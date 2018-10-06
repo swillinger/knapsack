@@ -7,18 +7,19 @@ options:
 pipelines:
   default:
     - step:
-        name: Install, Build, Test, Deploy
+        name: Install, Build, Test
         script:
-          - npm i -g --unsafe-perm now@latest
-          - yarn deploy:test
+          - yarn install
+          - yarn build
+          - yarn test
 
-  branches:
-      epic/v2:
-        - step:
-            name: Install, Build, Test, Deploy
-            script:
-              - npm i -g --unsafe-perm now@latest
-              - yarn deploy:prod
+  # branches:
+  #     epic/v2:
+  #       - step:
+  #           name: Install, Build, Test, Deploy
+  #           script:
+  #             - npm i -g --unsafe-perm now@latest
+  #             - yarn deploy:prod
 
 #definitions:
 #  caches:

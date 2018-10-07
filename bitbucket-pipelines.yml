@@ -2,7 +2,7 @@ image: basaltinc/docker-node-php-base
 
 options:
   size: 2x  # all steps in this repo get 8GB memory
-  docker: true
+  # docker: true
 
 pipelines:
   default:

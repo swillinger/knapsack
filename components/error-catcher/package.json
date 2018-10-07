@@ -1,8 +1,6 @@
 {
   "name": "@basalt/bedrock-error-catcher",
   "version": "0.1.2",
-  "src": "src/error-catcher.jsx",
-  "private": true,
   "description": "A Bedrock component that helps build Design Systems",
   "main": "src/error-catcher.jsx",
   "module": "src/error-catcher.jsx",
@@ -19,5 +17,9 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@basalt/bedrock-core": "^0.1.2"
+  },
+  "publishConfig": {
+    "access": "private",
+    "registry": "http://basalt-npm.now.sh"
   }
 }

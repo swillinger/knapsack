@@ -1,9 +1,7 @@
 {
   "name": "@basalt/bedrock-api-server",
   "version": "0.1.2",
-  "private": true,
   "description": "API Server",
-  "src": "src/bedrock-api-server.js",
   "main": "src/bedrock-api-server.js",
   "module": "src/bedrock-api-server.js",
   "scripts": {},
@@ -17,5 +15,9 @@
   },
   "peerDependencies": {},
   "author": "Basalt (http://basalt.io)",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "publishConfig": {
+    "access": "private",
+    "registry": "http://basalt-npm.now.sh"
+  }
 }

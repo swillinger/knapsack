@@ -1,7 +1,6 @@
 {
   "name": "@basalt/bedrock-babel-config",
   "version": "0.1.2",
-  "private": true,
   "description": "Babel config and deps.",
   "main": "index.js",
   "scripts": {},
@@ -21,5 +20,9 @@
     "babel-plugin-transform-react-remove-prop-types": "^0.4.14"
   },
   "author": "Basalt (http://basalt.io)",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "publishConfig": {
+    "access": "private",
+    "registry": "http://basalt-npm.now.sh"
+  }
 }

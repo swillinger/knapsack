@@ -1,7 +1,6 @@
 {
   "name": "@basalt/bedrock-plugin-custom-homepage",
   "version": "0.1.2",
-  "private": true,
   "description": "A Bedrock plugin for setting a custom home page",
   "scripts": {},
   "dependencies": {
@@ -11,5 +10,9 @@
     "react": "^16.4.2"
   },
   "author": "Basalt (http://basalt.io)",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "publishConfig": {
+    "access": "private",
+    "registry": "http://basalt-npm.now.sh"
+  }
 }

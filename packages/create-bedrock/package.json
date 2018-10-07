@@ -1,7 +1,6 @@
 {
   "name": "create-bedrock",
   "version": "0.1.2",
-  "private": true,
   "preferGlobal": true,
   "description": "A Bedrock component that helps build Design Systems",
   "bin": "bin/index.js",
@@ -15,5 +14,9 @@
     "mem-fs-editor": "^5.1.0"
   },
   "author": "Basalt (http://basalt.io)",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "publishConfig": {
+    "access": "private",
+    "registry": "http://basalt-npm.now.sh"
+  }
 }

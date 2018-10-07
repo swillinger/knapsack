@@ -1,8 +1,6 @@
 {
   "name": "@basalt/bedrock-nav-list",
   "version": "0.1.2",
-  "src": "src/nav-list.jsx",
-  "private": true,
   "description": "A Bedrock component that helps build Design Systems",
   "main": "src/nav-list.jsx",
   "module": "src/nav-list.jsx",
@@ -20,5 +18,9 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@basalt/bedrock-core": "^0.1.2"
+  },
+  "publishConfig": {
+    "access": "private",
+    "registry": "http://basalt-npm.now.sh"
   }
 }

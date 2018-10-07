@@ -1,8 +1,6 @@
 {
   "name": "@basalt/bedrock-color-swatch",
   "version": "0.1.2",
-  "src": "src/color-swatch.jsx",
-  "private": true,
   "description": "A Bedrock component that helps build Design Systems",
   "main": "src/color-swatch.jsx",
   "module": "src/color-swatch.jsx",
@@ -23,5 +21,9 @@
     "styled-components": "beta"
   },
   "author": "Basalt (http://basalt.io)",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "publishConfig": {
+    "access": "private",
+    "registry": "http://basalt-npm.now.sh"
+  }
 }

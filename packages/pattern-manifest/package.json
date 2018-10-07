@@ -1,9 +1,7 @@
 {
   "name": "@basalt/bedrock-pattern-manifest",
   "version": "0.1.2",
-  "private": true,
   "description": "API Server",
-  "src": "src/bedrock-pattern-manifest.js",
   "main": "src/bedrock-pattern-manifest.js",
   "module": "src/bedrock-pattern-manifest.js",
   "scripts": {},
@@ -15,6 +13,9 @@
   },
   "peerDependencies": {},
   "author": "Basalt (http://basalt.io)",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "publishConfig": {
+    "access": "private",
+    "registry": "http://basalt-npm.now.sh"
+  }
 }
-

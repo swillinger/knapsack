@@ -1,8 +1,6 @@
 {
   "name": "@basalt/bedrock-core",
   "version": "0.1.2",
-  "src": "src/index.js",
-  "private": true,
   "description": "A Bedrock component that helps build Design Systems",
   "main": "src/index.js",
   "module": "src/index.js",
@@ -14,5 +12,9 @@
     "react": "^16.4.2"
   },
   "author": "Basalt (http://basalt.io)",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "publishConfig": {
+    "access": "private",
+    "registry": "http://basalt-npm.now.sh"
+  }
 }

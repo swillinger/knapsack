@@ -1,8 +1,8 @@
 {
   "name": "@basalt/bedrock-site",
   "description": "Basalt Design System Site",
-  "version": "1.0.2",
-  "author": "Basalt",
+  "version": "0.1.2",
+  "author": "Basalt (http://basalt.io)",
   "main": "bedrock-site.js",
   "dependencies": {
     "@basalt/bedrock-api-demo": "^0.1.2",
@@ -41,10 +41,13 @@
     "design-system",
     "basalt"
   ],
-  "license": "MIT",
-  "private": true,
+  "license": "UNLICENSED",
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.org/basaltinc/our-design-system"
+    "url": "https://bitbucket.org/basaltinc/bedrock"
+  },
+  "publishConfig": {
+    "access": "private",
+    "registry": "http://basalt-npm.now.sh"
   }
 }

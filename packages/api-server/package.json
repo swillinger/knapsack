@@ -1,6 +1,6 @@
 {
   "name": "@basalt/bedrock-api-server",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "API Server",
   "main": "src/bedrock-api-server.js",
   "module": "src/bedrock-api-server.js",
@@ -13,7 +13,6 @@
     "url-join": "^4.0.0",
     "ws": "^6.0.0"
   },
-  "peerDependencies": {},
   "author": "Basalt (http://basalt.io)",
   "license": "UNLICENSED",
   "publishConfig": {

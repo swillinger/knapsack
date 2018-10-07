@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build": "FORCE_COLOR=1 run-s --print-label build:*",
-    "build:storybook": "cd bedrock/apps/storybook && yarn build",
+    "build:storybook": "cd apps/storybook && yarn build",
     "clean": "lerna clean --yes && rm -rf node_modules",
     "dashboard": "webpack-dashboard",
     "jest": "jest",

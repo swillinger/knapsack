@@ -11,6 +11,6 @@
   "license": "UNLICENSED",
   "publishConfig": {
     "access": "restricted",
-    "registry": "http://basalt-npm.now.sh"
+    "registry": "https://basalt-npm.now.sh"
   }
 }

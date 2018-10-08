@@ -7,6 +7,7 @@
     "clean": "lerna clean --yes && rm -rf node_modules",
     "dashboard": "webpack-dashboard",
     "jest": "jest",
+    "lerna:publish": "lerna publish --registry https://basalt-npm.now.sh --verify-access",
     "lint:js": "eslint --ext .js,.jsx .",
     "lint:js:fix": "yarn lint:js --fix",
     "lint:style": "stylelint '**/*.{js,jsx}' --syntax scss || echo '@todo fix these stylelint errors and then adjust this script in package.json so it can fail the build again' ",

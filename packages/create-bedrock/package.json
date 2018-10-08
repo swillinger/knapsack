@@ -13,7 +13,7 @@
     "mem-fs": "^1.1.3",
     "mem-fs-editor": "^5.1.0"
   },
-  "author": "Basalt (https://basalt.io)",
+  "author": "Basalt (https://basalt.io/)",
   "license": "UNLICENSED",
   "publishConfig": {
     "access": "public",

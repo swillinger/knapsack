@@ -19,7 +19,7 @@
     "babel-plugin-styled-components": "^1.5.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.14"
   },
-  "author": "Basalt (https://basalt.io/)",
+  "author": "Basalt (https://basalt.io)",
   "license": "UNLICENSED",
   "publishConfig": {
     "access": "restricted",

@@ -1,6 +1,6 @@
 {
   "name": "@basalt/bedrock-colors-demo",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "A Bedrock component that helps build Design Systems",
   "main": "src/colors-demo.jsx",
   "module": "src/colors-demo.jsx",

@@ -1,14 +1,14 @@
 {
   "name": "@basalt/bedrock-site",
   "description": "Basalt Design System Site",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "author": "Basalt (https://basalt.io/)",
   "main": "bedrock-site.js",
   "dependencies": {
     "@basalt/bedrock-api-demo": "^0.2.7",
     "@basalt/bedrock-atoms": "^0.2.7",
     "@basalt/bedrock-babel-config": "^0.2.7",
-    "@basalt/bedrock-color-contrast-block": "^0.2.7",
+    "@basalt/bedrock-color-contrast-block": "^0.2.8",
     "@basalt/bedrock-color-swatch": "^0.2.7",
     "@basalt/bedrock-core": "^0.2.7",
     "@basalt/bedrock-dos-and-donts": "^0.2.7",

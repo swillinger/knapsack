@@ -1,6 +1,6 @@
 {
   "name": "@basalt/bedrock-example-simple",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "",
   "private": true,
   "main": "index.js",

@@ -1,6 +1,6 @@
 {
   "name": "@basalt/bedrock-api-server",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "API Server",
   "main": "src/bedrock-api-server.js",
   "module": "src/bedrock-api-server.js",

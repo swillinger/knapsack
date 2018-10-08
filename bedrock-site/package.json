@@ -46,7 +46,7 @@
     "url": "https://bitbucket.org/basaltinc/bedrock"
   },
   "publishConfig": {
-    "access": "restricted",
+    "access": "public",
     "registry": "https://basalt-npm.now.sh"
   }
 }

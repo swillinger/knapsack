@@ -20,7 +20,7 @@
     "@basalt/bedrock-core": "^0.2.5"
   },
   "publishConfig": {
-    "access": "restricted",
+    "access": "public",
     "registry": "https://basalt-npm.now.sh"
   }
 }

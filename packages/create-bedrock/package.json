@@ -16,7 +16,7 @@
   "author": "Basalt (https://basalt.io)",
   "license": "UNLICENSED",
   "publishConfig": {
-    "access": "restricted",
+    "access": "public",
     "registry": "https://basalt-npm.now.sh"
   }
 }

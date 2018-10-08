@@ -21,7 +21,7 @@
     "url-join": "^4.0.0"
   },
   "publishConfig": {
-    "access": "restricted",
+    "access": "public",
     "registry": "https://basalt-npm.now.sh"
   }
 }

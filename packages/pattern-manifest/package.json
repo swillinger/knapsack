@@ -11,7 +11,7 @@
     "fs-extra": "^7.0.0",
     "globby": "^8.0.1"
   },
-  "author": "Basalt (http://basalt.io)",
+  "author": "Basalt (https://basalt.io)",
   "license": "UNLICENSED",
   "publishConfig": {
     "access": "restricted",

@@ -13,7 +13,7 @@
     "url-join": "^4.0.0",
     "ws": "^6.0.0"
   },
-  "author": "Basalt (http://basalt.io)",
+  "author": "Basalt (https://basalt.io)",
   "license": "UNLICENSED",
   "publishConfig": {
     "access": "restricted",

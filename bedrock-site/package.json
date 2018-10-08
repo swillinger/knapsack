@@ -2,7 +2,7 @@
   "name": "@basalt/bedrock-site",
   "description": "Basalt Design System Site",
   "version": "0.2.3",
-  "author": "Basalt (https://basalt.io)",
+  "author": "Basalt (https://basalt.io/)",
   "main": "bedrock-site.js",
   "dependencies": {
     "@basalt/bedrock-api-demo": "^0.2.3",

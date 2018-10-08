@@ -16,7 +16,7 @@
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.11.1"
   },
-  "author": "Basalt (https://basalt.io)",
+  "author": "Basalt (https://basalt.io/)",
   "license": "UNLICENSED",
   "publishConfig": {
     "access": "restricted",

@@ -18,7 +18,7 @@
     "react": "^16.3.0",
     "styled-components": "beta"
   },
-  "author": "Basalt (https://basalt.io)",
+  "author": "Basalt (https://basalt.io/)",
   "license": "UNLICENSED",
   "publishConfig": {
     "access": "restricted",

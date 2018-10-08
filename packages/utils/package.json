@@ -9,7 +9,7 @@
     "@basalt/bedrock-core": "^0.2.3",
     "color": "^3.0.0"
   },
-  "author": "Basalt (https://basalt.io)",
+  "author": "Basalt (https://basalt.io/)",
   "license": "UNLICENSED",
   "publishConfig": {
     "access": "restricted",

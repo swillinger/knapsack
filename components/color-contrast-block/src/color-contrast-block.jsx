@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { convertColor } from '@basalt/bedrock-utils';
 import { Details, Select } from '@basalt/bedrock-atoms';
+import Spinner from '@basalt/bedrock-spinner';
 import {
   ColorContrastPlayground,
   AccessibilityInfo,
@@ -21,7 +22,6 @@ import {
   NewRatio,
   ColorName,
 } from './color-contrast-block.styles';
-import Spinner from '../../spinner';
 
 class ColorContrastBlock extends React.Component {
   constructor(props) {

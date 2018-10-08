@@ -1,12 +1,12 @@
 {
   "name": "@basalt/bedrock-utils",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "A Bedrock component that helps build Design Systems",
   "main": "src/index.js",
   "module": "src/index.js",
   "scripts": {},
   "dependencies": {
-    "@basalt/bedrock-core": "^0.2.5",
+    "@basalt/bedrock-core": "^0.2.6",
     "color": "^3.0.0"
   },
   "author": "Basalt (https://basalt.io)",

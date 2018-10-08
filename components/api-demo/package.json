@@ -1,15 +1,15 @@
 {
   "name": "@basalt/bedrock-api-demo",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "A Bedrock component that helps build Design Systems",
   "main": "src/api-demo.jsx",
   "module": "src/api-demo.jsx",
   "scripts": {},
   "dependencies": {
-    "@basalt/bedrock-atoms": "^0.2.5",
-    "@basalt/bedrock-core": "^0.2.5",
-    "@basalt/bedrock-schema-form": "^0.2.5",
-    "@basalt/bedrock-schema-table": "^0.2.5",
+    "@basalt/bedrock-atoms": "^0.2.6",
+    "@basalt/bedrock-core": "^0.2.6",
+    "@basalt/bedrock-schema-form": "^0.2.6",
+    "@basalt/bedrock-schema-table": "^0.2.6",
     "query-string": "^6.1.0"
   },
   "devDependencies": {

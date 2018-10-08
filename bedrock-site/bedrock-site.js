@@ -36,7 +36,16 @@ function createWebPackConfig(config) {
         {
           test: /\.(js|jsx|mjs)$/,
           loader: 'babel-loader',
-          exclude: [/(node_modules)/],
+          // exclude: [/(node_modules)/],
+          exclude: thePath => {
+            if (thePath.includes('node_modules/@basalt')) {
+              return false;
+            }
+            if (thePath.includes('node_modules')) {
+              return true;
+            }
+            return false;
+          },
           options: {
             extends: '@basalt/bedrock-babel-config/es',
           },

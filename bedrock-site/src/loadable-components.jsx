@@ -39,7 +39,7 @@ export const LoadableExamplesPage = Loadable({
 
 export const LoadableDesignTokenPage = Loadable({
   loader: () =>
-    import(/* webpackChunkName: 'design-token-page' */ '@basalt/bedrock-design-tokens-filterable-grid'),
+    import(/* webpackChunkName: 'design-token-page' */ './components/design-tokens-filterable-grid'),
   loading: Spinner,
 });
 
@@ -81,7 +81,7 @@ export const LoadableTypography = Loadable({
 
 export const LoadablePatternsPage = Loadable({
   loader: () =>
-    import(/* webpackChunkName: 'patterns-page' */ '@basalt/bedrock-patterns-filterable-grid'),
+    import(/* webpackChunkName: 'patterns-page' */ './components/patterns-filterable-grid'),
   loading: Spinner,
 });
 

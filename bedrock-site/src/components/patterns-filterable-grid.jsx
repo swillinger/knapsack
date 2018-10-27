@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Spinner from '@basalt/bedrock-spinner';
 import SchemaForm from '@basalt/bedrock-schema-form';
-import PatternGrid from '@basalt/bedrock-pattern-grid';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
+import PatternGrid from './pattern-grid';
 
 const filterSchema = {
   $schema: 'http://json-schema.org/draft-07/schema',

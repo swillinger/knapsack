@@ -19,7 +19,6 @@
     "@basalt/bedrock-dos-and-donts": "^0.2.7",
     "@basalt/bedrock-error-catcher": "^0.2.7",
     "@basalt/bedrock-global-styles": "^0.2.7",
-    "@basalt/bedrock-nav-list": "^0.2.7",
     "@basalt/bedrock-overview": "^0.2.7",
     "@basalt/bedrock-pattern-manifest": "^0.2.7",
     "@basalt/bedrock-schema-form": "^0.2.7",

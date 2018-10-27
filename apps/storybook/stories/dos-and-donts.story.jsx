@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
-import DosAndDonts from '@basalt/bedrock-dos-and-donts';
+import DosAndDonts from '../../../bedrock-site/src/components/dos-and-donts';
 
 storiesOf('DosAndDonts', module).add(
   'Overview',

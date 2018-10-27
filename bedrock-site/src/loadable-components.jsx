@@ -63,7 +63,7 @@ export const LoadableColors = Loadable({
 
 export const LoadableShadows = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "shadows-page" */ '@basalt/bedrock-shadows-demo'),
+    import(/* webpackChunkName: "shadows-page" */ './pages/design-tokens/shadows-page'),
   loading: Spinner,
 });
 

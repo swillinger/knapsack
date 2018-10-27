@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import SchemaForm from '@basalt/bedrock-schema-form';
 
 // index.js
@@ -175,7 +175,11 @@ export const PlaygroundSliceWrapper = styled.div`
       ? `border: solid 2px ${props.theme.globals.colors.active};`
       : 'border: none;'};
   ${props => (props.hasVisibleControls ? 'margin: 1.5rem;' : '')};
-  ${props => props.isChanged && `animation: ${briefHighlight} 1.5s`};
+  ${props =>
+    props.isChanged &&
+    css`
+      animation: ${briefHighlight} 1.5s;
+    `};
 `;
 
 export const SliceError = styled.div``;

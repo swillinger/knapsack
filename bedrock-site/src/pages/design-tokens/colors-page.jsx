@@ -1,11 +1,11 @@
 import React from 'react';
 import ColorSwatches from '@basalt/bedrock-color-swatch';
-import DosAndDonts from '@basalt/bedrock-dos-and-donts';
 import ColorContrastBlock from '@basalt/bedrock-color-contrast-block';
 import ApiDemo from '@basalt/bedrock-api-demo';
 import { BlockQuoteWrapper } from '@basalt/bedrock-atoms';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
 import Spinner from '@basalt/bedrock-spinner';
+import DosAndDonts from '../../components/dos-and-donts';
 
 class ColorsPage extends React.Component {
   constructor(props) {

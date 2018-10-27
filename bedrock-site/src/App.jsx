@@ -7,21 +7,21 @@ import {
 } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 import Spinner from '@basalt/bedrock-spinner';
-import GlobalStyles from '@basalt/bedrock-global-styles';
-import ErrorCatcher from '@basalt/bedrock-error-catcher';
 import {
   BedrockContextProvider,
   baseContext,
   plugins,
 } from '@basalt/bedrock-core';
 import merge from 'lodash.merge';
+import GlobalStyles from './globals/global-styles';
+import ErrorCatcher from './utils/error-catcher';
 import Header from './components/header';
 import Footer from './components/footer';
 import {
   LoadableAnimations,
   LoadableBreakpoints,
   LoadableColors,
-  LoadableComponentOverview,
+  LoadablePatternView,
   LoadableCustomSectionPage,
   LoadableDesignTokenPage,
   LoadableExamplesPage,
@@ -285,7 +285,7 @@ class App extends React.Component {
                           <Route
                             path="/patterns/:id"
                             render={({ match }) => (
-                              <LoadableComponentOverview
+                              <LoadablePatternView
                                 id={match.params.id}
                                 size="m"
                                 key={match.params.id}

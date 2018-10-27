@@ -3,23 +3,23 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Spinner from '@basalt/bedrock-spinner';
 import { Details, Select } from '@basalt/bedrock-atoms';
-import ErrorCatcher from '@basalt/bedrock-error-catcher';
 import ApiDemo from '@basalt/bedrock-api-demo';
-import Overview from '@basalt/bedrock-overview';
 import Twig from '@basalt/bedrock-twig';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
+import ErrorCatcher from '../utils/error-catcher';
+import Overview from '../layouts/overview';
 import {
   LoadableSchemaTable,
   LoadableVariationDemo,
-  LoadableDosAndDonts,
 } from '../loadable-components';
+import DosAndDonts from '../components/dos-and-donts';
 
 const OverviewHeader = styled.header`
   position: relative;
   margin-bottom: 2rem;
 `;
 
-class ComponentOverview extends Component {
+class PatternViewPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -156,7 +156,7 @@ class ComponentOverview extends Component {
           <LoadableVariationDemo schema={schema} template={name} data={data} />
 
           {dosAndDonts.map(item => (
-            <LoadableDosAndDonts
+            <DosAndDonts
               key={JSON.stringify(item)}
               title={item.title}
               description={item.description}
@@ -172,14 +172,14 @@ class ComponentOverview extends Component {
   }
 }
 
-ComponentOverview.defaultProps = {
+PatternViewPage.defaultProps = {
   demoSizes: [],
 };
 
-ComponentOverview.propTypes = {
+PatternViewPage.propTypes = {
   id: PropTypes.string.isRequired,
   demoSizes: PropTypes.arrayOf(PropTypes.string.isRequired),
   context: contextPropTypes.isRequired,
 };
 
-export default connectToContext(ComponentOverview);
+export default connectToContext(PatternViewPage);

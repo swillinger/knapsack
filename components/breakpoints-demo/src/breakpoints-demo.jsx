@@ -1,48 +1,72 @@
 import React from 'react';
-import ApiDemo from '@basalt/bedrock-api-demo';
-import BreakpointsChart from '@basalt/bedrock-breakpoints-chart';
-import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
+import PropTypes from 'prop-types';
+import deviceWidths from './device-widths';
+import {
+  BreakpointListItem,
+  BreakpointsWrapper,
+  DeviceListItem,
+  DeviceWidthUl,
+} from './breakpoints-demo.styles';
 
-class BreakpointsPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      breakpoints: [],
-    };
-    this.apiEndpoint = `${
-      props.context.settings.urls.apiUrlBase
-    }/design-token/breakpoints`;
-  }
+const BreakpointsItems = items =>
+  items.map(item => (
+    <BreakpointListItem key={item.name} left={item.value}>
+      <span className="label">
+        {item.name}:<br />
+        {item.value}
+      </span>
+    </BreakpointListItem>
+  ));
 
-  componentDidMount() {
-    window
-      .fetch(this.apiEndpoint)
-      .then(res => res.json())
-      .then(breakpoints => {
-        this.setState({ breakpoints });
-      });
-  }
+const BreakpointList = ({ items }) => (
+  <ul className="breakpoints">{BreakpointsItems(items)}</ul>
+);
 
-  render() {
-    console.log(this.state.breakpoints);
-    return (
-      <div className="docs">
-        <h4 className="eyebrow">Visual Language</h4>
-        <h2>Breakpoints</h2>
-        <BreakpointsChart breakpoints={this.state.breakpoints} />
-        <br />
-        <ApiDemo
-          title="Breakpoints API"
-          endpoint={this.apiEndpoint}
-          requestType="get"
-        />
-      </div>
-    );
-  }
-}
-
-BreakpointsPage.propTypes = {
-  context: contextPropTypes.isRequired,
+BreakpointList.propTypes = {
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
 };
 
-export default connectToContext(BreakpointsPage);
+const DeviceWidthsItems = items =>
+  items.map(item => (
+    <DeviceListItem key={item.name} width={item.width}>
+      <span className="label">
+        {item.name}: {item.width}
+      </span>
+    </DeviceListItem>
+  ));
+
+const DeviceWidthList = ({ items }) => (
+  <DeviceWidthUl>{DeviceWidthsItems(items)}</DeviceWidthUl>
+);
+
+DeviceWidthList.propTypes = {
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      width: PropTypes.number.isRequired,
+    }),
+  ).isRequired,
+};
+
+const BreakpointsDemo = ({ breakpoints }) => (
+  <BreakpointsWrapper>
+    <BreakpointList items={breakpoints} />
+    <DeviceWidthList items={deviceWidths} />
+  </BreakpointsWrapper>
+);
+
+BreakpointsDemo.propTypes = {
+  breakpoints: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      width: PropTypes.number.isRequired,
+    }),
+  ).isRequired,
+};
+
+export default BreakpointsDemo;

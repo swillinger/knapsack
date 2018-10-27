@@ -4,10 +4,10 @@ import arrayMove from 'array-move';
 import uuid from 'uuid/v4';
 import Spinner from '@basalt/bedrock-spinner';
 import { StatusMessage } from '@basalt/bedrock-atoms';
-import Sidebar from '@basalt/bedrock-sidebar';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import Sidebar from '../../components/sidebar';
 import PlaygroundSlice from './playground-slice';
 import PlaygroundSidebar, {
   SIDEBAR_DEFAULT,

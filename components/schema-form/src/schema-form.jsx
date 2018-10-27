@@ -39,27 +39,29 @@ export default class SchemaForm extends React.Component {
 
   render() {
     return (
-      <Form
-        {...this.props}
-        formData={this.props.formData}
-        schema={this.props.schema}
-        uiSchema={this.props.uiSchema}
-        onSubmit={this.onSubmit}
-        onError={this.onError}
-        onChange={this.onChange}
-        ObjectFieldTemplate={ObjectFieldTemplate}
-        ArrayFieldTemplate={CustomArrayField}
-        FieldTemplate={CustomField}
-        className={this.props.isInline ? 'rjsf rjsf--inline' : 'rjsf'}
-        isInline={this.props.isInline}
-      >
-        {!this.props.hasSubmit && <span />}
-        {this.props.hasSubmit && (
-          <Button onClick={this.props.onSubmit} primary>
-            Submit
-          </Button>
-        )}
-      </Form>
+      <div className={this.props.className}>
+        <Form
+          {...this.props}
+          formData={this.props.formData}
+          schema={this.props.schema}
+          uiSchema={this.props.uiSchema}
+          onSubmit={this.onSubmit}
+          onError={this.onError}
+          onChange={this.onChange}
+          ObjectFieldTemplate={ObjectFieldTemplate}
+          ArrayFieldTemplate={CustomArrayField}
+          FieldTemplate={CustomField}
+          className={this.props.isInline ? 'rjsf rjsf--inline' : 'rjsf'}
+          isInline={this.props.isInline}
+        >
+          {!this.props.hasSubmit && <span />}
+          {this.props.hasSubmit && (
+            <Button onClick={this.props.onSubmit} primary>
+              Submit
+            </Button>
+          )}
+        </Form>
+      </div>
     );
   }
 }
@@ -74,6 +76,7 @@ SchemaForm.defaultProps = {
   onSubmit: () => {},
   onError: () => {},
   hasSubmit: false,
+  className: '',
 };
 
 SchemaForm.propTypes = {
@@ -87,4 +90,5 @@ SchemaForm.propTypes = {
   isInline: PT.bool, // @todo implement `isInline` form for left-to-right mini-forms
   formData: PT.object,
   hasSubmit: PT.bool,
+  className: PT.string,
 };

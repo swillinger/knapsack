@@ -73,6 +73,9 @@ function createWebPackConfig(config) {
       extensions: ['.mjs', '.jsx', '.js', '.json', '.css'],
       mainFields: ['module', 'main'],
       modules: ['node_modules', path.resolve(__dirname, 'node_modules')],
+      alias: {
+        'styled-components': require.resolve('styled-components'),
+      },
     },
     devServer: {
       overlay: true,

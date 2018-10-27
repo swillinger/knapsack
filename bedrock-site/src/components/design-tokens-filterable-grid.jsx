@@ -1,6 +1,6 @@
 import React from 'react';
 import { contextPropTypes, connectToContext } from '@basalt/bedrock-core';
-import PatternGrid from '@basalt/bedrock-pattern-grid';
+import PatternGrid from './pattern-grid';
 
 function DesignTokenPage({ context }) {
   return (

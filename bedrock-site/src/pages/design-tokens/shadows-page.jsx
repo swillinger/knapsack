@@ -1,7 +1,7 @@
 import React from 'react';
 import { BlockQuoteWrapper } from '@basalt/bedrock-atoms';
 import { contextPropTypes } from '@basalt/bedrock-core';
-import { ShadowDemoBox } from './shadows-demo.styles';
+import { ShadowDemoBox } from './shadows-page.styles';
 
 function ShadowsPage(props) {
   const { enableBlockquotes } = props.context.settings;

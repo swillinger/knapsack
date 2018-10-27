@@ -27,7 +27,7 @@ export const LoadablePatternNew = Loadable({
 
 export const LoadablePlayground = Loadable({
   loader: () =>
-    import(/* webpackChunkName: 'playground' */ '@basalt/bedrock-playground'),
+    import(/* webpackChunkName: 'playground' */ './layouts/playground'),
   loading: Spinner,
 });
 
@@ -87,8 +87,7 @@ export const LoadablePatternsPage = Loadable({
 
 export const LoadableSidebar = Loadable({
   loader: () =>
-    import(/* webpackChunkName: 'sidebar' */
-    '@basalt/bedrock-sidebar'),
+    import(/* webpackChunkName: 'sidebar' */ './components/sidebar'),
   loading: Spinner,
 });
 

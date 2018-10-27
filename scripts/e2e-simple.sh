@@ -76,9 +76,7 @@ root_path=$PWD
 
 # Start local registry
 tmp_registry_log=`mktemp`
-# (cd && nohup npx verdaccio@3.8.2 -c "$root_path"/scripts/verdaccio.yml &>$tmp_registry_log &)
-# @todo remove below line in favor of above line as I've locally ran `npm i -g verdaccio@3.5.2` to speed testing
-(mkdir -p scripts/verdaccio && nohup verdaccio -c "$root_path"/scripts/verdaccio.yml &>$tmp_registry_log &)
+(mkdir -p scripts/verdaccio && nohup npx verdaccio@3.8.2 -c "$root_path"/scripts/verdaccio.yml &>$tmp_registry_log &)
 # Wait for `verdaccio` to boot
 grep -q 'http address' <(tail -f $tmp_registry_log)
 echo 'Verdaccio booted!'

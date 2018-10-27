@@ -6,7 +6,7 @@ import { StatusMessage } from '@basalt/bedrock-atoms';
 import patternNewSchema from '@basalt/bedrock-pattern-manifest/src/pattern-new.schema';
 import urlJoin from 'url-join';
 
-class PatternEdit extends Component {
+class PatternNew extends Component {
   constructor(props) {
     super(props);
     this.apiEndpoint = urlJoin(
@@ -78,11 +78,11 @@ class PatternEdit extends Component {
         <br />
         <StatusMessage
           message={`Warning: after you land on the brand new Overview page, you will see an error saying something like 'Template ... is not defined'
-        
+
 YOU MUST RESTART COMMAND LINE TOOLS AFTERWARDS
-        
+
 We're working on a better solution already; thanks you for your patience,
-The Management        
+The Management
         `}
           type="warning"
         />
@@ -91,8 +91,8 @@ The Management
   }
 }
 
-PatternEdit.propTypes = {
+PatternNew.propTypes = {
   context: contextPropTypes.isRequired,
 };
 
-export default connectToContext(PatternEdit);
+export default connectToContext(PatternNew);

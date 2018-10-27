@@ -9,7 +9,6 @@
     "@basalt/bedrock-api-server": "^0.2.7",
     "@basalt/bedrock-atoms": "^0.2.7",
     "@basalt/bedrock-babel-config": "^0.2.7",
-    "@basalt/bedrock-breakpoints-chart": "^0.2.7",
     "@basalt/bedrock-breakpoints-demo": "^0.2.7",
     "@basalt/bedrock-code-block": "^0.2.7",
     "@basalt/bedrock-color-contrast-block": "^0.2.8",

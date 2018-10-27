@@ -52,7 +52,9 @@ class Header extends React.Component {
     return (
       <ul>
         <li>
-          <SiteHeaderNavLink to="/about">Get Started</SiteHeaderNavLink>
+          <SiteHeaderNavLink to="/pages/about/get-started">
+            Get Started
+          </SiteHeaderNavLink>
         </li>
         <li>
           <SiteHeaderNavLink to="/design-tokens">

@@ -12,7 +12,7 @@
   "peerDependencies": {
     "prop-types": "^15.0.0",
     "react": "^16.3.0",
-    "styled-components": "beta"
+    "styled-components": "^4.0.2"
   },
   "author": "Basalt (https://basalt.io/)",
   "license": "UNLICENSED",
@@ -20,7 +20,6 @@
     "@basalt/bedrock-core": "^0.2.7"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "https://basalt-npm.now.sh"
+    "access": "public"
   }
 }

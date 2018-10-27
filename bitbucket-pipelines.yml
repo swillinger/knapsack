@@ -9,7 +9,7 @@ pipelines:
     - step:
         name: Install, Build, Test
         script:
-          - yarn install
+          - yarn install --no-lockfile
           - yarn build
           - yarn test
 

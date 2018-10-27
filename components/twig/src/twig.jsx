@@ -13,7 +13,7 @@ import { IFrameWrapper } from './twig.styles';
  * @param {boolean} [isReadyForIframe=true] - Add JS that prepares it for iFrame use.
  * @returns {string} - Full HTML page.
  */
-function wrapHtml(html, cssUrls, jsUrls, isReadyForIframe = true) {
+function wrapHtml(html, cssUrls = [], jsUrls = [], isReadyForIframe = true) {
   return `
 <!doctype html>
 <html lang="en">
@@ -30,7 +30,7 @@ function wrapHtml(html, cssUrls, jsUrls, isReadyForIframe = true) {
   }
 </head>
 <body>
-${html}
+<div>${html}</div>
 ${jsUrls.map(jsUrl => `<script src="${jsUrl}"></script>`)}
 <style>
   body {

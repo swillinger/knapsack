@@ -1,7 +1,7 @@
 function presets(useESModules) {
   return [
     [
-      '@babel/preset-env',
+      require.resolve('@babel/preset-env'),
       {
         modules: useESModules ? false : 'commonjs',
         targets: {
@@ -9,19 +9,19 @@ function presets(useESModules) {
         },
       },
     ],
-    '@babel/preset-react',
+    require.resolve('@babel/preset-react'),
   ];
 }
 
 module.exports = (useESModules = false) => ({
   presets: presets(useESModules),
   plugins: [
-    '@babel/plugin-syntax-dynamic-import',
-    'transform-react-remove-prop-types',
-    'babel-plugin-styled-components',
+    require.resolve('@babel/plugin-syntax-dynamic-import'),
+    require.resolve('babel-plugin-transform-react-remove-prop-types'),
+    require.resolve('babel-plugin-styled-components'),
     [
       // http://babeljs.io/docs/en/babel-plugin-transform-runtime
-      '@babel/plugin-transform-runtime',
+      require.resolve('@babel/plugin-transform-runtime'),
       {
         corejs: false,
         helpers: true,
@@ -29,5 +29,7 @@ module.exports = (useESModules = false) => ({
         useESModules,
       },
     ],
+    require.resolve('@babel/plugin-proposal-object-rest-spread'),
+    require.resolve('@babel/plugin-proposal-class-properties'),
   ],
 });

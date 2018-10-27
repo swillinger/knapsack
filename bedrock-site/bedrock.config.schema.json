@@ -27,7 +27,6 @@
       "additionalProperties": false,
       "required": [
         "site",
-        "parentBrand",
         "isDebug",
         "isDevMode",
         "isProd",
@@ -144,7 +143,7 @@
           "type": "object",
           "description": "Various resource urls",
           "additionalProperties": false,
-          "required": ["apiUrlBase", "cssUrls", "jsUrls"],
+          "required": ["apiUrlBase", "cssUrls"],
           "properties": {
             "apiUrlBase": {
               "title": "Api Url Base",

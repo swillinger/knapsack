@@ -19,7 +19,6 @@
     "@basalt/bedrock-core": "^0.2.7"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "https://basalt-npm.now.sh"
+    "access": "public"
   }
 }

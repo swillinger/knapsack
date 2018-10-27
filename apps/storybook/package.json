@@ -22,5 +22,8 @@
     "babel-core": "^6.26.3"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "publishConfig": {
+    "access": "public"
+  }
 }

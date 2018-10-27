@@ -2,7 +2,7 @@ const {
   validateSchemaAndAssignDefaults,
 } = require('@basalt/bedrock-schema-utils');
 const webpack = require('webpack');
-const Stylish = require('webpack-stylish');
+// const Stylish = require('webpack-stylish');
 const Visualizer = require('webpack-visualizer-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -35,7 +35,7 @@ function createWebPackConfig(config) {
       rules: [
         {
           test: /\.(js|jsx|mjs)$/,
-          loader: 'babel-loader',
+          loader: require.resolve('babel-loader'),
           // exclude: [/(node_modules)/],
           exclude: thePath => {
             if (thePath.includes('node_modules/@basalt')) {
@@ -47,21 +47,21 @@ function createWebPackConfig(config) {
             return false;
           },
           options: {
-            extends: '@basalt/bedrock-babel-config/es',
+            extends: require.resolve('@basalt/bedrock-babel-config/es'),
           },
         },
         {
           test: [/\.jpeg?$/, /\.jpg?$/, /\.svg?$/, /\.png?$/],
-          loader: 'url-loader',
+          loader: require.resolve('url-loader'),
         },
         {
           test: [/\.css?$/],
           use: [
             {
-              loader: 'style-loader',
+              loader: require.resolve('style-loader'),
             },
             {
-              loader: 'css-loader',
+              loader: require.resolve('css-loader'),
             },
           ],
         },
@@ -69,10 +69,11 @@ function createWebPackConfig(config) {
     },
     devtool: isProd ? 'source-map' : 'cheap-module-source-map',
     resolve: {
+      // symlinks: false, // @todo consider, but be careful
       extensions: ['.mjs', '.jsx', '.js', '.json', '.css'],
       mainFields: ['module', 'main'],
+      modules: ['node_modules', path.resolve(__dirname, 'node_modules')],
     },
-    stats: 'none',
     devServer: {
       overlay: true,
       hot: true,
@@ -81,8 +82,9 @@ function createWebPackConfig(config) {
         index: '/index.html',
       },
     },
+    // stats: 'none',
     plugins: [
-      new Stylish(),
+      // new Stylish(), @todo consider re-enabling later, needed to for debugging
       new webpack.NamedModulesPlugin(),
       new webpack.DefinePlugin({
         'process.env': {

@@ -51,25 +51,25 @@ export const LoadableAnimations = Loadable({
 
 export const LoadableBreakpoints = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "breakpoints" */ './pages/design-tokens/breakpoints-page'),
+    import(/* webpackChunkName: "breakpoints-page" */ './pages/design-tokens/breakpoints-page'),
   loading: Spinner,
 });
 
 export const LoadableColors = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "colors" */ './pages/design-tokens/colors-page'),
+    import(/* webpackChunkName: "colors-page" */ './pages/design-tokens/colors-page'),
   loading: Spinner,
 });
 
 export const LoadableShadows = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "spacings" */ '@basalt/bedrock-shadows-demo'),
+    import(/* webpackChunkName: "shadows-page" */ '@basalt/bedrock-shadows-demo'),
   loading: Spinner,
 });
 
 export const LoadableSpacings = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "spacings" */ '@basalt/bedrock-spacings-demo'),
+    import(/* webpackChunkName: "spacings-page" */ './pages/design-tokens/spacings-page'),
   loading: Spinner,
 });
 

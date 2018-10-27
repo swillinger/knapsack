@@ -75,7 +75,7 @@ export const LoadableSpacings = Loadable({
 
 export const LoadableTypography = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "typography" */ '@basalt/bedrock-typographies-demo'),
+    import(/* webpackChunkName: "typography" */ './pages/design-tokens/typography-page'),
   loading: Spinner,
 });
 

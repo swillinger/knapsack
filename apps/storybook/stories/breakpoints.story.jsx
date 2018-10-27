@@ -1,14 +1,14 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
-import BreakpointsChart from '@basalt/bedrock-breakpoints-chart';
+import BreakpointsDemo from '@basalt/bedrock-breakpoints-demo';
 
 storiesOf('Breakpoints', module).add(
   'Overview',
   withInfo({
     inline: true,
   })(() => (
-    <BreakpointsChart
+    <BreakpointsDemo
       breakpoints={[
         {
           name: '$bp--xsmall',

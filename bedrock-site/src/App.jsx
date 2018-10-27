@@ -7,13 +7,13 @@ import {
 } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 import Spinner from '@basalt/bedrock-spinner';
-import GlobalStyles from '@basalt/bedrock-global-styles';
 import {
   BedrockContextProvider,
   baseContext,
   plugins,
 } from '@basalt/bedrock-core';
 import merge from 'lodash.merge';
+import GlobalStyles from './globals/global-styles';
 import ErrorCatcher from './utils/error-catcher';
 import Header from './components/header';
 import Footer from './components/footer';

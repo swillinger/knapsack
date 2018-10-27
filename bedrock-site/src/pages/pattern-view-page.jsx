@@ -11,8 +11,8 @@ import Overview from '../layouts/overview';
 import {
   LoadableSchemaTable,
   LoadableVariationDemo,
-  LoadableDosAndDonts,
 } from '../loadable-components';
+import DosAndDonts from '../components/dos-and-donts';
 
 const OverviewHeader = styled.header`
   position: relative;
@@ -156,7 +156,7 @@ class PatternViewPage extends Component {
           <LoadableVariationDemo schema={schema} template={name} data={data} />
 
           {dosAndDonts.map(item => (
-            <LoadableDosAndDonts
+            <DosAndDonts
               key={JSON.stringify(item)}
               title={item.title}
               description={item.description}

@@ -45,7 +45,7 @@ export const LoadableDesignTokenPage = Loadable({
 
 export const LoadableAnimations = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "animations" */ '@basalt/bedrock-transitions-demo'),
+    import(/* webpackChunkName: "animations" */ './pages/design-tokens/transitions-demo'),
   loading: Spinner,
 });
 

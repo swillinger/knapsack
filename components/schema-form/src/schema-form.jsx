@@ -40,27 +40,28 @@ export default class SchemaForm extends React.Component {
   render() {
     return (
       <div className={this.props.className}>
-      <Form
-        {...this.props}
-        formData={this.props.formData}
-        schema={this.props.schema}
-        uiSchema={this.props.uiSchema}
-        onSubmit={this.onSubmit}
-        onError={this.onError}
-        onChange={this.onChange}
-        ObjectFieldTemplate={ObjectFieldTemplate}
-        ArrayFieldTemplate={CustomArrayField}
-        FieldTemplate={CustomField}
-        className={this.props.isInline ? 'rjsf rjsf--inline' : 'rjsf'}
-        isInline={this.props.isInline}
-      >
-        {!this.props.hasSubmit && <span />}
-        {this.props.hasSubmit && (
-          <Button onClick={this.props.onSubmit} primary>
-            Submit
-          </Button>
-        )}
-      </Form></div>
+        <Form
+          {...this.props}
+          formData={this.props.formData}
+          schema={this.props.schema}
+          uiSchema={this.props.uiSchema}
+          onSubmit={this.onSubmit}
+          onError={this.onError}
+          onChange={this.onChange}
+          ObjectFieldTemplate={ObjectFieldTemplate}
+          ArrayFieldTemplate={CustomArrayField}
+          FieldTemplate={CustomField}
+          className={this.props.isInline ? 'rjsf rjsf--inline' : 'rjsf'}
+          isInline={this.props.isInline}
+        >
+          {!this.props.hasSubmit && <span />}
+          {this.props.hasSubmit && (
+            <Button onClick={this.props.onSubmit} primary>
+              Submit
+            </Button>
+          )}
+        </Form>
+      </div>
     );
   }
 }

@@ -57,7 +57,7 @@ export const LoadableBreakpoints = Loadable({
 
 export const LoadableColors = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "colors" */ '@basalt/bedrock-colors-demo'),
+    import(/* webpackChunkName: "colors" */ './pages/design-tokens/colors-page'),
   loading: Spinner,
 });
 

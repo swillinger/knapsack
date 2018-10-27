@@ -7,9 +7,9 @@ import {
 } from '@basalt/bedrock-atoms';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
 import { flattenArray } from '@basalt/bedrock-utils';
-import NavList from '@basalt/bedrock-nav-list';
 import urlJoin from 'url-join';
 import { FaTimes } from 'react-icons/fa';
+import NavList from './nav-list';
 
 class SecondaryNav extends Component {
   static prepSectionLinks(sections) {

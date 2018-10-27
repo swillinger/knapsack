@@ -27,7 +27,7 @@ export const LoadablePatternNew = Loadable({
 
 export const LoadablePlayground = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "playground" */ './layouts/playground'),
+    import(/* webpackChunkName: "playground" */ './pages/playground'),
   loading: Spinner,
 });
 

@@ -8,13 +8,13 @@ import {
 import styled, { ThemeProvider } from 'styled-components';
 import Spinner from '@basalt/bedrock-spinner';
 import GlobalStyles from '@basalt/bedrock-global-styles';
-import ErrorCatcher from '@basalt/bedrock-error-catcher';
 import {
   BedrockContextProvider,
   baseContext,
   plugins,
 } from '@basalt/bedrock-core';
 import merge from 'lodash.merge';
+import ErrorCatcher from './utils/error-catcher';
 import Header from './components/header';
 import Footer from './components/footer';
 import {

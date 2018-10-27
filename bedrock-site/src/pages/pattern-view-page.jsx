@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Spinner from '@basalt/bedrock-spinner';
 import { Details, Select } from '@basalt/bedrock-atoms';
-import ErrorCatcher from '@basalt/bedrock-error-catcher';
 import ApiDemo from '@basalt/bedrock-api-demo';
 import Twig from '@basalt/bedrock-twig';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
+import ErrorCatcher from '../utils/error-catcher';
 import Overview from '../layouts/overview';
 import {
   LoadableSchemaTable,

@@ -9,7 +9,7 @@ export const LoadablePatternView = Loadable({
 
 export const LoadableHome = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "home" */ './components/home-splash.jsx'),
+    import(/* webpackChunkName: "home-splash" */ './components/home-splash.jsx'),
   loading: Spinner,
 });
 
@@ -27,13 +27,13 @@ export const LoadablePatternNew = Loadable({
 
 export const LoadablePlayground = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "playground" */ './pages/playground'),
+    import(/* webpackChunkName: "playground-page" */ './pages/playground'),
   loading: Spinner,
 });
 
 export const LoadableExamplesPage = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "about-page" */ './components/examples-guide'),
+    import(/* webpackChunkName: "examples-landing-page" */ './pages/examples-landing-page.jsx'),
   loading: Spinner,
 });
 
@@ -45,7 +45,7 @@ export const LoadableDesignTokenPage = Loadable({
 
 export const LoadableAnimations = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "animations" */ './pages/design-tokens/transitions-demo'),
+    import(/* webpackChunkName: "transitions-page" */ './pages/design-tokens/transitions-demo'),
   loading: Spinner,
 });
 

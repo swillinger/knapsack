@@ -2,13 +2,13 @@ import React from 'react';
 import ApiDemo from '@basalt/bedrock-api-demo';
 import { TwoUp, BlockQuoteWrapper } from '@basalt/bedrock-atoms';
 import Spinner from '@basalt/bedrock-spinner';
-import DosAndDonts from '@basalt/bedrock-dos-and-donts';
 import Twig from '@basalt/bedrock-twig';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
+import DosAndDonts from '../../components/dos-and-donts';
 import {
   DemoTransitionMove,
   DemoTransitionOpacity,
-} from './transitions-demo.styles';
+} from './transitions-page.styles';
 
 class AnimationsPage extends React.Component {
   constructor(props) {

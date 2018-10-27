@@ -45,7 +45,7 @@ export const LoadableDesignTokenPage = Loadable({
 
 export const LoadableAnimations = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "transitions-page" */ './pages/design-tokens/transitions-demo'),
+    import(/* webpackChunkName: "transitions-page" */ './pages/design-tokens/transitions-page'),
   loading: Spinner,
 });
 
@@ -107,12 +107,6 @@ export const LoadableSchemaTable = Loadable({
 export const LoadableVariationDemo = Loadable({
   loader: () =>
     import(/* webpackChunkName: "variation-demo" */ '@basalt/bedrock-variation-demo'),
-  loading: Spinner,
-});
-
-export const LoadableDosAndDonts = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "dos-and-donts" */ '@basalt/bedrock-dos-and-donts'),
   loading: Spinner,
 });
 

@@ -5,9 +5,9 @@ import Spinner from '@basalt/bedrock-spinner';
 import { Details, Select } from '@basalt/bedrock-atoms';
 import ErrorCatcher from '@basalt/bedrock-error-catcher';
 import ApiDemo from '@basalt/bedrock-api-demo';
-import Overview from '@basalt/bedrock-overview';
 import Twig from '@basalt/bedrock-twig';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
+import Overview from '../layouts/overview';
 import {
   LoadableSchemaTable,
   LoadableVariationDemo,
@@ -19,7 +19,7 @@ const OverviewHeader = styled.header`
   margin-bottom: 2rem;
 `;
 
-class ComponentOverview extends Component {
+class PatternViewPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -172,14 +172,14 @@ class ComponentOverview extends Component {
   }
 }
 
-ComponentOverview.defaultProps = {
+PatternViewPage.defaultProps = {
   demoSizes: [],
 };
 
-ComponentOverview.propTypes = {
+PatternViewPage.propTypes = {
   id: PropTypes.string.isRequired,
   demoSizes: PropTypes.arrayOf(PropTypes.string.isRequired),
   context: contextPropTypes.isRequired,
 };
 
-export default connectToContext(ComponentOverview);
+export default connectToContext(PatternViewPage);

@@ -1,9 +1,9 @@
 import Loadable from 'react-loadable';
 import Spinner from '@basalt/bedrock-spinner';
 
-export const LoadableComponentOverview = Loadable({
+export const LoadablePatternView = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "component-overview" */ './layouts/component-overview'),
+    import(/* webpackChunkName: "pattern-view-page" */ './pages/pattern-view-page'),
   loading: Spinner,
 });
 
@@ -15,13 +15,13 @@ export const LoadableHome = Loadable({
 
 export const LoadablePatternEdit = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "pattern-edit" */ './pages/pattern-edit'),
+    import(/* webpackChunkName: "pattern-edit-page" */ './pages/pattern-edit-page'),
   loading: Spinner,
 });
 
 export const LoadablePatternNew = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "pattern-new" */ './pages/pattern-new'),
+    import(/* webpackChunkName: "pattern-new-page" */ './pages/pattern-new-page'),
   loading: Spinner,
 });
 

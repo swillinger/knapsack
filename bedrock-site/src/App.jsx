@@ -21,7 +21,7 @@ import {
   LoadableAnimations,
   LoadableBreakpoints,
   LoadableColors,
-  LoadableComponentOverview,
+  LoadablePatternView,
   LoadableCustomSectionPage,
   LoadableDesignTokenPage,
   LoadableExamplesPage,
@@ -285,7 +285,7 @@ class App extends React.Component {
                           <Route
                             path="/patterns/:id"
                             render={({ match }) => (
-                              <LoadableComponentOverview
+                              <LoadablePatternView
                                 id={match.params.id}
                                 size="m"
                                 key={match.params.id}

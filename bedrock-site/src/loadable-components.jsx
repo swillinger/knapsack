@@ -123,6 +123,6 @@ export const LoadableSettingsPage = Loadable({
 
 export const LoadableCustomSectionPage = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "custom-section-page" */ './layouts/custom-section-page'),
+    import(/* webpackChunkName: "custom-section-page" */ './pages/custom-section-page'),
   loading: Spinner,
 });

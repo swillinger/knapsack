@@ -127,6 +127,8 @@ exit 0
 # Install the app in a temporary location
 cd $temp_app_path
 npx create-bedrock test-app
+cd test-app
+yarn
 
 # Cleanup
 cleanup

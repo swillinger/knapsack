@@ -33,7 +33,7 @@ export const LoadablePlayground = Loadable({
 
 export const LoadableExamplesPage = Loadable({
   loader: () =>
-    import(/* webpackChunkName: 'about-page' */ '@basalt/bedrock-examples-guide'),
+    import(/* webpackChunkName: 'about-page' */ './components/examples-guide'),
   loading: Spinner,
 });
 

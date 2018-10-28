@@ -1,7 +1,6 @@
 {
   "name": "<%= name %>",
   "private": true,
-  "main": "index.js",
   "scripts": {
     "build": "rm -rf dist && NODE_ENV=production webpack-cli -p --mode production",
     "serve": "node api-server/index.js",
@@ -11,12 +10,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@basalt/bedrock-api-server": "*",
-    "@basalt/bedrock-pattern-manifest": "*",
-    "@basalt/bedrock-site": "*",
+    "@basalt/bedrock-api-server": "^0.2.0",
+    "@basalt/bedrock-pattern-manifest": "^0.2.0",
+    "@basalt/bedrock-site": "^0.2.0",
     "@basalt/demo-data": "^0.5.1",
     "@basalt/twig-renderer": "^0.10.2"
-  },
-  "author": "",
-  "license": "UNLICENSED"
+  }
 }

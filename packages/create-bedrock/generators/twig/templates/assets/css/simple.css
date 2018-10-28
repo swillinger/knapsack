@@ -1,0 +1,12 @@
+body {
+    z-index: 42;
+}
+
+img {
+    max-width: 100%;
+}
+
+.card {
+    border: 1px solid #000;
+    border-radius: 3px;
+}

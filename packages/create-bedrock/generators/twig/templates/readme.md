@@ -5,3 +5,9 @@
 ```
 yarn install
 ```
+
+## Usage
+
+```
+yarn start
+```

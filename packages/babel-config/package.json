@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {},
   "dependencies": {
+    "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
     "@babel/node": "^7.0.0",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
@@ -14,6 +15,7 @@
     "@babel/polyfill": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.1.0",
     "@babel/register": "^7.0.0",
     "@babel/runtime": "^7.0.0",
     "babel-core": "bridge",

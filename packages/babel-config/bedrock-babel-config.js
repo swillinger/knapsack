@@ -9,7 +9,20 @@ function presets(useESModules) {
         },
       },
     ],
-    require.resolve('@babel/preset-react'),
+    [
+      require.resolve('@babel/preset-react'),
+      {
+        development: process.env.NODE_ENV !== 'production',
+      },
+    ],
+    [
+      require.resolve('@babel/preset-typescript'),
+      {
+        isTSX: true,
+        allExtensions: true,
+        jsxPragma: 'React',
+      },
+    ],
   ];
 }
 

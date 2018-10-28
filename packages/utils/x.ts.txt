@@ -1,0 +1,4 @@
+import { getRandomInt, convertColor } from './src/index.js';
+
+const a = getRandomInt(true);
+convertColor('#ccc', 'hex');

@@ -10,9 +10,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@basalt/bedrock-api-server": "^0.2.0",
-    "@basalt/bedrock-pattern-manifest": "^0.2.0",
-    "@basalt/bedrock-site": "^0.2.0",
+    "@basalt/bedrock-api-server": "latest",
+    "@basalt/bedrock-pattern-manifest": "latest",
+    "@basalt/bedrock-site": "latest",
     "@basalt/demo-data": "^0.5.1",
     "@basalt/twig-renderer": "^0.10.2"
   }

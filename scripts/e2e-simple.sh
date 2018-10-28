@@ -116,7 +116,6 @@ git status
 echo 'about to clean those ^^^'
 git clean -df
 ./scripts/publish.sh prerelease --yes --force-publish=* --exact --npm-tag=latest --no-git-tag-version --no-push --registry="$custom_registry_url" --npm-client=npm
-exit 0
 
 # ******************************************************************************
 # Install react-scripts prerelease via create-react-app prerelease.

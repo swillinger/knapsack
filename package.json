@@ -2,9 +2,7 @@
   "name": "@basalt/bedrock",
   "private": true,
   "scripts": {
-    "build": "FORCE_COLOR=1 run-s --print-label build:**",
-    "build:storybook": "cd apps/storybook && yarn build",
-    "build:example:simple": "cd examples/simple && yarn build",
+    "build": "FORCE_COLOR=1 lerna run build",
     "clean": "lerna clean --yes && rm -rf node_modules",
     "dashboard": "webpack-dashboard",
     "jest": "jest",

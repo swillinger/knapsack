@@ -126,6 +126,9 @@ cd $temp_app_path
 npx create-bedrock test-app
 cd test-app
 yarn
+echo 'Install successfull. Building...'
+yarn build
+echo 'Build successfull! Cleaning up...'
 
 # Cleanup
 cleanup

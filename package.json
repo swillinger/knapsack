@@ -1,5 +1,5 @@
 {
-  "name": "@basalt/bedrock",
+  "name": "@basalt/bedrock-monorepo",
   "private": true,
   "scripts": {
     "build": "FORCE_COLOR=1 lerna run build",

@@ -13,6 +13,10 @@ md.setOptions({
 
 class BedrockApiServer {
   // @todo define structure of `userConfig`
+
+  /**
+   * @param {BedrockApiServerConfig} userConfig - The users config
+   */
   constructor(userConfig) {
     this.config = userConfig;
     this.endpoints = [];

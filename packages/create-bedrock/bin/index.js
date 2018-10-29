@@ -1,7 +1,24 @@
 #!/usr/bin/env node
+const program = require('commander');
+const { join } = require('path');
 const init = require('../lib/init');
+const { version } = require('../package.json');
 
+program
+  .version(version)
+  .option('--force', 'Overwrite existing files')
+  .parse(process.argv);
+
+// console.log({
+//   args: program.args,
+//   force: program.force,
+// });
+
+// process.exit(0);
+const [name] = program.args;
 init({
   // @todo enable options passed in from cli
-  force: true, // clean directory first
+  name,
+  dir: join(process.cwd(), name),
+  force: program.force,
 }).then(() => console.log('all done'));

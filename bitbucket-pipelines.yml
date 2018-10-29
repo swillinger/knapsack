@@ -12,6 +12,7 @@ pipelines:
           - yarn install --no-lockfile
           - yarn build
           - yarn test
+          - ./scripts/e2e-simple.sh
 
   # branches:
   #     epic/v2:

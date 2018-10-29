@@ -2,8 +2,8 @@
   "name": "@basalt/bedrock-twig",
   "version": "0.2.7",
   "description": "A Bedrock component that helps build Design Systems",
-  "main": "src/twig.jsx",
-  "module": "src/twig.jsx",
+  "main": "src/index.jsx",
+  "module": "src/index.jsx",
   "scripts": {},
   "devDependencies": {
     "prop-types": "^15.0.0",

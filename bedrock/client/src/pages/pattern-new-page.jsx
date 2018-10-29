@@ -3,8 +3,8 @@ import { Redirect } from 'react-router-dom';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
 import SchemaForm from '@basalt/bedrock-schema-form';
 import { StatusMessage } from '@basalt/bedrock-atoms';
-import patternNewSchema from '@basalt/bedrock-pattern-manifest/src/pattern-new.schema';
 import urlJoin from 'url-join';
+import patternNewSchema from '../../../server/src/pattern-manifest/pattern.schema';
 
 class PatternNew extends Component {
   constructor(props) {

@@ -1,3 +1,4 @@
 node_modules
 dist
 vendor
+/packages/create-bedrock/generators/twig/templates/

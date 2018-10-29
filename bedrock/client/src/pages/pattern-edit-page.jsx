@@ -4,8 +4,8 @@ import { Redirect } from 'react-router-dom';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
 import SchemaForm from '@basalt/bedrock-schema-form';
 import { StatusMessage } from '@basalt/bedrock-atoms';
-import patternMetaSchema from '@basalt/bedrock-pattern-manifest/src/pattern-meta.schema';
 import urlJoin from 'url-join';
+import patternMetaSchema from '../../../server/src/pattern-manifest/pattern-meta.schema';
 
 class PatternEdit extends Component {
   constructor(props) {

@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "@basalt/bedrock-api-demo": "^0.2.7",
-    "@basalt/bedrock-api-server": "^0.2.7",
     "@basalt/bedrock-atoms": "^0.2.7",
     "@basalt/bedrock-babel-config": "^0.2.7",
     "@basalt/bedrock-breakpoints-demo": "^0.2.7",
@@ -17,7 +16,6 @@
     "@basalt/bedrock-color-contrast-block": "^0.2.8",
     "@basalt/bedrock-color-swatch": "^0.2.7",
     "@basalt/bedrock-core": "^0.2.7",
-    "@basalt/bedrock-pattern-manifest": "^0.2.7",
     "@basalt/bedrock-schema-form": "^0.2.7",
     "@basalt/bedrock-schema-table": "^0.2.7",
     "@basalt/bedrock-schema-utils": "^0.2.7",

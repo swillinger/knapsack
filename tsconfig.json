@@ -1,26 +1,22 @@
 {
   "compilerOptions": {
-    "allowJs": false,
-    "checkJs": false,
-    "baseUrl": "./",
-    // "paths": {
-    //   "@basalt": [
-    //     "./packages/*/src",
-    //     "./components/*/src"
-    //   ]
-    // },
-    "target": "es2015",
-    "module": "es2015",
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "strict": false,
-    "composite": true,
-    "resolveJsonModule": true,
-    "moduleResolution": "node",
-    "noEmit": false,
-    "esModuleInterop": true,
+    "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "emitDeclarationOnly": true
-  }
+    "checkJs": true,
+    "jsx": "react",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "outDir": "dist",
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "target": "esnext"
+  },
+  "typeAcquisition": {
+    "enable": true
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

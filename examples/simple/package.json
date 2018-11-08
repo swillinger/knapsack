@@ -5,21 +5,18 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf dist && NODE_ENV=production webpack-cli -p --mode production",
-    "serve": "node api-server/index.js",
-    "serve:debug": "node --no-lazy --inspect-brk=9239 api-server/index.js",
-    "start:api": "nodemon --watch api-server/ --exec 'yarn serve' ",
-    "start:webpack": "DEV_MODE=yes webpack-dev-server",
-    "start:debug": "node --no-lazy --inspect-brk=9229 ./node_modules/.bin/run-p --print-label start:api start:webpack",
-    "start": "run-p --print-label start:api start:webpack",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "NODE_ENV=production node $NODE_DEBUG_OPTION ./node_modules/.bin/bedrock build",
+    "build:tokens": "theo ./design-tokens/tokens.yml --transform web --format raw.json,scss,html --dest ./assets/dist/tokens",
+    "serve": "node $NODE_DEBUG_OPTION ./node_modules/.bin/bedrock serve",
+    "start": "node $NODE_DEBUG_OPTION ./node_modules/.bin/bedrock start"
   },
   "dependencies": {
-    "@basalt/bedrock-api-server": "*",
-    "@basalt/bedrock-pattern-manifest": "*",
-    "@basalt/bedrock-site": "*",
+    "@basalt/bedrock": "*",
     "@basalt/demo-data": "^0.5.1",
     "@basalt/twig-renderer": "^0.10.2"
+  },
+  "devDependencies": {
+    "theo": "^8.0.0"
   },
   "author": "",
   "license": "ISC"

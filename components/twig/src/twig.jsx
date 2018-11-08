@@ -139,7 +139,7 @@ class Twig extends React.Component {
   getHtml(data) {
     const type = this.props.isStringTemplate ? 'renderString' : 'renderFile';
     // let body = data;
-    const url = `${this.apiEndpoint}/render-twig?type=${type}`;
+    const url = `${this.apiEndpoint}/render?type=${type}`;
 
     // if (this.props.isStringTemplate) {
     //   url = `${apiUrlBase}/render-twig?templateString`;

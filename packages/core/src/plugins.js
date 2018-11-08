@@ -1,9 +1,27 @@
 import global from 'global';
 
+/**
+ * @typedef {Object} DesignTokenPage
+ * @prop {string} id
+ * @prop {string} title
+ * @prop {string} path
+ * @prop {string} [description]
+ * @prop {string[]} tokenCategories
+ * @prop {Function<React.ReactElement>} render
+ */
+
 class PluginStore {
   constructor() {
     this.plugins = {};
     this.homePage = null;
+    this.designTokensGroupPages = {};
+  }
+
+  /**
+   * @return {DesignTokenPage[]}
+   */
+  get designTokensPages() {
+    return Object.values(this.designTokensGroupPages);
   }
 
   /**
@@ -26,6 +44,27 @@ class PluginStore {
     this.homePage = { render };
   }
 
+  /**
+   * @param {DesignTokenPage} config
+   * @return {null}
+   */
+  addDesignTokensGroupPage({
+    id,
+    title,
+    description = '',
+    tokenCategories,
+    render,
+  }) {
+    this.designTokensGroupPages[id] = {
+      id,
+      title,
+      description,
+      path: `/design-tokens/${id}`,
+      tokenCategories,
+      render,
+    };
+  }
+
   loadPlugins(api) {
     Object.keys(this.plugins)
       .map(name => this.plugins[name])
@@ -42,4 +81,5 @@ function getPluginStore() {
   return global[KEY];
 }
 
+/** @type {PluginStore} */
 export const plugins = getPluginStore();

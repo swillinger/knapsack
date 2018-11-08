@@ -27,6 +27,7 @@
     "packages": [
       "bedrock",
       "apps/*",
+      "examples/simple",
       "components/*",
       "packages/*"
     ],

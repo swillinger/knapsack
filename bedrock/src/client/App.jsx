@@ -209,20 +209,15 @@ class App extends React.Component {
                           {this.state.designTokensPages.map(page => {
                             const {
                               render,
-                              tokenCategories,
-                              id,
-                              description,
-                              path,
+                              ...rest
                             } = page;
                             return (
                               <Route
-                                key={id}
-                                path={path}
+                                key={page.id}
+                                path={page.path}
                                 render={() =>
                                   render({
-                                    id,
-                                    description,
-                                    tokenCategories,
+                                    ...rest,
                                   })
                                 }
                               />

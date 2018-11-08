@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const WebSocket = require('ws');
 const urlJoin = require('url-join');
 const fs = require('fs-extra');
+const { join } = require('path');
 const md = require('marked');
 const highlight = require('highlight.js');
 // const { PatternSchema } = require('../../dist/schemas/pattern');
@@ -51,22 +52,24 @@ class BedrockApiServer {
       next();
     });
 
-    if (this.config.staticDirs) {
-      this.config.staticDirs.forEach(staticDir =>
-        this.app.use(staticDir.prefix, express.static(staticDir.path)),
-      );
-    }
-
-    if (this.config.spaIndexHtmlPath) {
+    if (this.config.webroot) {
+      this.app.use(express.static(this.config.webroot));
+      // Since this is a Single Page App, we will send all html requests to the `index.html` file in the webroot
       this.app.use('*', (req, res, next) => {
         const { accept = '' } = req.headers;
         const accepted = accept.split(',');
         if (accepted.includes('text/html')) {
-          res.sendFile(this.config.spaIndexHtmlPath);
+          res.sendFile(join(this.config.webroot, 'index.html'));
         } else {
           next();
         }
       });
+    }
+
+    if (this.config.staticDirs) {
+      this.config.staticDirs.forEach(staticDir =>
+        this.app.use(staticDir.prefix, express.static(staticDir.path)),
+      );
     }
 
     this.app.get(this.config.baseUrl, (req, res) => {

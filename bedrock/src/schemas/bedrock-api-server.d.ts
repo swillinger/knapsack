@@ -39,9 +39,8 @@ interface ExamplePageData {
 
 interface BedrockApiServerConfig {
   port: number;
+  webroot?: string;
   websocketsPort?: number;
-  /** Path to `index.html` */
-  spaIndexHtmlPath?: string;
   baseUrl: string;
   showEndpoints?: boolean;
   designTokens?: DesignTokenConfig[];

@@ -20,14 +20,11 @@ async function serve(config, { tokens }) {
 
   const apiServer = new BedrockApiServer({
     port: 3999,
+    webroot: config.dist,
     staticDirs: [
       {
         prefix: USER_SITE_PUBLIC,
         path: config.public,
-      },
-      {
-        prefix: '/',
-        path: config.dist,
       },
     ],
     baseUrl: '/api',

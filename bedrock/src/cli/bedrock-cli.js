@@ -33,7 +33,7 @@ function processConfig(userConfig, from) {
     public: resolve(from, publicDir),
     examplesDir: resolve(from, examplesDir),
     css: css.map(x => resolve(from, x)),
-    dist,
+    dist: resolve(from, dist),
     ...rest,
   };
 }

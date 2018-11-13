@@ -1,43 +1,97 @@
-props2:
-  - name: c-blue
-    value: '{!primary_color}'
-    comment: yolo
 props:
   c-blue:
     value: '{!primary_color}'
     comment: ima blue color
+  c-blue-text:
+    value: '{!primary_color}'
+    category: text-color
+  c-blue-hr:
+    value: '{!primary_color}'
+    category: hr-color
+  c-blue-border:
+    value: '{!primary_color}'
+    category: border-color
   c-blue--light:
-    value: hsl(165, 26%, 85%)
+    value: '{!blue_light}'
+  c-blue--light-text:
+    value: '{!blue_light}'
+    category: text-color;
+  c-blue--light-hr:
+    value: '{!blue_light}'
+    category: hr-color;
+  c-blue--light-border:
+    value: '{!blue_light}'
+    category: border-color;
   c-green:
-    value: hsl(159, 20%, 17%)
-  c-iron:
-    value: hsl(240, 3%, 85%)
+    value: '{!green}'
+  c-green-text:
+    value: '{!green}'
+    category: text-color
+  c-green-hr:
+    value: '{!green}'
+    category: hr-color
+  c-green-border:
+    value: '{!green}'
+    category: border-color
   c-yellow:
-    value: hsl(52, 74%, 54%)
+    value: '{!secondary_color}'
+  c-yellow-text:
+    value: '{!secondary_color}'
+    category: text-color
+  c-yellow-hr:
+    value: '{!secondary_color}'
+    category: hr-color
+  c-yellow-border:
+    value: '{!secondary_color}'
+    category: border-color
   c-white:
     value: white
   c-gray:
-    value: hsl(240, 3%, 85%)
+    value: '{!gray}'
+  c-gray-text:
+    value: '{!gray}'
+    category: text-color
+  c-gray-hr:
+    value: '{!gray}'
+    category: hr-color
+    comment: 'test comment'
+  c-gray-border:
+    value: '{!gray}'
+    category: border-color
   c-gray-dark:
-    value: hsl(0, 0%, 40%)
+    value: '{!gray_dark}'
+  c-gray-dark-text:
+    value: '{!gray_dark}'
+    category: text-color
+  c-gray-dark-hr:
+    value: '{!gray_dark}'
+    category: hr-color
+  c-gray-dark-border:
+    value: '{!gray_dark}'
+    category: border-color
   c-black:
     value: black
+  c-black-hr:
+    value: black
+    category: hr-color
   c-transparent:
     value: hsla(0, 0%, 0%, 0)
   c-border:
     value: hsl(240, 3%, 85%)
-  c-header-text:
+    category: border-color
+  c-text-dark:
     value: black
-  c-body-text:
-    value: black
-  c-primary:
-    value: hsl(200, 55%, 19%)
-  c-secondary:
-    value: hsl(52, 74%, 54%)
+    category: text-color
+#  c-primary:
+#    value: '{!primary_color}'
+#  c-secondary:
+#    value: '{!secondary_color}'
   c-links:
     value: hsl(200, 55%, 19%)
+    category: text-color
   c-links-hover:
     value: hsl(200, 55%, 9%)
+    category: text-color
 imports:
   - ./aliases.yml
 global:

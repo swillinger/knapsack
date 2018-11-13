@@ -1,3 +1,23 @@
 aliases:
   primary_color:
-    value: "#0070d2"
+    value: "#16394B"
+  secondary_color:
+    value: "#E1C933"
+  blue_light:
+    value: "#CFE3DE"
+  green:
+    value: "#23342E"
+  gray:
+    value: "#D8D8DA"
+  gray_dark:
+    value: "#666666"
+  fs-xxl:
+    value: "2.25rem"
+  fs-xl:
+    value: "1.75rem"
+  fs-l:
+    value: "1.25rem"
+  fs-m:
+    value: "1rem"
+  fs-s:
+    value: "0.875rem"

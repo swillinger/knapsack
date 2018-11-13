@@ -57,7 +57,7 @@ class Header extends React.Component {
           </SiteHeaderNavLink>
         </li>
         <li>
-          <SiteHeaderNavLink to="/design-tokens/shadows">
+          <SiteHeaderNavLink to="/design-tokens">
             Design Tokens
           </SiteHeaderNavLink>
         </li>

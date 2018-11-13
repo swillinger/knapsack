@@ -7,3 +7,7 @@ imports:
   - ./shadows.yml
   - ./typography-sizes.yml
   - ./typography-fonts.yml
+  - ./typography-weights.yml
+  - ./typography-style.yml
+  - ./typography-line-height.yml
+  - ./borders.yml

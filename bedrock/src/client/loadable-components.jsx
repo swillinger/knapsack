@@ -43,7 +43,7 @@ export const LoadableDesignTokenPage = Loadable({
   loading: Spinner,
 });
 
-export const LoadableAnimations = Loadable({
+export const LoadableTransitions = Loadable({
   loader: () =>
     import(/* webpackChunkName: "transitions-page" */ './pages/design-tokens/transitions-page'),
   loading: Spinner,
@@ -67,9 +67,21 @@ export const LoadableShadows = Loadable({
   loading: Spinner,
 });
 
+export const LoadableBorders = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "borders-page" */ './pages/design-tokens/borders-page'),
+  loading: Spinner,
+});
+
 export const LoadableSpacings = Loadable({
   loader: () =>
     import(/* webpackChunkName: "spacings-page" */ './pages/design-tokens/spacings-page'),
+  loading: Spinner,
+});
+
+export const LoadableSizings = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "sizings-page" */ './pages/design-tokens/sizings-page'),
   loading: Spinner,
 });
 

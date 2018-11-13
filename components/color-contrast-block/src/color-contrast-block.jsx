@@ -45,10 +45,11 @@ class ColorContrastBlock extends React.Component {
   async componentDidMount() {
     this.checkColorContrast();
     const colors = this.props.bgColors;
+    const textColors = this.props.textColors;
     const results = await Promise.all(
       colors.map(async bgColor => {
         const comparisonResults = await Promise.all(
-          colors
+          textColors
             .filter(comparedColor => comparedColor.value !== bgColor.value)
             .map(async comparedColor => ({
               comparedColor,
@@ -111,7 +112,7 @@ class ColorContrastBlock extends React.Component {
       return <Spinner />;
     }
     const colorBlocks = this.state.allResults.map(result => (
-      <ColorContrast key={result.bgColor.value} color={result.bgColor.value}>
+      <ColorContrast key={result.bgColor.name} color={result.bgColor.value}>
         {/* @todo find a way to handle white */}
         <Details>
           <summary>{result.bgColor.name}</summary>
@@ -128,7 +129,7 @@ class ColorContrastBlock extends React.Component {
               {result.comparisonResults.map(compared => (
                 <ColorCompare
                   color={result.bgColor.value}
-                  key={compared.comparedColor.value}
+                  key={compared.comparedColor.name}
                   comparedColor={compared.comparedColor.value}
                 >
                   <Fade comparedColor={compared.comparedColor.value} />

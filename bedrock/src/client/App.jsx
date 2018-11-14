@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   BrowserRouter as Router,
   Route,
@@ -17,22 +18,16 @@ import GlobalStyles from './globals/global-styles';
 import ErrorCatcher from './utils/error-catcher';
 import Header from './components/header';
 import Footer from './components/footer';
+import { apiUrlBase } from './data';
 import {
-  LoadableAnimations,
-  LoadableBreakpoints,
-  LoadableColors,
   LoadablePatternView,
   LoadableCustomSectionPage,
-  LoadableDesignTokenPage,
   LoadableExamplesPage,
   LoadablePatternsPage,
   LoadablePlayground,
   LoadableSecondaryNav,
   LoadableSettingsPage,
-  LoadableShadows,
   LoadableSidebar,
-  LoadableSpacings,
-  LoadableTypography,
   LoadablePatternEdit,
   LoadablePatternNew,
   LoadableHome,
@@ -61,13 +56,13 @@ class App extends React.Component {
     super(props);
     this.state = {
       patterns: [],
-      settings: props.bedrockSettings,
-      /** @type {DesignTokensPage[]} */
+      settings: {},
       designTokensPages: [],
       sections: [],
+      meta: {},
       ready: false,
     };
-    this.apiEndpoint = `${props.bedrockSettings.urls.apiUrlBase}`;
+    this.apiEndpoint = `${apiUrlBase}`;
     this.isDesignTokenAvailable = this.isDesignTokenAvailable.bind(this);
   }
 
@@ -77,6 +72,18 @@ class App extends React.Component {
     });
 
     const results = await Promise.all([
+      window
+        .fetch(`${this.apiEndpoint}/settings`)
+        .then(res => res.json())
+        .then(settings => ({
+          settings,
+        })),
+      window
+        .fetch(`${this.apiEndpoint}/meta`)
+        .then(res => res.json())
+        .then(meta => ({
+          meta,
+        })),
       window
         .fetch(`${this.apiEndpoint}/patterns`)
         .then(res => res.json())
@@ -125,13 +132,14 @@ class App extends React.Component {
       return <Spinner />;
     }
 
-    // Just a demo of how to override
     const cruxContext = merge({}, baseContext, {
       theme: this.state.settings.theme,
       patterns: this.state.patterns,
       sections: this.state.sections,
       designTokensPages: this.state.designTokensPages,
       settings: this.state.settings,
+      features: this.props.features,
+      meta: this.state.meta,
       setSettings: newSettings => this.setState({ settings: newSettings }),
     });
 
@@ -202,15 +210,12 @@ class App extends React.Component {
                           ))}
                           <Route
                             path="/design-tokens"
-                            component={LoadableDesignTokenPage}
+                            component={LoadableAllTokens}
                             exact
                           />
 
                           {this.state.designTokensPages.map(page => {
-                            const {
-                              render,
-                              ...rest
-                            } = page;
+                            const { render, ...rest } = page;
                             return (
                               <Route
                                 key={page.id}
@@ -260,13 +265,6 @@ class App extends React.Component {
                               />
                             )}
                           />
-                          <Route
-                            path="/resources/:id"
-                            render={({ match }) => {
-                              const Component = [match.id];
-                              return <Component />;
-                            }}
-                          />
                           <Redirect to="/" />
                         </Switch>
                       </ErrorCatcher>
@@ -284,7 +282,7 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  bedrockSettings: PropTypes.object.isRequired, // eslint-disable-line
+  features: PropTypes.object.isRequired, // eslint-disable-line
 };
 
 export default App;

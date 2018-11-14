@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 const program = require('commander');
-const { existsSync } = require('fs-extra');
+const { existsSync, readSync } = require('fs-extra');
 const { join, resolve, dirname } = require('path');
 const log = require('./log');
 const { serve } = require('../server/server');
@@ -22,7 +22,6 @@ function processConfig(userConfig, from) {
     src,
     public: publicDir,
     dist,
-    examplesDir,
     designTokens,
     css,
     ...rest
@@ -31,7 +30,6 @@ function processConfig(userConfig, from) {
     src: src.map(s => resolve(from, s)),
     designTokens: resolve(from, designTokens),
     public: resolve(from, publicDir),
-    examplesDir: resolve(from, examplesDir),
     css: css.map(x => resolve(from, x)),
     dist: resolve(from, dist),
     ...rest,
@@ -48,6 +46,11 @@ if (!existsSync(configPath)) {
 const config = processConfig(require(configPath), dirname(configPath));
 // console.log({ config });
 program.version(version);
+
+// const userPkgPath = join(process.cwd(), 'package.json');
+// let userPkg = {};
+// if (existsSync(userPkgPath)) userPkg = require(userPkgPath); // eslint-disable-line
+// const { scripts } = userPkg;
 
 program.command('serve').action(async () => {
   log.info('running serve...');

@@ -10,6 +10,7 @@ import { flattenArray } from '@basalt/bedrock-utils';
 import urlJoin from 'url-join';
 import { FaTimes } from 'react-icons/fa';
 import NavList from './nav-list';
+import { apiUrlBase } from '../data';
 
 class SecondaryNav extends Component {
   static prepSectionLinks(sections) {
@@ -44,7 +45,7 @@ class SecondaryNav extends Component {
         ...props.context.designTokensPages,
       ],
     };
-    this.apiEndpoint = `${props.context.settings.urls.apiUrlBase}`;
+    this.apiEndpoint = `${apiUrlBase}`;
     this.handleFilterReset = this.handleFilterReset.bind(this);
   }
 

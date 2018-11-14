@@ -4,22 +4,20 @@ const twigRenderer = require('./twig-renderer');
 const config = {
   src: ['./assets/patterns/*'], // @todo rename `src` to `patterns`
   newPatternDir: './assets/patterns/',
-  examplesDir: './assets/examples/',
   dist: './dist',
   public: './public',
-  data: './data', // @todo consider removing. needed? could see future use, but don't think there is any current use.
+  data: './data',
   assets: './assets',
   css: ['./public/assets/simple.css'],
   // js: ['./public/assets/script.js'],
-  site: {
-    title: 'A Super Simple Site',
-    subtitle: 'A Simple Example of a Design System',
-    slogan: "Wasn't that simple?",
-    version: '1.2.3',
-  },
+  // site: {
+  //   // title: 'A Super Simple Site',
+  //   // subtitle: 'A Simple Example of a Design System',
+  //   // slogan: "Wasn't that simple?",
+  //   version: '1.2.3',
+  // },
   templates: [{
     test: theTemplatePath => theTemplatePath.endsWith('.twig'),
-    // render: () => console.log('render..') //@todo
     render: (template, data = {}) => twigRenderer.render(template, data),
     renderString: (templateString, data = {}) => twigRenderer.renderString(templateString, data),
   }],

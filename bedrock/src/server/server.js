@@ -1,6 +1,8 @@
 const BedrockApiServer = require('./bedrock-api-server');
 const BedrockPatternManifest = require('./pattern-manifest/bedrock-pattern-manifest');
 const ExampleStore = require('./example-store');
+const SettingsStore = require('./settings-store');
+const portfinder = require('portfinder');
 const { USER_SITE_PUBLIC } = require('../lib/constants');
 // const { BedrockConfig } = require('../../schemas/bedrock-config');
 
@@ -9,24 +11,23 @@ const { USER_SITE_PUBLIC } = require('../lib/constants');
  * @returns {Promise<void>}
  */
 async function serve(config, { tokens }) {
+  const settingsStore = new SettingsStore({ dataDir: config.data });
+
   const patternManifest = new BedrockPatternManifest({
     newPatternDir: config.newPatternDir,
     patternPaths: config.src,
+    dataDir: config.data,
   });
 
   const exampleStore = new ExampleStore({
-    dir: config.examplesDir,
+    dir: config.data,
   });
 
   const apiServer = new BedrockApiServer({
     port: 3999,
     webroot: config.dist,
-    staticDirs: [
-      {
-        prefix: USER_SITE_PUBLIC,
-        path: config.public,
-      },
-    ],
+    public: config.public,
+    websocketsPort: await portfinder.getPortPromise(),
     baseUrl: '/api',
     showEndpoints: true,
     designTokens: tokens.categories.map(category => {
@@ -45,6 +46,9 @@ async function serve(config, { tokens }) {
     patternManifest,
     templateRenderers: config.templates,
     exampleStore,
+    settingsStore,
+    css: config.css,
+    js: config.js,
   });
 
   patternManifest.watch(({ event, path }) => {

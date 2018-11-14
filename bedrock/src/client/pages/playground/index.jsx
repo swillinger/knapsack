@@ -7,6 +7,7 @@ import { StatusMessage } from '@basalt/bedrock-atoms';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import { apiUrlBase } from '../../data';
 import Sidebar from '../../components/sidebar';
 import PlaygroundSlice from './playground-slice';
 import PlaygroundSidebar, {
@@ -40,7 +41,7 @@ class Playground extends Component {
       changeId: null,
     };
     // Static properties
-    this.apiEndpoint = `${props.context.settings.urls.apiUrlBase}`;
+    this.apiEndpoint = `${apiUrlBase}`;
     // Bindings
     this.moveSlice = this.moveSlice.bind(this);
     this.moveSliceUp = this.moveSliceUp.bind(this);

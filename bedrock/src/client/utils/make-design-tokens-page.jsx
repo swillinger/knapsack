@@ -22,7 +22,6 @@ export default function makeDesignTokensPage(WrappedComponent) {
     componentDidMount() {
       getDesignTokensCategories(this.props.tokenCategories)
         .then(tokens => {
-          console.log('getDesignTokensCategories', { tokens });
           if (tokens.ok) {
             this.setState({
               tokens: tokens.data,

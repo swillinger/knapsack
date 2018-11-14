@@ -3,9 +3,11 @@ const bodyParser = require('body-parser');
 const WebSocket = require('ws');
 const urlJoin = require('url-join');
 const fs = require('fs-extra');
-const { join } = require('path');
+const { join, relative } = require('path');
 const md = require('marked');
 const highlight = require('highlight.js');
+const { wrapHtml } = require('./templates');
+const { USER_SITE_PUBLIC } = require('../lib/constants');
 // const { PatternSchema } = require('../../dist/schemas/pattern');
 // const { PatternMetaSchema } = require('../../dist/schemas/pattern-meta');
 
@@ -64,6 +66,10 @@ class BedrockApiServer {
           next();
         }
       });
+    }
+
+    if (this.config.public) {
+      this.app.use(USER_SITE_PUBLIC, express.static(this.config.public));
     }
 
     if (this.config.staticDirs) {
@@ -161,6 +167,22 @@ class BedrockApiServer {
               ok: false,
               message: 'No valid "type" of request sent.',
             };
+        }
+
+        // @todo allow query param on API request to toggle
+        const wrapHtmlResults = true;
+        if (results.ok && wrapHtmlResults) {
+          const cssUrls = this.config.css
+            ? this.config.css.map(css =>
+                join(USER_SITE_PUBLIC, relative(this.config.public, css)),
+              )
+            : [];
+          const jsUrls = this.config.js
+            ? this.config.js.map(js =>
+                join(USER_SITE_PUBLIC, relative(this.config.public, js)),
+              )
+            : [];
+          results.html = wrapHtml(results.html, cssUrls, jsUrls);
         }
 
         res.json(results);
@@ -286,12 +308,34 @@ class BedrockApiServer {
       res.send(sections);
     });
 
+    const url3 = urlJoin(this.config.baseUrl, 'settings');
+    this.registerEndpoint(url3);
+    this.app.get(url3, async (req, res) => {
+      const settings = this.config.settingsStore.getSettings();
+      res.send(settings);
+    });
+
+    const url4 = urlJoin(this.config.baseUrl, 'settings');
+    this.registerEndpoint(url4, 'POST');
+    this.app.post(url4, async (req, res) => {
+      const results = this.config.settingsStore.setSettings(req.body);
+      res.send(results);
+    });
+
     if (this.config.websocketsPort) {
       this.wss = new WebSocket.Server({
         port: this.config.websocketsPort,
         clientTracking: true,
       });
     }
+
+    const url5 = urlJoin(this.config.baseUrl, 'meta');
+    this.registerEndpoint(url5);
+    this.app.get(url5, (req, res) => {
+      res.send({
+        websocketsPort: this.config.websocketsPort,
+      });
+    });
   }
 
   static getExpress() {

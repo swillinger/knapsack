@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { BlockQuoteWrapper } from '@basalt/bedrock-atoms';
+import { apiUrlBase } from '../data';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
 import {
   ReleaseCommit,
@@ -53,7 +54,7 @@ class ReleaseNotesPage extends React.Component {
   }
 
   componentDidMount() {
-    const apiEndpoint = this.props.context.settings.apiUrlBase;
+    const apiEndpoint = apiUrlBase;
     window
       .fetch(`${apiEndpoint}/releasenotes`)
       .then(res => res.json())

@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import uuid from 'uuid/v4';
 import { Button, TwoUp, BlockQuoteWrapper } from '@basalt/bedrock-atoms';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
+import { apiUrlBase } from '../data';
 
 class ExamplesLandingPage extends Component {
   constructor(props) {
@@ -11,7 +12,7 @@ class ExamplesLandingPage extends Component {
       exampleLinks: [],
       redirect: '',
     };
-    this.apiEndpoint = `${props.context.settings.urls.apiUrlBase}`;
+    this.apiEndpoint = `${apiUrlBase}`;
     this.makeNewExample = this.makeNewExample.bind(this);
   }
 

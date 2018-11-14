@@ -13,16 +13,6 @@ function getWebpack(config) {
   const webpackConfig = createWebpackConfig({
     dist: config.dist,
     public: config.public,
-    settings: {
-      site: config.site,
-      urls: {
-        apiUrlBase: '/api',
-        cssUrls: config.css.map(cssUrl =>
-          join(USER_SITE_PUBLIC, relative(config.public, cssUrl)),
-        ),
-        // jsUrls: [],
-      },
-    },
   });
   return webpack(webpackConfig);
 }

@@ -7,6 +7,7 @@ import ApiDemo from '@basalt/bedrock-api-demo';
 import Twig from '@basalt/bedrock-twig';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
 import ErrorCatcher from '../utils/error-catcher';
+import { apiUrlBase } from '../data';
 import Overview from '../layouts/overview';
 import {
   LoadableSchemaTable,
@@ -32,17 +33,15 @@ class PatternViewPage extends Component {
       meta: {},
       ready: false,
     };
-    this.apiEndpoint = `${props.context.settings.urls.apiUrlBase}/pattern/${
-      props.id
-    }`;
-    this.isDevMode = this.props.context.settings.isDevMode;
-    this.websocketsPort = this.props.context.settings.websocketsPort;
+    this.apiEndpoint = `${apiUrlBase}/pattern/${props.id}`;
+    this.enableTemplatePush = this.props.context.features.enableTemplatePush;
+    this.websocketsPort = this.props.context.meta.websocketsPort;
     this.getData = this.getData.bind(this);
   }
 
   componentDidMount() {
     this.getData();
-    if (this.isDevMode) {
+    if (this.enableTemplatePush) {
       this.socket = new window.WebSocket(
         `ws://localhost:${this.websocketsPort}`,
       );
@@ -62,7 +61,7 @@ class PatternViewPage extends Component {
   }
 
   componentWillUnmount() {
-    if (this.isDevMode) {
+    if (this.enableTemplatePush) {
       this.socket.close(1000, 'componentWillUnmount called');
     }
   }

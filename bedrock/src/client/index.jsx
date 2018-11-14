@@ -3,9 +3,7 @@ import ReactDom from 'react-dom';
 import App from './App';
 
 document.addEventListener('DOMContentLoaded', () => {
-  const { bedrockSettings } = window;
-  ReactDom.render(
-    <App bedrockSettings={bedrockSettings} />,
-    document.getElementById('app'),
-  );
+  const bedrock = window.__BEDROCK__ || {};
+  const { features } = bedrock;
+  ReactDom.render(<App features={features} />, document.getElementById('app'));
 });

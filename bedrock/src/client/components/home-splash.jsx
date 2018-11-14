@@ -12,15 +12,15 @@ import {
 const HomeSplash = ({ context }) => (
   <HomeSplashWrapper>
     <HomeSplashCore>
-      {context.settings.site.subtitle && (
-        <EyeBrow>{context.settings.site.subtitle}</EyeBrow>
+      {context.settings.subtitle && (
+        <EyeBrow>{context.settings.subtitle}</EyeBrow>
       )}
-      <Title>{context.settings.site.title}</Title>
-      {context.settings.site.slogan && (
-        <Subtitle>{context.settings.site.slogan}</Subtitle>
+      <Title>{context.settings.title}</Title>
+      {context.settings.slogan && (
+        <Subtitle>{context.settings.slogan}</Subtitle>
       )}
-      {context.settings.site.version && (
-        <VersionTag>{context.settings.site.version}</VersionTag>
+      {context.settings.version && (
+        <VersionTag>{context.settings.version}</VersionTag>
       )}
     </HomeSplashCore>
   </HomeSplashWrapper>

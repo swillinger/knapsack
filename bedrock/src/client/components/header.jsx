@@ -119,7 +119,7 @@ class Header extends React.Component {
       <SiteNav>
         <h3 style={{ margin: 0 }}>
           <SiteHeaderLink to="/">
-            {this.props.context.settings.site.title}
+            {this.props.context.settings.title}
           </SiteHeaderLink>
         </h3>
         {this.renderNavigation()}

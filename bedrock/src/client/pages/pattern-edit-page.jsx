@@ -6,12 +6,13 @@ import SchemaForm from '@basalt/bedrock-schema-form';
 import { StatusMessage } from '@basalt/bedrock-atoms';
 import urlJoin from 'url-join';
 import patternMetaSchema from '../../schemas/pattern-meta.schema';
+import { apiUrlBase } from '../data';
 
 class PatternEdit extends Component {
   constructor(props) {
     super(props);
     this.apiEndpoint = urlJoin(
-      props.context.settings.urls.apiUrlBase,
+      apiUrlBase,
       'pattern-meta',
       props.id,
     );

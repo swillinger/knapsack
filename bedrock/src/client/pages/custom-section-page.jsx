@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
 import Spinner from '@basalt/bedrock-spinner';
 import urlJoin from 'url-join';
+import { apiUrlBase } from '../data';
 
 class CustomSectionPage extends React.Component {
   constructor(props) {
@@ -10,7 +11,7 @@ class CustomSectionPage extends React.Component {
     this.state = {
       page: {},
     };
-    this.apiEndpoint = `${props.context.settings.urls.apiUrlBase}/section/`;
+    this.apiEndpoint = `${apiUrlBase}/section/`;
   }
 
   componentDidMount() {

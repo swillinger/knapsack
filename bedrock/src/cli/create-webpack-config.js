@@ -1,6 +1,6 @@
-const {
-  validateSchemaAndAssignDefaults,
-} = require('@basalt/bedrock-schema-utils');
+// const {
+//   validateSchemaAndAssignDefaults,
+// } = require('@basalt/bedrock-schema-utils');
 const webpack = require('webpack');
 // const Stylish = require('webpack-stylish');
 const Visualizer = require('webpack-visualizer-plugin');
@@ -8,8 +8,9 @@ const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlTemplate = require('html-webpack-template');
 const DashboardPlugin = require('webpack-dashboard/plugin');
-const { join, resolve } = require('path');
-const bedrockConfigSchema = require('../schemas/bedrock.config.schema.json');
+const { resolve } = require('path');
+// const bedrockSettingsSchema = require('../schemas/bedrock.config.schema.json');
+const features = require('../lib/features');
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -18,16 +19,12 @@ const isProd = process.env.NODE_ENV === 'production';
  * @prop {string} dist - The absolute path to where files will be written.
  * @prop {string} [pluginSetupFile] - File that contains all the imported plugin register functions
  * @prop {string} public - The absolute path to where files will be available to the dev server.
- * @prop {Object} settings
- * @prop {boolean} [settings.hasJiraIssueCollector]
- * @prop {Object} settings.site
- * @prop {string} settings.site.title
  */
 
 /**
  * @private
  * @param {CreateWebpackConfig} userConfig - @todo document
- * @return {webpack.Configuration} - WebPack config
+ * @return {Object} - WebPack config
  */
 function createWebPackConfig(userConfig) {
   // @todo re-enable schema validation - this config comes from users
@@ -106,14 +103,6 @@ function createWebPackConfig(userConfig) {
         'styled-components': require.resolve('styled-components'),
       },
     },
-    devServer: {
-      overlay: true,
-      hot: true,
-      contentBase: [resolve(config.dist), resolve(config.public)],
-      historyApiFallback: {
-        index: '/index.html',
-      },
-    },
     // stats: 'none',
     plugins: [
       // new Stylish(), @todo consider re-enabling later, needed to for debugging
@@ -131,7 +120,8 @@ function createWebPackConfig(userConfig) {
       new HtmlWebpackPlugin({
         template: HtmlTemplate,
         inject: false,
-        title: config.settings.site.title,
+        // title: config.settings.site.title,
+        title: 'Bedrock',
         appMountId: 'app',
         cache: false,
         mobile: true,
@@ -139,14 +129,12 @@ function createWebPackConfig(userConfig) {
           // code highlighting styles
           'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/darcula.min.css',
         ],
-        scripts: [
-          // Adds Jira Issue Collector; configure here: https://basalt.atlassian.net/secure/ViewCollectors!default.jspa?projectKey=BED
-          config.settings.hasJiraIssueCollector
-            ? 'https://basalt.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/b55nvt/b/2/a44af77267a987a660377e5c46e0fb64/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=6687b2a8'
-            : '',
-        ].filter(x => x),
+        scripts: [].filter(x => x),
         window: {
-          bedrockSettings: config.settings,
+          //   bedrockSettings: config.settings,
+          __BEDROCK__: {
+            features,
+          },
         },
       }),
     ],
@@ -177,7 +165,17 @@ function createWebPackConfig(userConfig) {
     webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
   }
 
-  return webpackConfig;
+  return {
+    ...webpackConfig,
+    devServer: {
+      overlay: true,
+      hot: true,
+      contentBase: [resolve(config.dist), resolve(config.public)],
+      historyApiFallback: {
+        index: '/index.html',
+      },
+    },
+  };
 }
 
 module.exports = createWebPackConfig;

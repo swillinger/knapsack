@@ -1,6 +1,4 @@
-const fs = require('fs-extra');
-const path = require('path');
-const { writeJson } = require('./server-utils');
+const { FileDb } = require('./db');
 
 /**
  * @typedef {Object} ExampleStoreConfig
@@ -14,14 +12,11 @@ class ExampleStore {
   constructor({ dir }) {
     /** @type {string} */
     this.dir = dir;
-  }
-
-  /**
-   * @param {string} id
-   * @return {string}
-   */
-  getPath(id) {
-    return path.join(this.dir, `${id}.json`);
+    this.db = new FileDb({
+      dbDir: dir,
+      name: 'bedrock.examples',
+      defaults: {},
+    });
   }
 
   /**
@@ -29,25 +24,14 @@ class ExampleStore {
    * @return {Promise<ExamplePageData>}
    */
   async getExample(id) {
-    const fileString = await fs.readFile(this.getPath(id), 'utf8');
-    return JSON.parse(fileString);
+    return this.db.get(id);
   }
 
   /**
    * @return {Promise<ExamplePageData[]>}
    */
   async getExamples() {
-    const files = await fs.readdir(this.dir);
-    const filePaths = files
-      .filter(filePath => filePath.endsWith('json'))
-      .map(filePath => path.join(this.dir, filePath));
-
-    return Promise.all(
-      filePaths.map(async filePath => {
-        const fileString = await fs.readFile(filePath, 'utf8');
-        return JSON.parse(fileString);
-      }),
-    );
+    return this.db.values();
   }
 
   /**
@@ -57,7 +41,7 @@ class ExampleStore {
    */
   async setExample(id, data) {
     try {
-      await writeJson(this.getPath(id), data);
+      this.db.set(id, data);
       return {
         ok: true,
         message: `Example ${id} saved successfully!`,

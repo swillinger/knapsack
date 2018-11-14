@@ -6,6 +6,7 @@ const {
   validateSchemaAndAssignDefaults,
 } = require('@basalt/bedrock-schema-utils');
 const chokidar = require('chokidar');
+// const { FileDb } = require('../db');
 const patternSchema = require('../../schemas/pattern.schema');
 // const patternMetaSchema = require('./pattern-meta.schema');
 const { writeAllFiles } = require('./pattern-templates');
@@ -34,6 +35,12 @@ class BedrockPatternManifest {
         onlyFiles: false,
       })
       .filter(thePath => fs.statSync(thePath).isDirectory());
+
+    // this.db = new FileDb({
+    //   dbDir: config.dataDir,
+    //   name: 'bedrock.patterns',
+    //   defaults: {},
+    // });
 
     this.getPatterns = this.getPatterns.bind(this);
     this.getPattern = this.getPattern.bind(this);
@@ -155,7 +162,7 @@ class BedrockPatternManifest {
   /**
    * @param {string} id
    * @param {PatternMetaSchema} meta
-   * @returns {Promise<{ ok: boolean, message: string }>}
+   * @returns {Promise<GenericResponse>}
    */
   async setPatternMeta(id, meta) {
     const pattern = this.getPattern(id);
@@ -164,14 +171,17 @@ class BedrockPatternManifest {
         pattern.metaFilePath,
         JSON.stringify(meta, null, '  ') + os.EOL,
       );
+      // this.db.set(`${id}.meta`, meta);
       return {
         ok: true,
         message: `Pattern Meta for ${id} saved successfully`,
+        data: {},
       };
     } catch (error) {
       return {
         ok: false,
         message: error.toString(),
+        data: {},
       };
     }
   }
@@ -183,6 +193,7 @@ class BedrockPatternManifest {
       return {
         ok: false,
         message: `That directory already exists, not overwriting it. ${dir}`,
+        data: {},
       };
     }
     await fs.ensureDir(dir);
@@ -195,6 +206,7 @@ class BedrockPatternManifest {
     return {
       ok: true,
       message: `Created Pattern File in "${dir}"`,
+      data: {},
     };
   }
 

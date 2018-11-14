@@ -4,15 +4,13 @@ import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
 import SchemaForm from '@basalt/bedrock-schema-form';
 import { StatusMessage } from '@basalt/bedrock-atoms';
 import urlJoin from 'url-join';
-import patternMetaSchema from '../../schemas/pattern-meta.schema';
+import patternMetaSchema from '../../schemas/pattern-meta.schema.json';
+import { apiUrlBase } from '../data';
 
 class PatternNew extends Component {
   constructor(props) {
     super(props);
-    this.apiEndpoint = urlJoin(
-      props.context.settings.urls.apiUrlBase,
-      'new-pattern',
-    );
+    this.apiEndpoint = urlJoin(apiUrlBase, 'new-pattern');
     this.state = {
       statusMessage: '',
       statusType: 'info',
@@ -70,7 +68,7 @@ class PatternNew extends Component {
           />
         )}
         <SchemaForm
-          schema={patternNewSchema}
+          schema={patternMetaSchema}
           formData={this.state.formData}
           hasSubmit
           onSubmit={this.handleSubmit}

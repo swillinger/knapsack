@@ -1,6 +1,6 @@
 import urlJoin from 'url-join';
 
-const apiUrlBase = '/api'; // @todo refactor
+export const apiUrlBase = '/api'; // @todo refactor
 
 export const ENDPOINTS = {
   DESIGN_TOKENS: urlJoin(apiUrlBase, 'design-tokens'),
@@ -47,11 +47,13 @@ export async function getDesignTokensCategory(category) {
     return {
       ok: false,
       message: `No api endpoint for ${category} available, so probably no tokens for it.`,
+      data: {},
     };
   } catch (err) {
     return {
       ok: false,
       message: `No api endpoint for ${category} available, so probably no tokens for it.`,
+      data: {},
     };
   }
 }
@@ -85,5 +87,10 @@ export async function getDesignTokensCategories(categories) {
     })
     .catch(err => {
       console.error('Error: getDesignTokensCategories', err);
+      return {
+        ok: false,
+        data: {},
+        message: err.toString(),
+      };
     });
 }

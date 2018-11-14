@@ -1,13 +1,13 @@
 import React from 'react';
 import SchemaForm from '@basalt/bedrock-schema-form';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
-import bedrockConfigSchema from '../schemas/bedrock.config.schema';
+import bedrockSettingsSchema from '../schemas/bedrock.settings.schema.json';
 
 const SettingsPage = props => (
   <div>
     <h4 className="eyebrow">Configuration</h4>
     <h2>Settings</h2>
-    {(props.context.settings.isDevMode && (
+    {(props.context.features.enableUiSettings && (
       <React.Fragment>
         <hr />
         <br />
@@ -22,14 +22,9 @@ const SettingsPage = props => (
         <br />
         <hr />
         <SchemaForm
-          schema={bedrockConfigSchema.properties.settings}
+          schema={bedrockSettingsSchema}
           formData={props.context.settings}
           onChange={({ formData }) => props.context.setSettings(formData)}
-          uiSchema={{
-            websocketsPort: {
-              'ui:widget': 'updown',
-            },
-          }}
         />
       </React.Fragment>
     )) || (

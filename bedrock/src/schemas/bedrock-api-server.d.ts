@@ -39,6 +39,7 @@ interface ExamplePageData {
 
 interface BedrockApiServerConfig {
   port: number;
+  public?: string;
   webroot?: string;
   websocketsPort?: number;
   baseUrl: string;
@@ -79,10 +80,15 @@ interface BedrockApiServerConfig {
     }[]
   }[];
 
+  settingsStore: SettingsStore;
+
   staticDirs?: {
     prefix: string;
     path: string;
   }[];
+
+  css?: string[];
+  js?: string[];
 }
 
 interface Endpoint {

@@ -13,20 +13,19 @@ interface TemplateRenderers {
 interface BedrockConfig {
   src: string[];
   newPatternDir: string;
-  examplesDir: string;
   /** Output directory */
   dist: string;
   data: string;
   public: string;
   assets: string;
   css: string[];
-  js: string[];
-  site: {
-    title: string;
-    subtitle: string;
-    slogan: string;
-    version: string;
-  },
+  js?: string[];
+  // site: {
+  //   title: string;
+  //   subtitle: string;
+  //   slogan: string;
+  //   version: string;
+  // },
   templates: TemplateRenderers[],
   designTokens: string;
 }

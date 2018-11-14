@@ -6,9 +6,9 @@ version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
-      - image: circleci/node:8.10
-      
+      # base docker image
+      - image: basaltinc/docker-node-php-base
+
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
@@ -32,12 +32,12 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-        
+
+
       - run: yarn build
 
-      # run tests!
       - run: yarn test
-      
+
       - run: ./scripts/e2e-simple.sh
 
 

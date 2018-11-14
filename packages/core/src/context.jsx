@@ -298,10 +298,12 @@ export const baseContext = {
   },
 };
 
+export const BedrockContext = React.createContext(baseContext);
+
 export const {
   Provider: BedrockContextProvider,
   Consumer: BedrockContextConsumer,
-} = React.createContext(baseContext);
+} = BedrockContext;
 
 export function connectToContext(Component) {
   return props => (

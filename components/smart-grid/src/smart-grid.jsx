@@ -28,10 +28,7 @@ export default class SmartGrid extends Component {
   }
 }
 
-/*
-** The value `0` below is used to infer "use the last value"
-** Example: 'row-items-small' below inherits from 'row-items-xsmall'
- */
+// The value `0` below is used to infer "use the last value" Example: 'row-items-small' below inherits from 'row-items-xsmall'
 SmartGrid.defaultProps = {
   'row-items-xsmall': 1,
   'row-items-small': 0,

@@ -3,7 +3,10 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "dist"
-  }
+  },
+  "exclude": [
+    "dist"
+  ]
   // ,
   // "references": [
   //   {"path": "../core"}

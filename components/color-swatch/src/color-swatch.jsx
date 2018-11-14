@@ -26,7 +26,7 @@ const ColorSwatch = ({ color, format }) => {
         <CopyToClipboardWrapper>
           <CopyToClipboard
             text={colorValue}
-            onCopy={() => window.alert(`${colorValue} copied to clipboard`)}
+            onCopy={() => window.alert(`${colorValue} copied to clipboard`)} // @todo improve
           >
             <svg
               width="26"

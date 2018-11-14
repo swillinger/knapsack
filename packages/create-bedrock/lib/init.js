@@ -1,7 +1,7 @@
 // const inquirer = require('inquirer');
 // const del = require('del');
 const { existsSync, mkdir } = require('fs-extra');
-const twigGen = require('../generators/twig');
+const simpleGen = require('../generators/simple');
 
 // const GENERATORS = {
 //   twig: 'twig',
@@ -40,7 +40,8 @@ async function init(options) {
   //     console.log('uh oh, no good generator selected...');
   //     process.exit(1);
   // }
-  return twigGen(options);
+  // return twigGen(options);
+  return simpleGen(options);
 }
 
 module.exports = init;

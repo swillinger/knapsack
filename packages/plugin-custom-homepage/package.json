@@ -7,7 +7,7 @@
     "@basalt/bedrock-core": "^0.2.7"
   },
   "peerDependencies": {
-    "react": "^16.4.2"
+    "react": "^16.6.0"
   },
   "author": "Basalt (https://basalt.io/)",
   "license": "UNLICENSED",

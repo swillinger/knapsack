@@ -1,6 +1,6 @@
 {
   "name": "@basalt/bedrock-utils",
-  "version": "0.2.7",
+  "version": "0.3.0",
   "description": "A Bedrock component that helps build Design Systems",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -11,11 +11,11 @@
     "build": "rm -rf dist && yarn build:js && yarn build:types"
   },
   "dependencies": {
-    "@basalt/bedrock-core": "^0.2.7",
+    "@basalt/bedrock-core": "^0.3.0",
     "color": "^3.0.0"
   },
   "devDependencies": {
-    "@basalt/bedrock-babel-config": "^0.2.7"
+    "@basalt/bedrock-babel-config": "^0.3.0"
   },
   "author": "Basalt (https://basalt.io/)",
   "license": "UNLICENSED",

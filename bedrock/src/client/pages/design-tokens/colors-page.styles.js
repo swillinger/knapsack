@@ -18,7 +18,7 @@ export const TextColorDemo = styled.div`
   vertical-align: top;
   padding: 0.7rem;
   * {
-  color: ${props => props.color};
+    color: ${props => props.color};
   }
 `;
 

@@ -1,6 +1,11 @@
 {
   "parser": "babel-eslint",
-  "extends": ["airbnb", "prettier", "prettier/react", "plugin:promise/recommended"],
+  "extends": [
+    "airbnb",
+    "prettier",
+    "prettier/react"
+//    "plugin:promise/recommended" @todo turn this back and .then() fix every error
+  ],
   "plugins": ["prettier", "jest", "jsdoc", "promise"],
   "env": {
     "jest/globals": true

@@ -3,10 +3,10 @@ import styled from 'styled-components';
 export const TypographyChildrenDemoWrapper = styled.div`
   font-family: ${props => props.fontFamily};
   padding: 1rem 1rem 0;
-  font-weight: ${props => props.fontWeight ? props.fontWeight : 400};
-  font-style: ${props => props.fontStyle ? props.fontStyle : 'normal'};
+  font-weight: ${props => (props.fontWeight ? props.fontWeight : 400)};
+  font-style: ${props => (props.fontStyle ? props.fontStyle : 'normal')};
   p {
-    line-height: ${props => props.lineHeight ? props.lineHeight : 'inherit'};
+    line-height: ${props => (props.lineHeight ? props.lineHeight : 'inherit')};
   }
   blockquote::first-line {
     font-weight: 800;
@@ -35,13 +35,13 @@ export const TypographyChildrenDemoWrapper = styled.div`
 export const FontSizeDemo = styled.div`
   font-size: ${props => props.fontSize};
   border-bottom: ${props =>
-  props.length !== props.index
-    ? `1px dotted ${props.theme.globals.colors.neutralLight}`
-    : ''};
+    props.length !== props.index
+      ? `1px dotted ${props.theme.globals.colors.neutralLight}`
+      : ''};
   padding-bottom: ${props =>
-  props.length !== props.index ? props.theme.globals.spacing.m : ''};
+    props.length !== props.index ? props.theme.globals.spacing.m : ''};
   margin-bottom: ${props =>
-  props.length !== props.index ? props.theme.globals.spacing.l : ''};
+    props.length !== props.index ? props.theme.globals.spacing.l : ''};
 
   blockquote::first-line {
     font-weight: 800;

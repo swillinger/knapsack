@@ -1,9 +1,8 @@
+const portfinder = require('portfinder');
 const BedrockApiServer = require('./bedrock-api-server');
 const BedrockPatternManifest = require('./pattern-manifest/bedrock-pattern-manifest');
 const ExampleStore = require('./example-store');
 const SettingsStore = require('./settings-store');
-const portfinder = require('portfinder');
-const { USER_SITE_PUBLIC } = require('../lib/constants');
 // const { BedrockConfig } = require('../../schemas/bedrock-config');
 
 /**

@@ -4,7 +4,7 @@ import arrayMove from 'array-move';
 import uuid from 'uuid/v4';
 import Spinner from '@basalt/bedrock-spinner';
 import { StatusMessage } from '@basalt/bedrock-atoms';
-import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
+import { connectToContext } from '@basalt/bedrock-core';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { apiUrlBase } from '../../data';
@@ -423,7 +423,7 @@ class Playground extends Component {
 }
 
 Playground.propTypes = {
-  context: contextPropTypes.isRequired,
+  // context: contextPropTypes.isRequired,
   patterns: PropTypes.array.isRequired, // eslint-disable-line
   example: PropTypes.object.isRequired, // eslint-disable-line
   id: PropTypes.string.isRequired, // @todo save/show playgrounds based on `id`

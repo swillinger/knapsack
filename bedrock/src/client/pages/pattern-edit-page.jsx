@@ -11,11 +11,7 @@ import { apiUrlBase } from '../data';
 class PatternEdit extends Component {
   constructor(props) {
     super(props);
-    this.apiEndpoint = urlJoin(
-      apiUrlBase,
-      'pattern-meta',
-      props.id,
-    );
+    this.apiEndpoint = urlJoin(apiUrlBase, 'pattern-meta', props.id);
     const pattern = props.context.patterns.find(p => p.id === props.id);
     this.state = {
       statusMessage: '',

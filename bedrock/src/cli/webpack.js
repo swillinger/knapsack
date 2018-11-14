@@ -1,8 +1,7 @@
 const webpack = require('webpack');
-const { relative, join } = require('path');
+// const { relative, join } = require('path');
 // const webpackDevServer = require('webpack-dev-server');
 const createWebpackConfig = require('./create-webpack-config');
-const { USER_SITE_PUBLIC } = require('../lib/constants');
 const log = require('./log');
 
 /**

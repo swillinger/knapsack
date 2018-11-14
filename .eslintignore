@@ -2,3 +2,4 @@ node_modules
 dist
 examples
 /packages/create-bedrock/generators/twig/templates/
+/crux

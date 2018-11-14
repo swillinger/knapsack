@@ -1,12 +1,12 @@
 #! /usr/bin/env node
 const program = require('commander');
-const { existsSync, readSync } = require('fs-extra');
+const { existsSync } = require('fs-extra');
 const { join, resolve, dirname } = require('path');
 const log = require('./log');
 const { serve } = require('../server/server');
 const { version } = require('../../package.json');
 const webpack = require('./webpack');
-const { getTokens, processTokens } = require('./design-tokens');
+const { processTokens } = require('./design-tokens');
 
 /**
  * Prepare user config: validate, convert all paths to absolute, assign defaults

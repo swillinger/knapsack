@@ -1,9 +1,15 @@
 import React from 'react';
 import { plugins } from '@basalt/bedrock-core';
-import { LoadableShadows, LoadableBorders, LoadableColors, LoadableTransitions, LoadableTypography, LoadableSizings } from './loadable-components';
+import {
+  LoadableShadows,
+  LoadableBorders,
+  LoadableColors,
+  LoadableTransitions,
+  LoadableTypography,
+  LoadableSizings,
+} from './loadable-components';
 
-
-plugins.register('design-tokens-groups', api => {
+plugins.register('design-tokens-groups', api => {// eslint-disable-line
   // plugins.addDesignTokensGroupPage({
   //   id: 'colors',
   //   tokenCategories: [
@@ -36,7 +42,13 @@ plugins.register('design-tokens-groups', api => {
     id: 'colors',
     title: 'Colors',
     description: 'Some colors',
-    tokenCategories: ['border-color', 'text-color', 'hr-color', 'background-color', 'background-gradient'],
+    tokenCategories: [
+      'border-color',
+      'text-color',
+      'hr-color',
+      'background-color',
+      'background-gradient',
+    ],
     render: props => <LoadableColors {...props} />,
   });
 
@@ -52,7 +64,15 @@ plugins.register('design-tokens-groups', api => {
     id: 'typography',
     title: 'Typography',
     description: 'Some typography',
-    tokenCategories: ['font-family', 'font-size', 'font-weight', 'font-style', 'line-height', 'text-color', 'text-shadow'],
+    tokenCategories: [
+      'font-family',
+      'font-size',
+      'font-weight',
+      'font-style',
+      'line-height',
+      'text-color',
+      'text-shadow',
+    ],
     render: props => <LoadableTypography {...props} />,
   });
 

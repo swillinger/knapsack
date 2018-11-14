@@ -1,6 +1,8 @@
 import React from 'react';
 import { ShadowDemoBox } from './shadows-page.styles';
-import makeDesignTokensPage from '../../utils/make-design-tokens-page';
+import makeDesignTokensPage, {
+  propTypes,
+} from '../../utils/make-design-tokens-page';
 
 function ShadowsPage(props) {
   const {
@@ -69,8 +71,6 @@ function ShadowsPage(props) {
   );
 }
 
-// ShadowsPage.propTypes = {
-//   context: contextPropTypes.isRequired,
-// };
+ShadowsPage.propTypes = propTypes;
 
 export default makeDesignTokensPage(ShadowsPage);

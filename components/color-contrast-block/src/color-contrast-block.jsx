@@ -45,7 +45,7 @@ class ColorContrastBlock extends React.Component {
   async componentDidMount() {
     this.checkColorContrast();
     const colors = this.props.bgColors;
-    const textColors = this.props.textColors;
+    const { textColors } = this.props;
     const results = await Promise.all(
       colors.map(async bgColor => {
         const comparisonResults = await Promise.all(

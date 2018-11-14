@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Spinner from '@basalt/bedrock-spinner';
 import SchemaForm from '@basalt/bedrock-schema-form';
-import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
+import { connectToContext } from '@basalt/bedrock-core';
 import PatternGrid from './pattern-grid';
 import { apiUrlBase } from '../data';
 
@@ -143,7 +143,7 @@ class PatternsPage extends Component {
 }
 
 PatternsPage.propTypes = {
-  context: contextPropTypes.isRequired,
+  // context: contextPropTypes.isRequired,
 };
 
 export default connectToContext(PatternsPage);

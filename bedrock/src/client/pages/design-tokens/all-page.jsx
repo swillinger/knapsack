@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import Spinner from '@basalt/bedrock-spinner';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import {
-  connectToContext,
-  contextPropTypes,
-  plugins,
-} from '@basalt/bedrock-core';
+import { connectToContext } from '@basalt/bedrock-core';
 import { getDesignTokensCategories } from '../../data';
 
 class AllPage extends Component {

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { BlockQuoteWrapper } from '@basalt/bedrock-atoms';
-import { apiUrlBase } from '../data';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
+import { apiUrlBase } from '../data';
 import {
   ReleaseCommit,
   CommitHash,

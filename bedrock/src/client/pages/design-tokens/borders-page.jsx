@@ -1,6 +1,8 @@
 import React from 'react';
 import { BordersDemoBox } from './borders-page.styles';
-import makeDesignTokensPage from '../../utils/make-design-tokens-page';
+import makeDesignTokensPage, {
+  propTypes,
+} from '../../utils/make-design-tokens-page';
 
 function BordersPage(props) {
   const {
@@ -77,13 +79,10 @@ function BordersPage(props) {
           </div>
         )}
       </div>
-      
     </div>
   );
 }
 
-// BordersPage.propTypes = {
-//   context: contextPropTypes.isRequired,
-// };
+BordersPage.propTypes = propTypes;
 
 export default makeDesignTokensPage(BordersPage);

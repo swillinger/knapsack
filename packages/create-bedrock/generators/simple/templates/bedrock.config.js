@@ -16,11 +16,14 @@ const config = {
   //   // slogan: "Wasn't that simple?",
   //   version: '1.2.3',
   // },
-  templates: [{
-    test: theTemplatePath => theTemplatePath.endsWith('.twig'),
-    render: (template, data = {}) => twigRenderer.render(template, data),
-    renderString: (templateString, data = {}) => twigRenderer.renderString(templateString, data),
-  }],
+  templates: [
+    {
+      test: theTemplatePath => theTemplatePath.endsWith('.twig'),
+      render: (template, data = {}) => twigRenderer.render(template, data),
+      renderString: (templateString, data = {}) =>
+        twigRenderer.renderString(templateString, data),
+    },
+  ],
   designTokens: './design-tokens/tokens.yml',
 };
 

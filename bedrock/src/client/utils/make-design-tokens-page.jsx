@@ -1,7 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Spinner from '@basalt/bedrock-spinner';
 import { StatusMessage } from '@basalt/bedrock-atoms';
 import { getDesignTokensCategories } from '../data';
+
+export const propTypes = {
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  tokens: PropTypes.object.isRequired,
+};
 
 /**
  *

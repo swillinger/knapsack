@@ -1,14 +1,16 @@
 import React from 'react';
 import SpacingSwatches from '@basalt/bedrock-spacing-swatch';
 
-import makeDesignTokensPage from '../../utils/make-design-tokens-page';
-import {FontSizeDemo} from "./typography-page.styles";
+import makeDesignTokensPage, {
+  propTypes,
+} from '../../utils/make-design-tokens-page';
+import { FontSizeDemo } from './typography-page.styles';
 
 function SizingsPage(props) {
   const {
-    'spacing': spacings,
+    spacing: spacings,
     'font-size': fontSizes,
-    'media-query': mediaQueries,
+    // 'media-query': mediaQueries,
   } = props.tokens;
 
   return (
@@ -16,12 +18,12 @@ function SizingsPage(props) {
       <h4 className="eyebrow">Design Tokens</h4>
       <h2>{props.title}</h2>
 
-        {spacings && (
-          <div>
-            <h3>Spacing</h3>
-            <SpacingSwatches spaces={spacings}/>
-          </div>
-        )}
+      {spacings && (
+        <div>
+          <h3>Spacing</h3>
+          <SpacingSwatches spaces={spacings} />
+        </div>
+      )}
 
       {fontSizes && (
         <div>
@@ -41,13 +43,10 @@ function SizingsPage(props) {
           ))}
         </div>
       )}
-
     </div>
   );
 }
 
-// SizingsPage.propTypes = {
-//   context: contextPropTypes.isRequired,
-// };
+SizingsPage.propTypes = propTypes;
 
 export default makeDesignTokensPage(SizingsPage);

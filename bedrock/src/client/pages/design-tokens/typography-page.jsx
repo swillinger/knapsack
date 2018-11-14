@@ -1,8 +1,13 @@
 import React from 'react';
-import { TypographyChildrenDemoWrapper, FontSizeDemo } from "./typography-page.styles";
-import makeDesignTokensPage from "../../utils/make-design-tokens-page";
-import { TextColorDemo } from "./colors-page.styles";
-import {ShadowDemoBox} from "./shadows-page.styles";
+import {
+  TypographyChildrenDemoWrapper,
+  FontSizeDemo,
+} from './typography-page.styles';
+import makeDesignTokensPage, {
+  propTypes,
+} from '../../utils/make-design-tokens-page';
+import { TextColorDemo } from './colors-page.styles';
+import { ShadowDemoBox } from './shadows-page.styles';
 
 function TypographyPage(props) {
   const {
@@ -23,21 +28,21 @@ function TypographyPage(props) {
       {fontSizes && (
         <div>
           <h3>Font sizes</h3>
-            {fontSizes.map((fontSize, index) => (
-              <FontSizeDemo
-                key={fontSize.name}
-                index={index + 1}
-                length={fontSizes.length}
-                fontSize={fontSize.value}
-              >
-                <code>{fontSize.name}</code>: {fontSize.value} <br />
-                <blockquote contentEditable suppressContentEditableWarning>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </blockquote>
-              </FontSizeDemo>
-            ))}
-          </div>
-        )}
+          {fontSizes.map((fontSize, index) => (
+            <FontSizeDemo
+              key={fontSize.name}
+              index={index + 1}
+              length={fontSizes.length}
+              fontSize={fontSize.value}
+            >
+              <code>{fontSize.name}</code>: {fontSize.value} <br />
+              <blockquote contentEditable suppressContentEditableWarning>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </blockquote>
+            </FontSizeDemo>
+          ))}
+        </div>
+      )}
 
       {fontFamilies && (
         <>
@@ -63,14 +68,14 @@ function TypographyPage(props) {
           <h3>Font Weights</h3>
           {fontWeights.map((fontWeight, index) => (
             <TypographyChildrenDemoWrapper
-            key={fontWeight.name}
-            index={index + 1}
-            length={fontWeights.length}
-            fontWeight={fontWeight.value}
+              key={fontWeight.name}
+              index={index + 1}
+              length={fontWeights.length}
+              fontWeight={fontWeight.value}
             >
               <code>{fontWeight.name}</code>: {fontWeight.value} <br />
               <p suppressContentEditableWarning>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               </p>
             </TypographyChildrenDemoWrapper>
           ))}
@@ -82,14 +87,14 @@ function TypographyPage(props) {
           <h3>Font Styles</h3>
           {fontStyles.map((fontStyle, index) => (
             <TypographyChildrenDemoWrapper
-            key={fontStyle.name}
-            index={index + 1}
-            length={fontStyles.length}
-            fontStyle={fontStyle.value}
+              key={fontStyle.name}
+              index={index + 1}
+              length={fontStyles.length}
+              fontStyle={fontStyle.value}
             >
               <code>{fontStyle.name}</code>: {fontStyle.value} <br />
               <p contentEditable suppressContentEditableWarning>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               </p>
             </TypographyChildrenDemoWrapper>
           ))}
@@ -100,10 +105,7 @@ function TypographyPage(props) {
         <>
           <h3>Text Colors</h3>
           {textColors.map(textColor => (
-            <TextColorDemo
-              key={textColor.name}
-              color={textColor.value}
-            >
+            <TextColorDemo key={textColor.name} color={textColor.value}>
               <h3>{textColor.name} H3</h3>
               <p>Value: {textColor.value}</p>
               {textColor.comment && <p>{textColor.comment}</p>}
@@ -142,21 +144,22 @@ function TypographyPage(props) {
             >
               <code>{lineHeight.name}</code>: {lineHeight.value} <br />
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur.
               </p>
               <br />
             </TypographyChildrenDemoWrapper>
           ))}
         </div>
       )}
-
     </div>
   );
 }
 
-
-// TypographyPage.propTypes = {
-//   context: contextPropTypes.isRequired,
-// };
+TypographyPage.propTypes = propTypes;
 
 export default makeDesignTokensPage(TypographyPage);

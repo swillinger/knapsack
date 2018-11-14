@@ -7,18 +7,18 @@ export const ENDPOINTS = {
 };
 
 // @todo make every `fetch` function use this function
-async function request(endpoint) {
-  /** @type {Response} */
-  const response = await window.fetch(endpoint);
-  const { ok, status, statusText } = response;
-  if (ok) {
-    return response.json();
-  }
-  return {
-    ok: false,
-    message: `Error hitting endpoint, received ${status}: ${statusText}`,
-  };
-}
+// async function request(endpoint) {
+//   /** @type {Response} */
+//   const response = await window.fetch(endpoint);
+//   const { ok, status, statusText } = response;
+//   if (ok) {
+//     return response.json();
+//   }
+//   return {
+//     ok: false,
+//     message: `Error hitting endpoint, received ${status}: ${statusText}`,
+//   };
+// }
 
 /**
  * @return {Promise<string[]>}

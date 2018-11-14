@@ -4,13 +4,12 @@ import {
   DemoTransitionMove,
   DemoTransitionOpacity,
 } from './transitions-page.styles';
-import makeDesignTokensPage from "../../utils/make-design-tokens-page";
+import makeDesignTokensPage, {
+  propTypes,
+} from '../../utils/make-design-tokens-page';
 
 function TransitionsPage(props) {
-  const {
-    'animation': animations,
-  } = props.tokens;
-
+  const { animation: animations } = props.tokens;
 
   return (
     <div>
@@ -20,8 +19,10 @@ function TransitionsPage(props) {
         {animations && (
           <div>
             {animations.map(animation => (
-              <li>
-                <code>${animation.name}: {animation.value}</code>
+              <li key={animation.value}>
+                <code>
+                  ${animation.name}: {animation.value}
+                </code>
                 {animation.comment && <p>{animation.comment}</p>}
               </li>
             ))}
@@ -30,8 +31,8 @@ function TransitionsPage(props) {
       </ul>
       <h4>Opacity</h4>
       <p>
-        Changes to opacity are an effective way of indicating that an
-        element can be interacted with through a click or key press.
+        Changes to opacity are an effective way of indicating that an element
+        can be interacted with through a click or key press.
       </p>
       <DemoTransitionOpacity>
         <strong>Opacity</strong> (Hover to see effect)
@@ -50,12 +51,10 @@ function TransitionsPage(props) {
         <Spinner />
       </div>
       <br />
-      </div>
-    );
-  }
+    </div>
+  );
+}
 
-{/*AnimationsPage.propTypes = {*/}
-  {/*context: contextPropTypes.isRequired,*/}
-{/*};*/}
+TransitionsPage.propTypes = propTypes;
 
 export default makeDesignTokensPage(TransitionsPage);

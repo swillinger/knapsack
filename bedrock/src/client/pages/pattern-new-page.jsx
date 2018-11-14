@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
+import { connectToContext } from '@basalt/bedrock-core';
 import SchemaForm from '@basalt/bedrock-schema-form';
 import { StatusMessage } from '@basalt/bedrock-atoms';
 import urlJoin from 'url-join';
@@ -90,7 +90,7 @@ The Management
 }
 
 PatternNew.propTypes = {
-  context: contextPropTypes.isRequired,
+  // context: contextPropTypes.isRequired,
 };
 
 export default connectToContext(PatternNew);

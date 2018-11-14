@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
+import { connectToContext } from '@basalt/bedrock-core';
 import Spinner from '@basalt/bedrock-spinner';
 import urlJoin from 'url-join';
 import { apiUrlBase } from '../data';
@@ -45,7 +45,7 @@ class CustomSectionPage extends React.Component {
 }
 
 CustomSectionPage.propTypes = {
-  context: contextPropTypes.isRequired,
+  // context: contextPropTypes.isRequired,
   sectionId: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
 };

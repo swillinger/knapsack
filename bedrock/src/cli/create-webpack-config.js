@@ -132,7 +132,7 @@ function createWebPackConfig(userConfig) {
         scripts: [].filter(x => x),
         window: {
           //   bedrockSettings: config.settings,
-          __BEDROCK__: {
+          bedrock: {
             features,
           },
         },

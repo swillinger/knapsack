@@ -1,7 +1,6 @@
 // const inquirer = require('inquirer');
 // const del = require('del');
 const { existsSync, mkdir } = require('fs-extra');
-const twigGen = require('../generators/twig');
 const simpleGen = require('../generators/simple');
 
 // const GENERATORS = {

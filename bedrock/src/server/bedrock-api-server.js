@@ -317,12 +317,12 @@ class BedrockApiServer {
     });
 
     if (enableUiSettings) {
-    const url4 = urlJoin(this.config.baseUrl, 'settings');
-    this.registerEndpoint(url4, 'POST');
-    this.app.post(url4, async (req, res) => {
-      const results = this.config.settingsStore.setSettings(req.body);
-      res.send(results);
-    });
+      const url4 = urlJoin(this.config.baseUrl, 'settings');
+      this.registerEndpoint(url4, 'POST');
+      this.app.post(url4, async (req, res) => {
+        const results = this.config.settingsStore.setSettings(req.body);
+        res.send(results);
+      });
     }
 
     if (this.config.websocketsPort && enableTemplatePush) {

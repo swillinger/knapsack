@@ -44,10 +44,7 @@ export const PatternListWrapper = styled.ul`
   justify-content: space-between;
 `;
 
-/*
-**  prop.thumb is set via the global config `enablePatternIcons`
-**  If set false, we present a list instead of a grid
-*/
+// prop.thumb is set via the global config `enablePatternIcons` If set false, we present a list instead of a grid
 function noIconStyles(props) {
   if (!props.thumb)
     return `

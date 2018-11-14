@@ -52,6 +52,7 @@ function ColorsPage(props) {
         </div>
       )}
 
+      {/* eslint-disable */}
       <div>
         {backgroundColors &&
           textColors && (
@@ -64,6 +65,7 @@ function ColorsPage(props) {
             </div>
           )}
       </div>
+      {/* eslint-disable */}
 
       {textColors && (
         <div>

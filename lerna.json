@@ -3,8 +3,6 @@
   "useWorkspaces": true,
   "version": "0.2.8",
   "command": {
-    "publish": {
-      "registry": "https://basalt-npm.now.sh"
-    }
+    "publish": {}
   }
 }

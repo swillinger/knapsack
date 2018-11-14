@@ -73,12 +73,6 @@ export const LoadableBorders = Loadable({
   loading: Spinner,
 });
 
-export const LoadableSpacings = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "spacings-page" */ './pages/design-tokens/spacings-page'),
-  loading: Spinner,
-});
-
 export const LoadableSizings = Loadable({
   loader: () =>
     import(/* webpackChunkName: "sizings-page" */ './pages/design-tokens/sizings-page'),

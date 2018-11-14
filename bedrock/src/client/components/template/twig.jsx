@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import iframeResizer from 'iframe-resizer/js/iframeResizer'; // https://www.npmjs.com/package/iframe-resizer
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
 import { IFrameWrapper } from './twig.styles';
-
-// @todo pull in properly
-const apiUrlBase = '/api';
+import { apiUrlBase } from '../../data';
 
 class Twig extends React.Component {
   constructor(props) {

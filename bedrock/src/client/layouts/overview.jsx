@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import SchemaForm from '@basalt/bedrock-schema-form';
 import { Button, Select } from '@basalt/bedrock-atoms';
 import CodeBlock from '@basalt/bedrock-code-block';
-import Twig from '@basalt/bedrock-twig';
+import Template from '../components/template';
 import {
   OverviewWrapper,
   CodeBlockWrapper,
@@ -93,7 +93,7 @@ class Overview extends React.Component {
         <DemoGrid size={this.state.size}>
           <DemoStage size={this.state.size}>
             <Resizable>
-              <Twig
+              <Template
                 template={this.state.template}
                 data={this.state.data}
                 handleNewHtml={html => this.setState({ html })}

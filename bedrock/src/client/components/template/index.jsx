@@ -1,8 +1,6 @@
 import React from 'react';
 import Twig from './twig';
 
-// @todo rename package from `@basalt/bedrock-twig` to `@basalt/bedrock-template`
-
 const Template = props => {
   const TheTemplate = Twig;
   // @todo add React support
@@ -15,5 +13,8 @@ const Template = props => {
   // }
   return <TheTemplate {...props} />;
 };
+
+// @todo fix proptypes being lifted up
+Template.propTypes = Twig.propTypes;
 
 export default Template;

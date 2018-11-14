@@ -8,6 +8,7 @@ const md = require('marked');
 const highlight = require('highlight.js');
 const { wrapHtml } = require('./templates');
 const { USER_SITE_PUBLIC } = require('../lib/constants');
+const { enableTemplatePush, enableUiSettings } = require('../lib/features');
 // const { PatternSchema } = require('../../dist/schemas/pattern');
 // const { PatternMetaSchema } = require('../../dist/schemas/pattern-meta');
 
@@ -315,14 +316,16 @@ class BedrockApiServer {
       res.send(settings);
     });
 
+    if (enableUiSettings) {
     const url4 = urlJoin(this.config.baseUrl, 'settings');
     this.registerEndpoint(url4, 'POST');
     this.app.post(url4, async (req, res) => {
       const results = this.config.settingsStore.setSettings(req.body);
       res.send(results);
     });
+    }
 
-    if (this.config.websocketsPort) {
+    if (this.config.websocketsPort && enableTemplatePush) {
       this.wss = new WebSocket.Server({
         port: this.config.websocketsPort,
         clientTracking: true,

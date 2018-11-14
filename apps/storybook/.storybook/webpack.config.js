@@ -7,7 +7,7 @@ module.exports = (baseConfig, env, defaultConfig) => {
       // Fixes the inability for babel-loader to process the components that are part of this monorepo
       rule.include.push(path.join(__dirname, '../../../components'));
       rule.include.push(path.join(__dirname, '../../../packages'));
-      rule.include.push(path.join(__dirname, '../../../bedrock/client/src'));
+      rule.include.push(path.join(__dirname, '../../../bedrock/src'));
       return rule;
     }
 

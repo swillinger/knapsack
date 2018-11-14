@@ -10,7 +10,7 @@ import {
   FaArrowsAlt,
 } from 'react-icons/fa';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
-import Twig from '@basalt/bedrock-twig';
+import Template from '../../components/template';
 import { DragTypes } from './DragTypes';
 import {
   PlaygroundIcon,
@@ -88,7 +88,7 @@ const PlaygroundSlice = ({
             </PlaygroundIcon>
           </PlaygroundIconWrapper>
           <div style={{ flexGrow: 1 }}>
-            <Twig template={template} data={data} isResizable={false} />
+            <Template template={template} data={data} isResizable={false} />
           </div>
         </PlaygroundSliceWrapper>
       </div>,

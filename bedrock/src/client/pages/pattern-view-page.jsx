@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import Spinner from '@basalt/bedrock-spinner';
 import { Details, Select } from '@basalt/bedrock-atoms';
 import ApiDemo from '@basalt/bedrock-api-demo';
-import Twig from '@basalt/bedrock-twig';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
+import Template from '../components/template';
 import ErrorCatcher from '../utils/error-catcher';
 import { apiUrlBase } from '../data';
 import Overview from '../layouts/overview';
@@ -129,7 +129,7 @@ class PatternViewPage extends Component {
             <Details>
               <summary>Examples</summary>
               {examples.map(example => (
-                <Twig
+                <Template
                   template={name}
                   data={example}
                   key={JSON.stringify(example)}

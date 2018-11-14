@@ -112,7 +112,7 @@ export const LoadableSchemaTable = Loadable({
 
 export const LoadableVariationDemo = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "variation-demo" */ '@basalt/bedrock-variation-demo'),
+    import(/* webpackChunkName: "variation-demo" */ './components/variation-demo'),
   loading: Spinner,
 });
 

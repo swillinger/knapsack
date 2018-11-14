@@ -4,8 +4,8 @@ import { FaPlus, FaMinus } from 'react-icons/fa';
 import SchemaForm from '@basalt/bedrock-schema-form';
 import TabbedPanel from '@basalt/bedrock-tabbed-panel';
 import { Checkerboard } from '@basalt/bedrock-atoms';
-import Twig from '@basalt/bedrock-twig';
 import { getTypeColor } from '@basalt/bedrock-core';
+import Template from './template';
 import {
   VariationsWrapper,
   FooterRegion,
@@ -61,7 +61,7 @@ export class VariationDemo extends Component {
               </code>
             </h4>
             <Checkerboard bleed="20px">
-              <Twig template={this.props.template} data={itemData} />
+              <Template template={this.props.template} data={itemData} />
             </Checkerboard>
           </VariationItemExpanded>
         );
@@ -87,7 +87,7 @@ export class VariationDemo extends Component {
             />
           </VariationItem>
           <Checkerboard bleed="20px">
-            <Twig
+            <Template
               template={this.props.template}
               showDataUsed={false}
               data={this.state.data}

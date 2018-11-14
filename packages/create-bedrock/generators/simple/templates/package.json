@@ -12,7 +12,7 @@
     "watch": "node $NODE_DEBUG_OPTION ./node_modules/.bin/bedrock start"
   },
   "dependencies": {
-    "@basalt/bedrock": "*",
+    "@basalt/bedrock": "^0.2.9",
     "@basalt/demo-data": "^0.5.1",
     "@basalt/twig-renderer": "^0.10.2"
   },

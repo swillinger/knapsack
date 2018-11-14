@@ -1,11 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const WebSocket = require('ws');
+const { ApolloServer, gql } = require('apollo-server-express');
 const urlJoin = require('url-join');
 const fs = require('fs-extra');
 const { join, relative } = require('path');
 const md = require('marked');
 const highlight = require('highlight.js');
+const GraphQLJSON = require('graphql-type-json');
 const { wrapHtml } = require('./templates');
 const { USER_SITE_PUBLIC } = require('../lib/constants');
 const { enableTemplatePush, enableUiSettings } = require('../lib/features');
@@ -35,9 +37,110 @@ class BedrockApiServer {
       exampleStore,
       /** @type {BedrockPatternManifest} */
       patternManifest,
+      settingsStore,
     } = userConfig;
 
     this.config = userConfig;
+
+    const typeDefs = gql`
+      scalar JSON
+      type Meta {
+        websocketPort: Int
+      }
+
+      type Settings {
+        title: String
+        subtitle: String
+        slogan: String
+      }
+
+      type PatternTemplate {
+        name: String!
+        "JSON Schema"
+        schema: JSON
+        "CSS Selector"
+        selector: String
+        #uiSchema
+      }
+
+      enum PatternType {
+        component
+        layout
+      }
+
+      enum PatternStatus {
+        draft
+        inProgress
+        ready
+      }
+
+      enum PatternUses {
+        inSlice
+        inGrid
+        inComponent
+      }
+
+      enum PatternDemoSize {
+        s
+        m
+        l
+        full
+      }
+
+      type PatternMeta {
+        title: String!
+        description: String
+        type: PatternType
+        status: PatternStatus
+        uses: [PatternUses]
+        demoSize: PatternDemoSize
+      }
+
+      type Pattern {
+        id: ID!
+        "Relative path to a JSON file that stores meta data for pattern. Schema for that file is in pattern-meta.schema.json."
+        metaFilePath: String
+        templates: [PatternTemplate]!
+        meta: PatternMeta
+      }
+
+      # The "Query" type is the root of all GraphQL queries.
+      type Query {
+        meta: Meta
+        settings: Settings
+        patterns: [Pattern]
+        pattern(id: ID): Pattern
+        setSettings(settings: JSON): Settings
+        setSetting(setting: String, value: String): Settings
+      }
+    `;
+
+    const resolvers = {
+      settings: () => settingsStore.getSettings(),
+      patterns: () => patternManifest.getPatterns(),
+      pattern: (root, { id }) => patternManifest.getPattern(id),
+      setSettings: (parent, { settings }) => {
+        settingsStore.setSettings(settings);
+        return settingsStore.getSettings();
+      },
+      setSetting: (parent, { setting, value }) => {
+        settingsStore.setSetting(setting, value);
+        return settingsStore.getSettings();
+      },
+    };
+
+    const gqlServer = new ApolloServer({
+      typeDefs,
+      resolvers: {
+        Query: {
+          ...resolvers,
+          meta: () => ({
+            websocketPort: this.config.websocketsPort,
+          }),
+        },
+        JSON: GraphQLJSON,
+      },
+    });
 
     /** @type {Endpoint[]} */
     this.endpoints = [];
@@ -45,6 +148,8 @@ class BedrockApiServer {
     this.app = express();
 
     this.app.use(bodyParser.json());
+
+    gqlServer.applyMiddleware({ app: this.app });
 
     this.app.use('*', (req, res, next) => {
       res.header('Access-Control-Allow-Origin', '*');
@@ -312,7 +417,7 @@ class BedrockApiServer {
     const url3 = urlJoin(this.config.baseUrl, 'settings');
     this.registerEndpoint(url3);
     this.app.get(url3, async (req, res) => {
-      const settings = this.config.settingsStore.getSettings();
+      const settings = settingsStore.getSettings();
       res.send(settings);
     });
 
@@ -320,7 +425,7 @@ class BedrockApiServer {
       const url4 = urlJoin(this.config.baseUrl, 'settings');
       this.registerEndpoint(url4, 'POST');
       this.app.post(url4, async (req, res) => {
-        const results = this.config.settingsStore.setSettings(req.body);
+        const results = settingsStore.setSettings(req.body);
         res.send(results);
       });
     }

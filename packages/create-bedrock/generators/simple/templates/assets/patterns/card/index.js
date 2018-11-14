@@ -5,7 +5,7 @@ module.exports = {
   metaFilePath: './meta.json',
   templates: [
     {
-      name: '@patterns/card.twig',
+      name: '@components/card.twig',
       schema,
     },
   ],

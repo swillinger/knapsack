@@ -7,7 +7,7 @@ function DesignTokenPage({ context }) {
     <div>
       <h2>Visual Language</h2>
       <p>Explore the visual language that makes up the Crux Design System.</p>
-      <PatternGrid patterns={context.designTokens} ready />
+      <PatternGrid patterns={context.designTokensPages} ready />
     </div>
   );
 }

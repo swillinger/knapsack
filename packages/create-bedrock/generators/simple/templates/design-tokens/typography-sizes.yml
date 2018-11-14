@@ -1,0 +1,32 @@
+props:
+  fs-xxl:
+    value: '{!fs-xxl}'
+  fs-xl:
+    value: '{!fs-xl}'
+  fs-l:
+    value: '{!fs-xl}'
+  fs-m:
+    value: '{!fs-m}'
+  fs-s:
+    value: '{!fs-s}'
+  fs-xs:
+    value: .75rem
+  fs-xxs:
+    value: .625rem
+  fs-h1:
+    value: 3.25rem
+  fs-h2:
+    value: '{!fs-xxl}'
+  fs-h3:
+    value: '{!fs-xl}'
+  fs-h4:
+    value: '{!fs-l}'
+  fs-h5:
+    value: '{!fs-m}'
+  fs-h6:
+    value: '{!fs-s}'
+imports:
+  - ./aliases.yml
+global:
+  type: number
+  category: font-size

@@ -1,4 +1,6 @@
+// const { validateSchema } = require('@basalt/bedrock-schema-utils');
 const { FileDb } = require('./db');
+// const settingsSchema = require('../schemas/bedrock.settings.schema');
 
 class SettingsStore {
   /**
@@ -40,6 +42,7 @@ class SettingsStore {
    * @return {{ok: boolean, message: string}}
    */
   setSettings(id, data) {
+    // @todo validate
     try {
       this.db.set(id, data);
       return {

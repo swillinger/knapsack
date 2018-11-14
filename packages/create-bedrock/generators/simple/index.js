@@ -5,8 +5,8 @@ const { join } = require('path');
 const store = memFs.create();
 const fs = editor.create(store);
 
-async function twigGen(options) {
-  console.log('twig generate starting...');
+async function simpleGen(options) {
+  console.log('simple generate starting...');
 
   fs.copyTpl(join(__dirname, 'templates'), options.dir, options);
 
@@ -15,4 +15,4 @@ async function twigGen(options) {
   });
 }
 
-module.exports = twigGen;
+module.exports = simpleGen;

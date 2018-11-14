@@ -26,5 +26,6 @@ init({
   // @todo enable options passed in from cli
   name,
   dir: join(process.cwd(), name),
+  bedrockVersion: version,
   force: program.force,
 }).then(() => console.log('all done'));

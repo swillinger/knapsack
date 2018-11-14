@@ -33,11 +33,10 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # run tests!
-      - run: yarn test
 
       - run: yarn build
 
+      - run: yarn test
 
       - run: ./scripts/e2e-simple.sh
 

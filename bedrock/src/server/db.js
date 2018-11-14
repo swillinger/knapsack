@@ -58,6 +58,10 @@ class FileDb {
     return this.db.set(key, value).write();
   }
 
+  setAll(data) {
+    return this.db.assign({}, data).write();
+  }
+
   update(key, func) {
     return this.db.update(key, func).write();
   }

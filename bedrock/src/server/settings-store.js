@@ -36,12 +36,16 @@ class SettingsStore {
     return this.db.getAll();
   }
 
+  setSettings(data) {
+    this.db.setAll(data);
+  }
+
   /**
    * @param {string} id
    * @param {BedrockSettings} data
    * @return {{ok: boolean, message: string}}
    */
-  setSettings(id, data) {
+  setSetting(id, data) {
     // @todo validate
     try {
       this.db.set(id, data);

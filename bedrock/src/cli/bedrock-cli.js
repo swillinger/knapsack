@@ -53,7 +53,7 @@ program.version(version);
 // const { scripts } = userPkg;
 
 program.command('serve').action(async () => {
-  log.info('running serve...');
+  log.info('🏔 running serve...');
   const tokens = await processTokens(config.designTokens);
   await serve(config, {
     tokens,
@@ -61,7 +61,7 @@ program.command('serve').action(async () => {
 });
 
 program.command('build').action(async () => {
-  log.info('running build...');
+  log.info('🏔 running build...');
   try {
     await webpack.build(config);
   } catch (e) {
@@ -72,7 +72,7 @@ program.command('build').action(async () => {
 });
 
 program.command('start').action(async () => {
-  log.info('running start...');
+  log.info('🏔 running start...');
   try {
     await webpack.watch(config);
   } catch (e) {

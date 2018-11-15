@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import uuid from 'uuid/v4';
+import shortid from 'shortid';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Button, TwoUp, BlockQuoteWrapper } from '@basalt/bedrock-atoms';
@@ -27,7 +27,7 @@ class ExamplesLandingPage extends Component {
   }
 
   makeNewExample() {
-    const id = uuid();
+    const id = shortid.generate();
     window
       .fetch(`${this.apiEndpoint}/example/${id}`, {
         method: 'POST',
@@ -37,6 +37,7 @@ class ExamplesLandingPage extends Component {
         body: JSON.stringify({
           id,
           title: 'My New Example',
+          path: `/examples/${id}`,
           slices: [],
         }),
       })

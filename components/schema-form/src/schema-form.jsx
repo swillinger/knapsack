@@ -44,7 +44,7 @@ export default class SchemaForm extends React.Component {
           {...this.props}
           formData={this.props.formData}
           schema={this.props.schema}
-          uiSchema={this.props.uiSchema}
+          uiSchema={this.props.uiSchema ? this.props.uiSchema : undefined}
           onSubmit={this.onSubmit}
           onError={this.onError}
           onChange={this.onChange}

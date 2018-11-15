@@ -5,4 +5,5 @@ module.exports = {
   enableBlockquotes: false,
   enableUiSettings: !isProd,
   enableTemplatePush: !isProd,
+  enablePatternIcons: false,
 };

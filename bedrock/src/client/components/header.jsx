@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
 import {
   SiteHeaderLink,
@@ -31,6 +33,7 @@ class Header extends React.Component {
       this.setState({ mobileNavVisible: false });
     }
   }
+
   /* eslint-enable */
 
   componentWillUnmount() {
@@ -116,14 +119,28 @@ class Header extends React.Component {
 
   render() {
     return (
-      <SiteNav>
-        <h3 style={{ margin: 0 }}>
-          <SiteHeaderLink to="/">
-            {this.props.context.settings.title}
-          </SiteHeaderLink>
-        </h3>
-        {this.renderNavigation()}
-      </SiteNav>
+      <Query
+        query={gql`
+          {
+            settings {
+              title
+            }
+          }
+        `}
+      >
+        {({ loading, error, data }) => {
+          if (loading) return <p>Loading...</p>;
+          if (error) return <p>Error :(</p>;
+          return (
+            <SiteNav>
+              <h3 style={{ margin: 0 }}>
+                <SiteHeaderLink to="/">{data.settings.title}</SiteHeaderLink>
+              </h3>
+              {this.renderNavigation()}
+            </SiteNav>
+          );
+        }}
+      </Query>
     );
   }
 }

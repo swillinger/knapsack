@@ -3,25 +3,22 @@
   "type": "object",
   "title": "Bedrock Settings",
   "additionalProperties": false,
-  "required": [],
+  "required": ["title"],
   "properties": {
     "title": {
       "title": "Title",
       "type": "string",
-      "description": "The title of the site",
-      "default": "My Title"
+      "description": "The title of the site"
     },
     "subtitle": {
       "title": "Subtitle",
       "type": "string",
-      "description": "Site subtitle",
-      "default": "My Subtitle"
+      "description": "Site subtitle"
     },
     "slogan": {
       "title": "Slogan",
       "type": "string",
-      "description": "Slogan for this design system",
-      "default": "My Slogan"
+      "description": "Slogan for this design system"
     },
     "parentBrand": {
       "title": "Parent Brand",

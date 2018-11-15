@@ -48,10 +48,18 @@ class BedrockApiServer {
         websocketPort: Int
       }
 
-      type Settings {
+      type SettingsParentBrand {
+        "URL to image"
+        logo: String
         title: String
+        homepage: String
+      }
+
+      type Settings {
+        title: String!
         subtitle: String
         slogan: String
+        parentBrand: SettingsParentBrand
       }
 
       type PatternTemplate {
@@ -116,7 +124,10 @@ class BedrockApiServer {
     `;
 
     const resolvers = {
-      settings: () => settingsStore.getSettings(),
+      settings: () => {
+        console.log('GET settings');
+        return settingsStore.getSettings();
+      },
       patterns: () => patternManifest.getPatterns(),
       pattern: (root, { id }) => patternManifest.getPattern(id),
       setSettings: (parent, { settings }) => {

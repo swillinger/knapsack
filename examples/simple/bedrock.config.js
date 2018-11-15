@@ -10,12 +10,6 @@ const config = {
   assets: './assets',
   css: ['./public/assets/simple.css'],
   // js: ['./public/assets/script.js'],
-  // site: {
-  //   // title: 'A Super Simple Site',
-  //   // subtitle: 'A Simple Example of a Design System',
-  //   // slogan: "Wasn't that simple?",
-  //   version: '1.2.3',
-  // },
   templates: [{
     test: theTemplatePath => theTemplatePath.endsWith('.twig'),
     render: (template, data = {}) => twigRenderer.render(template, data),

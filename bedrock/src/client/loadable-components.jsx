@@ -37,12 +37,6 @@ export const LoadableExamplesPage = Loadable({
   loading: Spinner,
 });
 
-export const LoadableDesignTokenPage = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "design-token-page" */ './components/design-tokens-filterable-grid'),
-  loading: Spinner,
-});
-
 export const LoadableTransitions = Loadable({
   loader: () =>
     import(/* webpackChunkName: "transitions-page" */ './pages/design-tokens/transitions-page'),

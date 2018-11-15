@@ -50,8 +50,8 @@ class Header extends React.Component {
     }));
   }
 
-  static renderLinks(context) {
-    const { settings, sections } = context;
+  // @todo refactor
+  static renderLinks(settings, sections) {
     return (
       <ul>
         <li>
@@ -101,12 +101,12 @@ class Header extends React.Component {
     );
   }
 
-  renderNavigation() {
+  renderNavigation(settings) {
     // If Mobile
     if (this.state.windowWidth <= 950) {
       return this.state.mobileNavVisible ? (
         <MobileNav>
-          {Header.renderLinks(this.props.context)}
+          {Header.renderLinks(settings, this.props.context.sections)}
           <X onClick={this.handleNavClick} />
         </MobileNav>
       ) : (
@@ -114,7 +114,7 @@ class Header extends React.Component {
       );
     }
     // If Desktop
-    return Header.renderLinks(this.props.context);
+    return Header.renderLinks(settings, this.props.context.sections);
   }
 
   render() {
@@ -131,12 +131,13 @@ class Header extends React.Component {
         {({ loading, error, data }) => {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>Error :(</p>;
+          const { settings } = data;
           return (
             <SiteNav>
               <h3 style={{ margin: 0 }}>
-                <SiteHeaderLink to="/">{data.settings.title}</SiteHeaderLink>
+                <SiteHeaderLink to="/">{settings.title}</SiteHeaderLink>
               </h3>
-              {this.renderNavigation()}
+              {this.renderNavigation(settings)}
             </SiteNav>
           );
         }}

@@ -9,6 +9,7 @@ const md = require('marked');
 const highlight = require('highlight.js');
 const GraphQLJSON = require('graphql-type-json');
 const { wrapHtml } = require('./templates');
+const log = require('../cli/log');
 const { USER_SITE_PUBLIC } = require('../lib/constants');
 const { enableTemplatePush, enableUiSettings } = require('../lib/features');
 // const { PatternSchema } = require('../../dist/schemas/pattern');
@@ -137,6 +138,7 @@ class BedrockApiServer {
       type Example {
         id: ID!
         title: String!
+        path: String!
         slices: [ExampleSlice!]!
       }
 
@@ -538,15 +540,16 @@ class BedrockApiServer {
 
     // console.log({ endpoints });
     app.listen(port, () => {
-      console.log(
-        `Express listening on http://localhost:${port}`,
-        showEndpoints ? 'Available endpoints:' : '',
-      );
       if (showEndpoints) {
-        console.log(
-          endpoints.map(e => ` ${e.pathname} (${e.method})`).join('\n'),
+        log.dim(
+          `Available endpoints: \n${endpoints
+            .map(e => ` ${e.pathname} (${e.method})`)
+            .join('\n')}`,
         );
       }
+      setTimeout(() => {
+        log.success(`🚀 Server listening on http://localhost:${port}`);
+      }, 250);
     });
   }
 }

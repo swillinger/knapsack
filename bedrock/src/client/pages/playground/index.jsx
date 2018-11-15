@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import arrayMove from 'array-move';
-import uuid from 'uuid/v4';
+import shortid from 'shortid';
 import Spinner from '@basalt/bedrock-spinner';
 import { StatusMessage } from '@basalt/bedrock-atoms';
 import { connectToContext } from '@basalt/bedrock-core';
@@ -212,14 +212,14 @@ class Playground extends Component {
 
   /**
    * @param {Object} patternId - a pattern id
-   * @param {string} slice.id - uuid
+   * @param {string} slice.id - unique id
    * @param {string} slice.patternId - ID of Pattern, i.e. `media-block`
    * @param {Object} slice.data - Data for Pattern,s usually `{}`
    * @returns {null} - sets state
    */
   handleAddSlice(patternId) {
     const { schema, uiSchema } = this.getTemplateFromPatternId(patternId);
-    const id = uuid();
+    const id = shortid.generate();
     this.setState(prevState => {
       prevState.slices.splice(prevState.editFormInsertionIndex, 0, {
         id,

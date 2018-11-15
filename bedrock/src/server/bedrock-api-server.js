@@ -62,13 +62,27 @@ class BedrockApiServer {
         parentBrand: SettingsParentBrand
       }
 
+      type PatternDoAndDontItem {
+        image: String!
+        caption: String
+        do: Boolean!
+      }
+
+      "Visual representations of what to do, and not to do, with components."
+      type PatternDoAndDont {
+        title: String
+        description: String
+        items: [PatternDoAndDontItem!]!
+      }
+
       type PatternTemplate {
         name: String!
         "JSON Schema"
         schema: JSON
         "CSS Selector"
         selector: String
-        #uiSchema
+        uiSchema: JSON
+        isInline: Boolean
       }
 
       enum PatternType {
@@ -102,6 +116,8 @@ class BedrockApiServer {
         status: PatternStatus
         uses: [PatternUses]
         demoSize: PatternDemoSize
+        hasIcon: Boolean
+        dosAndDonts: [PatternDoAndDont]
       }
 
       type Pattern {

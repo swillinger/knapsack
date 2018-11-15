@@ -128,24 +128,42 @@ class BedrockApiServer {
         meta: PatternMeta
       }
 
+      type ExampleSlice {
+        id: ID!
+        patternId: ID!
+        data: JSON!
+      }
+
+      type Example {
+        id: ID!
+        title: String!
+        slices: [ExampleSlice!]!
+      }
+
       # The "Query" type is the root of all GraphQL queries.
       type Query {
+        example(id: ID): Example
+        examples: [Example]
+        setExample(id: ID, data: JSON): Example
         meta: Meta
-        settings: Settings
         patterns: [Pattern]
         pattern(id: ID): Pattern
+        settings: Settings
         setSettings(settings: JSON): Settings
         setSetting(setting: String, value: String): Settings
       }
     `;
 
     const resolvers = {
-      settings: () => {
-        console.log('GET settings');
-        return settingsStore.getSettings();
+      example: (root, { id }) => exampleStore.getExample(id),
+      setExample: async (root, { id, data }) => {
+        await exampleStore.setExample(id, data);
+        return exampleStore.getExample(id);
       },
+      examples: () => exampleStore.getExamples(),
       patterns: () => patternManifest.getPatterns(),
       pattern: (root, { id }) => patternManifest.getPattern(id),
+      settings: () => settingsStore.getSettings(),
       setSettings: (parent, { settings }) => {
         settingsStore.setSettings(settings);
         return settingsStore.getSettings();

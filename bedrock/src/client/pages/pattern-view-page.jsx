@@ -20,6 +20,38 @@ const OverviewHeader = styled.header`
   margin-bottom: 2rem;
 `;
 
+const query = gql`
+  query PatternViewPage($id: ID) {
+    pattern(id: $id) {
+      id
+      templates {
+        name
+        schema
+        isInline
+        uiSchema
+      }
+      meta {
+        title
+        description
+        type
+        status
+        uses
+        demoSize
+        hasIcon
+        dosAndDonts {
+          title
+          description
+          items {
+            image
+            do
+            caption
+          }
+        }
+      }
+    }
+  }
+`;
+
 class PatternViewPage extends Component {
   constructor(props) {
     super(props);
@@ -33,37 +65,6 @@ class PatternViewPage extends Component {
       meta: null,
     };
 
-    this.query = gql`
-      {
-        pattern(id: "${props.id}") {
-          id
-          templates {
-            name
-            schema
-            isInline
-            uiSchema
-          }
-          meta {
-            title
-            description
-            type
-            status
-            uses
-            demoSize
-            hasIcon
-            dosAndDonts {
-              title
-              description
-              items {
-                image
-                do
-                caption
-              }
-            }
-          }
-        }
-      }
-    `;
     // this.apiEndpoint = `${apiUrlBase}/pattern/${props.id}`;
     this.enableTemplatePush = this.props.context.features.enableTemplatePush;
     this.websocketsPort = this.props.context.meta.websocketsPort;
@@ -99,7 +100,7 @@ class PatternViewPage extends Component {
   render() {
     if (!this.state.meta) {
       return (
-        <Query query={this.query}>
+        <Query query={query} variables={{ id: this.props.id }}>
           {({ loading, error, data }) => {
             if (loading) return <Spinner />;
             if (error) return <p>Error :(</p>;

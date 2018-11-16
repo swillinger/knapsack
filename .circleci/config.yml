@@ -40,5 +40,4 @@ jobs:
 
       - run: ./scripts/e2e-simple.sh
 
-
-
+      - run: ./scripts/create-bedrock-deploy/deploy.sh

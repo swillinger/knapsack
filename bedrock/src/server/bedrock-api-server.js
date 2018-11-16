@@ -48,7 +48,7 @@ class BedrockApiServer {
     const typeDefs = gql`
       scalar JSON
       type Meta {
-        websocketPort: Int
+        websocketsPort: Int
       }
 
       type SettingsParentBrand {
@@ -204,7 +204,7 @@ class BedrockApiServer {
         Query: {
           ...resolvers,
           meta: () => ({
-            websocketPort: this.config.websocketsPort,
+            websocketsPort: this.config.websocketsPort,
           }),
         },
         JSON: GraphQLJSON,

@@ -1,2 +1,3 @@
 #!/bin/bash
-npx now --build-env NPM_TOKEN=@npm-token
+npm i -g now
+now --build-env NPM_TOKEN=@npm-token

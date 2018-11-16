@@ -38,6 +38,7 @@ async function serve(config) {
     websocketsPort: await portfinder.getPortPromise(),
     baseUrl: '/api',
     showEndpoints: true,
+    designTokensStore,
     designTokens: tokens.categories.map(category => {
       const theseTokens = tokens.tokens.filter(
         token => token.category === category,

@@ -157,6 +157,13 @@ class BedrockApiServer {
         comment: String
       }
 
+      type TokenGroup {
+        id: ID!
+        title: String
+        description: String
+        tokenCategories: [String]
+      }
+      
       # The "Query" type is the root of all GraphQL queries.
       type Query {
         example(id: ID): Example
@@ -170,6 +177,7 @@ class BedrockApiServer {
         setSetting(setting: String, value: String): Settings
         tokenCategories: [TokenCategory]
         tokens(category: String): [DesignToken]
+        tokenGroups(group: String): [TokenGroup]
       }
     `;
 
@@ -196,6 +204,7 @@ class BedrockApiServer {
           id: cat,
         })),
       tokens: (root, { category }) => designTokensStore.getTokens(category),
+      tokenGroups: (root, { group }) => designTokensStore.getGroups(group),
     };
 
     const gqlServer = new ApolloServer({

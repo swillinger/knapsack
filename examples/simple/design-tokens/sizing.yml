@@ -15,4 +15,4 @@ props:
     value: 8rem
 global:
   type: string
-  category: sizing
+  category: spacing

@@ -163,7 +163,7 @@ class BedrockApiServer {
         description: String
         tokenCategories: [String]
       }
-      
+
       # The "Query" type is the root of all GraphQL queries.
       type Query {
         example(id: ID): Example

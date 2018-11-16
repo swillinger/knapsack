@@ -1,86 +1,44 @@
 import React from 'react';
 import { plugins } from '@basalt/bedrock-core';
+import { TOKEN_GROUPS } from '../lib/constants';
 import {
   LoadableShadows,
   LoadableBorders,
   LoadableColors,
-  LoadableTransitions,
+  // LoadableTransitions,
   LoadableTypography,
   LoadableSizings,
 } from './loadable-components';
 
 plugins.register('design-tokens-groups', api => {// eslint-disable-line
-  // plugins.addDesignTokensGroupPage({
-  //   id: 'colors',
-  //   tokenCategories: [
-  //     'border-color',
-  //     'text-color',
-  //     'hr-color',
-  //     'background-color',
-  //     'background-gradient',
-  //   ],
-  //   render: props => <LoadableColors {...props} />,
-  // });
-
   plugins.addDesignTokensGroupPage({
-    id: 'shadows',
-    title: 'Shadows',
-    description: 'Some shadows',
-    tokenCategories: ['box-shadow', 'inner-shadow', 'text-shadow'],
+    ...TOKEN_GROUPS.SHADOWS,
     render: props => <LoadableShadows {...props} />,
   });
 
   plugins.addDesignTokensGroupPage({
-    id: 'borders',
-    title: 'Borders',
-    description: 'Some borders',
-    tokenCategories: ['border-color', 'border-style', 'border-radius'],
+    ...TOKEN_GROUPS.BORDERS,
     render: props => <LoadableBorders {...props} />,
   });
 
   plugins.addDesignTokensGroupPage({
-    id: 'colors',
-    title: 'Colors',
-    description: 'Some colors',
-    tokenCategories: [
-      'border-color',
-      'text-color',
-      'hr-color',
-      'background-color',
-      'background-gradient',
-    ],
+    ...TOKEN_GROUPS.COLORS,
     render: props => <LoadableColors {...props} />,
   });
 
-  plugins.addDesignTokensGroupPage({
-    id: 'transitions',
-    title: 'Transitions',
-    description: 'Some transitions',
-    tokenCategories: ['animation'],
-    render: props => <LoadableTransitions {...props} />,
-  });
+  // plugins.addDesignTokensGroupPage({
+  //   ...TOKEN_GROUPS.ANIMATIONS,
+  //   // @todo rename transitions => animations
+  //   render: props => <LoadableTransitions {...props} />,
+  // });
 
   plugins.addDesignTokensGroupPage({
-    id: 'typography',
-    title: 'Typography',
-    description: 'Some typography',
-    tokenCategories: [
-      'font-family',
-      'font-size',
-      'font-weight',
-      'font-style',
-      'line-height',
-      'text-color',
-      'text-shadow',
-    ],
+    ...TOKEN_GROUPS.TYPOGRAPHY,
     render: props => <LoadableTypography {...props} />,
   });
 
   plugins.addDesignTokensGroupPage({
-    id: 'sizings',
-    title: 'Sizings',
-    description: 'Some sizings',
-    tokenCategories: ['spacing', 'font-size', 'media-query'],
+    ...TOKEN_GROUPS.SIZING,
     render: props => <LoadableSizings {...props} />,
   });
 });

@@ -1,4 +1,6 @@
 const theo = require('theo');
+const { TOKEN_GROUPS } = require('../lib/constants');
+const { hasItemsInItems } = require('../lib/utils');
 
 /**
  * @typedef {Object} TheoProp
@@ -16,6 +18,11 @@ class DesignTokensStore {
     this.tokenPath = tokenPath;
     /** @type {TheoProp[]} */
     this.tokens = this.convertTokens();
+    const possibleGroups = Object.values(TOKEN_GROUPS);
+    // only include groups that have a design token category to demo
+    this.groups = possibleGroups.filter(group =>
+      hasItemsInItems(group.tokenCategories, this.getCategories()),
+    );
   }
 
   /**
@@ -37,6 +44,17 @@ class DesignTokensStore {
       return results.props;
     }
     return results;
+  }
+
+  /**
+   * @param {string} [group]
+   * @return {Object[]}
+   */
+  getGroups(group) {
+    if (group) {
+      return this.groups.filter(g => g.id === group);
+    }
+    return this.groups;
   }
 
   /**

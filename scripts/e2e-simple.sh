@@ -128,12 +128,13 @@ cd test-app
 yarn
 echo 'Install successfull. Building...'
 yarn build
-echo 'Build successfull! Deploying...'
-npm i -g now@latest --unsafe-perm
-echo 'Hiding now deploy command as it contains a secret'
-set +C
-now --build-env NPM_TOKEN=@npm-token --token=$NOW_TOKEN --team=basalt --name='create-bedrock' --no-clipboard
-set -x
+echo 'Build successfull!'
+# echo 'Deploying...'
+# npm i -g now@latest --unsafe-perm
+# echo 'Hiding now deploy command as it contains a secret'
+# set +C
+# now --build-env NPM_TOKEN=@npm-token --token=$NOW_TOKEN --team=basalt --name='create-bedrock' --no-clipboard
+# set -x
 
 echo 'Cleaning up...'
 # Cleanup

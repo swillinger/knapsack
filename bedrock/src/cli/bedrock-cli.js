@@ -6,7 +6,6 @@ const log = require('./log');
 const { serve } = require('../server/server');
 const { version } = require('../../package.json');
 const webpack = require('./webpack');
-const { processTokens } = require('./design-tokens');
 
 /**
  * Prepare user config: validate, convert all paths to absolute, assign defaults
@@ -54,10 +53,7 @@ program.version(version);
 
 program.command('serve').action(async () => {
   log.info('🏔 running serve...');
-  const tokens = await processTokens(config.designTokens);
-  await serve(config, {
-    tokens,
-  });
+  await serve(config);
 });
 
 program.command('build').action(async () => {

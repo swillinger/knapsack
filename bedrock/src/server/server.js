@@ -3,13 +3,14 @@ const BedrockApiServer = require('./bedrock-api-server');
 const BedrockPatternManifest = require('./pattern-manifest/bedrock-pattern-manifest');
 const ExampleStore = require('./example-store');
 const SettingsStore = require('./settings-store');
+const DesignTokensStore = require('./design-tokens-store');
 // const { BedrockConfig } = require('../../schemas/bedrock-config');
 
 /**
  * @param {BedrockConfig} config
  * @returns {Promise<void>}
  */
-async function serve(config, { tokens }) {
+async function serve(config) {
   const settingsStore = new SettingsStore({ dataDir: config.data });
 
   const patternManifest = new BedrockPatternManifest({
@@ -21,6 +22,14 @@ async function serve(config, { tokens }) {
   const exampleStore = new ExampleStore({
     dir: config.data,
   });
+
+  const designTokensStore = new DesignTokensStore({
+    tokenPath: config.designTokens,
+  });
+  const tokens = {
+    tokens: await designTokensStore.getTokens(),
+    categories: await designTokensStore.getCategories(),
+  };
 
   const apiServer = new BedrockApiServer({
     port: 3999,
@@ -39,7 +48,7 @@ async function serve(config, { tokens }) {
           title: category,
           description: `Description for ${category}`,
         },
-        get: () => theseTokens,
+        get: () => Promise.resolve(theseTokens),
       };
     }),
     patternManifest,

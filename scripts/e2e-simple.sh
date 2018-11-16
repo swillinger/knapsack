@@ -129,7 +129,8 @@ yarn
 echo 'Install successfull. Building...'
 yarn build
 echo 'Build successfull! Deploying...'
-npx now@latest --build-env NPM_TOKEN=@npm-token --token=$NOW_TOKEN --team=basalt --name='create-bedrock' --no-clipboard
+npm i -g now@latest
+now --build-env NPM_TOKEN=@npm-token --token=$NOW_TOKEN --team=basalt --name='create-bedrock' --no-clipboard
 
 echo 'Cleaning up...'
 # Cleanup

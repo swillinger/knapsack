@@ -141,8 +141,8 @@ function createWebPackConfig(userConfig) {
     ],
     performance: {
       hints: isProd ? 'error' : false,
-      maxAssetSize: 300000,
-      maxEntrypointSize: 300000,
+      maxAssetSize: 500000,
+      maxEntrypointSize: 500000,
     },
     optimization: {
       minimize: isProd,

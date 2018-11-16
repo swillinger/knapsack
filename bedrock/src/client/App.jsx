@@ -15,13 +15,12 @@ import {
 } from '@basalt/bedrock-core';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
-import merge from 'lodash.merge';
 import GlobalStyles from './globals/global-styles';
 import ErrorCatcher from './utils/error-catcher';
-import Header from './components/header';
-import Footer from './components/footer';
 import { apiUrlBase } from './data';
 import {
+  LoadableHeader,
+  LoadableFooter,
   LoadablePatternView,
   LoadableCustomSectionPage,
   LoadableExamplesPage,
@@ -135,8 +134,7 @@ class App extends React.Component {
       return <Spinner />;
     }
 
-    const cruxContext = merge({}, baseContext, {
-      theme: this.state.settings.theme,
+    const cruxContext = Object.assign({}, baseContext, {
       patterns: this.state.patterns,
       sections: this.state.sections,
       designTokensPages: this.state.designTokensPages,
@@ -157,7 +155,9 @@ class App extends React.Component {
                   <div>
                     <Route
                       path="/"
-                      component={routeProps => <Header {...routeProps} />}
+                      component={routeProps => (
+                        <LoadableHeader {...routeProps} />
+                      )}
                     />
                     <Site>
                       <Switch>
@@ -274,7 +274,7 @@ class App extends React.Component {
                         </ErrorCatcher>
                       </MainContent>
                     </Site>
-                    <Footer />
+                    <LoadableFooter />
                   </div>
                 </Router>
               </React.Fragment>

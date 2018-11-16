@@ -4,9 +4,9 @@
     "airbnb",
     "prettier",
     "prettier/react"
-//    "plugin:promise/recommended" @todo turn this back and .then() fix every error
+    //    "plugin:promise/recommended" @todo turn this back and .then() fix every error
   ],
-  "plugins": ["prettier", "jest", "jsdoc", "promise"],
+  "plugins": ["prettier", "jest", "jsdoc", "promise", "graphql"],
   "env": {
     "jest/globals": true
   },

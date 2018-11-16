@@ -1,6 +1,16 @@
 import Loadable from 'react-loadable';
 import Spinner from '@basalt/bedrock-spinner';
 
+export const LoadableHeader = Loadable({
+  loader: () => import(/* webpackChunkName: "header" */ './components/header'),
+  loading: Spinner,
+});
+
+export const LoadableFooter = Loadable({
+  loader: () => import(/* webpackChunkName: "footer" */ './components/footer'),
+  loading: Spinner,
+});
+
 export const LoadablePatternView = Loadable({
   loader: () =>
     import(/* webpackChunkName: "pattern-view-page" */ './pages/pattern-view-page'),
@@ -34,12 +44,6 @@ export const LoadablePlayground = Loadable({
 export const LoadableExamplesPage = Loadable({
   loader: () =>
     import(/* webpackChunkName: "examples-landing-page" */ './pages/examples-landing-page.jsx'),
-  loading: Spinner,
-});
-
-export const LoadableDesignTokenPage = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "design-token-page" */ './components/design-tokens-filterable-grid'),
   loading: Spinner,
 });
 

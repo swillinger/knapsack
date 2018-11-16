@@ -1,12 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const WebSocket = require('ws');
+const { ApolloServer, gql } = require('apollo-server-express');
 const urlJoin = require('url-join');
 const fs = require('fs-extra');
 const { join, relative } = require('path');
 const md = require('marked');
 const highlight = require('highlight.js');
+const GraphQLJSON = require('graphql-type-json');
 const { wrapHtml } = require('./templates');
+const log = require('../cli/log');
 const { USER_SITE_PUBLIC } = require('../lib/constants');
 const { enableTemplatePush, enableUiSettings } = require('../lib/features');
 // const { PatternSchema } = require('../../dist/schemas/pattern');
@@ -35,9 +38,178 @@ class BedrockApiServer {
       exampleStore,
       /** @type {BedrockPatternManifest} */
       patternManifest,
+      settingsStore,
+      /** @type {DesignTokensStore} */
+      designTokensStore,
     } = userConfig;
 
     this.config = userConfig;
+
+    const typeDefs = gql`
+      scalar JSON
+      type Meta {
+        websocketPort: Int
+      }
+
+      type SettingsParentBrand {
+        "URL to image"
+        logo: String
+        title: String
+        homepage: String
+      }
+
+      type Settings {
+        title: String!
+        subtitle: String
+        slogan: String
+        parentBrand: SettingsParentBrand
+      }
+
+      type PatternDoAndDontItem {
+        image: String!
+        caption: String
+        do: Boolean!
+      }
+
+      "Visual representations of what to do, and not to do, with components."
+      type PatternDoAndDont {
+        title: String
+        description: String
+        items: [PatternDoAndDontItem!]!
+      }
+
+      type PatternTemplate {
+        name: String!
+        "JSON Schema"
+        schema: JSON
+        "CSS Selector"
+        selector: String
+        uiSchema: JSON
+        isInline: Boolean
+      }
+
+      enum PatternType {
+        component
+        layout
+      }
+
+      enum PatternStatus {
+        draft
+        inProgress
+        ready
+      }
+
+      enum PatternUses {
+        inSlice
+        inGrid
+        inComponent
+      }
+
+      enum PatternDemoSize {
+        s
+        m
+        l
+        full
+      }
+
+      type PatternMeta {
+        title: String!
+        description: String
+        type: PatternType
+        status: PatternStatus
+        uses: [PatternUses]
+        demoSize: PatternDemoSize
+        hasIcon: Boolean
+        dosAndDonts: [PatternDoAndDont]
+      }
+
+      type Pattern {
+        id: ID!
+        "Relative path to a JSON file that stores meta data for pattern. Schema for that file is in pattern-meta.schema.json."
+        metaFilePath: String
+        templates: [PatternTemplate]!
+        meta: PatternMeta
+      }
+
+      type ExampleSlice {
+        id: ID!
+        patternId: ID!
+        data: JSON!
+      }
+
+      type Example {
+        id: ID!
+        title: String!
+        path: String!
+        slices: [ExampleSlice!]!
+      }
+
+      type TokenCategory {
+        id: ID!
+      }
+
+      type DesignToken {
+        category: String!
+        name: String!
+        originalValue: String!
+        type: String!
+        value: String!
+        comment: String
+      }
+
+      # The "Query" type is the root of all GraphQL queries.
+      type Query {
+        example(id: ID): Example
+        examples: [Example]
+        setExample(id: ID, data: JSON): Example
+        meta: Meta
+        patterns: [Pattern]
+        pattern(id: ID): Pattern
+        settings: Settings
+        setSettings(settings: JSON): Settings
+        setSetting(setting: String, value: String): Settings
+        tokenCategories: [TokenCategory]
+        tokens(category: String): [DesignToken]
+      }
+    `;
+
+    const resolvers = {
+      example: (root, { id }) => exampleStore.getExample(id),
+      setExample: async (root, { id, data }) => {
+        await exampleStore.setExample(id, data);
+        return exampleStore.getExample(id);
+      },
+      examples: () => exampleStore.getExamples(),
+      patterns: () => patternManifest.getPatterns(),
+      pattern: (root, { id }) => patternManifest.getPattern(id),
+      settings: () => settingsStore.getSettings(),
+      setSettings: (parent, { settings }) => {
+        settingsStore.setSettings(settings);
+        return settingsStore.getSettings();
+      },
+      setSetting: (parent, { setting, value }) => {
+        settingsStore.setSetting(setting, value);
+        return settingsStore.getSettings();
+      },
+      tokenCategories: () =>
+        designTokensStore.getCategories().map(cat => ({
+          id: cat,
+        })),
+      tokens: (root, { category }) => designTokensStore.getTokens(category),
+    };
+
+    const gqlServer = new ApolloServer({
+      typeDefs,
+      resolvers: {
+        Query: {
+          ...resolvers,
+          meta: () => ({
+            websocketPort: this.config.websocketsPort,
+          }),
+        },
+        JSON: GraphQLJSON,
+      },
+    });
 
     /** @type {Endpoint[]} */
     this.endpoints = [];
@@ -45,6 +217,8 @@ class BedrockApiServer {
     this.app = express();
 
     this.app.use(bodyParser.json());
+
+    gqlServer.applyMiddleware({ app: this.app });
 
     this.app.use('*', (req, res, next) => {
       res.header('Access-Control-Allow-Origin', '*');
@@ -312,7 +486,7 @@ class BedrockApiServer {
     const url3 = urlJoin(this.config.baseUrl, 'settings');
     this.registerEndpoint(url3);
     this.app.get(url3, async (req, res) => {
-      const settings = this.config.settingsStore.getSettings();
+      const settings = settingsStore.getSettings();
       res.send(settings);
     });
 
@@ -320,7 +494,7 @@ class BedrockApiServer {
       const url4 = urlJoin(this.config.baseUrl, 'settings');
       this.registerEndpoint(url4, 'POST');
       this.app.post(url4, async (req, res) => {
-        const results = this.config.settingsStore.setSettings(req.body);
+        const results = settingsStore.setSettings(req.body);
         res.send(results);
       });
     }
@@ -388,15 +562,16 @@ class BedrockApiServer {
 
     // console.log({ endpoints });
     app.listen(port, () => {
-      console.log(
-        `Express listening on http://localhost:${port}`,
-        showEndpoints ? 'Available endpoints:' : '',
-      );
       if (showEndpoints) {
-        console.log(
-          endpoints.map(e => ` ${e.pathname} (${e.method})`).join('\n'),
+        log.dim(
+          `Available endpoints: \n${endpoints
+            .map(e => ` ${e.pathname} (${e.method})`)
+            .join('\n')}`,
         );
       }
+      setTimeout(() => {
+        log.success(`🚀 Server listening on http://localhost:${port}`);
+      }, 250);
     });
   }
 }

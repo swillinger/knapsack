@@ -63,6 +63,7 @@ function createWebPackConfig(userConfig) {
           test: /\.(js|jsx|mjs)$/,
           loader: require.resolve('babel-loader'),
           // exclude: [/(node_modules)/],
+          // @todo remove this after dependencies are pre-compiled
           exclude: thePath => {
             if (thePath.includes('node_modules/@basalt')) {
               return false;
@@ -140,8 +141,22 @@ function createWebPackConfig(userConfig) {
     ],
     performance: {
       hints: isProd ? 'error' : false,
-      maxAssetSize: 300000,
-      maxEntrypointSize: 300000,
+      maxAssetSize: 500000,
+      maxEntrypointSize: 500000,
+    },
+    optimization: {
+      minimize: isProd,
+      // minimizer: [new TerserPlugin()],
+      namedChunks: true,
+      runtimeChunk: 'single',
+      // https://itnext.io/react-router-and-webpack-v4-code-splitting-using-splitchunksplugin-f0a48f110312
+      // https://webpack.js.org/plugins/split-chunks-plugin/
+      splitChunks: {
+        chunks: 'all',
+        maxInitialRequests: 30,
+        maxAsyncRequests: 50,
+        maxSize: 300000,
+      },
     },
   };
 

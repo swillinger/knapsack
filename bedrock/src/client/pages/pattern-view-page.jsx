@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Spinner from '@basalt/bedrock-spinner';
 import { Details, Select } from '@basalt/bedrock-atoms';
-import ApiDemo from '@basalt/bedrock-api-demo';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
 import Template from '../components/template';
 import ErrorCatcher from '../utils/error-catcher';
-import { apiUrlBase } from '../data';
 import Overview from '../layouts/overview';
 import {
   LoadableSchemaTable,
@@ -30,17 +30,46 @@ class PatternViewPage extends Component {
         uiSchema: {},
         isInline: false,
       },
-      meta: {},
-      ready: false,
+      meta: null,
     };
-    this.apiEndpoint = `${apiUrlBase}/pattern/${props.id}`;
+
+    this.query = gql`
+      {
+        pattern(id: "${props.id}") {
+          id
+          templates {
+            name
+            schema
+            isInline
+            uiSchema
+          }
+          meta {
+            title
+            description
+            type
+            status
+            uses
+            demoSize
+            hasIcon
+            dosAndDonts {
+              title
+              description
+              items {
+                image
+                do
+                caption
+              }
+            }
+          }
+        }
+      }
+    `;
+    // this.apiEndpoint = `${apiUrlBase}/pattern/${props.id}`;
     this.enableTemplatePush = this.props.context.features.enableTemplatePush;
     this.websocketsPort = this.props.context.meta.websocketsPort;
-    this.getData = this.getData.bind(this);
   }
 
   componentDidMount() {
-    this.getData();
     if (this.enableTemplatePush) {
       this.socket = new window.WebSocket(
         `ws://localhost:${this.websocketsPort}`,
@@ -54,7 +83,8 @@ class PatternViewPage extends Component {
         const { ext } = JSON.parse(event.data);
         // console.log('Message from server ', ext, event.data);
         if (ext !== '.twig') {
-          this.getData();
+          // @todo improve. Need to refresh data.
+          this.setState({ meta: null });
         }
       });
     }
@@ -66,31 +96,31 @@ class PatternViewPage extends Component {
     }
   }
 
-  getData() {
-    window
-      .fetch(this.apiEndpoint)
-      .then(res => res.json())
-      .then(pattern => {
-        this.setState({
-          meta: pattern.meta,
-          templates: pattern.templates,
-          currentTemplate: pattern.templates[0],
-          ready: true,
-        });
-      });
-  }
-
   render() {
-    let content;
-    if (!this.state.ready) {
-      content = <Spinner />;
-    } else {
-      const { templates, meta, currentTemplate } = this.state;
-      const { title, description, type, demoSize } = meta;
-      const { name, schema, uiSchema, isInline } = currentTemplate;
-      const [data, ...examples] = schema.examples ? schema.examples : [{}];
-      const dosAndDonts = schema.dosAndDonts ? schema.dosAndDonts : [];
-      content = (
+    if (!this.state.meta) {
+      return (
+        <Query query={this.query}>
+          {({ loading, error, data }) => {
+            if (loading) return <Spinner />;
+            if (error) return <p>Error :(</p>;
+            this.setState({
+              meta: data.pattern.meta,
+              templates: data.pattern.templates,
+              currentTemplate: data.pattern.templates[0],
+            });
+            return null;
+          }}
+        </Query>
+      );
+    }
+
+    const { templates, meta, currentTemplate } = this.state;
+    const { title, description, type, demoSize } = meta;
+    const { name, schema, uiSchema, isInline } = currentTemplate;
+    const [data, ...examples] = schema.examples ? schema.examples : [{}];
+    const dosAndDonts = schema.dosAndDonts ? schema.dosAndDonts : [];
+    return (
+      <ErrorCatcher>
         <article>
           <OverviewHeader>
             <h4 className="eyebrow" style={{ textTransform: 'capitalize' }}>
@@ -163,16 +193,16 @@ class PatternViewPage extends Component {
             />
           ))}
 
-          <ApiDemo endpoint={this.apiEndpoint} />
+          {/* <ApiDemo endpoint={this.apiEndpoint} /> */}
         </article>
-      );
-    }
-    return <ErrorCatcher>{content}</ErrorCatcher>;
+      </ErrorCatcher>
+    );
   }
 }
 
 PatternViewPage.defaultProps = {
-  demoSizes: [],
+  // @todo this is a hotfix and needs to be refactored
+  demoSizes: ['s', 'm', 'l'],
 };
 
 PatternViewPage.propTypes = {

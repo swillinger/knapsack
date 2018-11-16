@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import Spinner from '@basalt/bedrock-spinner';
 import SchemaForm from '@basalt/bedrock-schema-form';
 import { connectToContext } from '@basalt/bedrock-core';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
 import PatternGrid from './pattern-grid';
-import { apiUrlBase } from '../data';
 
 const filterSchema = {
   $schema: 'http://json-schema.org/draft-07/schema',
@@ -51,12 +52,37 @@ const filterSchema = {
   },
 };
 
+const query = gql`
+  {
+    patterns {
+      id
+      meta {
+        title
+        description
+        type
+        status
+        uses
+        demoSize
+        hasIcon
+        dosAndDonts {
+          title
+          description
+          items {
+            image
+            caption
+            do
+          }
+        }
+      }
+    }
+  }
+`;
+
 class PatternsPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isReady: false,
-      patterns: [],
+      patterns: null,
       visiblePatterns: [],
       formData: {
         statuses: {
@@ -72,19 +98,6 @@ class PatternsPage extends Component {
     };
     this.handleChangeForm = this.handleChangeForm.bind(this);
     this.updateVisiblePatterns = this.updateVisiblePatterns.bind(this);
-  }
-
-  componentDidMount() {
-    window
-      .fetch(`${apiUrlBase}/patterns`)
-      .then(res => res.json())
-      .then(patterns => {
-        this.setState({
-          isReady: true,
-          patterns,
-          visiblePatterns: patterns,
-        });
-      });
   }
 
   updateVisiblePatterns() {
@@ -122,15 +135,26 @@ class PatternsPage extends Component {
   }
 
   render() {
-    if (!this.state.isReady) {
-      return <Spinner />;
+    if (!this.state.patterns) {
+      return (
+        <Query query={query}>
+          {({ loading, error, data }) => {
+            if (loading) return <Spinner />;
+            if (error) return <p>Error :(</p>;
+            this.setState({
+              patterns: data.patterns,
+              visiblePatterns: data.patterns,
+            });
+            return null;
+          }}
+        </Query>
+      );
     }
 
     return (
       <div className="patterns-filters">
         <h2>Patterns</h2>
         <p>Explore the design patterns that make up the Crux Design System.</p>
-
         <SchemaForm
           schema={filterSchema}
           formData={this.state.formData}
@@ -141,9 +165,5 @@ class PatternsPage extends Component {
     );
   }
 }
-
-PatternsPage.propTypes = {
-  // context: contextPropTypes.isRequired,
-};
 
 export default connectToContext(PatternsPage);

@@ -84,7 +84,8 @@ function PatternGridListItem(props) {
 }
 
 function PatternGrid(props) {
-  const { enablePatternIcons } = props.context.settings;
+  const { enablePatternIcons } = props.context.features;
+  console.log({ enablePatternIcons });
   return (
     <React.Fragment>
       {enablePatternIcons ? (

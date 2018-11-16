@@ -15,13 +15,13 @@ props:
     value: '{!blue_light}'
   c-blue--light-text:
     value: '{!blue_light}'
-    category: text-color;
+    category: text-color
   c-blue--light-hr:
     value: '{!blue_light}'
-    category: hr-color;
+    category: hr-color
   c-blue--light-border:
     value: '{!blue_light}'
-    category: border-color;
+    category: border-color
   c-green:
     value: '{!green}'
   c-green-text:

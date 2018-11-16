@@ -1,5 +1,8 @@
 import React from 'react';
-import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
+import { connectToContext } from '@basalt/bedrock-core';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
+import Spinner from '@basalt/bedrock-spinner';
 import {
   HomeSplashCore,
   EyeBrow,
@@ -8,6 +11,16 @@ import {
   Title,
   VersionTag,
 } from './home-splash.styles';
+
+const query = gql`
+  {
+    settings {
+      title
+      subtitle
+      slogan
+    }
+  }
+`;
 
 /**
  * @param {string} x
@@ -65,29 +78,27 @@ function bigWords(x) {
   return vw;
 }
 
-const HomeSplash = ({ context }) => (
-  <HomeSplashWrapper>
-    <HomeSplashCore>
-      {context.settings.subtitle && (
-        <EyeBrow>{context.settings.subtitle}</EyeBrow>
-      )}
-      {context.settings.title && (
-        <Title vw={bigWords(context.settings.title)}>
-          {context.settings.title}
-        </Title>
-      )}
-      {context.settings.slogan && (
-        <Subtitle>{context.settings.slogan}</Subtitle>
-      )}
-      {context.settings.version && (
-        <VersionTag>{context.settings.version}</VersionTag>
-      )}
-    </HomeSplashCore>
-  </HomeSplashWrapper>
-);
+const HomeSplash = () => (
+  <Query query={query}>
+    {({ loading, error, data }) => {
+      if (loading) return <Spinner />;
+      if (error) return <p>Error :(</p>;
 
-HomeSplash.propTypes = {
-  context: contextPropTypes.isRequired,
-};
+      const { settings } = data;
+      return (
+        <HomeSplashWrapper>
+          <HomeSplashCore>
+            {settings.subtitle && <EyeBrow>{settings.subtitle}</EyeBrow>}
+            {settings.title && (
+              <Title vw={bigWords(settings.title)}>{settings.title}</Title>
+            )}
+            {settings.slogan && <Subtitle>{settings.slogan}</Subtitle>}
+            {settings.version && <VersionTag>{settings.version}</VersionTag>}
+          </HomeSplashCore>
+        </HomeSplashWrapper>
+      );
+    }}
+  </Query>
+);
 
 export default connectToContext(HomeSplash);

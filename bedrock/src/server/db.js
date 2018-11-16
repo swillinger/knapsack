@@ -1,6 +1,7 @@
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const { join } = require('path');
+const chokidar = require('chokidar');
 
 /**
  * Creates a LoDash powered JSON file database, via `lowdb` that is created using the `_.chain` method.
@@ -18,7 +19,8 @@ class FileDb {
   constructor({ dbDir, name, defaults = {} }) {
     // @todo kebab-case `name`
     // @todo should this read a pre-existing file first?
-    const adapter = new FileSync(join(dbDir, `${name}.json`));
+    const dbPath = join(dbDir, `${name}.json`);
+    const adapter = new FileSync(dbPath);
     const db = low(adapter);
 
     // Set some defaults (required if your JSON file is empty)
@@ -31,6 +33,15 @@ class FileDb {
     // db.get('posts')
     //   .find({ id: 1 })
     //   .value()
+
+    // Start watching the file in case user manually changes it so we can re-read it into memory
+    const watcher = chokidar.watch(dbPath, {
+      ignoreInitial: true,
+    });
+
+    watcher.on('all', () => {
+      this.db = db.read();
+    });
   }
 
   getDb() {

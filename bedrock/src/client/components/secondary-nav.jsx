@@ -25,6 +25,10 @@ const secondaryNavQuery = gql`
         title
       }
     }
+    tokenGroups {
+      id
+      title
+    }
   }
 `;
 
@@ -81,7 +85,8 @@ class SecondaryNav extends Component {
     return (
       <Query query={secondaryNavQuery}>
         {({ data }) => {
-          const { patterns = [], examples = [] } = data;
+          const { patterns = [], examples = [], tokenGroups = [] } = data;
+          console.log({ tokenGroups });
           const items = [
             // {
             //   title: 'Design Tokens',

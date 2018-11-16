@@ -128,7 +128,9 @@ cd test-app
 yarn
 echo 'Install successfull. Building...'
 yarn build
-echo 'Build successfull! Cleaning up...'
+echo 'Build successfull! Deploying...'
+npx now@latest --build-env NPM_TOKEN=@npm-token --token=$NOW_TOKEN --team=basalt --name='create-bedrock' --no-clipboard
 
+echo 'Cleaning up...'
 # Cleanup
 cleanup

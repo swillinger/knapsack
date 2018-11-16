@@ -58,9 +58,13 @@ class DesignTokensStore {
   }
 
   /**
+   * @param {string} [category]
    * @returns {TheoProp[]}
    */
-  getTokens() {
+  getTokens(category) {
+    if (category) {
+      return this.tokens.filter(t => t.category === category);
+    }
     return this.tokens;
   }
 }

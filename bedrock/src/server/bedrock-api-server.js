@@ -39,6 +39,8 @@ class BedrockApiServer {
       /** @type {BedrockPatternManifest} */
       patternManifest,
       settingsStore,
+      /** @type {DesignTokensStore} */
+      designTokensStore,
     } = userConfig;
 
     this.config = userConfig;
@@ -142,6 +144,19 @@ class BedrockApiServer {
         slices: [ExampleSlice!]!
       }
 
+      type TokenCategory {
+        id: ID!
+      }
+
+      type DesignToken {
+        category: String!
+        name: String!
+        originalValue: String!
+        type: String!
+        value: String!
+        comment: String
+      }
+
       # The "Query" type is the root of all GraphQL queries.
       type Query {
         example(id: ID): Example
@@ -153,6 +168,8 @@ class BedrockApiServer {
         settings: Settings
         setSettings(settings: JSON): Settings
         setSetting(setting: String, value: String): Settings
+        tokenCategories: [TokenCategory]
+        tokens(category: String): [DesignToken]
       }
     `;
 
@@ -174,6 +191,11 @@ class BedrockApiServer {
         settingsStore.setSetting(setting, value);
         return settingsStore.getSettings();
       },
+      tokenCategories: () =>
+        designTokensStore.getCategories().map(cat => ({
+          id: cat,
+        })),
+      tokens: (root, { category }) => designTokensStore.getTokens(category),
     };
 
     const gqlServer = new ApolloServer({

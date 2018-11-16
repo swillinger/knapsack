@@ -98,13 +98,11 @@ class SecondaryNav extends Component {
               id: 'all-design-tokens',
               path: '/design-tokens/all',
             },
-            // ...this.props.context.designTokensPages,
             ...tokenGroups.map(tokenGroup => ({
               id: tokenGroup.id,
               title: tokenGroup.title,
               path: urlJoin('/design-tokens', tokenGroup.id),
             })),
-            // @todo bring back Design tokens when vailable through gql
             {
               title: 'Patterns',
               id: 'patterns',

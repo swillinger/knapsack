@@ -135,7 +135,7 @@ class App extends React.Component {
     }
 
     const cruxContext = Object.assign({}, baseContext, {
-      patterns: this.state.patterns,
+      // patterns: this.state.patterns,
       sections: this.state.sections,
       designTokensPages: this.state.designTokensPages,
       settings: this.state.settings,

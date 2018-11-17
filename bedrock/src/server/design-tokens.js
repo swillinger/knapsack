@@ -1,6 +1,36 @@
 const theo = require('theo');
+const { gql } = require('apollo-server-express');
 const { TOKEN_GROUPS } = require('../lib/constants');
 const { hasItemsInItems } = require('../lib/utils');
+
+const designTokensTypeDef = gql`
+  type TokenCategory {
+    id: ID!
+    name: String
+  }
+
+  type DesignToken {
+    category: String!
+    name: String!
+    originalValue: String!
+    type: String!
+    value: String!
+    comment: String
+  }
+
+  type TokenGroup {
+    id: ID!
+    title: String
+    description: String
+    tokenCategories: [String]
+  }
+
+  type Query {
+    tokenCategories: [TokenCategory]
+    tokens(category: String): [DesignToken]
+    tokenGroups(group: String): [TokenGroup]
+  }
+`;
 
 /**
  * @typedef {Object} TheoProp
@@ -13,7 +43,7 @@ const { hasItemsInItems } = require('../lib/utils');
 
 theo.registerFormat('bedrock', result => result.toJSON());
 
-class DesignTokensStore {
+class DesignTokens {
   constructor({ tokenPath }) {
     this.tokenPath = tokenPath;
     /** @type {TheoProp[]} */
@@ -87,4 +117,20 @@ class DesignTokensStore {
   }
 }
 
-module.exports = DesignTokensStore;
+const designTokensResolvers = {
+  Query: {
+    tokenCategories: (parent, args, { tokens }) =>
+      tokens.getCategories().map(cat => ({
+        id: cat,
+        name: cat,
+      })),
+    tokens: (parent, { category }, { tokens }) => tokens.getTokens(category),
+    tokenGroups: (parent, { group }, { tokens }) => tokens.getGroups(group),
+  },
+};
+
+module.exports = {
+  DesignTokens,
+  designTokensResolvers,
+  designTokensTypeDef,
+};

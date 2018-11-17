@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
 import {
   SiteHeaderLink,
   Hamburger,
@@ -11,6 +10,28 @@ import {
   SiteNav,
   X,
 } from './header.styles';
+
+const headerQuery = gql`
+  {
+    settings {
+      title
+      parentBrand {
+        homepage
+        title
+        logo
+      }
+    }
+    examples {
+      id
+    }
+    patterns {
+      id
+    }
+    tokenGroups {
+      id
+    }
+  }
+`;
 
 class Header extends React.Component {
   constructor(props) {
@@ -51,7 +72,7 @@ class Header extends React.Component {
   }
 
   // @todo refactor
-  static renderLinks(settings, sections) {
+  static renderLinks({ settings }) {
     return (
       <ul>
         <li>
@@ -65,13 +86,14 @@ class Header extends React.Component {
         <li>
           <SiteHeaderNavLink to="/examples">Examples</SiteHeaderNavLink>
         </li>
-        {sections.map(section => (
-          <li key={section.id}>
-            <SiteHeaderNavLink to={section.items[0].path}>
-              {section.title}
-            </SiteHeaderNavLink>
-          </li>
-        ))}
+        {/* @todo Reimplement header nav for custom sections once implemented with gql */}
+        {/* {sections.map(section => ( */}
+        {/* <li key={section.id}> */}
+        {/* <SiteHeaderNavLink to={section.items[0].path}> */}
+        {/* {section.title} */}
+        {/* </SiteHeaderNavLink> */}
+        {/* </li> */}
+        {/* ))} */}
         {settings.parentBrand && (
           <li>
             <a
@@ -96,12 +118,12 @@ class Header extends React.Component {
     );
   }
 
-  renderNavigation(settings) {
+  renderNavigation(data) {
     // If Mobile
     if (this.state.windowWidth <= 950) {
       return this.state.mobileNavVisible ? (
         <MobileNav>
-          {Header.renderLinks(settings, this.props.context.sections)}
+          {Header.renderLinks(data)}
           <X onClick={this.handleNavClick} />
         </MobileNav>
       ) : (
@@ -109,30 +131,21 @@ class Header extends React.Component {
       );
     }
     // If Desktop
-    return Header.renderLinks(settings, this.props.context.sections);
+    return Header.renderLinks(data);
   }
 
   render() {
     return (
-      <Query
-        query={gql`
-          {
-            settings {
-              title
-            }
-          }
-        `}
-      >
+      <Query query={headerQuery}>
         {({ loading, error, data }) => {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>Error :(</p>;
-          const { settings } = data;
           return (
             <SiteNav>
               <h3 style={{ margin: 0 }}>
-                <SiteHeaderLink to="/">{settings.title}</SiteHeaderLink>
+                <SiteHeaderLink to="/">{data.settings.title}</SiteHeaderLink>
               </h3>
-              {this.renderNavigation(settings)}
+              {this.renderNavigation(data)}
             </SiteNav>
           );
         }}
@@ -145,7 +158,6 @@ Header.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string,
   }).isRequired,
-  context: contextPropTypes.isRequired,
 };
 
-export default connectToContext(Header);
+export default Header;

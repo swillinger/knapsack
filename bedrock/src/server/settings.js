@@ -1,8 +1,32 @@
-// const { validateSchema } = require('@basalt/bedrock-schema-utils');
+const { gql } = require('apollo-server-express');
+const GraphQLJSON = require('graphql-type-json');
 const { FileDb } = require('./db');
-// const settingsSchema = require('../schemas/bedrock.settings.schema');
 
-class SettingsStore {
+const settingsTypeDef = gql`
+  scalar JSON
+
+  type SettingsParentBrand {
+    "URL to image"
+    logo: String
+    title: String
+    homepage: String
+  }
+
+  type Settings {
+    title: String!
+    subtitle: String
+    slogan: String
+    parentBrand: SettingsParentBrand
+  }
+
+  type Query {
+    settings: Settings
+    setSettings(settings: JSON): Settings
+    setSetting(setting: String, value: String): Settings
+  }
+`;
+
+class Settings {
   /**
    * @param {BedrockSettingsStoreConfig} Object
    */
@@ -62,4 +86,23 @@ class SettingsStore {
   }
 }
 
-module.exports = SettingsStore;
+const settingsResolvers = {
+  Query: {
+    settings: (parent, args, { settings }) => settings.getSettings(),
+    setSettings: (parent, { newSettings }, { settings }) => {
+      settings.setSettings(newSettings);
+      return settings.getSettings();
+    },
+    setSetting: (parent, { setting, value }, { settings }) => {
+      settings.setSetting(setting, value);
+      return settings.getSettings();
+    },
+  },
+  JSON: GraphQLJSON,
+};
+
+module.exports = {
+  Settings,
+  settingsTypeDef,
+  settingsResolvers,
+};

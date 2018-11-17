@@ -70,7 +70,7 @@ class FileDb {
   }
 
   setAll(data) {
-    return this.db.assign({}, data).write();
+    return this.db.setState(data).write();
   }
 
   update(key, func) {

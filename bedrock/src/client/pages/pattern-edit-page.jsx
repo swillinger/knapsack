@@ -5,10 +5,10 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import SchemaForm from '@basalt/bedrock-schema-form';
 import { StatusMessage } from '@basalt/bedrock-atoms';
+import Spinner from '@basalt/bedrock-spinner';
 import urlJoin from 'url-join';
 import patternMetaSchema from '../../schemas/pattern-meta.schema';
 import { apiUrlBase } from '../data';
-import Spinner from '../../../../components/spinner';
 
 const patternIdsQuery = gql`
   {

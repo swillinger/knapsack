@@ -263,9 +263,7 @@ function getRoutes(config) {
   const url5 = urlJoin(config.baseUrl, 'meta');
   registerEndpoint(url5);
   router.get(url5, (req, res) => {
-    res.send({
-      websocketsPort: config.websocketsPort,
-    });
+    res.send(config.meta);
   });
 
   return router;

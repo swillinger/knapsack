@@ -25,6 +25,10 @@ const { Patterns, patternsResolvers, patternsTypeDef } = require('./patterns');
 async function serve(config) {
   const port = 3999;
   const websocketsPort = await portfinder.getPortPromise();
+  const meta = {
+    websocketsPort,
+  };
+
   const patterns = new Patterns({
     newPatternDir: config.newPatternDir,
     patternPaths: config.src,
@@ -43,9 +47,7 @@ async function serve(config) {
 
   const metaResolvers = {
     Query: {
-      meta: () => ({
-        websocketsPort,
-      }),
+      meta: () => meta,
     },
   };
 
@@ -152,6 +154,7 @@ async function serve(config) {
     webroot: config.dist,
     public: config.public,
     baseUrl: '/api',
+    meta,
     designTokens: tokens.categories.map(category => {
       const theseTokens = tokens.tokens.filter(
         token => token.category === category,

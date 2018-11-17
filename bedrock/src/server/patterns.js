@@ -1,5 +1,5 @@
 const { gql } = require('apollo-server-express');
-const os = require('os');
+const GraphQLJSON = require('graphql-type-json');
 const fs = require('fs-extra');
 const { join } = require('path');
 const globby = require('globby');
@@ -13,6 +13,8 @@ const patternMetaSchema = require('../schemas/pattern-meta.schema.json');
 const { writeJson } = require('./server-utils');
 
 const patternsTypeDef = gql`
+  scalar JSON
+
   type PatternDoAndDontItem {
     image: String!
     caption: String
@@ -332,10 +334,7 @@ class Patterns {
   async setPatternMeta(id, meta) {
     const pattern = this.getPattern(id);
     try {
-      await fs.writeFile(
-        pattern.metaFilePath,
-        JSON.stringify(meta, null, '  ') + os.EOL,
-      );
+      await writeJson(pattern.metaFilePath, meta);
       // this.db.set(`${id}.meta`, meta);
       return {
         ok: true,
@@ -394,6 +393,7 @@ const patternsResolvers = {
     patterns: (parent, args, { patterns }) => patterns.getPatterns(),
     pattern: (parent, { id }, { patterns }) => patterns.getPattern(id),
   },
+  JSON: GraphQLJSON,
 };
 
 module.exports = {

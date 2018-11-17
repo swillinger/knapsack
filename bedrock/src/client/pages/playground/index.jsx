@@ -7,6 +7,8 @@ import { StatusMessage } from '@basalt/bedrock-atoms';
 import { connectToContext } from '@basalt/bedrock-core';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
 import { apiUrlBase } from '../../data';
 import Sidebar from '../../components/sidebar';
 import PlaygroundSlice from './playground-slice';
@@ -22,13 +24,27 @@ import {
   SliceError,
 } from './playground.styles';
 
+const query = gql`
+  query PlaygroundExamples($id: ID) {
+    example(id: $id) {
+      id
+      title
+      path
+      slices {
+        id
+        patternId
+        data
+      }
+    }
+  }
+`;
+
 class Playground extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ready: false,
-      example: {},
-      slices: [],
+      example: null,
+      slices: null,
       sidebarContent: SIDEBAR_DEFAULT,
       editFormInsertionIndex: null,
       editFormSchema: {},
@@ -61,30 +77,6 @@ class Playground extends Component {
     this.briefHighlight = this.briefHighlight.bind(this);
   }
 
-  componentDidMount() {
-    window
-      .fetch(`${this.apiEndpoint}/example/${this.props.id}`)
-      .then(res => res.json())
-      .then(results => {
-        if (results.ok) {
-          this.setState(prevState => ({
-            example: results.example,
-            slices: results.example.slices,
-            hasVisibleControls: results.example.hasVisibleControls
-              ? results.example.hasVisibleControls
-              : prevState.hasVisibleControls,
-            ready: true,
-          }));
-        } else {
-          this.setState({
-            statusMessage: results.message,
-            statusType: 'error',
-            ready: true,
-          });
-        }
-      });
-  }
-
   /**
    * @param {string} patternId - ID of Pattern, i.e. `media-block`
    * @return {{ name: string, selector: string, schema: Object, uiSchema: Object }} - First (main) template
@@ -109,6 +101,7 @@ class Playground extends Component {
     });
 
     window
+      // @todo write gql mutation here
       .fetch(`${this.apiEndpoint}/example/${this.props.id}`, {
         method: 'POST',
         headers: {
@@ -288,10 +281,20 @@ class Playground extends Component {
   }
 
   render() {
-    const { hasVisibleControls } = this.state.example;
-
-    if (!this.state.ready) {
-      return <Spinner />;
+    if (!this.state.example) {
+      return (
+        <Query query={query} variables={{ id: this.props.id }}>
+          {({ loading, error, data }) => {
+            if (loading) return <Spinner />;
+            if (error) return <p>Error :(</p>;
+            this.setState({
+              example: data.example,
+              slices: data.example.slices,
+            });
+            return null;
+          }}
+        </Query>
+      );
     }
 
     return (
@@ -317,8 +320,8 @@ class Playground extends Component {
             slices={this.state.slices}
           />
         </Sidebar>
-        <MainContent hasVisibleControls={hasVisibleControls}>
-          {hasVisibleControls && (
+        <MainContent hasVisibleControls={this.state.hasVisibleControls}>
+          {this.state.hasVisibleControls && (
             <React.Fragment>
               <h4 className="eyebrow">Prototyping Sandbox</h4>
               <h2>{this.state.example.title}</h2>
@@ -334,7 +337,7 @@ class Playground extends Component {
           <StartInsertSlice
             onClick={() => this.handleStartInsertSlice(0)}
             onKeyPress={() => this.handleStartInsertSlice(0)}
-            hasVisibleControls={hasVisibleControls}
+            hasVisibleControls={this.state.hasVisibleControls}
             isActive={this.state.editFormInsertionIndex === 0}
           >
             {this.state.editFormInsertionIndex === 0 ? (
@@ -390,7 +393,7 @@ class Playground extends Component {
                     }}
                     moveUp={() => this.moveSliceUp(sliceIndex, slice.id)}
                     moveDown={() => this.moveSliceDown(sliceIndex, slice.id)}
-                    hasVisibleControls={hasVisibleControls}
+                    hasVisibleControls={this.state.hasVisibleControls}
                     isBeingEdited={this.state.editFormSliceId === slice.id}
                     isFirst={sliceIndex === 0}
                     isLast={this.state.slices.length - 1 === sliceIndex}
@@ -402,7 +405,7 @@ class Playground extends Component {
                   key={`${slice.id}--handleAddSlice`}
                   onClick={() => this.handleStartInsertSlice(sliceIndex + 1)}
                   onKeyPress={() => this.handleStartInsertSlice(sliceIndex + 1)}
-                  hasVisibleControls={hasVisibleControls}
+                  hasVisibleControls={this.state.hasVisibleControls}
                   isActive={
                     this.state.editFormInsertionIndex === sliceIndex + 1
                   }

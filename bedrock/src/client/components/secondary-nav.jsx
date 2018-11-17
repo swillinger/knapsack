@@ -25,6 +25,10 @@ const secondaryNavQuery = gql`
         title
       }
     }
+    tokenGroups {
+      id
+      title
+    }
   }
 `;
 
@@ -81,21 +85,24 @@ class SecondaryNav extends Component {
     return (
       <Query query={secondaryNavQuery}>
         {({ data }) => {
-          const { patterns = [], examples = [] } = data;
+          const { patterns = [], examples = [], tokenGroups = [] } = data;
           const items = [
-            // {
-            //   title: 'Design Tokens',
-            //   id: 'design-tokens',
-            //   path: '/design-tokens',
-            //   isHeading: true,
-            // },
-            // {
-            //   title: 'All Tokens',
-            //   id: 'all-design-tokens',
-            //   path: '/design-tokens/all',
-            // },
-            // ...this.props.context.designTokensPages,
-            // @todo bring back Design tokens when vailable through gql
+            {
+              title: 'Design Tokens',
+              id: 'design-tokens',
+              path: '/design-tokens',
+              isHeading: true,
+            },
+            {
+              title: 'All Tokens',
+              id: 'all-design-tokens',
+              path: '/design-tokens/all',
+            },
+            ...tokenGroups.map(tokenGroup => ({
+              id: tokenGroup.id,
+              title: tokenGroup.title,
+              path: urlJoin('/design-tokens', tokenGroup.id),
+            })),
             {
               title: 'Patterns',
               id: 'patterns',

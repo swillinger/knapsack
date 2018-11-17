@@ -50,7 +50,7 @@ class ExamplesLandingPage extends Component {
   }
 
   render() {
-    const { enableBlockquotes } = this.props.context.settings;
+    const { enableBlockquotes } = this.props.context.features;
     if (this.state.redirect) {
       return <Redirect to={`/examples/${this.state.redirect}`} />;
     }

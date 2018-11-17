@@ -1,23 +1,50 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
 import SchemaForm from '@basalt/bedrock-schema-form';
 import { StatusMessage } from '@basalt/bedrock-atoms';
 import urlJoin from 'url-join';
 import patternMetaSchema from '../../schemas/pattern-meta.schema';
 import { apiUrlBase } from '../data';
+import Spinner from '../../../../components/spinner';
+
+const patternIdsQuery = gql`
+  {
+    patterns {
+      id
+      meta {
+        title
+        description
+        type
+        status
+        uses
+        demoSize
+        hasIcon
+        dosAndDonts {
+          title
+          description
+          items {
+            image
+            caption
+            do
+          }
+        }
+      }
+    }
+  }
+`;
 
 class PatternEdit extends Component {
   constructor(props) {
     super(props);
     this.apiEndpoint = urlJoin(apiUrlBase, 'pattern-meta', props.id);
-    const pattern = props.context.patterns.find(p => p.id === props.id);
+    // const pattern = props.context.patterns.find(p => p.id === props.id);
     this.state = {
       statusMessage: '',
       statusType: 'info',
       redirectUrl: '',
-      formData: pattern.meta,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -38,7 +65,6 @@ class PatternEdit extends Component {
           this.setState({
             statusMessage: `${results.message} Redirecting...`,
             statusType: 'success',
-            formData,
           });
           // without this delay, the next page does not show the fresh data yet
           setTimeout(() => {
@@ -48,7 +74,6 @@ class PatternEdit extends Component {
           this.setState({
             statusMessage: results.message,
             statusType: 'error',
-            formData,
           });
         }
       })
@@ -67,20 +92,28 @@ class PatternEdit extends Component {
             type={this.state.statusType}
           />
         )}
-        <SchemaForm
-          schema={patternMetaSchema}
-          formData={this.state.formData}
-          hasSubmit
-          onSubmit={this.handleSubmit}
-        />
+        <Query query={patternIdsQuery}>
+          {({ error, loading, data }) => {
+            if (loading) return <Spinner />;
+            if (error) return <p>Error</p>;
+            const formData = data.patterns.find(p => p.id === this.props.id);
+            return (
+              <SchemaForm
+                schema={patternMetaSchema}
+                formData={formData}
+                hasSubmit
+                onSubmit={this.handleSubmit}
+              />
+            );
+          }}
+        </Query>
       </div>
     );
   }
 }
 
 PatternEdit.propTypes = {
-  context: contextPropTypes.isRequired,
   id: PropTypes.string.isRequired,
 };
 
-export default connectToContext(PatternEdit);
+export default PatternEdit;

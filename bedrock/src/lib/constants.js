@@ -85,8 +85,19 @@ const TOKEN_GROUPS = {
   },
 };
 
+/**
+ * Base Paths for URLs
+ * DO NOT INCLUDE TRAILING SLASH!
+ */
+const BASE_PATHS = {
+  PATTERNS: '/patterns',
+  DESIGN_TOKENS: '/design-tokens',
+  EXAMPLES: '/examples',
+};
+
 module.exports = {
   USER_SITE_PUBLIC: '/user-site-public',
   TOKEN_CATS,
   TOKEN_GROUPS,
+  BASE_PATHS,
 };

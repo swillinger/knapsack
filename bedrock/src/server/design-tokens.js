@@ -1,6 +1,6 @@
 const theo = require('theo');
 const { gql } = require('apollo-server-express');
-const { TOKEN_GROUPS } = require('../lib/constants');
+const { TOKEN_GROUPS, BASE_PATHS } = require('../lib/constants');
 const { hasItemsInItems } = require('../lib/utils');
 
 const designTokensTypeDef = gql`
@@ -21,6 +21,7 @@ const designTokensTypeDef = gql`
   type TokenGroup {
     id: ID!
     title: String
+    path: String
     description: String
     tokenCategories: [String]
   }
@@ -50,9 +51,14 @@ class DesignTokens {
     this.tokens = this.convertTokens();
     const possibleGroups = Object.values(TOKEN_GROUPS);
     // only include groups that have a design token category to demo
-    this.groups = possibleGroups.filter(group =>
-      hasItemsInItems(group.tokenCategories, this.getCategories()),
-    );
+    this.groups = possibleGroups
+      .filter(group =>
+        hasItemsInItems(group.tokenCategories, this.getCategories()),
+      )
+      .map(group => ({
+        path: `${BASE_PATHS.DESIGN_TOKENS}/${group.id}`,
+        ...group,
+      }));
   }
 
   /**

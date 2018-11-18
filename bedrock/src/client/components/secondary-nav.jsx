@@ -11,6 +11,7 @@ import Spinner from '@basalt/bedrock-spinner';
 import urlJoin from 'url-join';
 import { FaTimes } from 'react-icons/fa';
 import NavList from './nav-list';
+import { BASE_PATHS } from '../../lib/constants';
 
 const secondaryNavQuery = gql`
   {
@@ -27,6 +28,7 @@ const secondaryNavQuery = gql`
     tokenGroups {
       id
       title
+      path
     }
   }
 `;
@@ -92,23 +94,19 @@ class SecondaryNav extends Component {
             {
               title: 'Design Tokens',
               id: 'design-tokens',
-              path: '/design-tokens',
+              path: BASE_PATHS.DESIGN_TOKENS,
               isHeading: true,
             },
             {
               title: 'All Tokens',
               id: 'all-design-tokens',
-              path: '/design-tokens/all',
+              path: `${BASE_PATHS.DESIGN_TOKENS}/all`,
             },
-            ...tokenGroups.map(tokenGroup => ({
-              id: tokenGroup.id,
-              title: tokenGroup.title,
-              path: urlJoin('/design-tokens', tokenGroup.id),
-            })),
+            ...tokenGroups,
             {
               title: 'Patterns',
               id: 'patterns',
-              path: '/patterns',
+              path: BASE_PATHS.PATTERNS,
               isHeading: true,
             },
             {
@@ -125,12 +123,12 @@ class SecondaryNav extends Component {
               title: 'Examples',
               id: 'example-heading',
               isHeading: true,
-              path: '/examples',
+              path: BASE_PATHS.EXAMPLES,
             },
             ...examples.map(example => ({
               id: example.id,
               title: example.title,
-              path: `/examples/${example.id}`,
+              path: `${BASE_PATHS.EXAMPLES}/${example.id}`,
             })),
             // ...SecondaryNav.prepSectionLinks(this.props.context.sections),
             // @todo bring back custom sections through gql

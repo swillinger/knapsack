@@ -65,7 +65,6 @@ class App extends React.Component {
     };
     this.apiEndpoint = `${apiUrlBase}`;
     this.apolloClient = new ApolloClient();
-    this.isDesignTokenAvailable = this.isDesignTokenAvailable.bind(this);
   }
 
   async componentDidMount() {
@@ -145,7 +144,6 @@ class App extends React.Component {
               if (error) return <p>Error</p>;
 
               const { tokenGroups = [] } = data;
-              console.log({ tokenGroups });
               return (
                 <BedrockContextProvider value={cruxContext}>
                   <ThemeProvider theme={cruxContext.theme}>

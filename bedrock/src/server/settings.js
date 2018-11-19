@@ -21,8 +21,10 @@ const settingsTypeDef = gql`
 
   type Query {
     settings: Settings
+  }
+
+  type Mutation {
     setSettings(settings: JSON): Settings
-    setSetting(setting: String, value: String): Settings
   }
 `;
 
@@ -89,12 +91,10 @@ class Settings {
 const settingsResolvers = {
   Query: {
     settings: (parent, args, { settings }) => settings.getSettings(),
-    setSettings: (parent, { newSettings }, { settings }) => {
+  },
+  Mutation: {
+    setSettings: (parent, { settings: newSettings }, { settings }) => {
       settings.setSettings(newSettings);
-      return settings.getSettings();
-    },
-    setSetting: (parent, { setting, value }, { settings }) => {
-      settings.setSetting(setting, value);
       return settings.getSettings();
     },
   },

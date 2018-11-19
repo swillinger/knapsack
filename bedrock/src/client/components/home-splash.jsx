@@ -3,6 +3,7 @@ import { connectToContext } from '@basalt/bedrock-core';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import Spinner from '@basalt/bedrock-spinner';
+import { StatusMessage } from '@basalt/bedrock-atoms';
 import {
   HomeSplashCore,
   EyeBrow,
@@ -82,7 +83,7 @@ const HomeSplash = () => (
   <Query query={query}>
     {({ loading, error, data }) => {
       if (loading) return <Spinner />;
-      if (error) return <p>Error :(</p>;
+      if (error) return <StatusMessage message={error.message} type="error " />;
 
       const { settings } = data;
       return (

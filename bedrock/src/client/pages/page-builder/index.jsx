@@ -23,10 +23,11 @@ import {
   Page,
   SliceError,
 } from './page-builder.styles';
+import { BASE_PATHS } from '../../../lib/constants';
 
 const query = gql`
-  query PlaygroundExamples($id: ID) {
-    example(id: $id) {
+  query PageBuilerPages($id: ID) {
+    pageBuilderPage(id: $id) {
       id
       title
       path
@@ -102,7 +103,7 @@ class Playground extends Component {
 
     window
       // @todo write gql mutation here
-      .fetch(`${this.apiEndpoint}/example/${this.props.id}`, {
+      .fetch(`${this.apiEndpoint}${BASE_PATHS.PAGES}/${this.props.id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -288,8 +289,8 @@ class Playground extends Component {
             if (loading) return <Spinner />;
             if (error) return <p>Error :(</p>;
             this.setState({
-              example: data.example,
-              slices: data.example.slices,
+              example: data.pageBuilderPage,
+              slices: data.pageBuilderPage.slices,
             });
             return null;
           }}

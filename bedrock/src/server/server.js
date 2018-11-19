@@ -9,7 +9,11 @@ const log = require('../cli/log');
 const { getRoutes } = require('./rest-api');
 const { enableTemplatePush } = require('../lib/features');
 const { USER_SITE_PUBLIC } = require('../lib/constants');
-const { Examples, examplesTypeDef, examplesResolvers } = require('./examples');
+const {
+  PageBuilder,
+  pageBuilderPagesTypeDef,
+  pageBuilderPagesResolvers,
+} = require('./page-builder');
 const { Settings, settingsTypeDef, settingsResolvers } = require('./settings');
 const {
   DesignTokens,
@@ -55,8 +59,8 @@ async function serve(config) {
     schema: mergeSchemas({
       schemas: [
         makeExecutableSchema({
-          typeDefs: examplesTypeDef,
-          resolvers: examplesResolvers,
+          typeDefs: pageBuilderPagesTypeDef,
+          resolvers: pageBuilderPagesResolvers,
         }),
         makeExecutableSchema({
           typeDefs: settingsTypeDef,
@@ -78,7 +82,7 @@ async function serve(config) {
     }),
     // https://www.apollographql.com/docs/apollo-server/essentials/data.html#context
     context: ({ req }) => ({// eslint-disable-line
-      examples: new Examples({ dataDir: config.data }),
+      pageBuilderPages: new PageBuilder({ dataDir: config.data }),
       settings: new Settings({ dataDir: config.data }),
       tokens: new DesignTokens({ tokenPath: config.designTokens }),
       patterns,
@@ -170,7 +174,7 @@ async function serve(config) {
     }),
     patternManifest: patterns,
     templateRenderers: config.templates,
-    exampleStore: new Examples({
+    pageBuilder: new PageBuilder({
       dataDir: config.data,
     }),
     settingsStore: new Settings({ dataDir: config.data }),

@@ -6,10 +6,11 @@ import gql from 'graphql-tag';
 import { Button, TwoUp, BlockQuoteWrapper } from '@basalt/bedrock-atoms';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
 import { apiUrlBase } from '../data';
+import { BASE_PATHS } from '../../lib/constants';
 
 const examplesQuery = gql`
   {
-    examples {
+    pageBuilderPages {
       title
       id
     }
@@ -29,7 +30,7 @@ class PageBuilderLandingPage extends Component {
   makeNewExample() {
     const id = shortid.generate();
     window
-      .fetch(`${this.apiEndpoint}/example/${id}`, {
+      .fetch(`${this.apiEndpoint}${BASE_PATHS.PAGES}/${id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -37,11 +38,13 @@ class PageBuilderLandingPage extends Component {
         body: JSON.stringify({
           id,
           title: 'My New Example',
-          path: `/pages/${id}`,
+          path: `${BASE_PATHS.PAGES}/${id}`,
           slices: [],
         }),
       })
-      .then(res => res.json())
+      .then(res => {
+        res.json();
+      })
       .then(() => {
         this.setState({
           redirect: id,
@@ -52,12 +55,12 @@ class PageBuilderLandingPage extends Component {
   render() {
     const { enableBlockquotes } = this.props.context.features;
     if (this.state.redirect) {
-      return <Redirect to={`/examples/${this.state.redirect}`} />;
+      return <Redirect to={`${BASE_PATHS.PAGES}/${this.state.redirect}`} />;
     }
     return (
       <Query query={examplesQuery}>
         {({ data }) => {
-          const { examples = [] } = data;
+          const { pageBuilderPages = [] } = data;
           return (
             <>
               <h4 className="eyebrow">Prototyping Pages</h4>
@@ -87,9 +90,9 @@ class PageBuilderLandingPage extends Component {
                 <div>
                   <h3>Pages</h3>
                   <ul>
-                    {examples.map(({ id, title }) => (
+                    {pageBuilderPages.map(({ id, title }) => (
                       <li key={id}>
-                        <Link to={`/examples/${id}`}>{title}</Link>
+                        <Link to={`${BASE_PATHS.PAGES}/${id}`}>{title}</Link>
                       </li>
                     ))}
                   </ul>

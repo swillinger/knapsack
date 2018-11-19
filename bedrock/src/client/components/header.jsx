@@ -22,7 +22,7 @@ const headerQuery = gql`
         logo
       }
     }
-    examples {
+    pageBuilderPages {
       id
     }
     patterns {

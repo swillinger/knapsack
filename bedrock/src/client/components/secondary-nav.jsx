@@ -15,7 +15,7 @@ import { BASE_PATHS } from '../../lib/constants';
 
 const secondaryNavQuery = gql`
   {
-    examples {
+    pageBuilderPages {
       title
       id
     }
@@ -89,7 +89,11 @@ class SecondaryNav extends Component {
           if (loading) return <Spinner />;
           if (error) return <p>Error</p>;
 
-          const { patterns = [], examples = [], tokenGroups = [] } = data;
+          const {
+            patterns = [],
+            pageBuilderPages = [],
+            tokenGroups = [],
+          } = data;
           const items = [
             {
               title: 'Design Tokens',
@@ -125,10 +129,10 @@ class SecondaryNav extends Component {
               isHeading: true,
               path: BASE_PATHS.PAGES,
             },
-            ...examples.map(example => ({
-              id: example.id,
-              title: example.title,
-              path: `${BASE_PATHS.PAGES}/${example.id}`,
+            ...pageBuilderPages.map(page => ({
+              id: page.id,
+              title: page.title,
+              path: `${BASE_PATHS.PAGES}/${page.id}`,
             })),
             // ...SecondaryNav.prepSectionLinks(this.props.context.sections),
             // @todo bring back custom sections through gql

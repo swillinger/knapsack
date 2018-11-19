@@ -130,7 +130,7 @@ async function serve(config) {
 
   const tokens = {
     tokens: await designTokens.getTokens(),
-    categories: await designTokens.getCategories(),
+    categories: await designTokens.allCategoriesUsed,
   };
 
   const endpoints = [];

@@ -27,6 +27,8 @@ function cleanup {
   # Uncomment when snapshot testing is enabled by default:
   # rm ./packages/react-scripts/template/src/__snapshots__/App.test.js.snap
   rm -rf "$temp_app_path"
+  # Removing all published npm packages
+  rm -rf "$root_path/scripts/verdaccio/"
   killall verdaccio || true
   npm set registry "$original_npm_registry_url"
   yarn config set registry "$original_yarn_registry_url"
@@ -128,7 +130,14 @@ cd test-app
 yarn
 echo 'Install successfull. Building...'
 yarn build
-echo 'Build successfull! Cleaning up...'
+echo 'Build successfull!'
+# echo 'Deploying...'
+# npm i -g now@latest --unsafe-perm
+# echo 'Hiding now deploy command as it contains a secret'
+# set +C
+# now --build-env NPM_TOKEN=@npm-token --token=$NOW_TOKEN --team=basalt --name='create-bedrock' --no-clipboard
+# set -x
 
+echo 'Cleaning up...'
 # Cleanup
 cleanup

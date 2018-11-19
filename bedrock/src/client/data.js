@@ -1,96 +1,48 @@
-import urlJoin from 'url-join';
-
 export const apiUrlBase = '/api'; // @todo refactor
 
-export const ENDPOINTS = {
-  DESIGN_TOKENS: urlJoin(apiUrlBase, 'design-tokens'),
-};
-
-// @todo make every `fetch` function use this function
-// async function request(endpoint) {
-//   /** @type {Response} */
-//   const response = await window.fetch(endpoint);
-//   const { ok, status, statusText } = response;
-//   if (ok) {
-//     return response.json();
-//   }
-//   return {
-//     ok: false,
-//     message: `Error hitting endpoint, received ${status}: ${statusText}`,
-//   };
-// }
-
 /**
- * @return {Promise<string[]>}
+ * GraphQL Query
+ * Must pass in `query` OR `gqlQuery`
+ * @param {Object} obj
+ * @param {string | DocumentNode} [obj.query] - Plain GraphQL query
+ * @param {DocumentNode} [obj.gqlQueryObj] - GraphQL query made from `gql`
+ * @param {Object} [obj.variables] - GraphQL variables
+ * @return {Promise<Object>}
+ * @async
  */
-export function getAvailableTokenCategories() {
-  return window
-    .fetch(ENDPOINTS.DESIGN_TOKENS)
-    .then(res => res.json())
-    .then(x => x.map(y => y.id))
-    .catch(console.log.bind(console));
-}
-
-/**
- * @param {string} category
- * @return {Promise<GenericResponse>}
- */
-export async function getDesignTokensCategory(category) {
-  try {
-    /** @type {Response} */
-    const response = await window.fetch(
-      urlJoin(apiUrlBase, 'design-token', category),
-    );
-    if (response.ok) {
-      return response.json();
-    }
-    return {
-      ok: false,
-      message: `No api endpoint for ${category} available, so probably no tokens for it.`,
-      data: {},
-    };
-  } catch (err) {
-    return {
-      ok: false,
-      message: `No api endpoint for ${category} available, so probably no tokens for it.`,
-      data: {},
-    };
+export function gqlQuery({ query = '', gqlQueryObj, variables = {} }) {
+  if (!query && !gqlQueryObj) {
+    throw new Error('Must provide either "query" or "gqlQueryObj".');
   }
-}
 
-export async function getDesignTokensCategories(categories) {
-  const availableCategories = await getAvailableTokenCategories();
-  const results = {};
-
-  return Promise.all(
-    categories
-      .filter(category => availableCategories.includes(category))
-      .map(category =>
-        getDesignTokensCategory(category).then(tokens => ({
-          [category]: tokens,
-        })),
-      ),
-  )
-    .then(allTokens => {
-      allTokens.forEach(allToken => {
-        const [id] = Object.keys(allToken);
-        const tokens = allToken[id];
-        if (tokens.ok) {
-          results[id] = tokens.data;
-        }
-      });
-
-      return {
-        ok: true,
-        data: results,
-      };
+  if (typeof query !== 'string') {
+    // if (gqlQueryObj.kind !== 'Document') {
+    //   throw new Error('"gqlQueryObj" not a valid GraphQL document.');
+    // }
+    query = query.loc.source.body; // eslint-disable-line no-param-reassign
+  }
+  // if (!query && gqlQueryObj) {
+  //   if (gqlQueryObj.kind !== 'Document') {
+  //     throw new Error('"gqlQueryObj" not a valid GraphQL document.');
+  //   }
+  //   query = gqlQueryObj.loc.source.body; // eslint-disable-line no-param-reassign
+  // }
+  console.log({ query });
+  return window
+    .fetch('/graphql', {
+      method: 'POST',
+      headers: {
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Connection: 'keep-alive',
+        Dnt: '1',
+      },
+      body: JSON.stringify({
+        query,
+        variables,
+      }),
     })
-    .catch(err => {
-      console.error('Error: getDesignTokensCategories', err);
-      return {
-        ok: false,
-        data: {},
-        message: err.toString(),
-      };
-    });
+    .then(res => res.text())
+    .catch(console.log.bind(console));
 }

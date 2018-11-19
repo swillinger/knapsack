@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
 import Spinner from '@basalt/bedrock-spinner';
 import { StatusMessage } from '@basalt/bedrock-atoms';
-import { getDesignTokensCategories } from '../data';
 
 export const propTypes = {
   id: PropTypes.string.isRequired,
@@ -10,6 +11,30 @@ export const propTypes = {
   description: PropTypes.string.isRequired,
   tokens: PropTypes.object.isRequired,
 };
+
+const query = gql`
+  query TokenGroup($group: String) {
+    tokenGroup(group: $group) {
+      id
+      description
+      path
+      title
+      tokenCategories {
+        id
+        hasDemo
+        name
+        tokens {
+          category
+          comment
+          name
+          originalValue
+          type
+          value
+        }
+      }
+    }
+  }
+`;
 
 /**
  *
@@ -27,33 +52,27 @@ export default function makeDesignTokensPage(WrappedComponent) {
       };
     }
 
-    componentDidMount() {
-      getDesignTokensCategories(this.props.tokenCategories)
-        .then(tokens => {
-          if (tokens.ok) {
-            this.setState({
-              tokens: tokens.data,
-              ready: true,
-            });
-          } else {
-            this.setState({
-              errorMessage: tokens.message,
-              ready: true,
-            });
-          }
-          return tokens.ok;
-        })
-        .catch(console.log.bind(console));
-    }
-
     render() {
-      if (!this.state.ready) {
-        return <Spinner />;
-      }
-      if (this.state.errorMessage) {
-        return <StatusMessage message={this.state.errorMessage} type="error" />;
-      }
-      return <WrappedComponent {...this.props} tokens={this.state.tokens} />;
+      return (
+        <Query query={query} variables={{ group: this.props.id }}>
+          {({ loading, error, data }) => {
+            if (loading) {
+              return <Spinner />;
+            }
+            if (error) {
+              return <StatusMessage message={error.message} type="error" />;
+            }
+            const tokens = {};
+            // @todo remove once group pages can use `data.tokenGroup`
+            data.tokenGroup.tokenCategories.forEach(cat => {
+              if (cat.hasDemo) {
+                tokens[cat.id] = cat.tokens;
+              }
+            });
+            return <WrappedComponent {...data.tokenGroup} tokens={tokens} />;
+          }}
+        </Query>
+      );
     }
   };
 }

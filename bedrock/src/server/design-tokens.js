@@ -16,7 +16,7 @@ const designTokensTypeDef = gql`
   type DesignToken {
     category: String!
     name: String!
-    originalValue: String!
+    originalValue: String
     type: String!
     value: String!
     comment: String
@@ -44,7 +44,8 @@ const designTokensTypeDef = gql`
     tokenCategories: [TokenCategory]
     tokenCategory(category: String): TokenCategory
     tokens(category: String): [DesignToken]
-    tokenGroups(group: String): [TokenGroup]
+    tokenGroups: [TokenGroup]
+    tokenGroup(group: String): TokenGroup
   }
 `;
 
@@ -147,13 +148,9 @@ class DesignTokens {
   }
 
   /**
-   * @param {string} [group]
    * @return {TokenGroup[]}
    */
-  getGroups(group) {
-    if (group) {
-      return this.groups.filter(g => g.id === group);
-    }
+  getGroups() {
     return this.groups;
   }
 
@@ -220,7 +217,8 @@ const designTokensResolvers = {
     tokenCategory: (parent, { category }, { tokens }) =>
       tokens.getCategory(category),
     tokens: (parent, { category }, { tokens }) => tokens.getTokens(category),
-    tokenGroups: (parent, { group }, { tokens }) => tokens.getGroups(group),
+    tokenGroups: (parent, args, { tokens }) => tokens.getGroups(),
+    tokenGroup: (parent, { group }, { tokens }) => tokens.getGroup(group),
   },
 };
 

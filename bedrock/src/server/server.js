@@ -121,14 +121,14 @@ async function serve(config, meta) {
   //   );
   // }
 
-  const designTokens = new DesignTokens({
-    tokenPath: config.designTokens,
-  });
+  // const designTokens = new DesignTokens({
+  //   tokenPath: config.designTokens,
+  // });
 
-  const tokens = {
-    tokens: await designTokens.getTokens(),
-    categories: await designTokens.allCategoriesUsed,
-  };
+  // const tokens = {
+  //   tokens: await designTokens.getTokens(),
+  //   categories: await designTokens.allCategoriesUsed,
+  // };
 
   const endpoints = [];
 
@@ -152,19 +152,19 @@ async function serve(config, meta) {
     public: config.public,
     baseUrl: '/api',
     meta,
-    designTokens: tokens.categories.map(category => {
-      const theseTokens = tokens.tokens.filter(
-        token => token.category === category,
-      );
-      return {
-        id: category,
-        meta: {
-          title: category,
-          description: `Description for ${category}`,
-        },
-        get: () => Promise.resolve(theseTokens),
-      };
-    }),
+    // designTokens: tokens.categories.map(category => {
+    //   const theseTokens = tokens.tokens.filter(
+    //     token => token.category === category,
+    //   );
+    //   return {
+    //     id: category,
+    //     meta: {
+    //       title: category,
+    //       description: `Description for ${category}`,
+    //     },
+    //     get: () => Promise.resolve(theseTokens),
+    //   };
+    // }),
     patternManifest: patterns,
     templateRenderers: config.templates,
     exampleStore: new Examples({

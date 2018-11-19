@@ -37,13 +37,13 @@ export const LoadablePatternNew = Loadable({
 
 export const LoadablePlayground = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "playground-page" */ './pages/playground'),
+    import(/* webpackChunkName: "playground-page" */ './pages/page-builder'),
   loading: Spinner,
 });
 
 export const LoadableExamplesPage = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "examples-landing-page" */ './pages/examples-landing-page.jsx'),
+    import(/* webpackChunkName: "page-builder-landing-page" */ './pages/page-builder-landing-page.jsx'),
   loading: Spinner,
 });
 

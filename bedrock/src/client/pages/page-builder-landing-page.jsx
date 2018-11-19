@@ -16,7 +16,7 @@ const examplesQuery = gql`
   }
 `;
 
-class ExamplesLandingPage extends Component {
+class PageBuilderLandingPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -114,8 +114,8 @@ class ExamplesLandingPage extends Component {
   }
 }
 
-ExamplesLandingPage.propTypes = {
+PageBuilderLandingPage.propTypes = {
   context: contextPropTypes.isRequired,
 };
 
-export default connectToContext(ExamplesLandingPage);
+export default connectToContext(PageBuilderLandingPage);

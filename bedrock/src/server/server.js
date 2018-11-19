@@ -4,7 +4,6 @@ const { mergeSchemas, makeExecutableSchema } = require('graphql-tools');
 const WebSocket = require('ws');
 const bodyParser = require('body-parser');
 const { join } = require('path');
-const portfinder = require('portfinder');
 const log = require('../cli/log');
 const { getRoutes } = require('./rest-api');
 const { enableTemplatePush } = require('../lib/features');
@@ -20,14 +19,11 @@ const { Patterns, patternsResolvers, patternsTypeDef } = require('./patterns');
 
 /**
  * @param {BedrockConfig} config
+ * @param {BedrockMeta} meta
  * @returns {Promise<void>}
  */
-async function serve(config) {
+async function serve(config, meta) {
   const port = 3999;
-  const websocketsPort = await portfinder.getPortPromise();
-  const meta = {
-    websocketsPort,
-  };
 
   const patterns = new Patterns({
     newPatternDir: config.newPatternDir,
@@ -38,6 +34,7 @@ async function serve(config) {
   const metaTypeDef = gql`
     type Meta {
       websocketsPort: Int
+      bedrockVersion: String
     }
 
     type Query {
@@ -204,9 +201,9 @@ async function serve(config) {
     return true;
   }
 
-  if (websocketsPort && enableTemplatePush) {
+  if (meta.websocketsPort && enableTemplatePush) {
     wss = new WebSocket.Server({
-      port: websocketsPort,
+      port: meta.websocketsPort,
       clientTracking: true,
     });
   }

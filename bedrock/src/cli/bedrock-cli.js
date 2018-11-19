@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 const program = require('commander');
 const { existsSync } = require('fs-extra');
+const portfinder = require('portfinder');
 const { join, resolve, dirname } = require('path');
 const log = require('./log');
 const { serve } = require('../server/server');
@@ -35,6 +36,16 @@ function processConfig(userConfig, from) {
   };
 }
 
+/**
+ * @return {Promise<BedrockMeta>}
+ */
+async function getMeta() {
+  return {
+    websocketsPort: await portfinder.getPortPromise(),
+    bedrockVersion: version,
+  };
+}
+
 const configPath = join(process.cwd(), 'bedrock.config.js');
 if (!existsSync(configPath)) {
   log.error('Could not find bedrock.config.js file in CWD.');
@@ -53,7 +64,7 @@ program.version(version);
 
 program.command('serve').action(async () => {
   log.info('🏔 running serve...');
-  await serve(config);
+  await serve(config, await getMeta());
 });
 
 program.command('build').action(async () => {

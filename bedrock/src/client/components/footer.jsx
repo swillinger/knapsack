@@ -11,6 +11,9 @@ const currentYear = today.getFullYear();
 
 const query = gql`
   {
+    meta {
+      bedrockVersion
+    }
     settings {
       parentBrand {
         homepage
@@ -49,6 +52,24 @@ const Footer = props => (
                 {parentBrand.title}
               </a>
             )}
+          </p>
+          <p>
+            Built on{' '}
+            <a
+              href="https://www.getbedrock.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Bedrock
+            </a>{' '}
+            {data.meta.bedrockVersion} by{' '}
+            <a
+              href="https://basalt.io"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Basalt
+            </a>
           </p>
         </FooterWrapper>
       );

@@ -117,18 +117,18 @@ class SecondaryNav extends Component {
             ...patterns.map(pattern => ({
               id: pattern.id,
               title: pattern.meta.title,
-              path: urlJoin('/patterns', pattern.id),
+              path: urlJoin(BASE_PATHS.PATTERNS, pattern.id),
             })),
             {
               title: 'Page Builder',
-              id: 'example-heading',
+              id: 'page-builder',
               isHeading: true,
-              path: BASE_PATHS.EXAMPLES,
+              path: BASE_PATHS.PAGES,
             },
             ...examples.map(example => ({
               id: example.id,
               title: example.title,
-              path: `${BASE_PATHS.EXAMPLES}/${example.id}`,
+              path: `${BASE_PATHS.PAGES}/${example.id}`,
             })),
             // ...SecondaryNav.prepSectionLinks(this.props.context.sections),
             // @todo bring back custom sections through gql

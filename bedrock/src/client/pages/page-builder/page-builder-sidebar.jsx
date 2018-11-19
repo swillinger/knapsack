@@ -14,6 +14,7 @@ import {
   PatternListWrapper,
   PlaygroundStyledSchemaForm,
 } from './page-builder.styles';
+import { BASE_PATHS } from '../../../lib/constants';
 
 // Export of allowed sidebarContent states
 export const SIDEBAR_DEFAULT = 'default';
@@ -138,13 +139,13 @@ function PageBuilderSidebar(props) {
         >
           Save*
         </Button>
-        <Link to="/examples">Back</Link>
+        <Link to={BASE_PATHS.PAGES}>Back</Link>
       </div>
       <p>
         <br />
         <small>* Warning: server unresponsive for ~3s upon save</small>
       </p>
-      {/* @todo Fix unresponsive server triggered by save. Since this writes to the JSON files in `server/data/examples/*.json` and the `watch:server` task watches that directory for changes, it cause server to restart. It can't be fixed by just moving the files: cause then those files are cached. */}
+      {/* @todo Fix unresponsive server triggered by save. Since this writes to the JSON files in `server/data/pages/*.json` and the `watch:server` task watches that directory for changes, it cause server to restart. It can't be fixed by just moving the files: cause then those files are cached. */}
     </div>
   );
 }

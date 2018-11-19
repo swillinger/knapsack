@@ -37,7 +37,7 @@ class PageBuilderLandingPage extends Component {
         body: JSON.stringify({
           id,
           title: 'My New Example',
-          path: `/examples/${id}`,
+          path: `/pages/${id}`,
           slices: [],
         }),
       })

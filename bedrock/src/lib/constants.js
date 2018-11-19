@@ -92,7 +92,8 @@ const TOKEN_GROUPS = {
 const BASE_PATHS = {
   PATTERNS: '/patterns',
   DESIGN_TOKENS: '/design-tokens',
-  EXAMPLES: '/examples',
+  PAGES: '/pages',
+  CUSTOM_PAGES: '/custom-pages',
 };
 
 module.exports = {

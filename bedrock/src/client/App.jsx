@@ -24,9 +24,9 @@ import {
   LoadableFooter,
   LoadablePatternView,
   LoadableCustomSectionPage,
-  LoadableExamplesPage,
+  LoadablePageBuilderLandingPage,
   LoadablePatternsPage,
-  LoadablePlayground,
+  LoadablePageBuilder,
   LoadableSecondaryNav,
   LoadableSettingsPage,
   LoadableSidebar,
@@ -186,7 +186,7 @@ class App extends React.Component {
                                   <Route
                                     path="/examples/:id"
                                     render={({ match }) => (
-                                      <LoadablePlayground
+                                      <LoadablePageBuilder
                                         id={match.params.id}
                                         patterns={this.state.patterns}
                                       />
@@ -194,7 +194,7 @@ class App extends React.Component {
                                   />
                                   <Route
                                     path="/examples"
-                                    component={LoadableExamplesPage}
+                                    component={LoadablePageBuilderLandingPage}
                                     exact
                                   />
                                   {this.state.sections.map(section => (

@@ -60,8 +60,8 @@ class PageBuilderLandingPage extends Component {
           const { examples = [] } = data;
           return (
             <>
-              <h4 className="eyebrow">Prototyping and Samples</h4>
-              <h2>Examples</h2>
+              <h4 className="eyebrow">Prototyping Pages</h4>
+              <h2>Page Builder</h2>
               {enableBlockquotes && (
                 <BlockQuoteWrapper>
                   When I design buildings, I think of the overall composition,
@@ -85,7 +85,7 @@ class PageBuilderLandingPage extends Component {
                   </p>
                 </div>
                 <div>
-                  <h3>Interactive Examples</h3>
+                  <h3>Pages</h3>
                   <ul>
                     {examples.map(({ id, title }) => (
                       <li key={id}>
@@ -96,7 +96,7 @@ class PageBuilderLandingPage extends Component {
                 </div>
               </TwoUp>
               <div>
-                <h3>Create a New Example</h3>
+                <h3>Create a New Page</h3>
                 <Button
                   primary
                   onClick={this.makeNewExample}

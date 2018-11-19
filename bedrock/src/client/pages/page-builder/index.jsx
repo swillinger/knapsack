@@ -11,18 +11,18 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { apiUrlBase } from '../../data';
 import Sidebar from '../../components/sidebar';
-import PlaygroundSlice from './playground-slice';
-import PlaygroundSidebar, {
+import PlaygroundSlice from './page-builder-slice';
+import PageBuilderSidebar, {
   SIDEBAR_DEFAULT,
   SIDEBAR_FORM,
   SIDEBAR_PATTERNS,
-} from './playground-sidebar';
+} from './page-builder-sidebar';
 import {
   MainContent,
   StartInsertSlice,
   Page,
   SliceError,
-} from './playground.styles';
+} from './page-builder.styles';
 
 const query = gql`
   query PlaygroundExamples($id: ID) {
@@ -300,7 +300,7 @@ class Playground extends Component {
     return (
       <Page>
         <Sidebar>
-          <PlaygroundSidebar
+          <PageBuilderSidebar
             editFormSchema={this.state.editFormSchema}
             editFormUiSchema={this.state.editFormUiSchema}
             editFormSliceId={this.state.editFormSliceId}

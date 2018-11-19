@@ -120,7 +120,7 @@ class SecondaryNav extends Component {
               path: urlJoin('/patterns', pattern.id),
             })),
             {
-              title: 'Examples',
+              title: 'Page Builder',
               id: 'example-heading',
               isHeading: true,
               path: BASE_PATHS.EXAMPLES,

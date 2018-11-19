@@ -2,14 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
-// import urlJoin from 'url-join';
 import SmartGrid from '@basalt/bedrock-smart-grid';
-// import {
-//   StyledPatternGridItem,
-//   PatternGridItemDescription,
-//   PatternGridItemThumb,
-//   PatternGridItemTitle,
-// } from './pattern-grid.styles';
 import {
   StyledPatternGridListItem,
   PatternGridListItemDescription,
@@ -86,7 +79,6 @@ function PatternGridListItem(props) {
 
 function PatternGrid(props) {
   const { enablePatternIcons } = props.context.features;
-  console.log({ enablePatternIcons });
   return (
     <React.Fragment>
       {enablePatternIcons ? (
@@ -128,19 +120,6 @@ PatternGrid.propTypes = {
   ).isRequired,
   context: contextPropTypes.isRequired,
 };
-//
-// PatternGridItem.propTypes = {
-//   pattern: PropTypes.shape({
-//     id: PropTypes.string,
-//     path: PropTypes.string,
-//     meta: PropTypes.shape({
-//       title: PropTypes.string,
-//       description: PropTypes.string,
-//       hasIcon: PropTypes.bool,
-//     }).isRequired,
-//   }).isRequired,
-//   context: contextPropTypes.isRequired,
-// };
 
 PatternGridListItem.propTypes = {
   pattern: PropTypes.shape({

@@ -84,7 +84,7 @@ class Header extends React.Component {
           <SiteHeaderNavLink to="/patterns">Patterns</SiteHeaderNavLink>
         </li>
         <li>
-          <SiteHeaderNavLink to="/examples">Examples</SiteHeaderNavLink>
+          <SiteHeaderNavLink to="/page-builder">Page Builder</SiteHeaderNavLink>
         </li>
         {/* @todo Reimplement header nav for custom sections once implemented with gql */}
         {/* {sections.map(section => ( */}

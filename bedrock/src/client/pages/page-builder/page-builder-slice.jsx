@@ -16,9 +16,9 @@ import {
   PlaygroundIcon,
   PlaygroundIconWrapper,
   PlaygroundSliceWrapper,
-} from './playground.styles';
+} from './page-builder.styles';
 
-const PlaygroundSlice = ({
+const PageBuilderSlice = ({
   moveUp,
   moveDown,
   deleteMe,
@@ -95,11 +95,11 @@ const PlaygroundSlice = ({
     ),
   );
 
-PlaygroundSlice.defaultProps = {
+PageBuilderSlice.defaultProps = {
   data: {},
 };
 
-PlaygroundSlice.propTypes = {
+PageBuilderSlice.propTypes = {
   template: PropTypes.string.isRequired,
   data: PropTypes.object, // eslint-disable-line react/no-unused-prop-types
   showEditForm: PropTypes.func.isRequired,
@@ -189,7 +189,7 @@ const sliceTarget = {
   },
 };
 
-// Sending our `PlaygroundSlice` component through two Higher Order Components:
+// Sending our `PageBuilderSlice` component through two Higher Order Components:
 // HOC 1: Makes Draggable - http://react-dnd.github.io/react-dnd/docs-drag-source.html
 const DraggablePlaygroundSlice = DragSource(
   DragTypes.SLICE,
@@ -199,7 +199,7 @@ const DraggablePlaygroundSlice = DragSource(
     connectDragSource: connect.dragSource(), // used to wrap an element to make draggable
     isDragging: monitor.isDragging(),
   }),
-)(PlaygroundSlice); // <- HOC takes in a component here
+)(PageBuilderSlice); // <- HOC takes in a component here
 
 // HOC 2: Makes Droppable - http://react-dnd.github.io/react-dnd/docs-drop-target.html
 const DroppableDraggablePlaygroundSlice = DropTarget(

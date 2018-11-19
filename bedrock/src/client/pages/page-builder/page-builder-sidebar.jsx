@@ -8,23 +8,23 @@ import {
 } from '@basalt/bedrock-atoms';
 import { Link } from 'react-router-dom';
 import { FaTimes } from 'react-icons/fa';
-import PlaygroundEditForm from './playground-edit-form';
-import PlaygroundSidebarPatternListItem from './pattern-sidebar--pattern-list-item';
+import PageBuilderEditForm from './page-builder-edit-form';
+import PlaygroundSidebarPatternListItem from './page-builder-pattern-list-item';
 import {
   PatternListWrapper,
   PlaygroundStyledSchemaForm,
-} from './playground.styles';
+} from './page-builder.styles';
 
 // Export of allowed sidebarContent states
 export const SIDEBAR_DEFAULT = 'default';
 export const SIDEBAR_FORM = 'form';
 export const SIDEBAR_PATTERNS = 'patterns';
 
-function PlaygroundSidebar(props) {
+function PageBuilderSidebar(props) {
   if (props.sidebarContent === SIDEBAR_FORM) {
     const { slices, editFormSliceId, editFormSchema, editFormUiSchema } = props;
     return (
-      <PlaygroundEditForm
+      <PageBuilderEditForm
         schema={editFormSchema}
         uiSchema={editFormUiSchema}
         data={slices.find(s => s.id === editFormSliceId).data}
@@ -97,7 +97,7 @@ function PlaygroundSidebar(props) {
   // if (props.sidebarContent === SIDEBAR_DEFAULT or anything else)
   return (
     <div>
-      <h4>Playground</h4>
+      <h4>Page Builder</h4>
       <PlaygroundStyledSchemaForm
         onChange={({ formData }) => props.handleMetaFormChange(formData)}
         formData={props.metaFormData}
@@ -106,7 +106,7 @@ function PlaygroundSidebar(props) {
           type: 'object',
           properties: {
             title: {
-              title: 'Example Title',
+              title: 'Page Title',
               type: 'string',
             },
             description: {
@@ -149,7 +149,7 @@ function PlaygroundSidebar(props) {
   );
 }
 
-PlaygroundSidebar.propTypes = {
+PageBuilderSidebar.propTypes = {
   editFormSchema: PropTypes.object.isRequired,
   editFormUiSchema: PropTypes.object.isRequired,
   editFormSliceId: PropTypes.string.isRequired,
@@ -169,4 +169,4 @@ PlaygroundSidebar.propTypes = {
   slices: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-export default PlaygroundSidebar;
+export default PageBuilderSidebar;

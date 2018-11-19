@@ -35,13 +35,13 @@ export const LoadablePatternNew = Loadable({
   loading: Spinner,
 });
 
-export const LoadablePlayground = Loadable({
+export const LoadablePageBuilder = Loadable({
   loader: () =>
     import(/* webpackChunkName: "playground-page" */ './pages/page-builder'),
   loading: Spinner,
 });
 
-export const LoadableExamplesPage = Loadable({
+export const LoadablePageBuilderLandingPage = Loadable({
   loader: () =>
     import(/* webpackChunkName: "page-builder-landing-page" */ './pages/page-builder-landing-page.jsx'),
   loading: Spinner,

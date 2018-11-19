@@ -31,7 +31,7 @@ interface Slice {
   data: object;
 }
 
-interface ExamplePageData {
+interface PageBuilderPage {
   id: string;
   title: string;
   slices: Slice[];
@@ -68,7 +68,7 @@ interface BedrockApiServerConfig {
   //   setExample: (id: string, data: ExamplePageData) => GenericResponse;
   // };
 
-  exampleStore: any;
+  pageBuilder?: any;
 
   sections?: {
     title: string;

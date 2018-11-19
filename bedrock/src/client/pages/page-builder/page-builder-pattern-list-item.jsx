@@ -7,7 +7,7 @@ import {
   PatternListItemDescription,
   PatternListItemThumb,
   PatternListItemWrapper,
-} from './playground.styles';
+} from './page-builder.styles';
 
 // @todo Get pattern icons working for this again
 // class PlaygroundSidebarPatternListItem extends Component {

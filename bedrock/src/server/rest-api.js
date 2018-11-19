@@ -5,7 +5,7 @@ const { join, relative } = require('path');
 const md = require('marked');
 const highlight = require('highlight.js');
 const { wrapHtml } = require('./templates');
-const { USER_SITE_PUBLIC } = require('../lib/constants');
+const { USER_SITE_PUBLIC, BASE_PATHS } = require('../lib/constants');
 const { enableUiSettings } = require('../lib/features');
 
 const router = express.Router();
@@ -19,7 +19,7 @@ function getRoutes(config) {
   const {
     registerEndpoint,
     patternManifest,
-    exampleStore,
+    pageBuilder,
     settingsStore,
   } = config;
 
@@ -168,15 +168,15 @@ function getRoutes(config) {
     });
   }
 
-  if (exampleStore) {
-    const url1 = urlJoin(config.baseUrl, '/example/:id');
+  if (pageBuilder) {
+    const url1 = urlJoin(config.baseUrl, `${BASE_PATHS.PAGES}/:id`);
     registerEndpoint(url1);
     router.get(url1, async (req, res) => {
       try {
-        const example = await exampleStore.getExample(req.params.id);
+        const page = await pageBuilder.getPageBuilderPage(req.params.id);
         res.send({
           ok: true,
-          example,
+          page,
         });
       } catch (error) {
         if (error.code === 'ENOENT') {
@@ -193,21 +193,24 @@ function getRoutes(config) {
       }
     });
 
-    const url2 = urlJoin(config.baseUrl, '/example/:id');
+    const url2 = urlJoin(config.baseUrl, `${BASE_PATHS.PAGES}/:id`);
     registerEndpoint(url2, 'POST');
     router.post(url2, async (req, res) => {
-      const results = await exampleStore.setExample(req.params.id, req.body);
+      const results = await pageBuilder.setPageBuilderPage(
+        req.params.id,
+        req.body,
+      );
       res.send(results);
     });
 
-    const url3 = urlJoin(config.baseUrl, '/examples');
+    const url3 = urlJoin(config.baseUrl, BASE_PATHS.PAGES);
     registerEndpoint(url3);
     router.get(url3, async (req, res) => {
-      const results = await exampleStore.getExamples();
+      const results = await pageBuilder.getPageBuilderPages();
       res.send(results);
     });
   } else {
-    router.get(urlJoin(config.baseUrl, '/examples'), async (req, res) => {
+    router.get(urlJoin(config.baseUrl, BASE_PATHS.PAGES), async (req, res) => {
       res.send([]);
     });
   }

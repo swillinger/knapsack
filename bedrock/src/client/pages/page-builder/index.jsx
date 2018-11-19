@@ -11,22 +11,23 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { apiUrlBase } from '../../data';
 import Sidebar from '../../components/sidebar';
-import PlaygroundSlice from './playground-slice';
-import PlaygroundSidebar, {
+import PlaygroundSlice from './page-builder-slice';
+import PageBuilderSidebar, {
   SIDEBAR_DEFAULT,
   SIDEBAR_FORM,
   SIDEBAR_PATTERNS,
-} from './playground-sidebar';
+} from './page-builder-sidebar';
 import {
   MainContent,
   StartInsertSlice,
   Page,
   SliceError,
-} from './playground.styles';
+} from './page-builder.styles';
+import { BASE_PATHS } from '../../../lib/constants';
 
 const query = gql`
-  query PlaygroundExamples($id: ID) {
-    example(id: $id) {
+  query PageBuilerPages($id: ID) {
+    pageBuilderPage(id: $id) {
       id
       title
       path
@@ -102,7 +103,7 @@ class Playground extends Component {
 
     window
       // @todo write gql mutation here
-      .fetch(`${this.apiEndpoint}/example/${this.props.id}`, {
+      .fetch(`${this.apiEndpoint}${BASE_PATHS.PAGES}/${this.props.id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -288,8 +289,8 @@ class Playground extends Component {
             if (loading) return <Spinner />;
             if (error) return <p>Error :(</p>;
             this.setState({
-              example: data.example,
-              slices: data.example.slices,
+              example: data.pageBuilderPage,
+              slices: data.pageBuilderPage.slices,
             });
             return null;
           }}
@@ -300,7 +301,7 @@ class Playground extends Component {
     return (
       <Page>
         <Sidebar>
-          <PlaygroundSidebar
+          <PageBuilderSidebar
             editFormSchema={this.state.editFormSchema}
             editFormUiSchema={this.state.editFormUiSchema}
             editFormSliceId={this.state.editFormSliceId}

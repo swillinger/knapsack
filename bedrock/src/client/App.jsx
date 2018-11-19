@@ -24,9 +24,9 @@ import {
   LoadableFooter,
   LoadablePatternView,
   LoadableCustomSectionPage,
-  LoadableExamplesPage,
+  LoadablePageBuilderLandingPage,
   LoadablePatternsPage,
-  LoadablePlayground,
+  LoadablePageBuilder,
   LoadableSecondaryNav,
   LoadableSettingsPage,
   LoadableSidebar,
@@ -160,7 +160,7 @@ class App extends React.Component {
                           <Site>
                             <Switch>
                               <Route path="/" exact />
-                              <Route path="/examples/*" />
+                              <Route path={`${BASE_PATHS.PAGES}/*`} />
                               <Route
                                 path="/"
                                 render={({ location }) => (
@@ -184,23 +184,25 @@ class App extends React.Component {
                                     }}
                                   />
                                   <Route
-                                    path="/examples/:id"
+                                    path={`${BASE_PATHS.PAGES}/:id`}
                                     render={({ match }) => (
-                                      <LoadablePlayground
+                                      <LoadablePageBuilder
                                         id={match.params.id}
                                         patterns={this.state.patterns}
                                       />
                                     )}
                                   />
                                   <Route
-                                    path="/examples"
-                                    component={LoadableExamplesPage}
+                                    path={`${BASE_PATHS.PAGES}`}
+                                    component={LoadablePageBuilderLandingPage}
                                     exact
                                   />
                                   {this.state.sections.map(section => (
                                     <Route
                                       key={section.id}
-                                      path={`/pages/${section.id}/:id`}
+                                      path={`${BASE_PATHS.CUSTOM_PAGES}/${
+                                        section.id
+                                      }/:id`}
                                       render={({ match }) => (
                                         <LoadableCustomSectionPage
                                           key={match.params.id}
@@ -236,7 +238,7 @@ class App extends React.Component {
                                   })}
 
                                   <Route
-                                    path="/design-tokens/all"
+                                    path={`${BASE_PATHS.DESIGN_TOKENS}/all`}
                                     component={LoadableAllTokens}
                                   />
                                   <Route

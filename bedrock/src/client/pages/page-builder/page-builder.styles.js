@@ -36,7 +36,7 @@ export const StartInsertSlice = styled.div`
   }
 `;
 
-// playground-sidebar.jsx
+// page-builder-sidebar.jsx
 
 export const PatternListWrapper = styled.ul`
   display: flex;
@@ -107,7 +107,7 @@ export const PlaygroundStyledSchemaForm = styled(SchemaForm)`
   margin-bottom: 1rem;
 `;
 
-// playground-slice.jsx
+// page-builder-slice.jsx
 
 export const PlaygroundIcon = styled.div`
   display: block;

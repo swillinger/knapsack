@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@basalt/bedrock-atoms';
-import { PlaygroundStyledSchemaForm } from './playground.styles';
+import { PlaygroundStyledSchemaForm } from './page-builder.styles';
 
-const PlaygroundEditForm = ({
+const PageBuilderEditForm = ({
   schema,
   data,
   handleChange,
@@ -50,11 +50,11 @@ const PlaygroundEditForm = ({
   </div>
 );
 
-PlaygroundEditForm.defaultProps = {
+PageBuilderEditForm.defaultProps = {
   data: {},
 };
 
-PlaygroundEditForm.propTypes = {
+PageBuilderEditForm.propTypes = {
   schema: PropTypes.object.isRequired,
   uiSchema: PropTypes.object.isRequired,
   data: PropTypes.object,
@@ -64,4 +64,4 @@ PlaygroundEditForm.propTypes = {
   handleClearData: PropTypes.func.isRequired,
 };
 
-export default PlaygroundEditForm;
+export default PageBuilderEditForm;

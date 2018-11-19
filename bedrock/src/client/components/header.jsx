@@ -10,6 +10,7 @@ import {
   SiteNav,
   X,
 } from './header.styles';
+import { BASE_PATHS } from '../../lib/constants';
 
 const headerQuery = gql`
   {
@@ -21,7 +22,7 @@ const headerQuery = gql`
         logo
       }
     }
-    examples {
+    pageBuilderPages {
       id
     }
     patterns {
@@ -76,15 +77,19 @@ class Header extends React.Component {
     return (
       <ul>
         <li>
-          <SiteHeaderNavLink to="/design-tokens">
+          <SiteHeaderNavLink to={BASE_PATHS.DESIGN_TOKENS}>
             Design Tokens
           </SiteHeaderNavLink>
         </li>
         <li>
-          <SiteHeaderNavLink to="/patterns">Patterns</SiteHeaderNavLink>
+          <SiteHeaderNavLink to={BASE_PATHS.PATTERNS}>
+            Patterns
+          </SiteHeaderNavLink>
         </li>
         <li>
-          <SiteHeaderNavLink to="/examples">Examples</SiteHeaderNavLink>
+          <SiteHeaderNavLink to={BASE_PATHS.PAGES}>
+            Page Builder
+          </SiteHeaderNavLink>
         </li>
         {/* @todo Reimplement header nav for custom sections once implemented with gql */}
         {/* {sections.map(section => ( */}

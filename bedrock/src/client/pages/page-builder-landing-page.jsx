@@ -6,17 +6,18 @@ import gql from 'graphql-tag';
 import { Button, TwoUp, BlockQuoteWrapper } from '@basalt/bedrock-atoms';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
 import { apiUrlBase } from '../data';
+import { BASE_PATHS } from '../../lib/constants';
 
 const examplesQuery = gql`
   {
-    examples {
+    pageBuilderPages {
       title
       id
     }
   }
 `;
 
-class ExamplesLandingPage extends Component {
+class PageBuilderLandingPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,7 +30,7 @@ class ExamplesLandingPage extends Component {
   makeNewExample() {
     const id = shortid.generate();
     window
-      .fetch(`${this.apiEndpoint}/example/${id}`, {
+      .fetch(`${this.apiEndpoint}${BASE_PATHS.PAGES}/${id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -37,11 +38,13 @@ class ExamplesLandingPage extends Component {
         body: JSON.stringify({
           id,
           title: 'My New Example',
-          path: `/examples/${id}`,
+          path: `${BASE_PATHS.PAGES}/${id}`,
           slices: [],
         }),
       })
-      .then(res => res.json())
+      .then(res => {
+        res.json();
+      })
       .then(() => {
         this.setState({
           redirect: id,
@@ -52,16 +55,16 @@ class ExamplesLandingPage extends Component {
   render() {
     const { enableBlockquotes } = this.props.context.features;
     if (this.state.redirect) {
-      return <Redirect to={`/examples/${this.state.redirect}`} />;
+      return <Redirect to={`${BASE_PATHS.PAGES}/${this.state.redirect}`} />;
     }
     return (
       <Query query={examplesQuery}>
         {({ data }) => {
-          const { examples = [] } = data;
+          const { pageBuilderPages = [] } = data;
           return (
             <>
-              <h4 className="eyebrow">Prototyping and Samples</h4>
-              <h2>Examples</h2>
+              <h4 className="eyebrow">Prototyping Pages</h4>
+              <h2>Page Builder</h2>
               {enableBlockquotes && (
                 <BlockQuoteWrapper>
                   When I design buildings, I think of the overall composition,
@@ -85,18 +88,18 @@ class ExamplesLandingPage extends Component {
                   </p>
                 </div>
                 <div>
-                  <h3>Interactive Examples</h3>
+                  <h3>Pages</h3>
                   <ul>
-                    {examples.map(({ id, title }) => (
+                    {pageBuilderPages.map(({ id, title }) => (
                       <li key={id}>
-                        <Link to={`/examples/${id}`}>{title}</Link>
+                        <Link to={`${BASE_PATHS.PAGES}/${id}`}>{title}</Link>
                       </li>
                     ))}
                   </ul>
                 </div>
               </TwoUp>
               <div>
-                <h3>Create a New Example</h3>
+                <h3>Create a New Page</h3>
                 <Button
                   primary
                   onClick={this.makeNewExample}
@@ -114,8 +117,8 @@ class ExamplesLandingPage extends Component {
   }
 }
 
-ExamplesLandingPage.propTypes = {
+PageBuilderLandingPage.propTypes = {
   context: contextPropTypes.isRequired,
 };
 
-export default connectToContext(ExamplesLandingPage);
+export default connectToContext(PageBuilderLandingPage);

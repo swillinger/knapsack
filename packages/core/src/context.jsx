@@ -291,11 +291,6 @@ export const baseTheme = {
 
 export const baseContext = {
   theme: baseTheme,
-  settings: {
-    site: {
-      title: 'Bedrock',
-    },
-  },
 };
 
 export const BedrockContext = React.createContext(baseContext);

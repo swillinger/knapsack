@@ -55,5 +55,9 @@
       "requireParamDescription": false,
       "requireReturnDescription": false
     }]
+    // @todo enable
+//    "graphql/template-strings": ["error", {
+//      "env": "literal"
+//    }]
   }
 }

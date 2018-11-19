@@ -68,7 +68,7 @@ interface BedrockApiServerConfig {
   //   setExample: (id: string, data: ExamplePageData) => GenericResponse;
   // };
 
-  exampleStore: ExampleStore;
+  exampleStore: any;
 
   sections?: {
     title: string;
@@ -80,7 +80,7 @@ interface BedrockApiServerConfig {
     }[]
   }[];
 
-  settingsStore: SettingsStore;
+  settingsStore: any;
 
   staticDirs?: {
     prefix: string;

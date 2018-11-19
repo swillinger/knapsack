@@ -7,11 +7,11 @@ import {
   TypeToFilterInputWrapper,
   ClearFilterButton,
 } from '@basalt/bedrock-atoms';
-// import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
-// import { flattenArray } from '@basalt/bedrock-utils';
+import Spinner from '@basalt/bedrock-spinner';
 import urlJoin from 'url-join';
 import { FaTimes } from 'react-icons/fa';
 import NavList from './nav-list';
+import { BASE_PATHS } from '../../lib/constants';
 
 const secondaryNavQuery = gql`
   {
@@ -24,6 +24,11 @@ const secondaryNavQuery = gql`
       meta {
         title
       }
+    }
+    tokenGroups {
+      id
+      title
+      path
     }
   }
 `;
@@ -80,26 +85,28 @@ class SecondaryNav extends Component {
   render() {
     return (
       <Query query={secondaryNavQuery}>
-        {({ data }) => {
-          const { patterns = [], examples = [] } = data;
+        {({ loading, error, data }) => {
+          if (loading) return <Spinner />;
+          if (error) return <p>Error</p>;
+
+          const { patterns = [], examples = [], tokenGroups = [] } = data;
           const items = [
-            // {
-            //   title: 'Design Tokens',
-            //   id: 'design-tokens',
-            //   path: '/design-tokens',
-            //   isHeading: true,
-            // },
-            // {
-            //   title: 'All Tokens',
-            //   id: 'all-design-tokens',
-            //   path: '/design-tokens/all',
-            // },
-            // ...this.props.context.designTokensPages,
-            // @todo bring back Design tokens when vailable through gql
+            {
+              title: 'Design Tokens',
+              id: 'design-tokens',
+              path: BASE_PATHS.DESIGN_TOKENS,
+              isHeading: true,
+            },
+            {
+              title: 'All Tokens',
+              id: 'all-design-tokens',
+              path: `${BASE_PATHS.DESIGN_TOKENS}/all`,
+            },
+            ...tokenGroups,
             {
               title: 'Patterns',
               id: 'patterns',
-              path: '/patterns',
+              path: BASE_PATHS.PATTERNS,
               isHeading: true,
             },
             {
@@ -116,12 +123,12 @@ class SecondaryNav extends Component {
               title: 'Examples',
               id: 'example-heading',
               isHeading: true,
-              path: '/examples',
+              path: BASE_PATHS.EXAMPLES,
             },
             ...examples.map(example => ({
               id: example.id,
               title: example.title,
-              path: `/examples/${example.id}`,
+              path: `${BASE_PATHS.EXAMPLES}/${example.id}`,
             })),
             // ...SecondaryNav.prepSectionLinks(this.props.context.sections),
             // @todo bring back custom sections through gql

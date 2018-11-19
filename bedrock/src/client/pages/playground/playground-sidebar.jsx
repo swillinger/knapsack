@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
-import urlJoin from 'url-join';
 import {
   Button,
   ClearFilterButton,
@@ -9,13 +7,11 @@ import {
   TypeToFilterInputWrapper,
 } from '@basalt/bedrock-atoms';
 import { Link } from 'react-router-dom';
-import { FaExternalLinkAlt, FaTimes } from 'react-icons/fa';
+import { FaTimes } from 'react-icons/fa';
 import PlaygroundEditForm from './playground-edit-form';
+import PlaygroundSidebarPatternListItem from './pattern-sidebar--pattern-list-item';
 import {
   PatternListWrapper,
-  PatternListItemWrapper,
-  PatternListItemThumb,
-  PatternListItemDescription,
   PlaygroundStyledSchemaForm,
 } from './playground.styles';
 
@@ -23,76 +19,6 @@ import {
 export const SIDEBAR_DEFAULT = 'default';
 export const SIDEBAR_FORM = 'form';
 export const SIDEBAR_PATTERNS = 'patterns';
-
-class PlaygroundSidebarPatternListItem extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      imgSrc: urlJoin(
-        props.context.settings.patternIconBasePath,
-        `${props.pattern.id}.svg`,
-      ),
-    };
-    this.handleMissingImg = this.handleMissingImg.bind(this);
-    this.defaultImgPath = urlJoin(
-      this.props.context.settings.patternIconBasePath,
-      'default.svg',
-    );
-  }
-
-  handleMissingImg() {
-    console.info(
-      `Could not find image for ${this.props.pattern.id} at "${
-        this.state.imgSrc
-      }", using default image instead.`,
-    );
-    this.setState({
-      imgSrc: this.defaultImgPath,
-    });
-  }
-
-  render() {
-    const { enablePatternIcons } = this.props.context.settings;
-    return (
-      <PatternListItemWrapper
-        key={this.props.pattern.id}
-        thumb={enablePatternIcons}
-        type="button"
-      >
-        <div
-          role="button"
-          tabIndex="0"
-          onKeyPress={() => this.props.handleAddSlice(this.props.pattern.id)}
-          onClick={() => this.props.handleAddSlice(this.props.pattern.id)}
-        >
-          <h5>{this.props.pattern.meta.title}</h5>
-          {enablePatternIcons ? (
-            <PatternListItemThumb
-              src={
-                this.props.pattern.meta.hasIcon
-                  ? this.state.imgSrc
-                  : this.defaultImgPath
-              }
-              onError={this.handleMissingImg}
-              alt={this.props.pattern.meta.title}
-            />
-          ) : (
-            <PatternListItemDescription>
-              {this.props.pattern.meta.description}
-            </PatternListItemDescription>
-          )}
-        </div>
-        <Link
-          target="_blank"
-          to={`/patterns/${this.props.pattern.id}`}
-          title="Open component details in new window"
-        >
-          Details <FaExternalLinkAlt size={8} />
-        </Link>
-      </PatternListItemWrapper>
-    );
-  }
-}
 
 function PlaygroundSidebar(props) {
   if (props.sidebarContent === SIDEBAR_FORM) {
@@ -110,10 +36,9 @@ function PlaygroundSidebar(props) {
     );
   }
   if (props.sidebarContent === SIDEBAR_PATTERNS) {
-    const patterns = props.patterns
-      .filter(pattern => pattern.meta.uses.includes('inSlice'))
-      .filter(pattern => pattern.id !== 'site-footer')
-      .filter(pattern => pattern.id !== 'site-header');
+    const patterns = props.patterns.filter(pattern =>
+      pattern.meta.uses.includes('inSlice'),
+    );
     const items =
       props.filterTerm === ''
         ? patterns
@@ -152,11 +77,11 @@ function PlaygroundSidebar(props) {
             <PlaygroundSidebarPatternListItem
               key={pattern.id}
               pattern={pattern}
-              context={props.context}
               handleAddSlice={props.handleAddSlice}
             />
           ))}
         </PatternListWrapper>
+
         <Button
           onClick={props.handleCancelAddSlice}
           onKeyPress={props.handleCancelAddSlice}
@@ -168,6 +93,7 @@ function PlaygroundSidebar(props) {
       </div>
     );
   }
+
   // if (props.sidebarContent === SIDEBAR_DEFAULT or anything else)
   return (
     <div>
@@ -241,13 +167,6 @@ PlaygroundSidebar.propTypes = {
   patterns: PropTypes.arrayOf(PropTypes.object).isRequired,
   sidebarContent: PropTypes.string.isRequired,
   slices: PropTypes.arrayOf(PropTypes.object).isRequired,
-  context: contextPropTypes.isRequired,
 };
 
-PlaygroundSidebarPatternListItem.propTypes = {
-  pattern: PropTypes.object.isRequired,
-  handleAddSlice: PropTypes.func.isRequired,
-  context: contextPropTypes.isRequired,
-};
-
-export default connectToContext(PlaygroundSidebar);
+export default PlaygroundSidebar;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Spinner from '@basalt/bedrock-spinner';
 import { Details, Select } from '@basalt/bedrock-atoms';
-import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
+import { BedrockContext } from '@basalt/bedrock-core';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import Template from '../components/template';
@@ -53,6 +53,8 @@ const query = gql`
 `;
 
 class PatternViewPage extends Component {
+  static contextType = BedrockContext;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -64,17 +66,12 @@ class PatternViewPage extends Component {
       },
       meta: null,
     };
-
-    // this.apiEndpoint = `${apiUrlBase}/pattern/${props.id}`;
-    this.enableTemplatePush = this.props.context.features.enableTemplatePush;
-    this.websocketsPort = this.props.context.meta.websocketsPort;
   }
 
   componentDidMount() {
-    if (this.enableTemplatePush) {
-      this.socket = new window.WebSocket(
-        `ws://localhost:${this.websocketsPort}`,
-      );
+    const { websocketsPort } = this.context.meta;
+    if (this.context.features.enableTemplatePush && websocketsPort) {
+      this.socket = new window.WebSocket(`ws://localhost:${websocketsPort}`);
 
       // this.socket.addEventListener('open', event => {
       //   this.socket.send('Hello Server!', event);
@@ -92,7 +89,10 @@ class PatternViewPage extends Component {
   }
 
   componentWillUnmount() {
-    if (this.enableTemplatePush) {
+    if (
+      this.context.features.enableTemplatePush &&
+      this.context.meta.websocketsPort
+    ) {
       this.socket.close(1000, 'componentWillUnmount called');
     }
   }
@@ -209,7 +209,6 @@ PatternViewPage.defaultProps = {
 PatternViewPage.propTypes = {
   id: PropTypes.string.isRequired,
   demoSizes: PropTypes.arrayOf(PropTypes.string.isRequired),
-  context: contextPropTypes.isRequired,
 };
 
-export default connectToContext(PatternViewPage);
+export default PatternViewPage;

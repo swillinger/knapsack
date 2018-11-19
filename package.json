@@ -4,6 +4,7 @@
   "scripts": {
     "build": "FORCE_COLOR=1 lerna run build",
     "clean": "lerna clean --yes && rm -rf node_modules",
+    "cli:test": "rm -rf examples/create-bedrock-results && cd examples && ../node_modules/.bin/create-bedrock create-bedrock-results && cd .. && yarn && cd examples/create-bedrock-results && yarn start",
     "dashboard": "webpack-dashboard",
     "jest": "jest",
     "lerna:publish": "lerna publish --verify-access",
@@ -18,7 +19,7 @@
     "postversion": "git push && git push --tags",
     "reset": "yarn clean && yarn install --silent && FORCE_COLOR=1 run-s --print-label build:*",
     "start": "cd apps/storybook && yarn start",
-    "test": "run-s lint:style lint:js jest",
+    "test": "run-s lint:style lint:js jest && lerna run test",
     "uuid": "node -e \"process.stdout.write(require('uuid/v4')()) \" | pbcopy && echo 'uuid copied' "
   },
   "workspaces": {

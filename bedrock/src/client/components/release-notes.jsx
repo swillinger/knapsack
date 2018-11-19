@@ -64,7 +64,7 @@ class ReleaseNotesPage extends React.Component {
   }
 
   render() {
-    const { enableBlockquotes } = this.props.context.settings;
+    const { enableBlockquotes } = this.props.context.features;
     return (
       <div>
         <div className="body">

@@ -15,12 +15,10 @@ import {
   ColorCompare,
   ContrastWrapper,
   ContrastInner,
-  ColorContrast,
   Results,
   RowWrapper,
   Fade,
   NewRatio,
-  ColorName,
 } from './color-contrast-block.styles';
 
 class ColorContrastBlock extends React.Component {
@@ -112,49 +110,46 @@ class ColorContrastBlock extends React.Component {
       return <Spinner />;
     }
     const colorBlocks = this.state.allResults.map(result => (
-      <ColorContrast key={result.bgColor.name} color={result.bgColor.value}>
-        {/* @todo find a way to handle white */}
-        <Details>
-          <summary>{result.bgColor.name}</summary>
-          <ContrastInner key={result.bgColor.name} testing="testing">
-            <h3>{result.bgColor.name}</h3>
-            <p className="col col--1">Variable</p>
-            <p className="col col--2">Ratio</p>
-            <p className="col col--3">AA</p>
-            <p className="col col--4">AAA</p>
-            <p className="col col--5">AA Large</p>
-            <p className="col col--6">AAA Large</p>
-            <ColorBlock color={result.bgColor.value} />
-            <RowWrapper>
-              {result.comparisonResults.map(compared => (
-                <ColorCompare
-                  color={result.bgColor.value}
-                  key={compared.comparedColor.name}
-                  comparedColor={compared.comparedColor.value}
-                >
-                  <Fade comparedColor={compared.comparedColor.value} />
-                  <ColorName>{compared.comparedColor.name}</ColorName>
-                  <NewRatio ratio={compared.contrast.ratio}>
-                    {compared.contrast.ratio}
-                  </NewRatio>
-                  <Results pass={compared.contrast.AAA}>
-                    {compared.contrast.AAA}
-                  </Results>
-                  <Results pass={compared.contrast.AA}>
-                    {compared.contrast.AA}
-                  </Results>
-                  <Results pass={compared.contrast.AAALarge}>
-                    {compared.contrast.AAALarge}
-                  </Results>
-                  <Results pass={compared.contrast.AALarge}>
-                    {compared.contrast.AALarge}
-                  </Results>
-                </ColorCompare>
-              ))}
-            </RowWrapper>
-          </ContrastInner>
-        </Details>
-      </ColorContrast>
+      <Details key={result.bgColor.name}>
+        <summary>{result.bgColor.name}</summary>
+        <ContrastInner key={result.bgColor.name} testing="testing">
+          <h3>{result.bgColor.name}</h3>
+          <p className="col col--1">Variable</p>
+          <p className="col col--2">Ratio</p>
+          <p className="col col--3">AA</p>
+          <p className="col col--4">AAA</p>
+          <p className="col col--5">AA Large</p>
+          <p className="col col--6">AAA Large</p>
+          <ColorBlock color={result.bgColor.value} />
+          <RowWrapper>
+            {result.comparisonResults.map(compared => (
+              <ColorCompare
+                color={result.bgColor.value}
+                key={compared.comparedColor.name}
+                comparedColor={compared.comparedColor.value}
+              >
+                <Fade comparedColor={compared.comparedColor.value} />
+                <p>{compared.comparedColor.name}</p>
+                <NewRatio ratio={compared.contrast.ratio}>
+                  {compared.contrast.ratio}
+                </NewRatio>
+                <Results pass={compared.contrast.AAA}>
+                  {compared.contrast.AAA}
+                </Results>
+                <Results pass={compared.contrast.AA}>
+                  {compared.contrast.AA}
+                </Results>
+                <Results pass={compared.contrast.AAALarge}>
+                  {compared.contrast.AAALarge}
+                </Results>
+                <Results pass={compared.contrast.AALarge}>
+                  {compared.contrast.AALarge}
+                </Results>
+              </ColorCompare>
+            ))}
+          </RowWrapper>
+        </ContrastInner>
+      </Details>
     ));
     /* eslint-disable jsx-a11y/label-has-for */
     return (

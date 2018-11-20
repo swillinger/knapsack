@@ -17,11 +17,7 @@ import PageBuilderSidebar, {
   SIDEBAR_FORM,
   SIDEBAR_PATTERNS,
 } from './page-builder-sidebar';
-import {
-  MainContent,
-  StartInsertSlice,
-  SliceError,
-} from './page-builder.styles';
+import { MainContent, StartInsertSlice } from './page-builder.styles';
 import { BASE_PATHS } from '../../../lib/constants';
 
 const query = gql`
@@ -350,7 +346,7 @@ class Playground extends Component {
             const template = this.getTemplateFromPatternId(slice.patternId);
             if (!template) {
               return (
-                <SliceError
+                <div
                   key={`${slice.id}--fragment`}
                   onKeyPress={() => this.deleteSlice(slice.id)}
                   onClick={() => this.deleteSlice(slice.id)}
@@ -364,7 +360,7 @@ class Playground extends Component {
                     }" not found. Click to delete.`}
                     type="warning"
                   />
-                </SliceError>
+                </div>
               );
             }
             return (

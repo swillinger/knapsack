@@ -98,7 +98,7 @@ export const FormArrayItem = styled.div`
     }
   }
   & > * + * {
-    //margin-left: 0.25rem;
+    /* margin-left: 0.25rem; */
   }
   &:not(:last-child) {
     padding-bottom: 0.75rem;
@@ -110,13 +110,8 @@ export const Toggle = styled.div`
   p {
     display: none;
   }
-  span {
-    height: ${props => props.theme.inputs.height};
-    display: flex;
-    align-items: center;
-  }
-  
-   input[type=checkbox]{
+
+  input[type='checkbox'] {
     height: 0;
     width: 0;
     visibility: hidden;
@@ -124,6 +119,7 @@ export const Toggle = styled.div`
   }
 
   span {
+    align-items: center;
     cursor: pointer;
     text-indent: -9999px;
     width: 50px;
@@ -158,6 +154,4 @@ export const Toggle = styled.div`
   label:active:after {
     width: 32px;
   }
-}
-  
 `;

@@ -21,13 +21,13 @@ export const SelectStyledWrapper = styled.label`
     height: ${props => props.theme.selects.height};
     background-color: ${props => props.theme.selects.background};
     margin: ${props => props.theme.selects.margin};
-    // ::after produces the custom dropdown arrow next to text
+    /* ::after produces the custom dropdown arrow next to text */
     &::after {
       content: '';
       display: block;
       position: absolute;
-      pointer-events: none; // Arrow clickable in some browsers
-      border: 1px solid transparent; // reset all borders
+      pointer-events: none; /* Arrow clickable in some browsers */
+      border: 1px solid transparent; /* reset all borders */
       width: 0;
       height: 0;
       right: 10px;

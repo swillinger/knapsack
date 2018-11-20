@@ -50,7 +50,7 @@ const GlobalStyles = createGlobalStyle`
       min-height: 100vh;
     }
     ${props => addGlobalTypography(props.theme)}
-    //@todo Once Shadows are on the server, remove this from global import
+    /* @todo Once Shadows are on the server, remove this from global import */
     ${addGlobalShadows}
 `;
 

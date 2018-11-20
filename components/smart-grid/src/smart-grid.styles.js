@@ -21,7 +21,8 @@ export const SmartGridWrapper = styled.div`
 export const SmartGridItem = styled.div`
   margin-bottom: ${gutter}px;
   width: 100%;
-  display: flex; // children of this item will stretch in height to fill, so we get equal height items
+  display: flex;
+  /* stylelint-disable */
   ${props =>
     // eslint-disable-next-line array-callback-return
     Object.keys(breakpoints).map(bp => {
@@ -29,4 +30,5 @@ export const SmartGridItem = styled.div`
         return calcWidth(props[bp], bp);
       }
     })};
+  /* stylelint-enable */
 `;

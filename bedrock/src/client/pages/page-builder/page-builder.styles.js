@@ -72,7 +72,7 @@ export const PatternListItemWrapper = styled.li`
     text-decoration: none;
     transition: ${props => props.theme.transitions.all};
   }
-  // Specific styling only when props.thumb (enablePatternIcons) is false
+  /* Specific styling only when props.thumb (enablePatternIcons) is false */
   ${props => noIconStyles(props)};
 `;
 
@@ -168,5 +168,3 @@ export const PlaygroundSliceWrapper = styled.div`
       animation: ${briefHighlight} 1.5s;
     `};
 `;
-
-export const SliceError = styled.div``;

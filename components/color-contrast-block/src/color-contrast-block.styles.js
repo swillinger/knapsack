@@ -62,7 +62,6 @@ export const SmallText = styled.h5`
   font-weight: normal;
 `;
 
-export const ColorContrast = styled.div``;
 export const ContrastWrapper = styled.div`
   margin: 0 auto;
   max-width: 1500px;
@@ -118,16 +117,12 @@ export const RowWrapper = styled.div`
 
 export const Fade = styled.div`
   grid-column: 2 / 4;
-  background-color: ${props =>
-    props.comparedColor ? props.comparedColor : 'auto'};
   background: linear-gradient(
     to right,
     ${props => (props.comparedColor ? props.comparedColor : 'auto')} 40%,
     transparent 80%
   );
 `;
-
-export const ColorName = styled.p``;
 
 export const Results = styled.p`
   color: ${props =>

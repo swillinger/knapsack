@@ -8,6 +8,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlTemplate = require('html-webpack-template');
 const DashboardPlugin = require('webpack-dashboard/plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const { resolve } = require('path');
 // const bedrockSettingsSchema = require('../schemas/bedrock.config.schema.json');
 const features = require('../lib/features');
@@ -116,6 +117,9 @@ function createWebPackConfig(userConfig) {
       }),
       new Visualizer(), // view at output-dir/stats.html
       new DashboardPlugin(),
+      new FaviconsWebpackPlugin(
+        resolve(__dirname, '../client/assets/favicon.png'),
+      ),
       // https://github.com/jaketrent/html-webpack-template
       // template: https://github.com/jaketrent/html-webpack-template/blob/master/index.ejs
       new HtmlWebpackPlugin({

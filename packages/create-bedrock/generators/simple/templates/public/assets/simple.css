@@ -3,6 +3,7 @@
   --border-radius: 3px;
 
   --padding-medium: 15px;
+  --padding-large: 25px;
 }
 
 body {
@@ -14,6 +15,7 @@ img {
 }
 
 .card {
+    background: #FFF;
     border: var(--border);
     border-radius: var(--border-radius);
 }
@@ -24,4 +26,15 @@ img {
   border: var(--border);
   border-radius: var(--border-radius);
   padding: var(--padding-medium);
+}
+
+.hero {
+  width: 100%;
+}
+
+.hero .hero__inner {
+  background-size: cover;
+  background-position: top center;
+  padding: var(--padding-large);
+  text-align: center;
 }

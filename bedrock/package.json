@@ -113,6 +113,6 @@
     "url": "https://bitbucket.org/basaltinc/bedrock"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "restricted"
   }
 }

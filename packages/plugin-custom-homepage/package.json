@@ -12,6 +12,6 @@
   "author": "Basalt (https://basalt.io/)",
   "license": "UNLICENSED",
   "publishConfig": {
-    "access": "public"
+    "access": "restricted"
   }
 }

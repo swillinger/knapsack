@@ -24,6 +24,6 @@
   "author": "",
   "license": "ISC",
   "publishConfig": {
-    "access": "public"
+    "access": "restricted"
   }
 }

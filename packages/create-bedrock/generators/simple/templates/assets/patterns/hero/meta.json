@@ -1,0 +1,7 @@
+{
+  "title": "Hero",
+  "type": "component",
+  "description": "A Hero that shows the things",
+  "uses": ["inSlice"],
+  "demoSize": "full"
+}

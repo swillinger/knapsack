@@ -2,9 +2,10 @@ import React from 'react';
 import Spinner from '@basalt/bedrock-spinner';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
+import { StatusMessage } from '@basalt/bedrock-atoms';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import { StatusMessage } from '@basalt/bedrock-atoms';
+import PageWithSidebar from '../../layouts/page-with-sidebar';
 
 const query = gql`
   {
@@ -19,19 +20,15 @@ const query = gql`
   }
 `;
 
-function AllPage() {
+function AllPage(props) {
   return (
     <Query query={query}>
       {({ loading, error, data }) => {
-        if (loading) {
-          return <Spinner />;
-        }
-        if (error) {
+        if (loading) return <Spinner />;
+        if (error)
           return <StatusMessage message={error.message} type="error" />;
-        }
-
         return (
-          <div>
+          <PageWithSidebar {...props}>
             <h4 className="eyebrow">Design Tokens</h4>
             <h2>All Tokens</h2>
             <ReactTable
@@ -62,7 +59,7 @@ function AllPage() {
               defaultPageSize={data.tokens.length}
               filterable
             />
-          </div>
+          </PageWithSidebar>
         );
       }}
     </Query>

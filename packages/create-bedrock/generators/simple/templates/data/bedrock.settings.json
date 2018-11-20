@@ -2,5 +2,8 @@
   "title": "A Design System",
   "subtitle": "A Simple Example of a Design System",
   "slogan": "Don't repeat yourself",
-  "parentBrand": {}
+  "parentBrand": {
+    "homepage": "https://www.basalt.io",
+    "title": "Basalt"
+  }
 }

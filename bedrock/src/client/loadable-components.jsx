@@ -91,13 +91,7 @@ export const LoadableTypography = Loadable({
 
 export const LoadablePatternsPage = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "patterns-page" */ './components/patterns-filterable-grid'),
-  loading: Spinner,
-});
-
-export const LoadableSidebar = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "sidebar" */ './components/sidebar'),
+    import(/* webpackChunkName: "patterns-page" */ './pages/patterns-filterable-grid-page'),
   loading: Spinner,
 });
 

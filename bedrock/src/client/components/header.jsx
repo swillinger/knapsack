@@ -51,7 +51,7 @@ class Header extends React.Component {
 
   /* eslint-disable */
   componentDidUpdate(prevProps) {
-    if (this.props.location.pathname !== prevProps.location.pathname) {
+    if (this.props.pathname !== prevProps.pathname) {
       this.setState({ mobileNavVisible: false });
     }
   }

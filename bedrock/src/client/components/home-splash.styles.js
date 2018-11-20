@@ -34,6 +34,9 @@ export const EyeBrow = styled.h2`
 export const Title = styled.h1`
   font-size: ${props => (props.vw ? props.vw : 10)}vw;
   line-height: 1;
+  @media screen and (min-width: 900px) {
+    font-size: 170px;
+  }
 `;
 
 export const Subtitle = styled.h2`

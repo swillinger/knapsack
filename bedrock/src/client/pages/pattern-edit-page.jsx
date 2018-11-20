@@ -9,6 +9,7 @@ import Spinner from '@basalt/bedrock-spinner';
 import urlJoin from 'url-join';
 import patternMetaSchema from '../../schemas/pattern-meta.schema';
 import { apiUrlBase } from '../data';
+import PageWithSidebar from '../layouts/page-with-sidebar';
 
 const patternIdsQuery = gql`
   {
@@ -85,7 +86,7 @@ class PatternEdit extends Component {
       return <Redirect to={this.state.redirectUrl} />;
     }
     return (
-      <div>
+      <PageWithSidebar {...this.props}>
         {this.state.statusMessage && (
           <StatusMessage
             message={this.state.statusMessage}
@@ -107,7 +108,7 @@ class PatternEdit extends Component {
             );
           }}
         </Query>
-      </div>
+      </PageWithSidebar>
     );
   }
 }

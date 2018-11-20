@@ -6,7 +6,7 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom';
-import styled, { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import Spinner from '@basalt/bedrock-spinner';
 import {
   BedrockContextProvider,
@@ -21,38 +21,18 @@ import GlobalStyles from './globals/global-styles';
 import ErrorCatcher from './utils/error-catcher';
 import { apiUrlBase } from './data';
 import {
-  LoadableHeader,
-  LoadableFooter,
   LoadablePatternView,
   LoadableCustomSectionPage,
   LoadablePageBuilderLandingPage,
   LoadablePatternsPage,
   LoadablePageBuilder,
-  LoadableSecondaryNav,
   LoadableSettingsPage,
-  LoadableSidebar,
   LoadablePatternEdit,
   LoadablePatternNew,
   LoadableHome,
   LoadableAllTokens,
 } from './loadable-components';
 import { BASE_PATHS } from '../lib/constants';
-
-const Site = styled.div`
-  display: flex;
-  justify-content: center;
-  min-height: calc(100vh - 140px);
-  width: 100%;
-  max-width: 100vw;
-  @media (min-width: 1300px) {
-    min-height: calc(100vh - 175px);
-  }
-`;
-
-const MainContent = styled.div`
-  flex-grow: 1;
-  padding: ${props => props.theme.globals.spacing.l};
-`;
 
 class App extends React.Component {
   constructor(props) {
@@ -146,151 +126,132 @@ class App extends React.Component {
       <ErrorCatcher>
         <ApolloProvider client={this.apolloClient}>
           <Query query={query}>
-            {({ loading, error, data }) => {
+            {({ loading, error, data: { tokenGroups = [] } }) => {
               if (loading) return <Spinner />;
               if (error) return <p>Error</p>;
-
-              const { tokenGroups = [] } = data;
               return (
                 <BedrockContextProvider value={cruxContext}>
                   <ThemeProvider theme={cruxContext.theme}>
-                    <React.Fragment>
+                    <>
                       <GlobalStyles />
                       <Router>
-                        <div>
+                        <Switch>
                           <Route
                             path="/"
-                            component={routeProps => (
-                              <LoadableHeader {...routeProps} />
+                            exact
+                            render={props =>
+                              plugins.homePage ? (
+                                plugins.homePage.render()
+                              ) : (
+                                <LoadableHome {...props} />
+                              )
+                            }
+                          />
+                          <Route
+                            path={`${BASE_PATHS.PAGES}/:id`}
+                            render={({ match, ...rest }) => (
+                              <LoadablePageBuilder
+                                {...rest}
+                                id={match.params.id}
+                                patterns={this.state.patterns}
+                              />
                             )}
                           />
-                          <Site>
-                            <Switch>
-                              <Route path="/" exact />
-                              <Route path={`${BASE_PATHS.PAGES}/*`} />
+                          <Route
+                            path={BASE_PATHS.PAGES}
+                            exact
+                            render={props => (
+                              <LoadablePageBuilderLandingPage {...props} />
+                            )}
+                          />
+                          {this.state.sections.map(section => (
+                            <Route
+                              key={section.id}
+                              path={`${BASE_PATHS.CUSTOM_PAGES}/${
+                                section.id
+                              }/:id`}
+                              render={({ match, ...rest }) => (
+                                <LoadableCustomSectionPage
+                                  {...rest}
+                                  key={match.params.id}
+                                  id={match.params.id}
+                                  sectionId={section.id}
+                                />
+                              )}
+                            />
+                          ))}
+                          <Route
+                            path={BASE_PATHS.DESIGN_TOKENS}
+                            exact
+                            render={props => <LoadableAllTokens {...props} />}
+                          />
+
+                          {tokenGroups.map(group => {
+                            const { render } = plugins.designTokensGroupPages[
+                              group.id
+                            ];
+                            return (
                               <Route
-                                path="/"
-                                render={({ location }) => (
-                                  <LoadableSidebar>
-                                    <LoadableSecondaryNav location={location} />
-                                  </LoadableSidebar>
-                                )}
+                                key={group.id}
+                                path={group.path}
+                                render={props =>
+                                  render({
+                                    ...props,
+                                    ...group,
+                                  })
+                                }
                               />
-                            </Switch>
-                            <MainContent>
-                              <ErrorCatcher>
-                                <Switch>
-                                  <Route
-                                    path="/"
-                                    exact
-                                    render={() => {
-                                      if (plugins.homePage) {
-                                        return plugins.homePage.render();
-                                      }
-                                      return <LoadableHome />;
-                                    }}
-                                  />
-                                  <Route
-                                    path={`${BASE_PATHS.PAGES}/:id`}
-                                    render={({ match }) => (
-                                      <LoadablePageBuilder
-                                        id={match.params.id}
-                                        patterns={this.state.patterns}
-                                      />
-                                    )}
-                                  />
-                                  <Route
-                                    path={`${BASE_PATHS.PAGES}`}
-                                    component={LoadablePageBuilderLandingPage}
-                                    exact
-                                  />
-                                  {this.state.sections.map(section => (
-                                    <Route
-                                      key={section.id}
-                                      path={`${BASE_PATHS.CUSTOM_PAGES}/${
-                                        section.id
-                                      }/:id`}
-                                      render={({ match }) => (
-                                        <LoadableCustomSectionPage
-                                          key={match.params.id}
-                                          id={match.params.id}
-                                          sectionId={section.id}
-                                        />
-                                      )}
-                                    />
-                                  ))}
-                                  <Route
-                                    path={BASE_PATHS.DESIGN_TOKENS}
-                                    component={LoadableAllTokens}
-                                    exact
-                                  />
-
-                                  {tokenGroups.map(group => {
-                                    const {
-                                      render,
-                                    } = plugins.designTokensGroupPages[
-                                      group.id
-                                    ];
-                                    return (
-                                      <Route
-                                        key={group.id}
-                                        path={group.path}
-                                        render={() =>
-                                          render({
-                                            ...group,
-                                            tokenCategories:
-                                              group.tokenCategoryIds,
-                                          })
-                                        }
-                                      />
-                                    );
-                                  })}
-
-                                  <Route
-                                    path={`${BASE_PATHS.DESIGN_TOKENS}/all`}
-                                    component={LoadableAllTokens}
-                                  />
-                                  <Route
-                                    path={BASE_PATHS.PATTERNS}
-                                    component={LoadablePatternsPage}
-                                    exact
-                                  />
-                                  <Route
-                                    path={`${BASE_PATHS.PATTERNS}/:id/edit`}
-                                    render={({ match }) => (
-                                      <LoadablePatternEdit
-                                        id={match.params.id}
-                                        key={match.params.id}
-                                      />
-                                    )}
-                                  />
-                                  <Route
-                                    path="/new-pattern"
-                                    component={LoadablePatternNew}
-                                  />
-                                  <Route
-                                    path="/settings"
-                                    component={LoadableSettingsPage}
-                                  />
-                                  <Route
-                                    path={`${BASE_PATHS.PATTERNS}/:id`}
-                                    render={({ match }) => (
-                                      <LoadablePatternView
-                                        id={match.params.id}
-                                        size="m"
-                                        key={match.params.id}
-                                      />
-                                    )}
-                                  />
-                                  <Redirect to="/" />
-                                </Switch>
-                              </ErrorCatcher>
-                            </MainContent>
-                          </Site>
-                          <LoadableFooter />
-                        </div>
+                            );
+                          })}
+                          <Route
+                            path={`${BASE_PATHS.DESIGN_TOKENS}/all`}
+                            exact
+                            render={props => <LoadableAllTokens {...props} />}
+                          />
+                          <Route
+                            path={BASE_PATHS.PATTERNS}
+                            exact
+                            render={props => (
+                              <LoadablePatternsPage {...props} />
+                            )}
+                          />
+                          <Route
+                            path={`${BASE_PATHS.PATTERNS}/:id/edit`}
+                            render={({ match, ...rest }) => (
+                              <LoadablePatternEdit
+                                {...rest}
+                                id={match.params.id}
+                                key={match.params.id}
+                              />
+                            )}
+                          />
+                          <Route
+                            path="/new-pattern"
+                            exact
+                            render={props => <LoadablePatternNew {...props} />}
+                          />
+                          <Route
+                            path="/settings"
+                            exact
+                            render={props => (
+                              <LoadableSettingsPage {...props} />
+                            )}
+                          />
+                          <Route
+                            path={`${BASE_PATHS.PATTERNS}/:id`}
+                            render={({ match, ...rest }) => (
+                              <LoadablePatternView
+                                {...rest}
+                                id={match.params.id}
+                                size="m"
+                                key={match.params.id}
+                              />
+                            )}
+                          />
+                          <Redirect to="/" />
+                        </Switch>
                       </Router>
-                    </React.Fragment>
+                    </>
                   </ThemeProvider>
                 </BedrockContextProvider>
               );

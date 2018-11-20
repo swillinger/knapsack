@@ -46,6 +46,9 @@ const GlobalStyles = createGlobalStyle`
       color: currentColor;
       width: 75%;
     }
+    #app {
+      min-height: 100vh;
+    }
     ${props => addGlobalTypography(props.theme)}
     //@todo Once Shadows are on the server, remove this from global import
     ${addGlobalShadows}

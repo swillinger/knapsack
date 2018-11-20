@@ -4,6 +4,7 @@ import { connectToContext } from '@basalt/bedrock-core';
 import Spinner from '@basalt/bedrock-spinner';
 import urlJoin from 'url-join';
 import { apiUrlBase } from '../data';
+import PageWithSidebar from '../layouts/page-with-sidebar';
 
 class CustomSectionPage extends React.Component {
   constructor(props) {
@@ -36,10 +37,10 @@ class CustomSectionPage extends React.Component {
     }
     const { title, contents } = this.state.page;
     return (
-      <div>
+      <PageWithSidebar {...this.props}>
         <h3>{title}</h3>
         <div dangerouslySetInnerHTML={{ __html: contents }} />
-      </div>
+      </PageWithSidebar>
     );
   }
 }

@@ -7,6 +7,7 @@ export const FooterWrapper = styled.footer`
   border-top: 1px solid #000000;
   background-color: ${props => props.theme.footer.background};
   color: white;
+  p,
   && a {
     color: white;
   }
@@ -19,6 +20,7 @@ export const FooterWrapper = styled.footer`
 export const FooterMenu = styled.ul`
   display: flex;
   list-style: none;
+  padding: 0;
 `;
 
 export const FooterMenuItem = styled.li`

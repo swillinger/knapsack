@@ -1,10 +1,10 @@
 import React from 'react';
-// import ApiDemo from '@basalt/bedrock-api-demo';
 import BreakpointsDemo from '@basalt/bedrock-breakpoints-demo';
 import { connectToContext } from '@basalt/bedrock-core';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import Spinner from '@basalt/bedrock-spinner';
+import PageWithSidebar from '../../layouts/page-with-sidebar';
 
 const query = gql`
   query Breakpoints($category: String) {
@@ -33,7 +33,7 @@ class BreakpointsPage extends React.Component {
         <Query query={query} variables={{ category: 'media-queries' }}>
           {({ loading, error, data }) => {
             if (loading) return <Spinner />;
-            if (error) return <p>Error :(</p>;
+            if (error) return <p>Error</p>;
             this.setState({ breakpoints: data.tokens });
             return null;
           }}
@@ -41,7 +41,7 @@ class BreakpointsPage extends React.Component {
       );
     }
     return (
-      <div className="docs">
+      <PageWithSidebar {...this.props} className="docs">
         <h4 className="eyebrow">Visual Language</h4>
         <h2>Breakpoints</h2>
         <BreakpointsDemo breakpoints={this.state.breakpoints} />
@@ -51,7 +51,7 @@ class BreakpointsPage extends React.Component {
         {/* endpoint={this.apiEndpoint} */}
         {/* requestType="get" */}
         {/* /> */}
-      </div>
+      </PageWithSidebar>
     );
   }
 }

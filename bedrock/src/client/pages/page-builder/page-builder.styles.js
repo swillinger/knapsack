@@ -5,18 +5,8 @@ import SchemaForm from '@basalt/bedrock-schema-form';
 
 export const MainContent = styled.div`
   flex-grow: 1;
-  padding: ${props => props.theme.globals.spacing.l};
   overflow-y: scroll;
   box-sizing: border-box;
-`;
-
-export const Page = styled.div`
-  display: flex;
-  justify-content: center;
-  height: calc(100vh - 175px);
-  max-width: 100vw;
-  // @todo fix this temp workaround for negatting the "MainContent" padding
-  margin: calc(-1 * ${props => props.theme.globals.spacing.l});
 `;
 
 export const StartInsertSlice = styled.div`

@@ -3,6 +3,7 @@ import { BordersDemoBox } from './borders-page.styles';
 import makeDesignTokensPage, {
   propTypes,
 } from '../../utils/make-design-tokens-page';
+import PageWithSidebar from '../../layouts/page-with-sidebar';
 
 function BordersPage(props) {
   const {
@@ -12,7 +13,7 @@ function BordersPage(props) {
   } = props.tokens;
 
   return (
-    <div>
+    <PageWithSidebar {...props}>
       <h4 className="eyebrow">Design Tokens</h4>
       <h2>{props.title}</h2>
 
@@ -79,7 +80,7 @@ function BordersPage(props) {
           </div>
         )}
       </div>
-    </div>
+    </PageWithSidebar>
   );
 }
 

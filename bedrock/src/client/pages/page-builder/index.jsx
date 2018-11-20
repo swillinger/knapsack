@@ -10,7 +10,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { apiUrlBase } from '../../data';
-import Sidebar from '../../components/sidebar';
+import PageWithSidebar from '../../layouts/page-with-sidebar';
 import PlaygroundSlice from './page-builder-slice';
 import PageBuilderSidebar, {
   SIDEBAR_DEFAULT,
@@ -20,7 +20,6 @@ import PageBuilderSidebar, {
 import {
   MainContent,
   StartInsertSlice,
-  Page,
   SliceError,
 } from './page-builder.styles';
 import { BASE_PATHS } from '../../../lib/constants';
@@ -297,30 +296,30 @@ class Playground extends Component {
         </Query>
       );
     }
-
+    const { props } = this;
+    const SideBarContent = (
+      <PageBuilderSidebar
+        editFormSchema={this.state.editFormSchema}
+        editFormUiSchema={this.state.editFormUiSchema}
+        editFormSliceId={this.state.editFormSliceId}
+        filterTerm={this.state.filterTerm}
+        handleAddSlice={this.handleAddSlice}
+        handleEditFormChange={this.handleEditFormChange}
+        handleClearData={this.handleClearData}
+        handleCancelAddSlice={this.handleCancelAddSlice}
+        handleHideEditForm={this.handleHideEditForm}
+        handleFilterChange={this.handleFilterChange}
+        handleFilterReset={this.handleFilterReset}
+        handleMetaFormChange={this.handleMetaFormChange}
+        handleSave={this.save}
+        metaFormData={this.state.example}
+        patterns={this.props.patterns}
+        sidebarContent={this.state.sidebarContent}
+        slices={this.state.slices}
+      />
+    );
     return (
-      <Page>
-        <Sidebar>
-          <PageBuilderSidebar
-            editFormSchema={this.state.editFormSchema}
-            editFormUiSchema={this.state.editFormUiSchema}
-            editFormSliceId={this.state.editFormSliceId}
-            filterTerm={this.state.filterTerm}
-            handleAddSlice={this.handleAddSlice}
-            handleEditFormChange={this.handleEditFormChange}
-            handleClearData={this.handleClearData}
-            handleCancelAddSlice={this.handleCancelAddSlice}
-            handleHideEditForm={this.handleHideEditForm}
-            handleFilterChange={this.handleFilterChange}
-            handleFilterReset={this.handleFilterReset}
-            handleMetaFormChange={this.handleMetaFormChange}
-            handleSave={this.save}
-            metaFormData={this.state.example}
-            patterns={this.props.patterns}
-            sidebarContent={this.state.sidebarContent}
-            slices={this.state.slices}
-          />
-        </Sidebar>
+      <PageWithSidebar {...props} sidebar={SideBarContent}>
         <MainContent hasVisibleControls={this.state.hasVisibleControls}>
           {this.state.hasVisibleControls && (
             <React.Fragment>
@@ -421,7 +420,7 @@ class Playground extends Component {
             );
           })}
         </MainContent>
-      </Page>
+      </PageWithSidebar>
     );
   }
 }

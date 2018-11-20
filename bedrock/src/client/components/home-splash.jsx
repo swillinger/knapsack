@@ -12,6 +12,7 @@ import {
   Title,
   VersionTag,
 } from './home-splash.styles';
+import PageWithoutSidebar from '../layouts/page-without-sidebar';
 
 const query = gql`
   {
@@ -79,7 +80,7 @@ function bigWords(x) {
   return vw;
 }
 
-const HomeSplash = () => (
+const HomeSplash = props => (
   <Query query={query}>
     {({ loading, error, data }) => {
       if (loading) return <Spinner />;
@@ -87,16 +88,18 @@ const HomeSplash = () => (
 
       const { settings } = data;
       return (
-        <HomeSplashWrapper>
-          <HomeSplashCore>
-            {settings.subtitle && <EyeBrow>{settings.subtitle}</EyeBrow>}
-            {settings.title && (
-              <Title vw={bigWords(settings.title)}>{settings.title}</Title>
-            )}
-            {settings.slogan && <Subtitle>{settings.slogan}</Subtitle>}
-            {settings.version && <VersionTag>{settings.version}</VersionTag>}
-          </HomeSplashCore>
-        </HomeSplashWrapper>
+        <PageWithoutSidebar {...props}>
+          <HomeSplashWrapper>
+            <HomeSplashCore>
+              {settings.subtitle && <EyeBrow>{settings.subtitle}</EyeBrow>}
+              {settings.title && (
+                <Title vw={bigWords(settings.title)}>{settings.title}</Title>
+              )}
+              {settings.slogan && <Subtitle>{settings.slogan}</Subtitle>}
+              {settings.version && <VersionTag>{settings.version}</VersionTag>}
+            </HomeSplashCore>
+          </HomeSplashWrapper>
+        </PageWithoutSidebar>
       );
     }}
   </Query>

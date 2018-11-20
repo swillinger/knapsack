@@ -30,7 +30,7 @@ const TooltipWrapper = styled.div`
       border-style: solid;
     }
   }
-  // stylelint-disable selector-type-no-unknown
+
   *:first-child {
     cursor: pointer;
     z-index: 5;
@@ -53,7 +53,7 @@ const TooltipWrapper = styled.div`
         filter: drop-shadow(1px 2px 1px #bcbcbc);
       }
     }
-    *first-child:hover ~ span {
+    *:first-child:hover ~ span {
       transform: translate3d(-50%, 0, 0);
       visibility: visible;
       opacity: 1;
@@ -73,7 +73,7 @@ const TooltipWrapper = styled.div`
         filter: drop-shadow(1px -1px 1px #bcbcbc);
       }
     }
-    *first-child:hover ~ span {
+    *:first-child:hover ~ span {
       transform: translate3d(-50%, 0, 0);
       visibility: visible;
       opacity: 1;
@@ -93,7 +93,7 @@ const TooltipWrapper = styled.div`
         filter: drop-shadow(2px 2px 1px #bcbcbc);
       }
     }
-    *first-child:hover ~ span {
+    *:first-child:hover ~ span {
       transform: translate3d(0, -50%, 0);
       visibility: visible;
       opacity: 1;
@@ -113,13 +113,12 @@ const TooltipWrapper = styled.div`
         filter: drop-shadow(-2px 2px 1px #bcbcbc);
       }
     }
-    *first-child:hover ~ span {
+    *:first-child:hover ~ span {
       transform: translate3d(0, -50%, 0);
       visibility: visible;
       opacity: 1;
     }
   }
-  // stylelint-enable selector-type-no-unknown
 `;
 
 export function Tooltip(props) {

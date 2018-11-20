@@ -53,9 +53,11 @@ export const PatternGridItemThumb = styled.img`
   margin: 0 auto 15px;
   filter: grayscale(75%);
   transition: ${props => props.theme.transitions.all};
+  /* stylelint-disable */
   ${StyledPatternGridItem}:hover & {
     filter: grayscale(0%);
   }
+  /* stylelint-enablee */
 `;
 
 export const PatternGridItemTitle = styled.span`

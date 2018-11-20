@@ -1,20 +1,18 @@
 import styled from 'styled-components';
 
 export const Button = styled.button`
-  & {
-    height: ${props => props.theme.buttons.height};
-    border: ${props => props.theme.buttons.border};
-    background-color: ${props =>
-      props.primary
-        ? props.theme.buttons.primary.background
-        : props.theme.buttons.secondary.background};
-    color: ${props =>
-      props.primary
-        ? props.theme.buttons.primary.color
-        : props.theme.buttons.secondary.color};
-    font-size: ${props => props.theme.buttons.fontSize};
-    cursor: ${props => props.theme.buttons.cursor};
-  }
+  height: ${props => props.theme.buttons.height};
+  border: ${props => props.theme.buttons.border};
+  background-color: ${props =>
+    props.primary
+      ? props.theme.buttons.primary.background
+      : props.theme.buttons.secondary.background};
+  color: ${props =>
+    props.primary
+      ? props.theme.buttons.primary.color
+      : props.theme.buttons.secondary.color};
+  font-size: ${props => props.theme.buttons.fontSize};
+  cursor: ${props => props.theme.buttons.cursor};
 `;
 
 export const BlockQuoteWrapper = styled.blockquote`
@@ -23,15 +21,15 @@ export const BlockQuoteWrapper = styled.blockquote`
   padding: ${props => props.theme.blockquotes.padding};
   position: relative;
   margin: ${props => props.theme.blockquotes.margin};
-  // citiation styling
+  /* citiation styling */
   footer {
     font-size: ${props => props.theme.blockquotes.citation.fontSize};
     color: ${props => props.theme.blockquotes.citation.color};
     margin: ${props => props.theme.blockquotes.citation.margin};
   }
-  // Befor and After produce the quote glyphs
+  /* Befor and After produce the quote glyphs */
   ::before {
-    content: '\\201C'; /*Unicode for Left Double Quote*/
+    content: '\\201C'; /* Unicode for Left Double Quote */
     width: ${props => props.theme.blockquotes.glyph.width};
     /*Font*/
     font-family: ${props => props.theme.blockquotes.glyph.fontFamily};

@@ -63,7 +63,6 @@ export const SidebarColumn = styled.div`
   padding: ${props => (props.sidebarCollapsed ? '0' : '2rem')};
   transition: left ease 0.6s;
   > * {
-    //left: ${props => (props.sidebarCollapsed ? '-300px' : '0')};
     opacity: ${props => (props.sidebarCollapsed ? '0' : '1')};
   }
 `;

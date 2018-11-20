@@ -15,6 +15,7 @@ import {
 } from '@basalt/bedrock-core';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider, Query } from 'react-apollo';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
 import GlobalStyles from './globals/global-styles';
 import ErrorCatcher from './utils/error-catcher';
@@ -64,7 +65,12 @@ class App extends React.Component {
       ready: false,
     };
     this.apiEndpoint = `${apiUrlBase}`;
-    this.apolloClient = new ApolloClient();
+    this.apolloClient = new ApolloClient({
+      // This ensures we don't have `__typename` appear everywhere in stored data ~ https://github.com/apollographql/apollo-client/issues/1913
+      cache: new InMemoryCache({
+        addTypename: false,
+      }),
+    });
   }
 
   async componentDidMount() {

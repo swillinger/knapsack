@@ -35,9 +35,8 @@ class Settings {
   constructor({ dataDir }) {
     /** @type {BedrockSettings} */
     const defaults = {
-      title: 'A Super Simple Site',
-      subtitle: 'A Simple Example of a Design System',
-      slogan: "Wasn't that simple?",
+      title: 'My Title',
+      parentBrand: {},
     };
 
     this.db = new FileDb({
@@ -63,9 +62,7 @@ class Settings {
   }
 
   setSettings(data) {
-    // If settings are got via GraphQL, then set, then it will include a `__typename` prop, which we don't want to save, so this removes that prop before saving. https://github.com/apollographql/apollo-client/issues/1913
-    const { __typename, ...settings } = data;
-    this.db.setAll(settings);
+    this.db.setAll(data);
   }
 
   /**

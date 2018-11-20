@@ -4,12 +4,12 @@ interface BedrockSettingsStoreConfig {
 
 interface BedrockSettings {
   title: string;
-  subtitle: string;
-  slogan: string;
+  subtitle?: string;
+  slogan?: string;
   parentBrand?: {
-    homepage: string;
+    homepage?: string;
     /** image url */
     logo?: string;
-    title: string;
+    title?: string;
   }
 }

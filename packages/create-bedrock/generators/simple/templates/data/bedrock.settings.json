@@ -1,5 +1,6 @@
 {
-  "title": "A Super Simple Site",
+  "title": "A Design System",
   "subtitle": "A Simple Example of a Design System",
-  "slogan": "Wasn't that simple?"
+  "slogan": "Don't repeat yourself",
+  "parentBrand": {}
 }

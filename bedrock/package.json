@@ -107,7 +107,6 @@
     "design-system",
     "basalt"
   ],
-  "license": "UNLICENSED",
   "repository": {
     "type": "git",
     "url": "https://bitbucket.org/basaltinc/bedrock"

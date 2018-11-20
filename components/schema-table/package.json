@@ -19,7 +19,6 @@
     "styled-components": "^4.0.2"
   },
   "author": "Basalt (https://basalt.io/)",
-  "license": "UNLICENSED",
   "publishConfig": {
     "access": "restricted"
   }

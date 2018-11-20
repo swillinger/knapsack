@@ -8,7 +8,6 @@
     "ajv": "^6.5.3"
   },
   "author": "Basalt (https://basalt.io/)",
-  "license": "UNLICENSED",
   "publishConfig": {
     "access": "restricted"
   }

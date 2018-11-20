@@ -25,7 +25,6 @@
     "prettier": "^1.14.2"
   },
   "author": "Basalt (https://basalt.io/)",
-  "license": "UNLICENSED",
   "publishConfig": {
     "access": "restricted"
   }

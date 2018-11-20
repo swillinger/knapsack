@@ -19,7 +19,6 @@
     "@basalt/bedrock-babel-config": "^0.6.0"
   },
   "author": "Basalt (https://basalt.io/)",
-  "license": "UNLICENSED",
   "publishConfig": {
     "access": "restricted"
   }

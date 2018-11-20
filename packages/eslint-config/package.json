@@ -21,7 +21,6 @@
     "typescript-eslint-parser": "^20.0.0"
   },
   "author": "Basalt (https://basalt.io/)",
-  "license": "UNLICENSED",
   "publishConfig": {
     "access": "restricted"
   }

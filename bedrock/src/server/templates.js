@@ -27,7 +27,7 @@ function wrapHtml(html, cssUrls = [], jsUrls = [], isReadyForIframe = true) {
   }
 </head>
 <body>
-<div>${html}</div>
+${html}
 ${jsUrls.map(jsUrl => `<script src="${jsUrl}"></script>`)}
 <style>
   body {

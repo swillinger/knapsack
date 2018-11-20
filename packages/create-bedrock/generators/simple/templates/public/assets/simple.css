@@ -1,3 +1,10 @@
+:root {
+  --border: 1px solid #000;
+  --border-radius: 3px;
+
+  --padding-medium: 15px;
+}
+
 body {
     z-index: 42;
 }
@@ -7,6 +14,14 @@ img {
 }
 
 .card {
-    border: 1px solid #000;
-    border-radius: 3px;
+    border: var(--border);
+    border-radius: var(--border-radius);
+}
+
+.button {
+  background: #FFF;
+  display: inline-block;
+  border: var(--border);
+  border-radius: var(--border-radius);
+  padding: var(--padding-medium);
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import SchemaForm from '@basalt/bedrock-schema-form';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
 import { Query, Mutation } from 'react-apollo';
@@ -46,8 +47,13 @@ const SettingsMutation = props => (
           schema={bedrockSettingsSchema}
           formData={props.settings}
           onSubmit={
-            // ({ formData }) => setSettings({ formData })
-            ({ formData }) => console.log({ formData })
+            ({ formData }) =>
+              setSettings({
+                variables: {
+                  settings: formData,
+                },
+              })
+            // ({ formData }) => console.log({ formData })
           }
           hasSubmit
         />
@@ -55,6 +61,10 @@ const SettingsMutation = props => (
     )}
   </Mutation>
 );
+
+SettingsMutation.propTypes = {
+  settings: PropTypes.object.isRequired, // eslint-disable-line
+};
 
 const SettingsPage = props => (
   <Query query={query}>

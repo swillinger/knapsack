@@ -63,7 +63,9 @@ class Settings {
   }
 
   setSettings(data) {
-    this.db.setAll(data);
+    // If settings are got via GraphQL, then set, then it will include a `__typename` prop, which we don't want to save, so this removes that prop before saving. https://github.com/apollographql/apollo-client/issues/1913
+    const { __typename, ...settings } = data;
+    this.db.setAll(settings);
   }
 
   /**

@@ -25,7 +25,7 @@
       "type": "object",
       "description": "Settings related to the parent brand that owns/uses the design system",
       "additionalProperties": false,
-      "required": ["logo", "title", "homepage"],
+      "required": [],
       "properties": {
         "logo": {
           "title": "Logo",

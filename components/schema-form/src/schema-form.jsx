@@ -55,11 +55,7 @@ export default class SchemaForm extends React.Component {
           isInline={this.props.isInline}
         >
           {!this.props.hasSubmit && <span />}
-          {this.props.hasSubmit && (
-            <Button onClick={this.props.onSubmit} primary>
-              Submit
-            </Button>
-          )}
+          {this.props.hasSubmit && <Button primary>Submit</Button>}
         </Form>
       </div>
     );

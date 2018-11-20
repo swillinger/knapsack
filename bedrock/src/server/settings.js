@@ -21,8 +21,10 @@ const settingsTypeDef = gql`
 
   type Query {
     settings: Settings
+  }
+
+  type Mutation {
     setSettings(settings: JSON): Settings
-    setSetting(setting: String, value: String): Settings
   }
 `;
 
@@ -61,7 +63,9 @@ class Settings {
   }
 
   setSettings(data) {
-    this.db.setAll(data);
+    // If settings are got via GraphQL, then set, then it will include a `__typename` prop, which we don't want to save, so this removes that prop before saving. https://github.com/apollographql/apollo-client/issues/1913
+    const { __typename, ...settings } = data;
+    this.db.setAll(settings);
   }
 
   /**
@@ -89,12 +93,10 @@ class Settings {
 const settingsResolvers = {
   Query: {
     settings: (parent, args, { settings }) => settings.getSettings(),
-    setSettings: (parent, { newSettings }, { settings }) => {
+  },
+  Mutation: {
+    setSettings: (parent, { settings: newSettings }, { settings }) => {
       settings.setSettings(newSettings);
-      return settings.getSettings();
-    },
-    setSetting: (parent, { setting, value }, { settings }) => {
-      settings.setSetting(setting, value);
       return settings.getSettings();
     },
   },

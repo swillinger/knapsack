@@ -4,7 +4,8 @@ import SchemaForm from '@basalt/bedrock-schema-form';
 import { connectToContext } from '@basalt/bedrock-core';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import PatternGrid from './pattern-grid';
+import PatternGrid from '../components/pattern-grid';
+import PageWithSidebar from '../layouts/page-with-sidebar';
 
 const filterSchema = {
   $schema: 'http://json-schema.org/draft-07/schema',
@@ -152,7 +153,7 @@ class PatternsPage extends Component {
     }
 
     return (
-      <div className="patterns-filters">
+      <PageWithSidebar {...this.props} className="patterns-filters">
         <h2>Patterns</h2>
         <p>Explore the design patterns that make up the Crux Design System.</p>
         <SchemaForm
@@ -161,7 +162,7 @@ class PatternsPage extends Component {
           onChange={this.handleChangeForm}
         />
         <PatternGrid patterns={this.state.visiblePatterns} />
-      </div>
+      </PageWithSidebar>
     );
   }
 }

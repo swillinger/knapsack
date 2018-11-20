@@ -14,6 +14,7 @@ import {
   LoadableVariationDemo,
 } from '../loadable-components';
 import DosAndDonts from '../components/dos-and-donts';
+import PageWithSidebar from '../layouts/page-with-sidebar';
 
 const OverviewHeader = styled.header`
   position: relative;
@@ -122,7 +123,7 @@ class PatternViewPage extends Component {
     const dosAndDonts = schema.dosAndDonts ? schema.dosAndDonts : [];
     return (
       <ErrorCatcher>
-        <article>
+        <PageWithSidebar {...this.props}>
           <OverviewHeader>
             <h4 className="eyebrow" style={{ textTransform: 'capitalize' }}>
               {type}
@@ -195,7 +196,7 @@ class PatternViewPage extends Component {
           ))}
 
           {/* <ApiDemo endpoint={this.apiEndpoint} /> */}
-        </article>
+        </PageWithSidebar>
       </ErrorCatcher>
     );
   }

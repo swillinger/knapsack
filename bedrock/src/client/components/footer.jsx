@@ -28,7 +28,6 @@ const Footer = props => (
     {({ loading, error, data }) => {
       if (loading) return <Spinner />;
       if (error) return <p>Error :(</p>;
-
       const { parentBrand } = data.settings;
       return (
         <FooterWrapper>
@@ -42,14 +41,14 @@ const Footer = props => (
             )}
           </FooterMenu>
           <p>
-            Copyright {currentYear} -{' '}
+            Copyright {currentYear}{' '}
             {parentBrand && (
               <a
                 href={parentBrand.homepage}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {parentBrand.title}
+                - {parentBrand.title}
               </a>
             )}
           </p>

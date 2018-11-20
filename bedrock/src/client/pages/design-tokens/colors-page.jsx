@@ -10,6 +10,7 @@ import {
 import makeDesignTokensPage, {
   propTypes,
 } from '../../utils/make-design-tokens-page';
+import PageWithSidebar from '../../layouts/page-with-sidebar';
 
 function ColorsPage(props) {
   const {
@@ -21,7 +22,7 @@ function ColorsPage(props) {
   } = props.tokens;
 
   return (
-    <div>
+    <PageWithSidebar {...props}>
       <h4 className="eyebrow">Design Tokens</h4>
       <h2>{props.title}</h2>
 
@@ -96,7 +97,7 @@ function ColorsPage(props) {
           ))}
         </div>
       )}
-    </div>
+    </PageWithSidebar>
   );
 }
 

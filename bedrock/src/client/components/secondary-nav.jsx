@@ -59,7 +59,7 @@ class SecondaryNav extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.location.pathname !== prevProps.location.pathname) {
+    if (this.props.pathname !== prevProps.pathname) {
       this.handleFilterReset();
     }
   }
@@ -171,9 +171,11 @@ class SecondaryNav extends Component {
 }
 
 SecondaryNav.propTypes = {
-  location: PropTypes.shape({
-    pathname: PropTypes.string,
-  }).isRequired,
+  pathname: PropTypes.string,
+};
+
+SecondaryNav.defaultProps = {
+  pathname: null,
 };
 
 export default SecondaryNav;

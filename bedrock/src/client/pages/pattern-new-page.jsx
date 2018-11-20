@@ -6,6 +6,7 @@ import { StatusMessage } from '@basalt/bedrock-atoms';
 import urlJoin from 'url-join';
 import patternMetaSchema from '../../schemas/pattern-meta.schema.json';
 import { apiUrlBase } from '../data';
+import PageWithSidebar from '../layouts/page-with-sidebar';
 
 class PatternNew extends Component {
   constructor(props) {
@@ -60,7 +61,7 @@ class PatternNew extends Component {
       return <Redirect to={this.state.redirectUrl} />;
     }
     return (
-      <div>
+      <PageWithSidebar {...this.props}>
         {this.state.statusMessage && (
           <StatusMessage
             message={this.state.statusMessage}
@@ -84,7 +85,7 @@ The Management
         `}
           type="warning"
         />
-      </div>
+      </PageWithSidebar>
     );
   }
 }

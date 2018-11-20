@@ -1,13 +1,38 @@
 import styled from 'styled-components';
 import { FaChevronLeft } from 'react-icons/fa';
 
+export const PageLayoutWithSidebar = styled.div`
+  display: grid;
+  grid-template-rows: 86px 1fr 86px;
+  ${props =>
+    props.sidebarCollapsed
+      ? 'grid-template-columns: 45px 1fr'
+      : 'grid-template-columns: 300px 1fr'};
+  height: 100vh;
+  grid-template-areas:
+    'header header'
+    'sidebar main'
+    'footer footer';
+  transition: all ease 0.3s;
+  > :first-child {
+    grid-area: header;
+  }
+  > :nth-child(2) {
+    grid-area: sidebar;
+  }
+  > :nth-child(3) {
+    grid-area: main;
+    padding: 2rem;
+  }
+  > :nth-child(4) {
+    grid-area: footer;
+  }
+`;
+
 export const SidebarStyled = styled.aside`
   position: relative;
   display: flex;
-  flex-shrink: 0;
   flex-direction: row;
-  width: ${props => (props.sidebarCollapsed ? '50px' : '300px')};
-  transition: 0.6s;
   h4:not(:first-child) {
     white-space: nowrap;
     margin: 1.25rem 0 0;
@@ -35,10 +60,10 @@ export const SidebarColumn = styled.div`
   display: flex;
   flex-direction: column;
   background: ${props => props.theme.sidebar.background};
-  padding: ${props => (props.sidebarCollapsed ? '25px' : '2rem')};
-  transition: 0.6s;
+  padding: ${props => (props.sidebarCollapsed ? '0' : '2rem')};
+  transition: left ease 0.6s;
   > * {
-    left: ${props => (props.sidebarCollapsed ? '-300px' : '0')};
+    //left: ${props => (props.sidebarCollapsed ? '-300px' : '0')};
     opacity: ${props => (props.sidebarCollapsed ? '0' : '1')};
   }
 `;
@@ -58,10 +83,5 @@ export const SidebarTrayHandle = styled.div`
 
 export const ToggleChevron = styled(FaChevronLeft)`
   margin-top: 50vh;
-  ${props =>
-    props.sidebarcollapsed === 'true'
-      ? `
-    transform: rotate(180deg);
-    `
-      : ``};
+  ${props => (props.sidebarcollapsed ? `transform: rotate(180deg);` : ``)};
 `;

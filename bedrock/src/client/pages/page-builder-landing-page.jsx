@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import shortid from 'shortid';
 import { Query } from 'react-apollo';
@@ -7,6 +8,7 @@ import { Button, TwoUp, BlockQuoteWrapper } from '@basalt/bedrock-atoms';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
 import { apiUrlBase } from '../data';
 import { BASE_PATHS } from '../../lib/constants';
+import PageWithSidebar from '../layouts/page-with-sidebar';
 
 const examplesQuery = gql`
   {
@@ -62,7 +64,7 @@ class PageBuilderLandingPage extends Component {
         {({ data }) => {
           const { pageBuilderPages = [] } = data;
           return (
-            <>
+            <PageWithSidebar location={this.props.location}>
               <h4 className="eyebrow">Prototyping Pages</h4>
               <h2>Page Builder</h2>
               {enableBlockquotes && (
@@ -109,7 +111,7 @@ class PageBuilderLandingPage extends Component {
                   Get Started
                 </Button>
               </div>
-            </>
+            </PageWithSidebar>
           );
         }}
       </Query>
@@ -117,8 +119,13 @@ class PageBuilderLandingPage extends Component {
   }
 }
 
+PageBuilderLandingPage.defaultProps = {
+  location: BASE_PATHS.PAGES,
+};
+
 PageBuilderLandingPage.propTypes = {
   context: contextPropTypes.isRequired,
+  location: PropTypes.object,
 };
 
 export default connectToContext(PageBuilderLandingPage);

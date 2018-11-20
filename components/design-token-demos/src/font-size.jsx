@@ -1,22 +1,22 @@
 import React from 'react';
 import { TOKEN_CATS } from '../constants';
 import { demoPropTypes } from './utils';
+import { StyledFontSizeDemo } from './styles';
 
 export const FontSizeDemo = ({ tokens }) => {
   if (!tokens) return null;
-  return tokens.map(token => (
-    <div key={token.name}>
-      <h4>
-        {token.name}
-        <code>: {token.value}</code>
-      </h4>
-      {token.comment && <small>{token.comment}</small>}
-      <div
-        style={{
-          borderColor: token.value,
-        }}
-      />
-    </div>
+  return tokens.map((token, index) => (
+    <StyledFontSizeDemo
+      key={token.name}
+      index={index + 1}
+      length={tokens.length}
+      fontSize={token.value}
+    >
+      <code>{token.name}</code>: {token.value} <br />
+      <blockquote contentEditable suppressContentEditableWarning>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      </blockquote>
+    </StyledFontSizeDemo>
   ));
 };
 

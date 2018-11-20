@@ -17,8 +17,11 @@
   "author": "Basalt (https://basalt.io/)",
   "license": "UNLICENSED",
   "dependencies": {
+    "@basalt/bedrock-atoms": "^0.6.0",
+    "@basalt/bedrock-breakpoints-demo": "^0.6.0",
     "@basalt/bedrock-core": "^0.6.0",
-    "@basalt/bedrock-color-swatch": "^0.6.0"
+    "@basalt/bedrock-color-swatch": "^0.6.0",
+    "@basalt/bedrock-spacing-swatch": "^0.6.0"
   },
   "publishConfig": {
     "access": "restricted"

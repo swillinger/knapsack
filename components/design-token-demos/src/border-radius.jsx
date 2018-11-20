@@ -1,6 +1,7 @@
 import React from 'react';
 import { TOKEN_CATS } from '../constants';
 import { demoPropTypes } from './utils';
+import { BordersDemoBox } from './styles';
 
 export const BorderRadiusDemo = ({ tokens }) => {
   if (!tokens) return null;
@@ -11,9 +12,10 @@ export const BorderRadiusDemo = ({ tokens }) => {
         <code>: {token.value}</code>
       </h4>
       {token.comment && <small>{token.comment}</small>}
-      <div
+      <BordersDemoBox
         style={{
-          borderColor: token.value,
+          borderRadius: token.value,
+          border: '1px solid black',
         }}
       />
     </div>

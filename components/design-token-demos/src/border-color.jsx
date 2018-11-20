@@ -1,6 +1,7 @@
 import React from 'react';
 import { TOKEN_CATS } from '../constants';
 import { demoPropTypes } from './utils';
+import { BordersDemoBox } from './styles';
 
 export const BorderColorDemo = ({ tokens }) => {
   if (!tokens) return null;
@@ -11,9 +12,11 @@ export const BorderColorDemo = ({ tokens }) => {
         <code>: {token.value}</code>
       </h4>
       {token.comment && <small>{token.comment}</small>}
-      <div
+      <BordersDemoBox
         style={{
           borderColor: token.value,
+          borderWidth: '1px',
+          borderStyle: 'solid',
         }}
       />
     </div>

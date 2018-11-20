@@ -10,7 +10,7 @@ import { TokenCategory } from '@basalt/bedrock-design-token-demos';
 import PageWithSidebar from '../../layouts/page-with-sidebar';
 
 const query = gql`
-  query OmniPage($id: String) {
+  query DesignTokenGroupPage($id: String) {
     tokenGroup(group: $id) {
       id
       title
@@ -20,6 +20,10 @@ const query = gql`
         tokens {
           name
           value
+          category
+          comment
+          originalValue
+          type
         }
       }
     }

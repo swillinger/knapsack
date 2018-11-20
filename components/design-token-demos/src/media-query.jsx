@@ -1,23 +1,11 @@
 import React from 'react';
+import BreakpointsDemo from '@basalt/bedrock-breakpoints-demo';
 import { TOKEN_CATS } from '../constants';
 import { demoPropTypes } from './utils';
 
 export const MediaQueryDemo = ({ tokens }) => {
   if (!tokens) return null;
-  return tokens.map(token => (
-    <div key={token.name}>
-      <h4>
-        {token.name}
-        <code>: {token.value}</code>
-      </h4>
-      {token.comment && <small>{token.comment}</small>}
-      <div
-        style={{
-          borderColor: token.value,
-        }}
-      />
-    </div>
-  ));
+  return <BreakpointsDemo breakpoints={tokens} />;
 };
 
 MediaQueryDemo.tokenCategory = TOKEN_CATS.MEDIA_QUERY;

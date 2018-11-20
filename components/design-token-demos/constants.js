@@ -14,7 +14,7 @@ const TOKEN_CATS = {
   LINE_HEIGHT: 'line-height',
   ANIMATION: 'animation',
   HR_COLOR: 'hr-color',
-  BACKGROUND_GRADIENT: 'background-gradient',
+  // BACKGROUND_GRADIENT: 'background-gradient',
   SPACING: 'spacing',
   MEDIA_QUERY: 'media-query',
 };

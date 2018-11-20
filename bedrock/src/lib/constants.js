@@ -33,16 +33,15 @@ const TOKEN_GROUPS = {
       TOKEN_CATS.BORDER_COLOR,
       TOKEN_CATS.TEXT_COLOR,
       TOKEN_CATS.HR_COLOR,
-      TOKEN_CATS.BACKGROUND_GRADIENT,
     ],
   },
   // @todo review
-  // ANIMATIONS: {
-  //   id: 'animations',
-  //   title: 'Animations',
-  //   description: 'Some Animations',
-  //   tokenCategoryIds: [TOKEN_CATS.ANIMATION],
-  // },
+  ANIMATIONS: {
+    id: 'animations',
+    title: 'Animations',
+    description: 'Some Animations',
+    tokenCategoryIds: [TOKEN_CATS.ANIMATION],
+  },
   TYPOGRAPHY: {
     id: 'typography',
     title: 'Typography',
@@ -62,9 +61,9 @@ const TOKEN_GROUPS = {
     title: 'Sizing',
     description: 'Some sizing',
     tokenCategoryIds: [
-      TOKEN_CATS.FONT_SIZE,
       TOKEN_CATS.SPACING,
       TOKEN_CATS.MEDIA_QUERY,
+      TOKEN_CATS.FONT_SIZE,
     ],
   },
 };

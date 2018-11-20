@@ -1,22 +1,21 @@
 import React from 'react';
+import { ShadowDemoBox } from '@basalt/bedrock/src/client/pages/design-tokens/shadows-page.styles';
 import { TOKEN_CATS } from '../constants';
 import { demoPropTypes } from './utils';
 
 export const TextShadowDemo = ({ tokens }) => {
   if (!tokens) return null;
   return tokens.map(token => (
-    <div key={token.name}>
-      <h4>
-        {token.name}
-        <code>: {token.value}</code>
-      </h4>
-      {token.comment && <small>{token.comment}</small>}
-      <div
+    <ShadowDemoBox key={token.name}>
+      <h4>{token.name}</h4>
+      <p
         style={{
-          borderColor: token.value,
+          textShadow: token.value,
         }}
-      />
-    </div>
+      >
+        Lorem Ipsum
+      </p>
+    </ShadowDemoBox>
   ));
 };
 

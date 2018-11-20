@@ -1,5 +1,6 @@
 #!/bin/bash
 set -x
+set -e
 # Start in this directory even if ran elsewhere
 cd "$(dirname "$0")"
 npm i -g now --unsafe-perm

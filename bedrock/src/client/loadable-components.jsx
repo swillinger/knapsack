@@ -11,6 +11,12 @@ export const LoadableFooter = Loadable({
   loading: Spinner,
 });
 
+export const LoadableDesignTokenGroup = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "design-token-group" */ './pages/design-tokens/design-token-group'),
+  loading: Spinner,
+});
+
 export const LoadablePatternView = Loadable({
   loader: () =>
     import(/* webpackChunkName: "pattern-view-page" */ './pages/pattern-view-page'),

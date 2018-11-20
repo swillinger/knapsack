@@ -7,13 +7,20 @@ import global from 'global';
  * @prop {string} path
  * @prop {string} [description]
  * @prop {string[]} tokenCategories
- * @prop {Function<React.ReactElement>} render
+ * @prop {() => React.ReactElement} render
+ */
+
+/**
+ * @typedef {Object} DesignTokenGroup
+ * @prop {string} id
+ * @prop {() => React.ReactElement} render
  */
 
 class PluginStore {
   constructor() {
     this.plugins = {};
     this.homePage = null;
+    this.designTokenCategoryDemos = {};
     this.designTokensGroupPages = {};
   }
 
@@ -25,10 +32,17 @@ class PluginStore {
   }
 
   /**
+   * @return {DesignTokenGroup[]}
+   */
+  get designTokensCategoryDemos() {
+    return Object.values(this.designTokenCategoryDemos);
+  }
+
+  /**
    * Register Bedrock plugin
    * @param {string} name - machine name of plugin; no spaces, lowercase
    * @param {Function} plugin - Plugin function
-   * @return {null} - Adds plugin to internal set
+   * @return {void} - Adds plugin to internal set
    */
   register(name, plugin) {
     // console.log('plugin registered', { name });
@@ -38,15 +52,23 @@ class PluginStore {
   /**
    * @param {Object} options - Options to pass in
    * @param {Function} options.render - Render function that pass props to custom component
-   * @return {null} - Sets the Home page
+   * @return {void} - Sets the Home page
    */
   setHomePage({ render }) {
     this.homePage = { render };
   }
 
   /**
+   * @param {DesignTokenGroup} opt
+   * @return {void}
+   */
+  addDesignTokenCategoryDemo({ id, render }) {
+    this.designTokenCategoryDemos[id] = { id, render };
+  }
+
+  /**
    * @param {DesignTokenPage} config
-   * @return {null}
+   * @return {void}
    */
   addDesignTokensGroupPage({
     id,

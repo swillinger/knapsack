@@ -93,6 +93,18 @@ function createWebPackConfig(userConfig) {
             },
           ],
         },
+        {
+          test: /\.(woff(2)?|ttf|eot|svg)?$/,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: '[name].[ext]',
+                outputPath: 'fonts/',
+              },
+            },
+          ],
+        },
       ],
     },
     devtool: isProd ? 'source-map' : 'cheap-module-source-map',

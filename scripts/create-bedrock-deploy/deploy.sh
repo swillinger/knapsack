@@ -5,5 +5,5 @@ set -e
 cd "$(dirname "$0")"
 npm i -g now --unsafe-perm
 now deploy --token=$NOW_TOKEN --team=basalt --no-clipboard --build-env NPM_TOKEN=@npm-token --force
-now alias --token=$NOW_TOKEN --team=basalt
+# now alias --token=$NOW_TOKEN --team=basalt
 now rm create-bedrock-demo --safe --yes --token=$NOW_TOKEN --team=basalt

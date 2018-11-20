@@ -1,6 +1,6 @@
 {
   "name": "@basalt/bedrock-core",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "A Bedrock component that helps build Design Systems",
   "main": "src/index.js",
   "module": "src/index.js",

@@ -30,34 +30,34 @@ function getRoutes(config) {
     });
   });
 
-  if (config.designTokens) {
-    config.designTokens.forEach(designToken => {
-      const url = urlJoin(config.baseUrl, 'design-token', designToken.id);
-      // console.log(`Setting up "${url}" api endpoint...`);
-      registerEndpoint(url);
-      router.get(url, async (req, res) => {
-        try {
-          const tokens = await designToken.get(req.query);
-          // console.log(`Responding on "${url}" api endpoint with: `, tokens);
-          res.send({
-            ok: true,
-            data: tokens,
-          });
-        } catch (err) {
-          res.send({
-            ok: false,
-            message: err.toString(),
-          });
-        }
-      });
-    });
-
-    const url2 = urlJoin(config.baseUrl, 'design-tokens');
-    registerEndpoint(url2);
-    router.get(url2, async (req, res) => {
-      res.send(config.designTokens);
-    });
-  }
+  // if (config.designTokens) {
+  //   config.designTokens.forEach(designToken => {
+  //     const url = urlJoin(config.baseUrl, 'design-token', designToken.id);
+  //     // console.log(`Setting up "${url}" api endpoint...`);
+  //     registerEndpoint(url);
+  //     router.get(url, async (req, res) => {
+  //       try {
+  //         const tokens = await designToken.get(req.query);
+  //         // console.log(`Responding on "${url}" api endpoint with: `, tokens);
+  //         res.send({
+  //           ok: true,
+  //           data: tokens,
+  //         });
+  //       } catch (err) {
+  //         res.send({
+  //           ok: false,
+  //           message: err.toString(),
+  //         });
+  //       }
+  //     });
+  //   });
+  //
+  //   const url2 = urlJoin(config.baseUrl, 'design-tokens');
+  //   registerEndpoint(url2);
+  //   router.get(url2, async (req, res) => {
+  //     res.send(config.designTokens);
+  //   });
+  // }
 
   if (config.templateRenderers) {
     const url = urlJoin(config.baseUrl, '/render');

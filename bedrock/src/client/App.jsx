@@ -129,12 +129,13 @@ class App extends React.Component {
         tokenGroups {
           id
           title
-          tokenCategories
+          tokenCategoryIds
           description
           path
         }
       }
     `;
+
     return (
       <ErrorCatcher>
         <ApolloProvider client={this.apolloClient}>
@@ -231,6 +232,8 @@ class App extends React.Component {
                                         render={() =>
                                           render({
                                             ...group,
+                                            tokenCategories:
+                                              group.tokenCategoryIds,
                                           })
                                         }
                                       />

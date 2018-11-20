@@ -19,12 +19,18 @@ const TOKEN_CATS = {
   MEDIA_QUERY: 'media-query',
 };
 
+/**
+ * @todo ensure we have a demo for each of these
+ * @type {string[]}
+ * */
+const tokenCategoriesWithDemo = Object.values(TOKEN_CATS);
+
 const TOKEN_GROUPS = {
   SHADOWS: {
     id: 'shadows',
     title: 'Shadows',
     description: 'Some shadows',
-    tokenCategories: [
+    tokenCategoryIds: [
       TOKEN_CATS.BOX_SHADOW,
       TOKEN_CATS.INNER_SHADOW,
       TOKEN_CATS.TEXT_SHADOW,
@@ -34,7 +40,7 @@ const TOKEN_GROUPS = {
     id: 'borders',
     title: 'Borders',
     description: 'Some borders',
-    tokenCategories: [
+    tokenCategoryIds: [
       TOKEN_CATS.BORDER_COLOR,
       TOKEN_CATS.BORDER_STYLE,
       TOKEN_CATS.BORDER_RADIUS,
@@ -44,7 +50,7 @@ const TOKEN_GROUPS = {
     id: 'colors',
     title: 'Colors',
     description: 'Some colors',
-    tokenCategories: [
+    tokenCategoryIds: [
       TOKEN_CATS.BORDER_COLOR,
       TOKEN_CATS.TEXT_COLOR,
       TOKEN_CATS.HR_COLOR,
@@ -57,13 +63,13 @@ const TOKEN_GROUPS = {
   //   id: 'animations',
   //   title: 'Animations',
   //   description: 'Some Animations',
-  //   tokenCategories: [TOKEN_CATS.ANIMATION],
+  //   tokenCategoryIds: [TOKEN_CATS.ANIMATION],
   // },
   TYPOGRAPHY: {
     id: 'typography',
     title: 'Typography',
     description: 'Some typography',
-    tokenCategories: [
+    tokenCategoryIds: [
       TOKEN_CATS.FONT_FAMILY,
       TOKEN_CATS.FONT_SIZE,
       TOKEN_CATS.FONT_STYLE,
@@ -77,13 +83,16 @@ const TOKEN_GROUPS = {
     id: 'sizing',
     title: 'Sizing',
     description: 'Some sizing',
-    tokenCategories: [
+    tokenCategoryIds: [
       TOKEN_CATS.FONT_SIZE,
       TOKEN_CATS.SPACING,
       TOKEN_CATS.MEDIA_QUERY,
     ],
   },
 };
+
+/** @type {TokenGroupDef[]} */
+const tokenGroups = Object.values(TOKEN_GROUPS);
 
 /**
  * Base Paths for URLs
@@ -100,5 +109,7 @@ module.exports = {
   USER_SITE_PUBLIC: '/user-site-public',
   TOKEN_CATS,
   TOKEN_GROUPS,
+  tokenGroups,
   BASE_PATHS,
+  tokenCategoriesWithDemo,
 };

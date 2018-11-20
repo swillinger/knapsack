@@ -4,7 +4,6 @@ const { mergeSchemas, makeExecutableSchema } = require('graphql-tools');
 const WebSocket = require('ws');
 const bodyParser = require('body-parser');
 const { join } = require('path');
-const portfinder = require('portfinder');
 const log = require('../cli/log');
 const { getRoutes } = require('./rest-api');
 const { enableTemplatePush } = require('../lib/features');
@@ -24,14 +23,11 @@ const { Patterns, patternsResolvers, patternsTypeDef } = require('./patterns');
 
 /**
  * @param {BedrockConfig} config
+ * @param {BedrockMeta} meta
  * @returns {Promise<void>}
  */
-async function serve(config) {
+async function serve(config, meta) {
   const port = 3999;
-  const websocketsPort = await portfinder.getPortPromise();
-  const meta = {
-    websocketsPort,
-  };
 
   const patterns = new Patterns({
     newPatternDir: config.newPatternDir,
@@ -42,6 +38,7 @@ async function serve(config) {
   const metaTypeDef = gql`
     type Meta {
       websocketsPort: Int
+      bedrockVersion: String
     }
 
     type Query {
@@ -128,14 +125,14 @@ async function serve(config) {
   //   );
   // }
 
-  const designTokens = new DesignTokens({
-    tokenPath: config.designTokens,
-  });
+  // const designTokens = new DesignTokens({
+  //   tokenPath: config.designTokens,
+  // });
 
-  const tokens = {
-    tokens: await designTokens.getTokens(),
-    categories: await designTokens.getCategories(),
-  };
+  // const tokens = {
+  //   tokens: await designTokens.getTokens(),
+  //   categories: await designTokens.allCategoriesUsed,
+  // };
 
   const endpoints = [];
 
@@ -159,19 +156,19 @@ async function serve(config) {
     public: config.public,
     baseUrl: '/api',
     meta,
-    designTokens: tokens.categories.map(category => {
-      const theseTokens = tokens.tokens.filter(
-        token => token.category === category,
-      );
-      return {
-        id: category,
-        meta: {
-          title: category,
-          description: `Description for ${category}`,
-        },
-        get: () => Promise.resolve(theseTokens),
-      };
-    }),
+    // designTokens: tokens.categories.map(category => {
+    //   const theseTokens = tokens.tokens.filter(
+    //     token => token.category === category,
+    //   );
+    //   return {
+    //     id: category,
+    //     meta: {
+    //       title: category,
+    //       description: `Description for ${category}`,
+    //     },
+    //     get: () => Promise.resolve(theseTokens),
+    //   };
+    // }),
     patternManifest: patterns,
     templateRenderers: config.templates,
     pageBuilder: new PageBuilder({
@@ -208,9 +205,9 @@ async function serve(config) {
     return true;
   }
 
-  if (websocketsPort && enableTemplatePush) {
+  if (meta.websocketsPort && enableTemplatePush) {
     wss = new WebSocket.Server({
-      port: websocketsPort,
+      port: meta.websocketsPort,
       clientTracking: true,
     });
   }

@@ -12,9 +12,7 @@ export const HomeSplashCore = styled.div`
   justify-content: center;
   box-sizing: border-box;
   text-align: right;
-  min-height: 87vh;
   @media screen and (min-width: 450px) {
-    min-height: 85vh;
     padding: 2rem;
   }
 `;

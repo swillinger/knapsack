@@ -21,6 +21,9 @@ const pageBuilderPagesTypeDef = gql`
   type Query {
     pageBuilderPage(id: ID): PageBuilderPage
     pageBuilderPages: [PageBuilderPage]
+  }
+
+  type Mutation {
     setPageBuilderPage(id: ID, data: JSON): PageBuilderPage
   }
 `;
@@ -77,12 +80,14 @@ const pageBuilderPagesResolvers = {
   Query: {
     pageBuilderPage: (parent, { id }, { pageBuilderPages }) =>
       pageBuilderPages.getPageBuilderPage(id),
+    pageBuilderPages: (parent, args, { pageBuilderPages }) =>
+      pageBuilderPages.getPageBuilderPages(),
+  },
+  Mutation: {
     setPageBuilderPage: async (parent, { id, data }, { pageBuilderPages }) => {
       await pageBuilderPages.setPageBuilderPage(id, data);
       return pageBuilderPages.getPageBuilderPage(id);
     },
-    pageBuilderPages: (parent, args, { pageBuilderPages }) =>
-      pageBuilderPages.getPageBuilderPages(),
   },
   JSON: GraphQLJSON,
 };

@@ -7,9 +7,8 @@ import { StatusMessage } from '@basalt/bedrock-atoms';
 import { connectToContext } from '@basalt/bedrock-core';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import { Query } from 'react-apollo';
+import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-import { apiUrlBase } from '../../data';
 import PageWithSidebar from '../../layouts/page-with-sidebar';
 import PlaygroundSlice from './page-builder-slice';
 import PageBuilderSidebar, {
@@ -18,11 +17,25 @@ import PageBuilderSidebar, {
   SIDEBAR_PATTERNS,
 } from './page-builder-sidebar';
 import { MainContent, StartInsertSlice } from './page-builder.styles';
-import { BASE_PATHS } from '../../../lib/constants';
 
 const query = gql`
   query PageBuilerPages($id: ID) {
     pageBuilderPage(id: $id) {
+      id
+      title
+      path
+      slices {
+        id
+        patternId
+        data
+      }
+    }
+  }
+`;
+
+const mutation = gql`
+  mutation setPageBuilderPage($id: ID, $data: JSON) {
+    setPageBuilderPage(id: $id, data: $data) {
       id
       title
       path
@@ -52,8 +65,6 @@ class Playground extends Component {
       hasVisibleControls: true,
       changeId: null,
     };
-    // Static properties
-    this.apiEndpoint = `${apiUrlBase}`;
     // Bindings
     this.moveSlice = this.moveSlice.bind(this);
     this.moveSliceUp = this.moveSliceUp.bind(this);
@@ -91,32 +102,20 @@ class Playground extends Component {
     });
   }
 
-  save() {
-    const newExample = Object.assign({}, this.state.example, {
-      slices: this.state.slices,
+  /**
+   * Save Whole Example page to server via GraphQL mutation
+   * @param {Function} setPageBuilderPage - The function provided by the GraphQL <Mutation> component
+   * @return {Promise<Object>} - Returns the structued object defined by the mutation.
+   */
+  async save(setPageBuilderPage) {
+    return setPageBuilderPage({
+      variables: {
+        id: this.props.id,
+        data: Object.assign({}, this.state.example, {
+          slices: this.state.slices,
+        }),
+      },
     });
-
-    window
-      // @todo write gql mutation here
-      .fetch(`${this.apiEndpoint}${BASE_PATHS.PAGES}/${this.props.id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newExample),
-      })
-      .then(res => res.json())
-      .then(results => {
-        this.setState({
-          statusMessage: results.message,
-          statusType: results.ok ? 'success' : 'error',
-        });
-        setTimeout(() => {
-          this.setState({
-            statusMessage: '',
-          });
-        }, 3000);
-      });
   }
 
   handleHideEditForm() {
@@ -132,7 +131,7 @@ class Playground extends Component {
    * @param {number} fromIndex - Move this item
    * @param {number} toIndex - To this index
    * @param {string} id - Slice Id
-   * @return {null} - sets state
+   * @return {void} - sets state
    */
   moveSlice(fromIndex, toIndex, id) {
     this.setState(prevState => ({
@@ -145,7 +144,7 @@ class Playground extends Component {
   /**
    * @param {number} index - Index of item in `this.state.slices` to move up
    * @param {number} id - ID of item in `this.state.slices` to move up
-   * @return {null} - sets state
+   * @return {void} - sets state
    */
   moveSliceUp(index, id) {
     this.setState(prevState => ({
@@ -160,7 +159,7 @@ class Playground extends Component {
   /**
    * @param {number} index - Index of item in `this.state.slices` to move down
    * @param {number} id - ID of item in `this.state.slices` to move down
-   * @return {null} - sets state
+   * @return {void} - sets state
    */
   moveSliceDown(index, id) {
     this.setState(prevState => ({
@@ -200,11 +199,8 @@ class Playground extends Component {
   }
 
   /**
-   * @param {Object} patternId - a pattern id
-   * @param {string} slice.id - unique id
-   * @param {string} slice.patternId - ID of Pattern, i.e. `media-block`
-   * @param {Object} slice.data - Data for Pattern,s usually `{}`
-   * @returns {null} - sets state
+   * @param {string} patternId - unique id
+   * @returns {void} - sets state
    */
   handleAddSlice(patternId) {
     const { schema, uiSchema } = this.getTemplateFromPatternId(patternId);
@@ -282,7 +278,8 @@ class Playground extends Component {
         <Query query={query} variables={{ id: this.props.id }}>
           {({ loading, error, data }) => {
             if (loading) return <Spinner />;
-            if (error) return <p>Error :(</p>;
+            if (error)
+              return <StatusMessage message={error.message} type="error " />;
             this.setState({
               example: data.pageBuilderPage,
               slices: data.pageBuilderPage.slices,
@@ -294,25 +291,40 @@ class Playground extends Component {
     }
     const { props } = this;
     const SideBarContent = (
-      <PageBuilderSidebar
-        editFormSchema={this.state.editFormSchema}
-        editFormUiSchema={this.state.editFormUiSchema}
-        editFormSliceId={this.state.editFormSliceId}
-        filterTerm={this.state.filterTerm}
-        handleAddSlice={this.handleAddSlice}
-        handleEditFormChange={this.handleEditFormChange}
-        handleClearData={this.handleClearData}
-        handleCancelAddSlice={this.handleCancelAddSlice}
-        handleHideEditForm={this.handleHideEditForm}
-        handleFilterChange={this.handleFilterChange}
-        handleFilterReset={this.handleFilterReset}
-        handleMetaFormChange={this.handleMetaFormChange}
-        handleSave={this.save}
-        metaFormData={this.state.example}
-        patterns={this.props.patterns}
-        sidebarContent={this.state.sidebarContent}
-        slices={this.state.slices}
-      />
+      <>
+        <Mutation
+          mutation={mutation}
+          variables={{
+            id: this.props.id,
+            data: this.state.example,
+          }}
+        >
+          {(setPageBuilderPage, { error }) => (
+            <>
+              {error && <StatusMessage message={error.message} type="error " />}
+              <PageBuilderSidebar
+                editFormSchema={this.state.editFormSchema}
+                editFormUiSchema={this.state.editFormUiSchema}
+                editFormSliceId={this.state.editFormSliceId}
+                filterTerm={this.state.filterTerm}
+                handleAddSlice={this.handleAddSlice}
+                handleEditFormChange={this.handleEditFormChange}
+                handleClearData={this.handleClearData}
+                handleCancelAddSlice={this.handleCancelAddSlice}
+                handleHideEditForm={this.handleHideEditForm}
+                handleFilterChange={this.handleFilterChange}
+                handleFilterReset={this.handleFilterReset}
+                handleMetaFormChange={this.handleMetaFormChange}
+                handleSave={() => this.save(setPageBuilderPage)}
+                metaFormData={this.state.example}
+                patterns={this.props.patterns}
+                sidebarContent={this.state.sidebarContent}
+                slices={this.state.slices}
+              />
+            </>
+          )}
+        </Mutation>
+      </>
     );
     return (
       <PageWithSidebar {...props} sidebar={SideBarContent}>
@@ -352,7 +364,7 @@ class Playground extends Component {
                   onClick={() => this.deleteSlice(slice.id)}
                   role="button"
                   aria-label="delete component"
-                  tabIndex="0"
+                  tabIndex={0}
                 >
                   <StatusMessage
                     message={`Template for "${

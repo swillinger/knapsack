@@ -133,8 +133,8 @@ function PageBuilderSidebar(props) {
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <Button
           type="submit"
-          onKeyPress={props.handleSave}
-          onClick={props.handleSave}
+          onKeyPress={() => props.handleSave()}
+          onClick={() => props.handleSave()}
           primary
         >
           Save*

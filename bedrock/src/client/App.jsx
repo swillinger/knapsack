@@ -27,6 +27,7 @@ import {
   LoadablePatternsPage,
   LoadablePageBuilder,
   LoadableSettingsPage,
+  LoadableDesignTokenGroup,
   LoadablePatternEdit,
   LoadablePatternNew,
   LoadableHome,
@@ -110,14 +111,11 @@ class App extends React.Component {
       setSettings: newSettings => this.setState({ settings: newSettings }),
     });
 
+    // @todo consider removing; we're not using it anymore
     const query = gql`
       {
         tokenGroups {
           id
-          title
-          tokenCategoryIds
-          description
-          path
         }
       }
     `;
@@ -126,7 +124,12 @@ class App extends React.Component {
       <ErrorCatcher>
         <ApolloProvider client={this.apolloClient}>
           <Query query={query}>
-            {({ loading, error, data: { tokenGroups = [] } }) => {
+            {({
+              loading,
+              error,
+              // eslint-disable-next-line no-unused-vars
+              data,
+            }) => {
               if (loading) return <Spinner />;
               if (error) return <p>Error</p>;
               return (
@@ -185,24 +188,6 @@ class App extends React.Component {
                             exact
                             render={props => <LoadableAllTokens {...props} />}
                           />
-
-                          {tokenGroups.map(group => {
-                            const { render } = plugins.designTokensGroupPages[
-                              group.id
-                            ];
-                            return (
-                              <Route
-                                key={group.id}
-                                path={group.path}
-                                render={props =>
-                                  render({
-                                    ...props,
-                                    ...group,
-                                  })
-                                }
-                              />
-                            );
-                          })}
                           <Route
                             path={`${BASE_PATHS.DESIGN_TOKENS}/all`}
                             exact
@@ -220,6 +205,15 @@ class App extends React.Component {
                             render={({ match, ...rest }) => (
                               <LoadablePatternEdit
                                 {...rest}
+                                id={match.params.id}
+                                key={match.params.id}
+                              />
+                            )}
+                          />
+                          <Route
+                            path={`${BASE_PATHS.DESIGN_TOKENS}/:id`}
+                            render={({ match }) => (
+                              <LoadableDesignTokenGroup
                                 id={match.params.id}
                                 key={match.params.id}
                               />

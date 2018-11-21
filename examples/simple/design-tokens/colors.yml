@@ -5,9 +5,6 @@ props:
   c-blue-text:
     value: '{!primary_color}'
     category: text-color
-  c-blue-hr:
-    value: '{!primary_color}'
-    category: hr-color
   c-blue-border:
     value: '{!primary_color}'
     category: border-color
@@ -16,9 +13,6 @@ props:
   c-blue--light-text:
     value: '{!blue_light}'
     category: text-color
-  c-blue--light-hr:
-    value: '{!blue_light}'
-    category: hr-color
   c-blue--light-border:
     value: '{!blue_light}'
     category: border-color
@@ -27,9 +21,6 @@ props:
   c-green-text:
     value: '{!green}'
     category: text-color
-  c-green-hr:
-    value: '{!green}'
-    category: hr-color
   c-green-border:
     value: '{!green}'
     category: border-color
@@ -38,9 +29,6 @@ props:
   c-yellow-text:
     value: '{!secondary_color}'
     category: text-color
-  c-yellow-hr:
-    value: '{!secondary_color}'
-    category: hr-color
   c-yellow-border:
     value: '{!secondary_color}'
     category: border-color
@@ -51,10 +39,6 @@ props:
   c-gray-text:
     value: '{!gray}'
     category: text-color
-  c-gray-hr:
-    value: '{!gray}'
-    category: hr-color
-    comment: 'test comment'
   c-gray-border:
     value: '{!gray}'
     category: border-color
@@ -63,17 +47,11 @@ props:
   c-gray-dark-text:
     value: '{!gray_dark}'
     category: text-color
-  c-gray-dark-hr:
-    value: '{!gray_dark}'
-    category: hr-color
   c-gray-dark-border:
     value: '{!gray_dark}'
     category: border-color
   c-black:
     value: black
-  c-black-hr:
-    value: black
-    category: hr-color
   c-transparent:
     value: hsla(0, 0%, 0%, 0)
   c-border:
@@ -92,6 +70,13 @@ props:
   c-links-hover:
     value: hsl(200, 55%, 9%)
     category: text-color
+  c-hr-light:
+    value: '{!gray}'
+    category: hr-color
+    comment: This should be the standard `<hr>` used
+  c-hr-dark:
+    value: '{!gray_dark}'
+    category: hr-color
 imports:
   - ./aliases.yml
 global:

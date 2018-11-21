@@ -1,12 +1,12 @@
-import fontAvenirLightTTF from '@basalt/bedrock/src/client/assets/fonts/avenir--light.ttf';
-import fontAvenirLightWOFF from '@basalt/bedrock/src/client/assets/fonts/avenir--light.woff';
-import fontAvenirLightWOFF2 from '@basalt/bedrock/src/client/assets/fonts/avenir--light.woff2';
-import fontAvenirMediumTTF from '@basalt/bedrock/src/client/assets/fonts/avenir--medium.ttf';
-import fontAvenirMediumWOFF from '@basalt/bedrock/src/client/assets/fonts/avenir--medium.woff';
-import fontAvenirMediumWOFF2 from '@basalt/bedrock/src/client/assets/fonts/avenir--medium.woff2';
-import fontDinCondensedTTF from '@basalt/bedrock/src/client/assets/fonts/din-condensed--regular.ttf';
-import fontDinCondensedWOFF from '@basalt/bedrock/src/client/assets/fonts/din-condensed--regular.woff';
-import fontDinCondensedWOFF2 from '@basalt/bedrock/src/client/assets/fonts/din-condensed--regular.woff2';
+import fontAvenirLightTTF from '../assets/fonts/avenir--light.ttf';
+import fontAvenirLightWOFF from '../assets/fonts/avenir--light.woff';
+import fontAvenirLightWOFF2 from '../assets/fonts/avenir--light.woff2';
+import fontAvenirMediumTTF from '../assets/fonts/avenir--medium.ttf';
+import fontAvenirMediumWOFF from '../assets/fonts/avenir--medium.woff';
+import fontAvenirMediumWOFF2 from '../assets/fonts/avenir--medium.woff2';
+import fontDinCondensedTTF from '../assets/fonts/din-condensed--regular.ttf';
+import fontDinCondensedWOFF from '../assets/fonts/din-condensed--regular.woff';
+import fontDinCondensedWOFF2 from '../assets/fonts/din-condensed--regular.woff2';
 
 export const addGlobalFonts = `
   @font-face {

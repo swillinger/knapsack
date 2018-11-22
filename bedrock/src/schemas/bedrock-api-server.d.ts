@@ -34,6 +34,7 @@ interface Slice {
 interface PageBuilderPage {
   id: string;
   title: string;
+  description: string;
   slices: Slice[];
 }
 

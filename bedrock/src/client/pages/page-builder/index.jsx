@@ -24,6 +24,7 @@ const query = gql`
       id
       title
       path
+      description
       slices {
         id
         patternId

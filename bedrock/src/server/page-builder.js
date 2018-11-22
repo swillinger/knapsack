@@ -14,6 +14,7 @@ const pageBuilderPagesTypeDef = gql`
   type PageBuilderPage {
     id: ID!
     title: String!
+    description: String!
     path: String!
     slices: [PageBuilderPageSlice]!
   }

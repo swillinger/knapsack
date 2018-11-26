@@ -1,7 +1,7 @@
 {
   "name": "@basalt/bedrock",
   "description": "Build Design Systems on top of Bedrock, by Basalt",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "author": "Basalt (https://basalt.io/)",
   "main": "bedrock-site.js",
   "bin": {
@@ -20,7 +20,7 @@
     "@basalt/bedrock-atoms": "^0.7.0",
     "@basalt/bedrock-babel-config": "^0.7.3",
     "@basalt/bedrock-breakpoints-demo": "^0.7.0",
-    "@basalt/bedrock-code-block": "^0.7.3",
+    "@basalt/bedrock-code-block": "^0.7.4",
     "@basalt/bedrock-color-contrast-block": "^0.7.3",
     "@basalt/bedrock-color-swatch": "^0.7.3",
     "@basalt/bedrock-core": "^0.7.0",

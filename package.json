@@ -5,6 +5,7 @@
     "build": "FORCE_COLOR=1 lerna run build",
     "clean": "lerna clean --yes && rm -rf node_modules",
     "cli:test": "rm -rf examples/create-bedrock-results && cd examples && ../node_modules/.bin/create-bedrock create-bedrock-results && cd .. && yarn && cd examples/create-bedrock-results && yarn start",
+    "commit": "git-cz",
     "dashboard": "webpack-dashboard",
     "jest": "jest",
     "lerna:publish": "lerna publish --verify-access",
@@ -40,9 +41,19 @@
       "@basalt/bedrock-storybook/babel-register/**"
     ]
   },
+  "config": {
+    "commitizen": {
+      "path": "cz-lerna-changelog"
+    }
+  },
   "devDependencies": {
+    "@commitlint/cli": "^7.2.1",
+    "@commitlint/config-conventional": "^7.1.2",
+    "@commitlint/config-lerna-scopes": "^7.2.1",
     "@types/jest": "^23.3.9",
     "color": "^3.0.0",
+    "commitizen": "^3.0.4",
+    "cz-lerna-changelog": "^2.0.0",
     "husky": "^1.2.0",
     "jest": "^23.5.0",
     "lerna": "^3.4.1",

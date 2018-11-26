@@ -39,8 +39,9 @@ jobs:
 
       - run: ./scripts/e2e-simple.sh
 
-      #- run:
-         # command: |
-           # if [ "${CIRCLE_BRANCH}" == "master" ]; then
-             # ./scripts/create-bedrock-deploy/deploy.sh
-           # fi
+      - run:
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              ./scripts/release.sh
+              #./scripts/create-bedrock-deploy/deploy.sh
+            fi

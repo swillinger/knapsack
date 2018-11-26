@@ -22,6 +22,7 @@
     "reset": "yarn clean && yarn install --silent && FORCE_COLOR=1 run-s --print-label build:*",
     "start": "cd apps/storybook && yarn start",
     "test": "run-s lint:style lint:js jest && lerna run test",
+    "up": "yarn upgrade-interactive --latest",
     "uuid": "node -e \"process.stdout.write(require('uuid/v4')()) \" | pbcopy && echo 'uuid copied' "
   },
   "workspaces": {

@@ -2,15 +2,19 @@ import styled from 'styled-components';
 import { FaInfoCircle } from 'react-icons/fa';
 
 export const CustomFieldWrapper = styled.div`
-  .rjsf--inline > & {
+  .rjsf--inline & {
     > div.custom-object {
       display: flex;
       justify-content: left;
       flex-wrap: wrap;
+      align-items: flex-end;
       > div.custom-object-item {
         padding: 0;
-        flex-grow: 1;
+        margin-right: ${props => props.theme.globals.spacing.m};
       }
+    }
+    .form-group {
+      margin-bottom: 0;
     }
   }
   .patterns-filters & {

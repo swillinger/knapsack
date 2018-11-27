@@ -155,11 +155,11 @@ class PatternsPage extends Component {
     return (
       <PageWithSidebar {...this.props} className="patterns-filters">
         <h2>Patterns</h2>
-        <p>Explore the design patterns that make up the Crux Design System.</p>
         <SchemaForm
           schema={filterSchema}
           formData={this.state.formData}
           onChange={this.handleChangeForm}
+          isInline
         />
         <PatternGrid patterns={this.state.visiblePatterns} />
       </PageWithSidebar>

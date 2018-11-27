@@ -137,7 +137,7 @@ class SecondaryNav extends Component {
             // ...SecondaryNav.prepSectionLinks(this.props.context.sections),
             // @todo bring back custom sections through gql
           ];
-          console.log(patterns.map(p => p.meta.title));
+
           return (
             <>
               <TypeToFilter>

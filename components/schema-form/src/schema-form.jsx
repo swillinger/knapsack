@@ -52,7 +52,6 @@ export default class SchemaForm extends React.Component {
           ArrayFieldTemplate={CustomArrayField}
           FieldTemplate={CustomField}
           className={this.props.isInline ? 'rjsf rjsf--inline' : 'rjsf'}
-          isInline={this.props.isInline}
         >
           {!this.props.hasSubmit && <span />}
           {this.props.hasSubmit && <Button primary>Submit</Button>}

@@ -1,7 +1,7 @@
 {
   "name": "@basalt/bedrock",
   "description": "Build Design Systems on top of Bedrock, by Basalt",
-  "version": "0.7.5",
+  "version": "0.7.6",
   "author": "Basalt (https://basalt.io/)",
   "main": "bedrock-site.js",
   "bin": {
@@ -16,7 +16,7 @@
     "test": "run-s test:*"
   },
   "dependencies": {
-    "@basalt/bedrock-api-demo": "^0.7.0",
+    "@basalt/bedrock-api-demo": "^0.7.6",
     "@basalt/bedrock-atoms": "^0.7.0",
     "@basalt/bedrock-babel-config": "^0.7.3",
     "@basalt/bedrock-breakpoints-demo": "^0.7.0",
@@ -25,7 +25,7 @@
     "@basalt/bedrock-color-swatch": "^0.7.3",
     "@basalt/bedrock-core": "^0.7.0",
     "@basalt/bedrock-design-token-demos": "^0.7.3",
-    "@basalt/bedrock-schema-form": "^0.7.0",
+    "@basalt/bedrock-schema-form": "^0.7.6",
     "@basalt/bedrock-schema-table": "^0.7.0",
     "@basalt/bedrock-schema-utils": "^0.7.0",
     "@basalt/bedrock-smart-grid": "^0.7.0",

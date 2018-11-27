@@ -148,7 +148,7 @@ async function serve(config, meta) {
     });
   }
 
-  const showEndpoints = true;
+  const showEndpoints = false;
 
   const restApiRoutes = getRoutes({
     registerEndpoint,

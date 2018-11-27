@@ -1,19 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
-import { Query } from 'react-apollo';
+import { Mutation, Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import SchemaForm from '@basalt/bedrock-schema-form';
 import { StatusMessage } from '@basalt/bedrock-atoms';
 import Spinner from '@basalt/bedrock-spinner';
 import urlJoin from 'url-join';
 import patternMetaSchema from '../../schemas/pattern-meta.schema';
-import { apiUrlBase } from '../data';
 import PageWithSidebar from '../layouts/page-with-sidebar';
+import { BASE_PATHS } from '../../lib/constants';
 
 const patternIdsQuery = gql`
-  {
-    patterns {
+  query PatternEditMeta($id: ID) {
+    pattern(id: $id) {
       id
       meta {
         title
@@ -23,94 +22,68 @@ const patternIdsQuery = gql`
         uses
         demoSize
         hasIcon
-        dosAndDonts {
-          title
-          description
-          items {
-            image
-            caption
-            do
-          }
-        }
       }
     }
   }
 `;
 
-class PatternEdit extends Component {
-  constructor(props) {
-    super(props);
-    this.apiEndpoint = urlJoin(apiUrlBase, 'pattern-meta', props.id);
-    // const pattern = props.context.patterns.find(p => p.id === props.id);
-    this.state = {
-      statusMessage: '',
-      statusType: 'info',
-      redirectUrl: '',
-    };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
+const patternMetaMutation = gql`
+  mutation SetPatternMeta($id: ID, $meta: JSON) {
+    setPatternMeta(id: $id, meta: $meta)
   }
+`;
 
-  handleSubmit({ formData }) {
-    window
-      .fetch(this.apiEndpoint, {
-        method: 'POST',
-        body: JSON.stringify(formData),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then(res => res.json())
-      .then(results => {
-        if (results.ok) {
-          this.setState({
-            statusMessage: `${results.message} Redirecting...`,
-            statusType: 'success',
-          });
-          // without this delay, the next page does not show the fresh data yet
-          setTimeout(() => {
-            this.setState({ redirectUrl: `/patterns/${this.props.id}` });
-          }, 1000);
-        } else {
-          this.setState({
-            statusMessage: results.message,
-            statusType: 'error',
-          });
-        }
-      })
-      .catch(err => console.error(err));
-  }
+function PatternEdit(props) {
+  return (
+    <PageWithSidebar {...props}>
+      <Query query={patternIdsQuery} variables={{ id: props.id }}>
+        {({ error: queryError, loading, data }) => {
+          if (loading) return <Spinner />;
+          if (queryError)
+            return <StatusMessage message={queryError.message} type="error" />;
 
-  render() {
-    if (this.state.redirectUrl) {
-      return <Redirect to={this.state.redirectUrl} />;
-    }
-    return (
-      <PageWithSidebar {...this.props}>
-        {this.state.statusMessage && (
-          <StatusMessage
-            message={this.state.statusMessage}
-            type={this.state.statusType}
-          />
-        )}
-        <Query query={patternIdsQuery}>
-          {({ error, loading, data }) => {
-            if (loading) return <Spinner />;
-            if (error) return <p>Error</p>;
-            const formData = data.patterns.find(p => p.id === this.props.id);
-            return (
-              <SchemaForm
-                schema={patternMetaSchema}
-                formData={formData}
-                hasSubmit
-                onSubmit={this.handleSubmit}
-              />
-            );
-          }}
-        </Query>
-      </PageWithSidebar>
-    );
-  }
+          return (
+            <Mutation
+              mutation={patternMetaMutation}
+              ignoreResults
+              onCompleted={() => {
+                // redirect to full page using a full reload so we don't need to worry about cached queries (like in the secondary nav)
+                window.location.pathname = urlJoin(
+                  BASE_PATHS.PATTERNS,
+                  props.id,
+                );
+              }}
+            >
+              {(setPatternMeta, { error: mutationError }) => {
+                if (mutationError)
+                  return (
+                    <StatusMessage
+                      message={mutationError.message}
+                      type="error"
+                    />
+                  );
+                return (
+                  <SchemaForm
+                    schema={patternMetaSchema}
+                    formData={data.pattern.meta}
+                    hasSubmit
+                    onSubmit={async ({ formData }) => {
+                      await setPatternMeta({
+                        variables: {
+                          id: props.id,
+                          meta: formData,
+                        },
+                      });
+                    }}
+                  />
+                );
+              }}
+            </Mutation>
+          );
+        }}
+      </Query>
+    </PageWithSidebar>
+  );
 }
 
 PatternEdit.propTypes = {

@@ -9,7 +9,7 @@ const {
 const chokidar = require('chokidar');
 // const { FileDb } = require('./db');
 const patternSchema = require('../schemas/pattern.schema');
-const patternMetaSchema = require('../schemas/pattern-meta.schema.json');
+const patternMetaSchema = require('../schemas/pattern-meta.schema');
 const { writeJson } = require('./server-utils');
 
 const patternsTypeDef = gql`
@@ -84,6 +84,10 @@ const patternsTypeDef = gql`
   type Query {
     patterns: [Pattern]
     pattern(id: ID): Pattern
+  }
+
+  type Mutation {
+    setPatternMeta(id: ID, meta: JSON): JSON
   }
 `;
 
@@ -332,6 +336,7 @@ class Patterns {
    * @returns {Promise<GenericResponse>}
    */
   async setPatternMeta(id, meta) {
+    console.log('setPatternMeta', { id, meta });
     const pattern = this.getPattern(id);
     try {
       await writeJson(pattern.metaFilePath, meta);
@@ -392,6 +397,12 @@ const patternsResolvers = {
   Query: {
     patterns: (parent, args, { patterns }) => patterns.getPatterns(),
     pattern: (parent, { id }, { patterns }) => patterns.getPattern(id),
+  },
+  Mutation: {
+    setPatternMeta: async (parent, { id, meta }, { patterns }) => {
+      await patterns.setPatternMeta(id, meta);
+      return patterns.getPatternMeta(id);
+    },
   },
   JSON: GraphQLJSON,
 };

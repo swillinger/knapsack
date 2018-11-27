@@ -4,7 +4,7 @@ import { connectToContext } from '@basalt/bedrock-core';
 import SchemaForm from '@basalt/bedrock-schema-form';
 import { StatusMessage } from '@basalt/bedrock-atoms';
 import urlJoin from 'url-join';
-import patternMetaSchema from '../../schemas/pattern-meta.schema.json';
+import patternMetaSchema from '../../schemas/pattern-meta.schema';
 import { apiUrlBase } from '../data';
 import PageWithSidebar from '../layouts/page-with-sidebar';
 

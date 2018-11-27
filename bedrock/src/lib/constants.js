@@ -82,6 +82,12 @@ const BASE_PATHS = {
   CUSTOM_PAGES: '/custom-pages',
 };
 
+const FILE_NAMES = {
+  PATTERN: 'bedrock.pattern.js',
+  PATTERN_META: 'bedrock.pattern-meta.json',
+  CONFIG: 'bedrock.config.js',
+};
+
 module.exports = {
   USER_SITE_PUBLIC: '/user-site-public',
   TOKEN_CATS,
@@ -89,4 +95,5 @@ module.exports = {
   tokenGroups,
   BASE_PATHS,
   tokenCategoriesWithDemo,
+  FILE_NAMES,
 };

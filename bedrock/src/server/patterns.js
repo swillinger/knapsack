@@ -11,6 +11,7 @@ const chokidar = require('chokidar');
 const patternSchema = require('../schemas/pattern.schema');
 const patternMetaSchema = require('../schemas/pattern-meta.schema');
 const { writeJson } = require('./server-utils');
+const { FILE_NAMES } = require('../lib/constants');
 
 const patternsTypeDef = gql`
   scalar JSON
@@ -97,7 +98,7 @@ const patternsTypeDef = gql`
  * @returns {Promise<void>}
  */
 async function writeMeta(dir, config) {
-  const thePath = join(dir, 'meta.json');
+  const thePath = join(dir, FILE_NAMES.PATTERN_META);
   const theFile = {
     title: config.title,
   };
@@ -110,13 +111,12 @@ async function writeMeta(dir, config) {
  * @return {Promise<void>}
  */
 async function writeEntry(dir, config) {
-  const thePath = join(dir, 'index.js');
+  const thePath = join(dir, FILE_NAMES.PATTERN);
   const theFile = `
 const schema = require('./${config.id}.schema.json');
 
 module.exports = {
   id: '${config.id}',
-  metaFilePath: './meta.json',
   templates: [
     {
       name: '@components/${config.id}.twig',
@@ -208,7 +208,7 @@ function createPatternsData(patternsDirs) {
       .forEach(cachedPath => delete require.cache[cachedPath]);
     try {
       /** @type {PatternWithMetaSchema} */
-      const pattern = require(dir); // eslint-disable-line
+      const pattern = require(join(dir, FILE_NAMES.PATTERN)); // eslint-disable-line
       if (pattern) {
         const results = validateSchemaAndAssignDefaults(patternSchema, pattern);
         if (!results.ok) {
@@ -218,14 +218,17 @@ function createPatternsData(patternsDirs) {
             `Error! Pattern Schema validation failed for "${name}"`,
             results.message,
           );
+          // @todo show user better error messages like what fields are wrong
           console.error(
-            'Review the "index.js" in that folder and compare to "pattern.schema.json"',
+            `Review the "${
+              FILE_NAMES.PATTERN
+            }" in that folder and compare to "pattern.schema.json"`,
           );
           console.log();
           process.exit(1);
         }
 
-        const metaFilePath = join(dir, pattern.metaFilePath);
+        const metaFilePath = join(dir, FILE_NAMES.PATTERN_META);
         // eslint-disable-next-line
         const patternMeta = require(metaFilePath);
         const metaResults = validateSchemaAndAssignDefaults(

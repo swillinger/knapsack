@@ -112,7 +112,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.org/basaltinc/bedrock"
+    "url": "https://github.com/basaltinc/bedrock"
+  },
+  "homepage": "https://getbedrock.com",
+  "bugs": {
+    "url": "https://github.com/basaltinc/bedrock/issues"
   },
   "publishConfig": {
     "access": "restricted"

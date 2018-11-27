@@ -31,7 +31,7 @@ async function serve(config, meta) {
 
   const patterns = new Patterns({
     newPatternDir: config.newPatternDir,
-    patternPaths: config.src,
+    patternPaths: config.patterns,
     dataDir: config.data,
   });
 

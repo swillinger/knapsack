@@ -2,7 +2,7 @@ const twigRenderer = require('./twig-renderer');
 
 /** @type {BedrockConfig} */
 const config = {
-  src: ['./assets/patterns/*'], // @todo rename `src` to `patterns`
+  patterns: ['./assets/patterns/*'],
   newPatternDir: './assets/patterns/',
   dist: './dist',
   public: './public',

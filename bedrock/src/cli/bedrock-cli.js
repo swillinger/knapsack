@@ -19,7 +19,7 @@ const webpack = require('./webpack');
  */
 function processConfig(userConfig, from) {
   const {
-    src,
+    patterns,
     public: publicDir,
     dist,
     designTokens,
@@ -27,7 +27,7 @@ function processConfig(userConfig, from) {
     ...rest
   } = userConfig;
   return {
-    src: src.map(s => resolve(from, s)),
+    patterns: patterns.map(p => resolve(from, p)),
     designTokens: resolve(from, designTokens),
     public: resolve(from, publicDir),
     css: css.map(x => resolve(from, x)),

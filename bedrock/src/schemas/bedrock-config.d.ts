@@ -11,7 +11,7 @@ interface TemplateRenderers {
 }
 
 interface BedrockConfig {
-  src: string[];
+  patterns: string[];
   newPatternDir: string;
   /** Output directory */
   dist: string;
@@ -20,12 +20,6 @@ interface BedrockConfig {
   assets: string;
   css: string[];
   js?: string[];
-  // site: {
-  //   title: string;
-  //   subtitle: string;
-  //   slogan: string;
-  //   version: string;
-  // },
   templates: TemplateRenderers[],
   designTokens: string;
 }

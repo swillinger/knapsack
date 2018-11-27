@@ -85,7 +85,11 @@ inquirer
     {
       name: 'issues',
       message: 'Issues closed in release (format: 42,12)',
-      filter: a => a.trim().split(','),
+      filter: a =>
+        a
+          .trim()
+          .filter(Boolean)
+          .split(','),
     },
   ])
   .then(async ({ tag, body, issues }) => {

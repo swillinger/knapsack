@@ -37,6 +37,9 @@ const Footer = props => (
                 <FooterMenuItem>
                   <Link to="/settings">Site Settings</Link>
                 </FooterMenuItem>
+                <FooterMenuItem>
+                  <Link to="/feedback">Feedback</Link>
+                </FooterMenuItem>
               </React.Fragment>
             )}
           </FooterMenu>

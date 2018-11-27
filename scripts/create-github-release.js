@@ -4,23 +4,18 @@ const inquirer = require('inquirer');
 
 const { GITHUB_TOKEN } = process.env;
 
-// https://developer.github.com/v3/repos/releases/#create-a-release
-
-inquirer
-  .prompt([
-    {
-      name: 'tag',
-    },
-    {
-      name: 'body',
-      type: 'editor',
-    },
-  ])
-  .then(({ tag, body }) => {
+/**
+ * @param {string} path
+ * @param {Object} requestBody
+ * @return {Promise<any>}
+ */
+function githubPost(path, requestBody) {
+  // eslint-disable-next-line
+  return new Promise((resolve, reject) => {// @todo implement `reject()`
     const options = {
       method: 'POST',
       hostname: 'api.github.com',
-      path: '/repos/basaltinc/bedrock/releases',
+      path,
       headers: {
         'Content-Type': 'application/json',
         Authorization: `token ${GITHUB_TOKEN}`,
@@ -39,19 +34,77 @@ inquirer
 
       res.on('end', () => {
         const responseBody = Buffer.concat(chunks);
-        console.log(responseBody.toString());
+        resolve(JSON.parse(responseBody.toString()));
       });
     });
 
-    const requestBody = {
-      tag_name: tag,
-      target_commitish: 'master',
-      name: tag,
-      body,
-      draft: false,
-      prerelease: false,
-    };
     // console.log({ requestBody });
     req.write(JSON.stringify(requestBody));
     req.end();
+  });
+}
+
+/**
+ * @param {string} tag
+ * @param {string} body
+ * @return {Promise<any>}
+ * @link https://developer.github.com/v3/repos/releases/#create-a-release
+ */
+async function createRelease(tag, body) {
+  await githubPost('/repos/basaltinc/bedrock/releases', {
+    tag_name: tag,
+    target_commitish: 'master',
+    name: tag,
+    body,
+    draft: false,
+    prerelease: false,
+  });
+}
+
+/**
+ * @param {string} issue
+ * @param {string} comment
+ * @return {Promise<any>}
+ * @link https://developer.github.com/v3/issues/comments/#create-a-comment
+ */
+async function commentOnIssue(issue, comment) {
+  await githubPost(`/repos/basaltinc/bedrock/issues/${issue}/comments`, {
+    body: comment,
+  });
+}
+
+inquirer
+  .prompt([
+    {
+      name: 'tag',
+    },
+    {
+      name: 'body',
+      type: 'editor',
+    },
+    {
+      name: 'issues',
+      message: 'Issues closed in release (format: 42,12)',
+      filter: a => a.trim().split(','),
+    },
+  ])
+  .then(async ({ tag, body, issues }) => {
+    const releaseResults = await createRelease(tag, body);
+    console.log(
+      `👍 Released [${tag}](https://github.com/basaltinc/bedrock/releases/tag/${tag})`,
+      releaseResults,
+    );
+    if (issues) {
+      const issueResults = await Promise.all(
+        issues.map(issue =>
+          commentOnIssue(
+            issue,
+            `Released in [${tag}](https://github.com/basaltinc/bedrock/releases/tag/${tag})`,
+          ),
+        ),
+      );
+      issueResults.forEach(result => {
+        console.log(`👍 Issue commented on: ${result.html_url}`);
+      });
+    }
   });

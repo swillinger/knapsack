@@ -81,26 +81,39 @@ function getRoutes(config) {
         data,
       } = body;
 
-      const renderer = config.templateRenderers.find(t => t.test(template));
-      // const renderer = config.templateRenderers.find(t => t.test(template));
-      if (!renderer) {
-        console.error(
-          'Error: no template renderer found to handle this template',
-        );
-        res.status(400).send({
-          ok: false,
-          message: 'No template renderer found to handle this template',
-        });
-      }
-
       let results;
       switch (type) {
-        case 'renderString':
-          results = await renderer.renderString(template, data);
-          break;
-        case 'renderFile':
+        // case 'renderString': {
+        //   // @todo determine how to figure out what renderer to use if it's a `renderString` request since we can't look at the `template` string and use file extension (since it's a template string and not a template name/path string). best idea so far is to add an `id` to each template renderer, but then it gets more complicated when it's used elsewhere. will probably get more fleshed out as other template languages land. see https://github.com/basaltinc/bedrock/issues/33
+        //   const renderer = config.templateRenderers.find(t =>
+        //     t.id(body.rendererId),
+        //   );
+        //   if (!renderer) {
+        //     console.error(
+        //       'Error: no template renderer found to handle this template',
+        //     );
+        //     res.status(400).send({
+        //       ok: false,
+        //       message: 'No template renderer found to handle this template',
+        //     });
+        //   }
+        //   results = await renderer.renderString(template, data);
+        //   break;
+        // }
+        case 'renderFile': {
+          const renderer = config.templateRenderers.find(t => t.test(template));
+          if (!renderer) {
+            console.error(
+              'Error: no template renderer found to handle this template',
+            );
+            res.status(400).send({
+              ok: false,
+              message: 'No template renderer found to handle this template',
+            });
+          }
           results = await renderer.render(template, data);
           break;
+        }
         default:
           results = {
             ok: false,

@@ -5,6 +5,7 @@ import SchemaForm from '@basalt/bedrock-schema-form';
 import { Button, Select } from '@basalt/bedrock-atoms';
 import CodeBlock from '@basalt/bedrock-code-block';
 import Template from '../components/template';
+import { enableCodeBlockLiveEdit } from '../../lib/features';
 import {
   OverviewWrapper,
   CodeBlockWrapper,
@@ -139,13 +140,15 @@ class Overview extends React.Component {
                 name: 'Twig',
                 code: twigCodeExample,
                 language: 'twig',
-                handleTyping: text => {
-                  this.setState({
-                    isStringTemplate: true,
-                    template: text,
-                    showForm: false,
-                  });
-                },
+                handleTyping: enableCodeBlockLiveEdit
+                  ? text => {
+                      this.setState({
+                        isStringTemplate: true,
+                        template: text,
+                        showForm: false,
+                      });
+                    }
+                  : null,
               },
               {
                 name: 'HTML',

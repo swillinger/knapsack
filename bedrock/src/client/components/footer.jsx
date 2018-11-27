@@ -4,7 +4,13 @@ import gql from 'graphql-tag';
 import Spinner from '@basalt/bedrock-spinner';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
 import { Link } from 'react-router-dom';
-import { FooterWrapper, FooterMenu, FooterMenuItem } from './footer.styles';
+import {
+  FooterWrapper,
+  FooterMenu,
+  FooterMenuItem,
+  FooterInner,
+  SubFooterWrapper,
+} from './footer.styles';
 
 const today = new Date();
 const currentYear = today.getFullYear();
@@ -31,48 +37,62 @@ const Footer = props => (
       const { parentBrand } = data.settings;
       return (
         <FooterWrapper>
-          <FooterMenu>
-            {props.context.features.enableUiSettings && (
-              <React.Fragment>
-                <FooterMenuItem>
-                  <Link to="/settings">Site Settings</Link>
-                </FooterMenuItem>
-                <FooterMenuItem>
-                  <Link to="/feedback">Feedback</Link>
-                </FooterMenuItem>
-              </React.Fragment>
-            )}
-          </FooterMenu>
-          <p>
-            Copyright {currentYear}{' '}
-            {parentBrand && (
+          <FooterInner>
+            <FooterMenu>
+              {props.context.features.enableUiSettings && (
+                <React.Fragment>
+                  <FooterMenuItem>
+                    <Link to="/settings">Site Settings</Link>
+                  </FooterMenuItem>
+                  <FooterMenuItem>
+                    <Link to="/feedback">Feedback</Link>
+                  </FooterMenuItem>
+                </React.Fragment>
+              )}
+            </FooterMenu>
+            <p>
+              Copyright {currentYear}{' '}
+              {parentBrand && (
+                <a
+                  href={parentBrand.homepage}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  - {parentBrand.title}
+                </a>
+              )}
+            </p>
+            <p>
+              Built on{' '}
               <a
-                href={parentBrand.homepage}
+                href="https://www.getbedrock.com"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                - {parentBrand.title}
+                Bedrock
+              </a>{' '}
+              {data.meta.bedrockVersion} by{' '}
+              <a
+                href="https://basalt.io"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Basalt
               </a>
-            )}
-          </p>
-          <p>
-            Built on{' '}
-            <a
-              href="https://www.getbedrock.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Bedrock
-            </a>{' '}
-            {data.meta.bedrockVersion} by{' '}
-            <a
-              href="https://basalt.io"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Basalt
-            </a>
-          </p>
+            </p>
+          </FooterInner>
+          <SubFooterWrapper>
+            <p>
+              Usage of this software is based on agreeing to our{' '}
+              <a
+                href="http://license.getbedrock.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                license
+              </a>
+            </p>
+          </SubFooterWrapper>
         </FooterWrapper>
       );
     }}

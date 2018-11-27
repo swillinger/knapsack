@@ -3,7 +3,7 @@ import { FaChevronLeft } from 'react-icons/fa';
 
 export const PageLayoutWithSidebar = styled.div`
   display: grid;
-  grid-template-rows: 86px 1fr 86px;
+  grid-template-rows: 86px 1fr 112px;
   ${props =>
     props.sidebarCollapsed
       ? 'grid-template-columns: 45px 1fr'

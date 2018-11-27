@@ -1,5 +1,5 @@
 const patternSchema = require('./pattern.schema');
-const patternMeta = require('./pattern-meta.schema.json');
+const patternMeta = require('./pattern-meta.schema');
 
 module.exports = {
   ...patternSchema,

@@ -336,7 +336,6 @@ class Patterns {
    * @returns {Promise<GenericResponse>}
    */
   async setPatternMeta(id, meta) {
-    console.log('setPatternMeta', { id, meta });
     const pattern = this.getPattern(id);
     try {
       await writeJson(pattern.metaFilePath, meta);

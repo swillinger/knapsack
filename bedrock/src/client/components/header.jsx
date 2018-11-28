@@ -103,6 +103,8 @@ class Header extends React.Component {
           <li>
             <a
               href={settings.parentBrand.homepage}
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
                 color: 'white',
                 textDecoration: 'none',

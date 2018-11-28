@@ -63,12 +63,10 @@ program.version(version);
 // const { scripts } = userPkg;
 
 program.command('serve').action(async () => {
-  log.info('🏔 running serve...');
   await serve(config, await getMeta());
 });
 
 program.command('build').action(async () => {
-  log.info('🏔 running build...');
   try {
     await webpack.build(config);
   } catch (e) {
@@ -79,7 +77,6 @@ program.command('build').action(async () => {
 });
 
 program.command('start').action(async () => {
-  log.info('🏔 running start...');
   try {
     await webpack.watch(config);
   } catch (e) {

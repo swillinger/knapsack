@@ -1,51 +1,90 @@
-const { default: chalk } = require('chalk');
+const log = require('npmlog'); // https://www.npmjs.com/package/npmlog
 
-const { log } = console;
+/**
+ * @param {string} level - one of: error, warn, http, info, verbose, silly
+ * @returns {void}
+ */
+function setLogLevel(level) {
+  log.level = level;
+}
+
+setLogLevel('info');
 
 /**
  * @param {string} msg
+ * @param {Object|[]} [extra]
+ * @param {string} [prefix=''] - Logging prefix
  * @returns {void}
  */
-function error(msg) {
-  log(chalk.red(msg));
+function error(msg, extra, prefix = '') {
+  if (extra) {
+    log.error(prefix, msg, extra);
+  } else {
+    log.error(prefix, msg);
+  }
 }
 
 /**
  * @param {string} msg
+ * @param {Object|[]} [extra]
+ * @param {string} [prefix=''] - Logging prefix
  * @returns {void}
  */
-function info(msg) {
-  log(chalk.blue(msg));
+function info(msg, extra, prefix = '') {
+  if (extra) {
+    log.info(prefix, msg, extra);
+  } else {
+    log.info(prefix, msg);
+  }
 }
 
 /**
  * @param {string} msg
+ * @param {Object|[]} [extra]
+ * @param {string} [prefix=''] - Logging prefix
  * @returns {void}
  */
-function warning(msg) {
-  log(chalk.yellow(msg));
+function warn(msg, extra, prefix = '') {
+  if (extra) {
+    log.warn(prefix, msg, extra);
+  } else {
+    log.warn(prefix, msg);
+  }
 }
 
 /**
  * @param {string} msg
+ * @param {Object|[]} [extra]
+ * @param {string} [prefix=''] - Logging prefix
  * @returns {void}
  */
-function success(msg) {
-  log(chalk.green(msg));
+function verbose(msg, extra, prefix = '') {
+  if (extra) {
+    log.verbose(prefix, msg, extra);
+  } else {
+    log.verbose(prefix, msg);
+  }
 }
 
 /**
  * @param {string} msg
+ * @param {Object|[]} [extra]
+ * @param {string} [prefix=''] - Logging prefix
  * @returns {void}
  */
-function dim(msg) {
-  log(chalk.dim(msg));
+function silly(msg, extra, prefix = '') {
+  if (extra) {
+    log.silly(prefix, msg, extra);
+  } else {
+    log.silly(prefix, msg);
+  }
 }
 
 module.exports = {
   error,
   info,
-  warning,
-  success,
-  dim,
+  warn,
+  verbose,
+  silly,
+  setLogLevel,
 };

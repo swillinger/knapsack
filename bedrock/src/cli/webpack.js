@@ -5,6 +5,34 @@ const createWebpackConfig = require('./create-webpack-config');
 const log = require('./log');
 
 /**
+ * Handle Webpack Results
+ * @param {Error} err
+ * @param {webpack.Stats} stats
+ * @return {boolean}
+ */
+function handleWebpackResults(err, stats) {
+  if (err) {
+    log.error('', err.stack || err, 'webpack');
+    if (err.details) {
+      log.error('', err.details, 'webpack');
+    }
+    return false;
+  }
+
+  const info = stats.toJson();
+
+  if (stats.hasErrors()) {
+    log.error('stats', info.errors, 'webpack');
+    return false;
+  }
+
+  if (stats.hasWarnings()) {
+    log.warn('stats', info.warnings, 'webpack');
+  }
+  return true;
+}
+
+/**
  * @param {BedrockConfig} config
  * @return {webpack.Compiler}
  */
@@ -23,21 +51,15 @@ function getWebpack(config) {
 function build(config) {
   return new Promise((resolve, reject) => {
     const compiler = getWebpack(config);
+    log.info('build starting...', null, 'webpack');
     compiler.run((err, stats) => {
-      if (err || stats.hasErrors()) {
-        log.error('Webpack Error!');
-        console.log(err);
-        console.log(
-          stats.toString({
-            chunks: false, // Makes the build much quieter
-            colors: true, // Shows colors in the console
-          }),
-        );
-        reject(err);
-        return false;
+      const ok = handleWebpackResults(err, stats);
+      if (ok) {
+        log.info('build done', null, 'webpack');
+        resolve();
+      } else {
+        reject();
       }
-      log.success('Webpack done');
-      resolve('Webpack done');
     });
   });
 }
@@ -49,27 +71,15 @@ function build(config) {
 function watch(config) {
   return new Promise((resolve, reject) => {
     const compiler = getWebpack(config);
+    log.info('watch starting...', null, 'webpack');
     compiler.watch({}, (err, stats) => {
-      if (err || stats.hasErrors()) {
-        log.error('Webpack Error!');
-        console.log(err);
-        console.log(
-          stats.toString({
-            chunks: false, // Makes the build much quieter
-            colors: true, // Shows colors in the console
-          }),
-        );
-        reject(err);
-        return false;
+      const ok = handleWebpackResults(err, stats);
+      if (ok) {
+        log.info('rebuilt', null, 'webpack');
+        resolve();
+      } else {
+        reject();
       }
-      console.log(
-        stats.toString({
-          chunks: false, // Makes the build much quieter
-          colors: true, // Shows colors in the console
-        }),
-      );
-      log.success('Webpack done watching');
-      resolve('Webpack done watching');
     });
   });
 }

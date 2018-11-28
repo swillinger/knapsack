@@ -148,8 +148,6 @@ async function serve(config, meta) {
     });
   }
 
-  const showEndpoints = false;
-
   const restApiRoutes = getRoutes({
     registerEndpoint,
     webroot: config.dist,
@@ -213,15 +211,16 @@ async function serve(config, meta) {
   }
 
   app.listen(port, () => {
-    if (showEndpoints) {
-      log.dim(
-        `Available endpoints: \n${endpoints
-          .map(e => ` ${e.pathname} (${e.method})`)
-          .join('\n')}`,
-      );
-    }
+    log.silly('Available endpoints', endpoints, 'server');
+
+    // want url to not get buried with info
+    // @todo show this after event is fired from WebPack being ready
     setTimeout(() => {
-      log.success(`🚀 Server listening on http://localhost:${port}`);
+      log.info(
+        `🚀 Server listening on http://localhost:${port}`,
+        null,
+        'server',
+      );
     }, 250);
   });
 

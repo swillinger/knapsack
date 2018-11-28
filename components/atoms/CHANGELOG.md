@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/basaltinc/bedrock/compare/v0.9.1...v0.10.0) (2018-11-28)
+
+
+### Features
+
+* **create-bedrock:** improved initial sample content ([97bff33](https://github.com/basaltinc/bedrock/commit/97bff33))
+
+
+
+
+
 # [0.9.0](https://github.com/basaltinc/bedrock/compare/v0.8.0...v0.9.0) (2018-11-27)
 
 **Note:** Version bump only for package @basalt/bedrock-atoms

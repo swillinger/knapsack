@@ -12,6 +12,7 @@ import urlJoin from 'url-join';
 import { FaTimes } from 'react-icons/fa';
 import NavList from './nav-list';
 import { BASE_PATHS } from '../../lib/constants';
+import { enableUiCreatePattern } from '../../lib/features';
 
 const secondaryNavQuery = gql`
   {
@@ -113,11 +114,13 @@ class SecondaryNav extends Component {
               path: BASE_PATHS.PATTERNS,
               isHeading: true,
             },
-            {
-              title: '+ add new pattern',
-              id: 'new-pattern',
-              path: '/new-pattern',
-            },
+            enableUiCreatePattern
+              ? {
+                  title: '+ add new pattern',
+                  id: 'new-pattern',
+                  path: '/new-pattern',
+                }
+              : null,
             ...patterns.map(pattern => ({
               id: pattern.id,
               title: pattern.meta.title,
@@ -136,7 +139,7 @@ class SecondaryNav extends Component {
             })),
             // ...SecondaryNav.prepSectionLinks(this.props.context.sections),
             // @todo bring back custom sections through gql
-          ];
+          ].filter(Boolean);
 
           return (
             <>

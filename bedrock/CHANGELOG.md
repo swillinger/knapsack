@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.1](https://github.com/basaltinc/bedrock/compare/v0.11.0...v0.11.1) (2018-11-28)
+
+
+### Bug Fixes
+
+* **bedrock:** top level Design Token page goes to first design token page ([5c851a7](https://github.com/basaltinc/bedrock/commit/5c851a7))
+
+
+
+
+
 # [0.11.0](https://github.com/basaltinc/bedrock/compare/v0.10.2...v0.11.0) (2018-11-28)
 
 

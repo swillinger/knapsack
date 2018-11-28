@@ -120,6 +120,8 @@ class App extends React.Component {
       {
         tokenGroups {
           id
+          title
+          path
         }
       }
     `;
@@ -190,7 +192,18 @@ class App extends React.Component {
                           <Route
                             path={BASE_PATHS.DESIGN_TOKENS}
                             exact
-                            render={props => <LoadableAllTokens {...props} />}
+                            render={() => {
+                              // @todo when url goes to `/design-tokens/` it does not show "Design Tokens > Colors" as active item in sidebar (currently the first token group is colors)
+                              const [firstTokenGroup] = data.tokenGroups;
+                              if (firstTokenGroup) {
+                                return (
+                                  <LoadableDesignTokenGroup
+                                    id={firstTokenGroup.id}
+                                  />
+                                );
+                              }
+                              return <p>No design token page found...</p>;
+                            }}
                           />
                           <Route
                             path={`${BASE_PATHS.DESIGN_TOKENS}/all`}

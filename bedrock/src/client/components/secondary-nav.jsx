@@ -102,12 +102,12 @@ class SecondaryNav extends Component {
               path: BASE_PATHS.DESIGN_TOKENS,
               isHeading: true,
             },
+            ...tokenGroups,
             {
               title: 'All Tokens',
               id: 'all-design-tokens',
               path: `${BASE_PATHS.DESIGN_TOKENS}/all`,
             },
-            ...tokenGroups,
             {
               title: 'Patterns',
               id: 'patterns',

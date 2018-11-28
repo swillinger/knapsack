@@ -13,9 +13,10 @@ const log = require('./log');
 function handleWebpackResults(err, stats) {
   if (err) {
     log.error('', err.stack || err, 'webpack');
-    if (err.details) {
-      log.error('', err.details, 'webpack');
-    }
+    // @todo consider keeping this; was on WebPack docs, but TypeScript doesn't think `.details` exists on `err`
+    // if (err.details) {
+    //   log.error('', err.details, 'webpack');
+    // }
     return false;
   }
 

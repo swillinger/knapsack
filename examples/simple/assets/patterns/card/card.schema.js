@@ -19,6 +19,12 @@ module.exports = {
       type: 'string',
       title: 'Image Path',
     },
+    align: {
+      title: 'Image Alignment',
+      type: 'string',
+      enum: ['top', 'right', 'bottom', 'left'],
+      default: 'left',
+    },
   },
   examples: [
     {

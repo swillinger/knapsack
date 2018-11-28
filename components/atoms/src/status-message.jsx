@@ -37,7 +37,7 @@ const StatusMessageWrapper = styled.aside`
 
 export function StatusMessage(props) {
   return (
-    <StatusMessageWrapper type={props.type}>
+    <StatusMessageWrapper type={props.type.trim()}>
       <p>{props.message}</p>
     </StatusMessageWrapper>
   );

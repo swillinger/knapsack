@@ -114,11 +114,12 @@ function PageBuilderSidebar(props) {
               title: 'Description',
               type: 'string',
             },
-            hasVisibleControls: {
-              title: 'Show Edit Controls',
-              type: 'boolean',
-              default: true,
-            },
+            // @todo uncomment below to restore the "Show Edit Controls" toggle, then fix it not working
+            // hasVisibleControls: {
+            //   title: 'Show Edit Controls',
+            //   type: 'boolean',
+            //   default: true,
+            // },
           },
         }}
         uiSchema={{
@@ -137,15 +138,10 @@ function PageBuilderSidebar(props) {
           onClick={() => props.handleSave()}
           primary
         >
-          Save*
+          Save
         </Button>
         <Link to={BASE_PATHS.PAGES}>Back</Link>
       </div>
-      <p>
-        <br />
-        <small>* Warning: server unresponsive for ~3s upon save</small>
-      </p>
-      {/* @todo Fix unresponsive server triggered by save. Since this writes to the JSON files in `server/data/pages/*.json` and the `watch:server` task watches that directory for changes, it cause server to restart. It can't be fixed by just moving the files: cause then those files are cached. */}
     </div>
   );
 }

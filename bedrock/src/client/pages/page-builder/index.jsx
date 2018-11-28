@@ -280,7 +280,7 @@ class Playground extends Component {
           {({ loading, error, data }) => {
             if (loading) return <Spinner />;
             if (error)
-              return <StatusMessage message={error.message} type="error " />;
+              return <StatusMessage message={error.message} type="error" />;
             this.setState({
               example: data.pageBuilderPage,
               slices: data.pageBuilderPage.slices,
@@ -302,7 +302,7 @@ class Playground extends Component {
         >
           {(setPageBuilderPage, { error }) => (
             <>
-              {error && <StatusMessage message={error.message} type="error " />}
+              {error && <StatusMessage message={error.message} type="error" />}
               <PageBuilderSidebar
                 editFormSchema={this.state.editFormSchema}
                 editFormUiSchema={this.state.editFormUiSchema}

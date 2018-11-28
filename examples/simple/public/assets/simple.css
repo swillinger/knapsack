@@ -1,12 +1,67 @@
+:root {
+  --border: 1px solid #000;
+  --border-radius: 3px;
+
+  --padding-medium: 15px;
+  --padding-large: 25px;
+}
+
 body {
-    z-index: 42;
+  z-index: 42;
 }
 
 img {
-    max-width: 100%;
+  max-width: 100%;
+  vertical-align: middle;
 }
 
 .card {
-    border: 1px solid #000;
-    border-radius: 3px;
+  background: #FFF;
+  border: var(--border);
+  border-radius: var(--border-radius);
+  display: flex;
+}
+
+.card--align-right > *,
+.card--align-left > * {
+  width: 49%;
+}
+
+.card--align-left {
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.card--align-right {
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+
+.card--align-top {
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card--align-bottom {
+  flex-direction: column-reverse;
+  justify-content: space-between;
+}
+
+.button {
+  background: #FFF;
+  display: inline-block;
+  border: var(--border);
+  border-radius: var(--border-radius);
+  padding: var(--padding-medium);
+}
+
+.hero {
+  width: 100%;
+}
+
+.hero .hero__inner {
+  background-size: cover;
+  background-position: top center;
+  padding: var(--padding-large);
+  text-align: center;
 }

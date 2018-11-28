@@ -7,17 +7,44 @@
 }
 
 body {
-    z-index: 42;
+  z-index: 42;
 }
 
 img {
-    max-width: 100%;
+  max-width: 100%;
+  vertical-align: middle;
 }
 
 .card {
-    background: #FFF;
-    border: var(--border);
-    border-radius: var(--border-radius);
+  background: #FFF;
+  border: var(--border);
+  border-radius: var(--border-radius);
+  display: flex;
+}
+
+.card--align-right > *,
+.card--align-left > * {
+  width: 49%;
+}
+
+.card--align-left {
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.card--align-right {
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+
+.card--align-top {
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card--align-bottom {
+  flex-direction: column-reverse;
+  justify-content: space-between;
 }
 
 .button {

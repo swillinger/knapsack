@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.1](https://github.com/basaltinc/bedrock/compare/v0.12.0...v0.12.1) (2018-11-28)
+
+
+### Bug Fixes
+
+* **bedrock:** update footer message ([884489f](https://github.com/basaltinc/bedrock/commit/884489f))
+* **create-bedrock:** alter parentBrand url ([76cd4e7](https://github.com/basaltinc/bedrock/commit/76cd4e7))
+
+
+
+
+
 # [0.12.0](https://github.com/basaltinc/bedrock/compare/v0.11.1...v0.12.0) (2018-11-28)
 
 

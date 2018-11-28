@@ -1,5 +1,8 @@
 FROM basaltinc/docker-node-php-base:latest
 ARG NPM_TOKEN
+ARG CIRCLE_BUILD_URL
+# doing this so the Docker cache gets cleared each time
+RUN echo "CIRCLE_BUILD_URL: $CIRCLE_BUILD_URL"
 RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
 WORKDIR /app
 RUN npx create-bedrock@latest my-site && cd my-site && npm install && npm run build

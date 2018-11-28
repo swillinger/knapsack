@@ -83,13 +83,14 @@ const Footer = props => (
           </FooterInner>
           <SubFooterWrapper>
             <p>
-              Usage of this software is based on agreeing to our{' '}
+              Download or use of this software is governed by our license
+              agreement available{' '}
               <a
                 href="http://license.getbedrock.com"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                license
+                here
               </a>
             </p>
           </SubFooterWrapper>

@@ -270,6 +270,7 @@ class Playground extends Component {
   handleMetaFormChange(formData) {
     this.setState(prevState => ({
       example: Object.assign({}, prevState.example, formData),
+      hasVisibleControls: formData.hasVisibleControls,
     }));
   }
 

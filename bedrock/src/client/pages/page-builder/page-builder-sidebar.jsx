@@ -114,12 +114,11 @@ function PageBuilderSidebar(props) {
               title: 'Description',
               type: 'string',
             },
-            // @todo uncomment below to restore the "Show Edit Controls" toggle, then fix it not working
-            // hasVisibleControls: {
-            //   title: 'Show Edit Controls',
-            //   type: 'boolean',
-            //   default: true,
-            // },
+            hasVisibleControls: {
+              title: 'Show Edit Controls',
+              type: 'boolean',
+              default: true,
+            },
           },
         }}
         uiSchema={{

@@ -2,7 +2,7 @@ FROM basaltinc/docker-node-php-base:latest
 ARG NPM_TOKEN
 RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
 WORKDIR /app
-RUN npx create-bedrock my-site && cd my-site && npm install && npm run build
+RUN npx create-bedrock@latest my-site && cd my-site && npm install && npm run build
 # COPY . .
 EXPOSE 3999
 # RUN npm install

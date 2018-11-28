@@ -4,6 +4,7 @@ const { join } = require('path');
 const init = require('../lib/init');
 const { version } = require('../package.json');
 
+console.log(`Creating Bedrock with v${version}...`);
 program
   .version(version)
   .option('--force', 'Overwrite existing files')

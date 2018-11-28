@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.2](https://github.com/basaltinc/bedrock/compare/v0.12.1...v0.12.2) (2018-11-28)
+
+
+### Bug Fixes
+
+* **bedrock:** fix playground controls toggle ([47c598a](https://github.com/basaltinc/bedrock/commit/47c598a)), closes [#25](https://github.com/basaltinc/bedrock/issues/25)
+
+
+### Performance Improvements
+
+* **bedrock-atoms:** remove jittery tooltip animation ([fd5a5f1](https://github.com/basaltinc/bedrock/commit/fd5a5f1))
+
+
+
+
+
 ## [0.12.1](https://github.com/basaltinc/bedrock/compare/v0.12.0...v0.12.1) (2018-11-28)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.2](https://github.com/basaltinc/bedrock/compare/v0.12.1...v0.12.2) (2018-11-28)
+
+
+### Performance Improvements
+
+* **bedrock-atoms:** remove jittery tooltip animation ([fd5a5f1](https://github.com/basaltinc/bedrock/commit/fd5a5f1))
+
+
+
+
+
 # [0.12.0](https://github.com/basaltinc/bedrock/compare/v0.11.1...v0.12.0) (2018-11-28)
 
 **Note:** Version bump only for package @basalt/bedrock-atoms

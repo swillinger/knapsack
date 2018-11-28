@@ -2,6 +2,7 @@ imports:
   - ./breakpoints.yml
   - ./colors.yml
   - ./spacing.yml
+  - ./sizing.yml
   - ./transitions.yml
   - ./shadows.yml
   - ./typography-sizes.yml

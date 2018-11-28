@@ -7,5 +7,10 @@
   <div class="card__contents">
     <h3 class="card__title">{{ title }}</h3>
     <p class="card__body">{{ body }}</p>
+    {% if buttons %}
+      {% for button in buttons %}
+        {% include '@components/button.twig' with button only %}
+      {% endfor %}
+    {% endif %}
   </div>
 </aside>

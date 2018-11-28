@@ -1,6 +1,6 @@
 {
   "name": "@basalt/bedrock-design-token-demos",
-  "version": "0.10.2",
+  "version": "0.11.0",
   "description": "A collection of design token category demos that each show off a single CSS property.",
   "main": "src/index.jsx",
   "module": "src/index.jsx",
@@ -17,11 +17,11 @@
   "author": "Basalt (https://basalt.io/)",
   "license": "UNLICENSED",
   "dependencies": {
-    "@basalt/bedrock-atoms": "^0.10.2",
-    "@basalt/bedrock-breakpoints-demo": "^0.10.2",
-    "@basalt/bedrock-color-swatch": "^0.10.2",
-    "@basalt/bedrock-core": "^0.10.2",
-    "@basalt/bedrock-spacing-swatch": "^0.10.2"
+    "@basalt/bedrock-atoms": "^0.11.0",
+    "@basalt/bedrock-breakpoints-demo": "^0.11.0",
+    "@basalt/bedrock-color-swatch": "^0.11.0",
+    "@basalt/bedrock-core": "^0.11.0",
+    "@basalt/bedrock-spacing-swatch": "^0.11.0"
   },
   "publishConfig": {
     "access": "restricted"

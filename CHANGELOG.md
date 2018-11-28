@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/basaltinc/bedrock/compare/v0.11.1...v0.12.0) (2018-11-28)
+
+
+### Bug Fixes
+
+* **bedrock:** fix schemaform icons ([3d69f74](https://github.com/basaltinc/bedrock/commit/3d69f74)), closes [#54](https://github.com/basaltinc/bedrock/issues/54)
+
+
+### Features
+
+* demo buttons used in card ([2dfd265](https://github.com/basaltinc/bedrock/commit/2dfd265))
+
+
+
+
+
 ## [0.11.1](https://github.com/basaltinc/bedrock/compare/v0.11.0...v0.11.1) (2018-11-28)
 
 

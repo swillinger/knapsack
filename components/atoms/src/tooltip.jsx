@@ -6,15 +6,15 @@ const TooltipWrapper = styled.div`
   position: relative;
   display: inline-block;
   span {
-    position: absolute;
-    min-width: 150px;
-    text-align: center;
-    padding: 0.5rem;
     visibility: hidden;
     opacity: 0;
+    position: absolute;
+    padding: 0.5rem;
+    min-width: 150px;
     background: ${props => props.bg_color};
-    transition: all 0.25s cubic-bezier(0, 0, 0.2, 1);
     color: ${props => props.text_color};
+    text-align: center;
+    transition: all 0.25s cubic-bezier(0, 0, 0.2, 1);
     border: 1px solid #cecece;
     border-radius: 3px;
     font-weight: 500;
@@ -31,30 +31,28 @@ const TooltipWrapper = styled.div`
     }
   }
 
-  *:first-child {
-    cursor: pointer;
-    z-index: 5;
-    &:hover ~ span {
-      visibility: visible;
-      opacity: 1;
-    }
+  cursor: pointer;
+  z-index: 5;
+  &:hover > span {
+    visibility: visible;
+    opacity: 1;
   }
+
   &[data-position='top'] {
     span {
-      bottom: calc(100% - 2px);
-      left: 50%;
-      transform: translate3d(-50%, -15px, 0);
+      bottom: calc(100% + 10px);
+      left: calc(50% + 2px);
+      transform: translateX(-50%);
       &:after {
         bottom: -0.5em;
         left: 50%;
-        transform: translate3d(-50%, 0, 0);
+        transform: translateX(-50%);
         border-width: 0.5em 0.5em 0 0.5em;
         border-color: white transparent transparent transparent;
         filter: drop-shadow(1px 2px 1px #bcbcbc);
       }
     }
-    *:first-child:hover ~ span {
-      transform: translate3d(-50%, 0, 0);
+    &:hover > span {
       visibility: visible;
       opacity: 1;
     }
@@ -73,16 +71,15 @@ const TooltipWrapper = styled.div`
         filter: drop-shadow(1px -1px 1px #bcbcbc);
       }
     }
-    *:first-child:hover ~ span {
-      transform: translate3d(-50%, 0, 0);
+    &:hover > span {
       visibility: visible;
       opacity: 1;
     }
   }
   &[data-position='left'] {
     span {
-      top: 50%;
-      right: calc(100% + 1.5em);
+      top: calc(50% - 2px);
+      right: calc(100% + 2em);
       transform: translate3d(15px, -50%, 0);
       &:after {
         top: 50%;
@@ -93,15 +90,14 @@ const TooltipWrapper = styled.div`
         filter: drop-shadow(2px 2px 1px #bcbcbc);
       }
     }
-    *:first-child:hover ~ span {
-      transform: translate3d(0, -50%, 0);
+    &:hover > span {
       visibility: visible;
       opacity: 1;
     }
   }
   &[data-position='right'] {
     span {
-      top: 50%;
+      top: calc(50% - 2px);
       left: 100%;
       transform: translate3d(15px, -50%, 0);
       &:after {
@@ -113,8 +109,7 @@ const TooltipWrapper = styled.div`
         filter: drop-shadow(-2px 2px 1px #bcbcbc);
       }
     }
-    *:first-child:hover ~ span {
-      transform: translate3d(0, -50%, 0);
+    &:hover > span {
       visibility: visible;
       opacity: 1;
     }

@@ -35,4 +35,5 @@ export const CopyToClipboardWrapper = styled.div`
   position: absolute;
   top: 0;
   right: 0;
+  cursor: pointer;
 `;

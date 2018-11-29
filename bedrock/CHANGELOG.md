@@ -3,12 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.3](https://github.com/basaltinc/bedrock/compare/v0.12.2...v0.12.3) (2018-11-29)
+
+**Note:** Version bump only for package @basalt/bedrock
+
+
+
+
+
 ## [0.12.2](https://github.com/basaltinc/bedrock/compare/v0.12.1...v0.12.2) (2018-11-28)
 
 
 ### Bug Fixes
 
-* **bedrock:** parent brand link opens in new tab ([2e4fdf0](https://github.com/basaltinc/bedrock/commit/2e4fdf0))
+* **bedrock:** fix playground controls toggle ([47c598a](https://github.com/basaltinc/bedrock/commit/47c598a)), closes [#25](https://github.com/basaltinc/bedrock/issues/25)
 
 
 

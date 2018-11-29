@@ -90,7 +90,7 @@ export const DemoGridControls = styled.div`
 export const SchemaFormWrapper = styled.div`
   display: ${props => (props.showForm ? 'flex' : 'none')};
   justify-content: center;
-  overflow: auto;
+  overflow: initial;
   overflow-y: visible;
   border: dotted 1px #ccc;
   position: relative;
@@ -118,7 +118,6 @@ export const SchemaFormWrapperInner = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-  max-height: ${props => (props.size === 'full' ? '40vh' : '75vh')};
   max-width: 800px;
   fieldset > legend,
   fieldset > legend + p {

@@ -52,6 +52,43 @@ const GlobalStyles = createGlobalStyle`
     ${props => addGlobalTypography(props.theme)}
     /* @todo Once Shadows are on the server, remove this from global import */
     ${addGlobalShadows}
+    /* React Table Styling Fixes */
+    .ReactTable .rt-table {
+      .rt-thead.-header {
+        box-shadow: none;
+        border-bottom: 1px solid #CCC;
+        font-weight: bold;
+      }
+      .rt-th.rt-resizable-header {
+        background: ${props => props.theme.globals.colors.neutralXLight};
+        border-top: 3px solid transparent;
+        border-bottom: 3px solid transparent;
+        color: ${props => props.theme.globals.colors.primary};
+        &:focus,
+        &:active {
+          outline: none;
+        }
+        &.-sort-asc {
+          box-shadow: none;
+          border-top: 3px solid ${props => props.theme.globals.colors.primary};
+        }
+        &.-sort-desc {
+          box-shadow: none;
+          border-bottom: 3px solid ${props =>
+            props.theme.globals.colors.primary};
+        }
+      }
+      .rt-thead.-filters {
+        background: #fbfbfb;
+      }
+      .rt-tbody {
+        .rt-td:first-child {
+          background: #fbfbfb;
+          color: ${props => props.theme.globals.colors.primary};
+          font-weight: bold;
+        }
+      }
+    }
 `;
 
 export default GlobalStyles;

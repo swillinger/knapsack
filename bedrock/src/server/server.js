@@ -29,6 +29,8 @@ const { Patterns, patternsResolvers, patternsTypeDef } = require('./patterns');
 async function serve(config, meta) {
   const port = 3999;
 
+  const settings = new Settings({ dataDir: config.data });
+
   const patterns = new Patterns({
     newPatternDir: config.newPatternDir,
     patternPaths: config.patterns,
@@ -80,8 +82,11 @@ async function serve(config, meta) {
     // https://www.apollographql.com/docs/apollo-server/essentials/data.html#context
     context: ({ req }) => ({// eslint-disable-line
       pageBuilderPages: new PageBuilder({ dataDir: config.data }),
-      settings: new Settings({ dataDir: config.data }),
-      tokens: new DesignTokens({ tokenPath: config.designTokens }),
+      settings,
+      tokens: new DesignTokens({
+        tokenPath: config.designTokens,
+        tokenGroups: settings.getSetting('designTokens').groups,
+      }),
       patterns,
     }),
     // playground: true,
@@ -172,7 +177,7 @@ async function serve(config, meta) {
     pageBuilder: new PageBuilder({
       dataDir: config.data,
     }),
-    settingsStore: new Settings({ dataDir: config.data }),
+    settingsStore: settings,
     css: config.css,
     js: config.js,
   });

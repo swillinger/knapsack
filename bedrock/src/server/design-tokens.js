@@ -3,7 +3,7 @@ const { gql } = require('apollo-server-express');
 const {
   TOKEN_CATS,
   BASE_PATHS,
-  tokenGroups,
+  // tokenGroups,
   tokenCategoriesWithDemo,
 } = require('../lib/constants');
 const { hasItemsInItems } = require('../lib/utils');
@@ -80,7 +80,7 @@ function categoryHasDemo(category) {
 }
 
 class DesignTokens {
-  constructor({ tokenPath }) {
+  constructor({ tokenPath, tokenGroups }) {
     // @todo test to ensure it's a path that points to a single yaml file and it exists
     this.tokenPath = tokenPath;
     this.getTokensInCategory = this.getTokensInCategory.bind(this);

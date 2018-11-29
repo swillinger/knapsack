@@ -1,8 +1,10 @@
 const { join } = require('path');
 const { DesignTokens } = require('../design-tokens');
+const { tokenGroups } = require('../../lib/constants');
 
 const tokens = new DesignTokens({
   tokenPath: join(__dirname, './fixtures/tokens/tokens.yml'),
+  tokenGroups,
 });
 
 describe('DesignTokens', () => {

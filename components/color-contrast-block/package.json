@@ -1,12 +1,12 @@
 {
   "name": "@basalt/bedrock-color-contrast-block",
-  "version": "0.12.2",
+  "version": "0.12.4",
   "description": "A Bedrock component that helps build Design Systems",
   "main": "src/color-contrast-block.jsx",
   "module": "src/color-contrast-block.jsx",
   "scripts": {},
   "dependencies": {
-    "@basalt/bedrock-atoms": "^0.12.2",
+    "@basalt/bedrock-atoms": "^0.12.4",
     "@basalt/bedrock-core": "^0.12.0",
     "@basalt/bedrock-utils": "^0.12.0"
   },

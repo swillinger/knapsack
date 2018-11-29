@@ -23,12 +23,12 @@ function handleWebpackResults(err, stats) {
   const info = stats.toJson();
 
   if (stats.hasErrors()) {
-    log.error('stats', info.errors, 'webpack');
+    log.error('stats', info.errors.join('\n'), 'webpack');
     return false;
   }
 
   if (stats.hasWarnings()) {
-    log.warn('stats', info.warnings, 'webpack');
+    log.warn('stats', info.warnings.join('\n'), 'webpack');
   }
   return true;
 }

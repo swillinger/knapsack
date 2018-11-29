@@ -39,6 +39,9 @@ class Settings {
     const defaults = {
       title: 'My Title',
       parentBrand: {},
+      designTokens: {
+        groups: [],
+      },
     };
 
     this.db = new FileDb({

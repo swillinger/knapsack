@@ -11,5 +11,8 @@ interface BedrockSettings {
     /** image url */
     logo?: string;
     title?: string;
-  }
+  },
+  designTokens: {
+    groups: any[],
+  },
 }

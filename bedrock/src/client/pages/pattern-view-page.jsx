@@ -157,7 +157,7 @@ class PatternViewPage extends Component {
             id={this.props.id}
           />
 
-          {examples && (
+          {!!examples.length && (
             <Details>
               <summary>Examples</summary>
               {examples.map(example => (

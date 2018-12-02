@@ -11,6 +11,7 @@ import Spinner from '@basalt/bedrock-spinner';
 import urlJoin from 'url-join';
 import { FaTimes } from 'react-icons/fa';
 import NavList from './nav-list';
+import { containsString } from '../utils/string-helpers';
 import { BASE_PATHS } from '../../lib/constants';
 import { enableUiCreatePattern } from '../../lib/features';
 
@@ -49,7 +50,6 @@ class SecondaryNav extends Component {
   //     ]),
   //   );
   // }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -76,10 +76,7 @@ class SecondaryNav extends Component {
       ? items
       : items.filter(
           item =>
-            item.isHeading ||
-            item.title
-              .toLowerCase()
-              .search(this.state.filterTerm.toLowerCase()) !== -1,
+            item.isHeading || containsString(item.title, this.state.filterTerm),
         );
   }
 

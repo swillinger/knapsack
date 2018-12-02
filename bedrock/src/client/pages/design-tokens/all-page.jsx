@@ -8,6 +8,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 // import { TokenCategory } from '@basalt/bedrock-design-token-demos';
 import PageWithSidebar from '../../layouts/page-with-sidebar';
+import { containsString } from '../../utils/string-helpers';
 
 const query = gql`
   {
@@ -19,20 +20,21 @@ const query = gql`
       value
       comment
     }
-    #    tokenCategories {
-    #      id
-    #      name
-    #      tokens {
-    #        name
-    #        value
-    #        category
-    #        comment
-    #        originalValue
-    #        type
-    #      }
-    #    }
   }
 `;
+
+/**
+ * Matches values, both case insensitive and location insensitive
+ * @param {Object} filter - column title as id and search term as value
+ * @param {Object} row - each row in the table
+ * @returns {boolean} - true if fuzzy match successful
+ */
+function basicFuzzyFilter(filter, row) {
+  const id = filter.pivotId || filter.id;
+  return row[id] !== undefined
+    ? containsString(String(row[id]), filter.value)
+    : true;
+}
 
 function AllPage(props) {
   return (
@@ -72,6 +74,7 @@ function AllPage(props) {
               showPagination={false}
               defaultPageSize={data.tokens.length}
               filterable
+              defaultFilterMethod={basicFuzzyFilter}
             />
 
             {/* @todo consider setting this page up with tabs at top to show either table (above) or every single token (below) */}

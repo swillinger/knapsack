@@ -25,7 +25,30 @@ const TOKEN_CATS = {
  * */
 const tokenCategoriesWithDemo = Object.values(TOKEN_CATS);
 
+// @todo make a GraphQL `enum` out of this
+const TOKEN_FORMATS = {
+  CUSTOM_PROPERTIES_CSS: 'custom-properties.css',
+  CSSMODULES_CSS: 'cssmodules.css',
+  SCSS: 'scss',
+  DEFAULT_SCSS: 'default.scss',
+  MAP_SCSS: 'map.scss',
+  MAP_VARIABLES_SCSS: 'map.variables.scss',
+  LIST_SCSS: 'list.scss',
+  COMMON_JS: 'common.js',
+  MODULE_JS: 'module.js',
+  ANDROID_XML: 'android.xml',
+  IOS_JSON: 'ios.json',
+  LESS: 'less',
+  RAW_JSON: 'raw.json',
+  STYL: 'styl',
+  AURA_TOKENS: 'aura.tokens',
+  JSON: 'json',
+  DEFAULT_SASS: 'default.sass',
+  SASS: 'sass',
+};
+
 module.exports = {
   TOKEN_CATS,
+  TOKEN_FORMATS,
   tokenCategoriesWithDemo,
 };

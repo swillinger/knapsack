@@ -1,9 +1,10 @@
 const theo = require('theo');
+const yaml = require('js-yaml');
 const { gql } = require('apollo-server-express');
 const {
   TOKEN_CATS,
   BASE_PATHS,
-  // tokenGroups,
+  TOKEN_FORMATS,
   tokenCategoriesWithDemo,
 } = require('../lib/constants');
 const { hasItemsInItems } = require('../lib/utils');
@@ -40,12 +41,34 @@ const designTokensTypeDef = gql`
     tokenCategoryIds: [ID]
   }
 
+  enum TokenFormats {
+    CUSTOM_PROPERTIES_CSS
+    CSSMODULES_CSS
+    SCSS
+    DEFAULT_SCSS
+    MAP_SCSS
+    MAP_VARIABLES_SCSS
+    LIST_SCSS
+    COMMON_JS
+    MODULE_JS
+    ANDROID_XML
+    IOS_JSON
+    LESS
+    RAW_JSON
+    STYL
+    AURA_TOKENS
+    JSON
+    DEFAULT_SASS
+    SASS
+  }
+
   type Query {
     tokenCategories: [TokenCategory]
     tokenCategory(category: String): TokenCategory
     tokens(category: String): [DesignToken]
     tokenGroups: [TokenGroup]
     tokenGroup(group: String): TokenGroup
+    tokensInFormat(format: TokenFormats!, category: String): String
   }
 `;
 
@@ -140,6 +163,28 @@ class DesignTokens {
   }
 
   /**
+   * Convert Design Tokens to another format, like scss, iOS, or JS vars
+   * @param {DesignToken[]} tokens
+   * @param {string} format - one of `allTokenFormats`
+   * @return {Promise<string>} - if you pass `scss` you'll get a string of scss vars
+   * @link https://www.npmjs.com/package/theo#formats
+   */
+  async convertTokensFormat(tokens, format) {
+    return theo.convert({
+      transform: {
+        type: 'web',
+        file: this.tokenPath,
+        data: yaml.dump({
+          props: tokens,
+        }),
+      },
+      format: {
+        type: format,
+      },
+    });
+  }
+
+  /**
    * @param {string} category
    * @return {boolean}
    */
@@ -217,6 +262,11 @@ const designTokensResolvers = {
     tokenCategory: (parent, { category }, { tokens }) =>
       tokens.getCategory(category),
     tokens: (parent, { category }, { tokens }) => tokens.getTokens(category),
+    tokensInFormat: async (parent, { category, format }, { tokens }) =>
+      tokens.convertTokensFormat(
+        tokens.getTokens(category),
+        TOKEN_FORMATS[format],
+      ),
     tokenGroups: (parent, args, { tokens }) => tokens.getGroups(),
     tokenGroup: (parent, { group }, { tokens }) => tokens.getGroup(group),
   },

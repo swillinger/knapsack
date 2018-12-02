@@ -6,7 +6,7 @@ import 'react-table/react-table.css';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { StatusMessage } from '@basalt/bedrock-atoms';
-import { TokenCategory } from '@basalt/bedrock-design-token-demos';
+import TokenCategory from '../../components/design-token-category';
 import PageWithSidebar from '../../layouts/page-with-sidebar';
 
 const query = gql`

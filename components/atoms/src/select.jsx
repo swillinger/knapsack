@@ -83,7 +83,7 @@ export class Select extends React.Component {
         <span>
           <select onChange={this.handleSelection} value={currentValue}>
             {this.props.items.map(item => (
-              <option tabIndex="0" value={item.value} key={item.value}>
+              <option tabIndex={0} value={item.value} key={item.value}>
                 {item.title ? item.title : item.value}
               </option>
             ))}

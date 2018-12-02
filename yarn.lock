@@ -16670,7 +16670,7 @@ text-table@0.2.0, text-table@^0.2.0, text-table@~0.2.0:
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
 
-theo@^8.0.0:
+theo@^8.0.0, theo@^8.0.1:
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/theo/-/theo-8.0.1.tgz#ca362e2f6f844aff9d7f815726b0ca4f02149e25"
   integrity sha512-R7WAjxXi+VWbxQLs1NS/Umc/1uzNJtunDFGh1C474l4dYG4OjsOYf/cOmAjHsxJC9xnj21i5J0KdkYTprfavoQ==

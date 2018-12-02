@@ -1,6 +1,7 @@
 const {
   TOKEN_CATS,
   tokenCategoriesWithDemo,
+  TOKEN_FORMATS,
 } = require('@basalt/bedrock-design-token-demos/constants');
 
 const TOKEN_GROUPS = {
@@ -97,4 +98,5 @@ module.exports = {
   BASE_PATHS,
   tokenCategoriesWithDemo,
   FILE_NAMES,
+  TOKEN_FORMATS,
 };

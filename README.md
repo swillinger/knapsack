@@ -2,37 +2,23 @@
 
 ## Requirements
 
-- `yarn` v1.6+
 - node.js 8+
 
-## Setup
+## Starting
 
 ```bash
-yarn install
-```
-
-## Starting Dev
-
-```bash
-yarn start
+npx create-bedrock my-design-system
+cd my-design-system
+npm install
+npm start
 ```
 
 Open these browser windows:
 
-- http://localhost:9001 - Bedrock Storybook
+- http://localhost:3999
 
 ## Commands
 
-- `yarn start` - Compile, start all watches and local server
-- `yarn build` - Compile with compression turned on
-- `yarn test` - Run all linting
-
----
-
-### Editor setup
-
-- Ignore indexing of any directory with these names:
-    - node_modules
-    - dist
-    - vendor
-- Install Editor Config plugin
+- `npm start` - Compile, start all watches and local server
+- `npm run build` - Compile with compression turned on
+- `npm run serve` - Start server

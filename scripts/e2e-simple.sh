@@ -29,6 +29,7 @@ function cleanup {
   rm -rf "$temp_app_path"
   # Removing all published npm packages
   rm -rf "$root_path/scripts/verdaccio/"
+  git checkout .
   killall verdaccio || true
   npm set registry "$original_npm_registry_url"
   yarn config set registry "$original_yarn_registry_url"

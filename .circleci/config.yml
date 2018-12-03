@@ -42,6 +42,11 @@ jobs:
       - run:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              git config --global push.default upstream
               ./scripts/release.sh
               ./scripts/create-bedrock-deploy/deploy.sh
+              git checkout develop
+              git pull
+              git merge master
+              git push
             fi

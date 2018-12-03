@@ -1,4 +1,14 @@
 export const apiUrlBase = '/api'; // @todo refactor
+export const graphqlBase = '/graphql';
+
+/**
+ * GraphQL Query Object to String
+ * @param {DocumentNode} gqlQueryObject -  GraphQL query made from `gql`
+ * @return {string}
+ */
+export function gqlToString(gqlQueryObject) {
+  return gqlQueryObject.loc.source.body;
+}
 
 /**
  * GraphQL Query
@@ -20,11 +30,11 @@ export function gqlQuery({ query, gqlQueryObj, variables = {} }) {
       throw new Error('"gqlQueryObj" not a valid GraphQL document.');
     }
     // get the plain string from the `gql` parsed object
-    query = gqlQueryObj.loc.source.body; // eslint-disable-line no-param-reassign
+    query = gqlToString(gqlQueryObj); // eslint-disable-line no-param-reassign
   }
 
   return window
-    .fetch('/graphql', {
+    .fetch(graphqlBase, {
       method: 'POST',
       headers: {
         'Accept-Encoding': 'gzip, deflate, br',

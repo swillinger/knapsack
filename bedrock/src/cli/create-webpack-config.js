@@ -61,11 +61,19 @@ function createWebPackConfig(userConfig) {
     module: {
       rules: [
         {
+          // https://github.com/graphql/graphiql/issues/617
+          test: /\.flow$/,
+          loader: 'ignore-loader',
+        },
+        {
           test: /\.(js|jsx|mjs)$/,
           loader: require.resolve('babel-loader'),
           // exclude: [/(node_modules)/],
           // @todo remove this after dependencies are pre-compiled
           exclude: thePath => {
+            if (/node_modules\/@basalt.*node_modules/.test(thePath)) {
+              return true;
+            }
             if (thePath.includes('node_modules/@basalt')) {
               return false;
             }
@@ -157,8 +165,18 @@ function createWebPackConfig(userConfig) {
     ],
     performance: {
       hints: isProd ? 'error' : false,
-      maxAssetSize: 500000,
-      maxEntrypointSize: 500000,
+      maxAssetSize: 510000,
+      maxEntrypointSize: 510000,
+      // if this function returns false it is not included in performance calculation
+      assetFilter: assetFilename => {
+        if (assetFilename.includes('graphiql')) {
+          return false;
+        }
+        if (/\.map$/.test(assetFilename)) {
+          return false;
+        }
+        return true;
+      },
     },
     optimization: {
       minimize: isProd,

@@ -23,6 +23,7 @@ import { apiUrlBase } from './data';
 import {
   LoadablePatternView,
   LoadableCustomSectionPage,
+  LoadableGraphiqlPage,
   LoadablePageBuilderLandingPage,
   LoadablePatternsPage,
   LoadablePageBuilder,
@@ -240,6 +241,13 @@ class App extends React.Component {
                             path="/new-pattern"
                             exact
                             render={props => <LoadablePatternNew {...props} />}
+                          />
+                          <Route
+                            path={`${BASE_PATHS.GRAPHIQL_PLAYGROUND}`}
+                            exact
+                            render={props => (
+                              <LoadableGraphiqlPage {...props} />
+                            )}
                           />
                           <Route
                             path="/settings"

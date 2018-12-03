@@ -91,6 +91,11 @@ class Header extends React.Component {
             Page Builder
           </SiteHeaderNavLink>
         </li>
+        <li>
+          <SiteHeaderNavLink to={BASE_PATHS.GRAPHIQL_PLAYGROUND}>
+            API
+          </SiteHeaderNavLink>
+        </li>
         {/* @todo Reimplement header nav for custom sections once implemented with gql */}
         {/* {sections.map(section => ( */}
         {/* <li key={section.id}> */}

@@ -82,6 +82,7 @@ const BASE_PATHS = {
   DESIGN_TOKENS: '/design-tokens',
   PAGES: '/pages',
   CUSTOM_PAGES: '/custom-pages',
+  GRAPHIQL_PLAYGROUND: '/graphql-playground',
 };
 
 const FILE_NAMES = {

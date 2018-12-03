@@ -44,4 +44,8 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               ./scripts/release.sh
               ./scripts/create-bedrock-deploy/deploy.sh
+              git checkout develop
+              git pull
+              git merge master
+              git push
             fi

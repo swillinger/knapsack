@@ -42,7 +42,7 @@ jobs:
       - run:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              git config --global push.default upstream
+              git config --global push.default simple
               ./scripts/release.sh
               ./scripts/create-bedrock-deploy/deploy.sh
               git checkout develop

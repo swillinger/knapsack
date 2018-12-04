@@ -19,4 +19,5 @@ git config --global user.name "Bedrock Bot"
 cp ./scripts/.npmrc-ci ~/.npmrc
 # see `lerna.json` for options
 ./node_modules/.bin/lerna publish --yes
+git pull
 git push origin master --follow-tags --no-verify

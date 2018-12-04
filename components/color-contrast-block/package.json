@@ -2,9 +2,11 @@
   "name": "@basalt/bedrock-color-contrast-block",
   "version": "0.15.0",
   "description": "A Bedrock component that helps build Design Systems",
-  "main": "src/color-contrast-block.jsx",
-  "module": "src/color-contrast-block.jsx",
-  "scripts": {},
+  "module": "dist/color-contrast-block.js",
+  "scripts": {
+    "build": "babel --config-file @basalt/bedrock-babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
+    "watch": "npm run build -- --watch"
+  },
   "dependencies": {
     "@basalt/bedrock-atoms": "^0.15.0",
     "@basalt/bedrock-core": "^0.15.0",
@@ -19,6 +21,9 @@
     "react": "^16.6.0",
     "styled-components": "^4.0.2"
   },
+  "files": [
+    "./dist"
+  ],
   "author": "Basalt (https://basalt.io/)",
   "publishConfig": {
     "access": "restricted"

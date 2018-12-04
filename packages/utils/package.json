@@ -6,7 +6,7 @@
   "module": "dist/index.js",
   "types": "src/index.d.ts",
   "scripts": {
-    "build:js": "babel --config-file @basalt/bedrock-babel-config/es --source-maps --ignore 'src/*.test.js' --extensions .js,.ts --out-dir dist/ src/",
+    "build:js": "babel --config-file @basalt/bedrock-babel-config/es --copy-files --source-maps --ignore 'src/*.test.js' --extensions .js,.ts --out-dir dist/ src/",
     "build:types": "tsc",
     "build": "rm -rf dist && yarn build:js",
     "prepare": "npm run build"

@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@basalt/bedrock-core": "^0.15.0",
+    "@basalt/bedrock-color-swatch": "*",
+    "@basalt/bedrock-api-demo": "*",
     "@storybook/addon-actions": "^3.4.10",
     "@storybook/addon-info": "^3.4.10",
     "@storybook/react": "^3.4.10",

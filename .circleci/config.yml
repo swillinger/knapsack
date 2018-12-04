@@ -9,14 +9,14 @@ jobs:
     docker:
       - image: basaltinc/docker-node-php-base
     steps:
-      - checkout
+      - run: checkout
 
       # Download and cache dependencies
       - restore_cache:
-        keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
 
       - run: yarn install --no-lockfile
 
@@ -26,18 +26,26 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
   test:
+    docker:
+      - image: basaltinc/docker-node-php-base
     steps:
       - run: yarn test
 
   build:
+    docker:
+      - image: basaltinc/docker-node-php-base
     steps:
       - run: yarn build
 
   full_test:
+    docker:
+      - image: basaltinc/docker-node-php-base
     steps:
       - run: ./scripts/e2e-simple.sh
 
   release:
+    docker:
+      - image: basaltinc/docker-node-php-base
     steps:
       - run:
           command: |
@@ -52,6 +60,8 @@ jobs:
             fi
 
   deploy:
+    docker:
+      - image: basaltinc/docker-node-php-base
     steps:
       - run:
           command: |

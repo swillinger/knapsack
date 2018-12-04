@@ -9,7 +9,7 @@ jobs:
     docker:
       - image: basaltinc/docker-node-php-base
     steps:
-      - run: checkout
+      - checkout
 
       # Download and cache dependencies
       - restore_cache:

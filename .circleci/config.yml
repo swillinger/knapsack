@@ -2,7 +2,7 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
-version: 2.1
+version: 2
 jobs:
   prep:
     working_directory: ~/repo
@@ -76,7 +76,7 @@ jobs:
             fi
 
 workflows:
-  version: 2.1
+  version: 2
   all_the_things:
     jobs:
       - prep

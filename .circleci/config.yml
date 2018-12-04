@@ -2,29 +2,21 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
-version: 2
+version: 2.1
 jobs:
-  build:
-    docker:
-      # base docker image
-      - image: basaltinc/docker-node-php-base
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
+  prep:
     working_directory: ~/repo
-
+    docker:
+      - image: basaltinc/docker-node-php-base
     steps:
       - checkout
 
       # Download and cache dependencies
       - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+      keys:
+        - v1-dependencies-{{ checksum "package.json" }}
+        # fallback to using the latest cache if no exact match is found
+        - v1-dependencies-
 
       - run: yarn install --no-lockfile
 
@@ -32,13 +24,21 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-
+          
+  test:
+    steps:
       - run: yarn test
 
+  build:
+    steps:
       - run: yarn build
 
+  full_test:
+    steps:
       - run: ./scripts/e2e-simple.sh
 
+  release:
+    steps:
       - run:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
@@ -50,3 +50,33 @@ jobs:
               #git merge master
               #git push
             fi
+
+  deploy:
+    steps:
+      - run:
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              #git config --global push.default upstream
+              ./scripts/release.sh
+              ./scripts/create-bedrock-deploy/deploy.sh
+              #git checkout develop
+              #git pull
+              #git merge master
+              #git push
+            fi
+
+workflows:
+  version: 2.1
+  all_the_things:
+    jobs:
+      - prep
+      - test:
+          requires:
+            - prep
+      - build:
+          requires:
+            - prep
+      - full_test:
+          requires:
+            - prep
+

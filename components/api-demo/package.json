@@ -5,7 +5,8 @@
   "module": "dist/api-demo.js",
   "scripts": {
     "build": "babel --config-file @basalt/bedrock-babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
-    "watch": "npm run build -- --watch"
+    "prepare": "yarn build",
+    "watch": "yarn build --watch"
   },
   "dependencies": {
     "@basalt/bedrock-atoms": "^0.15.0",

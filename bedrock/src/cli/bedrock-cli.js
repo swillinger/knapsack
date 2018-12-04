@@ -1,12 +1,19 @@
 #! /usr/bin/env node
 const program = require('commander');
-const { existsSync } = require('fs-extra');
+const { existsSync, copy, ensureSymlink, remove } = require('fs-extra');
 const portfinder = require('portfinder');
 const { join, resolve, dirname } = require('path');
 const log = require('./log');
 const { serve } = require('../server/server');
 const { version } = require('../../package.json');
-const webpack = require('./webpack');
+// const webpack = require('./webpack');
+
+// If any of our parent directories are not `node_modules`, then we are in "dev mode", which basically means that we are Bedrock developers working on this package in the monorepo.
+const isDevMode = !dirname(__dirname)
+  .split('/')
+  .includes('node_modules');
+
+if (isDevMode) log.info('Bedrock Dev Mode on');
 
 /**
  * Prepare user config: validate, convert all paths to absolute, assign defaults
@@ -68,7 +75,16 @@ program.command('serve').action(async () => {
 
 program.command('build').action(async () => {
   try {
-    await webpack.build(config);
+    // await webpack.build(config);
+    if (isDevMode) {
+      // we symlink in devmode
+      await remove(config.dist);
+      await ensureSymlink(join(__dirname, '../../dist/'), config.dist);
+    } else {
+      await copy(join(__dirname, '../../dist/'), config.dist, {
+        overwrite: true,
+      });
+    }
   } catch (e) {
     log.error('bedrock build error!');
     console.log(e);
@@ -76,14 +92,14 @@ program.command('build').action(async () => {
   }
 });
 
-program.command('start').action(async () => {
-  try {
-    await webpack.watch(config);
-  } catch (e) {
-    log.error('bedrock start error!');
-    console.log(e);
-    process.exit(1);
-  }
-});
+// program.command('start').action(async () => {
+//   try {
+//     await webpack.watch(config);
+//   } catch (e) {
+//     log.error('bedrock start error!');
+//     console.log(e);
+//     process.exit(1);
+//   }
+// });
 
 program.parse(process.argv);

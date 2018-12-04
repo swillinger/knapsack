@@ -25,7 +25,7 @@ export const LoadablePatternView = Loadable({
 
 export const LoadableHome = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "home-splash" */ './components/home-splash.jsx'),
+    import(/* webpackChunkName: "home-splash" */ './components/home-splash'),
   loading: Spinner,
 });
 
@@ -55,7 +55,7 @@ export const LoadablePageBuilder = Loadable({
 
 export const LoadablePageBuilderLandingPage = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "page-builder-landing-page" */ './pages/page-builder-landing-page.jsx'),
+    import(/* webpackChunkName: "page-builder-landing-page" */ './pages/page-builder-landing-page'),
   loading: Spinner,
 });
 

@@ -19,7 +19,7 @@ const isProd = process.env.NODE_ENV === 'production';
  * @typedef {Object} CreateWebpackConfig
  * @prop {string} dist - The absolute path to where files will be written.
  * @prop {string} [pluginSetupFile] - File that contains all the imported plugin register functions
- * @prop {string} public - The absolute path to where files will be available to the dev server.
+ * @prop {string} [public] - The absolute path to where files will be available to the dev server.
  */
 
 /**
@@ -68,22 +68,11 @@ function createWebPackConfig(userConfig) {
         {
           test: /\.(js|jsx|mjs)$/,
           loader: require.resolve('babel-loader'),
-          // exclude: [/(node_modules)/],
-          // @todo remove this after dependencies are pre-compiled
-          exclude: thePath => {
-            if (/node_modules\/@basalt.*node_modules/.test(thePath)) {
-              return true;
-            }
-            if (thePath.includes('node_modules/@basalt')) {
-              return false;
-            }
-            if (thePath.includes('node_modules')) {
-              return true;
-            }
-            return false;
-          },
+          include: [resolve(__dirname, '../../src')],
+          exclude: [/(node_modules)/],
           options: {
             extends: require.resolve('@basalt/bedrock-babel-config/es'),
+            cacheDirectory: true,
           },
         },
         {
@@ -216,14 +205,14 @@ function createWebPackConfig(userConfig) {
 
   return {
     ...webpackConfig,
-    devServer: {
-      overlay: true,
-      hot: true,
-      contentBase: [resolve(config.dist), resolve(config.public)],
-      historyApiFallback: {
-        index: '/index.html',
-      },
-    },
+    // devServer: {
+    //   overlay: true,
+    //   hot: true,
+    //   contentBase: [resolve(config.dist), resolve(config.public)],
+    //   historyApiFallback: {
+    //     index: '/index.html',
+    //   },
+    // },
   };
 }
 

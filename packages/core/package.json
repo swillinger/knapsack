@@ -2,6 +2,7 @@
   "name": "@basalt/bedrock-core",
   "version": "0.15.0",
   "description": "The core of Bedrock",
+  "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
     "build": "babel --config-file @basalt/bedrock-babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",

@@ -3,6 +3,7 @@
   "version": "0.15.0",
   "description": "A collection of design token category demos that each show off a single CSS property.",
   "module": "dist/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "babel --config-file @basalt/bedrock-babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
     "prepare": "yarn build",

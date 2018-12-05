@@ -39,7 +39,7 @@ class PageWithSidebar extends Component {
             {sidebar || <SecondaryNav pathname={pathname} />}
           </SidebarColumn>
           <SidebarTrayHandle onClick={this.handleSidebarToggle}>
-            <ToggleChevron sidebarcollapsed={sidebarCollapsed.toString()} />
+            <ToggleChevron sidebarcollapsed={sidebarCollapsed} />
           </SidebarTrayHandle>
         </SidebarStyled>
         <main>{children}</main>

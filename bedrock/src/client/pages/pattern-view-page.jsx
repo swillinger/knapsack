@@ -4,11 +4,12 @@ import styled from 'styled-components';
 import Spinner from '@basalt/bedrock-spinner';
 import { Button, Details, Select } from '@basalt/bedrock-atoms';
 import { BedrockContext } from '@basalt/bedrock-core';
-import { Query } from 'react-apollo';
+import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import queryString from 'query-string';
 import Template from '../components/template';
+import MdBlock from '../components/md-block';
 import ErrorCatcher from '../utils/error-catcher';
 import Overview from '../layouts/overview';
 import {
@@ -18,6 +19,7 @@ import {
 import DosAndDonts from '../components/dos-and-donts';
 import PageWithSidebar from '../layouts/page-with-sidebar';
 import { BASE_PATHS } from '../../lib/constants';
+import { enableUiSettings } from '../../lib/features';
 import { gqlToString } from '../data';
 
 const OverviewHeader = styled.header`
@@ -35,6 +37,7 @@ const query = gql`
         isInline
         uiSchema
       }
+      readme
       meta {
         title
         description
@@ -54,6 +57,12 @@ const query = gql`
         }
       }
     }
+  }
+`;
+
+const updateReadme = gql`
+  mutation UpdateReadme($id: ID!, $readme: String!) {
+    setPatternReadme(id: $id, readme: $readme)
   }
 `;
 
@@ -113,6 +122,7 @@ class PatternViewPage extends Component {
               meta: data.pattern.meta,
               templates: data.pattern.templates,
               currentTemplate: data.pattern.templates[0],
+              readme: data.pattern.readme,
             });
             return null;
           }}
@@ -120,7 +130,7 @@ class PatternViewPage extends Component {
       );
     }
 
-    const { templates, meta, currentTemplate } = this.state;
+    const { templates, meta, currentTemplate, readme } = this.state;
     const { title, description, type, demoSize } = meta;
     const { name, schema, uiSchema, isInline } = currentTemplate;
     const [data, ...examples] = schema.examples ? schema.examples : [{}];
@@ -192,6 +202,31 @@ class PatternViewPage extends Component {
                 />
               ))}
             </Details>
+          )}
+
+          {readme && (
+            <Mutation mutation={updateReadme} ignoreResults>
+              {setPatternReadme => {
+                const { id } = this.props;
+                return (
+                  <MdBlock
+                    md={readme}
+                    isEditable={enableUiSettings}
+                    title="Documentation"
+                    handleSave={async newReadme => {
+                      await setPatternReadme({
+                        variables: {
+                          id,
+                          readme: newReadme,
+                        },
+                      });
+                      // @todo Refactor this so a reload is not needed
+                      window.location.reload();
+                    }}
+                  />
+                );
+              }}
+            </Mutation>
           )}
 
           {Object.keys(schema.properties).length > 0 && (

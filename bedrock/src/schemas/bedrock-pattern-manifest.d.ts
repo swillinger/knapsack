@@ -119,6 +119,8 @@ interface PatternWithMetaSchema {
   metaFilePath: string;
   templates: PatternTemplatesSchema;
   meta?: PatternMetaSchema;
+  readme?: string;
+  dir: string;
 }
 
 /**

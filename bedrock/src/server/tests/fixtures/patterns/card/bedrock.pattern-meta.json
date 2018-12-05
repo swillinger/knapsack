@@ -1,0 +1,7 @@
+{
+  "title": "Card",
+  "type": "component",
+  "description": "A Card that powers the internet",
+  "uses": ["inSlice"],
+  "demoSize": "m"
+}

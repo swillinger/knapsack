@@ -4,7 +4,6 @@
   "version": "0.15.0",
   "command": {
     "version": {
-      "conventionalCommits": true,
       "message": "chore: publish %s [skip ci]"
     },
     "publish": {}

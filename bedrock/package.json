@@ -107,7 +107,7 @@
     "webpack-visualizer-plugin": "^0.1.11"
   },
   "files": [
-    "./src",
+    "./src/**",
     "./dist"
   ],
   "keywords": [

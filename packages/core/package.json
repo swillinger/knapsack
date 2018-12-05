@@ -2,9 +2,13 @@
   "name": "@basalt/bedrock-core",
   "version": "0.16.0",
   "description": "The core of Bedrock",
-  "main": "src/index.js",
-  "module": "src/index.js",
-  "scripts": {},
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "scripts": {
+    "build": "babel --config-file @basalt/bedrock-babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
+    "prepare": "yarn build",
+    "watch": "yarn build --watch"
+  },
   "dependencies": {
     "global": "^4.3.2",
     "prop-types": "^15.0.0"
@@ -13,6 +17,9 @@
     "react": "^16.6.0"
   },
   "author": "Basalt (https://basalt.io/)",
+  "files": [
+    "./dist"
+  ],
   "publishConfig": {
     "access": "restricted"
   }

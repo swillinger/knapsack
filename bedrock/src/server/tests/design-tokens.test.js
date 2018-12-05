@@ -1,10 +1,40 @@
 const { join } = require('path');
 const { DesignTokens } = require('../design-tokens');
-const { tokenGroups } = require('../../lib/constants');
 
 const tokens = new DesignTokens({
   tokenPath: join(__dirname, './fixtures/tokens/tokens.yml'),
-  tokenGroups,
+  tokenGroups: [
+    {
+      id: 'colors',
+      title: 'Colors',
+      description: 'Some colors',
+      tokenCategoryIds: ['background-color', 'text-color', 'hr-color'],
+    },
+    {
+      id: 'sizing',
+      title: 'Sizing',
+      description: 'Some sizing',
+      tokenCategoryIds: ['spacing', 'media-query'],
+    },
+    {
+      id: 'typography',
+      title: 'Typography',
+      description: 'Some typography',
+      tokenCategoryIds: [
+        'font-family',
+        'font-size',
+        'line-height',
+        'text-color',
+        'text-shadow',
+      ],
+    },
+    {
+      id: 'shadows',
+      title: 'Shadows',
+      description: 'Some shadows',
+      tokenCategoryIds: ['box-shadow', 'inner-shadow', 'text-shadow'],
+    },
+  ],
 });
 
 describe('DesignTokens', () => {

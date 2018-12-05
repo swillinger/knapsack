@@ -2,7 +2,12 @@
   "name": "@basalt/bedrock-monorepo",
   "private": true,
   "scripts": {
-    "build": "FORCE_COLOR=1 lerna run build",
+    "build:bedrock": "FORCE_COLOR=1 lerna run build --scope @basalt/bedrock",
+    "build:pkgs": "FORCE_COLOR=1 lerna run build --no-private --ignore @basalt/bedrock",
+    "build:private": "erna run build --scope @basalt/bedrock-example* --scope @basalt/bedrock-storybook",
+    "build": "run-s build:pkgs build:bedrock",
+    "build:all": "run-s build build:private",
+    "watch": "FORCE_COLOR=1 lerna run watch --parallel --no-private",
     "clean": "lerna clean --yes && rm -rf node_modules",
     "cli:test": "rm -rf examples/create-bedrock-results && cd examples && ../node_modules/.bin/create-bedrock create-bedrock-results && cd .. && yarn && cd examples/create-bedrock-results && yarn start",
     "commit": "git-cz",

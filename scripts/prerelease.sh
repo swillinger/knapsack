@@ -18,7 +18,7 @@ git config --global user.email $GITHUB_EMAIL
 git config --global user.name "Bedrock Bot"
 cp ./scripts/.npmrc-ci ~/.npmrc
 # see `lerna.json` for options
-./node_modules/.bin/lerna publish prerelease --yes
+./node_modules/.bin/lerna publish prerelease --npm-tag=next --yes
 git status
 # git pull origin develop
 # git push origin develop --follow-tags --no-verify

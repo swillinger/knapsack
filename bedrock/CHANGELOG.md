@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.15.1-alpha.0](https://github.com/basaltinc/bedrock/compare/v0.15.0...v0.15.1-alpha.0) (2018-12-05)
+
+
+### Features
+
+* **bedrock:** add page in client for graphiql ([#93](https://github.com/basaltinc/bedrock/issues/93)) ([40aae85](https://github.com/basaltinc/bedrock/commit/40aae85)), closes [#89](https://github.com/basaltinc/bedrock/issues/89)
+
+
+
+
+
 # [0.15.0](https://github.com/basaltinc/bedrock/compare/v0.13.1...v0.15.0) (2018-12-03)
 
 

@@ -50,3 +50,8 @@ jobs:
               #git merge master
               #git push
             fi
+
+            if [ "${CIRCLE_BRANCH}" == "develop" ]; then
+              ./scripts/prerelease.sh
+              #./scripts/create-bedrock-deploy/deploy.sh
+            fi

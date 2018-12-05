@@ -23,7 +23,6 @@
     "open:repo": "open https://github.com/basaltinc/bedrock",
     "open:ci": "open https://circleci.com/gh/basaltinc/bedrock",
     "pick": "pick-npm-run-all",
-    "postinstall": "lerna run prepare",
     "reset": "yarn clean && yarn install --silent && FORCE_COLOR=1 run-s --print-label build:*",
     "start": "cd apps/storybook && yarn start",
     "test": "run-s lint:style lint:js jest && lerna run test",

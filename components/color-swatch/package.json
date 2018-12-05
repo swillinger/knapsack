@@ -6,7 +6,7 @@
   "main": "dist/color-swatch.js",
   "scripts": {
     "build": "babel --config-file @basalt/bedrock-babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
-    "prepare": "yarn build",
+    "prepublishOnly": "yarn build",
     "watch": "yarn build --watch"
   },
   "dependencies": {

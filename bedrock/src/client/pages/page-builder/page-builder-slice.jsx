@@ -42,6 +42,7 @@ const PageBuilderSlice = ({
           isChanged={isChanged}
         >
           <PlaygroundIconWrapper
+            active={isBeingEdited}
             className="ei-content-block__button-tray"
             hasVisibleControls={hasVisibleControls}
           >

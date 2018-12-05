@@ -10,6 +10,9 @@ export const TextInputWrapper = styled.div`
     font-size: ${props => props.theme.inputs.fontSize};
     width: 100%;
   }
+  > textarea {
+    padding: ${props => props.theme.globals.spacing.s};
+  }
   > input {
     height: ${props => props.theme.inputs.height};
   }

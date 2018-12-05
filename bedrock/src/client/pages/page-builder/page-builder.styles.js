@@ -1,28 +1,26 @@
 import styled, { keyframes, css } from 'styled-components';
 import SchemaForm from '@basalt/bedrock-schema-form';
+import { Link } from 'react-router-dom';
 
 // index.js
 
 export const MainContent = styled.div`
   flex-grow: 1;
-  overflow-y: scroll;
   box-sizing: border-box;
 `;
 
 export const StartInsertSlice = styled.div`
   display: ${props => (props.hasVisibleControls ? 'block' : 'none')};
   border: ${props =>
-    props.isActive ? 'solid 2px #e1c933' : 'dashed 1px rgba(0,0,0,0.3)'};
+    props.isActive ? 'solid 1px #e1c933' : 'dashed 1px rgba(0,0,0,0.3)'};
   text-align: center;
   cursor: pointer;
-  padding: 1rem;
+  padding: 1rem 1rem 0.6rem;
   margin: 1rem 0;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease-in-out;
   &:hover,
   &:active {
-    color: #e1c933;
-    border: ${props => !props.isActive && 'dashed 1px #e1c933'};
-    text-decoration: underline;
+    border: ${props => !props.isActive && '1px dashed #e1c933'};
   }
 `;
 
@@ -39,7 +37,9 @@ function noIconStyles(props) {
   if (!props.thumb)
     return `
     background: #FFF;
-    padding: ${props.theme.globals.spacing.s};
+    padding: ${props.theme.globals.spacing.s} ${
+      props.theme.globals.spacing.s
+    } 3px;
     border: 1px solid ${props.theme.globals.colors.neutralLight};
   `;
 }
@@ -72,6 +72,10 @@ export const PatternListItemWrapper = styled.li`
     text-decoration: none;
     transition: ${props => props.theme.transitions.all};
   }
+  div[role='button']:focus,
+  div[role='button']:active {
+    outline: none;
+  }
   /* Specific styling only when props.thumb (enablePatternIcons) is false */
   ${props => noIconStyles(props)};
 `;
@@ -85,14 +89,19 @@ export const PatternListItemThumb = styled.img`
 export const PatternListItemDescription = styled.div`
   line-height: 1.25;
   font-size: 11px;
-  color: ${props => props.theme.globals.colors.neutralDark};
+  color: hsl(0, 0%, 35%);
   font-style: italic;
-  margin-bottom: 2px;
 `;
 
 export const PlaygroundStyledSchemaForm = styled(SchemaForm)`
-  > div > label {
-    display: none;
+  & > .rjsf > div {
+    margin: 0;
+    & > label {
+      display: none;
+    }
+  }
+  label {
+    color: ${props => props.theme.globals.colors.primary};
   }
   margin-bottom: 1rem;
 `;
@@ -127,6 +136,10 @@ export const PlaygroundIcon = styled.div`
   &:active {
     cursor: ${props => (props.disabled ? '' : 'pointer')};
   }
+  &:focus,
+  &:active {
+    outline: none;
+  }
   > svg {
     width: 100%;
     height: 100%;
@@ -143,7 +156,16 @@ export const briefHighlight = keyframes`
 
 export const PlaygroundIconWrapper = styled.div`
   box-sizing: border-box;
-  border: ${props => props.theme.globals.borders.border};
+  ${props =>
+    props.active
+      ? `
+        background: #fffdec;
+        border-left: solid 1px ${props.theme.globals.colors.active};
+        `
+      : `
+        background: #f9f9f9;
+        border: solid 1px ${props.theme.globals.colors.neutral};
+        `};
   margin-bottom: 0;
   display: ${props => (props.hasVisibleControls ? 'block' : 'none')};
   height: 100%;
@@ -153,18 +175,44 @@ export const PlaygroundIconWrapper = styled.div`
 `;
 
 export const PlaygroundSliceWrapper = styled.div`
+  background: #fff;
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
   box-sizing: border-box;
   ${props =>
     props.active && props.hasVisibleControls
-      ? `border: solid 2px ${props.theme.globals.colors.active};`
+      ? `border: solid 1px ${props.theme.globals.colors.active};`
       : 'border: none;'};
-  ${props => (props.hasVisibleControls ? 'margin: 1.5rem;' : '')};
   ${props =>
     props.isChanged &&
     css`
       animation: ${briefHighlight} 1.5s;
     `};
+  &:active {
+    border: solid 1px ${props => props.theme.globals.colors.neutral};
+    ${PlaygroundIconWrapper} {
+      background: #f9f9f9;
+      border-color: ${props => props.theme.globals.colors.neutral};
+      border-width: 0 0 0 1px;
+    }
+  }
+`;
+
+export const PlaygroundStyledLink = styled(Link)`
+  height: ${props => props.theme.buttons.height};
+  line-height: ${props => props.theme.buttons.height};
+  border: ${props => props.theme.buttons.border};
+  color: #000;
+  font-size: ${props => props.theme.buttons.fontSize};
+  font-weight: 400;
+  font-family: system-ui;
+  padding: 1px 7px 2px;
+  &:link,
+  &:visited {
+    color: #000;
+  }
+  &:hover {
+    text-decoration: none;
+  }
 `;

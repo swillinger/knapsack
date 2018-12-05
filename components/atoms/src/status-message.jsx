@@ -15,7 +15,7 @@ const statusColorSets = {
     border: '#c3e6cb',
   },
   warning: {
-    text: '#f5c6cb',
+    text: '#bd9712',
     bg: '#fff3cd',
     border: '#ffeeba',
   },
@@ -28,17 +28,20 @@ const statusColorSets = {
 
 const StatusMessageWrapper = styled.aside`
   padding: ${({ theme }) =>
-    `${theme.globals.spacing.s} ${theme.globals.spacing.m}`};
-  margin-bottom: ${({ theme }) => theme.globals.spacing.m};
-  border: solid 1px ${({ type }) => statusColorSets[type].border};
+    `${theme.globals.spacing.s} ${theme.globals.spacing.m} ${
+      theme.globals.spacing.xs
+    }`};
+  margin-bottom: ${({ theme }) => theme.globals.spacing.l};
+  border: solid 2px ${({ type }) => statusColorSets[type].border};
   background-color: ${({ type }) => statusColorSets[type].bg};
-  color: ${({ type }) => statusColorSets[type].color};
+  color: ${({ type }) => statusColorSets[type].text};
+  line-height: 1;
 `;
 
 export function StatusMessage(props) {
   return (
     <StatusMessageWrapper type={props.type.trim()}>
-      <p>{props.message}</p>
+      {props.message}
     </StatusMessageWrapper>
   );
 }

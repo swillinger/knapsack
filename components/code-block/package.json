@@ -2,9 +2,13 @@
   "name": "@basalt/bedrock-code-block",
   "version": "0.16.0",
   "description": "A Bedrock component that helps build Design Systems",
-  "main": "src/code-block.jsx",
-  "module": "src/code-block.jsx",
-  "scripts": {},
+  "module": "dist/code-block.js",
+  "main": "dist/code-block.js",
+  "scripts": {
+    "build": "babel --config-file @basalt/bedrock-babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
+    "prepare": "yarn build",
+    "watch": "yarn build --watch"
+  },
   "dependencies": {
     "@basalt/bedrock-atoms": "^0.16.0",
     "@basalt/bedrock-core": "^0.16.0",
@@ -19,6 +23,9 @@
     "react": "^16.6.0",
     "styled-components": "^4.0.2"
   },
+  "files": [
+    "./dist"
+  ],
   "author": "Basalt (https://basalt.io/)",
   "publishConfig": {
     "access": "restricted"

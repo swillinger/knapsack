@@ -2,9 +2,13 @@
   "name": "@basalt/bedrock-schema-form",
   "version": "0.16.0",
   "description": "A Bedrock component that helps build Design Systems",
-  "main": "src/schema-form.jsx",
-  "module": "src/schema-form.jsx",
-  "scripts": {},
+  "module": "dist/schema-form.js",
+  "main": "dist/schema-form.js",
+  "scripts": {
+    "build": "babel --config-file @basalt/bedrock-babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
+    "prepare": "yarn build",
+    "watch": "yarn build --watch"
+  },
   "dependencies": {
     "@basalt/bedrock-core": "^0.16.0",
     "react-jsonschema-form": "^1.0.3"
@@ -18,6 +22,9 @@
     "react": "^16.6.0",
     "styled-components": "^4.0.2"
   },
+  "files": [
+    "./dist"
+  ],
   "author": "Basalt (https://basalt.io/)",
   "publishConfig": {
     "access": "restricted"

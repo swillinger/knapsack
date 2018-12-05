@@ -2,9 +2,13 @@
   "name": "@basalt/bedrock-design-token-demos",
   "version": "0.16.0",
   "description": "A collection of design token category demos that each show off a single CSS property.",
-  "main": "src/index.jsx",
-  "module": "src/index.jsx",
-  "scripts": {},
+  "module": "dist/index.js",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "babel --config-file @basalt/bedrock-babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
+    "prepare": "yarn build",
+    "watch": "yarn build --watch"
+  },
   "devDependencies": {
     "prop-types": "^15.0.0",
     "react": "^16.6.0"
@@ -23,6 +27,10 @@
     "@basalt/bedrock-core": "^0.16.0",
     "@basalt/bedrock-spacing-swatch": "^0.16.0"
   },
+  "files": [
+    "./dist",
+    "constants.js"
+  ],
   "publishConfig": {
     "access": "restricted"
   }

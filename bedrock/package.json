@@ -8,11 +8,10 @@
     "bedrock": "src/cli/bedrock-cli.js"
   },
   "scripts": {
-    "build:js": "BABEL_ENV=cli babel --copy-files --source-maps --ignore 'src/*.test.js' --extensions .js,.ts --out-dir dist/ src/",
-    "watch:js": "yarn build:js --watch",
+    "build": "rm -rf dist && NODE_ENV=production webpack-cli --config ./webpack.config.js",
+    "watch": "webpack-cli --config ./webpack.config.js --watch",
     "test:types": "tsc",
-    "build": "rm -rf dist && run-s build:*",
-    "start": "run-p watch:*",
+    "prepare": "yarn build",
     "test": "run-s test:*"
   },
   "dependencies": {

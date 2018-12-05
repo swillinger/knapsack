@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.16.0](https://github.com/basaltinc/bedrock/compare/v0.15.1-alpha.2...v0.16.0) (2018-12-05)
+
+**Note:** Version bump only for package @basalt/bedrock-core
+
+
+
+
+
 ## [0.15.1-alpha.0](https://github.com/basaltinc/bedrock/compare/v0.15.0...v0.15.1-alpha.0) (2018-12-05)
 
 **Note:** Version bump only for package @basalt/bedrock-core

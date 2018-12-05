@@ -53,6 +53,29 @@ async function getMeta() {
   };
 }
 
+/**
+ * @param {BedrockConfig} config
+ * @return {Promise<void>}
+ */
+async function build(config) {
+  try {
+    if (isDevMode) {
+      // we symlink in devmode
+      await remove(config.dist);
+      await ensureSymlink(join(__dirname, '../../dist/'), config.dist);
+    } else {
+      await copy(join(__dirname, '../../dist/'), config.dist, {
+        overwrite: true,
+      });
+    }
+    log.info('built', null, 'build');
+  } catch (e) {
+    log.error('bedrock build error!');
+    console.log(e);
+    process.exit(1);
+  }
+}
+
 const configPath = join(process.cwd(), 'bedrock.config.js');
 if (!existsSync(configPath)) {
   log.error('Could not find bedrock.config.js file in CWD.');
@@ -74,32 +97,12 @@ program.command('serve').action(async () => {
 });
 
 program.command('build').action(async () => {
-  try {
-    // await webpack.build(config);
-    if (isDevMode) {
-      // we symlink in devmode
-      await remove(config.dist);
-      await ensureSymlink(join(__dirname, '../../dist/'), config.dist);
-    } else {
-      await copy(join(__dirname, '../../dist/'), config.dist, {
-        overwrite: true,
-      });
-    }
-  } catch (e) {
-    log.error('bedrock build error!');
-    console.log(e);
-    process.exit(1);
-  }
+  await build(config);
 });
 
-// program.command('start').action(async () => {
-//   try {
-//     await webpack.watch(config);
-//   } catch (e) {
-//     log.error('bedrock start error!');
-//     console.log(e);
-//     process.exit(1);
-//   }
-// });
+program.command('start').action(async () => {
+  await build(config);
+  await serve(config, await getMeta());
+});
 
 program.parse(process.argv);

@@ -4,7 +4,7 @@
   "scripts": {
     "build:bedrock": "FORCE_COLOR=1 lerna run build --scope @basalt/bedrock",
     "build:pkgs": "FORCE_COLOR=1 lerna run build --no-private --ignore @basalt/bedrock",
-    "build:private": "erna run build --scope @basalt/bedrock-example* --scope @basalt/bedrock-storybook",
+    "build:private": "lerna run build --scope @basalt/bedrock-example* --scope @basalt/bedrock-storybook",
     "build": "run-s build:pkgs build:bedrock",
     "build:all": "run-s build build:private",
     "watch": "FORCE_COLOR=1 lerna run watch --parallel --no-private",

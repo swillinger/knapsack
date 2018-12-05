@@ -53,5 +53,5 @@ jobs:
 
             if [ "${CIRCLE_BRANCH}" == "develop" ]; then
               ./scripts/prerelease.sh
-              #./scripts/create-bedrock-deploy/deploy.sh
+              ./scripts/create-bedrock-deploy-dev/deploy.sh
             fi

@@ -106,10 +106,6 @@
     "webpack-stylish": "^0.1.8",
     "webpack-visualizer-plugin": "^0.1.11"
   },
-  "files": [
-    "./src/**",
-    "./dist"
-  ],
   "keywords": [
     "design-system",
     "basalt"

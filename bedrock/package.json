@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@basalt/bedrock-design-token-demos": "^0.15.0",
+    "@basalt/bedrock-schema-utils": "^0.15.0",
     "apollo-boost": "^0.1.22",
     "apollo-server-express": "^2.2.3",
     "array-move": "^1.0.0",
@@ -49,7 +50,6 @@
     "@basalt/bedrock-core": "^0.15.0",
     "@basalt/bedrock-schema-form": "^0.15.0",
     "@basalt/bedrock-schema-table": "^0.15.0",
-    "@basalt/bedrock-schema-utils": "^0.15.0",
     "@basalt/bedrock-smart-grid": "^0.15.0",
     "@basalt/bedrock-spacing-swatch": "^0.15.0",
     "@basalt/bedrock-spinner": "^0.15.0",

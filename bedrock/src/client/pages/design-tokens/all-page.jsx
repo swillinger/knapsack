@@ -3,12 +3,16 @@ import Spinner from '@basalt/bedrock-spinner';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 // import { plugins } from '@basalt/bedrock-core';
-import { StatusMessage } from '@basalt/bedrock-atoms';
+import { Button, StatusMessage } from '@basalt/bedrock-atoms';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 // import { TokenCategory } from '@basalt/bedrock-design-token-demos';
+import { Link } from 'react-router-dom';
+import queryString from 'query-string';
 import PageWithSidebar from '../../layouts/page-with-sidebar';
 import { containsString } from '../../utils/string-helpers';
+import { BASE_PATHS } from '../../../lib/constants';
+import { gqlToString } from '../../data';
 
 const query = gql`
   {
@@ -46,7 +50,25 @@ function AllPage(props) {
         return (
           <PageWithSidebar {...props}>
             <h4 className="eyebrow">Design Tokens</h4>
-            <h2>All Tokens</h2>
+            <header
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+              }}
+            >
+              <h2>All Tokens</h2>
+              <Button>
+                <Link
+                  to={`${
+                    BASE_PATHS.GRAPHIQL_PLAYGROUND
+                  }?${queryString.stringify({
+                    query: gqlToString(query),
+                  })}`}
+                >
+                  See API
+                </Link>
+              </Button>
+            </header>
             <ReactTable
               data={data.tokens}
               columns={[

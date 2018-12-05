@@ -18,6 +18,6 @@ git config --global user.email $GITHUB_EMAIL
 git config --global user.name "Bedrock Bot"
 cp ./scripts/.npmrc-ci ~/.npmrc
 # see `lerna.json` for options
-./node_modules/.bin/lerna publish --yes
+./node_modules/.bin/lerna publish --conventional-commits --yes
 git pull origin master
 git push origin master --follow-tags --no-verify

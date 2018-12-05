@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Spinner from '@basalt/bedrock-spinner';
-import { Details, Select } from '@basalt/bedrock-atoms';
+import { Button, Details, Select } from '@basalt/bedrock-atoms';
 import { BedrockContext } from '@basalt/bedrock-core';
-import { Query } from 'react-apollo';
+import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
+import { Link } from 'react-router-dom';
+import queryString from 'query-string';
 import Template from '../components/template';
+import MdBlock from '../components/md-block';
 import ErrorCatcher from '../utils/error-catcher';
 import Overview from '../layouts/overview';
 import {
@@ -15,6 +18,9 @@ import {
 } from '../loadable-components';
 import DosAndDonts from '../components/dos-and-donts';
 import PageWithSidebar from '../layouts/page-with-sidebar';
+import { BASE_PATHS } from '../../lib/constants';
+import { enableUiSettings } from '../../lib/features';
+import { gqlToString } from '../data';
 
 const OverviewHeader = styled.header`
   position: relative;
@@ -31,6 +37,7 @@ const query = gql`
         isInline
         uiSchema
       }
+      readme
       meta {
         title
         description
@@ -50,6 +57,12 @@ const query = gql`
         }
       }
     }
+  }
+`;
+
+const updateReadme = gql`
+  mutation UpdateReadme($id: ID!, $readme: String!) {
+    setPatternReadme(id: $id, readme: $readme)
   }
 `;
 
@@ -109,6 +122,7 @@ class PatternViewPage extends Component {
               meta: data.pattern.meta,
               templates: data.pattern.templates,
               currentTemplate: data.pattern.templates[0],
+              readme: data.pattern.readme,
             });
             return null;
           }}
@@ -116,7 +130,7 @@ class PatternViewPage extends Component {
       );
     }
 
-    const { templates, meta, currentTemplate } = this.state;
+    const { templates, meta, currentTemplate, readme } = this.state;
     const { title, description, type, demoSize } = meta;
     const { name, schema, uiSchema, isInline } = currentTemplate;
     const [data, ...examples] = schema.examples ? schema.examples : [{}];
@@ -124,27 +138,47 @@ class PatternViewPage extends Component {
     return (
       <ErrorCatcher>
         <PageWithSidebar {...this.props}>
-          <OverviewHeader>
-            <h4 className="eyebrow" style={{ textTransform: 'capitalize' }}>
-              {type}
-            </h4>
-            <h2>{title}</h2>
-            <p>{description}</p>
-            {templates.length > 1 && (
-              <Select
-                label="Template"
-                items={templates.map(t => ({
-                  value: t.name,
-                  title: t.schema.title,
-                }))}
-                handleChange={value => {
-                  this.setState({
-                    currentTemplate: templates.find(t => t.name === value),
-                  });
-                }}
-              />
-            )}
-          </OverviewHeader>
+          <header
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+            }}
+          >
+            <OverviewHeader>
+              <h4 className="eyebrow" style={{ textTransform: 'capitalize' }}>
+                {type}
+              </h4>
+              <h2>{title}</h2>
+              <p>{description}</p>
+              {templates.length > 1 && (
+                <Select
+                  label="Template"
+                  items={templates.map(t => ({
+                    value: t.name,
+                    title: t.schema.title,
+                  }))}
+                  handleChange={value => {
+                    this.setState({
+                      currentTemplate: templates.find(t => t.name === value),
+                    });
+                  }}
+                />
+              )}
+            </OverviewHeader>
+            <Button>
+              <Link
+                to={`${BASE_PATHS.GRAPHIQL_PLAYGROUND}?${queryString.stringify({
+                  query: gqlToString(query),
+                  variables: JSON.stringify({
+                    id: this.props.id,
+                  }),
+                })}`}
+              >
+                See API
+              </Link>
+            </Button>
+          </header>
+
           <Overview
             template={name}
             schema={schema}
@@ -168,6 +202,31 @@ class PatternViewPage extends Component {
                 />
               ))}
             </Details>
+          )}
+
+          {readme && (
+            <Mutation mutation={updateReadme} ignoreResults>
+              {setPatternReadme => {
+                const { id } = this.props;
+                return (
+                  <MdBlock
+                    md={readme}
+                    isEditable={enableUiSettings}
+                    title="Documentation"
+                    handleSave={async newReadme => {
+                      await setPatternReadme({
+                        variables: {
+                          id,
+                          readme: newReadme,
+                        },
+                      });
+                      // @todo Refactor this so a reload is not needed
+                      window.location.reload();
+                    }}
+                  />
+                );
+              }}
+            </Mutation>
           )}
 
           {Object.keys(schema.properties).length > 0 && (

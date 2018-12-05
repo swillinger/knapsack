@@ -1,0 +1,11 @@
+<aside class="card {{ 'card--align-' ~ align|default('left') }}">
+  <div class="card__img">
+    {% if img %}
+      <img src="{{ img }}" alt="" class="card__img"/>
+    {% endif %}
+  </div>
+  <div class="card__contents">
+    <h3 class="card__title">{{ title }}</h3>
+    <p class="card__body">{{ body }}</p>
+  </div>
+</aside>

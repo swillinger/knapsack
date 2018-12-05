@@ -42,9 +42,6 @@ export const SidebarStyled = styled.aside`
     padding-left: 0;
     margin: 0;
   }
-  a {
-    white-space: nowrap;
-  }
   .field-array {
     .field-array.form-group {
       margin-left: 0;

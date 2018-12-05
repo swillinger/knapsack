@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
 import { plugins } from '@basalt/bedrock-core';
 import Spinner from '@basalt/bedrock-spinner';
 import 'react-table/react-table.css';
 import { Query } from 'react-apollo';
+import { Link } from 'react-router-dom';
 import gql from 'graphql-tag';
-import { StatusMessage } from '@basalt/bedrock-atoms';
+import { StatusMessage, Button } from '@basalt/bedrock-atoms';
+import { gqlToString } from '../../data';
+import { BASE_PATHS } from '../../../lib/constants';
 import TokenCategory from '../../components/design-token-category';
 import PageWithSidebar from '../../layouts/page-with-sidebar';
 
@@ -46,7 +50,28 @@ function DesignTokenGroup(props) {
           <PageWithSidebar {...props} className="design-token-group">
             <div>
               <h4 className="eyebrow">Design Tokens</h4>
-              <h2>{tokenGroup.title}</h2>
+              <header
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <h2>{tokenGroup.title}</h2>
+                <Button>
+                  <Link
+                    to={`${
+                      BASE_PATHS.GRAPHIQL_PLAYGROUND
+                    }?${queryString.stringify({
+                      query: gqlToString(query),
+                      variables: JSON.stringify({
+                        id: props.id,
+                      }),
+                    })}`}
+                  >
+                    See API
+                  </Link>
+                </Button>
+              </header>
               <div>
                 {tokenGroup.tokenCategories.map(category => {
                   let Demo = () => <p>no demo...</p>;

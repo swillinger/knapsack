@@ -9,6 +9,9 @@ export const SiteNav = styled.header`
   align-items: center;
   padding: 1.5rem 2rem;
   font-family: ${props => props.theme.header.fontFamily};
+  h3 {
+    z-index: 9999;
+  }
   ul {
     list-style: none;
     display: flex;

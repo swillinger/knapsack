@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
-
+import styled from 'styled-components';
 import { Details, Select } from '@basalt/bedrock-atoms';
 import { TOKEN_FORMATS } from '../../lib/constants';
 import { gqlQuery } from '../data';
+
+const CategoryWrapper = styled.aside`
+  margin-top: 4rem;
+`;
 
 const query = gql`
   query DesignTokenCategoryFormat($format: TokenFormats!, $category: String) {
@@ -55,8 +59,8 @@ export default class TokenCategory extends React.Component {
   render() {
     const { tokenCategory, children } = this.props;
     return (
-      <aside id={tokenCategory.id} style={{ borderBottom: 'solid 1px #ccc' }}>
-        <h3>{tokenCategory.name}</h3>
+      <CategoryWrapper id={tokenCategory.id}>
+        <h2>{tokenCategory.name}</h2>
         <div>{children}</div>
         <Details>
           <div style={{ padding: '10px 0 5px' }}>
@@ -72,7 +76,7 @@ export default class TokenCategory extends React.Component {
             </code>
           </pre>
         </Details>
-      </aside>
+      </CategoryWrapper>
     );
   }
 }

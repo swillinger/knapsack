@@ -8,7 +8,6 @@ const config = {
   dist: './dist',
   public: './public',
   data: './data',
-  assets: './assets',
   css: ['./public/assets/simple.css'],
   // js: ['./public/assets/script.js'],
   templates: [

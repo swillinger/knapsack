@@ -10,7 +10,7 @@ const chokidar = require('chokidar');
 // const { FileDb } = require('./db');
 const patternSchema = require('../schemas/pattern.schema');
 const patternMetaSchema = require('../schemas/pattern-meta.schema');
-const { writeJson } = require('./server-utils');
+const { writeJson, findReadmeInDirSync } = require('./server-utils');
 const { FILE_NAMES } = require('../lib/constants');
 
 const patternsTypeDef = gql`
@@ -80,6 +80,7 @@ const patternsTypeDef = gql`
     metaFilePath: String
     templates: [PatternTemplate]!
     meta: PatternMeta
+    readme: String
   }
 
   type Query {
@@ -89,6 +90,7 @@ const patternsTypeDef = gql`
 
   type Mutation {
     setPatternMeta(id: ID, meta: JSON): JSON
+    setPatternReadme(id: ID, readme: String): String
   }
 `;
 
@@ -207,8 +209,9 @@ function createPatternsData(patternsDirs) {
       .filter(cachedPath => cachedPath.startsWith(dir))
       .forEach(cachedPath => delete require.cache[cachedPath]);
     try {
+      const patternPath = join(dir, FILE_NAMES.PATTERN);
       /** @type {PatternWithMetaSchema} */
-      const pattern = require(join(dir, FILE_NAMES.PATTERN)); // eslint-disable-line
+      const pattern = require(patternPath); // eslint-disable-line
       if (pattern) {
         const results = validateSchemaAndAssignDefaults(patternSchema, pattern);
         if (!results.ok) {
@@ -251,11 +254,20 @@ function createPatternsData(patternsDirs) {
           console.log();
           process.exit(1);
         }
+
+        const readmeFilePath = findReadmeInDirSync(dir);
+        let readme = '';
+        if (readmeFilePath) {
+          readme = fs.readFileSync(readmeFilePath, 'utf8');
+        }
+
         /** @type {PatternWithMetaSchema} */
         const patternWithMeta = {
           ...results.data,
+          dir,
           metaFilePath, // replaces original relative one with absolute path
           meta: metaResults.data,
+          readme,
         };
 
         patterns.push(patternWithMeta);
@@ -357,6 +369,25 @@ class Patterns {
     }
   }
 
+  /**
+   * @param {string} id
+   * @param {string} readme
+   * @returns {Promise<void>}
+   */
+  async setPatternReadme(id, readme) {
+    const pattern = this.getPattern(id);
+    await fs.writeFile(findReadmeInDirSync(pattern.dir), readme);
+  }
+
+  /**
+   * @param {string} id
+   * @returns {Promise<string>}
+   */
+  async getPatternReadme(id) {
+    const pattern = this.getPattern(id);
+    return fs.readFile(findReadmeInDirSync(pattern.dir), 'utf8');
+  }
+
   async createPatternFiles(config) {
     const dir = join(this.newPatternDir, config.id);
     const exists = await fs.pathExists(dir);
@@ -404,6 +435,10 @@ const patternsResolvers = {
     setPatternMeta: async (parent, { id, meta }, { patterns }) => {
       await patterns.setPatternMeta(id, meta);
       return patterns.getPatternMeta(id);
+    },
+    setPatternReadme: async (parent, { id, readme }, { patterns }) => {
+      await patterns.setPatternReadme(id, readme);
+      return patterns.getPatternReadme(id);
     },
   },
   JSON: GraphQLJSON,

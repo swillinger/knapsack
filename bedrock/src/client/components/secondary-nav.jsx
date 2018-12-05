@@ -134,6 +134,12 @@ class SecondaryNav extends Component {
               title: page.title,
               path: `${BASE_PATHS.PAGES}/${page.id}`,
             })),
+            {
+              title: 'API',
+              id: 'graphiql',
+              isHeading: true,
+              path: BASE_PATHS.GRAPHIQL_PLAYGROUND,
+            },
             // ...SecondaryNav.prepSectionLinks(this.props.context.sections),
             // @todo bring back custom sections through gql
           ].filter(Boolean);

@@ -41,9 +41,15 @@ export const LoadablePatternNew = Loadable({
   loading: Spinner,
 });
 
+export const LoadableGraphiqlPage = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "graphiql-page" */ './pages/graphiql-page'),
+  loading: Spinner,
+});
+
 export const LoadablePageBuilder = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "playground-page" */ './pages/page-builder'),
+    import(/* webpackChunkName: "page-builder" */ './pages/page-builder'),
   loading: Spinner,
 });
 

@@ -63,6 +63,7 @@ export const colors = {
     ghost: 'hsl(30, 100%, 50%)',
   },
   gray: {
+    xdark: 'hsl(0, 0%, 35%)',
     dark: 'hsl(0, 0%, 50%)',
     base: 'hsl(240, 3%, 85%)',
     light: 'hsl(0, 0%, 60%)',

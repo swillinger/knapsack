@@ -35,9 +35,7 @@ ${jsUrls.map(jsUrl => `<script src="${jsUrl}"></script>`)}
     justify-content: center;
     align-items: center;
   }
-  .u-full-width.u-full-width {
-    position: unset;
-  }
+ 
 </style>
  <script>
   /**

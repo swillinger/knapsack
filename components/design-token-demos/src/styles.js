@@ -58,6 +58,9 @@ export const TypographyChildrenDemoWrapper = styled.div`
     border-right: 1px dashed transparent;
     border-bottom: 1px dashed transparent;
     transition: ${props => props.theme.transitions.all};
+    &:focus {
+      outline: none;
+    }
   }
   blockquote[contenteditable]:hover {
     border-top: 1px dashed ${props => props.theme.globals.colors.neutralLight};

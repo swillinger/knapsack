@@ -63,7 +63,7 @@ function createWebPackConfig(userConfig) {
         {
           // https://github.com/graphql/graphiql/issues/617
           test: /\.flow$/,
-          loader: 'ignore-loader',
+          loader: require.resolve('ignore-loader'),
         },
         {
           test: /\.(js|jsx|mjs)$/,
@@ -105,7 +105,7 @@ function createWebPackConfig(userConfig) {
           test: /\.(woff(2)?|ttf|eot)?$/,
           use: [
             {
-              loader: 'file-loader',
+              loader: require.resolve('file-loader'),
               options: {
                 name: '[name].[ext]',
                 outputPath: 'fonts/',

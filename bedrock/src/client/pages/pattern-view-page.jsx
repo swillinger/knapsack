@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Spinner from '@basalt/bedrock-spinner';
-import { Details, Select } from '@basalt/bedrock-atoms';
+import { Button, Details, Select } from '@basalt/bedrock-atoms';
 import { BedrockContext } from '@basalt/bedrock-core';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
+import { Link } from 'react-router-dom';
+import queryString from 'query-string';
 import Template from '../components/template';
 import ErrorCatcher from '../utils/error-catcher';
 import Overview from '../layouts/overview';
@@ -15,6 +17,8 @@ import {
 } from '../loadable-components';
 import DosAndDonts from '../components/dos-and-donts';
 import PageWithSidebar from '../layouts/page-with-sidebar';
+import { BASE_PATHS } from '../../lib/constants';
+import { gqlToString } from '../data';
 
 const OverviewHeader = styled.header`
   position: relative;
@@ -124,27 +128,47 @@ class PatternViewPage extends Component {
     return (
       <ErrorCatcher>
         <PageWithSidebar {...this.props}>
-          <OverviewHeader>
-            <h4 className="eyebrow" style={{ textTransform: 'capitalize' }}>
-              {type}
-            </h4>
-            <h2>{title}</h2>
-            <p>{description}</p>
-            {templates.length > 1 && (
-              <Select
-                label="Template"
-                items={templates.map(t => ({
-                  value: t.name,
-                  title: t.schema.title,
-                }))}
-                handleChange={value => {
-                  this.setState({
-                    currentTemplate: templates.find(t => t.name === value),
-                  });
-                }}
-              />
-            )}
-          </OverviewHeader>
+          <header
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+            }}
+          >
+            <OverviewHeader>
+              <h4 className="eyebrow" style={{ textTransform: 'capitalize' }}>
+                {type}
+              </h4>
+              <h2>{title}</h2>
+              <p>{description}</p>
+              {templates.length > 1 && (
+                <Select
+                  label="Template"
+                  items={templates.map(t => ({
+                    value: t.name,
+                    title: t.schema.title,
+                  }))}
+                  handleChange={value => {
+                    this.setState({
+                      currentTemplate: templates.find(t => t.name === value),
+                    });
+                  }}
+                />
+              )}
+            </OverviewHeader>
+            <Button>
+              <Link
+                to={`${BASE_PATHS.GRAPHIQL_PLAYGROUND}?${queryString.stringify({
+                  query: gqlToString(query),
+                  variables: JSON.stringify({
+                    id: this.props.id,
+                  }),
+                })}`}
+              >
+                See API
+              </Link>
+            </Button>
+          </header>
+
           <Overview
             template={name}
             schema={schema}

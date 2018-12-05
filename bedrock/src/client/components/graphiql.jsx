@@ -15,7 +15,7 @@ function GraphiQLBlock(props) {
   return (
     <GraphiQL
       fetcher={({ query, variables }) => gqlQuery({ query, variables })}
-      defaultQuery={props.initialQuery}
+      query={props.initialQuery}
       variables={props.initialVariables}
       response={props.initialResponse}
     />

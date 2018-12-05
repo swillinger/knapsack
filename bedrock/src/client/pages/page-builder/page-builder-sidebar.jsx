@@ -6,13 +6,13 @@ import {
   TypeToFilter,
   TypeToFilterInputWrapper,
 } from '@basalt/bedrock-atoms';
-import { Link } from 'react-router-dom';
 import { FaTimes } from 'react-icons/fa';
 import PageBuilderEditForm from './page-builder-edit-form';
 import PlaygroundSidebarPatternListItem from './page-builder-pattern-list-item';
 import {
   PatternListWrapper,
   PlaygroundStyledSchemaForm,
+  PlaygroundStyledLink,
 } from './page-builder.styles';
 import { BASE_PATHS } from '../../../lib/constants';
 
@@ -130,7 +130,7 @@ function PageBuilderSidebar(props) {
           },
         }}
       />
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div style={{ display: 'flex' }}>
         <Button
           type="submit"
           onKeyPress={() => props.handleSave()}
@@ -139,7 +139,12 @@ function PageBuilderSidebar(props) {
         >
           Save
         </Button>
-        <Link to={BASE_PATHS.PAGES}>Back</Link>
+        <PlaygroundStyledLink
+          to={BASE_PATHS.PAGES}
+          style={{ marginLeft: '15px' }}
+        >
+          Back
+        </PlaygroundStyledLink>
       </div>
     </div>
   );

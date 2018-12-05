@@ -1,19 +1,15 @@
 {
   "name": "@basalt/bedrock-api-demo",
-  "version": "0.15.1-alpha.1",
+  "version": "0.15.1-alpha.2",
   "description": "A Bedrock component that helps build Design Systems",
-  "module": "dist/api-demo.js",
-  "main": "dist/api-demo.js",
-  "scripts": {
-    "build": "babel --config-file @basalt/bedrock-babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
-    "prepare": "yarn build",
-    "watch": "yarn build --watch"
-  },
+  "main": "src/api-demo.jsx",
+  "module": "src/api-demo.jsx",
+  "scripts": {},
   "dependencies": {
-    "@basalt/bedrock-atoms": "^0.15.0",
-    "@basalt/bedrock-core": "^0.15.0",
-    "@basalt/bedrock-schema-form": "^0.15.0",
-    "@basalt/bedrock-schema-table": "^0.15.0",
+    "@basalt/bedrock-atoms": "^0.15.1-alpha.2",
+    "@basalt/bedrock-core": "^0.15.1-alpha.2",
+    "@basalt/bedrock-schema-form": "^0.15.1-alpha.2",
+    "@basalt/bedrock-schema-table": "^0.15.1-alpha.2",
     "query-string": "^6.1.0"
   },
   "devDependencies": {
@@ -26,9 +22,6 @@
     "styled-components": "^4.0.2"
   },
   "author": "Basalt (https://basalt.io/)",
-  "files": [
-    "./dist"
-  ],
   "publishConfig": {
     "access": "restricted"
   }

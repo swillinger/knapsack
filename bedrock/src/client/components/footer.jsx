@@ -52,7 +52,7 @@ const Footer = props => (
             </FooterMenu>
             <p>
               Copyright {currentYear}{' '}
-              {parentBrand && (
+              {parentBrand.title && parentBrand.homepage && (
                 <a
                   href={parentBrand.homepage}
                   target="_blank"
@@ -60,6 +60,18 @@ const Footer = props => (
                 >
                   - {parentBrand.title}
                 </a>
+              )}
+              {!parentBrand.title && parentBrand.homepage && (
+                <a
+                  href={parentBrand.homepage}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  - {parentBrand.homepage}
+                </a>
+              )}
+              {parentBrand.title && !parentBrand.homepage && (
+                <>- {parentBrand.title}</>
               )}
             </p>
             <p>

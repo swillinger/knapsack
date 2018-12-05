@@ -31,12 +31,7 @@ export const CustomFieldWrapper = styled.div`
     }
   }
   padding: 0;
-  margin: ${props => props.theme.globals.spacing.m}
-    ${props => props.theme.globals.spacing.m}
-    ${props => props.theme.globals.spacing.m} 0;
-  .form-group {
-    margin: 0.25rem 0.25rem 0.5rem 0;
-  }
+  margin: ${props => props.theme.globals.spacing.m} 0;
   > label {
     display: block;
     color: ${props => props.theme.labels.color};

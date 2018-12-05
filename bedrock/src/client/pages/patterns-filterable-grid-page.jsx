@@ -4,8 +4,13 @@ import SchemaForm from '@basalt/bedrock-schema-form';
 import { connectToContext } from '@basalt/bedrock-core';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
+import { Link } from 'react-router-dom';
+import queryString from 'query-string';
+import { Button } from '@basalt/bedrock-atoms';
 import PatternGrid from '../components/pattern-grid';
 import PageWithSidebar from '../layouts/page-with-sidebar';
+import { BASE_PATHS } from '../../lib/constants';
+import { gqlToString } from '../data';
 
 const filterSchema = {
   $schema: 'http://json-schema.org/draft-07/schema',
@@ -154,7 +159,23 @@ class PatternsPage extends Component {
 
     return (
       <PageWithSidebar {...this.props} className="patterns-filters">
-        <h2>Patterns</h2>
+        <header
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
+          <h2>Patterns</h2>
+          <Button>
+            <Link
+              to={`${BASE_PATHS.GRAPHIQL_PLAYGROUND}?${queryString.stringify({
+                query: gqlToString(query),
+              })}`}
+            >
+              See API
+            </Link>
+          </Button>
+        </header>
         <SchemaForm
           schema={filterSchema}
           formData={this.state.formData}

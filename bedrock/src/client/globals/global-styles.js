@@ -38,7 +38,7 @@ const GlobalStyles = createGlobalStyle`
       outline: none;
     }
     :focus {
-      outline-color: #CFE3DE;
+      outline-color: #e4f0f5;
     }
     hr {
       border-style: solid;

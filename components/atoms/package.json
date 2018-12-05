@@ -20,7 +20,7 @@
   },
   "author": "Basalt (https://basalt.io/)",
   "dependencies": {
-    "@basalt/bedrock-core": "^0.15.1-alpha.1"
+    "@basalt/bedrock-core": "^0.15.0"
   },
   "files": [
     "./dist"

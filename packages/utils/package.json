@@ -13,11 +13,11 @@
     "prepare": "npm run build"
   },
   "dependencies": {
-    "@basalt/bedrock-core": "^0.15.1-alpha.1",
+    "@basalt/bedrock-core": "^0.15.0",
     "color": "^3.0.0"
   },
   "devDependencies": {
-    "@basalt/bedrock-babel-config": "^0.15.1-alpha.1"
+    "@basalt/bedrock-babel-config": "^0.15.0"
   },
   "author": "Basalt (https://basalt.io/)",
   "publishConfig": {

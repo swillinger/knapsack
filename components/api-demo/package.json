@@ -10,10 +10,10 @@
     "watch": "yarn build --watch"
   },
   "dependencies": {
-    "@basalt/bedrock-atoms": "^0.15.1-alpha.1",
-    "@basalt/bedrock-core": "^0.15.1-alpha.1",
-    "@basalt/bedrock-schema-form": "^0.15.1-alpha.1",
-    "@basalt/bedrock-schema-table": "^0.15.1-alpha.1",
+    "@basalt/bedrock-atoms": "^0.15.0",
+    "@basalt/bedrock-core": "^0.15.0",
+    "@basalt/bedrock-schema-form": "^0.15.0",
+    "@basalt/bedrock-schema-table": "^0.15.0",
     "query-string": "^6.1.0"
   },
   "devDependencies": {

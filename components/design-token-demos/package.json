@@ -21,11 +21,11 @@
   "author": "Basalt (https://basalt.io/)",
   "license": "UNLICENSED",
   "dependencies": {
-    "@basalt/bedrock-atoms": "^0.15.1-alpha.1",
-    "@basalt/bedrock-breakpoints-demo": "^0.15.1-alpha.1",
-    "@basalt/bedrock-color-swatch": "^0.15.1-alpha.1",
-    "@basalt/bedrock-core": "^0.15.1-alpha.1",
-    "@basalt/bedrock-spacing-swatch": "^0.15.1-alpha.1"
+    "@basalt/bedrock-atoms": "^0.15.0",
+    "@basalt/bedrock-breakpoints-demo": "^0.15.0",
+    "@basalt/bedrock-color-swatch": "^0.15.0",
+    "@basalt/bedrock-core": "^0.15.0",
+    "@basalt/bedrock-spacing-swatch": "^0.15.0"
   },
   "files": [
     "./dist",

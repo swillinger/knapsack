@@ -3,7 +3,7 @@
 // } = require('@basalt/bedrock-schema-utils');
 const webpack = require('webpack');
 // const Stylish = require('webpack-stylish');
-const Visualizer = require('webpack-visualizer-plugin');
+// const Visualizer = require('webpack-visualizer-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlTemplate = require('html-webpack-template');
@@ -124,7 +124,7 @@ function createWebPackConfig(userConfig) {
           DEV_MODE: JSON.stringify(process.env.DEV_MODE),
         },
       }),
-      new Visualizer(), // view at output-dir/stats.html
+      // new Visualizer(), // view at output-dir/stats.html
       new DashboardPlugin(),
       new FaviconsWebpackPlugin(
         resolve(__dirname, '../client/assets/favicon.png'),

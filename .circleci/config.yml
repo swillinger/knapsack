@@ -43,7 +43,7 @@ jobs:
       - run:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              ./scripts/create-bedrock-deploy/deploy.sh
+              ./scripts/release.sh
             fi
 
             if [ "${CIRCLE_BRANCH}" == "develop" ]; then

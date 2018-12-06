@@ -1,6 +1,6 @@
 {
   "name": "@basalt/bedrock-tabbed-panel",
-  "version": "0.16.1-alpha.2",
+  "version": "0.16.1-alpha.3",
   "description": "A Bedrock component that helps build Design Systems",
   "module": "dist/tabbed-panel.js",
   "main": "dist/tabbed-panel.js",
@@ -20,7 +20,7 @@
   },
   "author": "Basalt (https://basalt.io/)",
   "dependencies": {
-    "@basalt/bedrock-core": "^0.16.1-alpha.2"
+    "@basalt/bedrock-core": "^0.16.1-alpha.3"
   },
   "files": [
     "./dist"

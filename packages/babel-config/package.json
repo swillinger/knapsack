@@ -1,6 +1,6 @@
 {
   "name": "@basalt/bedrock-babel-config",
-  "version": "0.16.1-alpha.2",
+  "version": "0.16.1-alpha.3",
   "description": "Babel config and deps.",
   "main": "index.js",
   "scripts": {},

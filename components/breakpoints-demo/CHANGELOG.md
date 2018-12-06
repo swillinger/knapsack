@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.16.3](https://github.com/basaltinc/bedrock/compare/v0.16.2-alpha.3...v0.16.3) (2018-12-06)
+
+
+
+## [0.16.2](https://github.com/basaltinc/bedrock/compare/v0.16.1...v0.16.2) (2018-12-06)
+
+**Note:** Version bump only for package @basalt/bedrock-breakpoints-demo
+
+
+
+
+
 ## [0.16.2](https://github.com/basaltinc/bedrock/compare/v0.16.1...v0.16.2) (2018-12-06)
 
 **Note:** Version bump only for package @basalt/bedrock-breakpoints-demo

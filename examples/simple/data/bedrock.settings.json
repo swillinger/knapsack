@@ -3,9 +3,9 @@
   "subtitle": "A Simple Example of a Design System",
   "slogan": "Don't repeat yourself",
   "parentBrand": {
-    "logo": "http://design.basalt.io/images/logos/white-color.svg",
-    "title": "Basalt",
-    "homepage": "https://basalt.io"
+    "logo": "",
+    "title": "",
+    "homepage": ""
   },
   "designTokens": {
     "groups": [

@@ -54,20 +54,29 @@ export const FooterBuiltOn = styled.div`
   position: relative;
   @media (max-width: 649px) {
     margin: 12px auto 0;
-  }
-  img {
-    height: 40px;
-    width: auto;
-    display: block;
+    right: -25px;
   }
 `;
 
+export const FooterBuiltOnImg = styled.img`
+  height: 40px;
+  width: auto;
+  display: block;
+`;
+
 export const FooterBuiltOnInner = styled.div`
-  font-size: 11px;
+  font-size: 10px;
   line-height: 1.25;
   position: absolute;
-  bottom: -20px;
+  bottom: -3px;
   left: 42px;
+`;
+
+export const FooterCreatedByImg = styled.img`
+  width: 129px;
+  position: absolute;
+  left: -34px;
+  bottom: -24px;
 `;
 
 export const SubFooterWrapper = styled.div`
@@ -78,7 +87,7 @@ export const SubFooterWrapper = styled.div`
     display: block;
     text-align: center;
     max-width: 225px;
-    margin: 36px auto 0;
+    margin: 42px auto 0;
   }
   p {
     font-size: 0.65rem;

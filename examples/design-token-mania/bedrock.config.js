@@ -7,8 +7,8 @@ const config = {
   dist: './dist',
   public: './public',
   data: './data',
-  css: ['./public/assets/simple.css'],
-  // js: ['./public/assets/script.js'],
+  css: ['/assets/simple.css'],
+  // js: ['/assets/script.js'],
   templates: [{
     test: theTemplatePath => theTemplatePath.endsWith('.twig'),
     render: (template, data = {}) => twigRenderer.render(template, data),

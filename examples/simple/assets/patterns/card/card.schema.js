@@ -1,4 +1,3 @@
-const { image } = require('@basalt/demo-data');
 const buttonSchema = require('../button/button.schema');
 
 module.exports = {
@@ -37,7 +36,7 @@ module.exports = {
       title: "I'm a Card Title",
       body:
         "I'm a body - Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      img: image(),
+      img: '/images/imagePlaceholder1.png',
     },
   ],
 };

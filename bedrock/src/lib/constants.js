@@ -18,7 +18,6 @@ const FILE_NAMES = {
 };
 
 module.exports = {
-  USER_SITE_PUBLIC: '/user-site-public',
   BASE_PATHS,
   FILE_NAMES,
 };

@@ -1,6 +1,6 @@
 {
   "name": "create-bedrock",
-  "version": "0.16.1-alpha.4",
+  "version": "0.16.1-alpha.6",
   "preferGlobal": true,
   "description": "A Bedrock component that helps build Design Systems",
   "bin": "bin/index.js",

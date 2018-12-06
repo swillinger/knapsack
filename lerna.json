@@ -1,7 +1,7 @@
 {
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "version": "0.16.2-alpha.0",
+  "version": "0.16.2-alpha.1",
   "loglevel": "error",
   "command": {
     "version": {

@@ -142,3 +142,8 @@ export const LoadableAllTokens = Loadable({
     import(/* webpackChunkName: "all-tokens" */ './pages/design-tokens/all-page'),
   loading: Spinner,
 });
+
+export const LoadableBadRoute = Loadable({
+  loader: () => import(/* webpackChunkName: "bad-route" */ './pages/bad-route'),
+  loading: Spinner,
+});

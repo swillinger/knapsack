@@ -33,6 +33,7 @@ import {
   LoadablePatternNew,
   LoadableHome,
   LoadableAllTokens,
+  LoadableBadRoute,
 } from './loadable-components';
 import { BASE_PATHS } from '../lib/constants';
 
@@ -194,16 +195,23 @@ class App extends React.Component {
                             path={BASE_PATHS.DESIGN_TOKENS}
                             exact
                             render={() => {
-                              // @todo when url goes to `/design-tokens/` it does not show "Design Tokens > Colors" as active item in sidebar (currently the first token group is colors)
                               const [firstTokenGroup] = data.tokenGroups;
                               if (firstTokenGroup) {
                                 return (
-                                  <LoadableDesignTokenGroup
-                                    id={firstTokenGroup.id}
+                                  <Redirect
+                                    to={`${BASE_PATHS.DESIGN_TOKENS}/${
+                                      firstTokenGroup.id
+                                    }`}
                                   />
                                 );
                               }
-                              return <p>No design token page found...</p>;
+                              return (
+                                <LoadableBadRoute
+                                  title="No Design Tokens Found"
+                                  subtitle="Not so fast"
+                                  message="We're having trouble finding your design tokens. Make sure you've properly configured `bedrock.config.js` to point to your entry design token yaml file, and that you've properly defined your design tokens. See the documentation at getbedrock.com for more details."
+                                />
+                              );
                             }}
                           />
                           <Route
@@ -275,6 +283,7 @@ class App extends React.Component {
                               </React.Suspense>
                             )}
                           />
+                          <Route path="*" render={() => <LoadableBadRoute />} />
                           <Redirect to="/" />
                         </Switch>
                       </Router>

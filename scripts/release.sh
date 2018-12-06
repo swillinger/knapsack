@@ -19,5 +19,8 @@ git config --global user.name "Bedrock Bot"
 cp ./scripts/.npmrc-ci ~/.npmrc
 # see `lerna.json` for options
 ./node_modules/.bin/lerna publish --conventional-commits --yes
+echo "changelog test output:"
+git show `git describe`:CHANGELOG.md | diff -u - CHANGELOG.md | grep '^\+' | grep -v '^\++' | sed -E 's/^\+//'
+echo "END: changelog"
 git pull origin master
 git push origin master --follow-tags --no-verify

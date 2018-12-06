@@ -7,10 +7,12 @@ import {
   Hamburger,
   MobileNav,
   SiteHeaderNavLink,
+  SiteHeaderLogo,
   SiteNav,
   X,
 } from './header.styles';
 import { BASE_PATHS } from '../../lib/constants';
+import bedrockLogo from '../assets/logo--orange.svg';
 
 const headerQuery = gql`
   {
@@ -155,6 +157,7 @@ class Header extends React.Component {
           return (
             <SiteNav>
               <h3 style={{ margin: 0 }}>
+                <SiteHeaderLogo src={bedrockLogo} alt="Bedrock" />
                 <SiteHeaderLink to="/">{data.settings.title}</SiteHeaderLink>
               </h3>
               {this.renderNavigation(data)}

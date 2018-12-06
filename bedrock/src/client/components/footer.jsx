@@ -9,11 +9,11 @@ import {
   FooterMenu,
   FooterMenuItem,
   FooterInner,
+  FooterBuiltOn,
+  FooterBuiltOnInner,
   SubFooterWrapper,
 } from './footer.styles';
-
-const today = new Date();
-const currentYear = today.getFullYear();
+import bedrockBranding from '../assets/built-on.svg';
 
 const query = gql`
   {
@@ -34,7 +34,6 @@ const Footer = props => (
     {({ loading, error, data }) => {
       if (loading) return <Spinner />;
       if (error) return <p>Error :(</p>;
-      const { parentBrand } = data.settings;
       return (
         <FooterWrapper>
           <FooterInner>
@@ -50,48 +49,27 @@ const Footer = props => (
                 </React.Fragment>
               )}
             </FooterMenu>
-            <p>
-              Copyright {currentYear}{' '}
-              {parentBrand.title && parentBrand.homepage && (
+            <FooterBuiltOn>
+              <FooterBuiltOnInner>
+                {data.meta.bedrockVersion}
+                <br />
+                by{' '}
                 <a
-                  href={parentBrand.homepage}
+                  href="https://basalt.io"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  - {parentBrand.title}
+                  Basalt
                 </a>
-              )}
-              {!parentBrand.title && parentBrand.homepage && (
-                <a
-                  href={parentBrand.homepage}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  - {parentBrand.homepage}
-                </a>
-              )}
-              {parentBrand.title && !parentBrand.homepage && (
-                <>- {parentBrand.title}</>
-              )}
-            </p>
-            <p>
-              Built on{' '}
+              </FooterBuiltOnInner>
               <a
-                href="https://www.getbedrock.com"
+                href="https://www.getbedrock.com/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Bedrock
-              </a>{' '}
-              {data.meta.bedrockVersion} by{' '}
-              <a
-                href="https://basalt.io"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Basalt
+                <img src={bedrockBranding} alt="Bedrock" />
               </a>
-            </p>
+            </FooterBuiltOn>
           </FooterInner>
           <SubFooterWrapper>
             <p>

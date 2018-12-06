@@ -109,7 +109,7 @@ class Playground extends Component {
    * @return {Promise<Object>} - Returns the structued object defined by the mutation.
    */
   async save(setPageBuilderPage) {
-    return setPageBuilderPage({
+    const results = await setPageBuilderPage({
       variables: {
         id: this.props.id,
         data: Object.assign({}, this.state.example, {
@@ -117,6 +117,17 @@ class Playground extends Component {
         }),
       },
     });
+    if (results.data) {
+      this.setState({
+        statusMessage: 'Page Builder example saved',
+      });
+      setTimeout(() => {
+        this.setState({
+          statusMessage: '',
+        });
+      }, 3000);
+    }
+    return results;
   }
 
   handleHideEditForm() {

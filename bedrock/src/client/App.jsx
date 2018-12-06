@@ -33,6 +33,7 @@ import {
   LoadablePatternNew,
   LoadableHome,
   LoadableAllTokens,
+  LoadableDocPage,
   LoadableBadRoute,
 } from './loadable-components';
 import { BASE_PATHS } from '../lib/constants';
@@ -240,6 +241,15 @@ class App extends React.Component {
                             path={`${BASE_PATHS.DESIGN_TOKENS}/:id`}
                             render={({ match }) => (
                               <LoadableDesignTokenGroup
+                                id={match.params.id}
+                                key={match.params.id}
+                              />
+                            )}
+                          />
+                          <Route
+                            path={`${BASE_PATHS.DOCS}/:id`}
+                            render={({ match }) => (
+                              <LoadableDocPage
                                 id={match.params.id}
                                 key={match.params.id}
                               />

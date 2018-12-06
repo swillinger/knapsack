@@ -24,8 +24,8 @@ export default class MdBlock extends React.Component {
   }
 
   handleEditingToggle() {
-    const { handleSave, md: markdown } = this.props;
-    const { editing } = this.state;
+    const { handleSave } = this.props;
+    const { editing, md: markdown } = this.state;
     /* Toggling "editing" state to false implies a save */
     if (editing && handleSave) {
       handleSave(markdown);

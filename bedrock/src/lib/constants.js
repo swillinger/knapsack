@@ -8,6 +8,7 @@ const BASE_PATHS = {
   PAGES: '/pages',
   CUSTOM_PAGES: '/custom-pages',
   GRAPHIQL_PLAYGROUND: '/graphql-playground',
+  DOCS: '/docs',
 };
 
 const FILE_NAMES = {

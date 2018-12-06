@@ -31,6 +31,7 @@ function processConfig(userConfig, from) {
     dist,
     designTokens,
     css,
+    docsDir,
     ...rest
   } = userConfig;
   return {
@@ -39,6 +40,7 @@ function processConfig(userConfig, from) {
     public: resolve(from, publicDir),
     css: css.map(x => resolve(from, x)),
     dist: resolve(from, dist),
+    docsDir: docsDir ? resolve(from, docsDir) : null,
     ...rest,
   };
 }

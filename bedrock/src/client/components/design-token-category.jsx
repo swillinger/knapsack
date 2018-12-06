@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import styled from 'styled-components';
 import { Details, Select } from '@basalt/bedrock-atoms';
-import { TOKEN_FORMATS } from '../../lib/constants';
+import { TOKEN_FORMATS } from '@basalt/bedrock-design-token-demos/constants';
+
 import { gqlQuery } from '../data';
 
 const CategoryWrapper = styled.aside`

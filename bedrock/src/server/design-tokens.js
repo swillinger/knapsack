@@ -2,15 +2,12 @@ const theo = require('theo');
 const yaml = require('js-yaml');
 const { gql } = require('apollo-server-express');
 const {
-  TOKEN_CATS,
-  BASE_PATHS,
-  TOKEN_FORMATS,
   tokenCategoriesWithDemo,
-} = require('../lib/constants');
-const { hasItemsInItems } = require('../lib/utils');
+  TOKEN_FORMATS,
+} = require('@basalt/bedrock-design-token-demos/constants');
+const { BASE_PATHS } = require('../lib/constants');
 
-// @todo make a GraphQL `enum` out of this
-const availableTokenCategories = Object.values(TOKEN_CATS); // eslint-disable-line
+const { hasItemsInItems } = require('../lib/utils');
 
 const designTokensTypeDef = gql`
   "A single value that can be assigned to a single CSS declaration"

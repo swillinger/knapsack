@@ -1,10 +1,14 @@
 {
   "name": "@basalt/bedrock-breakpoints-demo",
-  "version": "0.16.0",
+  "version": "0.16.1-alpha.3",
   "description": "A Bedrock component that helps build Design Systems",
-  "main": "src/breakpoints-demo.jsx",
-  "module": "src/breakpoints-demo.jsx",
-  "scripts": {},
+  "module": "dist/breakpoints-demo.js",
+  "main": "dist/breakpoints-demo.js",
+  "scripts": {
+    "build": "babel --config-file @basalt/bedrock-babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
+    "prepublishOnly": "yarn build",
+    "watch": "yarn build --watch"
+  },
   "devDependencies": {
     "prop-types": "^15.0.0",
     "react": "^16.6.0"
@@ -16,8 +20,11 @@
   },
   "author": "Basalt (https://basalt.io/)",
   "dependencies": {
-    "@basalt/bedrock-core": "^0.16.0"
+    "@basalt/bedrock-core": "^0.16.1-alpha.3"
   },
+  "files": [
+    "./dist"
+  ],
   "publishConfig": {
     "access": "restricted"
   }

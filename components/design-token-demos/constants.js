@@ -21,6 +21,7 @@ const TOKEN_CATS = {
 
 /**
  * @todo ensure we have a demo for each of these
+ * @todo make a GraphQL `enum` out of this
  * @type {string[]}
  * */
 const tokenCategoriesWithDemo = Object.values(TOKEN_CATS);

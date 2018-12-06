@@ -128,9 +128,9 @@ git clean -df
 cd $temp_app_path
 npx create-bedrock test-app
 cd test-app
-yarn
+npm install
 echo 'Install successfull. Building...'
-yarn build
+npm run build
 echo 'Build successfull!'
 # echo 'Deploying...'
 # npm i -g now@latest --unsafe-perm

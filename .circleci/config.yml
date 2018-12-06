@@ -34,7 +34,7 @@ jobs:
             - /usr/local/share/.cache/yarn/v2
           key: v1-dependencies-{{ checksum "yarn.lock" }}
 
-      - run: yarn build
+      - run: yarn build:all
 
       - run: yarn test
 
@@ -43,16 +43,19 @@ jobs:
       - run:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              #git config --global push.default upstream
-              ./scripts/release.sh
               ./scripts/create-bedrock-deploy/deploy.sh
-              #git checkout develop
-              #git pull
-              #git merge master
-              #git push
             fi
 
             if [ "${CIRCLE_BRANCH}" == "develop" ]; then
               ./scripts/prerelease.sh
+            fi
+
+      - run:
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              ./scripts/create-bedrock-deploy/deploy.sh
+            fi
+
+            if [ "${CIRCLE_BRANCH}" == "develop" ]; then
               ./scripts/create-bedrock-deploy-dev/deploy.sh
             fi

@@ -14,6 +14,7 @@ const {
   pageBuilderPagesResolvers,
 } = require('./page-builder');
 const { Settings, settingsTypeDef, settingsResolvers } = require('./settings');
+const { Docs, docsTypeDef, docsResolvers } = require('./docs');
 const {
   DesignTokens,
   designTokensTypeDef,
@@ -77,6 +78,10 @@ async function serve(config, meta) {
           typeDefs: metaTypeDef,
           resolvers: metaResolvers,
         }),
+        makeExecutableSchema({
+          typeDefs: docsTypeDef,
+          resolvers: docsResolvers,
+        }),
       ],
     }),
     // https://www.apollographql.com/docs/apollo-server/essentials/data.html#context
@@ -87,6 +92,7 @@ async function serve(config, meta) {
         tokenPath: config.designTokens,
         tokenGroups: settings.getSetting('designTokens').groups,
       }),
+      docs: new Docs({ docsDir: config.docsDir }),
       patterns,
     }),
     // playground: true,

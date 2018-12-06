@@ -1,6 +1,6 @@
 {
   "name": "@basalt/bedrock-core",
-  "version": "0.16.1-alpha.4",
+  "version": "0.16.1",
   "description": "The core of Bedrock",
   "main": "dist/index.js",
   "module": "dist/index.js",

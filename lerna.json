@@ -1,7 +1,8 @@
 {
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "version": "0.16.1-alpha.4",
+  "version": "0.16.1",
+  "loglevel": "error",
   "command": {
     "version": {
       "message": "chore: publish %s [skip ci]"

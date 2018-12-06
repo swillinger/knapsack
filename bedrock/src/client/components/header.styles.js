@@ -89,3 +89,13 @@ export const X = styled(FaTimes)`
   float: right;
   font-size: 1.5rem;
 `;
+
+export const SiteHeaderLogo = styled.img`
+  height: 30px;
+  margin-right: 1.25rem;
+  width: auto;
+  @media screen and (min-width: 450px) {
+    height: 38px;
+    margin-right: 1.5rem;
+  }
+`;

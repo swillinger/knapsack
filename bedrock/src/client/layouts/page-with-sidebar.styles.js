@@ -4,6 +4,9 @@ import { FaChevronLeft } from 'react-icons/fa';
 export const PageLayoutWithSidebar = styled.div`
   display: grid;
   grid-template-rows: 86px 1fr 112px;
+  @media (max-width: 649px) {
+    grid-template-rows: 86px 1fr 178px;
+  }
   ${props =>
     props.sidebarCollapsed
       ? 'grid-template-columns: 45px 1fr'

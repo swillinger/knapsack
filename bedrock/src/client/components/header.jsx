@@ -106,7 +106,7 @@ class Header extends React.Component {
         {/* </SiteHeaderNavLink> */}
         {/* </li> */}
         {/* ))} */}
-        {settings.parentBrand && (
+        {settings.parentBrand.title && settings.parentBrand.homepage && (
           <li>
             <a
               href={settings.parentBrand.homepage}

@@ -10,10 +10,13 @@ import {
   FooterMenuItem,
   FooterInner,
   FooterBuiltOn,
+  FooterBuiltOnImg,
   FooterBuiltOnInner,
+  FooterCreatedByImg,
   SubFooterWrapper,
 } from './footer.styles';
 import bedrockBranding from '../assets/built-on.svg';
+import createdBy from '../assets/created-by.svg';
 
 const query = gql`
   {
@@ -52,22 +55,20 @@ const Footer = props => (
             <FooterBuiltOn>
               <FooterBuiltOnInner>
                 {data.meta.bedrockVersion}
-                <br />
-                by{' '}
-                <a
-                  href="https://basalt.io"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Basalt
-                </a>
               </FooterBuiltOnInner>
               <a
                 href="https://www.getbedrock.com/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img src={bedrockBranding} alt="Bedrock" />
+                <FooterBuiltOnImg src={bedrockBranding} alt="Bedrock" />
+              </a>
+              <a
+                href="https://basalt.io"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FooterCreatedByImg src={createdBy} alt="Created by" />
               </a>
             </FooterBuiltOn>
           </FooterInner>

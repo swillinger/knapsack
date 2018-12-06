@@ -47,7 +47,8 @@ jobs:
             fi
 
             if [ "${CIRCLE_BRANCH}" == "develop" ]; then
-              ./scripts/prerelease.sh
+              #./scripts/prerelease.sh
+              echo 'placeholder for develop prerelease'
             fi
 
       - run:

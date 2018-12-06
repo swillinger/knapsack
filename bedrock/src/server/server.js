@@ -7,7 +7,6 @@ const { join } = require('path');
 const log = require('../cli/log');
 const { getRoutes } = require('./rest-api');
 const { enableTemplatePush } = require('../lib/features');
-const { USER_SITE_PUBLIC } = require('../lib/constants');
 const {
   PageBuilder,
   pageBuilderPagesTypeDef,
@@ -127,7 +126,7 @@ async function serve(config, meta) {
   }
 
   if (config.public) {
-    app.use(USER_SITE_PUBLIC, express.static(config.public));
+    app.use(express.static(config.public));
   }
 
   // if (config.staticDirs) {

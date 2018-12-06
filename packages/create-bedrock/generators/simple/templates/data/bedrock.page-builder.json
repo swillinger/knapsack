@@ -20,7 +20,7 @@
         "data": {
           "title": "I'm a Card Title",
           "body": "I'm a body - Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          "img": "https://basalt-demo-data.netlify.com/imagePlaceholder3.png"
+          "img": "/images/imagePlaceholder1.png"
         }
       },
       {

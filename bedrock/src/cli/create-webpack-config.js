@@ -54,8 +54,8 @@ function createWebPackConfig(userConfig) {
     },
     output: {
       filename: '[name].bundle.js',
-      path: resolve(config.dist),
-      publicPath: '/',
+      path: resolve(config.dist, 'bedrock'),
+      publicPath: '/bedrock/',
       chunkFilename: '[name].chunk.js',
     },
     module: {
@@ -139,6 +139,7 @@ function createWebPackConfig(userConfig) {
         appMountId: 'app',
         cache: false,
         mobile: true,
+        filename: '../index.html',
         links: [
           // code highlighting styles
           'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/darcula.min.css',

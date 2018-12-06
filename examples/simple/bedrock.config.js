@@ -8,8 +8,8 @@ const config = {
   dist: './dist',
   public: './public',
   data: './data',
-  css: ['./public/assets/simple.css'],
-  // js: ['./public/assets/script.js'],
+  css: ['/assets/simple.css'],
+  // js: ['/assets/script.js'],
   docsDir: './docs',
   templates: [{
     test: theTemplatePath => theTemplatePath.endsWith('.twig'),

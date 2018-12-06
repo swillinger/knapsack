@@ -1,11 +1,10 @@
 const express = require('express');
 const urlJoin = require('url-join');
 const fs = require('fs-extra');
-const { join, relative } = require('path');
 const md = require('marked');
 const highlight = require('highlight.js');
 const { wrapHtml } = require('./templates');
-const { USER_SITE_PUBLIC, BASE_PATHS } = require('../lib/constants');
+const { BASE_PATHS } = require('../lib/constants');
 const { enableUiSettings } = require('../lib/features');
 
 const router = express.Router();
@@ -124,17 +123,7 @@ function getRoutes(config) {
       // @todo allow query param on API request to toggle
       const wrapHtmlResults = true;
       if (results.ok && wrapHtmlResults) {
-        const cssUrls = config.css
-          ? config.css.map(css =>
-              join(USER_SITE_PUBLIC, relative(config.public, css)),
-            )
-          : [];
-        const jsUrls = config.js
-          ? config.js.map(js =>
-              join(USER_SITE_PUBLIC, relative(config.public, js)),
-            )
-          : [];
-        results.html = wrapHtml(results.html, cssUrls, jsUrls);
+        results.html = wrapHtml(results.html, config.css, config.js);
       }
 
       res.json(results);

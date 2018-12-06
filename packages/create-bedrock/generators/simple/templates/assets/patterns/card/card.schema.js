@@ -1,5 +1,3 @@
-const { image } = require('@basalt/demo-data');
-
 module.exports = {
   $schema: 'http://json-schema.org/draft-07/schema',
   type: 'object',
@@ -31,7 +29,7 @@ module.exports = {
       title: "I'm a Card Title",
       body:
         "I'm a body - Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      img: image(),
+      img: '/images/imagePlaceholder1.png',
     },
   ],
 };

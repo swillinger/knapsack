@@ -20,22 +20,23 @@ jobs:
       - checkout
 
       # Download and cache dependencies
-#      - restore_cache:
-#          keys:
-#          - v1-dependencies-{{ checksum "yarn.lock" }}
-#          # fallback to using the latest cache if no exact match is found
-#          - v1-dependencies-
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "yarn.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
 
-      - run: yarn cache dir && yarn install --no-lockfile
+      - run: yarn install --no-lockfile
 
-#      - save_cache:
-#          paths:
-#            - node_modules
-#          key: v1-dependencies-{{ checksum "package.json" }}
-
-      - run: yarn test
+      - save_cache:
+          paths:
+            - node_modules
+            - /usr/local/share/.cache/yarn/v2
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
 
       - run: yarn build
+
+      - run: yarn test
 
       - run: ./scripts/e2e-simple.sh
 

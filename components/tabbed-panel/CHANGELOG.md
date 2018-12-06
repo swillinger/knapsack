@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.16.2](https://github.com/basaltinc/bedrock/compare/v0.16.1...v0.16.2) (2018-12-06)
+
+**Note:** Version bump only for package @basalt/bedrock-tabbed-panel
+
+
+
+
+
 ## [0.16.1](https://github.com/basaltinc/bedrock/compare/v0.16.1-alpha.6...v0.16.1) (2018-12-06)
 
 **Note:** Version bump only for package @basalt/bedrock-tabbed-panel

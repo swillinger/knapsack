@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Spinner from '@basalt/bedrock-spinner';
-import { Button, Details, Select } from '@basalt/bedrock-atoms';
+import { Button, Details, Select, StatusMessage } from '@basalt/bedrock-atoms';
 import { BedrockContext } from '@basalt/bedrock-core';
 import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -78,7 +78,6 @@ class PatternViewPage extends Component {
         uiSchema: {},
         isInline: false,
       },
-      meta: null,
     };
   }
 
@@ -96,7 +95,7 @@ class PatternViewPage extends Component {
         // console.log('Message from server ', ext, event.data);
         if (ext !== '.twig') {
           // @todo improve. Need to refresh data.
-          this.setState({ meta: null });
+          // this.setState({ meta: null });
         }
       });
     }
@@ -112,149 +111,166 @@ class PatternViewPage extends Component {
   }
 
   render() {
-    if (!this.state.meta) {
-      return (
-        <Query query={query} variables={{ id: this.props.id }}>
-          {({ loading, error, data }) => {
-            if (loading) return <Spinner />;
-            if (error) return <p>Error :(</p>;
-            this.setState({
-              meta: data.pattern.meta,
-              templates: data.pattern.templates,
-              currentTemplate: data.pattern.templates[0],
-              readme: data.pattern.readme,
-            });
-            return null;
-          }}
-        </Query>
-      );
-    }
-
-    const { templates, meta, currentTemplate, readme } = this.state;
-    const { title, description, type, demoSize } = meta;
-    const { name, schema, uiSchema, isInline } = currentTemplate;
-    const [data, ...examples] = schema.examples ? schema.examples : [{}];
-    const dosAndDonts = schema.dosAndDonts ? schema.dosAndDonts : [];
     return (
       <ErrorCatcher>
         <PageWithSidebar {...this.props}>
-          <header
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-            }}
-          >
-            <OverviewHeader>
-              <h4 className="eyebrow" style={{ textTransform: 'capitalize' }}>
-                {type}
-              </h4>
-              <h2>{title}</h2>
-              <p>{description}</p>
-              {templates.length > 1 && (
-                <Select
-                  label="Template"
-                  items={templates.map(t => ({
-                    value: t.name,
-                    title: t.schema.title,
-                  }))}
-                  handleChange={value => {
-                    this.setState({
-                      currentTemplate: templates.find(t => t.name === value),
-                    });
-                  }}
-                />
-              )}
-            </OverviewHeader>
-            <Button>
-              <Link
-                to={`${BASE_PATHS.GRAPHIQL_PLAYGROUND}?${queryString.stringify({
-                  query: gqlToString(query),
-                  variables: JSON.stringify({
-                    id: this.props.id,
-                  }),
-                })}`}
-              >
-                See API
-              </Link>
-            </Button>
-          </header>
-
-          <Overview
-            template={name}
-            schema={schema}
-            uiSchema={uiSchema}
-            demoSizes={this.props.demoSizes}
-            data={data}
-            size={demoSize}
-            key={name}
-            isInline={isInline}
-            id={this.props.id}
-          />
-
-          {!!examples.length && (
-            <Details>
-              <summary>Examples</summary>
-              {examples.map(example => (
-                <Template
-                  template={name}
-                  data={example}
-                  key={JSON.stringify(example)}
-                />
-              ))}
-            </Details>
-          )}
-
-          {readme && (
-            <Mutation mutation={updateReadme} ignoreResults>
-              {setPatternReadme => {
-                const { id } = this.props;
-                return (
-                  <MdBlock
-                    md={readme}
-                    isEditable={enableUiSettings}
-                    title="Documentation"
-                    handleSave={async newReadme => {
-                      await setPatternReadme({
-                        variables: {
-                          id,
-                          readme: newReadme,
-                        },
-                      });
-                      // @todo Refactor this so a reload is not needed
-                      window.location.reload();
+          <Query query={query} variables={{ id: this.props.id }}>
+            {({ loading, error, data: response }) => {
+              if (loading) return <Spinner />;
+              if (error) return <p>Error :(</p>;
+              // @todo add proper error page
+              const { templates, meta, readme } = response.pattern;
+              const { title, description, type, demoSize } = meta;
+              const { name, schema, uiSchema, isInline } = this.state
+                .currentTemplate.name
+                ? this.state.currentTemplate
+                : templates[0];
+              const [data, ...examples] = schema.examples
+                ? schema.examples
+                : [{}];
+              const dosAndDonts = schema.dosAndDonts ? schema.dosAndDonts : [];
+              return (
+                <>
+                  <header
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
                     }}
+                  >
+                    <OverviewHeader>
+                      <h4
+                        className="eyebrow"
+                        style={{ textTransform: 'capitalize' }}
+                      >
+                        {type}
+                      </h4>
+                      <h2>{title}</h2>
+                      <p>{description}</p>
+                      {templates.length > 1 && (
+                        <Select
+                          label="Template"
+                          items={templates.map(t => ({
+                            value: t.name,
+                            title: t.schema.title,
+                          }))}
+                          handleChange={value => {
+                            this.setState({
+                              currentTemplate: templates.find(
+                                t => t.name === value,
+                              ),
+                            });
+                          }}
+                        />
+                      )}
+                    </OverviewHeader>
+                    <Button>
+                      <Link
+                        to={`${
+                          BASE_PATHS.GRAPHIQL_PLAYGROUND
+                        }?${queryString.stringify({
+                          query: gqlToString(query),
+                          variables: JSON.stringify({
+                            id: this.props.id,
+                          }),
+                        })}`}
+                      >
+                        See API
+                      </Link>
+                    </Button>
+                  </header>
+
+                  <Overview
+                    template={name}
+                    schema={schema}
+                    uiSchema={uiSchema}
+                    demoSizes={this.props.demoSizes}
+                    data={data}
+                    size={demoSize}
+                    key={name}
+                    isInline={isInline}
+                    id={this.props.id}
                   />
-                );
-              }}
-            </Mutation>
-          )}
 
-          {Object.keys(schema.properties).length > 0 && (
-            <div>
-              <h4>Properties</h4>
-              <p>
-                The following properties make up the data that defines each
-                instance of this component.
-              </p>
-              <Details open>
-                <summary>Props Table</summary>
-                <LoadableSchemaTable schema={schema} />
-              </Details>
-            </div>
-          )}
+                  {!!examples.length && (
+                    <Details>
+                      <summary>Examples</summary>
+                      {examples.map(example => (
+                        <Template
+                          template={name}
+                          data={example}
+                          key={JSON.stringify(example)}
+                        />
+                      ))}
+                    </Details>
+                  )}
 
-          <LoadableVariationDemo schema={schema} template={name} data={data} />
+                  {readme && (
+                    <Mutation mutation={updateReadme} ignoreResults>
+                      {(setPatternReadme, { error: mutationError }) => {
+                        const { id } = this.props;
+                        if (mutationError)
+                          return (
+                            <StatusMessage
+                              message={mutationError.message}
+                              type="error"
+                            />
+                          );
+                        return (
+                          <MdBlock
+                            md={readme}
+                            isEditable={enableUiSettings}
+                            title="Documentation"
+                            handleSave={newReadme => {
+                              setPatternReadme({
+                                variables: {
+                                  id,
+                                  readme: newReadme,
+                                },
+                              });
 
-          {dosAndDonts.map(item => (
-            <DosAndDonts
-              key={JSON.stringify(item)}
-              title={item.title}
-              description={item.description}
-              items={item.items}
-            />
-          ))}
+                              // @todo Refactor this so a reload is not needed
+                              // window.location.reload();
+                            }}
+                          />
+                        );
+                      }}
+                    </Mutation>
+                  )}
 
-          {/* <ApiDemo endpoint={this.apiEndpoint} /> */}
+                  {Object.keys(schema.properties).length > 0 && (
+                    <div>
+                      <h4>Properties</h4>
+                      <p>
+                        The following properties make up the data that defines
+                        each instance of this component.
+                      </p>
+                      <Details open>
+                        <summary>Props Table</summary>
+                        <LoadableSchemaTable schema={schema} />
+                      </Details>
+                    </div>
+                  )}
+
+                  <LoadableVariationDemo
+                    schema={schema}
+                    template={name}
+                    data={data}
+                  />
+
+                  {dosAndDonts.map(item => (
+                    <DosAndDonts
+                      key={JSON.stringify(item)}
+                      title={item.title}
+                      description={item.description}
+                      items={item.items}
+                    />
+                  ))}
+
+                  {/* <ApiDemo endpoint={this.apiEndpoint} /> */}
+                </>
+              );
+            }}
+          </Query>
         </PageWithSidebar>
       </ErrorCatcher>
     );

@@ -43,11 +43,12 @@ jobs:
       - run:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              ./scripts/create-bedrock-deploy/deploy.sh
+              ./scripts/release.sh
             fi
 
             if [ "${CIRCLE_BRANCH}" == "develop" ]; then
-              ./scripts/prerelease.sh
+              #./scripts/prerelease.sh
+              echo 'placeholder for develop prerelease'
             fi
 
       - run:
@@ -57,5 +58,6 @@ jobs:
             fi
 
             if [ "${CIRCLE_BRANCH}" == "develop" ]; then
-              #./scripts/create-bedrock-deploy-dev/deploy.sh
+              ./scripts/create-bedrock-deploy-dev/deploy.sh
+              #echo 'placeholder for develop deploy'
             fi

@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.16.3](https://github.com/basaltinc/bedrock/compare/v0.16.2-alpha.3...v0.16.3) (2018-12-06)
+
+
+### Bug Fixes
+
+* **bedrock:** on page builder save, UI prompts user of action ([#128](https://github.com/basaltinc/bedrock/issues/128)) ([47f1a74](https://github.com/basaltinc/bedrock/commit/47f1a74)), closes [#41](https://github.com/basaltinc/bedrock/issues/41) [#112](https://github.com/basaltinc/bedrock/issues/112)
+
+
+
+## [0.16.2](https://github.com/basaltinc/bedrock/compare/v0.16.1...v0.16.2) (2018-12-06)
+
+
+
+
+
+## [0.16.2](https://github.com/basaltinc/bedrock/compare/v0.16.1...v0.16.2) (2018-12-06)
+
+**Note:** Version bump only for package @basalt/bedrock-monorepo
+
+
+
+
+
+## [0.16.1](https://github.com/basaltinc/bedrock/compare/v0.16.1-alpha.6...v0.16.1) (2018-12-06)
+
+**Note:** Version bump only for package @basalt/bedrock-monorepo
+
+
+
+
+
 # [0.16.0](https://github.com/basaltinc/bedrock/compare/v0.15.1-alpha.2...v0.16.0) (2018-12-05)
 
 

@@ -32,6 +32,12 @@ const secondaryNavQuery = gql`
       title
       path
     }
+    docs {
+      id
+      data {
+        title
+      }
+    }
   }
 `;
 
@@ -91,6 +97,7 @@ class SecondaryNav extends Component {
             patterns = [],
             pageBuilderPages = [],
             tokenGroups = [],
+            docs = [],
           } = data;
           const items = [
             {
@@ -133,6 +140,19 @@ class SecondaryNav extends Component {
               id: page.id,
               title: page.title,
               path: `${BASE_PATHS.PAGES}/${page.id}`,
+            })),
+            docs.length
+              ? {
+                  title: 'Docs',
+                  id: 'docs',
+                  isHeading: true,
+                  path: BASE_PATHS.DOCS,
+                }
+              : null,
+            ...docs.map(doc => ({
+              id: doc.id,
+              title: doc.data.title,
+              path: `${BASE_PATHS.DOCS}/${doc.id}`,
             })),
             {
               title: 'API',

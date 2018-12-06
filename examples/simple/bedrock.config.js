@@ -10,6 +10,7 @@ const config = {
   data: './data',
   css: ['./public/assets/simple.css'],
   // js: ['./public/assets/script.js'],
+  docsDir: './docs',
   templates: [{
     test: theTemplatePath => theTemplatePath.endsWith('.twig'),
     render: (template, data = {}) => twigRenderer.render(template, data),

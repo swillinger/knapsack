@@ -17,6 +17,11 @@ export const LoadableDesignTokenGroup = Loadable({
   loading: Spinner,
 });
 
+export const LoadableDocPage = Loadable({
+  loader: () => import(/* webpackChunkName: "doc-page" */ './pages/doc'),
+  loading: Spinner,
+});
+
 export const LoadablePatternView = Loadable({
   loader: () =>
     import(/* webpackChunkName: "pattern-view-page" */ './pages/pattern-view-page'),
@@ -140,5 +145,10 @@ export const LoadableCustomSectionPage = Loadable({
 export const LoadableAllTokens = Loadable({
   loader: () =>
     import(/* webpackChunkName: "all-tokens" */ './pages/design-tokens/all-page'),
+  loading: Spinner,
+});
+
+export const LoadableBadRoute = Loadable({
+  loader: () => import(/* webpackChunkName: "bad-route" */ './pages/bad-route'),
   loading: Spinner,
 });

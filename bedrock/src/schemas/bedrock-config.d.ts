@@ -25,4 +25,5 @@ interface BedrockConfig {
   js?: string[];
   templates: TemplateRenderers[],
   designTokens: string;
+  docsDir?: string;
 }

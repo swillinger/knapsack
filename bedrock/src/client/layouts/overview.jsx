@@ -130,9 +130,7 @@ class Overview extends React.Component {
           <h4>Live Code Snippets</h4>
           <p>
             The following code snippets will generate the component in the live
-            demo above. <br />
-            You may also edit the code below and see how this effects the
-            component.
+            demo above.
           </p>
           <CodeBlock
             items={[

@@ -58,6 +58,6 @@ jobs:
             fi
 
             if [ "${CIRCLE_BRANCH}" == "develop" ]; then
-              ./scripts/create-bedrock-deploy-dev/deploy.sh
-              #echo 'placeholder for develop deploy'
+             # ./scripts/create-bedrock-deploy-dev/deploy.sh
+              echo 'placeholder for develop deploy'
             fi

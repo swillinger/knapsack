@@ -25,5 +25,3 @@ echo "Previous version: $PREV_VERSION Current Version: $CURRENT_VERSION"
 echo "changelog test output:"
 git show $PREV_VERSION:CHANGELOG.md | diff -u - CHANGELOG.md | grep '^\+' | grep -v '^\++' | sed -E 's/^\+//'
 echo "END: changelog"
-git pull origin master
-git push origin master --follow-tags --no-verify

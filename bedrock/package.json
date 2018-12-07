@@ -121,6 +121,6 @@
     "url": "https://github.com/basaltinc/bedrock/issues"
   },
   "publishConfig": {
-    "access": "restricted"
+    "access": "public"
   }
 }

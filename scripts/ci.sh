@@ -3,6 +3,8 @@ set -x
 set -e
 # Start in scripts/ even if run from root directory
 cd "$(dirname "$0")"
+# Run everything from root of repo
+cd ..
 
 if [ "$TRAVIS_TAG" ]; then
   echo "Tag build $TRAVIS_TAG"

@@ -1,11 +1,30 @@
+# https://docs.travis-ci.com/
+git:
+  quiet: true
+  depth: 100
+
 language: node_js
 node_js:
   - 10
 
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.12.3
+
 install:
   - yarn install
+
+script:
+  - yarn build:all
+  - yarn test
+  - ./scripts/e2e-simple.sh
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then ./scripts/release.sh; fi
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then ./scripts/create-bedrock-deploy/deploy.sh; fi
 
 cache:
   - npm
   - yarn
 
+notifications:
+  email:
+    on_success: never
+    on_failure: never

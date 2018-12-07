@@ -39,7 +39,7 @@ else
   echo "========"
   echo "START: e2e-simple"
   echo "========"
-  if [ "$TRAVIS_PULL_REQUEST" ]; then
+  if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
     git checkout $TRAVIS_PULL_REQUEST_BRANCH
   else
     git checkout $TRAVIS_BRANCH
@@ -54,7 +54,7 @@ else
     echo "========"
     echo "START: release"
     echo "========"
-    ./scripts/release.sh;
+    ./scripts/release.sh
     git pull origin "$TRAVIS_BRANCH"
     git push origin "$TRAVIS_BRANCH" --follow-tags --no-verify
     echo "========"

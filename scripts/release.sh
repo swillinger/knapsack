@@ -22,5 +22,3 @@ cp ./scripts/.npmrc-ci ~/.npmrc
 echo "changelog test output:"
 git show `git describe`:CHANGELOG.md | diff -u - CHANGELOG.md | grep '^\+' | grep -v '^\++' | sed -E 's/^\+//'
 echo "END: changelog"
-git pull origin master
-git push origin master --follow-tags --no-verify

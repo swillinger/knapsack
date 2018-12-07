@@ -1,4 +1,6 @@
 #!/bin/bash
+set -x
+set -e
 # Start in scripts/ even if run from root directory
 cd "$(dirname "$0")"
 

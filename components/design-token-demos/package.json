@@ -32,6 +32,6 @@
     "constants.js"
   ],
   "publishConfig": {
-    "access": "restricted"
+    "access": "public"
   }
 }

@@ -20,6 +20,6 @@
   },
   "author": "Basalt (https://basalt.io/)",
   "publishConfig": {
-    "access": "restricted"
+    "access": "public"
   }
 }

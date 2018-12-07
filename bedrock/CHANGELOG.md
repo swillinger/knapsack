@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.16.6](https://github.com/basaltinc/bedrock/compare/v0.16.5...v0.16.6) (2018-12-07)
+
+
+### Bug Fixes
+
+* server will let through requests to "/admin" ([4bd3cd2](https://github.com/basaltinc/bedrock/commit/4bd3cd2))
+
+
+
+
+
 ## [0.16.5](https://github.com/basaltinc/bedrock/compare/v0.16.4...v0.16.5) (2018-12-06)
 
 

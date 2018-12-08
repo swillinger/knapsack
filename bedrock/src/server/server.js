@@ -3,7 +3,7 @@ const { ApolloServer, gql } = require('apollo-server-express');
 const { mergeSchemas, makeExecutableSchema } = require('graphql-tools');
 const WebSocket = require('ws');
 const bodyParser = require('body-parser');
-const { join } = require('path');
+const { join, relative } = require('path');
 const log = require('../cli/log');
 const { getRoutes } = require('./rest-api');
 const { enableTemplatePush } = require('../lib/features');
@@ -30,6 +30,18 @@ async function serve(config, meta) {
   const port = 3999;
 
   const settings = new Settings({ dataDir: config.data });
+
+  /** @type {string[]} */
+  const rootRelativeCSS = config.css.map(c => {
+    if (c.startsWith('http')) return c;
+    return `/${relative(config.public, c)}`;
+  });
+
+  /** @type {string[]} */
+  const rootRelativeJs = config.js.map(j => {
+    if (j.startsWith('http')) return j;
+    return `/${relative(config.public, j)}`;
+  });
 
   const patterns = new Patterns({
     newPatternDir: config.newPatternDir,
@@ -183,8 +195,8 @@ async function serve(config, meta) {
       dataDir: config.data,
     }),
     settingsStore: settings,
-    css: config.css,
-    js: config.js,
+    css: rootRelativeCSS,
+    js: rootRelativeJs,
   });
 
   app.use(restApiRoutes);

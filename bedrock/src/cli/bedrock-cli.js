@@ -49,8 +49,8 @@ function processConfig(userConfig, from) {
   fileExistsOrExit(config.designTokens);
   dirExistsOrExit(config.public);
   if (config.docsDir) dirExistsOrExit(config.docsDir);
-  if (config.css) config.css.forEach(fileExistsOrExit);
-  if (config.js) config.js.forEach(fileExistsOrExit);
+  if (config.css) config.css.forEach(c => fileExistsOrExit(c));
+  if (config.js) config.js.forEach(j => fileExistsOrExit(j));
 
   // checking to make sure all CSS and JS paths are inside the `config.public` directory
   [config.js, config.css].forEach(assets => {

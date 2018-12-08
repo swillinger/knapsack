@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.17.1](https://github.com/basaltinc/bedrock/compare/v0.17.0...v0.17.1) (2018-12-08)
+
+
+### Bug Fixes
+
+* **bedrock:** add proper error page for bad pattern urls ([#139](https://github.com/basaltinc/bedrock/issues/139)) ([b992a4f](https://github.com/basaltinc/bedrock/commit/b992a4f)), closes [#137](https://github.com/basaltinc/bedrock/issues/137)
+* **bedrock:** fix warning about sidebar collapse ([56316cc](https://github.com/basaltinc/bedrock/commit/56316cc)), closes [#107](https://github.com/basaltinc/bedrock/issues/107)
+
+
+
+
+
 # [0.17.0](https://github.com/basaltinc/bedrock/compare/v0.16.6...v0.17.0) (2018-12-08)
 
 **Note:** Version bump only for package @basalt/bedrock-monorepo

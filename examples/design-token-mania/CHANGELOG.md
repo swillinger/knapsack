@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.17.1](https://github.com/basaltinc/bedrock/compare/v0.17.0...v0.17.1) (2018-12-08)
+
+**Note:** Version bump only for package @basalt/bedrock-example-design-token-mania
+
+
+
+
+
 # [0.17.0](https://github.com/basaltinc/bedrock/compare/v0.16.6...v0.17.0) (2018-12-08)
 
 **Note:** Version bump only for package @basalt/bedrock-example-design-token-mania

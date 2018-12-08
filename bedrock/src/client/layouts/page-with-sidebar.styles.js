@@ -8,7 +8,7 @@ export const PageLayoutWithSidebar = styled.div`
     grid-template-rows: 86px 1fr 178px;
   }
   ${props =>
-    props.sidebarCollapsed
+    props.sidebarCollapsed === 'true'
       ? 'grid-template-columns: 45px 1fr'
       : 'grid-template-columns: 300px 1fr'};
   height: 100vh;
@@ -60,10 +60,10 @@ export const SidebarColumn = styled.div`
   display: flex;
   flex-direction: column;
   background: ${props => props.theme.sidebar.background};
-  padding: ${props => (props.sidebarCollapsed ? '0' : '2rem')};
+  padding: ${props => (props.sidebarCollapsed === 'true' ? '0' : '2rem')};
   transition: left ease 0.6s;
   > * {
-    opacity: ${props => (props.sidebarCollapsed ? '0' : '1')};
+    opacity: ${props => (props.sidebarCollapsed === 'true' ? '0' : '1')};
   }
 `;
 
@@ -82,5 +82,6 @@ export const SidebarTrayHandle = styled.div`
 
 export const ToggleChevron = styled(FaChevronLeft)`
   margin-top: 50vh;
-  ${props => (props.sidebarcollapsed ? `transform: rotate(180deg);` : ``)};
+  ${props =>
+    props.sidebarcollapsed === 'true' ? `transform: rotate(180deg);` : ``};
 `;

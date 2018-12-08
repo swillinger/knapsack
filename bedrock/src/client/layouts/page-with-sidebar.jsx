@@ -32,14 +32,14 @@ class PageWithSidebar extends Component {
     const pathname =
       (this.props.location && this.props.location.pathname) || this.props.path;
     return (
-      <PageLayoutWithSidebar sidebarCollapsed={sidebarCollapsed}>
+      <PageLayoutWithSidebar sidebarCollapsed={sidebarCollapsed.toString()}>
         <Header pathname={pathname} />
-        <SidebarStyled sidebarCollapsed={sidebarCollapsed}>
-          <SidebarColumn sidebarCollapsed={sidebarCollapsed}>
+        <SidebarStyled sidebarCollapsed={sidebarCollapsed.toString()}>
+          <SidebarColumn sidebarCollapsed={sidebarCollapsed.toString()}>
             {sidebar || <SecondaryNav pathname={pathname} />}
           </SidebarColumn>
           <SidebarTrayHandle onClick={this.handleSidebarToggle}>
-            <ToggleChevron sidebarcollapsed={sidebarCollapsed} />
+            <ToggleChevron sidebarcollapsed={sidebarCollapsed.toString()} />
           </SidebarTrayHandle>
         </SidebarStyled>
         <main>{children}</main>

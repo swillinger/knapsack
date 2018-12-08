@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.17.2](https://github.com/basaltinc/bedrock/compare/v0.17.1...v0.17.2) (2018-12-08)
+
+
+### Bug Fixes
+
+* **bedrock:** improve css and js config paths ([#146](https://github.com/basaltinc/bedrock/issues/146)) ([9539a54](https://github.com/basaltinc/bedrock/commit/9539a54)), closes [#145](https://github.com/basaltinc/bedrock/issues/145)
+
+
+
+
+
 ## [0.17.1](https://github.com/basaltinc/bedrock/compare/v0.17.0...v0.17.1) (2018-12-08)
 
 **Note:** Version bump only for package @basalt/bedrock-example-simple

@@ -1,7 +1,7 @@
 {
   "name": "@basalt/bedrock",
   "description": "Build Design Systems on top of Bedrock, by Basalt",
-  "version": "0.17.1",
+  "version": "0.17.2",
   "author": "Basalt (https://basalt.io/)",
   "main": "bedrock-site.js",
   "bin": {

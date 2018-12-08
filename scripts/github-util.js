@@ -66,7 +66,7 @@ async function createRelease(tag, body) {
  * @link https://developer.github.com/v3/issues/comments/#create-a-comment
  */
 async function commentOnIssue(issue, comment) {
-  await githubPost(`/repos/basaltinc/bedrock/issues/${issue}/comments`, {
+  return githubPost(`/repos/basaltinc/bedrock/issues/${issue}/comments`, {
     body: comment,
   });
 }

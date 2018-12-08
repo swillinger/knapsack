@@ -1,6 +1,6 @@
 {
   "name": "@basalt/eslint-config-bedrock",
-  "version": "0.16.3",
+  "version": "0.17.0",
   "description": "Eslint config and deps.",
   "main": ".eslintrc",
   "scripts": {},

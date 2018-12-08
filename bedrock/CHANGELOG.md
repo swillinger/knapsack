@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.17.0](https://github.com/basaltinc/bedrock/compare/v0.16.6...v0.17.0) (2018-12-08)
+
+
+### Features
+
+* releasing Bedrock publically! setup Travis CI ([99bc547](https://github.com/basaltinc/bedrock/commit/99bc547))
+
+
+
+
+
 ## [0.16.6](https://github.com/basaltinc/bedrock/compare/v0.16.5...v0.16.6) (2018-12-07)
 
 

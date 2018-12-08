@@ -6,8 +6,8 @@ import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import Spinner from '@basalt/bedrock-spinner';
 import { StatusMessage } from '@basalt/bedrock-atoms';
-import bedrockSettingsSchema from '../schemas/bedrock.settings.schema';
-import PageWithSidebar from './layouts/page-with-sidebar';
+import bedrockSettingsSchema from '../../schemas/bedrock.settings.schema';
+import PageWithSidebar from '../layouts/page-with-sidebar';
 
 // @todo implement parentbrand fully
 const query = gql`

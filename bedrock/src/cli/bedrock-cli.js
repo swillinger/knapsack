@@ -31,6 +31,7 @@ function processConfig(userConfig, from) {
     dist,
     designTokens,
     css,
+    js,
     docsDir,
     ...rest
   } = userConfig;
@@ -38,7 +39,8 @@ function processConfig(userConfig, from) {
     patterns: patterns.map(p => resolve(from, p)),
     designTokens: resolve(from, designTokens),
     public: resolve(from, publicDir),
-    css: css.map(x => resolve(from, x)),
+    css: css ? css.map(x => resolve(from, x)) : [],
+    js: js ? js.map(x => resolve(from, x)) : [],
     dist: resolve(from, dist),
     docsDir: docsDir ? resolve(from, docsDir) : null,
     ...rest,

@@ -126,6 +126,12 @@ class App extends React.Component {
           title
           path
         }
+        patterns {
+          id
+        }
+        docs {
+          id
+        }
       }
     `;
 
@@ -276,14 +282,33 @@ class App extends React.Component {
                           />
                           <Route
                             path={`${BASE_PATHS.PATTERNS}/:id`}
-                            render={({ match, ...rest }) => (
-                              <LoadablePatternView
-                                {...rest}
-                                id={match.params.id}
-                                size="m"
-                                key={match.params.id}
-                              />
-                            )}
+                            render={({ match, ...rest }) => {
+                              if (
+                                data.patterns
+                                  .map(pattern => pattern.id)
+                                  .find(item => match.params.id === item)
+                              ) {
+                                return (
+                                  <LoadablePatternView
+                                    {...rest}
+                                    id={match.params.id}
+                                    size="m"
+                                    key={match.params.id}
+                                  />
+                                );
+                              }
+                              return (
+                                <LoadableBadRoute
+                                  title={`Pattern "${
+                                    match.params.id
+                                  }" was not found in the system`}
+                                  subtitle="Hold your horses"
+                                  message={`We're having trouble finding the pattern "${
+                                    match.params.id
+                                  }" you requested. Please double check your url and the pattern meta.`}
+                                />
+                              );
+                            }}
                           />
                           <Route
                             path="/feedback"

@@ -63,7 +63,8 @@ export const colors = {
     ghost: 'hsl(30, 100%, 50%)',
   },
   gray: {
-    xdark: 'hsl(0, 0%, 35%)',
+    xxdark: 'hsl(0, 0%, 15%)',
+    xdark: 'hsl(0, 0%, 30%)',
     dark: 'hsl(0, 0%, 50%)',
     base: 'hsl(240, 3%, 85%)',
     light: 'hsl(0, 0%, 60%)',
@@ -265,7 +266,7 @@ export const baseTheme = {
     margin: '0 0 1.5rem',
   },
   selects: {
-    background: '#f2f3f3',
+    background: '#e3e4e4',
     border: '0',
     borderRadius: '0',
     fontSize: '0.75rem',
@@ -275,7 +276,7 @@ export const baseTheme = {
   },
   sidebar: {
     accentColor: colors.yellow.base,
-    background: '#f2f3f3',
+    background: '#f6f7f7',
   },
   statuses: {
     successColor: colors.green.ghost,

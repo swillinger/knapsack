@@ -132,7 +132,8 @@ export const LoadableVariationDemo = Loadable({
 });
 
 export const LoadableSettingsPage = Loadable({
-  loader: () => import(/* webpackChunkName: "patterns-page" */ './settings'),
+  loader: () =>
+    import(/* webpackChunkName: "patterns-page" */ './pages/settings'),
   loading: Spinner,
 });
 

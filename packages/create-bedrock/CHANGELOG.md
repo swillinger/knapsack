@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.17.0](https://github.com/basaltinc/bedrock/compare/v0.16.6...v0.17.0) (2018-12-08)
+
+**Note:** Version bump only for package create-bedrock
+
+
+
+
+
+## [0.16.5](https://github.com/basaltinc/bedrock/compare/v0.16.4...v0.16.5) (2018-12-06)
+
+
+### Bug Fixes
+
+* **bedrock:** make public directory straightforward ([52dfc6e](https://github.com/basaltinc/bedrock/commit/52dfc6e))
+
+
+
+
+
+## [0.16.4](https://github.com/basaltinc/bedrock/compare/v0.16.3...v0.16.4) (2018-12-06)
+
+**Note:** Version bump only for package create-bedrock
+
+
+
+
+
 ## [0.16.3](https://github.com/basaltinc/bedrock/compare/v0.16.2-alpha.3...v0.16.3) (2018-12-06)
 
 

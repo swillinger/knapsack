@@ -117,7 +117,7 @@ async function serve(config, meta) {
     app.use('*', (req, res, next) => {
       const { accept = '' } = req.headers;
       const accepted = accept.split(',');
-      if (accepted.includes('text/html')) {
+      if (!req.baseUrl.startsWith('/admin') && accepted.includes('text/html')) {
         res.sendFile(join(config.dist, 'index.html'));
       } else {
         next();

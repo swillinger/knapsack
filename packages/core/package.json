@@ -1,6 +1,6 @@
 {
   "name": "@basalt/bedrock-core",
-  "version": "0.16.3",
+  "version": "0.17.0",
   "description": "The core of Bedrock",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -21,6 +21,6 @@
     "./dist"
   ],
   "publishConfig": {
-    "access": "restricted"
+    "access": "public"
   }
 }

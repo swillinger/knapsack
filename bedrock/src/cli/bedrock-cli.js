@@ -2,10 +2,11 @@
 const program = require('commander');
 const { existsSync, copy, ensureSymlink, remove } = require('fs-extra');
 const portfinder = require('portfinder');
-const { join, resolve, dirname } = require('path');
+const { join, resolve, dirname, relative } = require('path');
 const log = require('./log');
 const { serve } = require('../server/server');
 const { version } = require('../../package.json');
+const { dirExistsOrExit, fileExistsOrExit } = require('../server/server-utils');
 // const webpack = require('./webpack');
 
 // If any of our parent directories are not `node_modules`, then we are in "dev mode", which basically means that we are Bedrock developers working on this package in the monorepo.
@@ -21,8 +22,6 @@ if (isDevMode) log.info('Bedrock Dev Mode on');
  * @param {string} from
  * @returns {BedrockConfig}
  * @todo validate with schema and assign defaults
- * @todo ensure path exists
- * @todo convert all paths to absolute (in-progress)
  */
 function processConfig(userConfig, from) {
   const {
@@ -35,16 +34,39 @@ function processConfig(userConfig, from) {
     docsDir,
     ...rest
   } = userConfig;
-  return {
+  const config = {
     patterns: patterns.map(p => resolve(from, p)),
     designTokens: resolve(from, designTokens),
     public: resolve(from, publicDir),
-    css: css ? css.map(x => resolve(from, x)) : [],
-    js: js ? js.map(x => resolve(from, x)) : [],
+    css: css ? css.map(x => (x.startsWith('http') ? x : resolve(from, x))) : [],
+    js: js ? js.map(x => (x.startsWith('http') ? x : resolve(from, x))) : [],
     dist: resolve(from, dist),
     docsDir: docsDir ? resolve(from, docsDir) : null,
     ...rest,
   };
+
+  // @todo check if `config.patterns` exists; but can't now as it can contain globs
+  fileExistsOrExit(config.designTokens);
+  dirExistsOrExit(config.public);
+  if (config.docsDir) dirExistsOrExit(config.docsDir);
+  if (config.css) config.css.forEach(c => fileExistsOrExit(c));
+  if (config.js) config.js.forEach(j => fileExistsOrExit(j));
+
+  // checking to make sure all CSS and JS paths are inside the `config.public` directory
+  [config.js, config.css].forEach(assets => {
+    const assetsNotPublicallyReachable = assets
+      .filter(asset => !asset.startsWith('http'))
+      .map(asset => relative(config.public, asset))
+      .filter(asset => asset.includes('..')).length;
+    if (assetsNotPublicallyReachable > 0) {
+      log.error(
+        `Some CSS or JS is not publically accessible! These must be either remote or places inside the "public" dir (${publicDir})`,
+      );
+      process.exit(1);
+    }
+  });
+
+  return config;
 }
 
 /**

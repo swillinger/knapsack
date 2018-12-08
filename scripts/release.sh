@@ -23,5 +23,7 @@ PREV_VERSION=`git describe --abbrev=0`
 CURRENT_VERSION=`git describe --abbrev=0`
 echo "Previous version: $PREV_VERSION Current Version: $CURRENT_VERSION"
 echo "changelog test output:"
-git show $PREV_VERSION:CHANGELOG.md | diff -u - CHANGELOG.md | grep '^\+' | grep -v '^\++' | sed -E 's/^\+//'
+CHANGES="`git show $PREV_VERSION:CHANGELOG.md | diff -u - CHANGELOG.md | grep '^\+' | grep -v '^\++' | sed -E 's/^\+//'`"
+echo "Creating GitHub release and announcing to issues"
+echo "$CHANGES" | node ./scripts/create-github-release.js "$CURRENT_VERSION"
 echo "END: changelog"

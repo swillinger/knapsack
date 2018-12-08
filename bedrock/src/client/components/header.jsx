@@ -33,6 +33,12 @@ const headerQuery = gql`
     tokenGroups {
       id
     }
+    docs {
+      id
+      data {
+        title
+      }
+    }
   }
 `;
 
@@ -75,7 +81,7 @@ class Header extends React.Component {
   }
 
   // @todo refactor
-  static renderLinks({ settings }) {
+  static renderLinks({ settings, docs }) {
     return (
       <ul>
         <li>
@@ -93,6 +99,13 @@ class Header extends React.Component {
             Page Builder
           </SiteHeaderNavLink>
         </li>
+        {docs && (
+          <li>
+            <SiteHeaderNavLink to={`${BASE_PATHS.DOCS}/${docs[0].id}`}>
+              Docs
+            </SiteHeaderNavLink>
+          </li>
+        )}
         <li>
           <SiteHeaderNavLink to={BASE_PATHS.GRAPHIQL_PLAYGROUND}>
             API

@@ -19,9 +19,9 @@ interface BedrockConfig {
   data: string;
   /** Hosted by bedrock server. Place compiled Design System css and js as well as images and other assets needed by bedrock */
   public: string;
-  /** Root relative paths to css assets located within the public directory */
-  css: string[];
-  /** Root relative paths to js assets located within the public directory */
+  /** Paths to css assets located within the public directory or absolute URL */
+  css?: string[];
+  /** Paths to js assets located within the public directory or absolute URL */
   js?: string[];
   templates: TemplateRenderers[],
   designTokens: string;

@@ -2,6 +2,7 @@ const globby = require('globby');
 const { join } = require('path');
 const fs = require('fs-extra');
 const os = require('os');
+const log = require('../cli/log');
 
 /**
  * @param {string} fileName - path to where JSON file should be written
@@ -32,8 +33,50 @@ function findReadmeInDirSync(dir) {
   return readmePath;
 }
 
+/**
+ * @param {string} filePath
+ * @return {boolean}
+ */
+function fileExists(filePath) {
+  return fs.statSync(filePath).isFile();
+}
+
+/**
+ * @param {string} dirPath
+ * @return {boolean}
+ */
+function dirExists(dirPath) {
+  return fs.statSync(dirPath).isDirectory();
+}
+
+/**
+ * @param {string} filePath
+ * @param {string} [msg]
+ * @return {boolean}
+ */
+function fileExistsOrExit(filePath, msg) {
+  if (fileExists(filePath)) return;
+  log.error(msg || `This file does not exist! ${filePath}`);
+  process.exit(1);
+}
+
+/**
+ * @param {string} dirPath
+ * @param {string} [msg]
+ * @return {boolean}
+ */
+function dirExistsOrExit(dirPath, msg) {
+  if (dirExists(dirPath)) return;
+  log.error(msg || `This folder does not exist! ${dirPath}`);
+  process.exit(1);
+}
+
 module.exports = {
   writeJson,
   findReadmeInDir,
   findReadmeInDirSync,
+  fileExists,
+  dirExists,
+  fileExistsOrExit,
+  dirExistsOrExit,
 };

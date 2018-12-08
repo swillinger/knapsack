@@ -8,8 +8,3 @@ order: 1
 ```
 npm install my-design-system
 ```
-
-# test 2
-
-
-This is a test

@@ -36,6 +36,7 @@ export const SelectStyledWrapper = styled.label`
       top: 41%;
     }
     select {
+      cursor: pointer;
       width: 100%;
       background-color: ${props => props.theme.selects.background};
       font-size: ${props => props.theme.selects.fontSize};
@@ -47,6 +48,7 @@ export const SelectStyledWrapper = styled.label`
       padding: 0.3rem 2rem 0.3rem 1rem;
       -webkit-appearance: none;
       -moz-appearance: none;
+      outline: none;
     }
   }
   /* stylelint-enable property-no-vendor-prefix */

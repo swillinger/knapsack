@@ -128,10 +128,10 @@ export const baseTheme = {
     },
   },
   details: {
-    borderTop: `solid 1px ${colors.gray.dark}`,
-    borderBottom: `solid 1px ${colors.gray.dark}`,
+    background: '#f2f3f3',
+    border: `solid 1px ${colors.gray.xlight}`,
     margin: '0 0 10px',
-    padding: '7px 0',
+    padding: '5px 7px 1px',
     summary: {
       fontWeight: 'bold',
       fontSize: '1.1rem',

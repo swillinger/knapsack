@@ -33,5 +33,51 @@
         }
       }
     ]
+  },
+  "8ADZrmS_8": {
+    "id": "8ADZrmS_8",
+    "title": "HERE IS A NEW PAGE",
+    "path": "/pages/8ADZrmS_8",
+    "description": "Test content here!",
+    "slices": [
+      {
+        "id": "10NsDJudT",
+        "patternId": "hero",
+        "data": {
+          "title": "Hi baby!",
+          "body": "This is a demo just for you!",
+          "img": "https://basalt-demo-data.netlify.com/imagePlaceholder3.png"
+        }
+      },
+      {
+        "id": "p2RnlCHoz",
+        "patternId": "card",
+        "data": {
+          "title": "I'm a Card Title",
+          "body": "I'm a body - Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "img": "https://basalt-demo-data.netlify.com/imagePlaceholder3.png",
+          "align": "left"
+        }
+      },
+      {
+        "id": "fMntIOErU",
+        "patternId": "card",
+        "data": {
+          "title": "I'm a Card Title",
+          "body": "I'm a body - Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "img": "https://basalt-demo-data.netlify.com/imagePlaceholder3.png",
+          "align": "right"
+        }
+      },
+      {
+        "id": "s-lcRemKU",
+        "patternId": "button",
+        "data": {
+          "text": "Read More!",
+          "url": "https://basalt.io"
+        }
+      }
+    ],
+    "hasVisibleControls": false
   }
 }

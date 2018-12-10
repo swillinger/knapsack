@@ -64,7 +64,6 @@ export default class TokenCategory extends React.Component {
 
   render() {
     const { tokenCategory, children } = this.props;
-    console.log(this.state.results);
     return (
       <CategoryWrapper id={tokenCategory.id}>
         <h2>{tokenCategory.name}</h2>

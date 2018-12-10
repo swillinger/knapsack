@@ -432,11 +432,17 @@ const patternsResolvers = {
     pattern: (parent, { id }, { patterns }) => patterns.getPattern(id),
   },
   Mutation: {
-    setPatternMeta: async (parent, { id, meta }, { patterns }) => {
+    setPatternMeta: async (parent, { id, meta }, { patterns, canWrite }) => {
+      if (!canWrite) return false;
       await patterns.setPatternMeta(id, meta);
       return patterns.getPatternMeta(id);
     },
-    setPatternReadme: async (parent, { id, readme }, { patterns }) => {
+    setPatternReadme: async (
+      parent,
+      { id, readme },
+      { patterns, canWrite },
+    ) => {
+      if (!canWrite) return false;
       await patterns.setPatternReadme(id, readme);
       return patterns.getPatternReadme(id);
     },

@@ -85,7 +85,12 @@ const pageBuilderPagesResolvers = {
       pageBuilderPages.getPageBuilderPages(),
   },
   Mutation: {
-    setPageBuilderPage: async (parent, { id, data }, { pageBuilderPages }) => {
+    setPageBuilderPage: async (
+      parent,
+      { id, data },
+      { pageBuilderPages, canWrite },
+    ) => {
+      if (!canWrite) return false;
       await pageBuilderPages.setPageBuilderPage(id, data);
       return pageBuilderPages.getPageBuilderPage(id);
     },

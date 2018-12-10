@@ -106,8 +106,10 @@ const docsResolvers = {
     doc: (parent, { id }, { docs }) => docs.getDoc(id),
   },
   Mutation: {
-    setDoc: async (parent, { id, content, data }, { docs }) =>
-      docs.setDoc(id, content, data),
+    setDoc: async (parent, { id, content, data }, { docs, canWrite }) => {
+      if (!canWrite) return false;
+      return docs.setDoc(id, content, data);
+    },
   },
 };
 

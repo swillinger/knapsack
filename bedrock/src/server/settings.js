@@ -98,11 +98,21 @@ const settingsResolvers = {
     settingsAll: (parent, args, { settings }) => settings.getSettings(),
   },
   Mutation: {
-    setSettings: (parent, { settings: newSettings }, { settings }) => {
+    setSettings: (
+      parent,
+      { settings: newSettings },
+      { settings, canWrite },
+    ) => {
+      if (!canWrite) return false;
       settings.setSettings(newSettings);
       return settings.getSettings();
     },
-    setSettingsAll: (parent, { settings: newSettings }, { settings }) => {
+    setSettingsAll: (
+      parent,
+      { settings: newSettings },
+      { settings, canWrite },
+    ) => {
+      if (!canWrite) return false;
       settings.setSettings(newSettings);
       return settings.getSettings();
     },

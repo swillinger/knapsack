@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const { join, relative } = require('path');
 const log = require('../cli/log');
 const { getRoutes } = require('./rest-api');
-const { enableTemplatePush } = require('../lib/features');
+const { enableTemplatePush, enableUiSettings } = require('../lib/features');
 const {
   PageBuilder,
   pageBuilderPagesTypeDef,
@@ -105,6 +105,7 @@ async function serve(config, meta) {
       }),
       docs: new Docs({ docsDir: config.docsDir }),
       patterns,
+      canWrite: enableUiSettings,
     }),
     // playground: true,
     // introspection: true,

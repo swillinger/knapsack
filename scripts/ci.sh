@@ -36,19 +36,19 @@ else
   echo "END: yarn test"
   echo "========"
 
-  echo "========"
-  echo "START: e2e-simple"
-  echo "========"
-  if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
-    git checkout $TRAVIS_PULL_REQUEST_BRANCH
-  else
+  if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+    echo "========"
+    echo "START: e2e-simple"
+    echo "========"
     git checkout $TRAVIS_BRANCH
+    ./scripts/e2e-simple.sh
+    echo "========"
+    echo "END: e2e-simple"
+    echo "========"
+  else
+    echo "Not doing e2e testing for this build"
   fi
-  ./scripts/e2e-simple.sh
-  echo "========"
-  echo "END: e2e-simple"
-  echo "========"
-
+  
   if [ "$TRAVIS_BRANCH" = "master" ]; then
     echo "On master branch"
     echo "========"

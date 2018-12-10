@@ -8,7 +8,12 @@ import { TOKEN_FORMATS } from '@basalt/bedrock-design-token-demos/constants';
 import { gqlQuery } from '../data';
 
 const CategoryWrapper = styled.aside`
-  margin-top: 4rem;
+  & + & {
+    margin-top: 4rem;
+  }
+  details {
+    margin-top: 1.5rem;
+  }
 `;
 
 const query = gql`
@@ -64,13 +69,12 @@ export default class TokenCategory extends React.Component {
         <h2>{tokenCategory.name}</h2>
         <div>{children}</div>
         <Details>
-          <div style={{ padding: '10px 0 5px' }}>
-            <Select
-              items={outputFormats}
-              handleChange={this.getFormat}
-              label="Format"
-            />
-          </div>
+          <summary>Token Data</summary>
+          <Select
+            items={outputFormats}
+            handleChange={this.getFormat}
+            label="Format"
+          />
           <pre>
             <code className={`lang-${this.state.format}`}>
               {this.state.results}

@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.17.4](https://github.com/basaltinc/bedrock/compare/v0.17.3...v0.17.4) (2018-12-10)
+
+**Note:** Version bump only for package @basalt/bedrock-example-simple
+
+
+
+
+
+## [0.17.3](https://github.com/basaltinc/bedrock/compare/v0.17.2...v0.17.3) (2018-12-08)
+
+
+### Bug Fixes
+
+* **bedrock:** add Docs header menu item ([a7053fa](https://github.com/basaltinc/bedrock/commit/a7053fa))
+
+
+
+
+
 ## [0.17.2](https://github.com/basaltinc/bedrock/compare/v0.17.1...v0.17.2) (2018-12-08)
 
 

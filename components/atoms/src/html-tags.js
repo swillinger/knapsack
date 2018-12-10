@@ -57,10 +57,11 @@ export const BlockQuoteWrapper = styled.blockquote`
 `;
 
 export const Details = styled.details`
+  background: ${props => props.theme.details.background};
   padding: ${props => props.theme.details.padding};
-  border-top: ${props => props.theme.details.borderTop};
-  border-bottom: ${props => props.theme.details.borderBottom};
+  border: ${props => props.theme.details.border};
   margin: ${props => props.theme.details.margin};
+  width: fit-content;
   > summary {
     font-weight: ${props => props.theme.details.summary.fontWeight};
     font-size: ${props => props.theme.details.summary.fontSize};
@@ -73,5 +74,9 @@ export const Details = styled.details`
     &:focus {
       outline: none;
     }
+  }
+  &[open] {
+    background: #fff;
+    padding-bottom: 7px;
   }
 `;

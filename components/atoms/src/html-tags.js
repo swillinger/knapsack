@@ -62,7 +62,6 @@ export const Details = styled.details`
   border: ${props => props.theme.details.border};
   margin: ${props => props.theme.details.margin};
   width: fit-content;
-  //transition: all 0.2s ease-in-out;
   > summary {
     font-weight: ${props => props.theme.details.summary.fontWeight};
     font-size: ${props => props.theme.details.summary.fontSize};

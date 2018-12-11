@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.18.0](https://github.com/basaltinc/bedrock/compare/v0.17.6...v0.18.0) (2018-12-11)
+
+
+### Features
+
+* Add GPL v2 License ([d9806a1](https://github.com/basaltinc/bedrock/commit/d9806a1))
+
+
+
+
+
 ## [0.17.6](https://github.com/basaltinc/bedrock/compare/v0.17.5...v0.17.6) (2018-12-11)
 
 **Note:** Version bump only for package @basalt/bedrock-api-demo

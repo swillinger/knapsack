@@ -20,7 +20,7 @@ const isProd = process.env.NODE_ENV === 'production';
 module.exports = {
   enableBlockquotes: false,
   // enableUiSettings: process.env.BEDROCK_ENABLE_UI_SETTINGS === 'yes',
-  enableUiSettings: !isProd,
+  enableUiSettings: true,
   // @todo fix ability to create new patterns via UI
   enableUiCreatePattern: false,
   enableTemplatePush: !isProd,

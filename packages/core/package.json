@@ -1,6 +1,6 @@
 {
   "name": "@basalt/bedrock-core",
-  "license": "GPL-2.0-only",
+  "license": "GPL-2.0-or-later",
   "version": "0.18.0",
   "description": "The core of Bedrock",
   "main": "dist/index.js",

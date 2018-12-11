@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.17.5](https://github.com/basaltinc/bedrock/compare/v0.17.4...v0.17.5) (2018-12-11)
+
+
+### Bug Fixes
+
+* **bedrock:** fix feature logic on UI schema lock down ([6f58095](https://github.com/basaltinc/bedrock/commit/6f58095))
+
+
+
+
+
 ## [0.17.4](https://github.com/basaltinc/bedrock/compare/v0.17.3...v0.17.4) (2018-12-10)
 
 **Note:** Version bump only for package @basalt/bedrock

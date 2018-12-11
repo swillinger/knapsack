@@ -1,5 +1,6 @@
 {
   "name": "@basalt/bedrock-design-token-demos",
+  "license": "GPL-2.0-only",
   "version": "0.17.6",
   "description": "A collection of design token category demos that each show off a single CSS property.",
   "module": "dist/index.js",

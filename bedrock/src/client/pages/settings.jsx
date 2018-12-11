@@ -4,9 +4,9 @@ import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import Spinner from '@basalt/bedrock-spinner';
 import { StatusMessage } from '@basalt/bedrock-atoms';
+import { BedrockContext } from '@basalt/bedrock-core';
 import bedrockSettingsSchema from '../../schemas/bedrock.settings.schema';
 import PageWithSidebar from '../layouts/page-with-sidebar';
-import { enableUiSettings } from '../../lib/features';
 
 // @todo implement parentbrand fully
 const query = gql`
@@ -31,6 +31,8 @@ const SET_SETTINGS = gql`
 `;
 
 class SettingsPage extends Component {
+  static contextType = BedrockContext;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -70,7 +72,7 @@ class SettingsPage extends Component {
                         schema={bedrockSettingsSchema}
                         formData={settings}
                         onSubmit={({ formData }) => {
-                          if (enableUiSettings) {
+                          if (this.context.features.enableUiSettings) {
                             setSettings({
                               variables: {
                                 settings: formData,

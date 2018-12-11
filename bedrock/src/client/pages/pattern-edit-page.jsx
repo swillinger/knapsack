@@ -5,11 +5,11 @@ import gql from 'graphql-tag';
 import SchemaForm from '@basalt/bedrock-schema-form';
 import { StatusMessage } from '@basalt/bedrock-atoms';
 import Spinner from '@basalt/bedrock-spinner';
+import { BedrockContext } from '@basalt/bedrock-core';
 import urlJoin from 'url-join';
 import patternMetaSchema from '../../schemas/pattern-meta.schema';
 import PageWithSidebar from '../layouts/page-with-sidebar';
 import { BASE_PATHS } from '../../lib/constants';
-import { enableUiSettings } from '../../lib/features';
 
 const patternIdsQuery = gql`
   query PatternEditMeta($id: ID) {
@@ -35,6 +35,8 @@ const patternMetaMutation = gql`
 `;
 
 class PatternEdit extends Component {
+  static contextType = BedrockContext;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -44,7 +46,7 @@ class PatternEdit extends Component {
   }
 
   updatePatternMetaRedirect() {
-    if (enableUiSettings) {
+    if (this.context.features.enableUiSettings) {
       // redirect to full page using a full reload so we don't need to worry about cached queries (like in the secondary nav)
       // @todo @joe fix this so a page reload is not required
       window.location.pathname = urlJoin(BASE_PATHS.PATTERNS, this.props.id);
@@ -52,6 +54,7 @@ class PatternEdit extends Component {
   }
 
   render() {
+    const { enableUiSettings } = this.context.features;
     return (
       <PageWithSidebar {...this.props}>
         <Query query={patternIdsQuery} variables={{ id: this.props.id }}>

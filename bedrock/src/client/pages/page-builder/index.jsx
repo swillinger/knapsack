@@ -17,7 +17,6 @@ import PageBuilderSidebar, {
   SIDEBAR_PATTERNS,
 } from './page-builder-sidebar';
 import { MainContent, StartInsertSlice } from './page-builder.styles';
-import { enableUiSettings } from '../../../lib/features';
 
 const query = gql`
   query PageBuilerPages($id: ID) {
@@ -110,7 +109,7 @@ class Playground extends Component {
    * @return {Promise<Object> | null} - Returns the structued object defined by the mutation.
    */
   async save(setPageBuilderPage) {
-    if (!enableUiSettings) {
+    if (!this.props.context.features.enableUiSettings) {
       this.setState({
         statusMessage:
           'Updating and saving data has been disabled through feature flags. This page builder example cannot be saved at this time.',

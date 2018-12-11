@@ -14,7 +14,6 @@ import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
 import { apiUrlBase } from '../data';
 import { BASE_PATHS } from '../../lib/constants';
 import PageWithSidebar from '../layouts/page-with-sidebar';
-import { enableUiSettings } from '../../lib/features';
 
 const examplesQuery = gql`
   {
@@ -35,7 +34,7 @@ class PageBuilderLandingPage extends Component {
   }
 
   makeNewExample() {
-    if (!enableUiSettings) {
+    if (!this.props.context.features.enableUiSettings) {
       this.setState({
         statusMessage:
           'A new page builder example can not be made at this time as this feature has been disabled on this sie.',

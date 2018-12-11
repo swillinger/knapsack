@@ -19,7 +19,6 @@ import {
 import DosAndDonts from '../components/dos-and-donts';
 import PageWithSidebar from '../layouts/page-with-sidebar';
 import { BASE_PATHS } from '../../lib/constants';
-import { enableUiSettings } from '../../lib/features';
 import { gqlToString } from '../data';
 
 const OverviewHeader = styled.header`
@@ -218,7 +217,7 @@ class PatternViewPage extends Component {
                         return (
                           <MdBlock
                             md={readme}
-                            isEditable={enableUiSettings}
+                            isEditable={this.context.features.enableUiSettings}
                             title="Documentation"
                             handleSave={newReadme => {
                               setPatternReadme({

@@ -48,8 +48,17 @@ else
   else
     echo "Not doing e2e testing for this build"
   fi
-  
+
   if [ "$TRAVIS_BRANCH" = "master" ]; then
+    echo "========"
+    echo "START: e2e-simple"
+    echo "========"
+    git checkout $TRAVIS_BRANCH
+    ./scripts/e2e-simple.sh
+    echo "========"
+    echo "END: e2e-simple"
+    echo "========"
+
     echo "On master branch"
     echo "========"
     echo "START: release"

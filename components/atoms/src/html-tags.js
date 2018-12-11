@@ -61,7 +61,6 @@ export const Details = styled.details`
   padding: ${props => props.theme.details.padding};
   border: ${props => props.theme.details.border};
   margin: ${props => props.theme.details.margin};
-  width: fit-content;
   > summary {
     font-weight: ${props => props.theme.details.summary.fontWeight};
     font-size: ${props => props.theme.details.summary.fontSize};

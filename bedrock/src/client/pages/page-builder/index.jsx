@@ -1,3 +1,19 @@
+/**
+ *  Copyright (C) 2018 Basalt
+    This file is part of Bedrock.
+    Bedrock is free software; you can redistribute it and/or modify it
+    under the terms of the GNU General Public License as published by the Free
+    Software Foundation; either version 2 of the License, or (at your option)
+    any later version.
+
+    Bedrock is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+    more details.
+
+    You should have received a copy of the GNU General Public License along
+    with Bedrock; if not, see <https://www.gnu.org/licenses>.
+ */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import arrayMove from 'array-move';
@@ -17,7 +33,6 @@ import PageBuilderSidebar, {
   SIDEBAR_PATTERNS,
 } from './page-builder-sidebar';
 import { MainContent, StartInsertSlice } from './page-builder.styles';
-import { enableUiSettings } from '../../../lib/features';
 
 const query = gql`
   query PageBuilerPages($id: ID) {
@@ -110,7 +125,7 @@ class Playground extends Component {
    * @return {Promise<Object> | null} - Returns the structued object defined by the mutation.
    */
   async save(setPageBuilderPage) {
-    if (!enableUiSettings) {
+    if (!this.props.context.features.enableUiSettings) {
       this.setState({
         statusMessage:
           'Updating and saving data has been disabled through feature flags. This page builder example cannot be saved at this time.',

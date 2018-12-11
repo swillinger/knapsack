@@ -1,6 +1,7 @@
 {
   "name": "@basalt/bedrock-design-token-demos",
-  "version": "0.17.4",
+  "license": "UNLICENSED",
+  "version": "0.18.0",
   "description": "A collection of design token category demos that each show off a single CSS property.",
   "module": "dist/index.js",
   "main": "dist/index.js",
@@ -19,13 +20,12 @@
     "styled-components": "^4.0.2"
   },
   "author": "Basalt (https://basalt.io/)",
-  "license": "UNLICENSED",
   "dependencies": {
-    "@basalt/bedrock-atoms": "^0.17.4",
-    "@basalt/bedrock-breakpoints-demo": "^0.17.4",
-    "@basalt/bedrock-color-swatch": "^0.17.4",
-    "@basalt/bedrock-core": "^0.17.4",
-    "@basalt/bedrock-spacing-swatch": "^0.17.4"
+    "@basalt/bedrock-atoms": "^0.18.0",
+    "@basalt/bedrock-breakpoints-demo": "^0.18.0",
+    "@basalt/bedrock-color-swatch": "^0.18.0",
+    "@basalt/bedrock-core": "^0.18.0",
+    "@basalt/bedrock-spacing-swatch": "^0.18.0"
   },
   "files": [
     "./dist",

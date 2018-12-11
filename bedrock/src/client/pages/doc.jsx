@@ -1,4 +1,20 @@
-import React from 'react';
+/**
+ *  Copyright (C) 2018 Basalt
+    This file is part of Bedrock.
+    Bedrock is free software; you can redistribute it and/or modify it
+    under the terms of the GNU General Public License as published by the Free
+    Software Foundation; either version 2 of the License, or (at your option)
+    any later version.
+
+    Bedrock is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+    more details.
+
+    You should have received a copy of the GNU General Public License along
+    with Bedrock; if not, see <https://www.gnu.org/licenses>.
+ */
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import Spinner from '@basalt/bedrock-spinner';
@@ -7,11 +23,11 @@ import { Mutation, Query } from 'react-apollo';
 import { Link } from 'react-router-dom';
 import gql from 'graphql-tag';
 import { StatusMessage, Button } from '@basalt/bedrock-atoms';
+import { BedrockContext } from '@basalt/bedrock-core';
 import MdBlock from '../components/md-block';
 import { gqlToString } from '../data';
 import { BASE_PATHS } from '../../lib/constants';
 import PageWithSidebar from '../layouts/page-with-sidebar';
-import { enableUiSettings } from '../../lib/features';
 
 const query = gql`
   query DocPage($id: ID!) {
@@ -33,72 +49,76 @@ const updateDoc = gql`
   }
 `;
 
-function DocPage(props) {
-  return (
-    <Query query={query} variables={{ id: props.id }}>
-      {({ loading, error, data }) => {
-        if (loading) {
-          return <Spinner />;
-        }
-        if (error) {
-          return <StatusMessage message={error.message} type="error" />;
-        }
+class DocPage extends Component {
+  static contextType = BedrockContext;
 
-        const {
-          content,
-          data: { title },
-        } = data.doc;
-        return (
-          <PageWithSidebar {...props} className="doc-group">
-            <div>
-              <h4 className="eyebrow">Docs</h4>
-              <header
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <h2>{title}</h2>
-                <Button>
-                  <Link
-                    to={`${
-                      BASE_PATHS.GRAPHIQL_PLAYGROUND
-                    }?${queryString.stringify({
-                      query: gqlToString(query),
-                      variables: JSON.stringify({
-                        id: props.id,
-                      }),
-                    })}`}
-                  >
-                    See API
-                  </Link>
-                </Button>
-              </header>
+  render() {
+    return (
+      <Query query={query} variables={{ id: this.props.id }}>
+        {({ loading, error, data }) => {
+          if (loading) {
+            return <Spinner />;
+          }
+          if (error) {
+            return <StatusMessage message={error.message} type="error" />;
+          }
+
+          const {
+            content,
+            data: { title },
+          } = data.doc;
+          return (
+            <PageWithSidebar {...this.props} className="doc-group">
               <div>
-                <Mutation mutation={updateDoc} ignoreResults>
-                  {setDoc => (
-                    <MdBlock
-                      md={content}
-                      isEditable={enableUiSettings}
-                      title={title}
-                      handleSave={async newContent => {
-                        await setDoc({
-                          variables: {
-                            id: props.id,
-                            content: newContent,
-                          },
-                        });
-                      }}
-                    />
-                  )}
-                </Mutation>
+                <h4 className="eyebrow">Docs</h4>
+                <header
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <h2>{title}</h2>
+                  <Button>
+                    <Link
+                      to={`${
+                        BASE_PATHS.GRAPHIQL_PLAYGROUND
+                      }?${queryString.stringify({
+                        query: gqlToString(query),
+                        variables: JSON.stringify({
+                          id: this.props.id,
+                        }),
+                      })}`}
+                    >
+                      See API
+                    </Link>
+                  </Button>
+                </header>
+                <div>
+                  <Mutation mutation={updateDoc} ignoreResults>
+                    {setDoc => (
+                      <MdBlock
+                        md={content}
+                        isEditable={this.context.features.enableUiSettings}
+                        title={title}
+                        handleSave={async newContent => {
+                          await setDoc({
+                            variables: {
+                              id: this.props.id,
+                              content: newContent,
+                            },
+                          });
+                        }}
+                      />
+                    )}
+                  </Mutation>
+                </div>
               </div>
-            </div>
-          </PageWithSidebar>
-        );
-      }}
-    </Query>
-  );
+            </PageWithSidebar>
+          );
+        }}
+      </Query>
+    );
+  }
 }
 
 DocPage.propTypes = {

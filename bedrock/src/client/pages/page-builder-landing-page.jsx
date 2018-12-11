@@ -1,3 +1,19 @@
+/**
+ *  Copyright (C) 2018 Basalt
+    This file is part of Bedrock.
+    Bedrock is free software; you can redistribute it and/or modify it
+    under the terms of the GNU General Public License as published by the Free
+    Software Foundation; either version 2 of the License, or (at your option)
+    any later version.
+
+    Bedrock is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+    more details.
+
+    You should have received a copy of the GNU General Public License along
+    with Bedrock; if not, see <https://www.gnu.org/licenses>.
+ */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -14,7 +30,6 @@ import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
 import { apiUrlBase } from '../data';
 import { BASE_PATHS } from '../../lib/constants';
 import PageWithSidebar from '../layouts/page-with-sidebar';
-import { enableUiSettings } from '../../lib/features';
 
 const examplesQuery = gql`
   {
@@ -35,7 +50,7 @@ class PageBuilderLandingPage extends Component {
   }
 
   makeNewExample() {
-    if (!enableUiSettings) {
+    if (!this.props.context.features.enableUiSettings) {
       this.setState({
         statusMessage:
           'A new page builder example can not be made at this time as this feature has been disabled on this sie.',

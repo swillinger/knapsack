@@ -1,12 +1,28 @@
+/**
+ *  Copyright (C) 2018 Basalt
+    This file is part of Bedrock.
+    Bedrock is free software; you can redistribute it and/or modify it
+    under the terms of the GNU General Public License as published by the Free
+    Software Foundation; either version 2 of the License, or (at your option)
+    any later version.
+
+    Bedrock is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+    more details.
+
+    You should have received a copy of the GNU General Public License along
+    with Bedrock; if not, see <https://www.gnu.org/licenses>.
+ */
 import React, { Component } from 'react';
 import SchemaForm from '@basalt/bedrock-schema-form';
 import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import Spinner from '@basalt/bedrock-spinner';
 import { StatusMessage } from '@basalt/bedrock-atoms';
+import { BedrockContext } from '@basalt/bedrock-core';
 import bedrockSettingsSchema from '../../schemas/bedrock.settings.schema';
 import PageWithSidebar from '../layouts/page-with-sidebar';
-import { enableUiSettings } from '../../lib/features';
 
 // @todo implement parentbrand fully
 const query = gql`
@@ -31,6 +47,8 @@ const SET_SETTINGS = gql`
 `;
 
 class SettingsPage extends Component {
+  static contextType = BedrockContext;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -70,7 +88,7 @@ class SettingsPage extends Component {
                         schema={bedrockSettingsSchema}
                         formData={settings}
                         onSubmit={({ formData }) => {
-                          if (enableUiSettings) {
+                          if (this.context.features.enableUiSettings) {
                             setSettings({
                               variables: {
                                 settings: formData,

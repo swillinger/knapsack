@@ -1,5 +1,6 @@
 {
   "name": "@basalt/bedrock-monorepo",
+  "license": "GPL-2.0-only",
   "private": true,
   "scripts": {
     "build:bedrock": "FORCE_COLOR=1 lerna run build --scope @basalt/bedrock",
@@ -93,6 +94,5 @@
   "homepage": "https://getbedrock.com",
   "bugs": {
     "url": "https://github.com/basaltinc/bedrock/issues"
-  },
-  "license": "SEE LICENSE IN LICENSE"
+  }
 }

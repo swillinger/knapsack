@@ -13,6 +13,7 @@ const CategoryWrapper = styled.aside`
   }
   details {
     margin-top: 1.5rem;
+    width: fit-content;
   }
 `;
 

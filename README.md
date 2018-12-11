@@ -1,5 +1,7 @@
 # Bedrock
 
+[See docs here](https://www.getbedrock.com/docs) 
+
 - Demo: <https://demo.getbedrock.com>
 - Basalt's Design System, Crux, built on Bedrock: <https://design.basalt.io>
 

@@ -1,5 +1,6 @@
 {
   "name": "@basalt/bedrock-babel-config",
+  "license": "GPL-2.0-only",
   "version": "0.17.0",
   "description": "Babel config and deps.",
   "main": "index.js",

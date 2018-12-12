@@ -98,7 +98,7 @@ class DocPage extends Component {
                     {setDoc => (
                       <MdBlock
                         md={content}
-                        isEditable={this.context.features.enableUiSettings}
+                        isEditable={this.context.permissions.includes('write')}
                         title={title}
                         handleSave={async newContent => {
                           await setDoc({

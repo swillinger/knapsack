@@ -125,7 +125,7 @@ class Playground extends Component {
    * @return {Promise<Object> | null} - Returns the structued object defined by the mutation.
    */
   async save(setPageBuilderPage) {
-    if (!this.props.context.features.enableUiSettings) {
+    if (!this.props.context.permissions.includes('write')) {
       this.setState({
         statusMessage:
           'Updating and saving data has been disabled through feature flags. This page builder example cannot be saved at this time.',

@@ -22,7 +22,9 @@ const bodyParser = require('body-parser');
 const { join, relative } = require('path');
 const log = require('../cli/log');
 const { getRoutes } = require('./rest-api');
-const { enableTemplatePush, enableUiSettings } = require('../lib/features');
+const { enableTemplatePush } = require('../lib/features');
+const { getRole } = require('./auth');
+const { PERMISSIONS } = require('../lib/constants');
 const {
   PageBuilder,
   pageBuilderPagesTypeDef,
@@ -112,17 +114,23 @@ async function serve(config, meta) {
       ],
     }),
     // https://www.apollographql.com/docs/apollo-server/essentials/data.html#context
-    context: ({ req }) => ({// eslint-disable-line
-      pageBuilderPages: new PageBuilder({ dataDir: config.data }),
-      settings,
-      tokens: new DesignTokens({
-        tokenPath: config.designTokens,
-        tokenGroups: settings.getSetting('designTokens').groups,
-      }),
-      docs: new Docs({ docsDir: config.docsDir }),
-      patterns,
-      canWrite: enableUiSettings,
-    }),
+    context: ({ req }) => {
+      // const { host, origin } = req.headers;
+      // log.verbose('request received', { host, origin }, 'graphql');
+      const role = getRole(req);
+      const canWrite = role.permissions.includes(PERMISSIONS.WRITE);
+      return {
+        pageBuilderPages: new PageBuilder({ dataDir: config.data }),
+        settings,
+        tokens: new DesignTokens({
+          tokenPath: config.designTokens,
+          tokenGroups: settings.getSetting('designTokens').groups,
+        }),
+        docs: new Docs({ docsDir: config.docsDir }),
+        patterns,
+        canWrite,
+      };
+    },
     // playground: true,
     // introspection: true,
   });
@@ -146,6 +154,7 @@ async function serve(config, meta) {
     app.use('*', (req, res, next) => {
       const { accept = '' } = req.headers;
       const accepted = accept.split(',');
+      // this is for serving up a Netlify CMS folder if present
       if (!req.baseUrl.startsWith('/admin') && accepted.includes('text/html')) {
         res.sendFile(join(config.dist, 'index.html'));
       } else {

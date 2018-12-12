@@ -233,7 +233,9 @@ class PatternViewPage extends Component {
                         return (
                           <MdBlock
                             md={readme}
-                            isEditable={this.context.features.enableUiSettings}
+                            isEditable={this.context.permissions.includes(
+                              'write',
+                            )}
                             title="Documentation"
                             handleSave={newReadme => {
                               setPatternReadme({

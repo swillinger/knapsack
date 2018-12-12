@@ -50,7 +50,7 @@ class PageBuilderLandingPage extends Component {
   }
 
   makeNewExample() {
-    if (!this.props.context.features.enableUiSettings) {
+    if (!this.props.context.permissions.includes('write')) {
       this.setState({
         statusMessage:
           'A new page builder example can not be made at this time as this feature has been disabled on this sie.',

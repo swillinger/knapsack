@@ -23,6 +23,8 @@ import { Link } from 'react-router-dom';
 export const MainContent = styled.div`
   flex-grow: 1;
   box-sizing: border-box;
+  max-width: 1200px;
+  margin: 0 auto;
 `;
 
 export const StartInsertSlice = styled.div`

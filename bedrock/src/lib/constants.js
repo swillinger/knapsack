@@ -14,6 +14,12 @@
     You should have received a copy of the GNU General Public License along
     with Bedrock; if not, see <https://www.gnu.org/licenses>.
  */
+
+const PERMISSIONS = {
+  READ: 'read',
+  WRITE: 'write',
+};
+
 /**
  * Base Paths for URLs
  * DO NOT INCLUDE TRAILING SLASH!
@@ -36,4 +42,5 @@ const FILE_NAMES = {
 module.exports = {
   BASE_PATHS,
   FILE_NAMES,
+  PERMISSIONS,
 };

@@ -88,7 +88,7 @@ class SettingsPage extends Component {
                         schema={bedrockSettingsSchema}
                         formData={settings}
                         onSubmit={({ formData }) => {
-                          if (this.context.features.enableUiSettings) {
+                          if (this.context.permissions.includes('write')) {
                             setSettings({
                               variables: {
                                 settings: formData,

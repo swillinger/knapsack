@@ -62,7 +62,7 @@ class PatternEdit extends Component {
   }
 
   updatePatternMetaRedirect() {
-    if (this.context.features.enableUiSettings) {
+    if (this.context.permissions.includes('write')) {
       // redirect to full page using a full reload so we don't need to worry about cached queries (like in the secondary nav)
       // @todo @joe fix this so a page reload is not required
       window.location.pathname = urlJoin(BASE_PATHS.PATTERNS, this.props.id);
@@ -70,7 +70,6 @@ class PatternEdit extends Component {
   }
 
   render() {
-    const { enableUiSettings } = this.context.features;
     return (
       <PageWithSidebar {...this.props}>
         <Query query={patternIdsQuery} variables={{ id: this.props.id }}>
@@ -107,7 +106,7 @@ class PatternEdit extends Component {
                         formData={data.pattern.meta}
                         hasSubmit
                         onSubmit={async ({ formData }) => {
-                          if (!enableUiSettings) {
+                          if (!this.context.permissions.includes('write')) {
                             this.setState({
                               statusMessage:
                                 'Editing pattern meta has been disabled on this site.',

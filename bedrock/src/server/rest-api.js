@@ -22,6 +22,7 @@ const highlight = require('highlight.js');
 const { wrapHtml } = require('./templates');
 const { BASE_PATHS } = require('../lib/constants');
 const { enableUiSettings } = require('../lib/features');
+const { getRole } = require('./auth');
 
 const router = express.Router();
 
@@ -285,6 +286,13 @@ function getRoutes(config) {
   registerEndpoint(url5);
   router.get(url5, (req, res) => {
     res.send(config.meta);
+  });
+
+  const url6 = urlJoin(config.baseUrl, 'permissions');
+  registerEndpoint(url6);
+  router.get(url6, (req, res) => {
+    const role = getRole(req);
+    res.send(role.permissions);
   });
 
   return router;

@@ -65,6 +65,7 @@ class App extends React.Component {
       patterns: [],
       settings: {},
       sections: [],
+      permissions: [],
       meta: {},
       ready: false,
     };
@@ -94,6 +95,12 @@ class App extends React.Component {
         .then(res => res.json())
         .then(meta => ({
           meta,
+        })),
+      window
+        .fetch(`${this.apiEndpoint}/permissions`)
+        .then(res => res.json())
+        .then(permissions => ({
+          permissions,
         })),
       window
         .fetch(`${this.apiEndpoint}/patterns`)
@@ -131,6 +138,7 @@ class App extends React.Component {
       settings: this.state.settings,
       features: this.props.features,
       meta: this.state.meta,
+      permissions: this.state.permissions,
       setSettings: newSettings => this.setState({ settings: newSettings }),
     });
 
@@ -249,16 +257,18 @@ class App extends React.Component {
                               <LoadablePatternsPage {...props} />
                             )}
                           />
-                          <Route
-                            path={`${BASE_PATHS.PATTERNS}/:id/edit`}
-                            render={({ match, ...rest }) => (
-                              <LoadablePatternEdit
-                                {...rest}
-                                id={match.params.id}
-                                key={match.params.id}
-                              />
-                            )}
-                          />
+                          {this.state.permissions.includes('write') && (
+                            <Route
+                              path={`${BASE_PATHS.PATTERNS}/:id/edit`}
+                              render={({ match, ...rest }) => (
+                                <LoadablePatternEdit
+                                  {...rest}
+                                  id={match.params.id}
+                                  key={match.params.id}
+                                />
+                              )}
+                            />
+                          )}
                           <Route
                             path={`${BASE_PATHS.DESIGN_TOKENS}/:id`}
                             render={({ match }) => (
@@ -277,11 +287,15 @@ class App extends React.Component {
                               />
                             )}
                           />
-                          <Route
-                            path="/new-pattern"
-                            exact
-                            render={props => <LoadablePatternNew {...props} />}
-                          />
+                          {this.state.permissions.includes('write') && (
+                            <Route
+                              path="/new-pattern"
+                              exact
+                              render={props => (
+                                <LoadablePatternNew {...props} />
+                              )}
+                            />
+                          )}
                           <Route
                             path={`${BASE_PATHS.GRAPHIQL_PLAYGROUND}`}
                             exact
@@ -289,13 +303,15 @@ class App extends React.Component {
                               <LoadableGraphiqlPage {...props} />
                             )}
                           />
-                          <Route
-                            path="/settings"
-                            exact
-                            render={props => (
-                              <LoadableSettingsPage {...props} />
-                            )}
-                          />
+                          {this.state.permissions.includes('write') && (
+                            <Route
+                              path="/settings"
+                              exact
+                              render={props => (
+                                <LoadableSettingsPage {...props} />
+                              )}
+                            />
+                          )}
                           <Route
                             path={`${BASE_PATHS.PATTERNS}/:id`}
                             render={({ match, ...rest }) => {

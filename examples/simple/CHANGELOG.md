@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/basaltinc/bedrock/compare/v0.18.2...v0.19.0) (2018-12-12)
+
+
+### Bug Fixes
+
+* **bedrock:** set max-width to 1200px for Page Builder ([aff2e05](https://github.com/basaltinc/bedrock/commit/aff2e05))
+
+
+### Features
+
+* **bedrock:** setup super basic permissions for read/write ([70a51cd](https://github.com/basaltinc/bedrock/commit/70a51cd))
+
+
+
+
+
+## [0.18.2](https://github.com/basaltinc/bedrock/compare/v0.18.1...v0.18.2) (2018-12-11)
+
+**Note:** Version bump only for package @basalt/bedrock-example-simple
+
+
+
+
+
+## [0.18.1](https://github.com/basaltinc/bedrock/compare/v0.18.0...v0.18.1) (2018-12-11)
+
+**Note:** Version bump only for package @basalt/bedrock-example-simple
+
+
+
+
+
 # [0.18.0](https://github.com/basaltinc/bedrock/compare/v0.17.6...v0.18.0) (2018-12-11)
 
 

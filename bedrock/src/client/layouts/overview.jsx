@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom';
 import SchemaForm from '@basalt/bedrock-schema-form';
 import { Button, Select } from '@basalt/bedrock-atoms';
 import CodeBlock from '@basalt/bedrock-code-block';
+import { BedrockContext } from '@basalt/bedrock-core';
 import Template from '../components/template';
 import { enableCodeBlockLiveEdit } from '../../lib/features';
 import {
@@ -54,6 +55,8 @@ const sizes = [
 ];
 
 class Overview extends React.Component {
+  static contextType = BedrockContext;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -102,9 +105,11 @@ class Overview extends React.Component {
             >
               {this.state.fullScreen ? 'Show Controls' : 'Fullscreen'}
             </Button>
-            <Link to={`/patterns/${this.props.id}/edit`}>
-              <Button>Edit Meta</Button>
-            </Link>
+            {this.context.permissions.includes('write') && (
+              <Link to={`/patterns/${this.props.id}/edit`}>
+                <Button>Edit Meta</Button>
+              </Link>
+            )}
           </DemoGridControls>
         </FlexWrapper>
         <DemoGrid size={this.state.size}>

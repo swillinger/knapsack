@@ -1,6 +1,6 @@
 {
   "name": "<%= name %>",
-  "license": "GPL-2.0-only",
+  "license": "GPL-2.0-or-later",
   "version": "1.0.0",
   "description": "",
   "private": true,
@@ -8,7 +8,7 @@
   "scripts": {
     "build": "NODE_ENV=production bedrock build",
     "build:tokens": "theo ./design-tokens/tokens.yml --transform web --format raw.json,scss,html --dest ./assets/dist/tokens",
-    "serve": "bedrock serve",
+    "serve": "NODE_ENV=production bedrock serve",
     "start": "bedrock start"
   },
   "dependencies": {

@@ -36,7 +36,7 @@ else
   echo "END: yarn test"
   echo "========"
 
-  if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+  if [[ "$TRAVIS_PULL_REQUEST" == "false" ]]; then
     echo "========"
     echo "START: e2e-simple"
     echo "========"
@@ -49,7 +49,7 @@ else
     echo "Not doing e2e testing for this build"
   fi
 
-  if [ "$TRAVIS_BRANCH" = "master" ]; then
+  if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then
     echo "========"
     echo "START: e2e-simple"
     echo "========"

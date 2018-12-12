@@ -53,13 +53,13 @@ class PageBuilderLandingPage extends Component {
     if (!this.props.context.permissions.includes('write')) {
       this.setState({
         statusMessage:
-          'A new page builder example can not be made at this time as this feature has been disabled on this sie.',
+          'A new page builder example can not be made at this time as this feature has been disabled on this instance. Please see your configuration to make adjustments.',
       });
       setTimeout(() => {
         this.setState({
           statusMessage: '',
         });
-      }, 3000);
+      }, 8000);
     } else {
       const id = shortid.generate();
       window
@@ -135,14 +135,20 @@ class PageBuilderLandingPage extends Component {
               </TwoUp>
               <div>
                 <h3>Create a New Page</h3>
-                <Button
-                  primary
-                  onClick={this.makeNewExample}
-                  onKeyPress={this.makeNewExample}
-                  type="submit"
-                >
-                  Get Started
-                </Button>
+                {(this.props.context.permissions.includes('write') && (
+                  <Button
+                    primary
+                    onClick={this.makeNewExample}
+                    onKeyPress={this.makeNewExample}
+                    type="submit"
+                  >
+                    Get Started
+                  </Button>
+                )) || (
+                  <Button primary type="submit" disabled>
+                    Get Started (disabled)
+                  </Button>
+                )}
               </div>
             </PageWithSidebar>
           );

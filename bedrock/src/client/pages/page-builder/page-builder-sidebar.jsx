@@ -158,7 +158,7 @@ class PageBuilderSidebar extends Component {
           }}
         />
         <div style={{ display: 'flex' }}>
-          {this.context.permissions.includes('write') && (
+          {(this.context.permissions.includes('write') && (
             <Button
               type="submit"
               onKeyPress={() => this.props.handleSave()}
@@ -166,6 +166,10 @@ class PageBuilderSidebar extends Component {
               primary
             >
               Save
+            </Button>
+          )) || (
+            <Button type="submit" primary disabled>
+              Save (disabled)
             </Button>
           )}
           <PlaygroundStyledLink

@@ -14,7 +14,7 @@
  You should have received a copy of the GNU General Public License along
  with Bedrock; if not, see <https://www.gnu.org/licenses>.
  */
-const log = require('../cli/log');
+
 const { PERMISSIONS } = require('../lib/constants');
 
 const isProd = process.env.NODE_ENV === 'production';
@@ -30,8 +30,10 @@ const ROLES = {
   },
 };
 
+/* eslint-disable no-unused-vars */
+
 /**
- * @param {IncomingMessage} req
+ * @param {Object} req - Is type `IncomingMessage` @todo set correctly
  * @returns {{ id: string, permissions: string[] }} - Role
  */
 function getRole(req) {
@@ -41,6 +43,8 @@ function getRole(req) {
   }
   return role;
 }
+
+/* eslint-enable no-unused-vars */
 
 module.exports = {
   getRole,

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/basaltinc/bedrock/compare/v0.18.2...v0.19.0) (2018-12-12)
+
+
+### Features
+
+* **bedrock:** setup super basic permissions for read/write ([70a51cd](https://github.com/basaltinc/bedrock/commit/70a51cd))
+
+
+
+
+
 ## [0.18.1](https://github.com/basaltinc/bedrock/compare/v0.18.0...v0.18.1) (2018-12-11)
 
 

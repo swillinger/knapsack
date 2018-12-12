@@ -1,7 +1,7 @@
 {
   "name": "@basalt/bedrock-example-simple",
   "license": "ISC",
-  "version": "0.18.2",
+  "version": "0.19.0",
   "description": "",
   "private": true,
   "main": "index.js",
@@ -12,7 +12,7 @@
     "start": "node $NODE_DEBUG_OPTION ./node_modules/.bin/bedrock start"
   },
   "dependencies": {
-    "@basalt/bedrock": "^0.18.2",
+    "@basalt/bedrock": "^0.19.0",
     "@basalt/demo-data": "^0.5.1",
     "@basalt/twig-renderer": "^0.10.2"
   },

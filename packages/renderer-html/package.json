@@ -3,11 +3,7 @@
   "version": "0.17.1",
   "description": "Render HTML",
   "main": "src/index.js",
-  "scripts": {
-    "build": "babel --config-file @basalt/bedrock-babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
-    "prepublishOnly": "yarn build",
-    "watch": "yarn build --watch"
-  },
+  "scripts": {},
   "dependencies": {
     "@basalt/bedrock-renderer-base": "^0.17.1",
     "fs-extra": "^7.0.1"
@@ -15,9 +11,6 @@
   "peerDependencies": {
   },
   "author": "Basalt (https://basalt.io/)",
-  "files": [
-    "./dist"
-  ],
   "publishConfig": {
     "access": "public"
   }

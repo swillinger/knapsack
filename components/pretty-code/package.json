@@ -1,27 +1,22 @@
 {
-  "name": "@basalt/bedrock-code-block",
-  "license": "GPL-2.0-or-later",
-  "version": "0.19.0",
-  "description": "A Bedrock component that helps build Design Systems",
-  "module": "dist/code-block.js",
-  "main": "dist/code-block.js",
+  "name": "@basalt/bedrock-pretty-code",
+  "version": "0.17.4",
+  "description": "A Bedrock component for syntax highlighting code",
+  "module": "dist/pretty-code.js",
+  "main": "dist/pretty-code.js",
   "scripts": {
     "build": "babel --config-file @basalt/bedrock-babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
     "prepublishOnly": "yarn build",
     "watch": "yarn build --watch"
   },
   "dependencies": {
-    "@basalt/bedrock-pretty-code": "^0.17.4",
-    "@basalt/bedrock-atoms": "^0.19.0",
-    "@basalt/bedrock-core": "^0.19.0",
-    "@basalt/bedrock-utils": "^0.19.0"
+    "refractor": "^2.6.2",
+    "prismjs": "^1.15.0"
   },
   "devDependencies": {
-    "prop-types": "^15.0.0",
     "react": "^16.6.0"
   },
   "peerDependencies": {
-    "prop-types": "^15.0.0",
     "react": "^16.6.0",
     "styled-components": "^4.0.2"
   },

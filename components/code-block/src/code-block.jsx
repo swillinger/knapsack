@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import pretty from 'pretty';
 import TabbedPanel from '@basalt/bedrock-tabbed-panel';
 
-import { CodePreview } from './code-block.styles';
+import PrettyCode from '@basalt/bedrock-pretty-code';
 
 class CodeBlock extends Component {
   constructor(props) {
@@ -26,24 +25,14 @@ class CodeBlock extends Component {
         title: item.name,
         id: item.language,
         children: (
-          <CodePreview>
-            <code
-              onKeyUp={event => handleTyping(event.target.innerText)}
-              contentEditable={isLive}
-              suppressContentEditableWarning
-              role="textbox"
-              tabIndex={0}
-              style={{
-                whiteSpace: 'pre',
-                overflow: 'auto',
-                width: '100%',
-              }}
-            >
-              {item.language === 'html'
-                ? pretty(item.code.trim(), { ocd: true })
-                : item.code.trim()}
-            </code>
-          </CodePreview>
+          <PrettyCode
+            onKeyUp={event => handleTyping(event.target.innerText)}
+            contentEditable={isLive}
+            role="textbox"
+            suppressContentEditableWarning
+            tabInde={0}
+            {...item}
+          />
         ),
       };
     });

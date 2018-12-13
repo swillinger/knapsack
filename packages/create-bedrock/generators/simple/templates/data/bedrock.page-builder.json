@@ -8,6 +8,7 @@
       {
         "id": "yxuj_qVuf",
         "patternId": "hero",
+        "templateId": "twig",
         "data": {
           "title": "I'm a Hero!",
           "body": "Lorem ipsum dolor sit amet, consectetur adipisicing elit..",
@@ -17,15 +18,17 @@
       {
         "id": "eoObDvUfX",
         "patternId": "card",
+        "templateId": "twig",
         "data": {
           "title": "I'm a Card Title",
           "body": "I'm a body - Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          "img": "/images/imagePlaceholder1.png"
+          "img": "/images/imagePlaceholder3.png"
         }
       },
       {
         "id": "UoUmOjNSW",
         "patternId": "hero",
+        "templateId": "twig",
         "data": {
           "title": "Have a great day!",
           "body": "Lorem ipsum dolor sit amet, consectetur adipisicing elit..",

@@ -24,6 +24,7 @@ const pageBuilderPagesTypeDef = gql`
   type PageBuilderPageSlice {
     id: ID!
     patternId: ID!
+    templateId: ID!
     data: JSON!
   }
 

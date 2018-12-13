@@ -17,13 +17,14 @@
 import React from 'react';
 import Header from '../components/header';
 import Footer from '../components/footer';
+import ErrorCatcher from '../utils/error-catcher';
 import { PageLayoutWithoutSidebar } from './page-without-sidebar.styles';
 
 function PageWithoutSidebar({ children, ...rest }) {
   return (
     <PageLayoutWithoutSidebar>
       <Header {...rest} />
-      {children}
+      <ErrorCatcher>{children}</ErrorCatcher>
       <Footer />
     </PageLayoutWithoutSidebar>
   );

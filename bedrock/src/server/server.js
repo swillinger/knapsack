@@ -65,6 +65,9 @@ async function serve(config, meta) {
     newPatternDir: config.newPatternDir,
     patternPaths: config.patterns,
     dataDir: config.data,
+    templateRenderers: config.templates,
+    rootRelativeCSS,
+    rootRelativeJs,
   });
 
   const metaTypeDef = gql`

@@ -5,16 +5,32 @@
   "minItems": 1,
   "items": {
     "type": "object",
-    "additionalProperties": false,
+    "additionalProperties": true,
     "required": [
-      "name",
-      "schema"
+      "schema",
+      "path",
+      "id",
+      "title"
     ],
     "properties": {
-      "name": {
-        "title": "Template Name",
+      "alias": {
+        "title": "Template Alias",
         "type": "string",
-        "description": "Path (prefixed with namespace) of pattern template. Example '@components/_media-block.twig'."
+        "description": "Instead of using the full path to the file, use this when passing to the template renderer"
+      },
+      "path": {
+        "title": "Template Path",
+        "type": "string",
+        "description": "Path to pattern template."
+      },
+      "id": {
+        "title": "Template ID",
+        "type": "string",
+        "description": "Unique identifier"
+      },
+      "title": {
+        "title": "Template Title",
+        "type": "string"
       },
       "selector": {
         "title": "CSS Selector",

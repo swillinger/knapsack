@@ -16,6 +16,7 @@
  */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import ErrorCatcher from '../utils/error-catcher';
 import Header from '../components/header';
 import SecondaryNav from '../components/secondary-nav';
 import Footer from '../components/footer';
@@ -58,7 +59,9 @@ class PageWithSidebar extends Component {
             <ToggleChevron sidebarcollapsed={sidebarCollapsed.toString()} />
           </SidebarTrayHandle>
         </SidebarStyled>
-        <main>{children}</main>
+        <ErrorCatcher>
+          <main>{children}</main>
+        </ErrorCatcher>
         <Footer />
       </PageLayoutWithSidebar>
     );

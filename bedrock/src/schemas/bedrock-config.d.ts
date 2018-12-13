@@ -1,13 +1,27 @@
-interface TemplateRenderResponse {
+interface BedrockTemplateRenderResults {
   ok: boolean;
   html?: string;
   message?: string;
 }
 
-interface TemplateRenderers {
+interface BedrockTemplateRenderer {
+  id: string
   test: (theTemplatePath: string) => boolean;
-  render: (template: string, data?: object) => Promise<TemplateRenderResponse>,
-  renderString: (template: string, data?: object) => Promise<TemplateRenderResponse>,
+  render: (templatePath: string, data?: object) => Promise<BedrockTemplateRenderResults>,
+  wrapHtml: (opt: {
+    html: string,
+    cssUrls?: string[],
+    jsUrls?: string[],
+    headJsUrls?: string[]
+  }) => string,
+  getHead: (opt: {
+    cssUrls?: string[],
+    headJsUrls?: string[],
+  }) => string;
+  getFoot: (opt: {
+    jsUrls?: string[],
+  }) => string;
+  // renderString: (template: string, data?: object) => Promise<BedrockTemplateRenderResults>,
 }
 
 interface BedrockConfig {
@@ -23,7 +37,7 @@ interface BedrockConfig {
   css?: string[];
   /** Paths to js assets located within the public directory or absolute URL */
   js?: string[];
-  templates: TemplateRenderers[],
+  templates: BedrockTemplateRenderer[],
   designTokens: string;
   docsDir?: string;
 }

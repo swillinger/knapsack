@@ -13,12 +13,12 @@
   },
   "dependencies": {
     "@basalt/bedrock": "^<%= bedrockVersion %>",
-    "@basalt/demo-data": "^0.5.1",
-    "@basalt/twig-renderer": "^0.10.2"
+    "@basalt/bedrock-renderer-html": "^<%= bedrockVersion %>",
+    "@basalt/bedrock-renderer-twig": "^<%= bedrockVersion %>",
+    "@basalt/demo-data": "^0.5.1"
   },
   "devDependencies": {
     "theo": "^8.0.0"
   },
-  "author": "",
-  "license": "ISC"
+  "author": ""
 }

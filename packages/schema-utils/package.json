@@ -10,7 +10,7 @@
     "watch": "yarn build --watch"
   },
   "dependencies": {
-    "ajv": "^6.5.3"
+    "ajv": "^6.6.1"
   },
   "files": [
     "./dist"

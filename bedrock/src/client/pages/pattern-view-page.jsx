@@ -47,7 +47,8 @@ const query = gql`
     pattern(id: $id) {
       id
       templates {
-        name
+        id
+        title
         schema
         isInline
         uiSchema
@@ -89,6 +90,7 @@ class PatternViewPage extends Component {
     this.state = {
       currentTemplate: {
         name: '',
+        id: '',
         schema: {},
         uiSchema: {},
         isInline: false,
@@ -132,12 +134,17 @@ class PatternViewPage extends Component {
           <Query query={query} variables={{ id: this.props.id }}>
             {({ loading, error, data: response }) => {
               if (loading) return <Spinner />;
-              if (error) return <p>Error :(</p>;
-              // @todo add proper error page
-              const { templates, meta, readme } = response.pattern;
+              if (error)
+                return <StatusMessage type="error" message={error.message} />;
+              const {
+                templates,
+                meta,
+                readme,
+                id: patternId,
+              } = response.pattern;
               const { title, description, type, demoSize } = meta;
-              const { name, schema, uiSchema, isInline } = this.state
-                .currentTemplate.name
+              const { schema, uiSchema, isInline, id: templateId } = this.state
+                .currentTemplate.id
                 ? this.state.currentTemplate
                 : templates[0];
               const [data, ...examples] = schema.examples
@@ -165,13 +172,13 @@ class PatternViewPage extends Component {
                         <Select
                           label="Template"
                           items={templates.map(t => ({
-                            value: t.name,
-                            title: t.schema.title,
+                            value: t.id,
+                            title: t.title,
                           }))}
                           handleChange={value => {
                             this.setState({
                               currentTemplate: templates.find(
-                                t => t.name === value,
+                                t => t.id === value,
                               ),
                             });
                           }}
@@ -195,23 +202,37 @@ class PatternViewPage extends Component {
                   </header>
 
                   <Overview
-                    template={name}
+                    templateId={templateId}
                     schema={schema}
                     uiSchema={uiSchema}
                     demoSizes={this.props.demoSizes}
                     data={data}
                     size={demoSize}
-                    key={name}
+                    key={`${patternId}-${templateId}`}
                     isInline={isInline}
                     id={this.props.id}
                   />
 
+                  <pre>
+                    <code>
+                      {JSON.stringify(
+                        {
+                          patternId,
+                          templateId,
+                        },
+                        null,
+                        '  ',
+                      )}
+                    </code>
+                  </pre>
+
                   {!!examples.length && (
-                    <Details>
+                    <Details open>
                       <summary>Examples</summary>
                       {examples.map(example => (
                         <Template
-                          template={name}
+                          patternId={patternId}
+                          templateId={templateId}
                           data={example}
                           key={JSON.stringify(example)}
                         />
@@ -270,7 +291,8 @@ class PatternViewPage extends Component {
 
                   <LoadableVariationDemo
                     schema={schema}
-                    template={name}
+                    templateId={templateId}
+                    patternId={patternId}
                     data={data}
                   />
 

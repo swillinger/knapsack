@@ -1,0 +1,31 @@
+{
+  "LwkPTTywB": {
+    "id": "LwkPTTywB",
+    "title": "My New Example",
+    "path": "/pages/LwkPTTywB",
+    "slices": [
+      {
+        "id": "BuyAwVG0r",
+        "patternId": "super-card",
+        "templateId": "twig",
+        "data": {
+          "title": "I'm a Card Title",
+          "body": "I'm a body - Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "img": "/images/imagePlaceholder1.png",
+          "align": "left"
+        }
+      },
+      {
+        "id": "fCqy3slwb",
+        "patternId": "super-card",
+        "templateId": "html",
+        "data": {
+          "title": "I'm a Card Title",
+          "body": "I'm a body - Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "img": "/images/imagePlaceholder1.png"
+        }
+      }
+    ],
+    "hasVisibleControls": true
+  }
+}

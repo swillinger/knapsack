@@ -16,10 +16,21 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
+import gql from 'graphql-tag';
 import iframeResizer from 'iframe-resizer/js/iframeResizer'; // https://www.npmjs.com/package/iframe-resizer
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
 import { IFrameWrapper } from './twig.styles';
-import { apiUrlBase } from '../../data';
+import { apiUrlBase, gqlQuery } from '../../data';
+
+const query = gql`
+  query TemplateRender($patternId: ID!, $templateId: ID!, $data: JSON) {
+    render(patternId: $patternId, templateId: $templateId, data: $data) {
+      ok
+      html
+      message
+    }
+  }
+`;
 
 class Twig extends React.Component {
   constructor(props) {
@@ -31,6 +42,7 @@ class Twig extends React.Component {
     this.enableTemplatePush = props.context.features.enableTemplatePush;
     this.websocketsPort = props.context.meta.websocketsPort;
     this.apiEndpoint = `${apiUrlBase}`;
+    this.id = `${this.props.templateId}-${this.props.patternId}`;
     this.iframeRef = React.createRef();
     this.getHtml = this.getHtml.bind(this);
   }
@@ -67,27 +79,39 @@ class Twig extends React.Component {
       this.iframeRef.current,
     );
     const [thisIframe] = iframes;
-    // `this.iframeResizer` can use all these callback methods: https://www.npmjs.com/package/iframe-resizer#callback-methods
-    this.iframeResizer = thisIframe.iFrameResizer;
-    // @todo Trigger resize only when needed. Temp stop-gap is to trigger a resize every second for now.
-    this.resizerIntervalId = setInterval(() => {
-      this.iframeResizer.resize();
-    }, 1000);
+    if (thisIframe) {
+      // `this.iframeResizer` can use all these callback methods: https://www.npmjs.com/package/iframe-resizer#callback-methods
+      this.iframeResizer = thisIframe.iFrameResizer;
+      // @todo Trigger resize only when needed. Temp stop-gap is to trigger a resize every second for now.
+      this.resizerIntervalId = setInterval(() => {
+        this.iframeResizer.resize();
+      }, 1000);
+    }
   }
 
   componentDidUpdate(prevProps) {
     const oldData = JSON.stringify(prevProps.data);
     const newData = JSON.stringify(this.props.data);
-    if (oldData !== newData || prevProps.template !== this.props.template) {
+    const oldName = `${prevProps.templateId}-${prevProps.patternId}`;
+    const newName = `${this.props.templateId}-${this.props.patternId}`;
+    if (oldData !== newData) {
+      this.getHtml(this.props.data);
+    }
+    if (oldName !== newName) {
       this.getHtml(this.props.data);
     }
   }
 
   componentWillUnmount() {
-    if (Object.prototype.hasOwnProperty.call(window, 'AbortController')) {
+    if (
+      Object.prototype.hasOwnProperty.call(window, 'AbortController') &&
+      this.controller
+    ) {
       this.controller.abort();
     }
-    this.iframeResizer.close(); // https://github.com/davidjbradshaw/iframe-resizer/issues/576
+    if (this.iframeResizer && typeof this.iframeResizer.close === 'function') {
+      this.iframeResizer.close(); // https://github.com/davidjbradshaw/iframe-resizer/issues/576
+    }
     clearInterval(this.resizerIntervalId);
     if (this.enableTemplatePush) {
       this.socket.close(1000, 'componentWillUnmount called');
@@ -95,58 +119,42 @@ class Twig extends React.Component {
   }
 
   /**
-   * @param {Object} data - Data to pass to template
+   * @param {Object} templateData - Data to pass to template
    * @return {void}
    */
-  getHtml(data) {
-    const type = this.props.isStringTemplate ? 'renderString' : 'renderFile';
-    // let body = data;
-    const url = `${this.apiEndpoint}/render?type=${type}`;
-
-    // if (this.props.isStringTemplate) {
-    //   url = `${apiUrlBase}/render-twig?templateString`;
-    //   body = {
-    //     template: this.props.template,
-    //     data,
-    //   };
-    // }
-    window
-      .fetch(url, {
-        method: 'POST',
-        body: JSON.stringify({
-          template: this.props.template,
-          data,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        signal: this.signal,
-      })
-      .then(res => res.json())
-      .then(results => {
-        // eslint-disable-next-line
-        // console.debug(results);
-        if (results.ok) {
-          this.setState({
-            html: results.html,
-          });
-          this.props.handleNewHtml(results.html);
-        } else {
-          this.setState({
-            html: results.message,
-          });
-        }
-      })
-      .catch(error => {
-        console.error(
-          `Error running getHtml for Twig.jsx ${this.props.template}`,
-          error,
-        );
-      });
+  getHtml(templateData) {
+    gqlQuery({
+      gqlQueryObj: query,
+      variables: {
+        templateId: this.props.templateId,
+        patternId: this.props.patternId,
+        data: templateData,
+      },
+    }).then(({ data, errors }) => {
+      if (errors) {
+        console.error(errors);
+        this.setState({
+          html: 'Error! See console',
+        });
+        return;
+      }
+      const { ok, html, message } = data.render;
+      if (ok) {
+        this.setState({
+          html,
+        });
+        this.props.handleNewHtml(html);
+      } else {
+        this.setState({
+          html: message,
+        });
+      }
+    });
   }
 
   render() {
     let { html } = this.state;
+    if (!html) return null;
     if (this.props.isDataShown) {
       const code = JSON.stringify(this.props.data, null, '  ');
       html = `${html}
@@ -156,7 +164,7 @@ class Twig extends React.Component {
         </details>`;
     }
 
-    if (html.length > 32768) {
+    if (html && html.length > 32768) {
       // https://stackoverflow.com/a/19739077
       return (
         <div>
@@ -178,8 +186,8 @@ class Twig extends React.Component {
           border: 'none',
           // border: 'dotted 1px green',
         }}
-        id={this.state.id}
-        title={this.props.template}
+        id={this.id}
+        title={this.id}
         ref={this.iframeRef}
         srcDoc={html}
       />
@@ -200,18 +208,17 @@ Twig.defaultProps = {
   data: {},
   isDataShown: false,
   handleNewHtml: () => {},
-  isStringTemplate: false,
   isResizable: true,
 };
 
 Twig.propTypes = {
-  template: PropTypes.string.isRequired,
+  templateId: PropTypes.string.isRequired,
+  patternId: PropTypes.string.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   context: contextPropTypes.isRequired,
   data: PropTypes.object,
   isDataShown: PropTypes.bool,
   handleNewHtml: PropTypes.func,
-  isStringTemplate: PropTypes.bool,
   isResizable: PropTypes.bool,
 };
 

@@ -22,7 +22,6 @@ import {
   TypeToFilter,
   TypeToFilterInputWrapper,
 } from '@basalt/bedrock-atoms';
-import { BedrockContext } from '@basalt/bedrock-core';
 import { FaTimes } from 'react-icons/fa';
 import PageBuilderEditForm from './page-builder-edit-form';
 import PlaygroundSidebarPatternListItem from './page-builder-pattern-list-item';
@@ -31,6 +30,7 @@ import {
   PlaygroundStyledSchemaForm,
   PlaygroundStyledLink,
 } from './page-builder.styles';
+import { PageBuilderContext } from './page-builder-context';
 import { BASE_PATHS } from '../../../lib/constants';
 
 // Export of allowed sidebarContent states
@@ -39,7 +39,7 @@ export const SIDEBAR_FORM = 'form';
 export const SIDEBAR_PATTERNS = 'patterns';
 
 class PageBuilderSidebar extends Component {
-  static contextType = BedrockContext;
+  static contextType = PageBuilderContext;
 
   constructor(props) {
     super(props);
@@ -66,7 +66,7 @@ class PageBuilderSidebar extends Component {
       );
     }
     if (this.props.sidebarContent === SIDEBAR_PATTERNS) {
-      const patterns = this.props.patterns.filter(pattern =>
+      const patterns = this.context.patterns.filter(pattern =>
         pattern.meta.uses.includes('inSlice'),
       );
       const items =
@@ -107,7 +107,6 @@ class PageBuilderSidebar extends Component {
               <PlaygroundSidebarPatternListItem
                 key={pattern.id}
                 pattern={pattern}
-                handleAddSlice={this.props.handleAddSlice}
               />
             ))}
           </PatternListWrapper>
@@ -158,7 +157,7 @@ class PageBuilderSidebar extends Component {
           }}
         />
         <div style={{ display: 'flex' }}>
-          {(this.context.permissions.includes('write') && (
+          {(this.context.appContext.permissions.includes('write') && (
             <Button
               type="submit"
               onKeyPress={() => this.props.handleSave()}
@@ -189,7 +188,6 @@ PageBuilderSidebar.propTypes = {
   editFormUiSchema: PropTypes.object.isRequired,
   editFormSliceId: PropTypes.string.isRequired,
   filterTerm: PropTypes.string.isRequired,
-  handleAddSlice: PropTypes.func.isRequired,
   handleEditFormChange: PropTypes.func.isRequired,
   handleClearData: PropTypes.func.isRequired,
   handleCancelAddSlice: PropTypes.func.isRequired,
@@ -199,7 +197,6 @@ PageBuilderSidebar.propTypes = {
   handleMetaFormChange: PropTypes.func.isRequired,
   handleSave: PropTypes.func.isRequired,
   metaFormData: PropTypes.object.isRequired,
-  patterns: PropTypes.arrayOf(PropTypes.object).isRequired,
   sidebarContent: PropTypes.string.isRequired,
   slices: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

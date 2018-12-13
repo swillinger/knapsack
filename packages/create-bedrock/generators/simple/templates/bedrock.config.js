@@ -1,4 +1,5 @@
-const twigRenderer = require('./twig-renderer');
+const HtmlRenderer = require('@basalt/bedrock-renderer-html');
+const TwigRenderer = require('@basalt/bedrock-renderer-twig');
 
 /** @type {BedrockConfig} */
 const config = {
@@ -12,12 +13,19 @@ const config = {
   // js: ['./public/assets/script.js'],
   docsDir: './docs',
   templates: [
-    {
-      test: theTemplatePath => theTemplatePath.endsWith('.twig'),
-      render: (template, data = {}) => twigRenderer.render(template, data),
-      renderString: (templateString, data = {}) =>
-        twigRenderer.renderString(templateString, data),
-    },
+    new HtmlRenderer(),
+    new TwigRenderer({
+      src: {
+        roots: ['./assets/patterns'],
+        namespaces: [
+          {
+            id: 'components',
+            recursive: true,
+            paths: ['./assets/patterns'],
+          },
+        ],
+      },
+    }),
   ],
 };
 

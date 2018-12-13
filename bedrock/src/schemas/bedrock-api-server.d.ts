@@ -51,7 +51,7 @@ interface BedrockApiServerConfig {
     renderString: (template: string, data: object) => RenderResponse;
   };
 
-  templateRenderers: TemplateRenderers[]
+  templateRenderers: BedrockTemplateRenderer[]
 
   patternManifest: BedrockPatternManifest;
 

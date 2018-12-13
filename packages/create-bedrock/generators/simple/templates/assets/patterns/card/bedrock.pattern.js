@@ -4,8 +4,21 @@ module.exports = {
   id: 'card',
   templates: [
     {
-      name: '@components/card.twig',
+      alias: '@components/card.twig',
+      path: './card.twig',
+      id: 'twig',
+      title: 'Twig',
       schema,
+    },
+    {
+      path: './card.html',
+      id: 'html',
+      title: 'HTML',
+      schema: {
+        ...schema,
+        required: [],
+        properties: {},
+      },
     },
   ],
 };

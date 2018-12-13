@@ -33,6 +33,7 @@ import PageBuilderSidebar, {
   SIDEBAR_PATTERNS,
 } from './page-builder-sidebar';
 import { MainContent, StartInsertSlice } from './page-builder.styles';
+import { PageBuilderContext } from './page-builder-context';
 
 const query = gql`
   query PageBuilerPages($id: ID) {
@@ -44,7 +45,24 @@ const query = gql`
       slices {
         id
         patternId
+        templateId
         data
+      }
+    }
+    patterns {
+      id
+      templates {
+        id
+        path
+        schema
+        title
+      }
+      meta {
+        description
+        title
+        uses
+        type
+        hasIcon
       }
     }
   }
@@ -66,9 +84,33 @@ const mutation = gql`
 `;
 
 class Playground extends Component {
+  static contextType = PageBuilderContext;
+
   constructor(props) {
     super(props);
+
+    this.handleAddSlice = this.handleAddSlice.bind(this);
+    this.moveSlice = this.moveSlice.bind(this);
+    this.moveSliceUp = this.moveSliceUp.bind(this);
+    this.moveSliceDown = this.moveSliceDown.bind(this);
+    this.deleteSlice = this.deleteSlice.bind(this);
+    this.handleHideEditForm = this.handleHideEditForm.bind(this);
+    this.save = this.save.bind(this);
+    this.getTemplateFromPatternId = this.getTemplateFromPatternId.bind(this);
+    this.handleEditFormChange = this.handleEditFormChange.bind(this);
+    this.handleClearData = this.handleClearData.bind(this);
+    this.handleCancelAddSlice = this.handleCancelAddSlice.bind(this);
+    this.handleFilterChange = this.handleFilterChange.bind(this);
+    this.handleFilterReset = this.handleFilterReset.bind(this);
+    this.handleMetaFormChange = this.handleMetaFormChange.bind(this);
+    this.handleStartInsertSlice = this.handleStartInsertSlice.bind(this);
+    this.briefHighlight = this.briefHighlight.bind(this);
+
+    // All state is passed to PageBuilderContext so all children can use it
+    /* eslint-disable react/no-unused-state */
     this.state = {
+      appContext: props.appContext,
+      patterns: [],
       example: null,
       slices: null,
       sidebarContent: SIDEBAR_DEFAULT,
@@ -81,36 +123,22 @@ class Playground extends Component {
       statusType: 'info',
       hasVisibleControls: true,
       changeId: null,
+      handleAddSlice: this.handleAddSlice,
     };
-    // Bindings
-    this.moveSlice = this.moveSlice.bind(this);
-    this.moveSliceUp = this.moveSliceUp.bind(this);
-    this.moveSliceDown = this.moveSliceDown.bind(this);
-    this.deleteSlice = this.deleteSlice.bind(this);
-    this.handleHideEditForm = this.handleHideEditForm.bind(this);
-    this.save = this.save.bind(this);
-    this.getTemplateFromPatternId = this.getTemplateFromPatternId.bind(this);
-    this.handleAddSlice = this.handleAddSlice.bind(this);
-    this.handleEditFormChange = this.handleEditFormChange.bind(this);
-    this.handleClearData = this.handleClearData.bind(this);
-    this.handleCancelAddSlice = this.handleCancelAddSlice.bind(this);
-    this.handleFilterChange = this.handleFilterChange.bind(this);
-    this.handleFilterReset = this.handleFilterReset.bind(this);
-    this.handleMetaFormChange = this.handleMetaFormChange.bind(this);
-    this.handleStartInsertSlice = this.handleStartInsertSlice.bind(this);
-    this.briefHighlight = this.briefHighlight.bind(this);
+    /* eslint-enable react/no-unused-state */
   }
 
   /**
    * @param {string} patternId - ID of Pattern, i.e. `media-block`
-   * @return {{ name: string, selector: string, schema: Object, uiSchema: Object }} - First (main) template
+   * @param {string} [templateId] - ID of Template
+   * @return {BedrockPatternTemplate} - Pattern template
    */
-  getTemplateFromPatternId(patternId) {
-    const pattern = this.props.patterns.find(p => p.id === patternId);
-    // @todo Improve template grabbing method besides just "first" one
-    if (pattern) {
-      return pattern.templates[0];
+  getTemplateFromPatternId(patternId, templateId) {
+    const pattern = this.state.patterns.find(p => p.id === patternId);
+    if (templateId) {
+      return pattern.templates.find(t => t.id === templateId);
     }
+    return pattern.templates[0];
   }
 
   handleFilterReset() {
@@ -125,7 +153,7 @@ class Playground extends Component {
    * @return {Promise<Object> | null} - Returns the structued object defined by the mutation.
    */
   async save(setPageBuilderPage) {
-    if (!this.props.context.permissions.includes('write')) {
+    if (!this.state.appContext.permissions.includes('write')) {
       this.setState({
         statusMessage:
           'Updating and saving data has been disabled through feature flags. This page builder example cannot be saved at this time.',
@@ -242,15 +270,20 @@ class Playground extends Component {
 
   /**
    * @param {string} patternId - unique id
+   * @param {string} templateId - unique id
    * @returns {void} - sets state
    */
-  handleAddSlice(patternId) {
-    const { schema, uiSchema } = this.getTemplateFromPatternId(patternId);
+  handleAddSlice(patternId, templateId) {
+    const { schema, uiSchema } = this.getTemplateFromPatternId(
+      patternId,
+      templateId,
+    );
     const id = shortid.generate();
     this.setState(prevState => {
       prevState.slices.splice(prevState.editFormInsertionIndex, 0, {
         id,
         patternId,
+        templateId,
         data: schema.examples ? schema.examples[0] : {},
       });
       return {
@@ -326,6 +359,7 @@ class Playground extends Component {
             this.setState({
               example: data.pageBuilderPage,
               slices: data.pageBuilderPage.slices,
+              patterns: data.patterns,
             });
             return null;
           }}
@@ -350,7 +384,6 @@ class Playground extends Component {
                 editFormUiSchema={this.state.editFormUiSchema}
                 editFormSliceId={this.state.editFormSliceId}
                 filterTerm={this.state.filterTerm}
-                handleAddSlice={this.handleAddSlice}
                 handleEditFormChange={this.handleEditFormChange}
                 handleClearData={this.handleClearData}
                 handleCancelAddSlice={this.handleCancelAddSlice}
@@ -370,108 +403,117 @@ class Playground extends Component {
       </>
     );
     return (
-      <PageWithSidebar {...props} sidebar={SideBarContent}>
-        <MainContent hasVisibleControls={this.state.hasVisibleControls}>
-          {this.state.hasVisibleControls && (
-            <React.Fragment>
-              <h4 className="eyebrow">Prototyping Sandbox</h4>
-              <h2>{this.state.example.title}</h2>
+      <PageBuilderContext.Provider value={this.state}>
+        <PageWithSidebar {...props} sidebar={SideBarContent}>
+          <MainContent hasVisibleControls={this.state.hasVisibleControls}>
+            {this.state.hasVisibleControls && (
+              <React.Fragment>
+                <h4 className="eyebrow">Prototyping Sandbox</h4>
+                <h2>{this.state.example.title}</h2>
 
-              {this.state.statusMessage && (
-                <StatusMessage
-                  message={this.state.statusMessage}
-                  type={this.state.statusType}
-                />
-              )}
-            </React.Fragment>
-          )}
-          <StartInsertSlice
-            onClick={() => this.handleStartInsertSlice(0)}
-            onKeyPress={() => this.handleStartInsertSlice(0)}
-            hasVisibleControls={this.state.hasVisibleControls}
-            isActive={this.state.editFormInsertionIndex === 0}
-          >
-            {this.state.editFormInsertionIndex === 0 ? (
-              <h6>Select a component to add from the sidebar</h6>
-            ) : (
-              <h6>Click to Insert Content Here</h6>
-            )}
-          </StartInsertSlice>
-          {this.state.slices.map((slice, sliceIndex) => {
-            const template = this.getTemplateFromPatternId(slice.patternId);
-            if (!template) {
-              return (
-                <div
-                  key={`${slice.id}--fragment`}
-                  onKeyPress={() => this.deleteSlice(slice.id)}
-                  onClick={() => this.deleteSlice(slice.id)}
-                  role="button"
-                  aria-label="delete component"
-                  tabIndex={0}
-                >
+                {this.state.statusMessage && (
                   <StatusMessage
-                    message={`Template for "${
-                      slice.patternId
-                    }" not found. Click to delete.`}
-                    type="warning"
-                  />
-                </div>
-              );
-            }
-            return (
-              <React.Fragment key={`${slice.id}--fragment`}>
-                {template && (
-                  <PlaygroundSlice
-                    key={slice.id}
-                    id={slice.id}
-                    index={sliceIndex}
-                    template={template.name}
-                    data={slice.data}
-                    showEditForm={() => {
-                      this.setState({
-                        editFormSliceId: slice.id,
-                        editFormSchema: template.schema,
-                        editFormUiSchema: template.uiSchema,
-                        sidebarContent: SIDEBAR_FORM,
-                        editFormInsertionIndex: null,
-                      });
-                      this.briefHighlight(slice.id);
-                    }}
-                    deleteMe={() => this.deleteSlice(slice.id)}
-                    moveSlice={(dragIndex, hoverIndex) => {
-                      console.log('moving...', { dragIndex, hoverIndex });
-                      this.moveSlice(dragIndex, hoverIndex, slice.id);
-                    }}
-                    moveUp={() => this.moveSliceUp(sliceIndex, slice.id)}
-                    moveDown={() => this.moveSliceDown(sliceIndex, slice.id)}
-                    hasVisibleControls={this.state.hasVisibleControls}
-                    isBeingEdited={this.state.editFormSliceId === slice.id}
-                    isFirst={sliceIndex === 0}
-                    isLast={this.state.slices.length - 1 === sliceIndex}
-                    isChanged={this.state.changeId === slice.id}
+                    message={this.state.statusMessage}
+                    type={this.state.statusType}
                   />
                 )}
-
-                <StartInsertSlice
-                  key={`${slice.id}--handleAddSlice`}
-                  onClick={() => this.handleStartInsertSlice(sliceIndex + 1)}
-                  onKeyPress={() => this.handleStartInsertSlice(sliceIndex + 1)}
-                  hasVisibleControls={this.state.hasVisibleControls}
-                  isActive={
-                    this.state.editFormInsertionIndex === sliceIndex + 1
-                  }
-                >
-                  {this.state.editFormInsertionIndex === sliceIndex + 1 ? (
-                    <h6>Select a component to add from the sidebar</h6>
-                  ) : (
-                    <h6>Click to Insert Content Here</h6>
-                  )}
-                </StartInsertSlice>
               </React.Fragment>
-            );
-          })}
-        </MainContent>
-      </PageWithSidebar>
+            )}
+            <StartInsertSlice
+              onClick={() => this.handleStartInsertSlice(0)}
+              onKeyPress={() => this.handleStartInsertSlice(0)}
+              hasVisibleControls={this.state.hasVisibleControls}
+              isActive={this.state.editFormInsertionIndex === 0}
+            >
+              {this.state.editFormInsertionIndex === 0 ? (
+                <h6>Select a component to add from the sidebar</h6>
+              ) : (
+                <h6>Click to Insert Content Here</h6>
+              )}
+            </StartInsertSlice>
+            {this.state.slices.map((slice, sliceIndex) => {
+              const { templateId, patternId } = slice;
+              const template = this.getTemplateFromPatternId(
+                slice.patternId,
+                templateId,
+              );
+              if (!slice.patternId && slice.templateId) {
+                return (
+                  <div
+                    key={`${slice.id}--fragment`}
+                    onKeyPress={() => this.deleteSlice(slice.id)}
+                    onClick={() => this.deleteSlice(slice.id)}
+                    role="button"
+                    aria-label="delete component"
+                    tabIndex={0}
+                  >
+                    <StatusMessage
+                      message={`Template for "${
+                        slice.patternId
+                      }" not found. Click to delete.`}
+                      type="warning"
+                    />
+                  </div>
+                );
+              }
+              return (
+                <React.Fragment key={`${slice.id}--fragment`}>
+                  {template && (
+                    <PlaygroundSlice
+                      key={slice.id}
+                      id={slice.id}
+                      index={sliceIndex}
+                      templateId={template.id}
+                      patternId={patternId}
+                      data={slice.data}
+                      showEditForm={() => {
+                        this.setState({
+                          editFormSliceId: slice.id,
+                          editFormSchema: template.schema,
+                          editFormUiSchema: template.uiSchema,
+                          sidebarContent: SIDEBAR_FORM,
+                          editFormInsertionIndex: null,
+                        });
+                        this.briefHighlight(slice.id);
+                      }}
+                      deleteMe={() => this.deleteSlice(slice.id)}
+                      moveSlice={(dragIndex, hoverIndex) => {
+                        console.log('moving...', { dragIndex, hoverIndex });
+                        this.moveSlice(dragIndex, hoverIndex, slice.id);
+                      }}
+                      moveUp={() => this.moveSliceUp(sliceIndex, slice.id)}
+                      moveDown={() => this.moveSliceDown(sliceIndex, slice.id)}
+                      hasVisibleControls={this.state.hasVisibleControls}
+                      isBeingEdited={this.state.editFormSliceId === slice.id}
+                      isFirst={sliceIndex === 0}
+                      isLast={this.state.slices.length - 1 === sliceIndex}
+                      isChanged={this.state.changeId === slice.id}
+                    />
+                  )}
+
+                  <StartInsertSlice
+                    key={`${slice.id}--handleAddSlice`}
+                    onClick={() => this.handleStartInsertSlice(sliceIndex + 1)}
+                    onKeyPress={() =>
+                      this.handleStartInsertSlice(sliceIndex + 1)
+                    }
+                    hasVisibleControls={this.state.hasVisibleControls}
+                    isActive={
+                      this.state.editFormInsertionIndex === sliceIndex + 1
+                    }
+                  >
+                    {this.state.editFormInsertionIndex === sliceIndex + 1 ? (
+                      <h6>Select a component to add from the sidebar</h6>
+                    ) : (
+                      <h6>Click to Insert Content Here</h6>
+                    )}
+                  </StartInsertSlice>
+                </React.Fragment>
+              );
+            })}
+          </MainContent>
+        </PageWithSidebar>
+      </PageBuilderContext.Provider>
     );
   }
 }

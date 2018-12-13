@@ -1,3 +1,5 @@
+const buttonSchema = require('../button/button.schema');
+
 module.exports = {
   $schema: 'http://json-schema.org/draft-07/schema',
   type: 'object',
@@ -22,6 +24,11 @@ module.exports = {
       type: 'string',
       enum: ['top', 'right', 'bottom', 'left'],
       default: 'left',
+    },
+    buttons: {
+      title: 'Buttons',
+      type: 'array',
+      items: buttonSchema,
     },
   },
   examples: [

@@ -42,7 +42,8 @@ const PageBuilderSlice = ({
   isBeingEdited,
   isFirst,
   isLast,
-  template,
+  templateId,
+  patternId,
   data,
   hasVisibleControls,
   isChanged,
@@ -105,7 +106,12 @@ const PageBuilderSlice = ({
             </PlaygroundIcon>
           </PlaygroundIconWrapper>
           <div style={{ flexGrow: 1 }}>
-            <Template template={template} data={data} isResizable={false} />
+            <Template
+              templateId={templateId}
+              patternId={patternId}
+              data={data}
+              isResizable={false}
+            />
           </div>
         </PlaygroundSliceWrapper>
       </div>,

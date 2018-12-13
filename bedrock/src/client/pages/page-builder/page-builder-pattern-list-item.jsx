@@ -14,16 +14,18 @@
     You should have received a copy of the GNU General Public License along
     with Bedrock; if not, see <https://www.gnu.org/licenses>.
  */
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
+import { Select, Button } from '@basalt/bedrock-atoms';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import {
   PatternListItemDescription,
   PatternListItemThumb,
   PatternListItemWrapper,
 } from './page-builder.styles';
+import { PageBuilderContext } from './page-builder-context';
 
 // @todo Get pattern icons working for this again
 // class PlaygroundSidebarPatternListItem extends Component {
@@ -102,55 +104,86 @@ import {
 //   }
 // }
 
-function PlaygroundSidebarPatternListItem(props) {
-  const { enablePatternIcons = false } = props.context.features || {};
-  return (
-    <PatternListItemWrapper
-      key={props.pattern.id}
-      thumb={enablePatternIcons}
-      type="button"
-    >
-      <div
-        role="button"
-        tabIndex={0}
-        onKeyPress={() => props.handleAddSlice(props.pattern.id)}
-        onClick={() => props.handleAddSlice(props.pattern.id)}
+class PlaygroundSidebarPatternListItem extends Component {
+  static contextType = PageBuilderContext;
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      templateId: props.pattern.templates[0].id,
+    };
+  }
+
+  render() {
+    const { enablePatternIcons = false } = this.props.context.features || {};
+    const { pattern } = this.props;
+    return (
+      <PatternListItemWrapper
+        key={this.props.pattern.id}
+        thumb={enablePatternIcons}
       >
-        <h5>{props.pattern.meta.title}</h5>
-        {enablePatternIcons ? (
-          <>
-            <span>
-              Pattern Icons is not a currently supported feature. Please toggle
-              feature flag enablePatternIcons to false.
-            </span>
-            <PatternListItemThumb
-              src={
-                /* this.props.pattern.meta.hasIcon ? this.state.imgSrc : this.defaultImgPath */ null
-              }
-              onError={/* this.handleMissingImg */ null}
-              alt={/* this.props.pattern.meta.title */ null}
-            />
-          </>
-        ) : (
-          <PatternListItemDescription>
-            {props.pattern.meta.description}
-          </PatternListItemDescription>
-        )}
-      </div>
-      <Link
-        target="_blank"
-        to={`/patterns/${props.pattern.id}`}
-        title="Open component details in new window"
-      >
-        Details <FaExternalLinkAlt size={8} />
-      </Link>
-    </PatternListItemWrapper>
-  );
+        <div>
+          <h5>{pattern.meta.title}</h5>
+          {enablePatternIcons ? (
+            <>
+              <span>
+                Pattern Icons is not a currently supported feature. Please
+                toggle feature flag enablePatternIcons to false.
+              </span>
+              <PatternListItemThumb
+                src={
+                  /* this.props.pattern.meta.hasIcon ? this.state.imgSrc : this.defaultImgPath */ null
+                }
+                onError={/* this.handleMissingImg */ null}
+                alt={/* this.props.pattern.meta.title */ null}
+              />
+            </>
+          ) : (
+            <PatternListItemDescription>
+              {pattern.meta.description}
+            </PatternListItemDescription>
+          )}
+        </div>
+        <Select
+          value={this.state.templateId}
+          handleChange={templateId => this.setState({ templateId })}
+          items={pattern.templates.map(template => ({
+            value: template.id,
+            title: template.title,
+          }))}
+        />
+        <br />
+        <Button
+          onKeyPress={() =>
+            this.context.handleAddSlice(
+              this.props.pattern.id,
+              this.state.templateId,
+            )
+          }
+          onClick={() =>
+            this.context.handleAddSlice(
+              this.props.pattern.id,
+              this.state.templateId,
+            )
+          }
+        >
+          Add
+        </Button>
+        <br />
+        <Link
+          target="_blank"
+          to={`/patterns/${this.props.pattern.id}`}
+          title="Open component details in new window"
+        >
+          Details <FaExternalLinkAlt size={8} />
+        </Link>
+      </PatternListItemWrapper>
+    );
+  }
 }
 
 PlaygroundSidebarPatternListItem.propTypes = {
   pattern: PropTypes.object.isRequired,
-  handleAddSlice: PropTypes.func.isRequired,
   context: contextPropTypes.isRequired,
 };
 

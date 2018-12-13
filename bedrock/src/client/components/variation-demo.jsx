@@ -77,7 +77,11 @@ export class VariationDemo extends Component {
               </code>
             </h4>
             <Checkerboard bleed="20px">
-              <Template template={this.props.template} data={itemData} />
+              <Template
+                templateId={this.props.templateId}
+                patternId={this.props.patternId}
+                data={itemData}
+              />
             </Checkerboard>
           </VariationItemExpanded>
         );
@@ -104,7 +108,8 @@ export class VariationDemo extends Component {
           </VariationItem>
           <Checkerboard bleed="20px">
             <Template
-              template={this.props.template}
+              templateId={this.props.templateId}
+              patternId={this.props.patternId}
               showDataUsed={false}
               data={this.state.data}
             />
@@ -177,7 +182,8 @@ VariationDemo.defaultProps = {
 };
 
 VariationDemo.propTypes = {
-  template: PropTypes.string.isRequired,
+  templateId: PropTypes.string.isRequired,
+  patternId: PropTypes.string.isRequired,
   data: PropTypes.object,
   // @todo cleanup api of `propKey` & `prop` - feels messy (but works!)
   propKey: PropTypes.string.isRequired,
@@ -190,13 +196,20 @@ VariationDemo.propTypes = {
   color: PropTypes.string,
 };
 
-export default function VariationDemos({ schema, template, data, isExpanded }) {
+export default function VariationDemos({
+  schema,
+  templateId,
+  patternId,
+  data,
+  isExpanded,
+}) {
   const variationsData = [];
   Object.keys(schema.properties).forEach(propKey => {
     const prop = schema.properties[propKey];
     if (prop.enum || prop.type === 'boolean') {
       variationsData.push({
-        template,
+        templateId,
+        patternId,
         prop,
         propKey,
         data,
@@ -240,7 +253,8 @@ VariationDemos.defaultProps = {
 
 VariationDemos.propTypes = {
   schema: PropTypes.object.isRequired,
-  template: PropTypes.string.isRequired,
+  templateId: PropTypes.string.isRequired,
+  patternId: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired,
   isExpanded: PropTypes.bool,
 };

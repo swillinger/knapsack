@@ -20,7 +20,7 @@ module.exports = {
   id: 'card',
   templates: [
     {
-      name: '@components/card.twig',
+      alias: '@components/card.twig',
       schema,
     },
   ],

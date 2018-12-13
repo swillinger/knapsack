@@ -23,10 +23,18 @@ const {
   validateSchemaAndAssignDefaults,
 } = require('@basalt/bedrock-schema-utils');
 const chokidar = require('chokidar');
+const {
+  version: iframeResizerVersion,
+} = require('iframe-resizer/package.json');
 // const { FileDb } = require('./db');
 const patternSchema = require('../schemas/pattern.schema');
 const patternMetaSchema = require('../schemas/pattern-meta.schema');
-const { writeJson, findReadmeInDirSync } = require('./server-utils');
+const {
+  writeJson,
+  findReadmeInDirSync,
+  fileExists,
+} = require('./server-utils');
+const log = require('../cli/log');
 const { FILE_NAMES } = require('../lib/constants');
 
 const patternsTypeDef = gql`
@@ -46,11 +54,13 @@ const patternsTypeDef = gql`
   }
 
   type PatternTemplate {
-    name: String!
     "JSON Schema"
     schema: JSON
     "CSS Selector"
     selector: String
+    id: ID!
+    path: String!
+    title: String!
     uiSchema: JSON
     isInline: Boolean
   }
@@ -99,9 +109,21 @@ const patternsTypeDef = gql`
     readme: String
   }
 
+  type PatternRenderResponse {
+    ok: Boolean!
+    html: String
+    message: String
+  }
+
   type Query {
     patterns: [Pattern]
     pattern(id: ID): Pattern
+    render(
+      patternId: ID
+      templateId: ID
+      wrapHtml: Boolean
+      data: JSON
+    ): PatternRenderResponse
   }
 
   type Mutation {
@@ -212,9 +234,10 @@ async function writeAllFiles(dir, config) {
 
 /**
  * @param {string[]} patternsDirs
- * @returns {PatternWithMetaSchema[]}
+ * @param {BedrockTemplateRenderer[]} templateRenderers
+ * @returns {BedrockPattern[]}
  */
-function createPatternsData(patternsDirs) {
+function createPatternsData(patternsDirs, templateRenderers) {
   const patterns = [];
 
   patternsDirs.forEach(dir => {
@@ -246,6 +269,34 @@ function createPatternsData(patternsDirs) {
           console.log();
           process.exit(1);
         }
+
+        results.data.templates = results.data.templates.map(template => {
+          const templatePath = join(dir, template.path);
+          if (!fileExists(templatePath)) {
+            log.error(
+              `Pattern ${pattern.id} has a template (${
+                template.id
+              }) with a path that cannot be found: ${templatePath}`,
+            );
+            process.exit(1);
+          }
+
+          const renderer = templateRenderers.find(t => t.test(templatePath));
+          if (!renderer) {
+            log.error(
+              `Pattern ${pattern.id} has a template ${
+                template.id
+              } with no associated renderer.`,
+            );
+            process.exit(1);
+          }
+
+          return {
+            ...template,
+            absolutePath: templatePath,
+            renderer,
+          };
+        });
 
         const metaFilePath = join(dir, FILE_NAMES.PATTERN_META);
         // eslint-disable-next-line
@@ -289,7 +340,8 @@ function createPatternsData(patternsDirs) {
         patterns.push(patternWithMeta);
       }
     } catch (e) {
-      // if it failed it's b/c it didn't have a `index.js` to grab; that's ok
+      log.error('Problem loading up Patterns', e);
+      process.exit(1);
     }
   });
 
@@ -315,8 +367,18 @@ class Patterns {
    * @param {string} opt.newPatternDir
    * @param {string[]} opt.patternPaths
    * @param {string} opt.dataDir
+   * @param {string[]} opt.rootRelativeJs
+   * @param {string[]} opt.rootRelativeCSS
+   * @param {BedrockTemplateRenderer[]} opt.templateRenderers
    */
-  constructor({ newPatternDir, patternPaths, dataDir }) {
+  constructor({
+    newPatternDir,
+    patternPaths,
+    dataDir,
+    templateRenderers,
+    rootRelativeJs,
+    rootRelativeCSS,
+  }) {
     /** @type {string} */
     this.newPatternDir = newPatternDir;
     /** @type {string[]} */
@@ -324,28 +386,40 @@ class Patterns {
     /** @type {string} */
     this.dataDir = dataDir;
 
+    this.templateRenderers = templateRenderers;
+    /** @type {string[]} */
+    this.rootRelativeCSS = rootRelativeCSS;
+    /** @type {string[]} */
+    this.rootRelativeJs = rootRelativeJs;
+
     /** @type {string[]} */
     this.patternsDirs = getPatternsDirs(this.patternPaths);
 
-    /** @type {PatternWithMetaSchema[]} */
-    this.allPatterns = createPatternsData(this.patternsDirs);
+    /** @type {BedrockPattern[]} */
+    this.allPatterns = createPatternsData(
+      this.patternsDirs,
+      this.templateRenderers,
+    );
   }
 
   updatePatternsData() {
     this.patternsDirs = getPatternsDirs(this.patternPaths);
-    this.allPatterns = createPatternsData(this.patternsDirs);
+    this.allPatterns = createPatternsData(
+      this.patternsDirs,
+      this.templateRenderers,
+    );
   }
 
   /**
    * @param {string} id
-   * @returns {PatternWithMetaSchema}
+   * @returns {BedrockPattern}
    */
   getPattern(id) {
     return this.allPatterns.find(p => p.id === id);
   }
 
   /**
-   * @returns {PatternWithMetaSchema[]}
+   * @returns {BedrockPattern[]}
    */
   getPatterns() {
     return this.allPatterns;
@@ -440,12 +514,61 @@ class Patterns {
       cb({ event, path });
     });
   }
+
+  /**
+   * Render template
+   * @param {Object} opt
+   * @param {string} opt.id - Pattern Id
+   * @param {string} [opt.templateId] - Template Id
+   * @param {boolean} [opt.wrapHtml=true] - Should it wrap HTML results with `<head>` and include assets?
+   * @param {Object} [opt.data] - Data to pass to template
+   * @return {Promise<BedrockTemplateRenderResults>}
+   */
+  async render({ id, templateId = '', wrapHtml = true, data = {} }) {
+    const pattern = this.getPattern(id);
+    let [template] = pattern.templates;
+    if (templateId) {
+      template = pattern.templates.find(t => t.id === templateId);
+    }
+    const { alias, renderer, absolutePath } = template;
+    let templateToRender = absolutePath;
+    if (alias) {
+      templateToRender = alias;
+    } else if (template.name) {
+      // backwards compatibility with old approach
+      templateToRender = template.name;
+    }
+
+    const renderedTemplate = await renderer.render(templateToRender, data);
+
+    if (!renderedTemplate.ok) return renderedTemplate;
+    if (wrapHtml) {
+      const wrappedHtml = renderer.wrapHtml({
+        html: renderedTemplate.html,
+        headJsUrls: [
+          `https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/${iframeResizerVersion}/iframeResizer.contentWindow.min.js`,
+        ],
+        cssUrls: this.rootRelativeCSS,
+        jsUrls: this.rootRelativeJs,
+      });
+      return {
+        ...renderedTemplate,
+        html: wrappedHtml,
+      };
+    }
+    return renderedTemplate;
+  }
 }
 
 const patternsResolvers = {
   Query: {
     patterns: (parent, args, { patterns }) => patterns.getPatterns(),
     pattern: (parent, { id }, { patterns }) => patterns.getPattern(id),
+    render: async (
+      parent,
+      { patternId, templateId, wrapHtml, data },
+      { patterns },
+    ) => patterns.render({ id: patternId, templateId, wrapHtml, data }),
   },
   Mutation: {
     setPatternMeta: async (parent, { id, meta }, { patterns, canWrite }) => {

@@ -62,7 +62,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      patterns: [],
       settings: {},
       sections: [],
       permissions: [],
@@ -101,12 +100,6 @@ class App extends React.Component {
         .then(res => res.json())
         .then(permissions => ({
           permissions,
-        })),
-      window
-        .fetch(`${this.apiEndpoint}/patterns`)
-        .then(res => res.json())
-        .then(patterns => ({
-          patterns,
         })),
       window
         .fetch(`${this.apiEndpoint}/sections`)
@@ -191,11 +184,10 @@ class App extends React.Component {
                           />
                           <Route
                             path={`${BASE_PATHS.PAGES}/:id`}
-                            render={({ match, ...rest }) => (
+                            render={({ match }) => (
                               <LoadablePageBuilder
-                                {...rest}
                                 id={match.params.id}
-                                patterns={this.state.patterns}
+                                appContext={this.state}
                               />
                             )}
                           />

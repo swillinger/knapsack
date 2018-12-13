@@ -19,13 +19,13 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import SchemaForm from '@basalt/bedrock-schema-form';
 import { Button, Select } from '@basalt/bedrock-atoms';
-import CodeBlock from '@basalt/bedrock-code-block';
+// import CodeBlock from '@basalt/bedrock-code-block';
 import { BedrockContext } from '@basalt/bedrock-core';
 import Template from '../components/template';
-import { enableCodeBlockLiveEdit } from '../../lib/features';
+// import { enableCodeBlockLiveEdit } from '../../lib/features';
 import {
   OverviewWrapper,
-  CodeBlockWrapper,
+  // CodeBlockWrapper,
   DemoGrid,
   DemoGridControls,
   DemoStage,
@@ -64,7 +64,6 @@ class Overview extends React.Component {
       html: '',
       size: props.size,
       isStringTemplate: false,
-      template: props.template,
       fullScreen: false,
       showForm: true,
     };
@@ -78,10 +77,10 @@ class Overview extends React.Component {
   }
 
   render() {
-    const dataString = JSON.stringify(this.state.data, null, '  ');
-    const twigCodeExample = `
-      {% include '${this.props.template}' with ${dataString} %}
-    `;
+    // const dataString = JSON.stringify(this.state.data, null, '  ');
+    // const twigCodeExample = `
+    //   {% include '${this.props.template}' with ${dataString} %}
+    // `;
     return (
       <OverviewWrapper {...this.props} {...this.state}>
         <FlexWrapper>
@@ -116,7 +115,8 @@ class Overview extends React.Component {
           <DemoStage size={this.state.size}>
             <Resizable>
               <Template
-                template={this.state.template}
+                templateId={this.props.templateId}
+                patternId={this.props.id}
                 data={this.state.data}
                 handleNewHtml={html => this.setState({ html })}
                 showDataUsed={false}
@@ -145,43 +145,43 @@ class Overview extends React.Component {
             </SchemaFormWrapperInner>
           </SchemaFormWrapper>
         </DemoGrid>
-        <CodeBlockWrapper
-          style={{ display: this.state.fullScreen ? 'none' : 'block' }}
-        >
-          <h4>Live Code Snippets</h4>
-          <p>
-            The following code snippets will generate the component in the live
-            demo above.
-          </p>
-          <CodeBlock
-            items={[
-              {
-                name: 'Twig',
-                code: twigCodeExample,
-                language: 'twig',
-                handleTyping: enableCodeBlockLiveEdit
-                  ? text => {
-                      this.setState({
-                        isStringTemplate: true,
-                        template: text,
-                        showForm: false,
-                      });
-                    }
-                  : null,
-              },
-              {
-                name: 'HTML',
-                code: this.state.html,
-                language: 'html',
-              },
-              {
-                name: 'JSON (Data Only)',
-                code: dataString,
-                language: 'json',
-              },
-            ]}
-          />
-        </CodeBlockWrapper>
+        {/* <CodeBlockWrapper */}
+        {/* style={{ display: this.state.fullScreen ? 'none' : 'block' }} */}
+        {/* > */}
+        {/* <h4>Live Code Snippets</h4> */}
+        {/* <p> */}
+        {/* The following code snippets will generate the component in the live */}
+        {/* demo above. */}
+        {/* </p> */}
+        {/* <CodeBlock */}
+        {/* items={[ */}
+        {/* { */}
+        {/* name: 'Twig', */}
+        {/* code: twigCodeExample, */}
+        {/* language: 'twig', */}
+        {/* handleTyping: enableCodeBlockLiveEdit */}
+        {/* ? text => { */}
+        {/* this.setState({ */}
+        {/* isStringTemplate: true, */}
+        {/* template: text, */}
+        {/* showForm: false, */}
+        {/* }); */}
+        {/* } */}
+        {/* : null, */}
+        {/* }, */}
+        {/* { */}
+        {/* name: 'HTML', */}
+        {/* code: this.state.html, */}
+        {/* language: 'html', */}
+        {/* }, */}
+        {/* { */}
+        {/* name: 'JSON (Data Only)', */}
+        {/* code: dataString, */}
+        {/* language: 'json', */}
+        {/* }, */}
+        {/* ]} */}
+        {/* /> */}
+        {/* </CodeBlockWrapper> */}
       </OverviewWrapper>
     );
   }
@@ -196,7 +196,8 @@ Overview.defaultProps = {
 };
 
 Overview.propTypes = {
-  template: PropTypes.string.isRequired,
+  templateId: PropTypes.string.isRequired,
+  patternId: PropTypes.string.isRequired,
   data: PropTypes.object,
   schema: PropTypes.object.isRequired,
   uiSchema: PropTypes.object,

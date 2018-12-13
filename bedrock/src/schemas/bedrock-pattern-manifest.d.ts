@@ -25,7 +25,6 @@ type Id = string;
 /**
  * Path (prefixed with namespace) of pattern template. Example '@components/_media-block.twig'.
  */
-type TemplateName = string;
 type CSSSelector = string;
 /**
  * Denote if this form should be displayed inline
@@ -35,7 +34,10 @@ type IsInline = boolean;
  * Collections of template files and their schemas
  */
 type PatternTemplatesSchema = {
-  name: TemplateName;
+  path: string;
+  id: string;
+  title: string;
+  alias: string;
   selector?: CSSSelector;
   schema: Schema;
   uiSchema?: UiSchema;
@@ -148,3 +150,29 @@ interface PatternMetaSchema {
   }[];
   demoSize?: DemoSize;
 }
+
+interface BedrockPattern {
+  id: Id;
+  /**
+   * Relative path to a JSON file that stores meta data for pattern. Schema for that file is in "pattern-meta.schema.json".
+   */
+  metaFilePath: string;
+  templates: BedrockPatternTemplate[];
+  meta?: PatternMetaSchema;
+  readme?: string;
+  dir: string;
+}
+
+type BedrockPatternTemplate = {
+  name: string;
+  path: string;
+  absolutePath: string;
+  id: string;
+  title: string;
+  alias: string;
+  selector?: CSSSelector;
+  schema: Schema;
+  uiSchema?: UiSchema;
+  isInline?: IsInline;
+  renderer: BedrockTemplateRenderer;
+};

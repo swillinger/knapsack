@@ -1,13 +1,9 @@
 {
   "name": "@basalt/bedrock-renderer-base",
-  "version": "0.17.1",
+  "version": "0.20.0",
   "description": "Base Renderer",
   "main": "src/index.js",
   "scripts": {},
-  "dependencies": {
-  },
-  "peerDependencies": {
-  },
   "author": "Basalt (https://basalt.io/)",
   "publishConfig": {
     "access": "public"

@@ -1,14 +1,12 @@
 {
   "name": "@basalt/bedrock-renderer-html",
-  "version": "0.17.1",
+  "version": "0.20.0",
   "description": "Render HTML",
   "main": "src/index.js",
   "scripts": {},
   "dependencies": {
-    "@basalt/bedrock-renderer-base": "^0.17.1",
+    "@basalt/bedrock-renderer-base": "^0.20.0",
     "fs-extra": "^7.0.1"
-  },
-  "peerDependencies": {
   },
   "author": "Basalt (https://basalt.io/)",
   "publishConfig": {

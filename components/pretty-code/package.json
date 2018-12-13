@@ -1,6 +1,6 @@
 {
   "name": "@basalt/bedrock-pretty-code",
-  "version": "0.17.4",
+  "version": "0.20.0",
   "description": "A Bedrock component for syntax highlighting code",
   "module": "dist/pretty-code.js",
   "main": "dist/pretty-code.js",
@@ -10,8 +10,8 @@
     "watch": "yarn build --watch"
   },
   "dependencies": {
-    "refractor": "^2.6.2",
-    "prismjs": "^1.15.0"
+    "prismjs": "^1.15.0",
+    "refractor": "^2.6.2"
   },
   "devDependencies": {
     "react": "^16.6.0"

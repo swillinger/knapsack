@@ -154,7 +154,6 @@ class Twig extends React.Component {
 
   render() {
     let { html } = this.state;
-    if (!html) return null;
     if (this.props.isDataShown) {
       const code = JSON.stringify(this.props.data, null, '  ');
       html = `${html}

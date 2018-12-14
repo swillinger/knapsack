@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.20.1](https://github.com/basaltinc/bedrock/compare/v0.20.0...v0.20.1) (2018-12-14)
+
+
+### Bug Fixes
+
+* **bedrock:** iFrames now resize to content again ([8bb3a80](https://github.com/basaltinc/bedrock/commit/8bb3a80))
+
+
+
+
+
 # [0.20.0](https://github.com/basaltinc/bedrock/compare/v0.19.0...v0.20.0) (2018-12-13)
 
 

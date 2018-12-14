@@ -358,7 +358,11 @@ function getPatternsDirs(patternPaths) {
       expandDirectories: true,
       onlyFiles: false,
     })
-    .filter(thePath => fs.statSync(thePath).isDirectory());
+    .filter(
+      thePath =>
+        fs.statSync(thePath).isDirectory() &&
+        fs.existsSync(join(thePath, FILE_NAMES.PATTERN)),
+    );
 }
 
 class Patterns {

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.20.2](https://github.com/basaltinc/bedrock/compare/v0.20.1...v0.20.2) (2018-12-14)
+
+
+### Bug Fixes
+
+* **bedrock:** removing test content ([3f46450](https://github.com/basaltinc/bedrock/commit/3f46450))
+
+
+
+
+
 ## [0.20.1](https://github.com/basaltinc/bedrock/compare/v0.20.0...v0.20.1) (2018-12-14)
 
 

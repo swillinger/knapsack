@@ -213,19 +213,6 @@ class PatternViewPage extends Component {
                     id={this.props.id}
                   />
 
-                  <pre>
-                    <code>
-                      {JSON.stringify(
-                        {
-                          patternId,
-                          templateId,
-                        },
-                        null,
-                        '  ',
-                      )}
-                    </code>
-                  </pre>
-
                   {!!examples.length && (
                     <Details open>
                       <summary>Examples</summary>

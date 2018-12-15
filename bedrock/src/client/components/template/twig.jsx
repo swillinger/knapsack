@@ -19,6 +19,7 @@ import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import iframeResizer from 'iframe-resizer/js/iframeResizer'; // https://www.npmjs.com/package/iframe-resizer
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
+import shortid from 'shortid';
 import { IFrameWrapper } from './twig.styles';
 import { apiUrlBase, gqlQuery } from '../../data';
 
@@ -42,7 +43,9 @@ class Twig extends React.Component {
     this.enableTemplatePush = props.context.features.enableTemplatePush;
     this.websocketsPort = props.context.meta.websocketsPort;
     this.apiEndpoint = `${apiUrlBase}`;
-    this.id = `${this.props.templateId}-${this.props.patternId}`;
+    this.id = `${this.props.templateId}-${
+      this.props.patternId
+    }-${shortid.generate()}`;
     this.iframeRef = React.createRef();
     this.getHtml = this.getHtml.bind(this);
   }

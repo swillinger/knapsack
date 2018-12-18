@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.20.4](https://github.com/basaltinc/bedrock/compare/v0.20.3...v0.20.4) (2018-12-15)
+
+
+### Bug Fixes
+
+* **bedrock:** iFrame resize bug on Templates ([51dc17b](https://github.com/basaltinc/bedrock/commit/51dc17b))
+
+
+
+
+
+## [0.20.3](https://github.com/basaltinc/bedrock/compare/v0.20.2...v0.20.3) (2018-12-14)
+
+
+### Bug Fixes
+
+* **bedrock:** server ignores pattern dirs with no bedrock.pattern.js file ([3d5e089](https://github.com/basaltinc/bedrock/commit/3d5e089)), closes [#164](https://github.com/basaltinc/bedrock/issues/164)
+* **bedrock-example-design-token-mania:** update template config ([10d7350](https://github.com/basaltinc/bedrock/commit/10d7350))
+
+
+
+
+
 ## [0.20.2](https://github.com/basaltinc/bedrock/compare/v0.20.1...v0.20.2) (2018-12-14)
 
 

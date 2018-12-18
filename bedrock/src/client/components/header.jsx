@@ -127,6 +127,11 @@ class Header extends React.Component {
             API
           </SiteHeaderNavLink>
         </li>
+        <li>
+          <SiteHeaderNavLink to={BASE_PATHS.STATISTICS}>
+            Stats
+          </SiteHeaderNavLink>
+        </li>
         {/* @todo Reimplement header nav for custom sections once implemented with gql */}
         {/* {sections.map(section => ( */}
         {/* <li key={section.id}> */}

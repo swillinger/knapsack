@@ -344,7 +344,7 @@ class App extends React.Component {
                             )}
                           />
                           <Route
-                            path="/statistics"
+                            path={BASE_PATHS.STATISTICS}
                             render={() => (
                               <React.Suspense fallback={<p>Loading...</p>}>
                                 <LoadableStatistics />

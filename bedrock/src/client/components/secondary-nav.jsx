@@ -176,6 +176,12 @@ class SecondaryNav extends Component {
               isHeading: true,
               path: BASE_PATHS.GRAPHIQL_PLAYGROUND,
             },
+            {
+              title: 'Stats',
+              id: 'stats',
+              isHeading: true,
+              path: BASE_PATHS.STATISTICS,
+            },
             // ...SecondaryNav.prepSectionLinks(this.props.context.sections),
             // @todo bring back custom sections through gql
           ].filter(Boolean);

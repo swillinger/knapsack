@@ -105,7 +105,7 @@ function Statistics() {
               <h4>Number of patterns: {patterns.length}</h4>
               <h4>Number of templates: {templateCount}</h4>
               <h4>Properties per template: {templateCount}</h4>
-              <BarChart width={800} height={400} data={templates}>
+              <BarChart width={1200} height={400} data={templates}>
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Bar dataKey="propertiesCount" fill="hsl(200,55%,19%)" />

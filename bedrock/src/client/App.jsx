@@ -51,6 +51,7 @@ import {
   LoadableAllTokens,
   LoadableDocPage,
   LoadableBadRoute,
+  LoadableStatistics,
 } from './loadable-components';
 import { BASE_PATHS } from '../lib/constants';
 
@@ -339,6 +340,14 @@ class App extends React.Component {
                             render={() => (
                               <React.Suspense fallback={<p>Loading...</p>}>
                                 <FeedbackPage />
+                              </React.Suspense>
+                            )}
+                          />
+                          <Route
+                            path="/statistics"
+                            render={() => (
+                              <React.Suspense fallback={<p>Loading...</p>}>
+                                <LoadableStatistics />
                               </React.Suspense>
                             )}
                           />

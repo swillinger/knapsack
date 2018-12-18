@@ -80,6 +80,7 @@
     "react-router-dom": "^4.3.1",
     "react-table": "^6.8.6",
     "react-test-render": "^1.1.1",
+    "recharts": "^1.4.1",
     "shortid": "^2.2.14",
     "style-loader": "^0.23.1",
     "styled-components": "^4.1.2",

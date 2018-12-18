@@ -169,3 +169,9 @@ export const LoadableBadRoute = Loadable({
   loader: () => import(/* webpackChunkName: "bad-route" */ './pages/bad-route'),
   loading: Spinner,
 });
+
+export const LoadableStatistics = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "bad-route" */ './pages/statistics'),
+  loading: Spinner,
+});

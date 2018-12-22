@@ -49,7 +49,7 @@ if (isDevMode) log.info('Bedrock Dev Mode on');
 
 /**
  * Prepare user config: validate, convert all paths to absolute, assign defaults
- * @param {BedrockConfig} userConfig
+ * @param {BedrockUserConfig} userConfig
  * @param {string} from
  * @returns {BedrockConfig}
  * @todo validate with schema and assign defaults
@@ -63,6 +63,8 @@ function processConfig(userConfig, from) {
     css,
     js,
     docsDir,
+    templates,
+    templateRenderers,
     ...rest
   } = userConfig;
   const config = {
@@ -73,6 +75,8 @@ function processConfig(userConfig, from) {
     js: js ? js.map(x => (x.startsWith('http') ? x : resolve(from, x))) : [],
     dist: resolve(from, dist),
     docsDir: docsDir ? resolve(from, docsDir) : null,
+    templateRenderers:
+      !templateRenderers && templates ? templates : templateRenderers,
     ...rest,
   };
 

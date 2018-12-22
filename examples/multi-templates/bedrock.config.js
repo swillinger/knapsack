@@ -12,7 +12,7 @@ const config = {
   css: [ './public/assets/simple.css' ],
   // js: ['./public/assets/script.js'],
   docsDir: './docs',
-  templates: [
+  templateRenderers: [
     new HtmlRenderer(),
     new TwigRenderer({
       src: {

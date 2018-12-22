@@ -65,7 +65,7 @@ async function serve(config, meta) {
     newPatternDir: config.newPatternDir,
     patternPaths: config.patterns,
     dataDir: config.data,
-    templateRenderers: config.templates,
+    templateRenderers: config.templateRenderers,
     rootRelativeCSS,
     rootRelativeJs,
   });
@@ -219,7 +219,7 @@ async function serve(config, meta) {
     //   };
     // }),
     patternManifest: patterns,
-    templateRenderers: config.templates,
+    templateRenderers: config.templateRenderers,
     pageBuilder: new PageBuilder({
       dataDir: config.data,
     }),

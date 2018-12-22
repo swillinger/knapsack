@@ -10,7 +10,7 @@ const config = {
   data: './data',
   css: ['./public/assets/simple.css'],
   // js: ['./public/assets/script.js'],
-  templates: [
+  templateRenderers: [
     new HtmlRenderer(),
     new TwigRenderer({
       src: {

@@ -37,7 +37,15 @@ interface BedrockConfig {
   css?: string[];
   /** Paths to js assets located within the public directory or absolute URL */
   js?: string[];
-  templates: BedrockTemplateRenderer[],
+  templateRenderers: BedrockTemplateRenderer[],
   designTokens: string;
   docsDir?: string;
+}
+
+interface BedrockUserConfig extends BedrockConfig {
+  /**
+   * Alias for `templateRenderers`
+   * @deprecated
+   */
+  templates?: BedrockTemplateRenderer[],
 }

@@ -17,16 +17,6 @@
 const log = require('npmlog'); // https://www.npmjs.com/package/npmlog
 
 /**
- * @param {string} level - one of: error, warn, http, info, verbose, silly
- * @returns {void}
- */
-function setLogLevel(level) {
-  log.level = level;
-}
-
-setLogLevel('info');
-
-/**
  * @param {string} msg
  * @param {Object|[]} [extra]
  * @param {string} [prefix=''] - Logging prefix
@@ -95,6 +85,17 @@ function silly(msg, extra, prefix = '') {
     log.silly(prefix, msg);
   }
 }
+
+/**
+ * @param {string} level - one of: error, warn, http, info, verbose, silly
+ * @returns {void}
+ */
+function setLogLevel(level) {
+  info(`Setting loglevel to ${level}`);
+  log.level = level;
+}
+
+setLogLevel(process.env.BEDROCK_LOG_LEVEL || 'info');
 
 module.exports = {
   error,

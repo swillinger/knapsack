@@ -26,6 +26,20 @@ const { version } = require('../../package.json');
 const { dirExistsOrExit, fileExistsOrExit } = require('../server/server-utils');
 // const webpack = require('./webpack');
 
+program
+  .version(version)
+  .option(
+    '--loglevel <loglevel>',
+    'one of: error, warn, http, info, verbose, silly. Can also set through env var $BEDROCK_LOG_LEVEL',
+    /^(error|warn|http|info|verbose|silly)$/i,
+    'info',
+  );
+
+program.on('option:loglevel', loglevel => {
+  // @todo see if this can get set earlier; currently if one does `--loglevel verbose` they don't see events that fire before `program.parse()` that only show info if loglevel is high enough. perhaps find a way to parse args earlier (i.e. twice)?
+  log.setLogLevel(loglevel);
+});
+
 // If any of our parent directories are not `node_modules`, then we are in "dev mode", which basically means that we are Bedrock developers working on this package in the monorepo.
 const isDevMode = !dirname(__dirname)
   .split('/')
@@ -129,8 +143,6 @@ if (!existsSync(configPath)) {
 
 /** @type {BedrockConfig} */
 const config = processConfig(require(configPath), dirname(configPath));
-// console.log({ config });
-program.version(version);
 
 // const userPkgPath = join(process.cwd(), 'package.json');
 // let userPkg = {};
@@ -151,3 +163,4 @@ program.command('start').action(async () => {
 });
 
 program.parse(process.argv);
+if (!program.args.length) program.help();

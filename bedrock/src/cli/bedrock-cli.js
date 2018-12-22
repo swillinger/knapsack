@@ -20,6 +20,7 @@ const { existsSync, copy, ensureSymlink, remove } = require('fs-extra');
 const portfinder = require('portfinder');
 const { join, resolve, dirname, relative } = require('path');
 const log = require('./log');
+const { bedrockEvents, EVENTS } = require('../server/events');
 const { serve } = require('../server/server');
 const { version } = require('../../package.json');
 const { dirExistsOrExit, fileExistsOrExit } = require('../server/server-utils');
@@ -81,6 +82,8 @@ function processConfig(userConfig, from) {
       process.exit(1);
     }
   });
+
+  bedrockEvents.emit(EVENTS.CONFIG_READY, config);
 
   return config;
 }

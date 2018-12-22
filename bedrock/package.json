@@ -4,13 +4,13 @@
   "description": "Build Design Systems on top of Bedrock, by Basalt",
   "version": "0.20.5",
   "author": "Basalt (https://basalt.io/)",
-  "main": "bedrock-site.js",
+  "main": "src/index.js",
   "bin": {
     "bedrock": "src/cli/bedrock-cli.js"
   },
   "scripts": {
-    "build": "rm -rf dist && NODE_ENV=production webpack-cli --config ./webpack.config.js",
-    "watch": "webpack-cli --config ./webpack.config.js --watch",
+    "build": "rm -rf dist && NODE_ENV=production webpack-cli --hide-modules --progress --config ./webpack.config.js",
+    "watch": "webpack-cli --config ./webpack.config.js --watch --hide-modules --progress",
     "test:types": "tsc",
     "prepublishOnly": "yarn build",
     "test": "run-s test:*"

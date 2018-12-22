@@ -26,6 +26,7 @@ const chokidar = require('chokidar');
 const {
   version: iframeResizerVersion,
 } = require('iframe-resizer/package.json');
+const { bedrockEvents, EVENTS } = require('./events');
 // const { FileDb } = require('./db');
 const patternSchema = require('../schemas/pattern.schema');
 const patternMetaSchema = require('../schemas/pattern-meta.schema');
@@ -345,6 +346,7 @@ function createPatternsData(patternsDirs, templateRenderers) {
     }
   });
 
+  bedrockEvents.emit(EVENTS.PATTERNS_DATA_READY, patterns);
   return patterns;
 }
 

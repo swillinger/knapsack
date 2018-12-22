@@ -171,6 +171,8 @@ const patterns = new Patterns({
   rootRelativeJs: config.rootRelativeJs,
 });
 
+const allTemplatePaths = patterns.getAllTemplatePaths();
+
 // const userPkgPath = join(process.cwd(), 'package.json');
 // let userPkg = {};
 // if (existsSync(userPkgPath)) userPkg = require(userPkgPath); // eslint-disable-line
@@ -190,7 +192,10 @@ program.command('build').action(async () => {
   await Promise.all(
     config.templateRenderers.map(async templateRenderer => {
       if (!templateRenderer.build) return;
-      await templateRenderer.build(config);
+      await templateRenderer.build({
+        config,
+        templatePaths: allTemplatePaths.filter(t => templateRenderer.test(t)),
+      });
       log.info('Built', null, `templateRender:${templateRenderer.id}`);
     }),
   );
@@ -200,7 +205,6 @@ program.command('build').action(async () => {
 program.command('start').action(async () => {
   const meta = await getMeta();
   await buildBedrock(config);
-  const allTemplatePaths = patterns.getAllTemplatePaths();
   const templateRendererWatches = config.templateRenderers.filter(t => t.watch);
 
   return Promise.all([

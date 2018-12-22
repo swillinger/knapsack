@@ -21,6 +21,7 @@ const portfinder = require('portfinder');
 const { join, resolve, dirname, relative } = require('path');
 const log = require('./log');
 const { bedrockEvents, EVENTS } = require('../server/events');
+const { Patterns } = require('../server/patterns');
 const { serve } = require('../server/server');
 const { version } = require('../../package.json');
 const { dirExistsOrExit, fileExistsOrExit } = require('../server/server-utils');
@@ -120,7 +121,7 @@ async function getMeta() {
  * @param {BedrockConfig} config
  * @return {Promise<void>}
  */
-async function build(config) {
+async function buildBedrock(config) {
   try {
     if (isDevMode) {
       // we symlink in devmode
@@ -131,10 +132,9 @@ async function build(config) {
         overwrite: true,
       });
     }
-    log.info('built', null, 'build');
+    log.info('Bedrock core built', null, 'build');
   } catch (e) {
-    log.error('bedrock build error!');
-    console.log(e);
+    log.error('Bedrock core build error!', e, 'build');
     process.exit(1);
   }
 }
@@ -148,22 +148,84 @@ if (!existsSync(configPath)) {
 /** @type {BedrockConfig} */
 const config = processConfig(require(configPath), dirname(configPath));
 
+/** @type {string[]} */
+const rootRelativeCSS = config.css.map(c => {
+  if (c.startsWith('http')) return c;
+  return `/${relative(config.public, c)}`;
+});
+
+/** @type {string[]} */
+const rootRelativeJs = config.js.map(j => {
+  if (j.startsWith('http')) return j;
+  return `/${relative(config.public, j)}`;
+});
+
+const patterns = new Patterns({
+  newPatternDir: config.newPatternDir,
+  patternPaths: config.patterns,
+  dataDir: config.data,
+  templateRenderers: config.templateRenderers,
+  rootRelativeCSS,
+  rootRelativeJs,
+});
+
 // const userPkgPath = join(process.cwd(), 'package.json');
 // let userPkg = {};
 // if (existsSync(userPkgPath)) userPkg = require(userPkgPath); // eslint-disable-line
 // const { scripts } = userPkg;
 
 program.command('serve').action(async () => {
-  await serve(config, await getMeta());
+  const meta = await getMeta();
+  await serve({
+    config,
+    meta,
+    patterns,
+    rootRelativeJs,
+    rootRelativeCSS,
+  });
 });
 
 program.command('build').action(async () => {
-  await build(config);
+  await buildBedrock(config);
+  await Promise.all(
+    config.templateRenderers.map(async templateRenderer => {
+      if (!templateRenderer.build) return;
+      await templateRenderer.build(config);
+      log.info('Built', null, `templateRender:${templateRenderer.id}`);
+    }),
+  );
+  log.info('Bedrock built', null, 'build');
 });
 
 program.command('start').action(async () => {
-  await build(config);
-  await serve(config, await getMeta());
+  const meta = await getMeta();
+  await buildBedrock(config);
+  const allTemplatePaths = patterns.getAllTemplatePaths();
+  const templateRendererWatches = config.templateRenderers.filter(t => t.watch);
+
+  return Promise.all([
+    patterns.watch(),
+    ...templateRendererWatches.map(t =>
+      t.watch({
+        config,
+        templatePaths: allTemplatePaths.filter(templatePath =>
+          t.test(templatePath),
+        ),
+      }),
+    ),
+    serve({
+      config,
+      meta,
+      patterns,
+      rootRelativeJs,
+      rootRelativeCSS,
+    }),
+  ])
+    .then(() => log.info('Started!', null, 'start'))
+    .catch(err => {
+      log.error('Bedrock start error', err, 'start');
+      process.exit(1);
+    });
 });
 
 program.parse(process.argv);

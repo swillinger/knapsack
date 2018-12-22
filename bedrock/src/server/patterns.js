@@ -152,7 +152,7 @@ async function writeMeta(dir, config) {
  * @return {Promise<void>}
  */
 async function writeEntry(dir, config) {
-  const thePath = join(dir, FILE_NAMES.PATTERN);
+  const thePath = join(dir, FILE_NAMES.PATTERN_CONFIG);
   const theFile = `
 const schema = require('./${config.id}.schema.json');
 
@@ -249,9 +249,9 @@ function createPatternsData(patternsDirs, templateRenderers) {
       .filter(cachedPath => cachedPath.startsWith(dir))
       .forEach(cachedPath => delete require.cache[cachedPath]);
     try {
-      const patternPath = join(dir, FILE_NAMES.PATTERN);
+      const patternConfigPath = join(dir, FILE_NAMES.PATTERN_CONFIG);
       /** @type {PatternWithMetaSchema} */
-      const pattern = require(patternPath); // eslint-disable-line
+      const pattern = require(patternConfigPath); // eslint-disable-line
       if (pattern) {
         const results = validateSchemaAndAssignDefaults(patternSchema, pattern);
         if (!results.ok) {
@@ -264,7 +264,7 @@ function createPatternsData(patternsDirs, templateRenderers) {
           // @todo show user better error messages like what fields are wrong
           console.error(
             `Review the "${
-              FILE_NAMES.PATTERN
+              FILE_NAMES.PATTERN_CONFIG
             }" in that folder and compare to "pattern.schema.json"`,
           );
           console.log();
@@ -363,7 +363,7 @@ function getPatternsDirs(patternPaths) {
     .filter(
       thePath =>
         fs.statSync(thePath).isDirectory() &&
-        fs.existsSync(join(thePath, FILE_NAMES.PATTERN)),
+        fs.existsSync(join(thePath, FILE_NAMES.PATTERN_CONFIG)),
     );
 }
 
@@ -466,6 +466,20 @@ class Patterns {
   }
 
   /**
+   * Get all the pattern's template file paths
+   * @return {string[]} - Absolute paths to all template files
+   */
+  getAllTemplatePaths() {
+    const allTemplatePaths = [];
+    this.allPatterns.forEach(pattern => {
+      pattern.templates.forEach(template => {
+        allTemplatePaths.push(template.absolutePath);
+      });
+    });
+    return allTemplatePaths;
+  }
+
+  /**
    * @param {string} id
    * @param {string} readme
    * @returns {Promise<void>}
@@ -508,16 +522,29 @@ class Patterns {
     };
   }
 
-  watch(cb) {
-    const watcher = chokidar.watch(this.patternsDirs.map(d => join(d, '**')), {
+  watch() {
+    const configFilesToWatch = [];
+    this.allPatterns.forEach(pattern => {
+      configFilesToWatch.push(
+        join(pattern.dir, FILE_NAMES.PATTERN_CONFIG),
+        join(pattern.dir, FILE_NAMES.PATTERN_META),
+      );
+    });
+    const watcher = chokidar.watch(configFilesToWatch, {
       ignoreInitial: true,
-      cwd: __dirname,
-      ignored: ['**/node_modules/**', '*.scss'],
+    });
+
+    watcher.on('ready', () => {
+      log.silly(
+        `Core Patterns is watching these files:`,
+        watcher.getWatched(),
+        'patterns',
+      );
     });
 
     watcher.on('all', (event, path) => {
+      bedrockEvents.emit(EVENTS.PATTERN_CONFIG_CHANGED, { event, path });
       this.updatePatternsData();
-      cb({ event, path });
     });
   }
 

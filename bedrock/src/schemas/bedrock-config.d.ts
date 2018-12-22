@@ -8,6 +8,14 @@ interface BedrockTemplateRenderer {
   id: string
   test: (theTemplatePath: string) => boolean;
   render: (templatePath: string, data?: object) => Promise<BedrockTemplateRenderResults>,
+  build?: (opt: {
+    config: BedrockConfig,
+    templatePaths: string[],
+  }) => Promise<void>,
+  watch?: (opt: {
+    config: BedrockConfig,
+    templatePaths: string[],
+  }) => Promise<void>,
   wrapHtml: (opt: {
     html: string,
     cssUrls?: string[],

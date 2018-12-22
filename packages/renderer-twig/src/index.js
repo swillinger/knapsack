@@ -3,9 +3,10 @@ const TwigRenderer = require('@basalt/twig-renderer');
 
 class BedrockTwigRenderer extends BedrockRenderer {
   constructor(config) {
-    super();
-    this.id = 'twig';
-    this.extension = '.twig';
+    super({
+      id: 'twig',
+      extension: '.twig',
+    });
     this.twigRenderer = new TwigRenderer(config);
   }
 

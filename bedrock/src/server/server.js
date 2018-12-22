@@ -19,8 +19,9 @@ const { ApolloServer, gql } = require('apollo-server-express');
 const { mergeSchemas, makeExecutableSchema } = require('graphql-tools');
 const WebSocket = require('ws');
 const bodyParser = require('body-parser');
-const { join, relative } = require('path');
+const { join } = require('path');
 const log = require('../cli/log');
+const { bedrockEvents, EVENTS } = require('./events');
 const { getRoutes } = require('./rest-api');
 const { enableTemplatePush } = require('../lib/features');
 const { getRole } = require('./auth');
@@ -37,38 +38,29 @@ const {
   designTokensTypeDef,
   designTokensResolvers,
 } = require('./design-tokens');
+// Need `Pattens` in so JsDoc works
+// eslint-disable-next-line no-unused-vars
 const { Patterns, patternsResolvers, patternsTypeDef } = require('./patterns');
 
 /**
- * @param {BedrockConfig} config
- * @param {BedrockMeta} meta
+ * @param {Object} opt
+ * @param {BedrockConfig} opt.config
+ * @param {Patterns} opt.patterns
+ * @param {BedrockMeta} opt.meta
+ * @param {string[]} opt.rootRelativeJs
+ * @param {string[]} opt.rootRelativeCSS
  * @returns {Promise<void>}
  */
-async function serve(config, meta) {
+async function serve({
+  config,
+  meta,
+  patterns,
+  rootRelativeJs,
+  rootRelativeCSS,
+}) {
   const port = 3999;
 
   const settings = new Settings({ dataDir: config.data });
-
-  /** @type {string[]} */
-  const rootRelativeCSS = config.css.map(c => {
-    if (c.startsWith('http')) return c;
-    return `/${relative(config.public, c)}`;
-  });
-
-  /** @type {string[]} */
-  const rootRelativeJs = config.js.map(j => {
-    if (j.startsWith('http')) return j;
-    return `/${relative(config.public, j)}`;
-  });
-
-  const patterns = new Patterns({
-    newPatternDir: config.newPatternDir,
-    patternPaths: config.patterns,
-    dataDir: config.data,
-    templateRenderers: config.templateRenderers,
-    rootRelativeCSS,
-    rootRelativeJs,
-  });
 
   const metaTypeDef = gql`
     type Meta {
@@ -276,8 +268,8 @@ async function serve(config, meta) {
   });
 
   if (enableTemplatePush && wss) {
-    patterns.watch(({ event, path }) => {
-      announcePatternChange({ event, path });
+    bedrockEvents.on(EVENTS.PATTERN_TEMPLATE_CHANGED, ({ path }) => {
+      announcePatternChange({ event: 'changed', path });
     });
   }
 }

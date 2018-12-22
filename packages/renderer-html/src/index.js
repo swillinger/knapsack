@@ -3,9 +3,10 @@ const fs = require('fs-extra');
 
 class BedrockHtmlRenderer extends BedrockRenderer {
   constructor() {
-    super();
-    this.id = 'html';
-    this.extension = '.html';
+    super({
+      id: 'html',
+      extension: '.html',
+    });
   }
 
   test(theTemplatePath) {

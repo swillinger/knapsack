@@ -81,6 +81,20 @@ function processConfig(userConfig, from) {
     ...rest,
   };
 
+  if (config.css) {
+    config.rootRelativeCSS = config.css.map(c => {
+      if (c.startsWith('http')) return c;
+      return `/${relative(config.public, c)}`;
+    });
+  }
+
+  if (config.js) {
+    config.rootRelativeJs = config.js.map(j => {
+      if (j.startsWith('http')) return j;
+      return `/${relative(config.public, j)}`;
+    });
+  }
+
   // @todo check if `config.patterns` exists; but can't now as it can contain globs
   fileExistsOrExit(config.designTokens);
   dirExistsOrExit(config.public);
@@ -148,25 +162,13 @@ if (!existsSync(configPath)) {
 /** @type {BedrockConfig} */
 const config = processConfig(require(configPath), dirname(configPath));
 
-/** @type {string[]} */
-const rootRelativeCSS = config.css.map(c => {
-  if (c.startsWith('http')) return c;
-  return `/${relative(config.public, c)}`;
-});
-
-/** @type {string[]} */
-const rootRelativeJs = config.js.map(j => {
-  if (j.startsWith('http')) return j;
-  return `/${relative(config.public, j)}`;
-});
-
 const patterns = new Patterns({
   newPatternDir: config.newPatternDir,
   patternPaths: config.patterns,
   dataDir: config.data,
   templateRenderers: config.templateRenderers,
-  rootRelativeCSS,
-  rootRelativeJs,
+  rootRelativeCSS: config.rootRelativeCSS,
+  rootRelativeJs: config.rootRelativeJs,
 });
 
 // const userPkgPath = join(process.cwd(), 'package.json');
@@ -180,8 +182,6 @@ program.command('serve').action(async () => {
     config,
     meta,
     patterns,
-    rootRelativeJs,
-    rootRelativeCSS,
   });
 });
 
@@ -217,8 +217,6 @@ program.command('start').action(async () => {
       config,
       meta,
       patterns,
-      rootRelativeJs,
-      rootRelativeCSS,
     }),
   ])
     .then(() => log.info('Started!', null, 'start'))

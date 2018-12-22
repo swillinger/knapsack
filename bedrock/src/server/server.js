@@ -47,17 +47,9 @@ const { Patterns, patternsResolvers, patternsTypeDef } = require('./patterns');
  * @param {BedrockConfig} opt.config
  * @param {Patterns} opt.patterns
  * @param {BedrockMeta} opt.meta
- * @param {string[]} opt.rootRelativeJs
- * @param {string[]} opt.rootRelativeCSS
  * @returns {Promise<void>}
  */
-async function serve({
-  config,
-  meta,
-  patterns,
-  rootRelativeJs,
-  rootRelativeCSS,
-}) {
+async function serve({ config, meta, patterns }) {
   const port = 3999;
 
   const settings = new Settings({ dataDir: config.data });
@@ -216,8 +208,8 @@ async function serve({
       dataDir: config.data,
     }),
     settingsStore: settings,
-    css: rootRelativeCSS,
-    js: rootRelativeJs,
+    css: config.rootRelativeCSS,
+    js: config.rootRelativeJs,
   });
 
   app.use(restApiRoutes);

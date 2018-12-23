@@ -13,11 +13,11 @@ class BedrockHtmlRenderer extends BedrockRenderer {
     return theTemplatePath.endsWith(this.extension);
   }
 
-  async render(templatePath) {
+  async render({ template }) {
     try {
       return {
         ok: true,
-        html: await fs.readFile(templatePath, 'utf8'),
+        html: await fs.readFile(template.absolutePath, 'utf8'),
       };
     } catch (error) {
       return {

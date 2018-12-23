@@ -563,20 +563,16 @@ class Patterns {
     if (templateId) {
       template = pattern.templates.find(t => t.id === templateId);
     }
-    const { alias, renderer, absolutePath } = template;
-    let templateToRender = absolutePath;
-    if (alias) {
-      templateToRender = alias;
-    } else if (template.name) {
-      // backwards compatibility with old approach
-      templateToRender = template.name;
-    }
 
-    const renderedTemplate = await renderer.render(templateToRender, data);
+    const renderedTemplate = await template.renderer.render({
+      pattern,
+      template,
+      data,
+    });
 
     if (!renderedTemplate.ok) return renderedTemplate;
     if (wrapHtml) {
-      const wrappedHtml = renderer.wrapHtml({
+      const wrappedHtml = template.renderer.wrapHtml({
         html: renderedTemplate.html,
         headJsUrls: [
           `https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/${iframeResizerVersion}/iframeResizer.contentWindow.min.js`,

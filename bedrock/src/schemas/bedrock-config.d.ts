@@ -7,7 +7,11 @@ interface BedrockTemplateRenderResults {
 interface BedrockTemplateRenderer {
   id: string
   test: (theTemplatePath: string) => boolean;
-  render: (templatePath: string, data?: object) => Promise<BedrockTemplateRenderResults>,
+  render: (opt: {
+    template: BedrockPatternTemplate,
+    pattern: BedrockPattern,
+    data?: object,
+  }) => Promise<BedrockTemplateRenderResults>,
   build?: (opt: {
     config: BedrockConfig,
     templatePaths: string[],

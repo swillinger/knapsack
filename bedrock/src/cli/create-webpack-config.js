@@ -69,10 +69,10 @@ function createWebPackConfig(userConfig) {
       ].filter(x => x),
     },
     output: {
-      filename: '[name].bundle.js',
+      filename: '[name].bundle.[hash].js',
       path: resolve(config.dist, 'bedrock'),
       publicPath: '/bedrock/',
-      chunkFilename: '[name].chunk.js',
+      chunkFilename: '[name].chunk.[hash].js',
     },
     module: {
       rules: [

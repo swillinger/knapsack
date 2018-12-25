@@ -282,8 +282,8 @@ function createPatternsData(patternsDirs, templateRenderers) {
             process.exit(1);
           }
 
-          const renderer = templateRenderers.find(t => t.test(templatePath));
-          if (!renderer) {
+          // ensure we have a templateRenderer for this template
+          if (templateRenderers.findIndex(t => t.test(templatePath)) === -1) {
             log.error(
               `Pattern ${pattern.id} has a template ${
                 template.id
@@ -295,7 +295,6 @@ function createPatternsData(patternsDirs, templateRenderers) {
           return {
             ...template,
             absolutePath: templatePath,
-            renderer,
           };
         });
 
@@ -551,20 +550,24 @@ class Patterns {
   /**
    * Render template
    * @param {Object} opt
-   * @param {string} opt.id - Pattern Id
+   * @param {string} opt.patternId - Pattern Id
    * @param {string} [opt.templateId] - Template Id
    * @param {boolean} [opt.wrapHtml=true] - Should it wrap HTML results with `<head>` and include assets?
    * @param {Object} [opt.data] - Data to pass to template
    * @return {Promise<BedrockTemplateRenderResults>}
    */
-  async render({ id, templateId = '', wrapHtml = true, data = {} }) {
-    const pattern = this.getPattern(id);
+  async render({ patternId, templateId = '', wrapHtml = true, data = {} }) {
+    const pattern = this.getPattern(patternId);
     let [template] = pattern.templates;
     if (templateId) {
       template = pattern.templates.find(t => t.id === templateId);
     }
 
-    const renderedTemplate = await template.renderer.render({
+    const renderer = this.templateRenderers.find(t =>
+      t.test(template.absolutePath),
+    );
+
+    const renderedTemplate = await renderer.render({
       pattern,
       template,
       data,
@@ -572,7 +575,7 @@ class Patterns {
 
     if (!renderedTemplate.ok) return renderedTemplate;
     if (wrapHtml) {
-      const wrappedHtml = template.renderer.wrapHtml({
+      const wrappedHtml = renderer.wrapHtml({
         html: renderedTemplate.html,
         headJsUrls: [
           `https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/${iframeResizerVersion}/iframeResizer.contentWindow.min.js`,
@@ -597,7 +600,7 @@ const patternsResolvers = {
       parent,
       { patternId, templateId, wrapHtml, data },
       { patterns },
-    ) => patterns.render({ id: patternId, templateId, wrapHtml, data }),
+    ) => patterns.render({ patternId, templateId, wrapHtml, data }),
   },
   Mutation: {
     setPatternMeta: async (parent, { id, meta }, { patterns, canWrite }) => {

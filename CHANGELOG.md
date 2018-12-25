@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.22.0](https://github.com/basaltinc/bedrock/compare/v0.21.0...v0.22.0) (2018-12-25)
+
+
+### Bug Fixes
+
+* **bedrock:** clean before build ([c67ecf7](https://github.com/basaltinc/bedrock/commit/c67ecf7))
+* delay pattern change announcement to client ([c4ecc96](https://github.com/basaltinc/bedrock/commit/c4ecc96))
+
+
+### Features
+
+* add caching headers for internal files ([7aa345b](https://github.com/basaltinc/bedrock/commit/7aa345b))
+* add json utils ([cfb6c65](https://github.com/basaltinc/bedrock/commit/cfb6c65))
+* add outputDirName prop for templateRenderers ([b4036cb](https://github.com/basaltinc/bedrock/commit/b4036cb))
+* templateRenderers gain init method ([beae716](https://github.com/basaltinc/bedrock/commit/beae716))
+* templateRenderers now get more info in render ([91407ff](https://github.com/basaltinc/bedrock/commit/91407ff))
+* templateRenderers now have build and watch methods ([9a0a0a3](https://github.com/basaltinc/bedrock/commit/9a0a0a3))
+
+
+### Performance Improvements
+
+* **bedrock:** add hash to filenames for cache ([cb85cd5](https://github.com/basaltinc/bedrock/commit/cb85cd5))
+
+
+
+
+
 # [0.21.0](https://github.com/basaltinc/bedrock/compare/v0.20.5...v0.21.0) (2018-12-22)
 
 

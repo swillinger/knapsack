@@ -16,7 +16,7 @@
     with Bedrock; if not, see <https://www.gnu.org/licenses>.
  */
 const program = require('commander');
-const { existsSync, copy, ensureSymlink, remove } = require('fs-extra');
+const { existsSync, copy, emptyDir } = require('fs-extra');
 const portfinder = require('portfinder');
 const { join, resolve, dirname, relative } = require('path');
 const log = require('./log');
@@ -137,15 +137,9 @@ async function getMeta() {
  */
 async function buildBedrock(config) {
   try {
-    if (isDevMode) {
-      // we symlink in devmode
-      await remove(config.dist);
-      await ensureSymlink(join(__dirname, '../../dist/'), config.dist);
-    } else {
-      await copy(join(__dirname, '../../dist/'), config.dist, {
-        overwrite: true,
-      });
-    }
+    await copy(join(__dirname, '../../dist/'), config.dist, {
+      overwrite: true,
+    });
     log.info('Bedrock core built', null, 'build');
   } catch (e) {
     log.error('Bedrock core build error!', e, 'build');
@@ -179,6 +173,7 @@ const allTemplatePaths = patterns.getAllTemplatePaths();
 // const { scripts } = userPkg;
 
 program.command('serve').action(async () => {
+  log.info('Serving...');
   const meta = await getMeta();
   await serve({
     config,
@@ -188,6 +183,8 @@ program.command('serve').action(async () => {
 });
 
 program.command('build').action(async () => {
+  log.info('Building...');
+  await emptyDir(config.dist);
   await buildBedrock(config);
   await Promise.all(
     config.templateRenderers.map(async templateRenderer => {
@@ -203,6 +200,7 @@ program.command('build').action(async () => {
 });
 
 program.command('start').action(async () => {
+  log.info('Starting...');
   const meta = await getMeta();
   await buildBedrock(config);
   const templateRendererWatches = config.templateRenderers.filter(t => t.watch);

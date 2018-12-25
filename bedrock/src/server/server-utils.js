@@ -30,6 +30,32 @@ function writeJson(fileName, object) {
 }
 
 /**
+ * @param {string} fileName - path to where JSON file should be read
+ * @return {Promise<Object>}
+ */
+function readJson(fileName) {
+  return fs.readFile(fileName, 'utf8').then(file => JSON.parse(file));
+}
+
+/**
+ * @param {string} fileName - path to where JSON file should be read
+ * @return {Object}
+ */
+function readJsonSync(fileName) {
+  return JSON.parse(fs.readFileSync(fileName, 'utf8'));
+}
+
+/**
+ * Get a NPM package's package.json as object
+ * @param {string} pkg
+ * @return {Object} - The package.json
+ */
+function getPkg(pkg) {
+  const pkgPath = require.resolve(`${pkg}/package.json`);
+  return readJsonSync(pkgPath);
+}
+
+/**
  * Find readme path in directory
  * @param {string} dir - Path to directory
  * @return {Promise<string>} - path to readme file in that directory
@@ -89,6 +115,9 @@ function dirExistsOrExit(dirPath, msg) {
 
 module.exports = {
   writeJson,
+  readJson,
+  readJsonSync,
+  getPkg,
   findReadmeInDir,
   findReadmeInDirSync,
   fileExists,

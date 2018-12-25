@@ -136,7 +136,11 @@ async function serve({ config, meta, patterns }) {
   });
 
   if (config.dist) {
-    app.use(express.static(config.dist));
+    app.use(
+      express.static(config.dist, {
+        maxAge: '1d',
+      }),
+    );
     // Since this is a Single Page App, we will send all html requests to the `index.html` file in the dist
     app.use('*', (req, res, next) => {
       const { accept = '' } = req.headers;

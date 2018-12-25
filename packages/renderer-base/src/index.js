@@ -6,6 +6,7 @@ class BedrockRenderer {
   constructor({ id, extension }) {
     this.id = id;
     this.extension = extension;
+    this.outputDirName = `bedrock-renderer-${this.id}`;
   }
 
   getHead({ cssUrls = [], headJsUrls = [] }) {

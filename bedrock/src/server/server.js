@@ -265,7 +265,9 @@ async function serve({ config, meta, patterns }) {
 
   if (enableTemplatePush && wss) {
     bedrockEvents.on(EVENTS.PATTERN_TEMPLATE_CHANGED, ({ path }) => {
-      announcePatternChange({ event: 'changed', path });
+      setTimeout(() => {
+        announcePatternChange({ event: 'changed', path });
+      }, 250);
     });
   }
 }

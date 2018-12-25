@@ -3,9 +3,10 @@ const TwigRenderer = require('@basalt/twig-renderer');
 
 class BedrockTwigRenderer extends BedrockRenderer {
   constructor(config) {
-    super();
-    this.id = 'twig';
-    this.extension = '.twig';
+    super({
+      id: 'twig',
+      extension: '.twig',
+    });
     this.twigRenderer = new TwigRenderer(config);
   }
 
@@ -13,8 +14,8 @@ class BedrockTwigRenderer extends BedrockRenderer {
     return theTemplatePath.endsWith(this.extension);
   }
 
-  async render(templatePath, data = {}) {
-    return this.twigRenderer.render(templatePath, data);
+  async render({ template, data }) {
+    return this.twigRenderer.render(template.alias, data);
   }
 }
 

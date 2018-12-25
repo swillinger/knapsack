@@ -16,11 +16,12 @@
     with Bedrock; if not, see <https://www.gnu.org/licenses>.
  */
 const program = require('commander');
-const { existsSync, copy, ensureSymlink, remove } = require('fs-extra');
+const { existsSync, copy, emptyDir } = require('fs-extra');
 const portfinder = require('portfinder');
 const { join, resolve, dirname, relative } = require('path');
 const log = require('./log');
 const { bedrockEvents, EVENTS } = require('../server/events');
+const { Patterns } = require('../server/patterns');
 const { serve } = require('../server/server');
 const { version } = require('../../package.json');
 const { dirExistsOrExit, fileExistsOrExit } = require('../server/server-utils');
@@ -80,6 +81,20 @@ function processConfig(userConfig, from) {
     ...rest,
   };
 
+  if (config.css) {
+    config.rootRelativeCSS = config.css.map(c => {
+      if (c.startsWith('http')) return c;
+      return `/${relative(config.public, c)}`;
+    });
+  }
+
+  if (config.js) {
+    config.rootRelativeJs = config.js.map(j => {
+      if (j.startsWith('http')) return j;
+      return `/${relative(config.public, j)}`;
+    });
+  }
+
   // @todo check if `config.patterns` exists; but can't now as it can contain globs
   fileExistsOrExit(config.designTokens);
   dirExistsOrExit(config.public);
@@ -120,21 +135,14 @@ async function getMeta() {
  * @param {BedrockConfig} config
  * @return {Promise<void>}
  */
-async function build(config) {
+async function buildBedrock(config) {
   try {
-    if (isDevMode) {
-      // we symlink in devmode
-      await remove(config.dist);
-      await ensureSymlink(join(__dirname, '../../dist/'), config.dist);
-    } else {
-      await copy(join(__dirname, '../../dist/'), config.dist, {
-        overwrite: true,
-      });
-    }
-    log.info('built', null, 'build');
+    await copy(join(__dirname, '../../dist/'), config.dist, {
+      overwrite: true,
+    });
+    log.info('Bedrock core built', null, 'build');
   } catch (e) {
-    log.error('bedrock build error!');
-    console.log(e);
+    log.error('Bedrock core build error!', e, 'build');
     process.exit(1);
   }
 }
@@ -148,22 +156,87 @@ if (!existsSync(configPath)) {
 /** @type {BedrockConfig} */
 const config = processConfig(require(configPath), dirname(configPath));
 
+const patterns = new Patterns({
+  newPatternDir: config.newPatternDir,
+  patternPaths: config.patterns,
+  dataDir: config.data,
+  templateRenderers: config.templateRenderers,
+  rootRelativeCSS: config.rootRelativeCSS,
+  rootRelativeJs: config.rootRelativeJs,
+});
+
+const allTemplatePaths = patterns.getAllTemplatePaths();
+
+config.templateRenderers.forEach(templateRenderer => {
+  if (templateRenderer.init) {
+    templateRenderer.init({
+      config,
+      allPatterns: patterns.getPatterns(),
+      templatePaths: allTemplatePaths.filter(t => templateRenderer.test(t)),
+    });
+    log.info('Init done', null, `templateRenderer:${templateRenderer.id}`);
+  }
+});
+log.verbose('All templateRenderers init done');
 // const userPkgPath = join(process.cwd(), 'package.json');
 // let userPkg = {};
 // if (existsSync(userPkgPath)) userPkg = require(userPkgPath); // eslint-disable-line
 // const { scripts } = userPkg;
 
 program.command('serve').action(async () => {
-  await serve(config, await getMeta());
+  log.info('Serving...');
+  const meta = await getMeta();
+  await serve({
+    config,
+    meta,
+    patterns,
+  });
 });
 
 program.command('build').action(async () => {
-  await build(config);
+  log.info('Building...');
+  await emptyDir(config.dist);
+  await buildBedrock(config);
+  await Promise.all(
+    config.templateRenderers.map(async templateRenderer => {
+      if (!templateRenderer.build) return;
+      await templateRenderer.build({
+        config,
+        templatePaths: allTemplatePaths.filter(t => templateRenderer.test(t)),
+      });
+      log.info('Built', null, `templateRender:${templateRenderer.id}`);
+    }),
+  );
+  log.info('Bedrock built', null, 'build');
 });
 
 program.command('start').action(async () => {
-  await build(config);
-  await serve(config, await getMeta());
+  log.info('Starting...');
+  const meta = await getMeta();
+  await buildBedrock(config);
+  const templateRendererWatches = config.templateRenderers.filter(t => t.watch);
+
+  return Promise.all([
+    patterns.watch(),
+    ...templateRendererWatches.map(t =>
+      t.watch({
+        config,
+        templatePaths: allTemplatePaths.filter(templatePath =>
+          t.test(templatePath),
+        ),
+      }),
+    ),
+    serve({
+      config,
+      meta,
+      patterns,
+    }),
+  ])
+    .then(() => log.info('Started!', null, 'start'))
+    .catch(err => {
+      log.error('Bedrock start error', err, 'start');
+      process.exit(1);
+    });
 });
 
 program.parse(process.argv);

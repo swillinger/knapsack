@@ -3,20 +3,21 @@ const fs = require('fs-extra');
 
 class BedrockHtmlRenderer extends BedrockRenderer {
   constructor() {
-    super();
-    this.id = 'html';
-    this.extension = '.html';
+    super({
+      id: 'html',
+      extension: '.html',
+    });
   }
 
   test(theTemplatePath) {
     return theTemplatePath.endsWith(this.extension);
   }
 
-  async render(templatePath) {
+  async render({ template }) {
     try {
       return {
         ok: true,
-        html: await fs.readFile(templatePath, 'utf8'),
+        html: await fs.readFile(template.absolutePath, 'utf8'),
       };
     } catch (error) {
       return {

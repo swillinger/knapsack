@@ -34,7 +34,7 @@ const BASE_PATHS = {
 };
 
 const FILE_NAMES = {
-  PATTERN: 'bedrock.pattern.js',
+  PATTERN_CONFIG: 'bedrock.pattern.js',
   PATTERN_META: 'bedrock.pattern-meta.json',
   CONFIG: 'bedrock.config.js',
 };

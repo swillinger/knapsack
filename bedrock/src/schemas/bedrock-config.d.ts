@@ -7,7 +7,24 @@ interface BedrockTemplateRenderResults {
 interface BedrockTemplateRenderer {
   id: string
   test: (theTemplatePath: string) => boolean;
-  render: (templatePath: string, data?: object) => Promise<BedrockTemplateRenderResults>,
+  render: (opt: {
+    template: BedrockPatternTemplate,
+    pattern: BedrockPattern,
+    data?: object,
+  }) => Promise<BedrockTemplateRenderResults>,
+  build?: (opt: {
+    config: BedrockConfig,
+    templatePaths: string[],
+  }) => Promise<void>,
+  watch?: (opt: {
+    config: BedrockConfig,
+    templatePaths: string[],
+  }) => Promise<void>,
+  init?: (opt: {
+    config: BedrockConfig,
+    templatePaths: string[],
+    allPatterns: BedrockPattern[],
+  }) => void,
   wrapHtml: (opt: {
     html: string,
     cssUrls?: string[],
@@ -35,8 +52,12 @@ interface BedrockConfig {
   public: string;
   /** Paths to css assets located within the public directory or absolute URL */
   css?: string[];
+  /** Derived from `css` */
+  rootRelativeCSS?: string[];
   /** Paths to js assets located within the public directory or absolute URL */
   js?: string[];
+  /** Derived from `js` */
+  rootRelativeJs?: string[];
   templateRenderers: BedrockTemplateRenderer[],
   designTokens: string;
   docsDir?: string;

@@ -167,6 +167,17 @@ const patterns = new Patterns({
 
 const allTemplatePaths = patterns.getAllTemplatePaths();
 
+config.templateRenderers.forEach(templateRenderer => {
+  if (templateRenderer.init) {
+    templateRenderer.init({
+      config,
+      allPatterns: patterns.getPatterns(),
+      templatePaths: allTemplatePaths.filter(t => templateRenderer.test(t)),
+    });
+    log.info('Init done', null, `templateRenderer:${templateRenderer.id}`);
+  }
+});
+log.verbose('All templateRenderers init done');
 // const userPkgPath = join(process.cwd(), 'package.json');
 // let userPkg = {};
 // if (existsSync(userPkgPath)) userPkg = require(userPkgPath); // eslint-disable-line

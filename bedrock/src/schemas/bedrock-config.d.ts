@@ -20,6 +20,11 @@ interface BedrockTemplateRenderer {
     config: BedrockConfig,
     templatePaths: string[],
   }) => Promise<void>,
+  init?: (opt: {
+    config: BedrockConfig,
+    templatePaths: string[],
+    allPatterns: BedrockPattern[],
+  }) => void,
   wrapHtml: (opt: {
     html: string,
     cssUrls?: string[],

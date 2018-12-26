@@ -25,6 +25,7 @@
     "@basalt/bedrock-color-swatch": "^0.22.0",
     "@basalt/bedrock-core": "^0.22.0",
     "@basalt/bedrock-design-token-demos": "^0.22.0",
+    "@basalt/bedrock-renderer-base": "^0.22.0",
     "@basalt/bedrock-schema-form": "^0.22.0",
     "@basalt/bedrock-schema-table": "^0.22.0",
     "@basalt/bedrock-schema-utils": "^0.22.0",

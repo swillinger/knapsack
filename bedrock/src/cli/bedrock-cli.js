@@ -19,6 +19,7 @@ const program = require('commander');
 const { existsSync, copy, emptyDir } = require('fs-extra');
 const portfinder = require('portfinder');
 const { join, resolve, dirname, relative } = require('path');
+const BedrockRenderer = require('@basalt/bedrock-renderer-base');
 const { validateUniqueIdsInArray } = require('@basalt/bedrock-schema-utils');
 const log = require('./log');
 const { bedrockEvents, EVENTS } = require('../server/events');
@@ -112,6 +113,16 @@ function processConfig(userConfig, from) {
     );
     process.exit(1);
   }
+
+  config.templateRenderers.forEach((templateRenderer, i) => {
+    if (templateRenderer instanceof BedrockRenderer === false) {
+      log.error(
+        `Each templateRenderer must be an instance of "BedrockRenderer" and ${templateRenderer.id ||
+          `number ${i + 1}`} is not`,
+      );
+      process.exit(1);
+    }
+  });
 
   // @todo check if `config.patterns` exists; but can't now as it can contain globs
   fileExistsOrExit(config.designTokens);

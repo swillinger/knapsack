@@ -3,7 +3,7 @@ module.exports = {
   type: 'object',
   title: 'Card',
   description: 'A Card that powers the internet',
-  required: ['title', 'body'],
+  required: ['title', 'body', 'img'],
   properties: {
     title: {
       type: 'string',

@@ -1,5 +1,5 @@
 {
-  "title": "Super Card",
+  "title": "Card",
   "type": "component",
   "description": "A Card that powers the internet",
   "uses": ["inSlice"],

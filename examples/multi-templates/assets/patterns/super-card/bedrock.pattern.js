@@ -1,7 +1,7 @@
 const schema = require('./card.schema');
 
 module.exports = {
-  id: 'super-card',
+  id: 'card',
   templates: [
     {
       alias: '@components/card.twig',

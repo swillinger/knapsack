@@ -1,7 +1,7 @@
 const HtmlRenderer = require('@basalt/bedrock-renderer-html');
 const TwigRenderer = require('@basalt/bedrock-renderer-twig');
 
-/** @type {BedrockConfig} */
+/** @type {BedrockUserConfig} */
 const config = {
   patterns: [ './assets/patterns/*' ],
   newPatternDir: './assets/patterns/',

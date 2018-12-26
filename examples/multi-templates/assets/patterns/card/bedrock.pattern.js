@@ -4,6 +4,12 @@ module.exports = {
   id: 'card',
   templates: [
     {
+      path: './card.jsx',
+      id: 'react',
+      title: 'React',
+      schema,
+    },
+    {
       alias: '@components/card.twig',
       path: './card.twig',
       id: 'twig',

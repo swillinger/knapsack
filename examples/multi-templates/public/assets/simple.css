@@ -16,7 +16,7 @@ img {
 }
 
 .card {
-  background: #FFF;
+  background: red;
   border: var(--border);
   border-radius: var(--border-radius);
   display: flex;

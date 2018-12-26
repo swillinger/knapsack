@@ -14,7 +14,7 @@ class BedrockTwigRenderer extends BedrockRenderer {
     return theTemplatePath.endsWith(this.extension);
   }
 
-  async render({ template, data }) {
+  async render({ template, data = {} }) {
     return this.twigRenderer.render(template.alias, data);
   }
 }

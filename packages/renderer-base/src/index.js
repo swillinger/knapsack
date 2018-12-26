@@ -72,12 +72,6 @@ ${this.getFoot({ jsUrls })}
     bedrockEvents.emit(EVENTS.PATTERN_TEMPLATE_REMOVED, { path });
   }
 
-  /**
-   * @param {Object} opt
-   * @param {BedrockConfig} opt.config
-   * @param {string[]} opt.templatePaths - absolute paths of templates for this renderer
-   * @return {Promise<boolean>}
-   */
   watch({ config, templatePaths }) {
     return new Promise((resolve, reject) => {
       const watcher = chokidar.watch(templatePaths, {
@@ -99,7 +93,7 @@ ${this.getFoot({ jsUrls })}
           watcher.getWatched(),
           `templateRender:${this.id}`,
         );
-        resolve(true);
+        resolve();
       });
     });
   }

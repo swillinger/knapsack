@@ -38,6 +38,9 @@ interface BedrockTemplateRenderer {
   getFoot: (opt: {
     jsUrls?: string[],
   }) => string;
+  onChange: (opt: { path: string }) => void,
+  onAdd: (opt: { path: string }) => void,
+  onRemove: (opt: { path: string }) => void,
   // renderString: (template: string, data?: object) => Promise<BedrockTemplateRenderResults>,
 }
 

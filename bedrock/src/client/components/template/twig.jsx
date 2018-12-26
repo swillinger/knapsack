@@ -65,10 +65,11 @@ class Twig extends React.Component {
       //   this.socket.send('Hello Server!', event);
       // });
 
-      this.socket.addEventListener('message', event => {
-        // console.log('Message from server ', event);
-        const { path } = JSON.parse(event.data);
-        if (path.endsWith('.twig')) {
+      this.socket.addEventListener('message', data => {
+        if (data.path.endsWith('css') || data.path.endsWith('js')) {
+          // @todo determine why `this.getHtml()` won't pull down changed CSS, in the meantime, we'll do a full page reload
+          window.location.reload();
+        } else {
           this.getHtml(this.props.data);
         }
       });

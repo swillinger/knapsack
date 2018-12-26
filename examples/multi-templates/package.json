@@ -1,6 +1,6 @@
 {
   "name": "@basalt/bedrock-example-multi-templates",
-  "version": "0.22.0",
+  "version": "0.23.0",
   "description": "",
   "private": true,
   "main": "index.js",
@@ -11,9 +11,9 @@
     "start": "node $NODE_DEBUG_OPTION ./node_modules/.bin/bedrock start"
   },
   "dependencies": {
-    "@basalt/bedrock": "^0.22.0",
-    "@basalt/bedrock-renderer-html": "^0.22.0",
-    "@basalt/bedrock-renderer-twig": "^0.22.0",
+    "@basalt/bedrock": "^0.23.0",
+    "@basalt/bedrock-renderer-html": "^0.23.0",
+    "@basalt/bedrock-renderer-twig": "^0.23.0",
     "@basalt/demo-data": "^0.5.1"
   },
   "devDependencies": {

@@ -1,11 +1,11 @@
 {
   "name": "@basalt/bedrock-renderer-twig",
-  "version": "0.22.0",
+  "version": "0.23.0",
   "description": "Render Twig",
   "main": "src/index.js",
   "scripts": {},
   "dependencies": {
-    "@basalt/bedrock-renderer-base": "^0.22.0",
+    "@basalt/bedrock-renderer-base": "^0.23.0",
     "@basalt/twig-renderer": "^0.10.2"
   },
   "author": "Basalt (https://basalt.io/)",

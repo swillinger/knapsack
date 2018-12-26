@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.23.0](https://github.com/basaltinc/bedrock/compare/v0.22.0...v0.23.0) (2018-12-26)
+
+
+### Bug Fixes
+
+* **bedrock:** pattern view examples closed ([0a4dd3d](https://github.com/basaltinc/bedrock/commit/0a4dd3d))
+
+
+### Features
+
+* add uniqueId validation ([7f3b90c](https://github.com/basaltinc/bedrock/commit/7f3b90c))
+* validate templateRenderer instance ([b6adb3f](https://github.com/basaltinc/bedrock/commit/b6adb3f))
+
+
+
+
+
 # [0.22.0](https://github.com/basaltinc/bedrock/compare/v0.21.0...v0.22.0) (2018-12-25)
 
 

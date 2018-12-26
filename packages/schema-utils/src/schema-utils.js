@@ -59,7 +59,7 @@ function validateSchemaAndAssignDefaults(schema, data) {
 
   const newData = Object.assign({}, data);
   // This `validate` function mutates `newData`, so that's why we created a new object above first.
-  const isValid = ajvDefaults.validate(schema, newData);
+  const isValid = !!ajvDefaults.validate(schema, newData);
   return {
     ok: isValid,
     message: isValid ? '' : ajvDefaults.errorsText(),
@@ -83,10 +83,41 @@ function validateDataAgainstSchema(schema, data) {
     };
   }
 
-  const isValid = ajv.validate(schema, data);
+  const isValid = !!ajv.validate(schema, data);
   return {
     ok: isValid,
     message: isValid ? '' : ajv.errorsText(),
+  };
+}
+
+/**
+ * @param {Object[]} items
+ * @return {{ ok: boolean, duplicates: any[], duplicateIdList: string, message: string }}
+ */
+function validateUniqueIdsInArray(items) {
+  const ids = [];
+  const duplicates = [];
+  items.forEach(item => {
+    if (ids.includes(item.id)) {
+      duplicates.push(item);
+    } else {
+      ids.push(item.id);
+    }
+  });
+  if (duplicates.length > 0) {
+    const duplicateIdList = duplicates.map(d => `"${d.id}"`).join(', ');
+    return {
+      ok: false,
+      duplicates,
+      duplicateIdList,
+      message: `Each item in the array requires unique "id" prop. These ids are duplicates: ${duplicateIdList}`,
+    };
+  }
+  return {
+    ok: true,
+    duplicates,
+    duplicateIdList: '',
+    message: '',
   };
 }
 
@@ -94,4 +125,5 @@ module.exports = {
   validateSchema,
   validateSchemaAndAssignDefaults,
   validateDataAgainstSchema,
+  validateUniqueIdsInArray,
 };

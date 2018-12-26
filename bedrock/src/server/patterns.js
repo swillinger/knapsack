@@ -17,10 +17,11 @@
 const { gql } = require('apollo-server-express');
 const GraphQLJSON = require('graphql-type-json');
 const fs = require('fs-extra');
-const { join } = require('path');
+const { join, relative } = require('path');
 const globby = require('globby');
 const {
   validateSchemaAndAssignDefaults,
+  validateUniqueIdsInArray,
 } = require('@basalt/bedrock-schema-utils');
 const chokidar = require('chokidar');
 const {
@@ -271,6 +272,21 @@ function createPatternsData(patternsDirs, templateRenderers) {
           process.exit(1);
         }
 
+        const templateValidation = validateUniqueIdsInArray(
+          results.data.templates,
+        );
+        if (!templateValidation.ok) {
+          log.error(
+            `Each "template" must have a unique "id", in "${relative(
+              process.cwd(),
+              dir,
+            )}" these do not: ${templateValidation.duplicateIdList}`,
+            null,
+            'patterns',
+          );
+          process.exit(1);
+        }
+
         results.data.templates = results.data.templates.map(template => {
           const templatePath = join(dir, template.path);
           if (!fileExists(templatePath)) {
@@ -343,8 +359,19 @@ function createPatternsData(patternsDirs, templateRenderers) {
       log.error('Problem loading up Patterns', e);
       process.exit(1);
     }
-  });
+  }); // end building up `patterns`
 
+  const results = validateUniqueIdsInArray(patterns);
+  if (!results.ok) {
+    log.error(
+      `Each "bedrock.pattern.js" must have a unique "id", these do not: ${
+        results.duplicateIdList
+      }`,
+      null,
+      'patterns',
+    );
+    process.exit(1);
+  }
   bedrockEvents.emit(EVENTS.PATTERNS_DATA_READY, patterns);
   return patterns;
 }

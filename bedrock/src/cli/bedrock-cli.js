@@ -19,6 +19,7 @@ const program = require('commander');
 const { existsSync, copy, emptyDir } = require('fs-extra');
 const portfinder = require('portfinder');
 const { join, resolve, dirname, relative } = require('path');
+const { validateUniqueIdsInArray } = require('@basalt/bedrock-schema-utils');
 const log = require('./log');
 const { bedrockEvents, EVENTS } = require('../server/events');
 const { Patterns } = require('../server/patterns');
@@ -98,6 +99,18 @@ function processConfig(userConfig, from) {
       if (j.startsWith('http')) return j;
       return `/${relative(config.public, j)}`;
     });
+  }
+
+  const templateRendererResults = validateUniqueIdsInArray(
+    config.templateRenderers,
+  );
+  if (!templateRendererResults.ok) {
+    log.error(
+      `Each templateRenderer must have a unique id, these do not: ${
+        templateRendererResults.duplicateIdList
+      }`,
+    );
+    process.exit(1);
   }
 
   // @todo check if `config.patterns` exists; but can't now as it can contain globs

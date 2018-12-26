@@ -65,7 +65,6 @@ function processConfig(userConfig, from) {
     js,
     docsDir,
     templates,
-    templateRenderers,
     ...rest
   } = userConfig;
   const config = {
@@ -76,10 +75,16 @@ function processConfig(userConfig, from) {
     js: js ? js.map(x => (x.startsWith('http') ? x : resolve(from, x))) : [],
     dist: resolve(from, dist),
     docsDir: docsDir ? resolve(from, docsDir) : null,
-    templateRenderers:
-      !templateRenderers && templates ? templates : templateRenderers,
     ...rest,
   };
+
+  // @deprecated - remove in v1.0.0
+  if (templates) {
+    log.warn(
+      'bedrock.config.js prop "templates" is deprecated and has been renamed to "templateRenderers", please rename with no change to config needed. The bots have moved your config to correct spot for now, but this will stop working at 1.0.0',
+    );
+    config.templateRenderers = templates;
+  }
 
   if (config.css) {
     config.rootRelativeCSS = config.css.map(c => {

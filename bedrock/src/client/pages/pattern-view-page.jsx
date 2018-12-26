@@ -214,8 +214,8 @@ class PatternViewPage extends Component {
                   />
 
                   {!!examples.length && (
-                    <Details open>
-                      <summary>Examples</summary>
+                    <Details>
+                      <summary>Extra Examples</summary>
                       {examples.map(example => (
                         <Template
                           patternId={patternId}

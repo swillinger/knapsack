@@ -1,5 +1,8 @@
 const HtmlRenderer = require('@basalt/bedrock-renderer-html');
 const TwigRenderer = require('@basalt/bedrock-renderer-twig');
+const ReactRenderer = require('@basalt/bedrock-renderer-react');
+const webpack = require('webpack');
+const webpackConfig = require('./webpack.config');
 
 /** @type {BedrockUserConfig} */
 const config = {
@@ -13,6 +16,10 @@ const config = {
   // js: ['./public/assets/script.js'],
   docsDir: './docs',
   templateRenderers: [
+    new ReactRenderer({
+      webpackConfig,
+      webpack,
+    }),
     new HtmlRenderer(),
     new TwigRenderer({
       src: {

@@ -7,7 +7,10 @@ class BedrockTwigRenderer extends BedrockRenderer {
       id: 'twig',
       extension: '.twig',
     });
-    this.twigRenderer = new TwigRenderer(config);
+    this.twigRenderer = new TwigRenderer({
+      keepAlive: process.env.NODE_ENV === 'production',
+      ...config,
+    });
   }
 
   test(theTemplatePath) {

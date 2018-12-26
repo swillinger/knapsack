@@ -1,0 +1,18 @@
+{
+  "name": "@basalt/bedrock-renderer-react",
+  "version": "0.23.0",
+  "description": "Render React",
+  "main": "src/index.js",
+  "scripts": {},
+  "dependencies": {
+    "@basalt/bedrock-renderer-base": "^0.23.0",
+    "webpack-manifest-plugin": "^2.0.4"
+  },
+  "peerDependencies": {
+    "@basalt/bedrock": "^0.23.0"
+  },
+  "author": "Basalt (https://basalt.io/)",
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -20,6 +20,11 @@ function getPkg(pkg) {
   return readJsonSync(pkgPath);
 }
 
+/**
+ * @param {string} distDirAbsolute
+ * @param {string} publicPath
+ * @return {string[]}
+ */
 function copyReactAssets(distDirAbsolute, publicPath) {
   try {
     const { version: reactVersion } = getPkg('react');

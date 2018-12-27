@@ -13,10 +13,6 @@ class BedrockTwigRenderer extends BedrockRendererBase {
     });
   }
 
-  test(theTemplatePath) {
-    return theTemplatePath.endsWith(this.extension);
-  }
-
   async render({ template, data = {} }) {
     return this.twigRenderer.render(template.alias, data);
   }

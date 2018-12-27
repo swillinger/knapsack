@@ -1,8 +1,9 @@
-const { bedrockEvents, EVENTS, log } = require('@basalt/bedrock');
 const chokidar = require('chokidar');
+const { bedrockEvents, EVENTS } = require('./events');
+const log = require('../cli/log');
 
 /* eslint-disable class-methods-use-this, no-empty-function, no-unused-vars */
-class BedrockRenderer {
+class BedrockRendererBase {
   constructor({ id, extension }) {
     this.id = id;
     this.extension = extension;
@@ -99,4 +100,4 @@ ${this.getFoot({ jsUrls })}
   }
 }
 
-module.exports = BedrockRenderer;
+module.exports = BedrockRendererBase;

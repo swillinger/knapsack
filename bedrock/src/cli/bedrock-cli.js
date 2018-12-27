@@ -19,8 +19,8 @@ const program = require('commander');
 const { existsSync, copy, emptyDir } = require('fs-extra');
 const portfinder = require('portfinder');
 const { join, resolve, dirname, relative } = require('path');
-const BedrockRenderer = require('@basalt/bedrock-renderer-base');
 const { validateUniqueIdsInArray } = require('@basalt/bedrock-schema-utils');
+const BedrockRendererBase = require('../server/renderer-base');
 const log = require('./log');
 const { bedrockEvents, EVENTS } = require('../server/events');
 const { Patterns } = require('../server/patterns');
@@ -115,7 +115,7 @@ function processConfig(userConfig, from) {
   }
 
   config.templateRenderers.forEach((templateRenderer, i) => {
-    if (templateRenderer instanceof BedrockRenderer === false) {
+    if (templateRenderer instanceof BedrockRendererBase === false) {
       log.error(
         `Each templateRenderer must be an instance of "BedrockRenderer" and ${templateRenderer.id ||
           `number ${i + 1}`} is not`,

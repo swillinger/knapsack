@@ -1,5 +1,9 @@
-const { bedrockEvents, EVENTS, log } = require('@basalt/bedrock');
-const BedrockRenderer = require('@basalt/bedrock-renderer-base');
+const {
+  bedrockEvents,
+  EVENTS,
+  log,
+  BedrockRendererBase,
+} = require('@basalt/bedrock');
 const fs = require('fs-extra');
 const path = require('path');
 const ManifestPlugin = require('webpack-manifest-plugin');
@@ -7,7 +11,7 @@ const { copyReactAssets } = require('./utils');
 
 const logPrefix = 'templateRenderer:react';
 
-class BedrockReactRenderer extends BedrockRenderer {
+class BedrockReactRenderer extends BedrockRendererBase {
   constructor({ webpackConfig, webpack }) {
     super({
       id: 'react',

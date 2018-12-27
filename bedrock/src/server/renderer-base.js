@@ -5,9 +5,16 @@ const log = require('../cli/log');
 /* eslint-disable class-methods-use-this, no-empty-function, no-unused-vars */
 class BedrockRendererBase {
   constructor({ id, extension }) {
+    /** @type {string} */
     this.id = id;
+    /** @type {string} */
     this.extension = extension;
     this.outputDirName = `bedrock-renderer-${this.id}`;
+    this.logPrefix = `templateRenderer:${this.id}`;
+  }
+
+  test(theTemplatePath) {
+    return theTemplatePath.endsWith(this.extension);
   }
 
   getHead({ cssUrls = [], headJsUrls = [] }) {
@@ -100,4 +107,6 @@ ${this.getFoot({ jsUrls })}
   }
 }
 
-module.exports = BedrockRendererBase;
+module.exports = {
+  BedrockRendererBase,
+};

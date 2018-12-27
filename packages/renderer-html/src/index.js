@@ -9,10 +9,6 @@ class BedrockHtmlRenderer extends BedrockRendererBase {
     });
   }
 
-  test(theTemplatePath) {
-    return theTemplatePath.endsWith(this.extension);
-  }
-
   async render({ template }) {
     try {
       return {

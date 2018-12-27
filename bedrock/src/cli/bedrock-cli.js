@@ -20,7 +20,7 @@ const { existsSync, copy, emptyDir } = require('fs-extra');
 const portfinder = require('portfinder');
 const { join, resolve, dirname, relative } = require('path');
 const { validateUniqueIdsInArray } = require('@basalt/bedrock-schema-utils');
-const BedrockRendererBase = require('../server/renderer-base');
+const { BedrockRendererBase } = require('../server/renderer-base');
 const log = require('./log');
 const { bedrockEvents, EVENTS } = require('../server/events');
 const { Patterns } = require('../server/patterns');
@@ -241,6 +241,7 @@ program.command('build').action(async () => {
 
 program.command('start').action(async () => {
   log.info('Starting...');
+  await emptyDir(config.dist);
   const meta = await getMeta();
   await buildBedrock(config);
   const templateRendererWatches = config.templateRenderers.filter(t => t.watch);

@@ -4,9 +4,7 @@
   "description": "Render React",
   "main": "src/index.js",
   "scripts": {},
-  "dependencies": {
-    "webpack-manifest-plugin": "^2.0.4"
-  },
+  "dependencies": {},
   "peerDependencies": {
     "@basalt/bedrock": "^0.23.0",
     "react": "^15.0.0 || ^16.0.0",

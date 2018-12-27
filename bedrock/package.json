@@ -91,6 +91,7 @@
     "webpack-cli": "^3.1.0",
     "webpack-dashboard": "^2.0.0",
     "webpack-dev-server": "^3.1.5",
+    "webpack-manifest-plugin": "^2.0.4",
     "webpack-stylish": "^0.1.8",
     "webpack-visualizer-plugin": "^0.1.11",
     "ws": "^6.1.2"

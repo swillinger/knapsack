@@ -5,6 +5,8 @@ const path = require('path');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const { copyReactAssets } = require('./utils');
 
+const logPrefix = 'templateRenderer:react';
+
 class BedrockReactRenderer extends BedrockRenderer {
   constructor({ webpackConfig, webpack }) {
     super({
@@ -58,12 +60,8 @@ class BedrockReactRenderer extends BedrockRenderer {
       ],
     };
     this.webpackCompiler = this.webpack(newWebpackConfig);
-    log.verbose(
-      'New Webpack Config and Compiler created',
-      null,
-      'templateRenderer:react',
-    );
-    log.silly('', entry, 'templateRenderer:react');
+    log.verbose('New Webpack Config and Compiler created', null, logPrefix);
+    log.silly('', entry, logPrefix);
   }
 
   createWebpackEntryFromPatterns(patterns) {
@@ -124,7 +122,7 @@ class BedrockReactRenderer extends BedrockRenderer {
     return new Promise((resolve, reject) => {
       this.webpackCompiler.run(async (err, stats) => {
         if (err || stats.hasErrors()) {
-          log.error(stats.toString(), err, 'react');
+          log.error(stats.toString(), err, logPrefix);
           reject();
           return;
         }
@@ -134,14 +132,14 @@ class BedrockReactRenderer extends BedrockRenderer {
   }
 
   webpackWatch() {
-    log.verbose('Starting Webpack watch...', null, 'templateRenderer:react');
+    log.verbose('Starting Webpack watch...', null, logPrefix);
     return this.webpackCompiler.watch({}, (err, stats) => {
       if (err || stats.hasErrors()) {
-        log.error(stats.toString(), err, 'react');
+        log.error(stats.toString(), err, logPrefix);
         return;
       }
       this.setManifest();
-      log.info('Webpack recompiled', null, 'react');
+      log.info('Webpack recompiled', null, logPrefix);
       super.onChange({ path: '' });
     });
   }
@@ -149,9 +147,9 @@ class BedrockReactRenderer extends BedrockRenderer {
   async watch({ config, templatePaths }) {
     await super.watch({ config, templatePaths });
     this.restartWebpackWatch = () => {
-      log.verbose('Restarting Webpack Watch', null, 'templateRenderer:react');
+      log.verbose('Restarting Webpack Watch', null, logPrefix);
       this.webpackWatcher.close(() => {
-        log.verbose('Restarted Webpack Watch', null, 'templateRenderer:react');
+        log.verbose('Restarted Webpack Watch', null, logPrefix);
         this.webpackWatcher = this.webpackWatch();
       });
     };

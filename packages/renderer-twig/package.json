@@ -5,8 +5,10 @@
   "main": "src/index.js",
   "scripts": {},
   "dependencies": {
-    "@basalt/bedrock-renderer-base": "^0.23.0",
     "@basalt/twig-renderer": "^0.10.2"
+  },
+  "peerDependencies": {
+    "@basalt/bedrock": "^0.23.0"
   },
   "author": "Basalt (https://basalt.io/)",
   "publishConfig": {

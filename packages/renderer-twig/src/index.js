@@ -1,7 +1,7 @@
-const BedrockRenderer = require('@basalt/bedrock-renderer-base');
+const { BedrockRendererBase } = require('@basalt/bedrock');
 const TwigRenderer = require('@basalt/twig-renderer');
 
-class BedrockTwigRenderer extends BedrockRenderer {
+class BedrockTwigRenderer extends BedrockRendererBase {
   constructor(config) {
     super({
       id: 'twig',

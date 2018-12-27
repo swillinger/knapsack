@@ -1,7 +1,7 @@
-const BedrockRenderer = require('@basalt/bedrock-renderer-base');
+const { BedrockRendererBase } = require('@basalt/bedrock');
 const fs = require('fs-extra');
 
-class BedrockHtmlRenderer extends BedrockRenderer {
+class BedrockHtmlRenderer extends BedrockRendererBase {
   constructor() {
     super({
       id: 'html',

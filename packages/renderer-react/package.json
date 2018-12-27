@@ -5,11 +5,13 @@
   "main": "src/index.js",
   "scripts": {},
   "dependencies": {
-    "@basalt/bedrock-renderer-base": "^0.23.0",
     "webpack-manifest-plugin": "^2.0.4"
   },
   "peerDependencies": {
-    "@basalt/bedrock": "^0.23.0"
+    "@basalt/bedrock": "^0.23.0",
+    "react": "^15.0.0 || ^16.0.0",
+    "react-dom": "^15.0.0 || ^16.0.0",
+    "webpack": "^4.0.0"
   },
   "author": "Basalt (https://basalt.io/)",
   "publishConfig": {

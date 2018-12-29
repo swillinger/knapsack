@@ -16,7 +16,7 @@
     with Bedrock; if not, see <https://www.gnu.org/licenses>.
  */
 const program = require('commander');
-const { existsSync, copy, emptyDirSync } = require('fs-extra');
+const { existsSync, emptyDirSync } = require('fs-extra');
 const portfinder = require('portfinder');
 const { join, resolve, dirname, relative } = require('path');
 const { validateUniqueIdsInArray } = require('@basalt/bedrock-schema-utils');
@@ -160,22 +160,6 @@ async function getMeta() {
   };
 }
 
-/**
- * @param {BedrockConfig} config
- * @return {Promise<void>}
- */
-async function buildBedrock(config) {
-  try {
-    await copy(join(__dirname, '../../dist/'), config.dist, {
-      overwrite: true,
-    });
-    log.info('Bedrock core built', null, 'build');
-  } catch (e) {
-    log.error('Bedrock core build error!', e, 'build');
-    process.exit(1);
-  }
-}
-
 const configPath = join(process.cwd(), 'bedrock.config.js');
 if (!existsSync(configPath)) {
   log.error('Could not find bedrock.config.js file in CWD.');
@@ -228,7 +212,6 @@ program.command('serve').action(async () => {
 
 program.command('build').action(async () => {
   log.info('Building...');
-  await buildBedrock(config);
   await Promise.all(
     config.templateRenderers.map(async templateRenderer => {
       if (!templateRenderer.build) return;
@@ -236,7 +219,7 @@ program.command('build').action(async () => {
         config,
         templatePaths: allTemplatePaths.filter(t => templateRenderer.test(t)),
       });
-      log.info('Built', null, `templateRender:${templateRenderer.id}`);
+      log.info('Built', null, `templateRenderer:${templateRenderer.id}`);
     }),
   );
   log.info('Bedrock built', null, 'build');
@@ -245,7 +228,6 @@ program.command('build').action(async () => {
 program.command('start').action(async () => {
   log.info('Starting...');
   const meta = await getMeta();
-  await buildBedrock(config);
   const templateRendererWatches = config.templateRenderers.filter(t => t.watch);
 
   return Promise.all([

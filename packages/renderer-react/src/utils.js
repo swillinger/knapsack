@@ -27,6 +27,7 @@ function getPkg(pkg) {
  */
 function copyReactAssets(distDirAbsolute, publicPath) {
   try {
+    fs.ensureDirSync(distDirAbsolute);
     const { version: reactVersion } = getPkg('react');
     const { version: reactDomVersion } = getPkg('react-dom');
 

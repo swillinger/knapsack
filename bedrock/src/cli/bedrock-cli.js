@@ -16,7 +16,7 @@
     with Bedrock; if not, see <https://www.gnu.org/licenses>.
  */
 const program = require('commander');
-const { existsSync, copy, emptyDir } = require('fs-extra');
+const { existsSync, copy, emptyDirSync } = require('fs-extra');
 const portfinder = require('portfinder');
 const { join, resolve, dirname, relative } = require('path');
 const { validateUniqueIdsInArray } = require('@basalt/bedrock-schema-utils');
@@ -185,6 +185,10 @@ if (!existsSync(configPath)) {
 /** @type {BedrockConfig} */
 const config = processConfig(require(configPath), dirname(configPath));
 
+if (config.dist) {
+  emptyDirSync(config.dist);
+}
+
 const patterns = new Patterns({
   newPatternDir: config.newPatternDir,
   patternPaths: config.patterns,
@@ -224,7 +228,6 @@ program.command('serve').action(async () => {
 
 program.command('build').action(async () => {
   log.info('Building...');
-  await emptyDir(config.dist);
   await buildBedrock(config);
   await Promise.all(
     config.templateRenderers.map(async templateRenderer => {
@@ -241,7 +244,6 @@ program.command('build').action(async () => {
 
 program.command('start').action(async () => {
   log.info('Starting...');
-  await emptyDir(config.dist);
   const meta = await getMeta();
   await buildBedrock(config);
   const templateRendererWatches = config.templateRenderers.filter(t => t.watch);

@@ -23,6 +23,7 @@ import { StatusMessage } from '@basalt/bedrock-atoms';
 import { BedrockContext } from '@basalt/bedrock-core';
 import bedrockSettingsSchema from '../../schemas/bedrock.settings.schema';
 import PageWithSidebar from '../layouts/page-with-sidebar';
+import PatternsSettings from '../components/patterns-settings';
 
 // @todo implement parentbrand fully
 const query = gql`
@@ -118,6 +119,8 @@ class SettingsPage extends Component {
             );
           }}
         </Query>
+        <hr />
+        <PatternsSettings />
       </PageWithSidebar>
     );
   }

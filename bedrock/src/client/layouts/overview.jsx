@@ -23,6 +23,7 @@ import { Button, Select } from '@basalt/bedrock-atoms';
 import { BedrockContext } from '@basalt/bedrock-core';
 import Template from '../components/template';
 // import { enableCodeBlockLiveEdit } from '../../lib/features';
+import { BASE_PATHS } from '../../lib/constants';
 import {
   OverviewWrapper,
   // CodeBlockWrapper,
@@ -105,7 +106,7 @@ class Overview extends React.Component {
               {this.state.fullScreen ? 'Show Controls' : 'Fullscreen'}
             </Button>
             {this.context.permissions.includes('write') && (
-              <Link to={`/patterns/${this.props.id}/edit`}>
+              <Link to={`${BASE_PATHS.PATTERN}/${this.props.id}/edit`}>
                 <Button>Edit Meta</Button>
               </Link>
             )}

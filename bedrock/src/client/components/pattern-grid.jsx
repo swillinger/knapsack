@@ -25,6 +25,7 @@ import {
   PatternGridListItemTitle,
   PatternGridList,
 } from './pattern-list.styles';
+import { BASE_PATHS } from '../../lib/constants';
 
 // @todo fix issue with pattern icons basepath
 // class PatternGridItem extends React.Component {
@@ -79,7 +80,7 @@ function PatternGridListItem(props) {
         to={
           props.pattern.path
             ? props.pattern.path
-            : `/patterns/${props.pattern.id}`
+            : `${BASE_PATHS.PATTERN}/${props.pattern.id}`
         }
       >
         <PatternGridListItemTitle>

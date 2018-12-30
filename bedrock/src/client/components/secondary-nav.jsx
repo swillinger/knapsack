@@ -144,7 +144,7 @@ class SecondaryNav extends Component {
             ...patterns.map(pattern => ({
               id: pattern.id,
               title: pattern.meta.title,
-              path: urlJoin(BASE_PATHS.PATTERNS, pattern.id),
+              path: urlJoin(BASE_PATHS.PATTERN, pattern.id),
             })),
             {
               title: 'Page Builder',

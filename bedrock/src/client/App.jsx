@@ -251,7 +251,7 @@ class App extends React.Component {
                           />
                           {this.state.permissions.includes('write') && (
                             <Route
-                              path={`${BASE_PATHS.PATTERNS}/:id/edit`}
+                              path={`${BASE_PATHS.PATTERN}/:id/edit`}
                               render={({ match, ...rest }) => (
                                 <LoadablePatternEdit
                                   {...rest}
@@ -305,7 +305,7 @@ class App extends React.Component {
                             />
                           )}
                           <Route
-                            path={`${BASE_PATHS.PATTERNS}/:id`}
+                            path={`${BASE_PATHS.PATTERN}/:id`}
                             render={({ match, ...rest }) => {
                               if (
                                 data.patterns

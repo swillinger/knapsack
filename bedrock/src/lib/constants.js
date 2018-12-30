@@ -25,6 +25,7 @@ const PERMISSIONS = {
  * DO NOT INCLUDE TRAILING SLASH!
  */
 const BASE_PATHS = {
+  PATTERN: '/pattern',
   PATTERNS: '/patterns',
   DESIGN_TOKENS: '/design-tokens',
   PAGES: '/pages',

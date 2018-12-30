@@ -65,7 +65,7 @@ class PatternEdit extends Component {
     if (this.context.permissions.includes('write')) {
       // redirect to full page using a full reload so we don't need to worry about cached queries (like in the secondary nav)
       // @todo @joe fix this so a page reload is not required
-      window.location.pathname = urlJoin(BASE_PATHS.PATTERNS, this.props.id);
+      window.location.pathname = urlJoin(BASE_PATHS.PATTERN, this.props.id);
     }
   }
 

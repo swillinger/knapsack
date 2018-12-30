@@ -1,6 +1,6 @@
 {
   "title": "Hero",
-  "type": "component",
+  "type": "molecules",
   "description": "A Hero that shows the things",
   "uses": ["inSlice"],
   "demoSize": "full"

@@ -1,7 +1,11 @@
 {
   "title": "Button",
-  "type": "component",
   "description": "A Button for clicking!",
-  "uses": ["inSlice"],
+  "type": "molecules",
+  "status": "ready",
+  "uses": [
+    "inSlice"
+  ],
+  "hasIcon": true,
   "demoSize": "m"
 }

@@ -151,6 +151,11 @@ interface PatternMetaSchema {
   demoSize?: DemoSize;
 }
 
+interface BedrockPatternType {
+  id: string;
+  title: string;
+}
+
 interface BedrockPattern {
   id: Id;
   /**

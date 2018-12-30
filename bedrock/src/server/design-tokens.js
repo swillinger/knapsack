@@ -22,6 +22,7 @@ const {
   TOKEN_FORMATS,
 } = require('@basalt/bedrock-design-token-demos/constants');
 const { BASE_PATHS } = require('../lib/constants');
+const { fileExistsOrExit } = require('./server-utils');
 
 const { hasItemsInItems } = require('../lib/utils');
 
@@ -117,7 +118,7 @@ function categoryHasDemo(category) {
 
 class DesignTokens {
   constructor({ tokenPath, tokenGroups }) {
-    // @todo test to ensure it's a path that points to a single yaml file and it exists
+    fileExistsOrExit(tokenPath);
     this.tokenPath = tokenPath;
     this.getTokensInCategory = this.getTokensInCategory.bind(this);
     this.getCategory = this.getCategory.bind(this);

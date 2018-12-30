@@ -36,8 +36,6 @@ module.exports = {
       title: 'Type',
       type: 'string',
       description: 'Describes the type of pattern.',
-      enum: ['component', 'layout'],
-      enumNames: ['Component', 'Layout'],
     },
     status: {
       title: 'Status',

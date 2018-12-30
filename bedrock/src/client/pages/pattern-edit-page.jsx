@@ -29,6 +29,10 @@ import { BASE_PATHS } from '../../lib/constants';
 
 const patternIdsQuery = gql`
   query PatternEditMeta($id: ID) {
+    patternTypes {
+      id
+      title
+    }
     pattern(id: $id) {
       id
       meta {
@@ -93,6 +97,11 @@ class PatternEdit extends Component {
                         type="error"
                       />
                     );
+                  // Need to dynamically add the pattern types to the schema form
+                  Object.assign(patternMetaSchema.properties.type, {
+                    enum: data.patternTypes.map(p => p.id),
+                    enumNames: data.patternTypes.map(p => p.title),
+                  });
                   return (
                     <>
                       {this.state.statusMessage && (

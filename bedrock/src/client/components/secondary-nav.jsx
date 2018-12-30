@@ -37,10 +37,14 @@ const secondaryNavQuery = gql`
       title
       id
     }
-    patterns {
+    patternTypes {
       id
-      meta {
-        title
+      title
+      patterns {
+        id
+        meta {
+          title
+        }
       }
     }
     tokenGroups {
@@ -98,7 +102,9 @@ class SecondaryNav extends Component {
       ? items
       : items.filter(
           item =>
-            item.isHeading || containsString(item.title, this.state.filterTerm),
+            item.isHeading ||
+            item.isSubHeading ||
+            containsString(item.title, this.state.filterTerm),
         );
   }
 
@@ -110,11 +116,29 @@ class SecondaryNav extends Component {
           if (error) return <p>Error</p>;
 
           const {
-            patterns = [],
+            patternTypes = [],
             pageBuilderPages = [],
             tokenGroups = [],
             docs = [],
           } = data;
+
+          const patternItems = [];
+          patternTypes.forEach(patternType => {
+            patternItems.push({
+              id: patternType.id,
+              title: patternType.title,
+              isSubHeading: true,
+              path: urlJoin(BASE_PATHS.PATTERNS, patternType.id),
+            });
+            patternType.patterns.forEach(pattern => {
+              patternItems.push({
+                id: pattern.id,
+                title: pattern.meta.title,
+                path: urlJoin(BASE_PATHS.PATTERN, pattern.id),
+              });
+            });
+          });
+
           const items = [
             {
               title: 'Design Tokens',
@@ -141,11 +165,7 @@ class SecondaryNav extends Component {
                   path: '/new-pattern',
                 }
               : null,
-            ...patterns.map(pattern => ({
-              id: pattern.id,
-              title: pattern.meta.title,
-              path: urlJoin(BASE_PATHS.PATTERN, pattern.id),
-            })),
+            ...patternItems,
             {
               title: 'Page Builder',
               id: 'page-builder',

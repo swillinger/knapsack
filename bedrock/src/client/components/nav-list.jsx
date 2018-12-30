@@ -23,10 +23,17 @@ function NavList({ items }) {
   return (
     <NavListStyled>
       <ul>
-        {items.map(({ title, isHeading, id, path }) =>
-          isHeading ? (
+        {items.map(({ title, isHeading, isSubHeading, id, path }) =>
+          isHeading || isSubHeading ? (
             <li key={id}>
-              <h4>{path ? <NavLink to={path}>{title}</NavLink> : title}</h4>
+              <h4
+                style={{
+                  fontSize: isSubHeading ? '80%' : '100%',
+                  marginLeft: isSubHeading ? '7px' : '0',
+                }}
+              >
+                {path ? <NavLink to={path}>{title}</NavLink> : title}
+              </h4>
             </li>
           ) : (
             <li key={id}>

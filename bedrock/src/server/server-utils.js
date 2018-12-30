@@ -94,7 +94,7 @@ function dirExists(dirPath) {
 /**
  * @param {string} filePath
  * @param {string} [msg]
- * @return {boolean}
+ * @return {void}
  */
 function fileExistsOrExit(filePath, msg) {
   if (fileExists(filePath)) return;
@@ -105,7 +105,7 @@ function fileExistsOrExit(filePath, msg) {
 /**
  * @param {string} dirPath
  * @param {string} [msg]
- * @return {boolean}
+ * @return {void}
  */
 function dirExistsOrExit(dirPath, msg) {
   if (dirExists(dirPath)) return;

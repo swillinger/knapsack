@@ -28,7 +28,7 @@ const {
   version: iframeResizerVersion,
 } = require('iframe-resizer/package.json');
 const { bedrockEvents, EVENTS } = require('./events');
-// const { FileDb } = require('./db');
+const { FileDb } = require('./db');
 const patternSchema = require('../schemas/pattern.schema');
 const patternMetaSchema = require('../schemas/pattern-meta.schema');
 const {
@@ -67,9 +67,10 @@ const patternsTypeDef = gql`
     isInline: Boolean
   }
 
-  enum PatternType {
-    component
-    layout
+  type PatternType {
+    id: ID!
+    title: String!
+    patterns: [Pattern]
   }
 
   enum PatternStatus {
@@ -94,7 +95,7 @@ const patternsTypeDef = gql`
   type PatternMeta {
     title: String!
     description: String
-    type: PatternType
+    type: ID
     status: PatternStatus
     uses: [PatternUses]
     demoSize: PatternDemoSize
@@ -120,6 +121,8 @@ const patternsTypeDef = gql`
   type Query {
     patterns: [Pattern]
     pattern(id: ID): Pattern
+    patternTypes: [PatternType]
+    patternType(id: ID): PatternType
     render(
       patternId: ID
       templateId: ID
@@ -130,6 +133,7 @@ const patternsTypeDef = gql`
 
   type Mutation {
     setPatternMeta(id: ID, meta: JSON): JSON
+    setPatternTypes(patternTypes: JSON): [PatternType]
     setPatternReadme(id: ID, readme: String): String
   }
 `;
@@ -411,6 +415,14 @@ class Patterns {
     rootRelativeJs,
     rootRelativeCSS,
   }) {
+    this.db = new FileDb({
+      dbDir: dataDir,
+      name: 'bedrock.patterns',
+      defaults: {
+        patternTypes: [],
+      },
+    });
+
     /** @type {string} */
     this.newPatternDir = newPatternDir;
     /** @type {string[]} */
@@ -548,6 +560,38 @@ class Patterns {
     };
   }
 
+  /**
+   * @return {{ id: string, title: string, patterns: BedrockPattern[] }[]}
+   */
+  getPatternTypes() {
+    const patterns = this.getPatterns();
+    /** @type {BedrockPatternType[]} */
+    const patternTypes = this.db.get('patternTypes');
+    return patternTypes.map(patternType => ({
+      ...patternType,
+      patterns: patterns.filter(
+        pattern => pattern.meta.type === patternType.id,
+      ),
+    }));
+  }
+
+  /**
+   * @param {string} id - ID of pattern type
+   * @return {{ id: string, title: string, patterns: BedrockPattern[] }}
+   */
+  getPatternType(id) {
+    return this.getPatternTypes().find(p => p.id === id);
+  }
+
+  /**
+   * @param {BedrockPatternType[]} patternTypes
+   * @return {BedrockPatternType[]}
+   */
+  setPatternTypes(patternTypes) {
+    this.db.set('patternTypes', patternTypes);
+    return this.db.get('patternTypes');
+  }
+
   watch() {
     const configFilesToWatch = [];
     this.allPatterns.forEach(pattern => {
@@ -623,6 +667,8 @@ const patternsResolvers = {
   Query: {
     patterns: (parent, args, { patterns }) => patterns.getPatterns(),
     pattern: (parent, { id }, { patterns }) => patterns.getPattern(id),
+    patternTypes: (parent, args, { patterns }) => patterns.getPatternTypes(),
+    patternType: (parent, { id }, { patterns }) => patterns.getPatternType(id),
     render: async (
       parent,
       { patternId, templateId, wrapHtml, data },
@@ -634,6 +680,14 @@ const patternsResolvers = {
       if (!canWrite) return false;
       await patterns.setPatternMeta(id, meta);
       return patterns.getPatternMeta(id);
+    },
+    setPatternTypes: async (
+      parent,
+      { patternTypes },
+      { patterns, canWrite },
+    ) => {
+      if (!canWrite) return false;
+      return patterns.setPatternTypes(patternTypes);
     },
     setPatternReadme: async (
       parent,

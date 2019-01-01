@@ -155,7 +155,7 @@ class SecondaryNav extends Component {
             {
               title: 'Patterns',
               id: 'patterns',
-              path: BASE_PATHS.PATTERNS,
+              path: `${BASE_PATHS.PATTERNS}/all`,
               isHeading: true,
             },
             enableUiCreatePattern

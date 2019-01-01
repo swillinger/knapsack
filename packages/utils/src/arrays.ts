@@ -21,17 +21,13 @@ export function concatArrays(a, b) {
 
 /**
  * Make an array unique by removing duplicate entries.
- * @param {Array} item - Array to make unique
+ * @param {Array} ar - Array to make unique
  * @returns {Array} - A unique array
  */
-export function uniqueArray(item) {
-  const u = {};
-  const newArray = [];
-  for (let i = 0, l = item.length; i < l; ++i) {
-    if (!{}.hasOwnProperty.call(u, item[i])) {
-      newArray.push(item[i]);
-      u[item[i]] = 1;
-    }
-  }
-  return newArray;
+export function uniqueArray(ar) {
+  const j = {};
+  ar.forEach(v => {
+    j[`${v}::${typeof v}`] = v;
+  });
+  return Object.keys(j).map(v => j[v]);
 }

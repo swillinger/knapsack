@@ -106,7 +106,7 @@ class Header extends React.Component {
           </SiteHeaderNavLink>
         </li>
         <li>
-          <SiteHeaderNavLink to={BASE_PATHS.PATTERNS}>
+          <SiteHeaderNavLink to={`${BASE_PATHS.PATTERNS}/all`}>
             Patterns
           </SiteHeaderNavLink>
         </li>

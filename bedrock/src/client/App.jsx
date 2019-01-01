@@ -242,11 +242,26 @@ class App extends React.Component {
                             exact
                             render={props => <LoadableAllTokens {...props} />}
                           />
+
                           <Route
-                            path={BASE_PATHS.PATTERNS}
+                            path={`${BASE_PATHS.PATTERNS}/all`}
                             exact
                             render={props => (
-                              <LoadablePatternsPage {...props} />
+                              <LoadablePatternsPage
+                                type="all"
+                                key="all"
+                                {...props}
+                              />
+                            )}
+                          />
+                          <Route
+                            path={`${BASE_PATHS.PATTERNS}/:type`}
+                            render={({ match, ...props }) => (
+                              <LoadablePatternsPage
+                                type={match.params.type}
+                                key={match.params.type}
+                                {...props}
+                              />
                             )}
                           />
                           {this.state.permissions.includes('write') && (

@@ -65,7 +65,16 @@ class Twig extends React.Component {
       //   this.socket.send('Hello Server!', event);
       // });
 
-      this.socket.addEventListener('message', data => {
+      this.socket.addEventListener('message', messageEvent => {
+        let data = { path: '' };
+        try {
+          data = JSON.parse(messageEvent.data);
+        } catch (error) {
+          console.warn(
+            'Tried to parse JSON string from WebSocket message so Template can re-fetch new data.',
+            { messageEvent, error },
+          );
+        }
         if (data.path.endsWith('css') || data.path.endsWith('js')) {
           // @todo determine why `this.getHtml()` won't pull down changed CSS, in the meantime, we'll do a full page reload
           window.location.reload();

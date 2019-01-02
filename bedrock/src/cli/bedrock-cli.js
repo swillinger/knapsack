@@ -223,6 +223,7 @@ program.command('build').action(async () => {
     }),
   );
   log.info('Bedrock built', null, 'build');
+  bedrockEvents.emit(EVENTS.SHUTDOWN);
 });
 
 program.command('start').action(async () => {

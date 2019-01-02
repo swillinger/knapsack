@@ -18,6 +18,7 @@ const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const { join } = require('path');
 const chokidar = require('chokidar');
+const { bedrockEvents, EVENTS } = require('./events');
 
 /**
  * Creates a LoDash powered JSON file database, via `lowdb` that is created using the `_.chain` method.
@@ -57,6 +58,10 @@ class FileDb {
 
     watcher.on('all', () => {
       this.db = db.read();
+    });
+
+    bedrockEvents.on(EVENTS.SHUTDOWN, () => {
+      watcher.close();
     });
   }
 

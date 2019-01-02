@@ -16,24 +16,6 @@
  */
 import styled from 'styled-components';
 
-export const OverviewWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  ${({ fullScreen }) =>
-    fullScreen &&
-    `
-      position: fixed;
-      background-color: white;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 10000;
-      height: 100vh;
-  `};
-`;
-
 export const DemoStage = styled.div`
   display: flex;
   flex-direction: column;
@@ -84,27 +66,8 @@ export const DemoGrid = styled.div`
   }
 `;
 
-export const FlexWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-`;
-
-export const DemoGridControls = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  > * {
-    margin: 0 0.25rem;
-  }
-  .button {
-    min-height: 33px;
-  }
-`;
-
 export const SchemaFormWrapper = styled.div`
-  display: ${props => (props.showForm ? 'flex' : 'none')};
+  display: flex;
   justify-content: center;
   overflow: initial;
   overflow-y: visible;
@@ -142,8 +105,4 @@ export const SchemaFormWrapperInner = styled.div`
   form > div > label {
     display: none;
   }
-`;
-
-export const CodeBlockWrapper = styled.div`
-  margin: 2rem 0;
 `;

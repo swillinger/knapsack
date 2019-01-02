@@ -16,7 +16,6 @@
  */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import Spinner from '@basalt/bedrock-spinner';
 import { Button, Details, Select, StatusMessage } from '@basalt/bedrock-atoms';
 import { BedrockContext } from '@basalt/bedrock-core';
@@ -36,11 +35,12 @@ import DosAndDonts from '../components/dos-and-donts';
 import PageWithSidebar from '../layouts/page-with-sidebar';
 import { BASE_PATHS } from '../../lib/constants';
 import { gqlToString } from '../data';
-
-const OverviewHeader = styled.header`
-  position: relative;
-  margin-bottom: 2rem;
-`;
+import {
+  FlexWrapper,
+  DemoGridControls,
+  OverviewWrapper,
+  PatternHeader,
+} from './pattern-view-page.styles';
 
 const query = gql`
   query PatternViewPage($id: ID) {
@@ -88,6 +88,8 @@ class PatternViewPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      demoSize: '',
+      fullScreen: false,
       currentTemplate: {
         name: '',
         id: '',
@@ -151,23 +153,29 @@ class PatternViewPage extends Component {
                 ? schema.examples
                 : [{}];
               const dosAndDonts = schema.dosAndDonts ? schema.dosAndDonts : [];
+
+              const hasSchema = !!(
+                schema &&
+                schema.properties &&
+                Object.keys(schema.properties).length > 0
+              );
+              const theDemoSize = hasSchema
+                ? this.state.demoSize || demoSize
+                : 'full';
               return (
                 <>
-                  <header
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                    }}
-                  >
-                    <OverviewHeader>
-                      <h4
-                        className="eyebrow"
-                        style={{ textTransform: 'capitalize' }}
-                      >
-                        {type}
-                      </h4>
-                      <h2>{title}</h2>
-                      <p>{description}</p>
+                  <PatternHeader>
+                    <h4
+                      className="eyebrow"
+                      style={{ textTransform: 'capitalize' }}
+                    >
+                      {type}
+                    </h4>
+                    <h2>{title}</h2>
+                    <p>{description}</p>
+                  </PatternHeader>
+                  <OverviewWrapper fullScreen={this.state.fullScreen}>
+                    <FlexWrapper>
                       {templates.length > 1 && (
                         <Select
                           label="Template"
@@ -184,34 +192,86 @@ class PatternViewPage extends Component {
                           }}
                         />
                       )}
-                    </OverviewHeader>
-                    <Button>
-                      <Link
-                        to={`${
-                          BASE_PATHS.GRAPHIQL_PLAYGROUND
-                        }?${queryString.stringify({
-                          query: gqlToString(query),
-                          variables: JSON.stringify({
-                            id: this.props.id,
-                          }),
-                        })}`}
-                      >
-                        See API
-                      </Link>
-                    </Button>
-                  </header>
+                      <DemoGridControls>
+                        {hasSchema && (
+                          <Select
+                            items={[
+                              {
+                                value: 's',
+                                title: 'Small',
+                              },
+                              {
+                                value: 'm',
+                                title: 'Medium',
+                              },
+                              {
+                                value: 'l',
+                                title: 'Large',
+                              },
+                              {
+                                value: 'full',
+                                title: 'Full',
+                              },
+                            ]}
+                            value={this.state.demoSize}
+                            handleChange={newDemoSize =>
+                              this.setState({ demoSize: newDemoSize })
+                            }
+                            label="Stage Size"
+                          />
+                        )}
 
-                  <Overview
-                    templateId={templateId}
-                    schema={schema}
-                    uiSchema={uiSchema}
-                    demoSizes={this.props.demoSizes}
-                    data={data}
-                    size={demoSize}
-                    key={`${patternId}-${templateId}`}
-                    isInline={isInline}
-                    id={this.props.id}
-                  />
+                        <Button
+                          type="button"
+                          className="button button--size-small"
+                          onClick={() =>
+                            this.setState(prevState => ({
+                              fullScreen: !prevState.fullScreen,
+                            }))
+                          }
+                        >
+                          {this.state.fullScreen
+                            ? 'Show Controls'
+                            : 'Fullscreen'}
+                        </Button>
+
+                        {this.context.permissions.includes('write') && (
+                          <Link
+                            to={`${BASE_PATHS.PATTERN}/${this.props.id}/edit`}
+                          >
+                            <Button>Edit Meta</Button>
+                          </Link>
+                        )}
+
+                        <Button>
+                          <Link
+                            to={`${
+                              BASE_PATHS.GRAPHIQL_PLAYGROUND
+                            }?${queryString.stringify({
+                              query: gqlToString(query),
+                              variables: JSON.stringify({
+                                id: this.props.id,
+                              }),
+                            })}`}
+                          >
+                            See API
+                          </Link>
+                        </Button>
+                      </DemoGridControls>
+                    </FlexWrapper>
+
+                    <Overview
+                      templateId={templateId}
+                      hasSchema={hasSchema}
+                      schema={schema}
+                      uiSchema={uiSchema}
+                      data={data}
+                      demoSize={theDemoSize}
+                      key={`${patternId}-${templateId}`}
+                      isInline={isInline}
+                      patternId={this.props.id}
+                    />
+                  </OverviewWrapper>
 
                   {!!examples.length && (
                     <Details>
@@ -262,26 +322,28 @@ class PatternViewPage extends Component {
                     </Mutation>
                   )}
 
-                  {Object.keys(schema.properties).length > 0 && (
-                    <div>
-                      <h4>Properties</h4>
-                      <p>
-                        The following properties make up the data that defines
-                        each instance of this component.
-                      </p>
-                      <Details open>
-                        <summary>Props Table</summary>
-                        <LoadableSchemaTable schema={schema} />
-                      </Details>
-                    </div>
-                  )}
+                  {hasSchema && (
+                    <>
+                      <div>
+                        <h4>Properties</h4>
+                        <p>
+                          The following properties make up the data that defines
+                          each instance of this component.
+                        </p>
+                        <Details open>
+                          <summary>Props Table</summary>
+                          <LoadableSchemaTable schema={schema} />
+                        </Details>
+                      </div>
 
-                  <LoadableVariationDemo
-                    schema={schema}
-                    templateId={templateId}
-                    patternId={patternId}
-                    data={data}
-                  />
+                      <LoadableVariationDemo
+                        schema={schema}
+                        templateId={templateId}
+                        patternId={patternId}
+                        data={data}
+                      />
+                    </>
+                  )}
 
                   {dosAndDonts.map(item => (
                     <DosAndDonts
@@ -303,14 +365,10 @@ class PatternViewPage extends Component {
   }
 }
 
-PatternViewPage.defaultProps = {
-  // @todo this is a hotfix and needs to be refactored
-  demoSizes: ['s', 'm', 'l'],
-};
+PatternViewPage.defaultProps = {};
 
 PatternViewPage.propTypes = {
   id: PropTypes.string.isRequired,
-  demoSizes: PropTypes.arrayOf(PropTypes.string.isRequired),
 };
 
 export default PatternViewPage;

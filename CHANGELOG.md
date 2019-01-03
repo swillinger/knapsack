@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.25.1](https://github.com/basaltinc/bedrock/compare/v0.25.0...v0.25.1) (2019-01-03)
+
+
+### Bug Fixes
+
+* giving string defaults to pattern meta ([bc983c5](https://github.com/basaltinc/bedrock/commit/bc983c5))
+
+
+
+
+
 # [0.25.0](https://github.com/basaltinc/bedrock/compare/v0.24.1...v0.25.0) (2019-01-03)
 
 

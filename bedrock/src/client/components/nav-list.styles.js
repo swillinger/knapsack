@@ -23,11 +23,27 @@ export const NavListStyled = styled.nav`
     align-items: center;
     position: relative;
   }
-  li:not(:first-child) h4 {
-    margin-top: 1.5rem;
+  .nav-list__item--heading {
+    h4 {
+      margin-top: 1.5rem;
+    }
+  }
+  .nav-list__item--subheading {
+    h4 {
+      font-size: 80%;
+      margin-left: 10px;
+      margin-top: 0.75rem;
+    }
+  }
+  .nav-list__item--heading + .nav-list__item--subheading > h4 {
+    margin-top: 0;
+  }
+  .nav-list__item--heading:first-child {
+    h4 {
+      margin-top: 0.5rem;
+    }
   }
   h4 {
-    margin-bottom: 0.25rem;
     text-decoration: none;
     a {
       margin-left: 0;

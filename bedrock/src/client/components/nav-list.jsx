@@ -22,21 +22,19 @@ import { NavListStyled } from './nav-list.styles';
 function NavList({ items }) {
   return (
     <NavListStyled>
-      <ul>
+      <ul className="nav-list">
         {items.map(({ title, isHeading, isSubHeading, id, path }) =>
           isHeading || isSubHeading ? (
-            <li key={id}>
-              <h4
-                style={{
-                  fontSize: isSubHeading ? '80%' : '100%',
-                  marginLeft: isSubHeading ? '7px' : '0',
-                }}
-              >
-                {path ? <NavLink to={path}>{title}</NavLink> : title}
-              </h4>
+            <li
+              className={`nav-list__item nav-list__item--${
+                isHeading ? 'heading' : 'subheading'
+              }`}
+              key={id}
+            >
+              <h4>{path ? <NavLink to={path}>{title}</NavLink> : title}</h4>
             </li>
           ) : (
-            <li key={id}>
+            <li className="nav-list__item" key={id}>
               <NavLink to={path} exact>
                 {title}
               </NavLink>

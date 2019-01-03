@@ -22,7 +22,7 @@ export const TypeToFilter = styled.div`
     font-weight: bold;
   }
   position: relative;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 `;
 
 export const ClearFilterButton = styled.div`

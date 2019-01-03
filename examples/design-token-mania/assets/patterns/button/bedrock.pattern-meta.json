@@ -1,6 +1,6 @@
 {
   "title": "Button",
-  "type": "component",
+  "type": "components",
   "description": "A Button for clicking!",
   "uses": ["inSlice"],
   "demoSize": "m"

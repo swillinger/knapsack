@@ -36,9 +36,12 @@ class ErrorCatcher extends Component {
 
   render() {
     if (this.state.errorInfo) {
-      const [line1, line2, ...rest] = this.state.errorInfo.componentStack
-        .split('\n')
-        .filter(x => x); // removes empty lines
+      const [
+        line1,
+        line2,
+        line3,
+        ...rest
+      ] = this.state.errorInfo.componentStack.split('\n').filter(x => x); // removes empty lines
 
       return (
         <div style={{ width: '90%', margin: '0 auto' }}>
@@ -48,6 +51,7 @@ class ErrorCatcher extends Component {
           </h4>
           <div>{line1}</div>
           <div>{line2}</div>
+          <div>{line3}</div>
           <details style={{ whiteSpace: 'pre-wrap' }}>
             <summary>Rest of Stack Trace</summary>
             {rest.join('\n')}

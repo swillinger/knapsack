@@ -27,6 +27,20 @@ function hasItemsInItems(arrayA, arrayB) {
   return arrayA.some(a => arrayB.includes(a));
 }
 
+/**
+ * Make an array unique by removing duplicate entries.
+ * @param {Array} ar - Array to make unique
+ * @returns {Array} - A unique array
+ */
+function uniqueArray(ar) {
+  const j = {};
+  ar.forEach(v => {
+    j[`${v}::${typeof v}`] = v;
+  });
+  return Object.keys(j).map(v => j[v]);
+}
+
 module.exports = {
   hasItemsInItems,
+  uniqueArray,
 };

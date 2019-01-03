@@ -29,9 +29,15 @@ import { BASE_PATHS } from '../../lib/constants';
 
 const patternIdsQuery = gql`
   query PatternEditMeta($id: ID) {
-    patternTypes {
-      id
-      title
+    patternSettings {
+      patternTypes {
+        id
+        title
+      }
+      patternStatuses {
+        id
+        title
+      }
     }
     pattern(id: $id) {
       id
@@ -83,6 +89,7 @@ class PatternEdit extends Component {
               return (
                 <StatusMessage message={queryError.message} type="error" />
               );
+            const { patternSettings, pattern } = data;
             return (
               <Mutation
                 mutation={patternMetaMutation}
@@ -97,11 +104,20 @@ class PatternEdit extends Component {
                         type="error"
                       />
                     );
+
+                  const { patternTypes, patternStatuses } = patternSettings;
                   // Need to dynamically add the pattern types to the schema form
                   Object.assign(patternMetaSchema.properties.type, {
-                    enum: data.patternTypes.map(p => p.id),
-                    enumNames: data.patternTypes.map(p => p.title),
-                    default: data.patternTypes.map(p => p.id)[0],
+                    enum: patternTypes.map(p => p.id),
+                    enumNames: patternTypes.map(p => p.title),
+                    default: patternTypes.map(p => p.id)[0],
+                  });
+
+                  // Need to dynamically add the pattern status to the schema form
+                  Object.assign(patternMetaSchema.properties.status, {
+                    enum: patternStatuses.map(p => p.id),
+                    enumNames: patternStatuses.map(p => p.title),
+                    default: patternStatuses.map(p => p.id)[0],
                   });
                   return (
                     <>
@@ -113,7 +129,7 @@ class PatternEdit extends Component {
                       )}
                       <SchemaForm
                         schema={patternMetaSchema}
-                        formData={data.pattern.meta}
+                        formData={pattern.meta}
                         hasSubmit
                         onSubmit={async ({ formData }) => {
                           if (!this.context.permissions.includes('write')) {

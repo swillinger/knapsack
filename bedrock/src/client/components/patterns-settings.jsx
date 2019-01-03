@@ -16,44 +16,77 @@
  */
 import React, { Component } from 'react';
 import SchemaForm from '@basalt/bedrock-schema-form';
-import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-import Spinner from '@basalt/bedrock-spinner';
-import { StatusMessage } from '@basalt/bedrock-atoms';
 import { BedrockContext } from '@basalt/bedrock-core';
+import { gqlQuery } from '../data';
 
 const query = gql`
   {
-    patternTypes {
-      id
-      title
+    patternSettings {
+      patternTypes {
+        id
+        title
+      }
+      patternStatuses {
+        id
+        title
+      }
     }
   }
 `;
 
-const SET_PATTERN_TYPES = gql`
-  mutation setPatternTypes($patternTypes: JSON) {
-    setPatternTypes(patternTypes: $patternTypes) {
-      id
-      title
+const SET_PATTERN_SETTINGS = gql`
+  mutation setPatternSettings($settings: JSON) {
+    setPatternSettings(settings: $settings) {
+      patternTypes {
+        id
+        title
+      }
+      patternStatuses {
+        id
+        title
+      }
     }
   }
 `;
 
 const schema = {
-  type: 'array',
-  title: 'Pattern Types',
-  items: {
-    type: 'object',
-    required: ['id', 'title'],
-    properties: {
-      id: {
-        type: 'string',
-        title: 'ID',
+  type: 'object',
+  properties: {
+    patternTypes: {
+      type: 'array',
+      title: 'Pattern Types',
+      items: {
+        type: 'object',
+        required: ['id', 'title'],
+        properties: {
+          id: {
+            type: 'string',
+            title: 'ID',
+          },
+          title: {
+            type: 'string',
+            title: 'Title',
+          },
+        },
       },
-      title: {
-        type: 'string',
-        title: 'Title',
+    },
+    patternStatuses: {
+      type: 'array',
+      title: 'Pattern Statuses',
+      items: {
+        type: 'object',
+        required: ['id', 'title'],
+        properties: {
+          id: {
+            type: 'string',
+            title: 'ID',
+          },
+          title: {
+            type: 'string',
+            title: 'Title',
+          },
+        },
       },
     },
   },
@@ -65,72 +98,50 @@ class PatternSettings extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      statusMessage: '',
-      statusType: 'info',
+      patternSettings: {
+        patternStatuses: [],
+        patternTypes: [],
+      },
+      ready: false,
     };
   }
 
+  componentDidMount() {
+    gqlQuery({
+      gqlQueryObj: query,
+    })
+      .then(({ data }) => {
+        this.setState({
+          patternSettings: data.patternSettings,
+          ready: true,
+        });
+      })
+      .catch(console.log.bind(console));
+  }
+
   render() {
+    if (!this.context.permissions.includes('write')) {
+      return <p>Editing currently disabled</p>;
+    }
+    if (!this.state.ready) return null;
     return (
-      <Query query={query}>
-        {({ loading, error: queryError, data, refetch }) => {
-          if (loading) return <Spinner />;
-          if (queryError)
-            return <StatusMessage message={queryError.message} type="error " />;
-          const { patternTypes } = data;
-          return (
-            <div>
-              <h4 className="eyebrow">Configuration</h4>
-              <h2>Settings</h2>
-              <Mutation
-                mutation={SET_PATTERN_TYPES}
-                variables={{ patternTypes }}
-              >
-                {(setPatternTypes, { error }) => (
-                  <>
-                    {error && (
-                      <StatusMessage message={error.message} type="error " />
-                    )}
-                    {this.state.statusMessage && (
-                      <StatusMessage
-                        message={this.state.statusMessage}
-                        type={this.state.statusType}
-                      />
-                    )}
-                    <SchemaForm
-                      schema={schema}
-                      formData={patternTypes}
-                      onSubmit={({ formData }) => {
-                        if (this.context.permissions.includes('write')) {
-                          setPatternTypes({
-                            variables: {
-                              patternTypes: formData,
-                            },
-                          });
-                          refetch();
-                        } else {
-                          this.setState({
-                            statusMessage:
-                              'Editing site settings has been disabled on this site.',
-                            statusType: 'error',
-                          });
-                          setTimeout(() => {
-                            this.setState({
-                              statusMessage: '',
-                              statusType: 'info',
-                            });
-                          }, 3000);
-                        }
-                      }}
-                      hasSubmit
-                    />
-                  </>
-                )}
-              </Mutation>
-            </div>
-          );
+      <SchemaForm
+        schema={schema}
+        formData={this.state.patternSettings}
+        hasSubmit
+        onSubmit={async ({ formData }) => {
+          gqlQuery({
+            gqlQueryObj: SET_PATTERN_SETTINGS,
+            variables: {
+              settings: formData,
+            },
+          })
+            .then(() => {
+              window.location.reload();
+            })
+            .catch(console.log.bind(console));
         }}
-      </Query>
+      />
     );
   }
 }

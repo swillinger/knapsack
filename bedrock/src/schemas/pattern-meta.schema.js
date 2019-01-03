@@ -40,9 +40,6 @@ module.exports = {
     status: {
       title: 'Status',
       type: 'string',
-      enum: ['draft', 'inProgress', 'ready'],
-      enumNames: ['Draft', 'In Progress', 'Ready'],
-      default: 'ready',
     },
     uses: {
       title: 'Uses',

@@ -73,10 +73,14 @@ const patternsTypeDef = gql`
     patterns: [Pattern]
   }
 
-  enum PatternStatus {
-    draft
-    inProgress
-    ready
+  type PatternStatus {
+    id: ID!
+    title: String!
+  }
+
+  type PatternSettings {
+    patternStatuses: [PatternStatus]
+    patternTypes: [PatternType]
   }
 
   enum PatternUses {
@@ -96,7 +100,7 @@ const patternsTypeDef = gql`
     title: String!
     description: String
     type: ID
-    status: PatternStatus
+    status: String
     uses: [PatternUses]
     demoSize: PatternDemoSize
     hasIcon: Boolean
@@ -123,6 +127,8 @@ const patternsTypeDef = gql`
     pattern(id: ID): Pattern
     patternTypes: [PatternType]
     patternType(id: ID): PatternType
+    patternStatuses: [PatternStatus]
+    patternSettings: PatternSettings
     render(
       patternId: ID
       templateId: ID
@@ -134,6 +140,8 @@ const patternsTypeDef = gql`
   type Mutation {
     setPatternMeta(id: ID, meta: JSON): JSON
     setPatternTypes(patternTypes: JSON): [PatternType]
+    setPatternStatuses(patternStatuses: JSON): [PatternStatus]
+    setPatternSettings(settings: JSON): PatternSettings
     setPatternReadme(id: ID, readme: String): String
   }
 `;
@@ -419,6 +427,20 @@ class Patterns {
       dbDir: dataDir,
       name: 'bedrock.patterns',
       defaults: {
+        patternStatuses: [
+          {
+            id: 'draft',
+            title: 'Draft',
+          },
+          {
+            id: 'inProgress',
+            title: 'In Progress',
+          },
+          {
+            id: 'ready',
+            title: 'Ready',
+          },
+        ],
         patternTypes: [
           {
             id: 'components',
@@ -597,6 +619,26 @@ class Patterns {
     return this.db.get('patternTypes');
   }
 
+  getPatternStatuses() {
+    return this.db.get('patternStatuses');
+  }
+
+  setPatternStatuses(patternStatuses) {
+    this.db.set('patternStatuses', patternStatuses);
+    return this.db.get('patternStatuses');
+  }
+
+  getPatternSettings() {
+    return {
+      ...this.db.getAll(),
+      patternTypes: this.getPatternTypes(),
+    };
+  }
+
+  setPatternSettings(settings) {
+    this.db.setAll(settings);
+  }
+
   watch() {
     const configFilesToWatch = [];
     this.allPatterns.forEach(pattern => {
@@ -674,6 +716,10 @@ const patternsResolvers = {
     pattern: (parent, { id }, { patterns }) => patterns.getPattern(id),
     patternTypes: (parent, args, { patterns }) => patterns.getPatternTypes(),
     patternType: (parent, { id }, { patterns }) => patterns.getPatternType(id),
+    patternStatuses: (parent, args, { patterns }) =>
+      patterns.getPatternStatuses(),
+    patternSettings: (parent, args, { patterns }) =>
+      patterns.getPatternSettings(),
     render: async (
       parent,
       { patternId, templateId, wrapHtml, data },
@@ -693,6 +739,23 @@ const patternsResolvers = {
     ) => {
       if (!canWrite) return false;
       return patterns.setPatternTypes(patternTypes);
+    },
+    setPatternStatuses: async (
+      parent,
+      { patternStatuses },
+      { patterns, canWrite },
+    ) => {
+      if (!canWrite) return false;
+      return patterns.setPatternStatuses(patternStatuses);
+    },
+    setPatternSettings: async (
+      parent,
+      { settings },
+      { patterns, canWrite },
+    ) => {
+      if (!canWrite) return false;
+      patterns.setPatternSettings(settings);
+      return patterns.getPatternSettings();
     },
     setPatternReadme: async (
       parent,

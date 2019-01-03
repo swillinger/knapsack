@@ -66,7 +66,7 @@ class SettingsPage extends Component {
             if (loading) return <Spinner />;
             if (queryError)
               return (
-                <StatusMessage message={queryError.message} type="error " />
+                <StatusMessage message={queryError.message} type="error" />
               );
             const { settingsAll: settings } = data;
             return (
@@ -77,7 +77,7 @@ class SettingsPage extends Component {
                   {(setSettings, { error }) => (
                     <>
                       {error && (
-                        <StatusMessage message={error.message} type="error " />
+                        <StatusMessage message={error.message} type="error" />
                       )}
                       {this.state.statusMessage && (
                         <StatusMessage

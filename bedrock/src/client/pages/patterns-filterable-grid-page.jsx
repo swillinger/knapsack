@@ -102,7 +102,8 @@ class PatternsPage extends Component {
       default: 'all',
     };
 
-    if (type.enum.length > 1) {
+    // Needs to be more than `all, components`
+    if (type.enum.length > 2) {
       filterSchema.properties.type = type;
     }
 

@@ -419,7 +419,12 @@ class Patterns {
       dbDir: dataDir,
       name: 'bedrock.patterns',
       defaults: {
-        patternTypes: [],
+        patternTypes: [
+          {
+            id: 'components',
+            title: 'Components',
+          },
+        ],
       },
     });
 

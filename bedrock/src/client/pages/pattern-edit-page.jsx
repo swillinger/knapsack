@@ -101,6 +101,7 @@ class PatternEdit extends Component {
                   Object.assign(patternMetaSchema.properties.type, {
                     enum: data.patternTypes.map(p => p.id),
                     enumNames: data.patternTypes.map(p => p.title),
+                    default: data.patternTypes.map(p => p.id)[0],
                   });
                   return (
                     <>

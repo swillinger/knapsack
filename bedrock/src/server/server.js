@@ -55,6 +55,12 @@ async function serve({ config, meta, patterns }) {
   const bedrockDistDir = join(__dirname, '../../dist/');
 
   const settings = new Settings({ dataDir: config.data });
+  const pageBuilderPages = new PageBuilder({ dataDir: config.data });
+  const tokens = new DesignTokens({
+    tokenPath: config.designTokens,
+    tokenGroups: settings.getSetting('designTokens').groups,
+  });
+  const docs = new Docs({ docsDir: config.docsDir });
 
   const metaTypeDef = gql`
     type Meta {
@@ -108,14 +114,12 @@ async function serve({ config, meta, patterns }) {
       // log.verbose('request received', { host, origin }, 'graphql');
       const role = getRole(req);
       const canWrite = role.permissions.includes(PERMISSIONS.WRITE);
+
       return {
-        pageBuilderPages: new PageBuilder({ dataDir: config.data }),
+        pageBuilderPages,
         settings,
-        tokens: new DesignTokens({
-          tokenPath: config.designTokens,
-          tokenGroups: settings.getSetting('designTokens').groups,
-        }),
-        docs: new Docs({ docsDir: config.docsDir }),
+        tokens,
+        docs,
         patterns,
         canWrite,
       };
@@ -217,9 +221,7 @@ async function serve({ config, meta, patterns }) {
     // }),
     patternManifest: patterns,
     templateRenderers: config.templateRenderers,
-    pageBuilder: new PageBuilder({
-      dataDir: config.data,
-    }),
+    pageBuilder: pageBuilderPages,
     settingsStore: settings,
     css: config.rootRelativeCSS,
     js: config.rootRelativeJs,

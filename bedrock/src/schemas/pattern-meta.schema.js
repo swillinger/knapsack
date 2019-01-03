@@ -31,6 +31,7 @@ module.exports = {
     description: {
       title: 'Description',
       type: 'string',
+      default: '',
     },
     type: {
       title: 'Type',
@@ -110,6 +111,7 @@ module.exports = {
       description: 'Size at which to demo this component',
       enum: ['s', 'm', 'l', 'full'],
       enumNames: ['Small', 'Medium', 'Large', 'full'],
+      default: 'l',
     },
   },
 };

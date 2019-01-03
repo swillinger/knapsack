@@ -247,11 +247,7 @@ class App extends React.Component {
                             path={`${BASE_PATHS.PATTERNS}/all`}
                             exact
                             render={props => (
-                              <LoadablePatternsPage
-                                type="all"
-                                key="all"
-                                {...props}
-                              />
+                              <LoadablePatternsPage type="all" {...props} />
                             )}
                           />
                           <Route
@@ -259,7 +255,6 @@ class App extends React.Component {
                             render={({ match, ...props }) => (
                               <LoadablePatternsPage
                                 type={match.params.type}
-                                key={match.params.type}
                                 {...props}
                               />
                             )}

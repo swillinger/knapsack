@@ -23,6 +23,8 @@ import {
   StyledPatternGridListItem,
   PatternGridListItemDescription,
   PatternGridListItemTitle,
+  PatternGridListItemType,
+  PatternGridListItemHeader,
   PatternGridList,
 } from './pattern-list.styles';
 import { BASE_PATHS } from '../../lib/constants';
@@ -83,9 +85,14 @@ function PatternGridListItem(props) {
             : `${BASE_PATHS.PATTERN}/${props.pattern.id}`
         }
       >
-        <PatternGridListItemTitle>
-          {props.pattern.meta.title}
-        </PatternGridListItemTitle>
+        <PatternGridListItemHeader>
+          <PatternGridListItemTitle>
+            {props.pattern.meta.title}
+          </PatternGridListItemTitle>
+          <PatternGridListItemType>
+            {props.pattern.meta.type}
+          </PatternGridListItemType>
+        </PatternGridListItemHeader>
         <PatternGridListItemDescription>
           {props.pattern.meta.description}
         </PatternGridListItemDescription>
@@ -145,6 +152,7 @@ PatternGridListItem.propTypes = {
     meta: PropTypes.shape({
       title: PropTypes.string,
       description: PropTypes.string,
+      type: PropTypes.string,
       hasIcon: PropTypes.bool,
     }).isRequired,
   }).isRequired,

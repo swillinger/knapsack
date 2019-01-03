@@ -19,7 +19,6 @@ import Spinner from '@basalt/bedrock-spinner';
 import SchemaForm from '@basalt/bedrock-schema-form';
 import { uniqueArray } from '@basalt/bedrock-utils';
 import { connectToContext } from '@basalt/bedrock-core';
-import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import queryString from 'query-string';
@@ -27,20 +26,13 @@ import { Button } from '@basalt/bedrock-atoms';
 import PatternGrid from '../components/pattern-grid';
 import PageWithSidebar from '../layouts/page-with-sidebar';
 import { BASE_PATHS } from '../../lib/constants';
-import { gqlToString } from '../data';
+import { gqlToString, gqlQuery } from '../data';
 
 const query = gql`
-  query($id: ID) {
-    patternType(id: $id) {
+  {
+    patternTypes {
       id
       title
-      patterns {
-        id
-        meta {
-          title
-          description
-        }
-      }
     }
     patterns {
       id
@@ -60,65 +52,92 @@ class PatternsPage extends Component {
     super(props);
     this.state = {
       patterns: [],
-      filterSchema: {},
-      formData: {},
+      patternTypes: [],
+      formData: {
+        type: props.type,
+      },
+      ready: false,
     };
   }
 
+  componentDidMount() {
+    gqlQuery({
+      gqlQueryObj: query,
+    })
+      .then(({ data: { patternTypes = [], patterns = [] } }) => {
+        this.setState({
+          patterns,
+          patternTypes,
+          ready: true,
+        });
+      })
+      .catch(console.log.bind(console));
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.type !== this.props.type) {
+      this.setState({
+        formData: {
+          type: nextProps.type,
+        },
+      });
+    }
+  }
+
   render() {
-    if (!this.state.patterns.length) {
-      return (
-        <Query query={query} variables={{ id: this.props.type }}>
-          {({ loading, error, data }) => {
-            if (loading) return <Spinner />;
-            if (error) return <p>Error :(</p>;
+    if (!this.state.ready) return <Spinner />;
+    const { formData, patterns } = this.state;
 
-            const thePatterns =
-              this.props.type === 'all'
-                ? data.patterns
-                : data.patternType.patterns;
+    const filterSchema = {
+      $schema: 'http://json-schema.org/draft-07/schema',
+      type: 'object',
+      properties: {},
+    };
 
-            const filterSchema = {
-              $schema: 'http://json-schema.org/draft-07/schema',
-              type: 'object',
-              properties: {},
-            };
+    const type = {
+      type: 'string',
+      title: 'Type',
+      enum: ['all', ...this.state.patternTypes.map(p => p.id)],
+      enumNames: ['All', ...this.state.patternTypes.map(p => p.title)],
+      default: 'all',
+    };
 
-            const status = {
-              type: 'string',
-              title: 'Status',
-              enum: uniqueArray(
-                thePatterns.map(pattern => pattern.meta.status),
-              ),
-            };
+    if (type.enum.length > 1) {
+      filterSchema.properties.type = type;
+    }
 
-            if (status.enum.length > 1) {
-              filterSchema.properties.status = status;
-            }
+    const status = {
+      type: 'string',
+      title: 'Status',
+      enum: uniqueArray(patterns.map(pattern => pattern.meta.status)),
+    };
 
-            this.setState({
-              patterns: thePatterns,
-              typeTitle:
-                this.props.type === 'all' ? 'All' : data.patternType.title,
-              filterSchema,
-            });
-            return null;
-          }}
-        </Query>
+    if (status.enum.length > 1) {
+      filterSchema.properties.status = status;
+    }
+
+    let visiblePatterns = this.state.patterns;
+    if (formData.status) {
+      visiblePatterns = visiblePatterns.filter(
+        p => p.meta.status === formData.status,
       );
     }
 
-    const { status } = this.state.formData;
-
-    let visiblePatterns = this.state.patterns;
-    if (status) {
-      visiblePatterns = visiblePatterns.filter(p => p.meta.status === status);
+    if (formData.type && formData.type !== 'all') {
+      visiblePatterns = visiblePatterns.filter(
+        p => p.meta.type === formData.type,
+      );
     }
+
+    const typeTitle =
+      formData.type === 'all'
+        ? 'All'
+        : this.state.patternTypes.find(p => p.id === formData.type).title;
 
     return (
       <PageWithSidebar {...this.props} className="patterns-filters">
         <h4 className="eyebrow" style={{ textTransform: 'capitalize' }}>
-          {this.state.typeTitle}
+          {typeTitle}
         </h4>
         <header
           style={{
@@ -138,9 +157,14 @@ class PatternsPage extends Component {
           </Button>
         </header>
         <SchemaForm
-          schema={this.state.filterSchema}
+          schema={filterSchema}
           formData={this.state.formData}
-          onChange={({ formData }) => this.setState({ formData })}
+          onChange={({ formData: newFormData }) => {
+            if (newFormData.type !== this.state.formData.type) {
+              this.props.history.push(`/patterns/${newFormData.type}`);
+            }
+            this.setState({ formData: newFormData });
+          }}
           isInline
         />
         <PatternGrid patterns={visiblePatterns} />

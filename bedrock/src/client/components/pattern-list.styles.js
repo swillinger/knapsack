@@ -36,8 +36,18 @@ export const StyledPatternGridListItem = styled.li`
   }
 `;
 
+export const PatternGridListItemHeader = styled.header`
+  display: flex;
+  align-items: center;
+`;
+
 export const PatternGridListItemTitle = styled.h3`
+  margin: 0 0.5rem 0 0;
+`;
+
+export const PatternGridListItemType = styled.h6`
   margin: 0;
+  color: ${props => props.theme.globals.colors.neutralDark};
 `;
 
 export const PatternGridListItemDescription = styled.div`

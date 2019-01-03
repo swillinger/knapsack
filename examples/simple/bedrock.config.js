@@ -3,7 +3,7 @@ const TwigRenderer = require('@basalt/bedrock-renderer-twig');
 
 /** @type {BedrockConfig} */
 const config = {
-  patterns: ['./assets/patterns/*'],
+  patterns: ['./assets/patterns/*', './assets/pages/*'],
   newPatternDir: './assets/patterns/',
   designTokens: './design-tokens/tokens.yml',
   dist: './dist',
@@ -17,11 +17,18 @@ const config = {
     new TwigRenderer({
       src: {
         roots: ['./assets/patterns'],
-        namespaces: [{
-          id: 'components',
-          recursive: true,
-          paths: ['./assets/patterns'],
-        }],
+        namespaces: [
+          {
+            id: 'components',
+            recursive: true,
+            paths: ['./assets/patterns'],
+          },
+          {
+            id: 'pages',
+            recursive: true,
+            paths: ['./assets/pages'],
+          },
+        ],
       }
     }),
   ],

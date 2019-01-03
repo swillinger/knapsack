@@ -1,7 +1,11 @@
 {
   "title": "Hero",
-  "type": "molecules",
   "description": "A Hero that shows the things",
-  "uses": ["inSlice"],
+  "type": "molecules",
+  "status": "draft",
+  "uses": [
+    "inSlice"
+  ],
+  "hasIcon": true,
   "demoSize": "full"
 }

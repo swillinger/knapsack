@@ -7,6 +7,20 @@
     {
       "id": "molecules",
       "title": "Molecules"
+    },
+    {
+      "id": "pages",
+      "title": "Pages"
+    }
+  ],
+  "patternStatuses": [
+    {
+      "id": "draft",
+      "title": "Draft"
+    },
+    {
+      "id": "inProgress",
+      "title": "In Progress"
     }
   ]
 }

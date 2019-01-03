@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.25.0](https://github.com/basaltinc/bedrock/compare/v0.24.1...v0.25.0) (2019-01-03)
+
+
+### Bug Fixes
+
+* **bedrock:** ensure design token file exist ([d2617c7](https://github.com/basaltinc/bedrock/commit/d2617c7))
+* do not make new instances on each request ([3ecc339](https://github.com/basaltinc/bedrock/commit/3ecc339))
+* pattern push refresh ([9e5a5bd](https://github.com/basaltinc/bedrock/commit/9e5a5bd))
+* shutdown db watchers at build end ([318f7bf](https://github.com/basaltinc/bedrock/commit/318f7bf))
+
+
+### Features
+
+* adding patternStatus and settings ([5ba7c5d](https://github.com/basaltinc/bedrock/commit/5ba7c5d))
+* basic setup of secondary nav pattern by type ([812af01](https://github.com/basaltinc/bedrock/commit/812af01))
+* create patternTypes server storage ([460e61b](https://github.com/basaltinc/bedrock/commit/460e61b))
+* create patternTypes UI edit form ([d8475c4](https://github.com/basaltinc/bedrock/commit/d8475c4))
+* hook up pattern edit page to patternTypes ([9224bfb](https://github.com/basaltinc/bedrock/commit/9224bfb))
+* pattern grid list type filters ([7f0d610](https://github.com/basaltinc/bedrock/commit/7f0d610))
+* pattern list page type and status filters ([30ca725](https://github.com/basaltinc/bedrock/commit/30ca725))
+* setting patternType default to components ([060b287](https://github.com/basaltinc/bedrock/commit/060b287))
+
+
+
+
+
 ## [0.24.1](https://github.com/basaltinc/bedrock/compare/v0.24.0...v0.24.1) (2018-12-29)
 
 

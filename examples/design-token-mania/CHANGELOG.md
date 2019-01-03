@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.25.0](https://github.com/basaltinc/bedrock/compare/v0.24.1...v0.25.0) (2019-01-03)
+
+
+### Features
+
+* adding patternStatus and settings ([5ba7c5d](https://github.com/basaltinc/bedrock/commit/5ba7c5d))
+
+
+
+
+
 ## [0.24.1](https://github.com/basaltinc/bedrock/compare/v0.24.0...v0.24.1) (2018-12-29)
 
 **Note:** Version bump only for package @basalt/bedrock-example-design-token-mania

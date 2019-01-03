@@ -1,7 +1,7 @@
 {
   "name": "@basalt/eslint-config-bedrock",
   "license": "GPL-2.0-or-later",
-  "version": "0.24.0",
+  "version": "0.25.0",
   "description": "Eslint config and deps.",
   "main": ".eslintrc",
   "scripts": {},

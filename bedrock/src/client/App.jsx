@@ -244,6 +244,13 @@ class App extends React.Component {
                           />
 
                           <Route
+                            path={BASE_PATHS.PATTERNS}
+                            exact
+                            render={() => (
+                              <Redirect to={`${BASE_PATHS.PATTERNS}/all`} />
+                            )}
+                          />
+                          <Route
                             path={`${BASE_PATHS.PATTERNS}/all`}
                             exact
                             render={props => (

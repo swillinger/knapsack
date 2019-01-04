@@ -179,5 +179,4 @@ type BedrockPatternTemplate = {
   schema: Schema;
   uiSchema?: UiSchema;
   isInline?: IsInline;
-  renderer: BedrockTemplateRenderer;
 };

@@ -19,11 +19,11 @@ import PropTypes from 'prop-types';
 import Spinner from '@basalt/bedrock-spinner';
 import { Button, Details, Select, StatusMessage } from '@basalt/bedrock-atoms';
 import { BedrockContext } from '@basalt/bedrock-core';
+import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
 import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import queryString from 'query-string';
-import Template from '../components/template';
 import MdBlock from '../components/md-block';
 import ErrorCatcher from '../utils/error-catcher';
 import Overview from '../layouts/overview';
@@ -31,7 +31,7 @@ import {
   LoadableSchemaTable,
   LoadableVariationDemo,
 } from '../loadable-components';
-import DosAndDonts from '../components/dos-and-donts';
+// import DosAndDonts from '../components/dos-and-donts';
 import PageWithSidebar from '../layouts/page-with-sidebar';
 import { BASE_PATHS } from '../../lib/constants';
 import { gqlToString } from '../data';
@@ -49,6 +49,7 @@ const query = gql`
       templates {
         id
         title
+        demoDatas
         schema
         isInline
         uiSchema
@@ -90,6 +91,7 @@ class PatternViewPage extends Component {
     this.state = {
       demoSize: '',
       fullScreen: false,
+      demoDataIndex: 0,
       currentTemplate: {
         name: '',
         id: '',
@@ -138,6 +140,7 @@ class PatternViewPage extends Component {
               if (loading) return <Spinner />;
               if (error)
                 return <StatusMessage type="error" message={error.message} />;
+
               const {
                 templates,
                 meta,
@@ -145,23 +148,40 @@ class PatternViewPage extends Component {
                 id: patternId,
               } = response.pattern;
               const { title, description, type, demoSize } = meta;
-              const { schema, uiSchema, isInline, id: templateId } = this.state
-                .currentTemplate.id
+
+              const {
+                schema,
+                uiSchema,
+                isInline,
+                id: templateId,
+                demoDatas,
+              } = this.state.currentTemplate.id
                 ? this.state.currentTemplate
                 : templates[0];
-              const [data, ...examples] = schema.examples
-                ? schema.examples
-                : [{}];
-              const dosAndDonts = schema.dosAndDonts ? schema.dosAndDonts : [];
 
               const hasSchema = !!(
                 schema &&
                 schema.properties &&
                 Object.keys(schema.properties).length > 0
               );
+
+              let datas = [{}];
+              if (demoDatas) {
+                datas = demoDatas;
+              } else if (
+                hasSchema &&
+                schema.examples &&
+                schema.examples.length > 0
+              ) {
+                datas = schema.examples;
+              }
+
+              // const dosAndDonts = schema.dosAndDonts ? schema.dosAndDonts : [];
+
               const theDemoSize = hasSchema
                 ? this.state.demoSize || demoSize
                 : 'full';
+
               return (
                 <>
                   <PatternHeader>
@@ -185,6 +205,7 @@ class PatternViewPage extends Component {
                           }))}
                           handleChange={value => {
                             this.setState({
+                              demoDataIndex: 0,
                               currentTemplate: templates.find(
                                 t => t.id === value,
                               ),
@@ -193,6 +214,51 @@ class PatternViewPage extends Component {
                         />
                       )}
                       <DemoGridControls>
+                        {datas.length > 1 && (
+                          <div
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                            }}
+                          >
+                            <div
+                              style={{
+                                paddingRight: '3px',
+                                marginRight: '5px',
+                              }}
+                            >
+                              Demos:
+                            </div>
+                            <div>
+                              <Button
+                                type="button"
+                                className="button button--size-small"
+                                disabled={this.state.demoDataIndex < 1}
+                                onClick={() => {
+                                  this.setState(prevState => ({
+                                    demoDataIndex: prevState.demoDataIndex - 1,
+                                  }));
+                                }}
+                              >
+                                <FaCaretLeft />
+                              </Button>
+                              <Button
+                                type="button"
+                                className="button button--size-small"
+                                disabled={
+                                  this.state.demoDataIndex === datas.length - 1
+                                }
+                                onClick={() => {
+                                  this.setState(prevState => ({
+                                    demoDataIndex: prevState.demoDataIndex + 1,
+                                  }));
+                                }}
+                              >
+                                <FaCaretRight />
+                              </Button>
+                            </div>
+                          </div>
+                        )}
                         {hasSchema && (
                           <Select
                             items={[
@@ -217,7 +283,7 @@ class PatternViewPage extends Component {
                             handleChange={newDemoSize =>
                               this.setState({ demoSize: newDemoSize })
                             }
-                            label="Stage Size"
+                            label="Stage"
                           />
                         )}
 
@@ -265,27 +331,15 @@ class PatternViewPage extends Component {
                       hasSchema={hasSchema}
                       schema={schema}
                       uiSchema={uiSchema}
-                      data={data}
+                      data={datas[this.state.demoDataIndex]}
                       demoSize={theDemoSize}
-                      key={`${patternId}-${templateId}`}
+                      key={`${patternId}-${templateId}-${
+                        this.state.demoDataIndex
+                      }`}
                       isInline={isInline}
                       patternId={this.props.id}
                     />
                   </OverviewWrapper>
-
-                  {!!examples.length && (
-                    <Details>
-                      <summary>Extra Examples</summary>
-                      {examples.map(example => (
-                        <Template
-                          patternId={patternId}
-                          templateId={templateId}
-                          data={example}
-                          key={JSON.stringify(example)}
-                        />
-                      ))}
-                    </Details>
-                  )}
 
                   {readme && (
                     <Mutation mutation={updateReadme} ignoreResults>
@@ -340,19 +394,22 @@ class PatternViewPage extends Component {
                         schema={schema}
                         templateId={templateId}
                         patternId={patternId}
-                        data={data}
+                        data={datas[this.state.demoDataIndex]}
+                        key={`${patternId}-${templateId}-${
+                          this.state.demoDataIndex
+                        }`}
                       />
                     </>
                   )}
 
-                  {dosAndDonts.map(item => (
-                    <DosAndDonts
-                      key={JSON.stringify(item)}
-                      title={item.title}
-                      description={item.description}
-                      items={item.items}
-                    />
-                  ))}
+                  {/* {dosAndDonts.map(item => ( */}
+                  {/* <DosAndDonts */}
+                  {/* key={JSON.stringify(item)} */}
+                  {/* title={item.title} */}
+                  {/* description={item.description} */}
+                  {/* items={item.items} */}
+                  {/* /> */}
+                  {/* ))} */}
 
                   {/* <ApiDemo endpoint={this.apiEndpoint} /> */}
                 </>

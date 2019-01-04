@@ -12,7 +12,8 @@ export const Button = styled.button`
       ? props.theme.buttons.primary.color
       : props.theme.buttons.secondary.color};
   font-size: ${props => props.theme.buttons.fontSize};
-  cursor: ${props => props.theme.buttons.cursor};
+  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
+  opacity: ${props => (props.disabled ? '.7' : '1')};
 `;
 
 export const BlockQuoteWrapper = styled.blockquote`

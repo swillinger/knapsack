@@ -30,13 +30,5 @@ module.exports = {
       type: 'array',
       items: buttonSchema,
     },
-  },
-  examples: [
-    {
-      title: "I'm a Card Title",
-      body:
-        "I'm a body - Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      img: '/images/imagePlaceholder1.png',
-    },
-  ],
+  }
 };

@@ -7,7 +7,6 @@
     "type": "object",
     "additionalProperties": false,
     "required": [
-      "schema",
       "path",
       "id",
       "title"
@@ -31,6 +30,14 @@
       "title": {
         "title": "Template Title",
         "type": "string"
+      },
+      "demoDatas": {
+        "title": "Demo Data Sets",
+        "description": "Sets of sample data to pass to template",
+        "type": "array",
+        "items": {
+          "type": "object"
+        }
       },
       "selector": {
         "title": "CSS Selector",

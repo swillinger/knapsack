@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.26.0](https://github.com/basaltinc/bedrock/compare/v0.25.1...v0.26.0) (2019-01-04)
+
+
+### Features
+
+* add demoDatas to take over schema.examples ([88ea2ce](https://github.com/basaltinc/bedrock/commit/88ea2ce))
+
+
+
+
+
 # [0.25.0](https://github.com/basaltinc/bedrock/compare/v0.24.1...v0.25.0) (2019-01-03)
 
 **Note:** Version bump only for package @basalt/bedrock-atoms

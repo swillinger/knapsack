@@ -24,11 +24,15 @@ class BedrockRendererBase {
     <head>
       <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-          ${cssUrls.map(
-            cssUrl =>
-              `<link rel="stylesheet" type="text/css" href="${cssUrl}">`,
-          )}
-          ${headJsUrls.map(jsUrl => `<script src="${jsUrl}"></script>`)}
+          ${cssUrls
+            .map(
+              cssUrl =>
+                `<link rel="stylesheet" type="text/css" href="${cssUrl}">`,
+            )
+            .join('')}
+          ${headJsUrls
+            .map(jsUrl => `<script src="${jsUrl}"></script>`)
+            .join('')}
     </head>
     <body>
     `;
@@ -36,13 +40,13 @@ class BedrockRendererBase {
 
   getFoot({ jsUrls = [] } = {}) {
     return `
-    ${jsUrls.map(jsUrl => `<script src="${jsUrl}"></script>`)}
+    ${jsUrls.map(jsUrl => `<script src="${jsUrl}"></script>`).join('')}
 <style>
-  body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  /*body {*/
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+  /*}*/
  
 </style>
  <script>
@@ -63,7 +67,7 @@ class BedrockRendererBase {
   wrapHtml({ html, cssUrls = [], jsUrls = [], headJsUrls = [] }) {
     return `
 ${this.getHead({ cssUrls, headJsUrls })}
-${html}
+<div>${html}</div>
 ${this.getFoot({ jsUrls })}
 `;
   }

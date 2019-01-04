@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.26.1](https://github.com/basaltinc/bedrock/compare/v0.26.0...v0.26.1) (2019-01-04)
+
+
+### Bug Fixes
+
+* improve message on file/dirExists util ([8b96a53](https://github.com/basaltinc/bedrock/commit/8b96a53))
+* multiple js/css urls had a comma printed between ([1e69d56](https://github.com/basaltinc/bedrock/commit/1e69d56))
+
+
+
+
+
 # [0.26.0](https://github.com/basaltinc/bedrock/compare/v0.25.1...v0.26.0) (2019-01-04)
 
 

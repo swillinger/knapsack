@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.26.0](https://github.com/basaltinc/bedrock/compare/v0.25.1...v0.26.0) (2019-01-04)
+
+
+### Bug Fixes
+
+* patterns list with wrong type ([77fb3b6](https://github.com/basaltinc/bedrock/commit/77fb3b6))
+* removing required examples key for schema ([3ceb4d2](https://github.com/basaltinc/bedrock/commit/3ceb4d2))
+
+
+### Features
+
+* add demoDatas to take over schema.examples ([88ea2ce](https://github.com/basaltinc/bedrock/commit/88ea2ce))
+
+
+
+
+
 ## [0.25.1](https://github.com/basaltinc/bedrock/compare/v0.25.0...v0.25.1) (2019-01-03)
 
 

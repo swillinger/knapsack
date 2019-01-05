@@ -27,6 +27,7 @@ const { Patterns } = require('../server/patterns');
 const { serve } = require('../server/server');
 const { version } = require('../../package.json');
 const { dirExistsOrExit, fileExistsOrExit } = require('../server/server-utils');
+const { build, testPatternRenders } = require('./commands');
 // const webpack = require('./webpack');
 
 program
@@ -211,19 +212,7 @@ program.command('serve').action(async () => {
 });
 
 program.command('build').action(async () => {
-  log.info('Building...');
-  await Promise.all(
-    config.templateRenderers.map(async templateRenderer => {
-      if (!templateRenderer.build) return;
-      await templateRenderer.build({
-        config,
-        templatePaths: allTemplatePaths.filter(t => templateRenderer.test(t)),
-      });
-      log.info('Built', null, `templateRenderer:${templateRenderer.id}`);
-    }),
-  );
-  log.info('Bedrock built', null, 'build');
-  bedrockEvents.emit(EVENTS.SHUTDOWN);
+  await build(config, allTemplatePaths);
 });
 
 program.command('start').action(async () => {
@@ -252,6 +241,13 @@ program.command('start').action(async () => {
       log.error('Bedrock start error', err, 'start');
       process.exit(1);
     });
+});
+
+program.command('test').action(async () => {
+  await build(config, allTemplatePaths);
+  /** @type {BedrockPattern[]} */
+  const allPatterns = await patterns.getPatterns();
+  await testPatternRenders(allPatterns, patterns);
 });
 
 program.parse(process.argv);

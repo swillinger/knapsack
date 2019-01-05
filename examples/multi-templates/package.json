@@ -10,7 +10,8 @@
     "build:wp": "webpack-cli --config ./webpack.config.js",
     "serve": "NODE_ENV=production node $NODE_DEBUG_OPTION ./node_modules/.bin/bedrock serve",
     "start:dev": "nodemon --watch ../../bedrock/src/ --watch ../../packages/ --exec 'bedrock start'",
-    "start": "node $NODE_DEBUG_OPTION ./node_modules/.bin/bedrock start"
+    "start": "node $NODE_DEBUG_OPTION ./node_modules/.bin/bedrock start",
+    "test": "bedrock test"
   },
   "dependencies": {
     "@babel/core": "^7.2.0",

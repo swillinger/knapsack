@@ -40,7 +40,24 @@ function uniqueArray(ar) {
   return Object.keys(j).map(v => j[v]);
 }
 
+/**
+ * Flatten nest array
+ * @param {Array} arr
+ * @return {Array}
+ * @link https://stackoverflow.com/a/15030117
+ */
+function flattenArray(arr) {
+  return arr.reduce(
+    (flat, toFlatten) =>
+      flat.concat(
+        Array.isArray(toFlatten) ? flattenArray(toFlatten) : toFlatten,
+      ),
+    [],
+  );
+}
+
 module.exports = {
   hasItemsInItems,
   uniqueArray,
+  flattenArray,
 };

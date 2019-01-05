@@ -1,6 +1,6 @@
 {
   "name": "@basalt/bedrock-renderer-twig",
-  "version": "0.26.0",
+  "version": "0.26.1",
   "description": "Render Twig",
   "main": "src/index.js",
   "scripts": {},

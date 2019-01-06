@@ -5,8 +5,8 @@
   "scripts": {
     "build:bedrock": "FORCE_COLOR=1 time lerna run build --scope @basalt/bedrock",
     "build:pkgs": "FORCE_COLOR=1 time lerna run build --no-private --ignore @basalt/bedrock",
-    "build:private": "time lerna run build --scope @basalt/bedrock-example*",
-    "build:storybook": "time lerna run build --scope @basalt/bedrock-storybook",
+    "build:private": "time lerna run --stream --bail build --scope @basalt/bedrock-example*",
+    "build:storybook": "time lerna run build --stream --bail --scope @basalt/bedrock-storybook",
     "build": "time run-s build:pkgs build:bedrock",
     "build:all": "time run-s build build:private",
     "watch": "FORCE_COLOR=1 lerna run watch --parallel --no-private",
@@ -27,7 +27,7 @@
     "pick": "pick-npm-run-all",
     "reset": "yarn clean && yarn install --silent && FORCE_COLOR=1 run-s --print-label build:*",
     "start": "cd apps/storybook && yarn start",
-    "test": "run-s lint:style lint:js jest && lerna run test",
+    "test": "run-s lint:style lint:js jest && lerna run --stream --bail test",
     "up": "yarn upgrade-interactive --latest",
     "uuid": "node -e \"process.stdout.write(require('uuid/v4')()) \" | pbcopy && echo 'uuid copied' "
   },

@@ -27,7 +27,12 @@
     "pick": "pick-npm-run-all",
     "reset": "yarn clean && yarn install --silent && FORCE_COLOR=1 run-s --print-label build:*",
     "start": "cd apps/storybook && yarn start",
-    "test": "run-s lint:style lint:js jest && lerna run --stream --bail test",
+    "test": "run-s lint:style lint:js jest test:bedrock",
+    "test:bedrock": "lerna run --stream --bail --scope @basalt/bedrock test",
+    "test:examples": "run-s test:ex-1 test:ex-2 test:ex-3",
+    "test:ex-1": "lerna run --stream --bail --scope @basalt/bedrock-example-design-token-mania test",
+    "test:ex-2": "lerna run --stream --bail --scope @basalt/bedrock-example-simple test",
+    "test:ex-3": "lerna run --stream --bail --scope @basalt/bedrock-example-multi-templates test",
     "up": "yarn upgrade-interactive --latest",
     "uuid": "node -e \"process.stdout.write(require('uuid/v4')()) \" | pbcopy && echo 'uuid copied' "
   },

@@ -12,9 +12,8 @@ before_install:
 install:
 - if [ "$TRAVIS_TAG" = "" ]; then yarn install; fi
 
-# `travis_wait n cmd` will run `cmd` for `n` minutes (default is 10)
 script:
-- travis_wait 20 ./scripts/ci.sh
+- ./scripts/ci.sh
 cache:
 - npm
 - yarn

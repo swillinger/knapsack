@@ -27,7 +27,7 @@
     "pick": "pick-npm-run-all",
     "reset": "yarn clean && yarn install --silent && FORCE_COLOR=1 run-s --print-label build:*",
     "start": "cd apps/storybook && yarn start",
-    "test": "run-s lint:style lint:js jest test:bedrock test:ex-1",
+    "test": "run-s lint:style lint:js jest test:bedrock test:ex-2",
     "test:bedrock": "lerna run --stream --bail --scope @basalt/bedrock test",
     "test:ex-1": "lerna run --stream --bail --scope @basalt/bedrock-example-design-token-mania test",
     "test:ex-2": "lerna run --stream --bail --scope @basalt/bedrock-example-simple test",

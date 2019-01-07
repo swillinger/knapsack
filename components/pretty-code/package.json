@@ -1,6 +1,6 @@
 {
   "name": "@basalt/bedrock-pretty-code",
-  "version": "0.26.1",
+  "version": "0.27.0",
   "description": "A Bedrock component for syntax highlighting code",
   "module": "dist/pretty-code.js",
   "main": "dist/pretty-code.js",

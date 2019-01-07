@@ -1,10 +1,11 @@
 git:
   quiet: true
-  depth: 100
+  depth: 300
 language: node_js
 node_js:
 - 10
 before_install:
+- echo '7.1' > ~/.phpenv
 - php --version
 - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.12.3
 - export PATH="$HOME/.yarn/bin:$PATH"

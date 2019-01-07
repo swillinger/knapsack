@@ -213,6 +213,7 @@ program.command('serve').action(async () => {
 
 program.command('build').action(async () => {
   await build(config, allTemplatePaths);
+  bedrockEvents.emit(EVENTS.SHUTDOWN);
 });
 
 program.command('start').action(async () => {
@@ -248,6 +249,7 @@ program.command('test').action(async () => {
   /** @type {BedrockPattern[]} */
   const allPatterns = await patterns.getPatterns();
   await testPatternRenders(allPatterns, patterns);
+  bedrockEvents.emit(EVENTS.SHUTDOWN);
 });
 
 program.parse(process.argv);

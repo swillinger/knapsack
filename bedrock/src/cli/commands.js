@@ -1,6 +1,5 @@
 const { flattenArray } = require('../lib/utils');
 const log = require('./log');
-const { bedrockEvents, EVENTS } = require('../server/events');
 
 async function build(config, allTemplatePaths) {
   log.info('Building...');
@@ -15,11 +14,10 @@ async function build(config, allTemplatePaths) {
     }),
   );
   log.info('Bedrock built', null, 'build');
-  bedrockEvents.emit(EVENTS.SHUTDOWN);
 }
 
-async function testPatternRenders(allPatterns, patterns) {
-  await Promise.all(
+function testPatternRenders(allPatterns, patterns) {
+  return Promise.all(
     allPatterns.map(async pattern =>
       Promise.all(
         pattern.templates.map(async template => {
@@ -81,8 +79,6 @@ async function testPatternRenders(allPatterns, patterns) {
       log.error('Test error', err, 'test');
       process.exit(1);
     });
-
-  bedrockEvents.emit(EVENTS.SHUTDOWN);
 }
 
 module.exports = {

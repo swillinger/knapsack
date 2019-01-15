@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.27.2](https://github.com/basaltinc/bedrock/compare/v0.27.1...v0.27.2) (2019-01-15)
+
+
+### Bug Fixes
+
+* update twig-renderer ([47eeeb9](https://github.com/basaltinc/bedrock/commit/47eeeb9))
+
+
+
+
+
 # [0.27.0](https://github.com/basaltinc/bedrock/compare/v0.26.1...v0.27.0) (2019-01-07)
 
 **Note:** Version bump only for package @basalt/bedrock-renderer-twig

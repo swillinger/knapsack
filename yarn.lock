@@ -851,15 +851,17 @@
   resolved "https://registry.yarnpkg.com/@basalt/demo-data/-/demo-data-0.5.1.tgz#97f1f11364864e890486919308fac42adf9a487e"
   integrity sha512-xMByiHFgi5IdxDULF8D3wFRojVhSJGn1l14JIPxoNlD0JkyrAu/vWxP5Zr2Pcel8JABL/ErZ2rWrMIB5lkhcIQ==
 
-"@basalt/twig-renderer@^0.10.2":
-  version "0.10.2"
-  resolved "https://registry.yarnpkg.com/@basalt/twig-renderer/-/twig-renderer-0.10.2.tgz#386785a0e473b07c4e95309b34f062f1be0c464b"
-  integrity sha512-0ftRT1JMRw5y0ww7R1a3EMnXvpJ3w/ld/wlNjdKkKcoWu8B3FsilTgPk7uJ0hzlvwZOW1mXrzTiQbfoP6rDGNQ==
+"@basalt/twig-renderer@^0.12.0":
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/@basalt/twig-renderer/-/twig-renderer-0.12.0.tgz#ef752a08d4c6378de1598a5cd4a1779b5dcb99b9"
+  integrity sha512-ORKtGM1Dy3nKhz2yKw0RPgybUTx6D6p4tKLc6LpKsCGhNhDbW20zwM5WR9dxfe0byqEaQvBgG6Syn0f4MMSdcw==
   dependencies:
+    "@babel/core" "^7.2.0"
+    "@babel/preset-env" "^7.2.0"
     ajv "^6.5.2"
-    execa "^0.10.0"
+    execa "^1.0.0"
     find-free-port "^2.0.0"
-    fs-extra "^6.0.1"
+    fs-extra "^7.0.1"
     node-fetch "^2.1.2"
     sleep-promise "^8.0.1"
 
@@ -8277,15 +8279,6 @@ fs-extra@^1.0.0:
     graceful-fs "^4.1.2"
     jsonfile "^2.1.0"
     klaw "^1.0.0"
-
-fs-extra@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-6.0.1.tgz#8abc128f7946e310135ddc93b98bddb410e7a34b"
-  integrity sha512-GnyIkKhhzXZUWFCaJzvyDLEEgDkPfb4/TPvJCJVuS8MWZgoSsErf++QpiAlDnKFcqhRlm+tIOcencCjyJE6ZCA==
-  dependencies:
-    graceful-fs "^4.1.2"
-    jsonfile "^4.0.0"
-    universalify "^0.1.0"
 
 fs-extra@^7.0.0, fs-extra@^7.0.1:
   version "7.0.1"

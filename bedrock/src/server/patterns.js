@@ -301,11 +301,22 @@ function createPatternsData(patternsDirs, templateRenderers) {
 
         results.data.templates = results.data.templates.map(template => {
           const templatePath = join(dir, template.path);
+          const docPath = join(dir, template.doc);
+
           if (!fileExists(templatePath)) {
             log.error(
               `Pattern ${pattern.id} has a template (${
                 template.id
               }) with a path that cannot be found: ${templatePath}`,
+            );
+            process.exit(1);
+          }
+
+          if (!fileExists(docPath)) {
+            log.error(
+              `Template ${
+                template.id
+              } has a doc path that points to a file that cannot be found: ${docPath}`,
             );
             process.exit(1);
           }
@@ -320,9 +331,12 @@ function createPatternsData(patternsDirs, templateRenderers) {
             process.exit(1);
           }
 
+          const doc = fs.readFileSync(docPath, 'utf8');
+
           return {
             ...template,
             absolutePath: templatePath,
+            doc,
           };
         });
 
@@ -350,19 +364,12 @@ function createPatternsData(patternsDirs, templateRenderers) {
           process.exit(1);
         }
 
-        const readmeFilePath = findReadmeInDirSync(dir);
-        let readme = '';
-        if (readmeFilePath) {
-          readme = fs.readFileSync(readmeFilePath, 'utf8');
-        }
-
         /** @type {PatternWithMetaSchema} */
         const patternWithMeta = {
           ...results.data,
           dir,
           metaFilePath, // replaces original relative one with absolute path
           meta: metaResults.data,
-          readme,
         };
 
         patterns.push(patternWithMeta);

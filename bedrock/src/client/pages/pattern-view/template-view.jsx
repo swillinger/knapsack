@@ -18,12 +18,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Spinner from '@basalt/bedrock-spinner';
-import { Button, Details, Select, StatusMessage } from '@basalt/bedrock-atoms';
+import { Details, Select, StatusMessage } from '@basalt/bedrock-atoms';
 import { BedrockContext } from '@basalt/bedrock-core';
 import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Link } from 'react-router-dom';
-import queryString from 'query-string';
 import Template from '../../components/template';
 import MdBlock from '../../components/md-block';
 import PatternStage from './pattern-stage';
@@ -32,8 +30,6 @@ import {
   LoadableVariationDemo,
 } from '../../loadable-components';
 // import DosAndDonts from '../../components/dos-and-donts';
-import { BASE_PATHS } from '../../../lib/constants';
-import { gqlToString } from '../../data';
 import {
   FlexWrapper,
   DemoGridControls,
@@ -88,21 +84,15 @@ class TemplateView extends Component {
     super(props);
     this.state = {
       demoSize: '',
-      currentTemplate: {
-        name: '',
-        id: '',
-        schema: {},
-        uiSchema: {},
-        isInline: false,
-        doc: '',
-      },
     };
   }
 
   componentDidMount() {
     const { websocketsPort } = this.context.meta;
     if (this.context.features.enableTemplatePush && websocketsPort) {
-      this.socket = new window.WebSocket(`ws://localhost:${websocketsPort}`);
+      this.socket = new window.WebSocket(
+        `ws://localhost:${websocketsPort + this.props.socketPortOffset}`,
+      );
 
       // this.socket.addEventListener('open', event => {
       //   this.socket.send('Hello Server!', event);
@@ -144,6 +134,7 @@ class TemplateView extends Component {
             isInline,
             id: templateId,
             doc: readme,
+            title,
           } = templates.find(t => t.id === this.props.templateId);
           const [data, ...examples] = schema.examples ? schema.examples : [{}];
           // const dosAndDonts = schema.dosAndDonts ? schema.dosAndDonts : [];
@@ -162,6 +153,7 @@ class TemplateView extends Component {
             <>
               <OverviewWrapper fullScreen={this.state.fullScreen}>
                 <FlexWrapper>
+                  {!this.props.isVerbose && <h3>{title}</h3>}
                   <DemoGridControls>
                     {hasSchema && (
                       <Select
@@ -190,39 +182,6 @@ class TemplateView extends Component {
                         label="Stage Size"
                       />
                     )}
-
-                    <Button
-                      type="button"
-                      className="button button--size-small"
-                      onClick={() =>
-                        this.setState(prevState => ({
-                          fullScreen: !prevState.fullScreen,
-                        }))
-                      }
-                    >
-                      {this.state.fullScreen ? 'Show Controls' : 'Fullscreen'}
-                    </Button>
-
-                    {this.context.permissions.includes('write') && (
-                      <Link to={`${BASE_PATHS.PATTERN}/${this.props.id}/edit`}>
-                        <Button>Edit Meta</Button>
-                      </Link>
-                    )}
-
-                    <Button>
-                      <Link
-                        to={`${
-                          BASE_PATHS.GRAPHIQL_PLAYGROUND
-                        }?${queryString.stringify({
-                          query: gqlToString(query),
-                          variables: JSON.stringify({
-                            id: this.props.id,
-                          }),
-                        })}`}
-                      >
-                        See API
-                      </Link>
-                    </Button>
                   </DemoGridControls>
                 </FlexWrapper>
                 <PatternStage
@@ -271,7 +230,7 @@ class TemplateView extends Component {
                 </Mutation>
               )}
 
-              {this.props.verbose && (
+              {this.props.isVerbose && (
                 <>
                   {hasSchema && (
                     <>
@@ -330,12 +289,16 @@ class TemplateView extends Component {
   }
 }
 
-TemplateView.defaultProps = {};
+TemplateView.defaultProps = {
+  socketPortOffset: 0,
+  isVerbose: true,
+};
 
 TemplateView.propTypes = {
   id: PropTypes.string.isRequired,
   templateId: PropTypes.string.isRequired,
-  verbose: PropTypes.bool.isRequired,
+  isVerbose: PropTypes.bool,
+  socketPortOffset: PropTypes.number,
 };
 
 export default TemplateView;

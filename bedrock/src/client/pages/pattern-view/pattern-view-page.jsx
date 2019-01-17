@@ -15,17 +15,25 @@
     with Bedrock; if not, see <https://www.gnu.org/licenses>.
  */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import Spinner from '@basalt/bedrock-spinner';
 import { Button, Select, StatusMessage } from '@basalt/bedrock-atoms';
 import { BedrockContext } from '@basalt/bedrock-core';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
+import { Link } from 'react-router-dom';
+import queryString from 'query-string';
+import PropTypes from 'prop-types';
 import ErrorCatcher from '../../utils/error-catcher';
 // import DosAndDonts from '../../components/dos-and-donts';
+import { BASE_PATHS } from '../../../lib/constants';
+import { gqlToString } from '../../data';
 import PageWithSidebar from '../../layouts/page-with-sidebar';
 import TemplateView from './template-view';
-import { PatternHeader } from './pattern-view-page.styles';
+import {
+  FlexWrapper,
+  PatternHeader,
+  DemoGridControls,
+} from './pattern-view-page.styles';
 
 const query = gql`
   query PatternViewPage($id: ID) {
@@ -39,9 +47,6 @@ const query = gql`
         title
         description
         type
-        status
-        uses
-        hasIcon
       }
     }
   }
@@ -76,58 +81,118 @@ class PatternViewPage extends Component {
               const { id: templateId } = this.state.currentTemplate.id
                 ? this.state.currentTemplate
                 : templates[0];
+              const { showAllTemplates } = this.state;
 
               return (
                 <>
                   <PatternHeader>
-                    <h4
-                      className="eyebrow"
-                      style={{ textTransform: 'capitalize' }}
-                    >
-                      {type}
-                    </h4>
-                    <h2>{title}</h2>
-                    <p>{description}</p>
-                    {templates.length > 1 && (
-                      <>
-                        {!this.state.showAllTemplates && (
-                          <Select
-                            label="Template"
-                            value={templateId}
-                            items={templates.map(t => ({
-                              value: t.id,
-                              title: t.title,
-                            }))}
-                            handleChange={value => {
-                              this.setState({
-                                currentTemplate: templates.find(
-                                  t => t.id === value,
-                                ),
-                              });
-                            }}
-                          />
-                        )}
-                        <Button
-                          type="button"
-                          className="button button--size-small"
-                          onClick={() =>
-                            this.setState(prevState => ({
-                              showAllTemplates: !prevState.showAllTemplates,
-                            }))
-                          }
+                    <FlexWrapper>
+                      <div>
+                        <h4
+                          className="eyebrow"
+                          style={{ textTransform: 'capitalize' }}
                         >
-                          {this.state.showAllTemplates
-                            ? 'Show One Template'
-                            : 'Show All Template'}
-                        </Button>
-                      </>
-                    )}
+                          {type}
+                        </h4>
+                        <h2>{title}</h2>
+                        <p>{description}</p>
+                      </div>
+                      {templates.length > 1 && (
+                        <DemoGridControls>
+                          {!this.state.showAllTemplates && (
+                            <Select
+                              label="Template"
+                              value={templateId}
+                              items={templates.map(t => ({
+                                value: t.id,
+                                title: t.title,
+                              }))}
+                              handleChange={value => {
+                                this.setState({
+                                  currentTemplate: templates.find(
+                                    t => t.id === value,
+                                  ),
+                                });
+                              }}
+                            />
+                          )}
+                          <Button
+                            type="button"
+                            className="button button--size-small"
+                            onClick={() =>
+                              this.setState(prevState => ({
+                                showAllTemplates: !prevState.showAllTemplates,
+                              }))
+                            }
+                          >
+                            {this.state.showAllTemplates
+                              ? 'Show One Template'
+                              : 'Show All Template'}
+                          </Button>
+                          <Button
+                            type="button"
+                            className="button button--size-small"
+                            onClick={() =>
+                              this.setState(prevState => ({
+                                fullScreen: !prevState.fullScreen,
+                              }))
+                            }
+                          >
+                            {this.state.fullScreen
+                              ? 'Show Controls'
+                              : 'Fullscreen'}
+                          </Button>
+
+                          {this.context.permissions.includes('write') && (
+                            <Link
+                              to={`${BASE_PATHS.PATTERN}/${this.props.id}/edit`}
+                            >
+                              <Button>Edit Meta</Button>
+                            </Link>
+                          )}
+
+                          <Button>
+                            <Link
+                              to={`${
+                                BASE_PATHS.GRAPHIQL_PLAYGROUND
+                              }?${queryString.stringify({
+                                query: gqlToString(query),
+                                variables: JSON.stringify({
+                                  id: this.props.id,
+                                }),
+                              })}`}
+                            >
+                              See API
+                            </Link>
+                          </Button>
+                        </DemoGridControls>
+                      )}
+                    </FlexWrapper>
                   </PatternHeader>
-                  <TemplateView
-                    id={this.props.id}
-                    templateId={templateId}
-                    verbose={!this.state.showAllTemplates}
-                  />
+
+                  {!showAllTemplates && (
+                    <TemplateView
+                      id={this.props.id}
+                      templateId={templateId}
+                      isVerbose
+                    />
+                  )}
+
+                  {showAllTemplates &&
+                    templates.map((template, index) => (
+                      <div key={template.id}>
+                        <TemplateView
+                          id={this.props.id}
+                          templateId={template.id}
+                          socketPortOffset={index}
+                          isVerbose={!this.state.showAllTemplates}
+                        />
+                        <br />
+                        <hr />
+                        <br />
+                      </div>
+                    ))}
+
                   {/* {dosAndDonts.map(item => ( */}
                   {/* <DosAndDonts */}
                   {/* key={JSON.stringify(item)} */}

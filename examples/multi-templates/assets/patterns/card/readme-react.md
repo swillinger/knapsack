@@ -1,4 +1,4 @@
-**About the Twig Template**
+**About the React Template**
 
 Cards visually wrap a unit of content so users can quickly identify relevant information. Cards are good for...
 

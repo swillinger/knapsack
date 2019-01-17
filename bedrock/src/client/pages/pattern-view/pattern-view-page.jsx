@@ -23,18 +23,18 @@ import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import queryString from 'query-string';
-import Template from '../components/template';
-import MdBlock from '../components/md-block';
-import ErrorCatcher from '../utils/error-catcher';
-import Overview from '../layouts/overview';
+import Template from '../../components/template';
+import MdBlock from '../../components/md-block';
+import ErrorCatcher from '../../utils/error-catcher';
+import PatternStage from './pattern-stage';
 import {
   LoadableSchemaTable,
   LoadableVariationDemo,
-} from '../loadable-components';
-import DosAndDonts from '../components/dos-and-donts';
-import PageWithSidebar from '../layouts/page-with-sidebar';
-import { BASE_PATHS } from '../../lib/constants';
-import { gqlToString } from '../data';
+} from '../../loadable-components';
+import DosAndDonts from '../../components/dos-and-donts';
+import PageWithSidebar from '../../layouts/page-with-sidebar';
+import { BASE_PATHS } from '../../../lib/constants';
+import { gqlToString } from '../../data';
 import {
   FlexWrapper,
   DemoGridControls,
@@ -52,8 +52,8 @@ const query = gql`
         schema
         isInline
         uiSchema
+        doc
       }
-      readme
       meta {
         title
         description
@@ -76,6 +76,7 @@ const query = gql`
   }
 `;
 
+// @todo UpdateReadme needs to work for each template doc
 const updateReadme = gql`
   mutation UpdateReadme($id: ID!, $readme: String!) {
     setPatternReadme(id: $id, readme: $readme)
@@ -90,6 +91,7 @@ class PatternViewPage extends Component {
     this.state = {
       demoSize: '',
       fullScreen: false,
+      showAllTemplates: false, // @todo lift this from the pattern meta on initial mount
       currentTemplate: {
         name: '',
         id: '',
@@ -138,15 +140,16 @@ class PatternViewPage extends Component {
               if (loading) return <Spinner />;
               if (error)
                 return <StatusMessage type="error" message={error.message} />;
-              const {
-                templates,
-                meta,
-                readme,
-                id: patternId,
-              } = response.pattern;
+              const { templates, meta, id: patternId } = response.pattern;
               const { title, description, type, demoSize } = meta;
-              const { schema, uiSchema, isInline, id: templateId } = this.state
-                .currentTemplate.id
+
+              const {
+                schema,
+                uiSchema,
+                isInline,
+                id: templateId,
+                doc: readme,
+              } = this.state.currentTemplate.id
                 ? this.state.currentTemplate
                 : templates[0];
               const [data, ...examples] = schema.examples
@@ -162,6 +165,7 @@ class PatternViewPage extends Component {
               const theDemoSize = hasSchema
                 ? this.state.demoSize || demoSize
                 : 'full';
+
               return (
                 <>
                   <PatternHeader>
@@ -177,20 +181,35 @@ class PatternViewPage extends Component {
                   <OverviewWrapper fullScreen={this.state.fullScreen}>
                     <FlexWrapper>
                       {templates.length > 1 && (
-                        <Select
-                          label="Template"
-                          items={templates.map(t => ({
-                            value: t.id,
-                            title: t.title,
-                          }))}
-                          handleChange={value => {
-                            this.setState({
-                              currentTemplate: templates.find(
-                                t => t.id === value,
-                              ),
-                            });
-                          }}
-                        />
+                        <>
+                          <Select
+                            label="Template"
+                            items={templates.map(t => ({
+                              value: t.id,
+                              title: t.title,
+                            }))}
+                            handleChange={value => {
+                              this.setState({
+                                currentTemplate: templates.find(
+                                  t => t.id === value,
+                                ),
+                              });
+                            }}
+                          />
+                          <Button
+                            type="button"
+                            className="button button--size-small"
+                            onClick={() =>
+                              this.setState(prevState => ({
+                                showAllTemplates: !prevState.showAllTemplates,
+                              }))
+                            }
+                          >
+                            {this.state.showAllTemplates
+                              ? 'Show One Template'
+                              : 'Show All Template'}
+                          </Button>
+                        </>
                       )}
                       <DemoGridControls>
                         {hasSchema && (
@@ -259,8 +278,7 @@ class PatternViewPage extends Component {
                         </Button>
                       </DemoGridControls>
                     </FlexWrapper>
-
-                    <Overview
+                    <PatternStage
                       templateId={templateId}
                       hasSchema={hasSchema}
                       schema={schema}

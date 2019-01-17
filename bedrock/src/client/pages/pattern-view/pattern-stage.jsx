@@ -17,16 +17,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SchemaForm from '@basalt/bedrock-schema-form';
-import Template from '../components/template';
+import Template from '../../components/template';
 import {
   DemoGrid,
   DemoStage,
   Resizable,
   SchemaFormWrapper,
   SchemaFormWrapperInner,
-} from './overview.styles';
+} from './pattern-stage.styles';
 
-class Overview extends React.Component {
+class PatternStage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -122,14 +122,14 @@ class Overview extends React.Component {
   }
 }
 
-Overview.defaultProps = {
+PatternStage.defaultProps = {
   data: {},
   demoSize: 'l',
   uiSchema: {},
   isInline: false,
 };
 
-Overview.propTypes = {
+PatternStage.propTypes = {
   templateId: PropTypes.string.isRequired,
   patternId: PropTypes.string.isRequired,
   data: PropTypes.object,
@@ -140,4 +140,4 @@ Overview.propTypes = {
   demoSize: PropTypes.string,
 };
 
-export default Overview;
+export default PatternStage;

@@ -80,7 +80,11 @@ function findReadmeInDirSync(dir) {
  * @return {boolean}
  */
 function fileExists(filePath) {
-  return fs.statSync(filePath).isFile();
+  try {
+    return fs.statSync(filePath).isFile();
+  } catch (err) {
+    return false;
+  }
 }
 
 /**
@@ -88,7 +92,11 @@ function fileExists(filePath) {
  * @return {boolean}
  */
 function dirExists(dirPath) {
-  return fs.statSync(dirPath).isDirectory();
+  try {
+    return fs.statSync(dirPath).isDirectory();
+  } catch (err) {
+    return false;
+  }
 }
 
 /**

@@ -64,6 +64,7 @@ const patternsTypeDef = gql`
     path: String!
     title: String!
     doc: String
+    demoDatas: [JSON]
     uiSchema: JSON
     isInline: Boolean
   }

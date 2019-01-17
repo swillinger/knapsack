@@ -3,6 +3,94 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.27.1](https://github.com/basaltinc/bedrock/compare/v0.27.0...v0.27.1) (2019-01-07)
+
+
+### Bug Fixes
+
+* test command exiting too early ([5450623](https://github.com/basaltinc/bedrock/commit/5450623))
+
+
+
+
+
+# [0.27.0](https://github.com/basaltinc/bedrock/compare/v0.26.1...v0.27.0) (2019-01-07)
+
+
+### Features
+
+* add cli command for testing all renders ([95b5cea](https://github.com/basaltinc/bedrock/commit/95b5cea))
+
+
+
+
+
+## [0.26.1](https://github.com/basaltinc/bedrock/compare/v0.26.0...v0.26.1) (2019-01-04)
+
+
+### Bug Fixes
+
+* improve message on file/dirExists util ([8b96a53](https://github.com/basaltinc/bedrock/commit/8b96a53))
+* multiple js/css urls had a comma printed between ([1e69d56](https://github.com/basaltinc/bedrock/commit/1e69d56))
+
+
+
+
+
+# [0.26.0](https://github.com/basaltinc/bedrock/compare/v0.25.1...v0.26.0) (2019-01-04)
+
+
+### Bug Fixes
+
+* patterns list with wrong type ([77fb3b6](https://github.com/basaltinc/bedrock/commit/77fb3b6))
+* removing required examples key for schema ([3ceb4d2](https://github.com/basaltinc/bedrock/commit/3ceb4d2))
+
+
+### Features
+
+* add demoDatas to take over schema.examples ([88ea2ce](https://github.com/basaltinc/bedrock/commit/88ea2ce))
+
+
+
+
+
+## [0.25.1](https://github.com/basaltinc/bedrock/compare/v0.25.0...v0.25.1) (2019-01-03)
+
+
+### Bug Fixes
+
+* giving string defaults to pattern meta ([bc983c5](https://github.com/basaltinc/bedrock/commit/bc983c5))
+
+
+
+
+
+# [0.25.0](https://github.com/basaltinc/bedrock/compare/v0.24.1...v0.25.0) (2019-01-03)
+
+
+### Bug Fixes
+
+* **bedrock:** ensure design token file exist ([d2617c7](https://github.com/basaltinc/bedrock/commit/d2617c7))
+* do not make new instances on each request ([3ecc339](https://github.com/basaltinc/bedrock/commit/3ecc339))
+* pattern push refresh ([9e5a5bd](https://github.com/basaltinc/bedrock/commit/9e5a5bd))
+* shutdown db watchers at build end ([318f7bf](https://github.com/basaltinc/bedrock/commit/318f7bf))
+
+
+### Features
+
+* adding patternStatus and settings ([5ba7c5d](https://github.com/basaltinc/bedrock/commit/5ba7c5d))
+* basic setup of secondary nav pattern by type ([812af01](https://github.com/basaltinc/bedrock/commit/812af01))
+* create patternTypes server storage ([460e61b](https://github.com/basaltinc/bedrock/commit/460e61b))
+* create patternTypes UI edit form ([d8475c4](https://github.com/basaltinc/bedrock/commit/d8475c4))
+* hook up pattern edit page to patternTypes ([9224bfb](https://github.com/basaltinc/bedrock/commit/9224bfb))
+* pattern grid list type filters ([7f0d610](https://github.com/basaltinc/bedrock/commit/7f0d610))
+* pattern list page type and status filters ([30ca725](https://github.com/basaltinc/bedrock/commit/30ca725))
+* setting patternType default to components ([060b287](https://github.com/basaltinc/bedrock/commit/060b287))
+
+
+
+
+
 ## [0.24.1](https://github.com/basaltinc/bedrock/compare/v0.24.0...v0.24.1) (2018-12-29)
 
 

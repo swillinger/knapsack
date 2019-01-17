@@ -18,7 +18,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Spinner from '@basalt/bedrock-spinner';
-import { Details, StatusMessage } from '@basalt/bedrock-atoms';
+import { Button, Details, StatusMessage } from '@basalt/bedrock-atoms';
+import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
 import { BedrockContext } from '@basalt/bedrock-core';
 import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -48,6 +49,7 @@ const query = gql`
         uiSchema
         doc
         demoSize
+        demoDatas
       }
     }
   }
@@ -65,6 +67,9 @@ class TemplateView extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      demoDataIndex: 0,
+    };
   }
 
   componentDidMount() {
@@ -114,6 +119,7 @@ class TemplateView extends Component {
             id: templateId,
             doc: readme,
             title,
+            demoDatas,
           } = templates.find(t => t.id === this.props.templateId);
           const [data, ...examples] = schema.examples ? schema.examples : [{}];
           // const dosAndDonts = schema.dosAndDonts ? schema.dosAndDonts : [];
@@ -123,39 +129,68 @@ class TemplateView extends Component {
             Object.keys(schema.properties).length > 0
           );
 
+          let datas = [{}];
+          if (demoDatas) {
+            datas = demoDatas;
+          } else if (
+            hasSchema &&
+            schema.examples &&
+            schema.examples.length > 0
+          ) {
+            datas = schema.examples;
+          }
+
           return (
             <>
               <OverviewWrapper>
                 <FlexWrapper>
                   {!this.props.isVerbose && <h3>{title}</h3>}
                   <DemoGridControls>
-                    {/* {hasSchema && ( */}
-                    {/* <Select */}
-                    {/* items={[ */}
-                    {/* { */}
-                    {/* value: 's', */}
-                    {/* title: 'Small', */}
-                    {/* }, */}
-                    {/* { */}
-                    {/* value: 'm', */}
-                    {/* title: 'Medium', */}
-                    {/* }, */}
-                    {/* { */}
-                    {/* value: 'l', */}
-                    {/* title: 'Large', */}
-                    {/* }, */}
-                    {/* { */}
-                    {/* value: 'full', */}
-                    {/* title: 'Full', */}
-                    {/* }, */}
-                    {/* ]} */}
-                    {/* value={this.props.demoSize} */}
-                    {/* handleChange={newDemoSize => */}
-                    {/* this.setState({ demoSize: newDemoSize }) */}
-                    {/* } */}
-                    {/* label="Stage Size" */}
-                    {/* /> */}
-                    {/* )} */}
+                    {datas.length > 1 && (
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <div
+                          style={{
+                            paddingRight: '3px',
+                            marginRight: '5px',
+                          }}
+                        >
+                          Demos:
+                        </div>
+                        <div>
+                          <Button
+                            type="button"
+                            className="button button--size-small"
+                            disabled={this.state.demoDataIndex < 1}
+                            onClick={() => {
+                              this.setState(prevState => ({
+                                demoDataIndex: prevState.demoDataIndex - 1,
+                              }));
+                            }}
+                          >
+                            <FaCaretLeft />
+                          </Button>
+                          <Button
+                            type="button"
+                            className="button button--size-small"
+                            disabled={
+                              this.state.demoDataIndex === datas.length - 1
+                            }
+                            onClick={() => {
+                              this.setState(prevState => ({
+                                demoDataIndex: prevState.demoDataIndex + 1,
+                              }));
+                            }}
+                          >
+                            <FaCaretRight />
+                          </Button>
+                        </div>
+                      </div>
+                    )}
                   </DemoGridControls>
                 </FlexWrapper>
                 <PatternStage
@@ -164,7 +199,7 @@ class TemplateView extends Component {
                   key={`${patternId}-${templateId}`}
                   schema={schema}
                   uiSchema={uiSchema}
-                  data={data}
+                  data={datas[this.state.demoDataIndex]}
                   demoSize={hasSchema ? this.props.demoSize : 'full'}
                   isInline={isInline}
                   patternId={this.props.id}

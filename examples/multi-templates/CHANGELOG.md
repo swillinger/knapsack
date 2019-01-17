@@ -3,6 +3,72 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.27.2](https://github.com/basaltinc/bedrock/compare/v0.27.1...v0.27.2) (2019-01-15)
+
+**Note:** Version bump only for package @basalt/bedrock-example-multi-templates
+
+
+
+
+
+## [0.27.1](https://github.com/basaltinc/bedrock/compare/v0.27.0...v0.27.1) (2019-01-07)
+
+**Note:** Version bump only for package @basalt/bedrock-example-multi-templates
+
+
+
+
+
+# [0.27.0](https://github.com/basaltinc/bedrock/compare/v0.26.1...v0.27.0) (2019-01-07)
+
+
+### Features
+
+* add cli command for testing all renders ([95b5cea](https://github.com/basaltinc/bedrock/commit/95b5cea))
+
+
+
+
+
+## [0.26.1](https://github.com/basaltinc/bedrock/compare/v0.26.0...v0.26.1) (2019-01-04)
+
+**Note:** Version bump only for package @basalt/bedrock-example-multi-templates
+
+
+
+
+
+# [0.26.0](https://github.com/basaltinc/bedrock/compare/v0.25.1...v0.26.0) (2019-01-04)
+
+
+### Features
+
+* add demoDatas to take over schema.examples ([88ea2ce](https://github.com/basaltinc/bedrock/commit/88ea2ce))
+
+
+
+
+
+## [0.25.1](https://github.com/basaltinc/bedrock/compare/v0.25.0...v0.25.1) (2019-01-03)
+
+**Note:** Version bump only for package @basalt/bedrock-example-multi-templates
+
+
+
+
+
+# [0.25.0](https://github.com/basaltinc/bedrock/compare/v0.24.1...v0.25.0) (2019-01-03)
+
+
+### Features
+
+* adding patternStatus and settings ([5ba7c5d](https://github.com/basaltinc/bedrock/commit/5ba7c5d))
+* setting patternType default to components ([060b287](https://github.com/basaltinc/bedrock/commit/060b287))
+
+
+
+
+
 ## [0.24.1](https://github.com/basaltinc/bedrock/compare/v0.24.0...v0.24.1) (2018-12-29)
 
 **Note:** Version bump only for package @basalt/bedrock-example-multi-templates

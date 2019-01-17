@@ -21,6 +21,10 @@
     {
       "id": "inProgress",
       "title": "In Progress"
+    },
+    {
+      "id": "ready",
+      "title": "Ready"
     }
   ]
 }

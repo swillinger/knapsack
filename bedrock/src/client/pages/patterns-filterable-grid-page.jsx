@@ -53,9 +53,7 @@ class PatternsPage extends Component {
     this.state = {
       patterns: [],
       patternTypes: [],
-      formData: {
-        type: props.type,
-      },
+      formData: {},
       ready: false,
     };
   }
@@ -65,10 +63,18 @@ class PatternsPage extends Component {
       gqlQueryObj: query,
     })
       .then(({ data: { patternTypes = [], patterns = [] } }) => {
+        const type = patternTypes.find(p => p.id === this.props.type);
+        if (!type && this.props.type !== 'all') {
+          this.props.history.push(`${BASE_PATHS.PATTERNS}/all`);
+        }
+
         this.setState({
+          ready: true,
           patterns,
           patternTypes,
-          ready: true,
+          formData: {
+            type: type ? type.id : 'all',
+          },
         });
       })
       .catch(console.log.bind(console));
@@ -162,7 +168,9 @@ class PatternsPage extends Component {
           formData={this.state.formData}
           onChange={({ formData: newFormData }) => {
             if (newFormData.type !== this.state.formData.type) {
-              this.props.history.push(`/patterns/${newFormData.type}`);
+              this.props.history.push(
+                `${BASE_PATHS.PATTERNS}/${newFormData.type}`,
+              );
             }
             this.setState({ formData: newFormData });
           }}

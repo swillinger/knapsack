@@ -5,14 +5,8 @@ module.exports = {
     {
       alias: '@pages/home-page.twig',
       path: './home-page.twig',
-      id: 'twig',
-      title: 'Twig',
-      schema: {
-        title: 'Home Page',
-        type: 'object',
-        // properties: {},
-        examples: [{}]
-      },
+      id: 'home',
+      title: 'Home',
     },
   ],
 };

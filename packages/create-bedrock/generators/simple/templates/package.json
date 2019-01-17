@@ -9,7 +9,8 @@
     "build": "NODE_ENV=production bedrock build",
     "build:tokens": "theo ./design-tokens/tokens.yml --transform web --format raw.json,scss,html --dest ./assets/dist/tokens",
     "serve": "NODE_ENV=production bedrock serve",
-    "start": "bedrock start"
+    "start": "bedrock start",
+    "test": "bedrock test"
   },
   "dependencies": {
     "@basalt/bedrock": "^<%= bedrockVersion %>",

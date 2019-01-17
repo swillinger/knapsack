@@ -118,6 +118,7 @@ class BedrockRendererWebpackBase extends BedrockRendererBase {
           reject();
           return;
         }
+        this.setManifest();
         resolve();
       });
     });

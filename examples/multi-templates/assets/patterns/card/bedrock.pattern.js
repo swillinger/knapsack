@@ -1,13 +1,29 @@
 const schema = require('./card.schema');
 
+const demoDatas = [
+  {
+    title: "I'm a Card Title 2",
+    body:
+      "I'm a body - Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    img: '/images/imagePlaceholder1.png',
+  },{
+    title: "I'm a Card Title 3",
+    body:
+      "I'm a body - Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    img: '/images/imagePlaceholder1.png',
+  },
+];
+
 module.exports = {
   id: 'card',
   templates: [
+
     {
       path: './card.jsx',
       id: 'react',
       title: 'React',
       doc: './readme-react.md',
+      demoDatas,
       schema,
     },
     {
@@ -15,6 +31,7 @@ module.exports = {
       path: './card.twig',
       id: 'twig',
       title: 'Twig',
+      demoDatas,
       schema,
     },
     {

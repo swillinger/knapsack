@@ -42,11 +42,13 @@ const query = gql`
       templates {
         id
         title
+        schema
       }
       meta {
         title
         description
         type
+        demoSize
       }
     }
   }
@@ -60,6 +62,7 @@ class PatternViewPage extends Component {
     this.state = {
       showAllTemplates: false, // @todo lift this from the pattern meta on initial mount
       isFullScreen: false,
+      demoSize: '',
       currentTemplate: {
         name: '',
         id: '',
@@ -78,11 +81,42 @@ class PatternViewPage extends Component {
                 return <StatusMessage type="error" message={error.message} />;
 
               const { templates, meta } = response.pattern;
-              const { title, description, type } = meta;
-              const { id: templateId } = this.state.currentTemplate.id
-                ? this.state.currentTemplate
-                : templates[0];
+              const {
+                title,
+                description,
+                type,
+                demoSize: defaultDemoSize,
+              } = meta;
+              const templateId = this.state.currentTemplate.id
+                ? this.state.currentTemplate.id
+                : templates[0].id;
               const { showAllTemplates } = this.state;
+              const demoSize = this.state.demoSize
+                ? this.state.demoSize
+                : defaultDemoSize;
+              const currentlySelectedTemplate = templates.find(
+                t => t.id === templateId,
+              );
+
+              let hasSchema;
+              if (this.state.showAllTemplates) {
+                hasSchema = !!(
+                  this.state.showAllTemplates &&
+                  !!templates.find(
+                    t =>
+                      t.schema &&
+                      t.schema.properties &&
+                      Object.keys(t.schema.properties).length > 0,
+                  )
+                );
+              } else {
+                hasSchema = !!(
+                  currentlySelectedTemplate.schema &&
+                  currentlySelectedTemplate.schema.properties &&
+                  Object.keys(currentlySelectedTemplate.schema.properties)
+                    .length > 0
+                );
+              }
 
               return (
                 <>
@@ -115,6 +149,33 @@ class PatternViewPage extends Component {
                                   ),
                                 });
                               }}
+                            />
+                          )}
+                          {hasSchema && (
+                            <Select
+                              items={[
+                                {
+                                  value: 's',
+                                  title: 'Small',
+                                },
+                                {
+                                  value: 'm',
+                                  title: 'Medium',
+                                },
+                                {
+                                  value: 'l',
+                                  title: 'Large',
+                                },
+                                {
+                                  value: 'full',
+                                  title: 'Full',
+                                },
+                              ]}
+                              value={demoSize}
+                              handleChange={newDemoSize =>
+                                this.setState({ demoSize: newDemoSize })
+                              }
+                              label="Stage Size"
                             />
                           )}
                           <Button
@@ -175,6 +236,7 @@ class PatternViewPage extends Component {
                     <TemplateView
                       id={this.props.id}
                       templateId={templateId}
+                      demoSize={this.state.demoSize || defaultDemoSize}
                       isVerbose
                     />
                   )}
@@ -187,6 +249,7 @@ class PatternViewPage extends Component {
                           key={template.id}
                           templateId={template.id}
                           socketPortOffset={index}
+                          demoSize={this.state.demoSize || defaultDemoSize}
                           isVerbose={!this.state.showAllTemplates}
                         />
                         <br />

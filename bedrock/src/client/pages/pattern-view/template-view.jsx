@@ -18,7 +18,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Spinner from '@basalt/bedrock-spinner';
-import { Details, Select, StatusMessage } from '@basalt/bedrock-atoms';
+import { Details, StatusMessage } from '@basalt/bedrock-atoms';
 import { BedrockContext } from '@basalt/bedrock-core';
 import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -49,23 +49,6 @@ const query = gql`
         doc
         demoSize
       }
-      meta {
-        title
-        description
-        type
-        status
-        uses
-        hasIcon
-        dosAndDonts {
-          title
-          description
-          items {
-            image
-            do
-            caption
-          }
-        }
-      }
     }
   }
 `;
@@ -82,9 +65,6 @@ class TemplateView extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      demoSize: '',
-    };
   }
 
   componentDidMount() {
@@ -125,7 +105,6 @@ class TemplateView extends Component {
           if (loading) return <Spinner />;
           if (error)
             return <StatusMessage type="error" message={error.message} />;
-          console.log(response);
           const { templates, id: patternId } = response.pattern;
 
           const {
@@ -135,63 +114,58 @@ class TemplateView extends Component {
             id: templateId,
             doc: readme,
             title,
-            demoSize,
           } = templates.find(t => t.id === this.props.templateId);
           const [data, ...examples] = schema.examples ? schema.examples : [{}];
           // const dosAndDonts = schema.dosAndDonts ? schema.dosAndDonts : [];
-
           const hasSchema = !!(
             schema &&
             schema.properties &&
             Object.keys(schema.properties).length > 0
           );
-          const theDemoSize = hasSchema
-            ? this.state.demoSize || demoSize
-            : 'full';
 
           return (
             <>
-              <OverviewWrapper fullScreen={this.state.fullScreen}>
+              <OverviewWrapper>
                 <FlexWrapper>
                   {!this.props.isVerbose && <h3>{title}</h3>}
                   <DemoGridControls>
-                    {hasSchema && (
-                      <Select
-                        items={[
-                          {
-                            value: 's',
-                            title: 'Small',
-                          },
-                          {
-                            value: 'm',
-                            title: 'Medium',
-                          },
-                          {
-                            value: 'l',
-                            title: 'Large',
-                          },
-                          {
-                            value: 'full',
-                            title: 'Full',
-                          },
-                        ]}
-                        value={this.state.demoSize || demoSize}
-                        handleChange={newDemoSize =>
-                          this.setState({ demoSize: newDemoSize })
-                        }
-                        label="Stage Size"
-                      />
-                    )}
+                    {/* {hasSchema && ( */}
+                    {/* <Select */}
+                    {/* items={[ */}
+                    {/* { */}
+                    {/* value: 's', */}
+                    {/* title: 'Small', */}
+                    {/* }, */}
+                    {/* { */}
+                    {/* value: 'm', */}
+                    {/* title: 'Medium', */}
+                    {/* }, */}
+                    {/* { */}
+                    {/* value: 'l', */}
+                    {/* title: 'Large', */}
+                    {/* }, */}
+                    {/* { */}
+                    {/* value: 'full', */}
+                    {/* title: 'Full', */}
+                    {/* }, */}
+                    {/* ]} */}
+                    {/* value={this.props.demoSize} */}
+                    {/* handleChange={newDemoSize => */}
+                    {/* this.setState({ demoSize: newDemoSize }) */}
+                    {/* } */}
+                    {/* label="Stage Size" */}
+                    {/* /> */}
+                    {/* )} */}
                   </DemoGridControls>
                 </FlexWrapper>
                 <PatternStage
                   templateId={templateId}
                   hasSchema={hasSchema}
+                  key={`${patternId}-${templateId}`}
                   schema={schema}
                   uiSchema={uiSchema}
                   data={data}
-                  demoSize={theDemoSize}
-                  key={`${patternId}-${templateId}`}
+                  demoSize={hasSchema ? this.props.demoSize : 'full'}
                   isInline={isInline}
                   patternId={this.props.id}
                 />
@@ -293,6 +267,7 @@ class TemplateView extends Component {
 TemplateView.defaultProps = {
   socketPortOffset: 0,
   isVerbose: true,
+  demoSize: 'full',
 };
 
 TemplateView.propTypes = {
@@ -300,6 +275,7 @@ TemplateView.propTypes = {
   templateId: PropTypes.string.isRequired,
   isVerbose: PropTypes.bool,
   socketPortOffset: PropTypes.number,
+  demoSize: PropTypes.string,
 };
 
 export default TemplateView;

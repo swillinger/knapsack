@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import pretty from 'pretty';
 
 // Load any languages you want to use from `refractor`
@@ -60,6 +61,11 @@ const CodeSnippet = props => {
       </CodeStyles>
     </PreStyles>
   );
+};
+
+CodeSnippet.propTypes = {
+  language: PropTypes.string.isRequired,
+  code: PropTypes.string.isRequired,
 };
 
 export default CodeSnippet;

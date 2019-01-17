@@ -59,6 +59,7 @@ class PatternViewPage extends Component {
     super(props);
     this.state = {
       showAllTemplates: false, // @todo lift this from the pattern meta on initial mount
+      isFullScreen: false,
       currentTemplate: {
         name: '',
         id: '',
@@ -69,7 +70,7 @@ class PatternViewPage extends Component {
   render() {
     return (
       <ErrorCatcher>
-        <PageWithSidebar {...this.props}>
+        <PageWithSidebar {...this.props} isFullScreen={this.state.isFullScreen}>
           <Query query={query} variables={{ id: this.props.id }}>
             {({ loading, error, data: response }) => {
               if (loading) return <Spinner />;
@@ -134,11 +135,11 @@ class PatternViewPage extends Component {
                             className="button button--size-small"
                             onClick={() =>
                               this.setState(prevState => ({
-                                fullScreen: !prevState.fullScreen,
+                                isFullScreen: !prevState.isFullScreen,
                               }))
                             }
                           >
-                            {this.state.fullScreen
+                            {this.state.isFullScreen
                               ? 'Show Controls'
                               : 'Fullscreen'}
                           </Button>
@@ -183,6 +184,7 @@ class PatternViewPage extends Component {
                       <div key={template.id}>
                         <TemplateView
                           id={this.props.id}
+                          key={template.id}
                           templateId={template.id}
                           socketPortOffset={index}
                           isVerbose={!this.state.showAllTemplates}

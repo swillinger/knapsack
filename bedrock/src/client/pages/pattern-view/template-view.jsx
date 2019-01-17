@@ -211,6 +211,7 @@ class TemplateView extends Component {
                     return (
                       <MdBlock
                         md={readme}
+                        key={`${patternId}-${templateId}`}
                         isEditable={this.context.permissions.includes('write')}
                         title="Documentation"
                         handleSave={newReadme => {

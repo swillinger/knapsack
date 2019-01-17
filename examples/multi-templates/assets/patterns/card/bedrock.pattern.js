@@ -15,7 +15,6 @@ module.exports = {
       path: './card.twig',
       id: 'twig',
       title: 'Twig',
-      doc: './readme.md',
       schema,
     },
     {

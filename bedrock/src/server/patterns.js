@@ -67,6 +67,7 @@ const patternsTypeDef = gql`
     demoDatas: [JSON]
     uiSchema: JSON
     isInline: Boolean
+    demoSize: String
   }
 
   type PatternType {

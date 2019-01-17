@@ -48,7 +48,6 @@ const query = gql`
         title
         description
         type
-        demoSize
       }
     }
   }

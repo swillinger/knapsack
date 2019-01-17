@@ -31,9 +31,23 @@ class PatternStage extends React.Component {
     super(props);
     this.state = {
       data: props.data,
+      prevProps: props,
       // html: '',
       // isStringTemplate: false,
     };
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (
+      JSON.stringify(nextProps.data) !==
+      JSON.stringify(prevState.prevProps.data)
+    ) {
+      return {
+        data: nextProps.data,
+        prevProps: nextProps,
+      };
+    }
+    return null;
   }
 
   render() {

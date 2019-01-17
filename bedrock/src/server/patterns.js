@@ -63,7 +63,8 @@ const patternsTypeDef = gql`
     id: ID!
     path: String!
     title: String!
-    doc: String!
+    doc: String
+    demoSize: PatternDemoSize
     uiSchema: JSON
     isInline: Boolean
   }
@@ -103,7 +104,6 @@ const patternsTypeDef = gql`
     type: ID
     status: String
     uses: [PatternUses]
-    demoSize: PatternDemoSize
     hasIcon: Boolean
     dosAndDonts: [PatternDoAndDont]
   }

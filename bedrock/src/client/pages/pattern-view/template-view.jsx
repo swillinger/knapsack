@@ -135,6 +135,7 @@ class TemplateView extends Component {
             id: templateId,
             doc: readme,
             title,
+            demoSize,
           } = templates.find(t => t.id === this.props.templateId);
           const [data, ...examples] = schema.examples ? schema.examples : [{}];
           // const dosAndDonts = schema.dosAndDonts ? schema.dosAndDonts : [];
@@ -144,10 +145,9 @@ class TemplateView extends Component {
             schema.properties &&
             Object.keys(schema.properties).length > 0
           );
-          // const theDemoSize = hasSchema
-          //   ? this.state.demoSize || demoSize
-          //   : 'full';
-          const theDemoSize = 'full';
+          const theDemoSize = hasSchema
+            ? this.state.demoSize || demoSize
+            : 'full';
 
           return (
             <>
@@ -175,7 +175,7 @@ class TemplateView extends Component {
                             title: 'Full',
                           },
                         ]}
-                        value={this.state.demoSize}
+                        value={this.state.demoSize || demoSize}
                         handleChange={newDemoSize =>
                           this.setState({ demoSize: newDemoSize })
                         }

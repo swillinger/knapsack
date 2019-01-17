@@ -8,6 +8,7 @@ module.exports = {
       id: 'react',
       title: 'React',
       doc: './readme-react.md',
+      demoSize: 'l',
       schema,
     },
     {
@@ -15,6 +16,7 @@ module.exports = {
       path: './card.twig',
       id: 'twig',
       title: 'Twig',
+      demoSize: 's',
       schema,
     },
     {

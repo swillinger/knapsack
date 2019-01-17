@@ -63,6 +63,7 @@ const patternsTypeDef = gql`
     id: ID!
     path: String!
     title: String!
+    doc: String!
     uiSchema: JSON
     isInline: Boolean
   }
@@ -113,7 +114,6 @@ const patternsTypeDef = gql`
     metaFilePath: String
     templates: [PatternTemplate]!
     meta: PatternMeta
-    readme: String
   }
 
   type PatternRenderResponse {

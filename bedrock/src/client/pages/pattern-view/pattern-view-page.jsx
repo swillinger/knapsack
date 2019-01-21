@@ -241,13 +241,12 @@ class PatternViewPage extends Component {
                   )}
 
                   {showAllTemplates &&
-                    templates.map((template, index) => (
+                    templates.map(template => (
                       <div key={template.id}>
                         <TemplateView
                           id={this.props.id}
                           key={template.id}
                           templateId={template.id}
-                          socketPortOffset={index}
                           demoSize={this.state.demoSize || defaultDemoSize}
                           isVerbose={!this.state.showAllTemplates}
                         />

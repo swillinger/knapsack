@@ -75,9 +75,7 @@ class TemplateView extends Component {
   componentDidMount() {
     const { websocketsPort } = this.context.meta;
     if (this.context.features.enableTemplatePush && websocketsPort) {
-      this.socket = new window.WebSocket(
-        `ws://localhost:${websocketsPort + this.props.socketPortOffset}`,
-      );
+      this.socket = new window.WebSocket(`ws://localhost:${websocketsPort}`);
 
       // this.socket.addEventListener('open', event => {
       //   this.socket.send('Hello Server!', event);
@@ -300,7 +298,6 @@ class TemplateView extends Component {
 }
 
 TemplateView.defaultProps = {
-  socketPortOffset: 0,
   isVerbose: true,
   demoSize: 'full',
 };
@@ -309,7 +306,6 @@ TemplateView.propTypes = {
   id: PropTypes.string.isRequired,
   templateId: PropTypes.string.isRequired,
   isVerbose: PropTypes.bool,
-  socketPortOffset: PropTypes.number,
   demoSize: PropTypes.string,
 };
 

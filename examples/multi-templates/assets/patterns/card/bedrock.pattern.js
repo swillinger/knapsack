@@ -22,7 +22,7 @@ module.exports = {
       path: './card.jsx',
       id: 'react',
       title: 'React',
-      doc: './readme-react.md',
+      docPath: './readme-react.md',
       demoDatas,
       schema,
     },
@@ -38,7 +38,7 @@ module.exports = {
       path: './card.html',
       id: 'html',
       title: 'HTML',
-      doc: './readme-html.md',
+      docPath: './readme-html.md',
       schema: {
         ...schema,
         required: [],

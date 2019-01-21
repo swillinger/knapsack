@@ -33,7 +33,7 @@ const patternSchema = require('../schemas/pattern.schema');
 const patternMetaSchema = require('../schemas/pattern-meta.schema');
 const {
   writeJson,
-  findReadmeInDirSync,
+  findMarkdownInDirSync,
   fileExists,
 } = require('./server-utils');
 const log = require('../cli/log');
@@ -145,7 +145,7 @@ const patternsTypeDef = gql`
     setPatternTypes(patternTypes: JSON): [PatternType]
     setPatternStatuses(patternStatuses: JSON): [PatternStatus]
     setPatternSettings(settings: JSON): PatternSettings
-    setPatternReadme(id: ID, readme: String): String
+    setPatternTemplateReadme(id: ID, templateId: ID, readme: String): Pattern
   }
 `;
 
@@ -558,21 +558,42 @@ class Patterns {
 
   /**
    * @param {string} id
+   * @param {string} templateId
    * @param {string} readme
    * @returns {Promise<void>}
    */
-  async setPatternReadme(id, readme) {
+  async setPatternTemplateReadme(id, templateId, readme) {
     const pattern = this.getPattern(id);
-    await fs.writeFile(findReadmeInDirSync(pattern.dir), readme);
+    const { docPath = null } =
+      pattern.templates.find(t => t.id === templateId) || {};
+    await fs.writeFile(findMarkdownInDirSync(pattern.dir, docPath), readme);
+    // this.allPatterns = this.allPatterns.map((pattern, index) => {
+    //   if (pattern.id = id) {
+    //     pattern.templates
+    //     return
+    //   }
+    //   return pattern;
+    // })
+    const templateIndex = pattern.templates.findIndex(t => t.id === templateId);
+    pattern.templates.splice(templateIndex, 1, {
+      ...pattern.templates[templateIndex],
+    });
+
+    this.allPatterns.splice(this.allPatterns.findIndex(p => p.id === id));
   }
 
   /**
    * @param {string} id
+   * @param {string} templateId
    * @returns {Promise<string>}
    */
-  async getPatternReadme(id) {
+  async getPatternTemplateReadme(id, templateId) {
     const pattern = this.getPattern(id);
-    return fs.readFile(findReadmeInDirSync(pattern.dir), 'utf8');
+    const { docPath = null } =
+      pattern.templates.find(t => t.id === templateId) || {};
+    return docPath
+      ? fs.readFile(findMarkdownInDirSync(pattern.dir, docPath), 'utf8')
+      : '';
   }
 
   async createPatternFiles(config) {
@@ -769,14 +790,14 @@ const patternsResolvers = {
       patterns.setPatternSettings(settings);
       return patterns.getPatternSettings();
     },
-    setPatternReadme: async (
+    setPatternTemplateReadme: async (
       parent,
-      { id, readme },
+      { id, templateId, readme },
       { patterns, canWrite },
     ) => {
       if (!canWrite) return false;
-      await patterns.setPatternReadme(id, readme);
-      return patterns.getPatternReadme(id);
+      await patterns.setPatternTemplateReadme(id, templateId, readme);
+      return patterns.getPattern(id);
     },
   },
   JSON: GraphQLJSON,

@@ -175,6 +175,7 @@ type BedrockPatternTemplate = {
   id: string;
   title: string;
   alias: string;
+  docPath: string;
   selector?: CSSSelector;
   schema: Schema;
   uiSchema?: UiSchema;

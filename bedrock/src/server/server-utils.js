@@ -76,6 +76,17 @@ function findReadmeInDirSync(dir) {
 }
 
 /**
+ * Find readme path in directory, Synchronously
+ * @param {string} dir - Path to directory
+ * @param {string} markdownPath - Path to markdown file from directory
+ * @return {string} - path to readme file in that directory
+ */
+function findMarkdownInDirSync(dir, markdownPath) {
+  const [readmePath = ''] = globby.sync(join(dir, markdownPath));
+  return readmePath;
+}
+
+/**
  * @param {string} filePath
  * @return {boolean}
  */
@@ -128,6 +139,7 @@ module.exports = {
   getPkg,
   findReadmeInDir,
   findReadmeInDirSync,
+  findMarkdownInDirSync,
   fileExists,
   dirExists,
   fileExistsOrExit,

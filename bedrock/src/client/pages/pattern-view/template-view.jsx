@@ -37,7 +37,7 @@ import {
   OverviewWrapper,
 } from './pattern-view-page.styles';
 
-const query = gql`
+const patternQuery = gql`
   query TemplateView($id: ID) {
     pattern(id: $id) {
       id
@@ -57,8 +57,18 @@ const query = gql`
 
 // @todo UpdateReadme needs to work for each template doc
 const updateReadme = gql`
-  mutation UpdateReadme($id: ID!, $readme: String!) {
-    setPatternReadme(id: $id, readme: $readme)
+  mutation UpdateReadme($id: ID!, $templateId: ID!, $readme: String!) {
+    setPatternTemplateReadme(
+      id: $id
+      templateId: $templateId
+      readme: $readme
+    ) {
+      id
+      templates {
+        id
+        doc
+      }
+    }
   }
 `;
 
@@ -103,7 +113,7 @@ class TemplateView extends Component {
 
   render() {
     return (
-      <Query query={query} variables={{ id: this.props.id }}>
+      <Query query={patternQuery} variables={{ id: this.props.id }}>
         {({ loading, error, data: response }) => {
           if (loading) return <Spinner />;
           if (error)
@@ -119,6 +129,7 @@ class TemplateView extends Component {
             title,
             demoDatas,
           } = templates.find(t => t.id === this.props.templateId);
+          console.log('wubba lubba dub dub', 'Readme Here', { readme });
           const [data, ...examples] = schema.examples ? schema.examples : [{}];
           // const dosAndDonts = schema.dosAndDonts ? schema.dosAndDonts : [];
           const hasSchema = !!(
@@ -205,8 +216,29 @@ class TemplateView extends Component {
               </OverviewWrapper>
 
               {readme && (
-                <Mutation mutation={updateReadme} ignoreResults>
-                  {(setPatternReadme, { error: mutationError }) => {
+                <Mutation
+                  mutation={updateReadme}
+                  refetchQueries={() => {
+                    console.log('wubba lubba dub dub', 'Refetch Called');
+                    console.log('wubba lubba dub dub', [
+                      {
+                        query: patternQuery,
+                        variables: {
+                          id: patternId,
+                        },
+                      },
+                    ]);
+                    return [
+                      {
+                        query: patternQuery,
+                        variables: {
+                          id: patternId,
+                        },
+                      },
+                    ];
+                  }}
+                >
+                  {(setPatternTemplateReadme, { error: mutationError }) => {
                     const { id } = this.props;
                     if (mutationError)
                       return (
@@ -222,9 +254,10 @@ class TemplateView extends Component {
                         isEditable={this.context.permissions.includes('write')}
                         title="Documentation"
                         handleSave={newReadme => {
-                          setPatternReadme({
+                          setPatternTemplateReadme({
                             variables: {
                               id,
+                              templateId,
                               readme: newReadme,
                             },
                           });

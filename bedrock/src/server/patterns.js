@@ -63,6 +63,7 @@ const patternsTypeDef = gql`
     id: ID!
     path: String!
     title: String!
+    docPath: String
     doc: String
     demoDatas: [JSON]
     uiSchema: JSON
@@ -324,8 +325,8 @@ function createPatternsData(patternsDirs, templateRenderers) {
           }
 
           let doc = '';
-          if (template.doc) {
-            const docPath = join(dir, template.doc);
+          if (template.docPath) {
+            const docPath = join(dir, template.docPath);
             if (!fileExists(docPath)) {
               log.error(
                 `Template ${

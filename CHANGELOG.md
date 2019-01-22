@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.28.1](https://github.com/basaltinc/bedrock/compare/v0.28.0...v0.28.1) (2019-01-22)
+
+
+### Bug Fixes
+
+* pattern page button show logic ([03bd2ab](https://github.com/basaltinc/bedrock/commit/03bd2ab))
+
+
+
+
+
 # [0.28.0](https://github.com/basaltinc/bedrock/compare/v0.27.2...v0.28.0) (2019-01-22)
 
 

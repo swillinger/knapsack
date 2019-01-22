@@ -16,7 +16,7 @@
     with Bedrock; if not, see <https://www.gnu.org/licenses>.
  */
 const program = require('commander');
-const { existsSync, emptyDirSync } = require('fs-extra');
+const { existsSync } = require('fs-extra');
 const portfinder = require('portfinder');
 const { join, resolve, dirname, relative } = require('path');
 const { validateUniqueIdsInArray } = require('@basalt/bedrock-schema-utils');
@@ -169,10 +169,6 @@ if (!existsSync(configPath)) {
 
 /** @type {BedrockConfig} */
 const config = processConfig(require(configPath), dirname(configPath));
-
-if (config.dist) {
-  emptyDirSync(config.dist);
-}
 
 const patterns = new Patterns({
   newPatternDir: config.newPatternDir,

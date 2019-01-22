@@ -97,6 +97,7 @@ export const SchemaFormWrapperInner = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
+  width: 100%;
   max-width: 800px;
   fieldset > legend,
   fieldset > legend + p {

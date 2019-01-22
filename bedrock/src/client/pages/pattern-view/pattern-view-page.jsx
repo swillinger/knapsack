@@ -137,52 +137,27 @@ class PatternViewPage extends Component {
                         <h2>{title}</h2>
                         <p>{description}</p>
                       </div>
-                      {templates.length > 1 && (
-                        <DemoGridControls>
-                          {!showAllTemplates && (
-                            <Select
-                              label="Template"
-                              value={templateId}
-                              items={templates.map(t => ({
-                                value: t.id,
-                                title: t.title,
-                              }))}
-                              handleChange={value => {
-                                this.setState({
-                                  currentTemplate: templates.find(
-                                    t => t.id === value,
-                                  ),
-                                });
-                              }}
-                            />
-                          )}
-                          {hasSchema && (
-                            <Select
-                              items={[
-                                {
-                                  value: 's',
-                                  title: 'Small',
-                                },
-                                {
-                                  value: 'm',
-                                  title: 'Medium',
-                                },
-                                {
-                                  value: 'l',
-                                  title: 'Large',
-                                },
-                                {
-                                  value: 'full',
-                                  title: 'Full',
-                                },
-                              ]}
-                              value={demoSize}
-                              handleChange={newDemoSize =>
-                                this.setState({ demoSize: newDemoSize })
-                              }
-                              label="Stage Size"
-                            />
-                          )}
+
+                      <DemoGridControls>
+                        {!showAllTemplates && templates.length > 1 && (
+                          <Select
+                            label="Template"
+                            value={templateId}
+                            items={templates.map(t => ({
+                              value: t.id,
+                              title: t.title,
+                            }))}
+                            handleChange={value => {
+                              this.setState({
+                                currentTemplate: templates.find(
+                                  t => t.id === value,
+                                ),
+                              });
+                            }}
+                          />
+                        )}
+
+                        {templates.length > 1 && (
                           <Button
                             type="button"
                             className="button button--size-small"
@@ -196,44 +171,73 @@ class PatternViewPage extends Component {
                               ? 'Show One Template'
                               : 'Show All Template'}
                           </Button>
-                          <Button
-                            type="button"
-                            className="button button--size-small"
-                            onClick={() =>
-                              this.setState(prevState => ({
-                                isFullScreen: !prevState.isFullScreen,
-                              }))
+                        )}
+
+                        {hasSchema && (
+                          <Select
+                            items={[
+                              {
+                                value: 's',
+                                title: 'Small',
+                              },
+                              {
+                                value: 'm',
+                                title: 'Medium',
+                              },
+                              {
+                                value: 'l',
+                                title: 'Large',
+                              },
+                              {
+                                value: 'full',
+                                title: 'Full',
+                              },
+                            ]}
+                            value={demoSize}
+                            handleChange={newDemoSize =>
+                              this.setState({ demoSize: newDemoSize })
                             }
+                            label="Stage Size"
+                          />
+                        )}
+
+                        <Button
+                          type="button"
+                          className="button button--size-small"
+                          onClick={() =>
+                            this.setState(prevState => ({
+                              isFullScreen: !prevState.isFullScreen,
+                            }))
+                          }
+                        >
+                          {this.state.isFullScreen
+                            ? 'Show Controls'
+                            : 'Fullscreen'}
+                        </Button>
+
+                        {this.context.permissions.includes('write') && (
+                          <Link
+                            to={`${BASE_PATHS.PATTERN}/${this.props.id}/edit`}
                           >
-                            {this.state.isFullScreen
-                              ? 'Show Controls'
-                              : 'Fullscreen'}
-                          </Button>
+                            <Button>Edit Meta</Button>
+                          </Link>
+                        )}
 
-                          {this.context.permissions.includes('write') && (
-                            <Link
-                              to={`${BASE_PATHS.PATTERN}/${this.props.id}/edit`}
-                            >
-                              <Button>Edit Meta</Button>
-                            </Link>
-                          )}
-
-                          <Button>
-                            <Link
-                              to={`${
-                                BASE_PATHS.GRAPHIQL_PLAYGROUND
-                              }?${queryString.stringify({
-                                query: gqlToString(query),
-                                variables: JSON.stringify({
-                                  id: this.props.id,
-                                }),
-                              })}`}
-                            >
-                              See API
-                            </Link>
-                          </Button>
-                        </DemoGridControls>
-                      )}
+                        <Button>
+                          <Link
+                            to={`${
+                              BASE_PATHS.GRAPHIQL_PLAYGROUND
+                            }?${queryString.stringify({
+                              query: gqlToString(query),
+                              variables: JSON.stringify({
+                                id: this.props.id,
+                              }),
+                            })}`}
+                          >
+                            See API
+                          </Link>
+                        </Button>
+                      </DemoGridControls>
                     </FlexWrapper>
                   </PatternHeader>
 

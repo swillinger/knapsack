@@ -566,7 +566,11 @@ class Patterns {
     const pattern = this.getPattern(id);
     const { docPath = null } =
       pattern.templates.find(t => t.id === templateId) || {};
+
+    // Write to the file system
     await fs.writeFile(findMarkdownInDirSync(pattern.dir, docPath), readme);
+
+    // Update the patterns data store (this.allPatterns)
     const patternIndex = this.allPatterns.findIndex(p => p.id === id);
     const templateIndex = pattern.templates.findIndex(t => t.id === templateId);
     const newTemplateData = {

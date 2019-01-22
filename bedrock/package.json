@@ -2,7 +2,7 @@
   "name": "@basalt/bedrock",
   "license": "GPL-2.0-or-later",
   "description": "Build Design Systems on top of Bedrock, by Basalt",
-  "version": "0.28.4",
+  "version": "0.28.5",
   "author": "Basalt (https://basalt.io/)",
   "main": "src/index.js",
   "bin": {

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.28.5](https://github.com/basaltinc/bedrock/compare/v0.28.4...v0.28.5) (2019-01-22)
+
+
+### Bug Fixes
+
+* correcting pattern edit form width ([7dd4ae0](https://github.com/basaltinc/bedrock/commit/7dd4ae0))
+
+
+
+
+
 ## [0.28.4](https://github.com/basaltinc/bedrock/compare/v0.28.3...v0.28.4) (2019-01-22)
 
 

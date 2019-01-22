@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.28.4](https://github.com/basaltinc/bedrock/compare/v0.28.3...v0.28.4) (2019-01-22)
+
+
+### Bug Fixes
+
+* remove pattern edit form copy ([1f559f2](https://github.com/basaltinc/bedrock/commit/1f559f2))
+
+
+
+
+
 ## [0.28.3](https://github.com/basaltinc/bedrock/compare/v0.28.2...v0.28.3) (2019-01-22)
 
 

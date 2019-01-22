@@ -5,7 +5,6 @@ Cards visually wrap a unit of content so users can quickly identify relevant inf
 - Blog teasers
 - Employee Bio's
 - Baseball Players
-- Testing
 
 **Installation**
 

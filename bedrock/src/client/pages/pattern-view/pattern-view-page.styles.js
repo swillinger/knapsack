@@ -26,18 +26,6 @@ export const OverviewWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
-  ${({ fullScreen }) =>
-    fullScreen &&
-    `
-      position: fixed;
-      background-color: white;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 10000;
-      height: 100vh;
-  `};
 `;
 
 export const FlexWrapper = styled.div`

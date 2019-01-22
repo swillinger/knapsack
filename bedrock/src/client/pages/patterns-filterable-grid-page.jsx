@@ -15,6 +15,7 @@
     with Bedrock; if not, see <https://www.gnu.org/licenses>.
  */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Spinner from '@basalt/bedrock-spinner';
 import SchemaForm from '@basalt/bedrock-schema-form';
 import { uniqueArray } from '@basalt/bedrock-utils';
@@ -181,5 +182,12 @@ class PatternsPage extends Component {
     );
   }
 }
+
+PatternsPage.propTypes = {
+  type: PropTypes.string.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default connectToContext(PatternsPage);

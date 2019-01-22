@@ -15,6 +15,7 @@
     with Bedrock; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
+import PropTypes from 'prop-types';
 import Header from '../components/header';
 import Footer from '../components/footer';
 import ErrorCatcher from '../utils/error-catcher';
@@ -30,6 +31,11 @@ function PageWithoutSidebar({ children, ...rest }) {
   );
 }
 
-PageWithoutSidebar.propTypes = {};
+PageWithoutSidebar.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+};
 
 export default PageWithoutSidebar;

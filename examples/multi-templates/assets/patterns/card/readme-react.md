@@ -1,11 +1,10 @@
-**About the HTML Template**
+**About the React Template**
 
 Cards visually wrap a unit of content so users can quickly identify relevant information. Cards are good for...
 
 - Blog teasers
 - Employee Bio's
 - Baseball Players
-- Testing
 
 **Installation**
 

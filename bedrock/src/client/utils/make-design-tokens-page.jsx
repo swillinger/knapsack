@@ -59,6 +59,10 @@ const query = gql`
  */
 export default function makeDesignTokensPage(WrappedComponent) {
   return class extends React.Component {
+    static propTypes = {
+      id: PropTypes.string.isRequired,
+    };
+
     constructor(props) {
       super(props);
       this.state = {

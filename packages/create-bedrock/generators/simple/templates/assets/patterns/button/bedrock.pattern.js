@@ -8,6 +8,7 @@ module.exports = {
       path: './button.twig',
       id: 'twig',
       title: 'Twig',
+      docPath: './README.md',
       schema,
     },
   ],

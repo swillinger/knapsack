@@ -57,6 +57,11 @@
         "title": "Is Inline",
         "type": "boolean",
         "description": "Denote if this form should be displayed inline"
+      },
+      "docPath": {
+        "title": "Documentation",
+        "type": "string",
+        "description": "Relative path to markdown documentation specific to this template"
       }
     }
   }

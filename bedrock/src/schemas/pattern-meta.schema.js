@@ -59,6 +59,12 @@ module.exports = {
       description: 'Set to false to show default placeholder thumbnail',
       default: true,
     },
+    showAllTemplates: {
+      title: 'Show All Templates',
+      type: 'boolean',
+      description: 'Can toggle in interface.',
+      default: false,
+    },
     // dosAndDonts: {
     //   type: 'array',
     //   description:

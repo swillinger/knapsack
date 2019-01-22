@@ -8,12 +8,14 @@ module.exports = {
       path: './card.twig',
       id: 'twig',
       title: 'Twig',
+      docPath: './readme.md',
       schema,
     },
     {
       path: './card.html',
       id: 'html',
       title: 'HTML',
+      docPath: './readme2.md',
       schema: {
         ...schema,
         required: [],

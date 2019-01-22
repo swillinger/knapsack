@@ -48,22 +48,29 @@ class PageWithSidebar extends Component {
     const { sidebarCollapsed } = this.state;
     const pathname =
       (this.props.location && this.props.location.pathname) || this.props.path;
+    if (!this.props.isFullScreen) {
+      return (
+        <PageLayoutWithSidebar sidebarCollapsed={sidebarCollapsed.toString()}>
+          <Header pathname={pathname} />
+          <SidebarStyled sidebarCollapsed={sidebarCollapsed.toString()}>
+            <SidebarColumn sidebarCollapsed={sidebarCollapsed.toString()}>
+              {sidebar || <SecondaryNav pathname={pathname} />}
+            </SidebarColumn>
+            <SidebarTrayHandle onClick={this.handleSidebarToggle}>
+              <ToggleChevron sidebarcollapsed={sidebarCollapsed.toString()} />
+            </SidebarTrayHandle>
+          </SidebarStyled>
+          <ErrorCatcher>
+            <main>{children}</main>
+          </ErrorCatcher>
+          <Footer />
+        </PageLayoutWithSidebar>
+      );
+    }
     return (
-      <PageLayoutWithSidebar sidebarCollapsed={sidebarCollapsed.toString()}>
-        <Header pathname={pathname} />
-        <SidebarStyled sidebarCollapsed={sidebarCollapsed.toString()}>
-          <SidebarColumn sidebarCollapsed={sidebarCollapsed.toString()}>
-            {sidebar || <SecondaryNav pathname={pathname} />}
-          </SidebarColumn>
-          <SidebarTrayHandle onClick={this.handleSidebarToggle}>
-            <ToggleChevron sidebarcollapsed={sidebarCollapsed.toString()} />
-          </SidebarTrayHandle>
-        </SidebarStyled>
-        <ErrorCatcher>
-          <main>{children}</main>
-        </ErrorCatcher>
-        <Footer />
-      </PageLayoutWithSidebar>
+      <ErrorCatcher>
+        <main>{children}</main>
+      </ErrorCatcher>
     );
   }
 }
@@ -80,6 +87,7 @@ PageWithSidebar.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
+  isFullScreen: PropTypes.bool,
 };
 
 PageWithSidebar.defaultProps = {
@@ -88,6 +96,7 @@ PageWithSidebar.defaultProps = {
   path: null,
   sidebar: null,
   children: <></>,
+  isFullScreen: false,
 };
 
 export default PageWithSidebar;

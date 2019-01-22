@@ -49,6 +49,7 @@ const patternIdsQuery = gql`
         uses
         demoSize
         hasIcon
+        showAllTemplates
       }
     }
   }

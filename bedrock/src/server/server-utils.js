@@ -14,8 +14,6 @@
     You should have received a copy of the GNU General Public License along
     with Bedrock; if not, see <https://www.gnu.org/licenses>.
  */
-const globby = require('globby');
-const { join } = require('path');
 const fs = require('fs-extra');
 const os = require('os');
 const log = require('../cli/log');
@@ -53,26 +51,6 @@ function readJsonSync(fileName) {
 function getPkg(pkg) {
   const pkgPath = require.resolve(`${pkg}/package.json`);
   return readJsonSync(pkgPath);
-}
-
-/**
- * Find readme path in directory
- * @param {string} dir - Path to directory
- * @return {Promise<string>} - path to readme file in that directory
- */
-async function findReadmeInDir(dir) {
-  const [readmePath = ''] = await globby(join(dir, '{readme,README}.{md,MD}'));
-  return readmePath;
-}
-
-/**
- * Find readme path in directory, Synchronously
- * @param {string} dir - Path to directory
- * @return {string} - path to readme file in that directory
- */
-function findReadmeInDirSync(dir) {
-  const [readmePath = ''] = globby.sync(join(dir, '{readme,README}.{md,MD}'));
-  return readmePath;
 }
 
 /**
@@ -126,8 +104,6 @@ module.exports = {
   readJson,
   readJsonSync,
   getPkg,
-  findReadmeInDir,
-  findReadmeInDirSync,
   fileExists,
   dirExists,
   fileExistsOrExit,

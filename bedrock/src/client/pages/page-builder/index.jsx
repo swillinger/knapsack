@@ -107,7 +107,7 @@ class Playground extends Component {
     this.briefHighlight = this.briefHighlight.bind(this);
 
     // All state is passed to PageBuilderContext so all children can use it
-    /* eslint-disable react/no-unused-state */
+    /* eslint-disable react/no-unused-state, react/prop-types */
     this.state = {
       appContext: props.appContext,
       patterns: [],
@@ -125,7 +125,7 @@ class Playground extends Component {
       changeId: null,
       handleAddSlice: this.handleAddSlice,
     };
-    /* eslint-enable react/no-unused-state */
+    /* eslint-enable react/no-unused-state, react/prop-types */
   }
 
   /**

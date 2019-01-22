@@ -22,6 +22,7 @@ module.exports = {
       path: './card.jsx',
       id: 'react',
       title: 'React',
+      docPath: './readme-react.md',
       demoDatas,
       schema,
     },
@@ -37,6 +38,7 @@ module.exports = {
       path: './card.html',
       id: 'html',
       title: 'HTML',
+      docPath: './readme-html.md',
       schema: {
         ...schema,
         required: [],

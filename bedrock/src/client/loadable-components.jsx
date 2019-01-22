@@ -40,7 +40,7 @@ export const LoadableDocPage = Loadable({
 
 export const LoadablePatternView = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "pattern-view-page" */ './pages/pattern-view-page'),
+    import(/* webpackChunkName: "pattern-view-page" */ './pages/pattern-view/pattern-view-page'),
   loading: Spinner,
 });
 

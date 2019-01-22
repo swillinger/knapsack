@@ -31,11 +31,7 @@ const { bedrockEvents, EVENTS } = require('./events');
 const { FileDb } = require('./db');
 const patternSchema = require('../schemas/pattern.schema');
 const patternMetaSchema = require('../schemas/pattern-meta.schema');
-const {
-  writeJson,
-  findReadmeInDirSync,
-  fileExists,
-} = require('./server-utils');
+const { writeJson, fileExists } = require('./server-utils');
 const log = require('../cli/log');
 const { FILE_NAMES } = require('../lib/constants');
 
@@ -63,9 +59,12 @@ const patternsTypeDef = gql`
     id: ID!
     path: String!
     title: String!
+    docPath: String
+    doc: String
     demoDatas: [JSON]
     uiSchema: JSON
     isInline: Boolean
+    demoSize: String
   }
 
   type PatternType {
@@ -103,9 +102,10 @@ const patternsTypeDef = gql`
     type: ID
     status: String
     uses: [PatternUses]
-    demoSize: PatternDemoSize
     hasIcon: Boolean
     dosAndDonts: [PatternDoAndDont]
+    demoSize: PatternDemoSize
+    showAllTemplates: Boolean
   }
 
   type Pattern {
@@ -114,7 +114,6 @@ const patternsTypeDef = gql`
     metaFilePath: String
     templates: [PatternTemplate]!
     meta: PatternMeta
-    readme: String
   }
 
   type PatternRenderResponse {
@@ -143,7 +142,7 @@ const patternsTypeDef = gql`
     setPatternTypes(patternTypes: JSON): [PatternType]
     setPatternStatuses(patternStatuses: JSON): [PatternStatus]
     setPatternSettings(settings: JSON): PatternSettings
-    setPatternReadme(id: ID, readme: String): String
+    setPatternTemplateReadme(id: ID, templateId: ID, readme: String): Pattern
   }
 `;
 
@@ -302,6 +301,7 @@ function createPatternsData(patternsDirs, templateRenderers) {
 
         results.data.templates = results.data.templates.map(template => {
           const templatePath = join(dir, template.path);
+
           if (!fileExists(templatePath)) {
             log.error(
               `Pattern ${pattern.id} has a template (${
@@ -321,9 +321,24 @@ function createPatternsData(patternsDirs, templateRenderers) {
             process.exit(1);
           }
 
+          let doc = '';
+          if (template.docPath) {
+            const docPath = join(dir, template.docPath);
+            if (!fileExists(docPath)) {
+              log.error(
+                `Template ${
+                  template.id
+                } has a doc path that points to a file that cannot be found: ${docPath}`,
+              );
+              process.exit(1);
+            }
+            doc = fs.readFileSync(docPath, 'utf8');
+          }
+
           return {
             ...template,
             absolutePath: templatePath,
+            doc,
           };
         });
 
@@ -351,19 +366,12 @@ function createPatternsData(patternsDirs, templateRenderers) {
           process.exit(1);
         }
 
-        const readmeFilePath = findReadmeInDirSync(dir);
-        let readme = '';
-        if (readmeFilePath) {
-          readme = fs.readFileSync(readmeFilePath, 'utf8');
-        }
-
         /** @type {PatternWithMetaSchema} */
         const patternWithMeta = {
           ...results.data,
           dir,
           metaFilePath, // replaces original relative one with absolute path
           meta: metaResults.data,
-          readme,
         };
 
         patterns.push(patternWithMeta);
@@ -547,21 +555,17 @@ class Patterns {
 
   /**
    * @param {string} id
+   * @param {string} templateId
    * @param {string} readme
    * @returns {Promise<void>}
    */
-  async setPatternReadme(id, readme) {
+  async setPatternTemplateReadme(id, templateId, readme) {
     const pattern = this.getPattern(id);
-    await fs.writeFile(findReadmeInDirSync(pattern.dir), readme);
-  }
+    const { docPath = null } =
+      pattern.templates.find(t => t.id === templateId) || {};
 
-  /**
-   * @param {string} id
-   * @returns {Promise<string>}
-   */
-  async getPatternReadme(id) {
-    const pattern = this.getPattern(id);
-    return fs.readFile(findReadmeInDirSync(pattern.dir), 'utf8');
+    // Write to the file system
+    await fs.writeFile(join(pattern.dir, docPath), readme);
   }
 
   async createPatternFiles(config) {
@@ -646,6 +650,9 @@ class Patterns {
       configFilesToWatch.push(
         join(pattern.dir, FILE_NAMES.PATTERN_CONFIG),
         join(pattern.dir, FILE_NAMES.PATTERN_META),
+        ...pattern.templates
+          .filter(t => t.docPath)
+          .map(t => join(pattern.dir, t.docPath)),
       );
     });
     const watcher = chokidar.watch(configFilesToWatch, {
@@ -758,14 +765,14 @@ const patternsResolvers = {
       patterns.setPatternSettings(settings);
       return patterns.getPatternSettings();
     },
-    setPatternReadme: async (
+    setPatternTemplateReadme: async (
       parent,
-      { id, readme },
+      { id, templateId, readme },
       { patterns, canWrite },
     ) => {
       if (!canWrite) return false;
-      await patterns.setPatternReadme(id, readme);
-      return patterns.getPatternReadme(id);
+      await patterns.setPatternTemplateReadme(id, templateId, readme);
+      return patterns.getPattern(id);
     },
   },
   JSON: GraphQLJSON,

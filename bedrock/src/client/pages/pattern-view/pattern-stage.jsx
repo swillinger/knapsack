@@ -74,11 +74,6 @@ class PatternStage extends React.Component {
             <SchemaFormWrapper size={this.props.demoSize}>
               <SchemaFormWrapperInner size={this.props.demoSize}>
                 <h4>Edit Form</h4>
-                <p>
-                  The following form is generated from the component schema
-                  (definition file). Edit this form to see your changes live.
-                  Changes will also update the code samples below.
-                </p>
                 <SchemaForm
                   schema={this.props.schema}
                   formData={this.state.data}

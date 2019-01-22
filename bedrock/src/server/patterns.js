@@ -567,19 +567,14 @@ class Patterns {
     const { docPath = null } =
       pattern.templates.find(t => t.id === templateId) || {};
     await fs.writeFile(findMarkdownInDirSync(pattern.dir, docPath), readme);
-    // this.allPatterns = this.allPatterns.map((pattern, index) => {
-    //   if (pattern.id = id) {
-    //     pattern.templates
-    //     return
-    //   }
-    //   return pattern;
-    // })
+    const patternIndex = this.allPatterns.findIndex(p => p.id === id);
     const templateIndex = pattern.templates.findIndex(t => t.id === templateId);
-    pattern.templates.splice(templateIndex, 1, {
+    const newTemplateData = {
       ...pattern.templates[templateIndex],
-    });
-
-    this.allPatterns.splice(this.allPatterns.findIndex(p => p.id === id));
+      doc: readme,
+    };
+    pattern.templates.splice(templateIndex, 1, newTemplateData);
+    this.allPatterns.splice(patternIndex, 1, pattern);
   }
 
   /**

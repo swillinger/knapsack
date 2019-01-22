@@ -129,7 +129,6 @@ class TemplateView extends Component {
             title,
             demoDatas,
           } = templates.find(t => t.id === this.props.templateId);
-          console.log('wubba lubba dub dub', 'Readme Here', { readme });
           const [data, ...examples] = schema.examples ? schema.examples : [{}];
           // const dosAndDonts = schema.dosAndDonts ? schema.dosAndDonts : [];
           const hasSchema = !!(
@@ -218,25 +217,14 @@ class TemplateView extends Component {
               {readme && (
                 <Mutation
                   mutation={updateReadme}
-                  refetchQueries={() => {
-                    console.log('wubba lubba dub dub', 'Refetch Called');
-                    console.log('wubba lubba dub dub', [
-                      {
-                        query: patternQuery,
-                        variables: {
-                          id: patternId,
-                        },
+                  refetchQueries={() => [
+                    {
+                      query: patternQuery,
+                      variables: {
+                        id: patternId,
                       },
-                    ]);
-                    return [
-                      {
-                        query: patternQuery,
-                        variables: {
-                          id: patternId,
-                        },
-                      },
-                    ];
-                  }}
+                    },
+                  ]}
                 >
                   {(setPatternTemplateReadme, { error: mutationError }) => {
                     const { id } = this.props;

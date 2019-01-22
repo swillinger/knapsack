@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.28.3](https://github.com/basaltinc/bedrock/compare/v0.28.2...v0.28.3) (2019-01-22)
+
+
+### Bug Fixes
+
+* add demoSize to pattern view gql query ([f1ad785](https://github.com/basaltinc/bedrock/commit/f1ad785))
+
+
+
+
+
 ## [0.28.2](https://github.com/basaltinc/bedrock/compare/v0.28.1...v0.28.2) (2019-01-22)
 
 

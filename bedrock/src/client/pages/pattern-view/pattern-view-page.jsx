@@ -49,6 +49,7 @@ const query = gql`
         description
         type
         showAllTemplates
+        demoSize
       }
     }
   }

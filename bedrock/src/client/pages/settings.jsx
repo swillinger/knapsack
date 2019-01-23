@@ -62,7 +62,7 @@ class SettingsPage extends Component {
     return (
       <PageWithSidebar>
         <Query query={query}>
-          {({ loading, error: queryError, data, refetch }) => {
+          {({ loading, error: queryError, data }) => {
             if (loading) return <Spinner />;
             if (queryError)
               return (
@@ -94,8 +94,9 @@ class SettingsPage extends Component {
                               variables: {
                                 settings: formData,
                               },
+                            }).then(() => {
+                              window.location.reload();
                             });
-                            refetch();
                           } else {
                             this.setState({
                               statusMessage:

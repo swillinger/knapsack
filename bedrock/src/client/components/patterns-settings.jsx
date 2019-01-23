@@ -148,6 +148,21 @@ class PatternSettings extends Component {
             })
             .catch(console.log.bind(console));
         }}
+        uiSchema={{
+          patternTypes: {
+            items: {
+              classNames: 'rjsf-custom-object-grid-2',
+            },
+          },
+          patternStatuses: {
+            items: {
+              classNames: 'rjsf-custom-object-grid-3',
+              color: {
+                'ui:widget': 'color',
+              },
+            },
+          },
+        }}
       />
     );
   }

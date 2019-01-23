@@ -1,0 +1,17 @@
+.rjsf-custom-object-grid-3.rjsf-custom-object-grid-3.rjsf-custom-object-grid-3.rjsf-custom-object-grid-3 > .custom-object {
+  display: flex;
+  justify-content: space-between;
+}
+
+.rjsf-custom-object-grid-3.rjsf-custom-object-grid-3.rjsf-custom-object-grid-3.rjsf-custom-object-grid-3 > .custom-object > .custom-object-item {
+  width: 30%;
+}
+
+.rjsf-custom-object-grid-2.rjsf-custom-object-grid-2.rjsf-custom-object-grid-2.rjsf-custom-object-grid-2 > .custom-object {
+  display: flex;
+  justify-content: space-between;
+}
+
+.rjsf-custom-object-grid-2.rjsf-custom-object-grid-2.rjsf-custom-object-grid-2.rjsf-custom-object-grid-2 > .custom-object > .custom-object-item {
+  width: 48%;
+}

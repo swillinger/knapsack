@@ -3,6 +3,7 @@ import PT from 'prop-types';
 import Form from 'react-jsonschema-form';
 import uuid from 'uuid/v4';
 import { Button } from '@basalt/bedrock-atoms';
+import './schema-form.css';
 import ObjectFieldTemplate from './custom-templates/custom-object';
 import CustomArrayField from './custom-templates/array-field';
 import CustomField from './custom-templates/custom-field';

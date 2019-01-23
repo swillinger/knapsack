@@ -149,10 +149,12 @@ class SecondaryNav extends Component {
                 title: (
                   <span>
                     {pattern.meta.title}
-                    <PatternStatusIcon
-                      color={status.color}
-                      title={status.title}
-                    />
+                    {status && (
+                      <PatternStatusIcon
+                        color={status.color}
+                        title={status.title}
+                      />
+                    )}
                   </span>
                 ),
                 path: urlJoin(BASE_PATHS.PATTERN, pattern.id),

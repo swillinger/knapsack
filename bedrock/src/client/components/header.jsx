@@ -115,7 +115,7 @@ class Header extends React.Component {
             Page Builder
           </SiteHeaderNavLink>
         </li>
-        {docs && (
+        {docs.length > 0 && (
           <li>
             <SiteHeaderNavLink to={`${BASE_PATHS.DOCS}/${docs[0].id}`}>
               Docs

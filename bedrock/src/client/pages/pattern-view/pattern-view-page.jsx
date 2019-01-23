@@ -147,17 +147,16 @@ class PatternViewPage extends Component {
                           {type}
                         </h4>
                         <h2 style={{ marginBottom: '0' }}>{title}</h2>
-                        <h5
-                          className="eyebrow"
-                          style={{ marginBottom: '1rem' }}
-                        >
-                          Status: {status.title}
-                          <PatternStatusIcon
-                            color={status.color}
-                            title={status.title}
-                          />
-                        </h5>
-                        <p>{description}</p>
+                        {status && (
+                          <h5 className="eyebrow" style={{ marginBottom: '0' }}>
+                            Status: {status.title}
+                            <PatternStatusIcon
+                              color={status.color}
+                              title={status.title}
+                            />
+                          </h5>
+                        )}
+                        <p style={{ marginTop: '1rem' }}>{description}</p>
                       </div>
 
                       <DemoGridControls>

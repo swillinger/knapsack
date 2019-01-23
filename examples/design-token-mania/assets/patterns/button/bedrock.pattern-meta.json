@@ -1,7 +1,12 @@
 {
   "title": "Button",
-  "type": "components",
   "description": "A Button for clicking!",
-  "uses": ["inSlice"],
+  "type": "components",
+  "status": "inProgress",
+  "uses": [
+    "inSlice"
+  ],
+  "hasIcon": true,
+  "showAllTemplates": false,
   "demoSize": "m"
 }

@@ -92,8 +92,14 @@ function PatternGridListItem({
           <PatternGridListItemTitle>{title}</PatternGridListItemTitle>
         </PatternGridListItemHeader>
         <PatternGridListItemType>
-          Type: {type} - Status: {status.title}
-          <PatternStatusIcon color={status.color} title={status.title} />
+          Type: {type}
+          {status && (
+            <span>
+              {' '}
+              - Status: {status.title}
+              <PatternStatusIcon color={status.color} title={status.title} />
+            </span>
+          )}
         </PatternGridListItemType>
         <PatternGridListItemDescription>
           {description}
@@ -114,7 +120,6 @@ function PatternGrid(props) {
           row-items-large={3}
           row-items-xlarge={5}
         >
-          <span>@todo custom pattern icons feature coming soon</span>
           {/* {props.patterns.map(pattern => ( */}
           {/* <PatternGridItem */}
           {/* key={pattern.id} */}

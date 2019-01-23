@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.29.0](https://github.com/basaltinc/bedrock/compare/v0.28.5...v0.29.0) (2019-01-23)
+
+
+### Bug Fixes
+
+* markdown docs link readability ([f57768f](https://github.com/basaltinc/bedrock/commit/f57768f))
+* settings page submit ([4e5ed09](https://github.com/basaltinc/bedrock/commit/4e5ed09))
+
+
+### Features
+
+* add status icon to Patterns ([1dcd3c2](https://github.com/basaltinc/bedrock/commit/1dcd3c2))
+* layout Site Settings form items in grid ([31d62e3](https://github.com/basaltinc/bedrock/commit/31d62e3))
+
+
+
+
+
 ## [0.28.5](https://github.com/basaltinc/bedrock/compare/v0.28.4...v0.28.5) (2019-01-22)
 
 

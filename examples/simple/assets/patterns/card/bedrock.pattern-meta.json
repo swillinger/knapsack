@@ -2,10 +2,11 @@
   "title": "Card",
   "description": "A Card that powers the internet",
   "type": "atoms",
-  "status": "ready",
+  "status": "inProgress",
   "uses": [
     "inSlice"
   ],
   "hasIcon": true,
+  "showAllTemplates": false,
   "demoSize": "m"
 }

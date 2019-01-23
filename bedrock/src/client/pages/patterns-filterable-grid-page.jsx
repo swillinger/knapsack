@@ -45,6 +45,11 @@ const query = gql`
         hasIcon
       }
     }
+    patternStatuses {
+      id
+      title
+      color
+    }
   }
 `;
 
@@ -54,6 +59,7 @@ class PatternsPage extends Component {
     this.state = {
       patterns: [],
       patternTypes: [],
+      patternStatuses: [],
       formData: {},
       ready: false,
     };
@@ -63,21 +69,26 @@ class PatternsPage extends Component {
     gqlQuery({
       gqlQueryObj: query,
     })
-      .then(({ data: { patternTypes = [], patterns = [] } }) => {
-        const type = patternTypes.find(p => p.id === this.props.type);
-        if (!type && this.props.type !== 'all') {
-          this.props.history.push(`${BASE_PATHS.PATTERNS}/all`);
-        }
+      .then(
+        ({
+          data: { patternTypes = [], patterns = [], patternStatuses = [] },
+        }) => {
+          const type = patternTypes.find(p => p.id === this.props.type);
+          if (!type && this.props.type !== 'all') {
+            this.props.history.push(`${BASE_PATHS.PATTERNS}/all`);
+          }
 
-        this.setState({
-          ready: true,
-          patterns,
-          patternTypes,
-          formData: {
-            type: type ? type.id : 'all',
-          },
-        });
-      })
+          this.setState({
+            ready: true,
+            patterns,
+            patternTypes,
+            patternStatuses,
+            formData: {
+              type: type ? type.id : 'all',
+            },
+          });
+        },
+      )
       .catch(console.log.bind(console));
   }
 
@@ -177,7 +188,10 @@ class PatternsPage extends Component {
           }}
           isInline
         />
-        <PatternGrid patterns={visiblePatterns} />
+        <PatternGrid
+          patterns={visiblePatterns}
+          patternStatuses={this.state.patternStatuses}
+        />
       </PageWithSidebar>
     );
   }

@@ -27,6 +27,7 @@ import Spinner from '@basalt/bedrock-spinner';
 import urlJoin from 'url-join';
 import { FaTimes } from 'react-icons/fa';
 import NavList from './nav-list';
+import { PatternStatusIcon } from './atoms';
 import { containsString } from '../utils/string-helpers';
 import { BASE_PATHS } from '../../lib/constants';
 import { enableUiCreatePattern } from '../../lib/features';
@@ -44,6 +45,7 @@ const secondaryNavQuery = gql`
         id
         meta {
           title
+          status
         }
       }
     }
@@ -57,6 +59,11 @@ const secondaryNavQuery = gql`
       data {
         title
       }
+    }
+    patternStatuses {
+      id
+      title
+      color
     }
   }
 `;
@@ -120,6 +127,7 @@ class SecondaryNav extends Component {
             pageBuilderPages = [],
             tokenGroups = [],
             docs = [],
+            patternStatuses = [],
           } = data;
 
           const patternItems = [];
@@ -130,10 +138,23 @@ class SecondaryNav extends Component {
               isSubHeading: true,
               path: urlJoin(BASE_PATHS.PATTERNS, patternType.id),
             });
+
             patternType.patterns.forEach(pattern => {
+              const status = patternStatuses.find(
+                p => p.id === pattern.meta.status,
+              );
               patternItems.push({
                 id: pattern.id,
-                title: pattern.meta.title,
+                // title: pattern.meta.title,
+                title: (
+                  <span>
+                    {pattern.meta.title}
+                    <PatternStatusIcon
+                      color={status.color}
+                      title={status.title}
+                    />
+                  </span>
+                ),
                 path: urlJoin(BASE_PATHS.PATTERN, pattern.id),
               });
             });

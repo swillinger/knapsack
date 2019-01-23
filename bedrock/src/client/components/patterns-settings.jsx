@@ -30,6 +30,7 @@ const query = gql`
       patternStatuses {
         id
         title
+        color
       }
     }
   }
@@ -45,6 +46,7 @@ const SET_PATTERN_SETTINGS = gql`
       patternStatuses {
         id
         title
+        color
       }
     }
   }
@@ -85,6 +87,11 @@ const schema = {
           title: {
             type: 'string',
             title: 'Title',
+          },
+          color: {
+            type: 'string',
+            title: 'Color',
+            default: '#ccc',
           },
         },
       },

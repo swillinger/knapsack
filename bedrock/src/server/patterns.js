@@ -76,6 +76,7 @@ const patternsTypeDef = gql`
   type PatternStatus {
     id: ID!
     title: String!
+    color: String
   }
 
   type PatternSettings {
@@ -440,14 +441,17 @@ class Patterns {
           {
             id: 'draft',
             title: 'Draft',
+            color: '#9b9b9b',
           },
           {
             id: 'inProgress',
             title: 'In Progress',
+            color: '#FC0',
           },
           {
             id: 'ready',
             title: 'Ready',
+            color: '#2ECC40',
           },
         ],
         patternTypes: [

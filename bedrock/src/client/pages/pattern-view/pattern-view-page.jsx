@@ -25,6 +25,7 @@ import queryString from 'query-string';
 import PropTypes from 'prop-types';
 import ErrorCatcher from '../../utils/error-catcher';
 // import DosAndDonts from '../../components/dos-and-donts';
+import { PatternStatusIcon } from '../../components/atoms';
 import { BASE_PATHS } from '../../../lib/constants';
 import { gqlToString } from '../../data';
 import PageWithSidebar from '../../layouts/page-with-sidebar';
@@ -50,7 +51,13 @@ const query = gql`
         type
         showAllTemplates
         demoSize
+        status
       }
+    }
+    patternStatuses {
+      id
+      title
+      color
     }
   }
 `;
@@ -81,13 +88,15 @@ class PatternViewPage extends Component {
               if (error)
                 return <StatusMessage type="error" message={error.message} />;
 
-              const { templates, meta } = response.pattern;
+              const { pattern, patternStatuses } = response;
+              const { templates, meta } = pattern;
               const {
                 title,
                 description,
                 type,
                 demoSize: defaultDemoSize,
                 showAllTemplates: defaultShowAllTemplates,
+                status: statusId,
               } = meta;
               const templateId = this.state.currentTemplate.id
                 ? this.state.currentTemplate.id
@@ -124,6 +133,8 @@ class PatternViewPage extends Component {
                 );
               }
 
+              const status = patternStatuses.find(p => p.id === statusId);
+
               return (
                 <>
                   <PatternHeader>
@@ -135,7 +146,17 @@ class PatternViewPage extends Component {
                         >
                           {type}
                         </h4>
-                        <h2>{title}</h2>
+                        <h2 style={{ marginBottom: '0' }}>{title}</h2>
+                        <h5
+                          className="eyebrow"
+                          style={{ marginBottom: '1rem' }}
+                        >
+                          Status: {status.title}
+                          <PatternStatusIcon
+                            color={status.color}
+                            title={status.title}
+                          />
+                        </h5>
                         <p>{description}</p>
                       </div>
 

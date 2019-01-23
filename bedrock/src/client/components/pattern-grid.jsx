@@ -27,6 +27,7 @@ import {
   PatternGridListItemHeader,
   PatternGridList,
 } from './pattern-list.styles';
+import { PatternStatusIcon } from './atoms';
 import { BASE_PATHS } from '../../lib/constants';
 
 // @todo fix issue with pattern icons basepath
@@ -75,26 +76,27 @@ import { BASE_PATHS } from '../../lib/constants';
 //   }
 // }
 
-function PatternGridListItem(props) {
+function PatternGridListItem({
+  patternStatuses,
+  pattern: {
+    id,
+    path = `${BASE_PATHS.PATTERN}/${id}`,
+    meta: { title, type, status: statusId, description },
+  },
+}) {
+  const status = patternStatuses.find(p => p.id === statusId);
   return (
-    <StyledPatternGridListItem key={props.pattern.id}>
-      <Link
-        to={
-          props.pattern.path
-            ? props.pattern.path
-            : `${BASE_PATHS.PATTERN}/${props.pattern.id}`
-        }
-      >
+    <StyledPatternGridListItem key={id}>
+      <Link to={path}>
         <PatternGridListItemHeader>
-          <PatternGridListItemTitle>
-            {props.pattern.meta.title}
-          </PatternGridListItemTitle>
-          <PatternGridListItemType>
-            {props.pattern.meta.type}
-          </PatternGridListItemType>
+          <PatternGridListItemTitle>{title}</PatternGridListItemTitle>
         </PatternGridListItemHeader>
+        <PatternGridListItemType>
+          Type: {type} - Status: {status.title}
+          <PatternStatusIcon color={status.color} title={status.title} />
+        </PatternGridListItemType>
         <PatternGridListItemDescription>
-          {props.pattern.meta.description}
+          {description}
         </PatternGridListItemDescription>
       </Link>
     </StyledPatternGridListItem>
@@ -124,7 +126,11 @@ function PatternGrid(props) {
       ) : (
         <PatternGridList>
           {props.patterns.map(pattern => (
-            <PatternGridListItem key={pattern.id} pattern={pattern} />
+            <PatternGridListItem
+              key={pattern.id}
+              pattern={pattern}
+              patternStatuses={props.patternStatuses}
+            />
           ))}
         </PatternGridList>
       )}
@@ -133,6 +139,13 @@ function PatternGrid(props) {
 }
 
 PatternGrid.propTypes = {
+  patternStatuses: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      color: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
   patterns: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
@@ -146,6 +159,13 @@ PatternGrid.propTypes = {
 };
 
 PatternGridListItem.propTypes = {
+  patternStatuses: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      color: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
   pattern: PropTypes.shape({
     id: PropTypes.string,
     path: PropTypes.string,
@@ -153,6 +173,7 @@ PatternGridListItem.propTypes = {
       title: PropTypes.string,
       description: PropTypes.string,
       type: PropTypes.string,
+      status: PropTypes.string,
       hasIcon: PropTypes.bool,
     }).isRequired,
   }).isRequired,

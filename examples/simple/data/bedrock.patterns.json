@@ -16,15 +16,18 @@
   "patternStatuses": [
     {
       "id": "draft",
-      "title": "Draft"
+      "title": "Draft",
+      "color": "#9b9b9b"
     },
     {
       "id": "inProgress",
-      "title": "In Progress"
+      "title": "In Progress",
+      "color": "#FC0"
     },
     {
       "id": "ready",
-      "title": "Ready"
+      "title": "Ready",
+      "color": "#2ECC40"
     }
   ]
 }

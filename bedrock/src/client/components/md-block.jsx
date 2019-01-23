@@ -75,7 +75,10 @@ export default class MdBlock extends React.Component {
         <DocumentationHeader>
           {title && <h4>{title}</h4>}
           {isEditable && (
-            <Button onClick={this.handleEditingToggle}>
+            <Button
+              onClick={this.handleEditingToggle}
+              style={{ marginLeft: 'auto' }}
+            >
               {editing ? 'Save' : 'Edit'}
             </Button>
           )}

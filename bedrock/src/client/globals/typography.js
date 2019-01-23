@@ -123,6 +123,7 @@ export const addGlobalTypography = theme => `
       a, a:link {
         color: ${theme.links.color};
         text-decoration: ${theme.links.textDecoration};
+        transition: color 0.3s linear;
       }
       a:visited {
         color: ${theme.links.visited.color};

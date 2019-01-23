@@ -256,9 +256,9 @@ export const baseTheme = {
   links: {
     fontFamily: fontFamilies.avenir.medium,
     color: colors.blue.base,
-    textDecoration: 'none',
+    textDecoration: 'underline',
     hover: {
-      color: colors.blue.base,
+      color: colors.blue.light,
       textDecoration: 'underline',
     },
     visited: {

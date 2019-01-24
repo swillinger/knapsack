@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.29.1](https://github.com/basaltinc/bedrock/compare/v0.29.0...v0.29.1) (2019-01-23)
+
+
+### Bug Fixes
+
+* improve handling of absent statuses ([0eda5c8](https://github.com/basaltinc/bedrock/commit/0eda5c8))
+
+
+
+
+
 # [0.29.0](https://github.com/basaltinc/bedrock/compare/v0.28.5...v0.29.0) (2019-01-23)
 
 

@@ -684,9 +684,16 @@ class Patterns {
    * @param {string} [opt.templateId] - Template Id
    * @param {boolean} [opt.wrapHtml=true] - Should it wrap HTML results with `<head>` and include assets?
    * @param {Object} [opt.data] - Data to pass to template
+   * @param {boolean} [opt.isInIframe=false] - Will this be in an iFrame?
    * @return {Promise<BedrockTemplateRenderResults>}
    */
-  async render({ patternId, templateId = '', wrapHtml = true, data = {} }) {
+  async render({
+    patternId,
+    templateId = '',
+    wrapHtml = true,
+    data = {},
+    isInIframe = false,
+  }) {
     const pattern = this.getPattern(patternId);
     let [template] = pattern.templates;
     if (templateId) {
@@ -708,8 +715,10 @@ class Patterns {
       const wrappedHtml = renderer.wrapHtml({
         html: renderedTemplate.html,
         headJsUrls: [
-          `https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/${iframeResizerVersion}/iframeResizer.contentWindow.min.js`,
-        ],
+          isInIframe
+            ? `https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/${iframeResizerVersion}/iframeResizer.contentWindow.min.js`
+            : '',
+        ].filter(x => x),
         cssUrls: this.rootRelativeCSS,
         jsUrls: this.rootRelativeJs,
       });

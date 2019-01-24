@@ -141,18 +141,6 @@ async function serve({ config, meta, patterns }) {
     next();
   });
 
-  // Since this is a Single Page App, we will send all html requests to the `index.html` file in the dist
-  app.use('*', (req, res, next) => {
-    const { accept = '' } = req.headers;
-    const accepted = accept.split(',');
-    // this is for serving up a Netlify CMS folder if present
-    if (!req.baseUrl.startsWith('/admin') && accepted.includes('text/html')) {
-      res.sendFile(join(bedrockDistDir, 'index.html'));
-    } else {
-      next();
-    }
-  });
-
   app.use(
     express.static(bedrockDistDir, {
       maxAge: '1d',
@@ -228,6 +216,18 @@ async function serve({ config, meta, patterns }) {
   });
 
   app.use(restApiRoutes);
+
+  // Since this is a Single Page App, we will send all html requests to the `index.html` file in the dist
+  app.use('*', (req, res, next) => {
+    const { accept = '' } = req.headers;
+    const accepted = accept.split(',');
+    // this is for serving up a Netlify CMS folder if present
+    if (!req.baseUrl.startsWith('/admin') && accepted.includes('text/html')) {
+      res.sendFile(join(bedrockDistDir, 'index.html'));
+    } else {
+      next();
+    }
+  });
 
   /** @type {WebSocket.Server} */
   let wss;

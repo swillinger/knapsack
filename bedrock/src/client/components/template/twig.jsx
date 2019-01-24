@@ -16,33 +16,20 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
 import iframeResizer from 'iframe-resizer/js/iframeResizer'; // https://www.npmjs.com/package/iframe-resizer
 import { connectToContext, contextPropTypes } from '@basalt/bedrock-core';
 import shortid from 'shortid';
+import qs from 'qs';
 import { IFrameWrapper } from './twig.styles';
-import { apiUrlBase, gqlQuery } from '../../data';
-
-const query = gql`
-  query TemplateRender($patternId: ID!, $templateId: ID!, $data: JSON) {
-    render(patternId: $patternId, templateId: $templateId, data: $data) {
-      ok
-      html
-      message
-    }
-  }
-`;
 
 class Twig extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      html: '',
-      // detailsOpen: false, @todo preserve if `<details>` is open between renders
+      htmlUrl: '',
     };
     this.enableTemplatePush = props.context.features.enableTemplatePush;
     this.websocketsPort = props.context.meta.websocketsPort;
-    this.apiEndpoint = `${apiUrlBase}`;
     this.id = `${this.props.templateId}-${
       this.props.patternId
     }-${shortid.generate()}`;
@@ -136,56 +123,22 @@ class Twig extends React.Component {
    * @return {void}
    */
   getHtml(templateData) {
-    gqlQuery({
-      gqlQueryObj: query,
-      variables: {
-        templateId: this.props.templateId,
-        patternId: this.props.patternId,
-        data: templateData,
-      },
-    }).then(({ data, errors }) => {
-      if (errors) {
-        console.error(errors);
-        this.setState({
-          html: 'Error! See console',
-        });
-        return;
-      }
-      const { ok, html, message } = data.render;
-      if (ok) {
-        this.setState({
-          html,
-        });
-        this.props.handleNewHtml(html);
-      } else {
-        this.setState({
-          html: message,
-        });
-      }
+    const query = qs.stringify({
+      templateId: this.props.templateId,
+      patternId: this.props.patternId,
+      data: qs.stringify(templateData),
+      isInIframe: true,
+      wrapHtml: true,
+      cacheBuster: shortid.generate(),
+    });
+
+    this.setState({
+      htmlUrl: `/api/render?${query}`,
     });
   }
 
   render() {
-    let { html } = this.state;
-    if (this.props.isDataShown) {
-      const code = JSON.stringify(this.props.data, null, '  ');
-      html = `${html}
-        <details>
-          <summary>Data Used</summary>
-          <pre><code>${code}</code></pre>
-        </details>`;
-    }
-
-    if (html && html.length > 32768) {
-      // https://stackoverflow.com/a/19739077
-      return (
-        <div>
-          There is too many characters in the html string to place in the iFrame
-          using the <code>srcdoc</code> attribute. The max characters is 32,768
-          and there were {html.length}.
-        </div>
-      );
-    }
+    const { htmlUrl } = this.state;
 
     const iframe = (
       <iframe
@@ -201,7 +154,7 @@ class Twig extends React.Component {
         id={this.id}
         title={this.id}
         ref={this.iframeRef}
-        srcDoc={html}
+        src={htmlUrl}
       />
     );
 
@@ -218,8 +171,6 @@ class Twig extends React.Component {
 
 Twig.defaultProps = {
   data: {},
-  isDataShown: false,
-  handleNewHtml: () => {},
   isResizable: true,
 };
 
@@ -229,8 +180,6 @@ Twig.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   context: contextPropTypes.isRequired,
   data: PropTypes.object,
-  isDataShown: PropTypes.bool,
-  handleNewHtml: PropTypes.func,
   isResizable: PropTypes.bool,
 };
 

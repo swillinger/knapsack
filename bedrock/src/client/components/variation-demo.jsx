@@ -69,7 +69,10 @@ export class VariationDemo extends Component {
           [propKey]: item,
         });
         return (
-          <VariationItemExpanded key={item.propKey} colorTheme={colorTheme}>
+          <VariationItemExpanded
+            key={JSON.stringify(itemData)}
+            colorTheme={colorTheme}
+          >
             <h4>
               <code>{propKey}</code>:{' '}
               <code>

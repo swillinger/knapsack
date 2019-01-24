@@ -19,7 +19,8 @@ const urlJoin = require('url-join');
 const fs = require('fs-extra');
 const md = require('marked');
 const highlight = require('highlight.js');
-const { wrapHtml } = require('./templates');
+const qs = require('qs');
+const log = require('../cli/log');
 const { BASE_PATHS } = require('../lib/constants');
 const { enableUiSettings } = require('../lib/features');
 const { getRole } = require('./auth');
@@ -75,75 +76,40 @@ function getRoutes(config) {
   //   });
   // }
 
-  if (config.templateRenderers) {
+  if (patternManifest) {
     const url = urlJoin(config.baseUrl, '/render');
-    // console.log(`Setting up "${url}" api endpoint...`);
-    registerEndpoint(url, 'POST');
-    router.post(url, async (req, res) => {
-      const { body } = req;
-      const { type } = req.query;
-      if (!type) {
-        console.error('Error: not enough info to render template');
-        res.status(400).send({
-          ok: false,
-          message: 'Request not formatted correctly.',
-        });
-      }
-
+    registerEndpoint(url, 'GET');
+    router.get(url, async (req, res) => {
+      const { query } = req;
       const {
-        /** @type {string} */
-        template,
-        /** @type {Object} */
+        patternId,
+        templateId,
+        data: dataString = '{}',
+        isInIframe = false,
+        wrapHtml = true,
+      } = query;
+      const data = qs.parse(dataString);
+
+      const results = await patternManifest.render({
+        patternId,
+        templateId,
         data,
-      } = body;
+        wrapHtml,
+        isInIframe,
+      });
 
-      let results;
-      switch (type) {
-        // case 'renderString': {
-        //   // @todo determine how to figure out what renderer to use if it's a `renderString` request since we can't look at the `template` string and use file extension (since it's a template string and not a template name/path string). best idea so far is to add an `id` to each template renderer, but then it gets more complicated when it's used elsewhere. will probably get more fleshed out as other template languages land. see https://github.com/basaltinc/bedrock/issues/33
-        //   const renderer = config.templateRenderers.find(t =>
-        //     t.id(body.rendererId),
-        //   );
-        //   if (!renderer) {
-        //     console.error(
-        //       'Error: no template renderer found to handle this template',
-        //     );
-        //     res.status(400).send({
-        //       ok: false,
-        //       message: 'No template renderer found to handle this template',
-        //     });
-        //   }
-        //   results = await renderer.renderString(template, data);
-        //   break;
-        // }
-        case 'renderFile': {
-          const renderer = config.templateRenderers.find(t => t.test(template));
-          if (!renderer) {
-            console.error(
-              'Error: no template renderer found to handle this template',
-            );
-            res.status(400).send({
-              ok: false,
-              message: 'No template renderer found to handle this template',
-            });
-          }
-          results = await renderer.render(template, data);
-          break;
-        }
-        default:
-          results = {
-            ok: false,
-            message: 'No valid "type" of request sent.',
-          };
+      if (results.ok) {
+        res.send(results.html);
+      } else {
+        log.error(`Error rendering template`, {
+          patternId,
+          templateId,
+          data,
+          wrapHtml,
+          isInIframe,
+        });
+        res.send(results.message);
       }
-
-      // @todo allow query param on API request to toggle
-      const wrapHtmlResults = true;
-      if (results.ok && wrapHtmlResults) {
-        results.html = wrapHtml(results.html, config.css, config.js);
-      }
-
-      res.json(results);
     });
   }
 

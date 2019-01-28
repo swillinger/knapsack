@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.29.4](https://github.com/basaltinc/bedrock/compare/v0.29.3...v0.29.4) (2019-01-28)
+
+
+### Bug Fixes
+
+* lock react-jsonschema-form to previous version ([b833b70](https://github.com/basaltinc/bedrock/commit/b833b70))
+
+
+
+
+
 ## [0.29.3](https://github.com/basaltinc/bedrock/compare/v0.29.2...v0.29.3) (2019-01-28)
 
 **Note:** Version bump only for package @basalt/bedrock-monorepo

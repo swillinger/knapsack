@@ -12,7 +12,7 @@ before_install:
 - echo -e "machine github.com\n  login $GITHUB_TOKEN" > ~/.netrc
 - ssh git@github.com || true
 install:
-- if [ "$TRAVIS_TAG" = "" ]; then yarn install; fi
+- if [ "$TRAVIS_TAG" = "" ]; then yarn install --frozen-lockfile; fi
 
 script:
 - ./scripts/ci.sh

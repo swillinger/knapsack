@@ -51,10 +51,6 @@ class PatternStage extends React.Component {
   }
 
   render() {
-    // const dataString = JSON.stringify(this.state.data, null, '  ');
-    // const twigCodeExample = `
-    //   {% include '${this.props.template}' with ${dataString} %}
-    // `;
     return (
       <>
         <DemoGrid size={this.props.demoSize}>
@@ -77,11 +73,12 @@ class PatternStage extends React.Component {
                 <SchemaForm
                   schema={this.props.schema}
                   formData={this.state.data}
-                  onChange={({ formData }) =>
+                  onChange={({ formData }) => {
+                    this.props.handleNewData(formData);
                     this.setState({
                       data: formData,
-                    })
-                  }
+                    });
+                  }}
                   uiSchema={this.props.uiSchema}
                   isInline={this.props.isInline}
                 />
@@ -147,6 +144,7 @@ PatternStage.propTypes = {
   isInline: PropTypes.bool,
   hasSchema: PropTypes.bool.isRequired,
   demoSize: PropTypes.string,
+  handleNewData: PropTypes.func.isRequired,
 };
 
 export default PatternStage;

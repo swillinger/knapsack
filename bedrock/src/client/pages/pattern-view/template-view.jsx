@@ -23,6 +23,7 @@ import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
 import { BedrockContext } from '@basalt/bedrock-core';
 import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
+import qs from 'qs';
 import MdBlock from '../../components/md-block';
 import PatternStage from './pattern-stage';
 import {
@@ -78,7 +79,9 @@ class TemplateView extends Component {
     super(props);
     this.state = {
       demoDataIndex: 0,
+      data: null,
     };
+    // this.setData = this.setData.bind(this);
   }
 
   componentDidMount() {
@@ -146,12 +149,34 @@ class TemplateView extends Component {
             datas = schema.examples;
           }
 
+          const queryString = qs.stringify({
+            templateId: this.props.templateId,
+            patternId: this.props.id,
+            data: qs.stringify(
+              this.state.data
+                ? this.state.data
+                : datas[this.state.demoDataIndex],
+            ),
+            isInIframe: false,
+            wrapHtml: true,
+          });
+          const externalUrl = `/api/render?${queryString}`;
+
           return (
             <>
               <OverviewWrapper>
                 <FlexWrapper>
                   {!this.props.isVerbose && <h3>{title}</h3>}
                   <DemoGridControls>
+                    <Button>
+                      <a
+                        href={externalUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Open in new window
+                      </a>
+                    </Button>
                     {datas.length > 1 && (
                       <div
                         style={{
@@ -209,6 +234,11 @@ class TemplateView extends Component {
                   demoSize={hasSchema ? this.props.demoSize : 'full'}
                   isInline={isInline}
                   patternId={this.props.id}
+                  handleNewData={newData => {
+                    this.setState({
+                      data: newData,
+                    });
+                  }}
                 />
               </OverviewWrapper>
 

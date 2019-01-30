@@ -88,7 +88,38 @@ function getRoutes(config) {
         isInIframe = false,
         wrapHtml = true,
       } = query;
-      const data = qs.parse(dataString);
+      const data = qs.parse(dataString, {
+        // This custom decoder is for turning values like `foo: "true"` into `foo: true`, along with Integers, null, and undefined.
+        // https://github.com/ljharb/qs/issues/91#issuecomment-437926409
+        decoder(str, decoder, charset) {
+          const strWithoutPlus = str.replace(/\+/g, ' ');
+          if (charset === 'iso-8859-1') {
+            // unescape never throws, no try...catch needed:
+            return strWithoutPlus.replace(/%[0-9a-f]{2}/gi, unescape);
+          }
+
+          if (/^(\d+|\d*\.\d+)$/.test(str)) {
+            return parseFloat(str);
+          }
+
+          const keywords = {
+            true: true,
+            false: false,
+            null: null,
+            undefined,
+          };
+          if (str in keywords) {
+            return keywords[str];
+          }
+
+          // utf-8
+          try {
+            return decodeURIComponent(strWithoutPlus);
+          } catch (e) {
+            return strWithoutPlus;
+          }
+        },
+      });
 
       const results = await patternManifest.render({
         patternId,

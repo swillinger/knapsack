@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.29.5](https://github.com/basaltinc/bedrock/compare/v0.29.4...v0.29.5) (2019-01-30)
+
+**Note:** Version bump only for package @basalt/bedrock-example-simple
+
+
+
+
+
 ## [0.29.4](https://github.com/basaltinc/bedrock/compare/v0.29.3...v0.29.4) (2019-01-28)
 
 **Note:** Version bump only for package @basalt/bedrock-example-simple

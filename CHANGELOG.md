@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.29.6](https://github.com/basaltinc/bedrock/compare/v0.29.5...v0.29.6) (2019-01-30)
+
+
+### Bug Fixes
+
+* can set port with BEDROCK_PORT env var ([9f28bff](https://github.com/basaltinc/bedrock/commit/9f28bff))
+
+
+
+
+
 ## [0.29.5](https://github.com/basaltinc/bedrock/compare/v0.29.4...v0.29.5) (2019-01-30)
 
 

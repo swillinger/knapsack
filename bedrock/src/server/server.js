@@ -51,7 +51,7 @@ const { Patterns, patternsResolvers, patternsTypeDef } = require('./patterns');
  * @returns {Promise<void>}
  */
 async function serve({ config, meta, patterns }) {
-  const port = 3999;
+  const port = process.env.BEDROCK_PORT || 3999;
   const bedrockDistDir = join(__dirname, '../../dist/');
 
   const settings = new Settings({ dataDir: config.data });

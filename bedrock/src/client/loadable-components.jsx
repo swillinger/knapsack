@@ -38,6 +38,12 @@ export const LoadableDocPage = Loadable({
   loading: Spinner,
 });
 
+export const LoadableChangelogPage = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "changlog-page" */ './pages/changelog'),
+  loading: Spinner,
+});
+
 export const LoadablePatternView = Loadable({
   loader: () =>
     import(/* webpackChunkName: "pattern-view-page" */ './pages/pattern-view/pattern-view-page'),

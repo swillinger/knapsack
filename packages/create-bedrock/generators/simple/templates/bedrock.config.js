@@ -1,5 +1,6 @@
 const HtmlRenderer = require('@basalt/bedrock-renderer-html');
 const TwigRenderer = require('@basalt/bedrock-renderer-twig');
+const { version } = require('./package.json');
 
 /** @type {BedrockConfig} */
 const config = {
@@ -11,6 +12,8 @@ const config = {
   data: './data',
   css: ['./public/assets/simple.css'],
   // js: ['./public/assets/script.js'],
+  // changelog: './CHANGELOG.md',
+  version,
   docsDir: './docs',
   templateRenderers: [
     new HtmlRenderer(),

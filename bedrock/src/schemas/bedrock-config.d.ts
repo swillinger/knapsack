@@ -64,6 +64,8 @@ interface BedrockConfig {
   templateRenderers: BedrockTemplateRenderer[],
   designTokens: string;
   docsDir?: string;
+  changelog?: string;
+  version?: string;
 }
 
 interface BedrockUserConfig extends BedrockConfig {

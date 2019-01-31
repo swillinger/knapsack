@@ -37,6 +37,9 @@ const query = gql`
       subtitle
       slogan
     }
+    meta {
+      version
+    }
   }
 `;
 
@@ -102,7 +105,10 @@ const HomeSplash = props => (
       if (loading) return <Spinner />;
       if (error) return <StatusMessage message={error.message} type="error " />;
 
-      const { settings } = data;
+      const {
+        settings,
+        meta: { version },
+      } = data;
       return (
         <PageWithoutSidebar {...props}>
           <HomeSplashWrapper>
@@ -112,7 +118,7 @@ const HomeSplash = props => (
                 <Title vw={bigWords(settings.title)}>{settings.title}</Title>
               )}
               {settings.slogan && <Subtitle>{settings.slogan}</Subtitle>}
-              {settings.version && <VersionTag>{settings.version}</VersionTag>}
+              {version && <VersionTag>{version}</VersionTag>}
             </HomeSplashCore>
           </HomeSplashWrapper>
         </PageWithoutSidebar>

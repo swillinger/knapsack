@@ -50,6 +50,7 @@ import {
   LoadableHome,
   LoadableAllTokens,
   LoadableDocPage,
+  LoadableChangelogPage,
   LoadableBadRoute,
 } from './loadable-components';
 import { BASE_PATHS } from '../lib/constants';
@@ -358,6 +359,10 @@ class App extends React.Component {
                                 <FeedbackPage />
                               </React.Suspense>
                             )}
+                          />
+                          <Route
+                            path="/changelog"
+                            component={LoadableChangelogPage}
                           />
                           <Route path="*" render={() => <LoadableBadRoute />} />
                           <Redirect to="/" />

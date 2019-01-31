@@ -64,8 +64,10 @@ async function serve({ config, meta, patterns }) {
 
   const metaTypeDef = gql`
     type Meta {
-      websocketsPort: Int
+      websocketsPort: Int!
       bedrockVersion: String
+      changelog: String
+      version: String
     }
 
     type Query {

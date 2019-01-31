@@ -16,7 +16,7 @@
     with Bedrock; if not, see <https://www.gnu.org/licenses>.
  */
 const program = require('commander');
-const { existsSync } = require('fs-extra');
+const { existsSync, readFile } = require('fs-extra');
 const portfinder = require('portfinder');
 const { join, resolve, dirname, relative } = require('path');
 const { validateUniqueIdsInArray } = require('@basalt/bedrock-schema-utils');
@@ -152,12 +152,17 @@ function processConfig(userConfig, from) {
 }
 
 /**
+ * @param {BedrockConfig} config
  * @return {Promise<BedrockMeta>}
  */
-async function getMeta() {
+async function getMeta(config) {
   return {
     websocketsPort: await portfinder.getPortPromise(),
     bedrockVersion: version,
+    changelog: config.changelog
+      ? await readFile(config.changelog, 'utf8')
+      : null,
+    version: config.version,
   };
 }
 
@@ -199,7 +204,7 @@ log.verbose('All templateRenderers init done');
 
 program.command('serve').action(async () => {
   log.info('Serving...');
-  const meta = await getMeta();
+  const meta = await getMeta(config);
   await serve({
     config,
     meta,
@@ -214,7 +219,7 @@ program.command('build').action(async () => {
 
 program.command('start').action(async () => {
   log.info('Starting...');
-  const meta = await getMeta();
+  const meta = await getMeta(config);
   const templateRendererWatches = config.templateRenderers.filter(t => t.watch);
 
   return Promise.all([

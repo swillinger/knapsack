@@ -92,25 +92,26 @@ function validateDataAgainstSchema(schema, data) {
 
 /**
  * @param {Object[]} items
+ * @param {string} [key='id']
  * @return {{ ok: boolean, duplicates: any[], duplicateIdList: string, message: string }}
  */
-function validateUniqueIdsInArray(items) {
+function validateUniqueIdsInArray(items, key = 'id') {
   const ids = [];
   const duplicates = [];
   items.forEach(item => {
-    if (ids.includes(item.id)) {
+    if (ids.includes(item[key])) {
       duplicates.push(item);
     } else {
-      ids.push(item.id);
+      ids.push(item[key]);
     }
   });
   if (duplicates.length > 0) {
-    const duplicateIdList = duplicates.map(d => `"${d.id}"`).join(', ');
+    const duplicateIdList = duplicates.map(d => `"${d[key]}"`).join(', ');
     return {
       ok: false,
       duplicates,
       duplicateIdList,
-      message: `Each item in the array requires unique "id" prop. These ids are duplicates: ${duplicateIdList}`,
+      message: `Each item in the array requires unique "${key}" prop. These ids are duplicates: ${duplicateIdList}`,
     };
   }
   return {

@@ -121,19 +121,23 @@ export const Toggle = styled.div`
     display: none;
   }
 
-  span {
+  .checkbox-label {
+    margin-left: 0.25rem;
+  }
+
+  .checkbox-toggler {
     align-items: center;
     cursor: pointer;
     text-indent: -9999px;
     width: 50px;
     height: 25px;
     background: ${props => props.theme.globals.colors.neutralLight};
-    display: block;
+    display: inline-block;
     border-radius: 50px;
     position: relative;
   }
 
-  span:after {
+  .checkbox-toggler:after {
     content: '';
     position: absolute;
     top: 5px;
@@ -145,11 +149,11 @@ export const Toggle = styled.div`
     transition: 0.3s;
   }
 
-  input:checked + span {
+  input:checked + .checkbox-toggler {
     background: ${props => props.theme.globals.colors.active};
   }
 
-  input:checked + span:after {
+  input:checked + .checkbox-toggler:after {
     left: calc(100% - 5px);
     transform: translateX(-100%);
   }

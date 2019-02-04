@@ -1,0 +1,11 @@
+{
+  "title": "Button",
+  "description": "A Button for clicking!",
+  "type": "atoms",
+  "status": "ready",
+  "uses": [
+    "inSlice"
+  ],
+  "hasIcon": true,
+  "demoSize": "m"
+}

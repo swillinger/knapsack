@@ -171,8 +171,8 @@ function createWebPackConfig(userConfig) {
     ],
     performance: {
       hints: isProd ? 'error' : false,
-      maxAssetSize: 510000,
-      maxEntrypointSize: 510000,
+      maxAssetSize: 610000,
+      maxEntrypointSize: 610000,
       // if this function returns false it is not included in performance calculation
       assetFilter: assetFilename => {
         if (assetFilename.includes('graphiql')) {

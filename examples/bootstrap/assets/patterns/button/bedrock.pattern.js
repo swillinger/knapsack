@@ -9,7 +9,14 @@ module.exports = {
       id: 'button-html',
       title: 'Button - Html',
       docPath: './README-html.md',
-      schema,
     },
+    // {
+    //   alias: '@components/button.html',
+    //   path: './button.html',
+    //   id: 'button-html',
+    //   title: 'Button - Html',
+    //   docPath: './README-html.md',
+    //   schema,
+    // },
   ],
 };

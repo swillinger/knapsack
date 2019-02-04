@@ -13,11 +13,67 @@ module.exports = {
       type: 'string',
       title: 'Url',
     },
+    style: {
+      type: 'string',
+      title: 'Style',
+      default: 'primary',
+      enum: [
+        'primary',
+        'secondary',
+        'success',
+        'danger',
+        'warning',
+        'info',
+        'light',
+        'dark',
+        'link',
+      ],
+      enumNames: [
+        'Primary',
+        'Secondary',
+        'Success',
+        'Danger',
+        'Warning',
+        'Info',
+        'Light',
+        'Dark',
+        'Link',
+      ],
+    },
+    size: {
+      type: 'string',
+      title: 'Size',
+      default: 'md',
+      enum: [
+        'sm',
+        'md',
+        'lg',
+      ],
+      enumNames: [
+        'Small',
+        'Default',
+        'Large',
+      ],
+    },
+    disabled: {
+      type: 'boolean',
+      title: 'Disabled',
+      default: false,
+    },
+    outlined: {
+      type: 'boolean',
+      title: 'Outlined',
+      default: false,
+    }
   },
   examples: [
     {
       text: 'Click Here',
       url: 'https://basalt.io',
+      style: 'primary',
+      size: 'md',
+      disabled: false,
+      outlined: false,
     },
   ],
 };

@@ -10,13 +10,13 @@ module.exports = {
       title: 'Button - Html',
       docPath: './README-html.md',
     },
-    // {
-    //   alias: '@components/button.html',
-    //   path: './button.html',
-    //   id: 'button-html',
-    //   title: 'Button - Html',
-    //   docPath: './README-html.md',
-    //   schema,
-    // },
+    {
+      alias: '@components/button.twig',
+      path: './button.twig',
+      id: 'button-twig',
+      title: 'Button - Twig',
+      docPath: './README-twig.md',
+      schema,
+    },
   ],
 };

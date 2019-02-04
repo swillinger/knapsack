@@ -49,6 +49,7 @@ function CheckboxesWidget(props) {
                 style={{
                   display: 'flex',
                   alignItems: 'center',
+                  marginBottom: '.75rem',
                 }}
                 htmlFor={itemId}
               >

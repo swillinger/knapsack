@@ -12,6 +12,8 @@ export * from './hr-color';
 export * from './inner-shadow';
 export * from './line-height';
 export * from './media-query';
+export * from './raw-values';
 export * from './spacing';
+export * from './table-list';
 export * from './text-color';
 export * from './text-shadow';

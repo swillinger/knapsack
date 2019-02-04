@@ -26,7 +26,6 @@ import gql from 'graphql-tag';
 import { StatusMessage, Button } from '@basalt/bedrock-atoms';
 import { gqlToString } from '../../data';
 import { BASE_PATHS } from '../../../lib/constants';
-import TokenCategory from '../../components/design-token-category';
 import PageWithSidebar from '../../layouts/page-with-sidebar';
 
 const query = gql`
@@ -96,11 +95,7 @@ function DesignTokenGroup(props) {
                   if (designTokenCategoryDemo) {
                     Demo = designTokenCategoryDemo.render;
                   }
-                  return (
-                    <TokenCategory tokenCategory={category} key={category.id}>
-                      <Demo tokens={category.tokens} />
-                    </TokenCategory>
-                  );
+                  return <Demo tokens={category.tokens} key={category.id} />;
                 })}
               </div>
             </div>

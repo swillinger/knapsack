@@ -21,6 +21,18 @@ const { FileDb } = require('./db');
 const settingsTypeDef = gql`
   scalar JSON
 
+  type CustomSectionMenuItem {
+    id: ID
+    title: String
+  }
+
+  type CustomSection {
+    id: ID
+    title: String
+    showInMainMenu: Boolean
+    pages: [CustomSectionMenuItem]
+  }
+
   type SettingsParentBrand {
     "URL to image"
     logo: String
@@ -33,6 +45,7 @@ const settingsTypeDef = gql`
     subtitle: String
     slogan: String
     parentBrand: SettingsParentBrand
+    customSections: [CustomSection]
   }
 
   type Query {
@@ -55,9 +68,7 @@ class Settings {
     const defaults = {
       title: 'My Title',
       parentBrand: {},
-      designTokens: {
-        groups: [],
-      },
+      customSections: [],
     };
 
     this.db = new FileDb({

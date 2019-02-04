@@ -33,6 +33,11 @@ const {
   pageBuilderPagesResolvers,
 } = require('./page-builder');
 const { Settings, settingsTypeDef, settingsResolvers } = require('./settings');
+const {
+  customPagesResolvers,
+  customPagesTypeDef,
+  CustomPages,
+} = require('./custom-pages');
 const { Docs, docsTypeDef, docsResolvers } = require('./docs');
 const {
   DesignTokens,
@@ -56,10 +61,8 @@ async function serve({ config, meta, patterns }) {
 
   const settings = new Settings({ dataDir: config.data });
   const pageBuilderPages = new PageBuilder({ dataDir: config.data });
-  const tokens = new DesignTokens({
-    tokenPath: config.designTokens,
-    tokenGroups: settings.getSetting('designTokens').groups,
-  });
+  const customPages = new CustomPages({ dataDir: config.data });
+  const tokens = new DesignTokens(config.designTokens);
   const docs = new Docs({ docsDir: config.docsDir });
 
   const metaTypeDef = gql`
@@ -108,6 +111,10 @@ async function serve({ config, meta, patterns }) {
           typeDefs: docsTypeDef,
           resolvers: docsResolvers,
         }),
+        makeExecutableSchema({
+          typeDefs: customPagesTypeDef,
+          resolvers: customPagesResolvers,
+        }),
       ],
     }),
     // https://www.apollographql.com/docs/apollo-server/essentials/data.html#context
@@ -124,6 +131,7 @@ async function serve({ config, meta, patterns }) {
         docs,
         patterns,
         canWrite,
+        customPages,
       };
     },
     // playground: true,
@@ -131,7 +139,11 @@ async function serve({ config, meta, patterns }) {
   });
 
   const app = express();
-  app.use(bodyParser.json());
+  app.use(
+    bodyParser.json({
+      limit: '5000kb',
+    }),
+  );
   gqlServer.applyMiddleware({ app });
 
   app.use('*', (req, res, next) => {
@@ -196,19 +208,6 @@ async function serve({ config, meta, patterns }) {
     public: config.public,
     baseUrl: '/api',
     meta,
-    // designTokens: tokens.categories.map(category => {
-    //   const theseTokens = tokens.tokens.filter(
-    //     token => token.category === category,
-    //   );
-    //   return {
-    //     id: category,
-    //     meta: {
-    //       title: category,
-    //       description: `Description for ${category}`,
-    //     },
-    //     get: () => Promise.resolve(theseTokens),
-    //   };
-    // }),
     patternManifest: patterns,
     templateRenderers: config.templateRenderers,
     pageBuilder: pageBuilderPages,

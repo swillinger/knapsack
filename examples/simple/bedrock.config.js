@@ -1,12 +1,26 @@
 const HtmlRenderer = require('@basalt/bedrock-renderer-html');
 const TwigRenderer = require('@basalt/bedrock-renderer-twig');
+const { theoBedrockFormat } = require('@basalt/bedrock');
+const theo = require('theo');
 const { version } = require('./package.json');
+
+const format = theoBedrockFormat(theo);
 
 /** @type {BedrockConfig} */
 const config = {
   patterns: ['./assets/patterns/*', './assets/pages/*'],
   newPatternDir: './assets/patterns/',
-  designTokens: './design-tokens/tokens.yml',
+  // designTokens: './design-tokens/tokens.yml',
+  designTokens: {
+    createCodeSnippet: token => `$${token.name}`,
+    data: theo.convertSync({
+      transform: {
+        type: 'web',
+        file: './design-tokens/tokens.yml',
+      },
+      format,
+    }),
+  },
   dist: './dist',
   public: './public',
   data: './data',
@@ -32,7 +46,7 @@ const config = {
             paths: ['./assets/pages'],
           },
         ],
-      }
+      },
     }),
   ],
 };

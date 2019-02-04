@@ -44,6 +44,9 @@ const GlobalStyles = createGlobalStyle`
       height: auto;
       vertical-align: middle;
     }
+    textarea {
+      width: 100%;
+    }
     main {
       display: block;
     }

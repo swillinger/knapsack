@@ -8,8 +8,8 @@ export const demoPropTypes = {
       value: PropTypes.string.isRequired,
       originalValue: PropTypes.string,
       category: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
       comment: PropTypes.string,
+      code: PropTypes.string,
     }).isRequired,
   ).isRequired,
 };

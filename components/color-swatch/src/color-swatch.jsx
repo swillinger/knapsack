@@ -13,20 +13,22 @@ import {
 
 const ColorSwatch = ({ color, format }) => {
   const colorValue = convertColor(color.value, format);
-
+  const toCopy = color.code ? color.code : colorValue;
   return (
     <OuterSwatch>
-      <div>
+      <header
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
+      >
         <h5>
-          Color: <code>{color.name}</code>
-        </h5>
-        <h5>
-          Value: <code>{colorValue}</code>
+          Name: <code>{color.name}</code>
         </h5>
         <CopyToClipboardWrapper>
           <CopyToClipboard
-            text={colorValue}
-            onCopy={() => window.alert(`${colorValue} copied to clipboard`)} // @todo improve
+            text={toCopy}
+            onCopy={() => window.alert(`"${toCopy}" copied to clipboard`)} // @todo improve
           >
             <svg
               width="26"
@@ -38,8 +40,17 @@ const ColorSwatch = ({ color, format }) => {
             </svg>
           </CopyToClipboard>
         </CopyToClipboardWrapper>
-        <InnerSwatch colorValue={color.value} />
-      </div>
+      </header>
+      {color.code && (
+        <h6>
+          Code: <code>{color.code}</code>
+        </h6>
+      )}
+      <h6>
+        Value: <code>{colorValue}</code>
+      </h6>
+
+      <InnerSwatch colorValue={color.value} />
     </OuterSwatch>
   );
 };
@@ -49,7 +60,8 @@ ColorSwatch.propTypes = {
   color: PropTypes.shape({
     name: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
-    comment: PropTypes.string.isRequired,
+    comment: PropTypes.string,
+    code: PropTypes.string,
   }).isRequired,
 };
 
@@ -93,7 +105,8 @@ ColorSwatches.propTypes = {
     PropTypes.shape({
       name: PropTypes.string.isRequired,
       value: PropTypes.string.isRequired,
-      comment: PropTypes.string.isRequired,
+      comment: PropTypes.string,
+      code: PropTypes.string,
     }),
   ).isRequired,
 };

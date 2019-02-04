@@ -5,32 +5,32 @@ interface BedrockTemplateRenderResults {
 }
 
 interface BedrockTemplateRenderer {
-  id: string
+  id: string;
   test: (theTemplatePath: string) => boolean;
   render: (opt: {
     template: BedrockPatternTemplate,
     pattern: BedrockPattern,
     data?: object,
-  }) => Promise<BedrockTemplateRenderResults>,
+  }) => Promise<BedrockTemplateRenderResults>;
   build?: (opt: {
     config: BedrockConfig,
     templatePaths: string[],
-  }) => Promise<void>,
+  }) => Promise<void>;
   watch?: (opt: {
     config: BedrockConfig,
     templatePaths: string[],
-  }) => Promise<void>,
+  }) => Promise<void>;
   init?: (opt: {
     config: BedrockConfig,
     templatePaths: string[],
     allPatterns: BedrockPattern[],
-  }) => void,
+  }) => void;
   wrapHtml: (opt: {
     html: string,
     cssUrls?: string[],
     jsUrls?: string[],
     headJsUrls?: string[]
-  }) => string,
+  }) => string;
   getHead: (opt: {
     cssUrls?: string[],
     headJsUrls?: string[],
@@ -38,10 +38,20 @@ interface BedrockTemplateRenderer {
   getFoot: (opt: {
     jsUrls?: string[],
   }) => string;
-  onChange: (opt: { path: string }) => void,
-  onAdd: (opt: { path: string }) => void,
-  onRemove: (opt: { path: string }) => void,
+  onChange: (opt: { path: string }) => void;
+  onAdd: (opt: { path: string }) => void;
+  onRemove: (opt: { path: string }) => void;
   // renderString: (template: string, data?: object) => Promise<BedrockTemplateRenderResults>,
+}
+
+interface BedrockDesignToken {
+  name: string;
+  value: string;
+  category: string;
+  tags?: string[];
+  originalValue: string;
+  code?: string;
+  comment?: string;
 }
 
 interface BedrockConfig {
@@ -62,7 +72,12 @@ interface BedrockConfig {
   /** Derived from `js` */
   rootRelativeJs?: string[];
   templateRenderers: BedrockTemplateRenderer[],
-  designTokens: string;
+  designTokens: {
+    createCodeSnippet?: (BedrockDesignToken) => string,
+    data: {
+      tokens: BedrockDesignToken[],
+    },
+  };
   docsDir?: string;
   changelog?: string;
   version?: string;

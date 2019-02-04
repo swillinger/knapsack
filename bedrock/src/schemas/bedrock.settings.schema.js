@@ -14,10 +14,6 @@
     You should have received a copy of the GNU General Public License along
     with Bedrock; if not, see <https://www.gnu.org/licenses>.
  */
-const {
-  tokenCategoriesWithDemo,
-} = require('@basalt/bedrock-design-token-demos/constants');
-
 module.exports = {
   $schema: 'http://json-schema.org/draft-07/schema',
   type: 'object',
@@ -65,40 +61,43 @@ module.exports = {
         },
       },
     },
-    designTokens: {
-      type: 'object',
-      title: 'Design Tokens',
-      properties: {
-        groups: {
-          type: 'array',
-          title: 'Token Groups',
-          description:
-            'Collections of Token Categories; all shown on a single page with own menu item.',
-          items: {
-            type: 'object',
-            required: ['id', 'title', 'tokenCategoryIds'],
-            properties: {
-              id: {
-                type: 'string',
-                title: 'ID',
-              },
-              title: {
-                type: 'string',
-                title: 'Title',
-              },
-              description: {
-                type: 'string',
-                title: 'Description',
-              },
-              tokenCategoryIds: {
-                type: 'array',
-                title: 'Token Category IDs',
-                description:
-                  'Each of these represent the Theo Design Token category you assigned it; these are often assigned to a single CSS declaration like `background-color` or `border-color`.',
-                items: {
+    customSections: {
+      type: 'array',
+      title: 'Custom Sections',
+      items: {
+        type: 'object',
+        required: ['id', 'title', 'pages'],
+        properties: {
+          id: {
+            type: 'string',
+            title: 'Section ID',
+          },
+          title: {
+            type: 'string',
+            title: 'Section Title',
+          },
+          showInMainMenu: {
+            type: 'boolean',
+            title: 'Show in Main Menu',
+            description: 'Will always show in Secondary Menu',
+            default: true,
+          },
+          pages: {
+            type: 'array',
+            title: 'Custom Pages',
+            description:
+              'Each item will become a page with a menu item and a unique URL',
+            items: {
+              type: 'object',
+              required: ['id', 'title'],
+              properties: {
+                id: {
                   type: 'string',
-                  title: 'Token Category',
-                  enum: tokenCategoriesWithDemo,
+                  title: 'Page ID',
+                },
+                title: {
+                  type: 'string',
+                  title: 'Page Title',
                 },
               },
             },

@@ -25,7 +25,9 @@
     "@basalt/bedrock-breakpoints-demo": "^0.29.0",
     "@basalt/bedrock-color-swatch": "^0.29.0",
     "@basalt/bedrock-core": "^0.29.0",
-    "@basalt/bedrock-spacing-swatch": "^0.29.0"
+    "@basalt/bedrock-spacing-swatch": "^0.29.0",
+    "@basalt/bedrock-utils": "^0.29.0",
+    "react-table": "^6.9.0"
   },
   "files": [
     "./dist",

@@ -24,6 +24,7 @@ import {
   ClearFilterButton,
 } from '@basalt/bedrock-atoms';
 import Spinner from '@basalt/bedrock-spinner';
+import { flattenArray } from '@basalt/bedrock-utils';
 import urlJoin from 'url-join';
 import { FaTimes } from 'react-icons/fa';
 import NavList from './nav-list';
@@ -49,11 +50,6 @@ const secondaryNavQuery = gql`
         }
       }
     }
-    tokenGroups {
-      id
-      title
-      path
-    }
     docs {
       id
       data {
@@ -65,24 +61,38 @@ const secondaryNavQuery = gql`
       title
       color
     }
+    settings {
+      customSections {
+        id
+        title
+        pages {
+          id
+          title
+        }
+      }
+    }
   }
 `;
 
 class SecondaryNav extends Component {
   // Was used for custom section items in the nav list. Removed for now. Once custom sections are lifted through gql, add this handling back as needed.
-  // @todo custom sections in the side nav
-  // static prepSectionLinks(sections) {
-  //   return flattenArray(
-  //     sections.map(section => [
-  //       {
-  //         title: section.title,
-  //         id: section.id,
-  //         isHeading: true,
-  //       },
-  //       ...section.items,
-  //     ]),
-  //   );
-  // }
+  static prepSectionLinks(sections) {
+    if (!sections) return [];
+    return flattenArray(
+      sections.map(section => [
+        {
+          title: section.title,
+          id: section.id,
+          isHeading: true,
+        },
+        ...section.pages.map(page => ({
+          ...page,
+          path: `/${section.id}/${page.id}`,
+        })),
+      ]),
+    );
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -125,9 +135,9 @@ class SecondaryNav extends Component {
           const {
             patternTypes = [],
             pageBuilderPages = [],
-            tokenGroups = [],
             docs = [],
             patternStatuses = [],
+            settings: { customSections = [] },
           } = data;
 
           const patternItems = [];
@@ -163,18 +173,6 @@ class SecondaryNav extends Component {
           });
 
           const items = [
-            {
-              title: 'Design Tokens',
-              id: 'design-tokens',
-              path: BASE_PATHS.DESIGN_TOKENS,
-              isHeading: true,
-            },
-            ...tokenGroups,
-            {
-              title: 'All Tokens',
-              id: 'all-design-tokens',
-              path: `${BASE_PATHS.DESIGN_TOKENS}/all`,
-            },
             {
               title: 'Patterns',
               id: 'patterns',
@@ -213,14 +211,13 @@ class SecondaryNav extends Component {
               title: doc.data.title,
               path: `${BASE_PATHS.DOCS}/${doc.id}`,
             })),
+            ...SecondaryNav.prepSectionLinks(customSections),
             {
               title: 'API',
               id: 'graphiql',
               isHeading: true,
               path: BASE_PATHS.GRAPHIQL_PLAYGROUND,
             },
-            // ...SecondaryNav.prepSectionLinks(this.props.context.sections),
-            // @todo bring back custom sections through gql
           ].filter(Boolean);
 
           return (

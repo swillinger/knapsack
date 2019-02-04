@@ -5,9 +5,9 @@ export const OuterSwatch = styled.div`
   margin-bottom: 10px;
   padding: 5px;
   border: solid 1px ${props => props.theme.globals.colors.neutral};
-  > div {
-    position: relative;
-  }
+  display: flex;
+  flex-direction: column;
+  position: relative;
   h5 {
     margin: 0 0 0.5rem;
   }
@@ -17,6 +17,7 @@ export const InnerSwatch = styled.div`
   height: 50px;
   background-color: ${props => (props.colorValue ? props.colorValue : 'auto')};
   border: solid 1px ${props => props.theme.globals.colors.neutral};
+  margin-top: auto;
 `;
 
 export const RightLabel = styled.div`
@@ -32,8 +33,5 @@ export const SwatchesWrapper = styled.div`
 `;
 
 export const CopyToClipboardWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
   cursor: pointer;
 `;

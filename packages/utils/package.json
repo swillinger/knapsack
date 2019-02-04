@@ -10,7 +10,8 @@
     "build:js": "babel --config-file @basalt/bedrock-babel-config/es --source-maps --ignore 'src/*.test.js' --extensions .js,.ts --out-dir dist/ src/",
     "build:types": "tsc",
     "build": "rm -rf dist && yarn build:js",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "watch": "yarn build --watch"
   },
   "dependencies": {
     "@basalt/bedrock-core": "^0.29.0",

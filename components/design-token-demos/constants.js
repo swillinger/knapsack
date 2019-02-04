@@ -1,4 +1,6 @@
 const TOKEN_CATS = {
+  RAW_VALUES: 'raw-values',
+  TABLE_LIST: 'table-list',
   BOX_SHADOW: 'box-shadow',
   INNER_SHADOW: 'inner-shadow',
   TEXT_SHADOW: 'text-shadow',

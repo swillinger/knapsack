@@ -38,17 +38,15 @@ import ErrorCatcher from './utils/error-catcher';
 import { apiUrlBase } from './data';
 import {
   LoadablePatternView,
-  LoadableCustomSectionPage,
   LoadableGraphiqlPage,
   LoadablePageBuilderLandingPage,
   LoadablePatternsPage,
   LoadablePageBuilder,
   LoadableSettingsPage,
-  LoadableDesignTokenGroup,
+  LoadableCustomPage,
   LoadablePatternEdit,
   LoadablePatternNew,
   LoadableHome,
-  LoadableAllTokens,
   LoadableDocPage,
   LoadableChangelogPage,
   LoadableBadRoute,
@@ -64,7 +62,6 @@ class App extends React.Component {
     super(props);
     this.state = {
       settings: {},
-      sections: [],
       permissions: [],
       meta: {},
       ready: false,
@@ -102,18 +99,6 @@ class App extends React.Component {
         .then(permissions => ({
           permissions,
         })),
-      window
-        .fetch(`${this.apiEndpoint}/sections`)
-        .then(res => res.json())
-        .then(sections => ({
-          sections: sections.map(section => ({
-            ...section,
-            items: section.items.map(item => ({
-              path: `/pages/${section.id}/${item.id}`,
-              ...item,
-            })),
-          })),
-        })),
     ]);
 
     const initialState = Object.assign({}, ...results);
@@ -139,10 +124,15 @@ class App extends React.Component {
     // @todo consider removing; we're not using it anymore
     const query = gql`
       {
-        tokenGroups {
-          id
-          title
-          path
+        settings {
+          customSections {
+            id
+            title
+            pages {
+              id
+              title
+            }
+          }
         }
         patterns {
           id
@@ -165,6 +155,9 @@ class App extends React.Component {
             }) => {
               if (loading) return <Spinner />;
               if (error) return <p>Error</p>;
+              const {
+                settings: { customSections },
+              } = data;
               return (
                 <BedrockContextProvider value={cruxContext}>
                   <ThemeProvider theme={cruxContext.theme}>
@@ -199,51 +192,6 @@ class App extends React.Component {
                               <LoadablePageBuilderLandingPage {...props} />
                             )}
                           />
-                          {this.state.sections.map(section => (
-                            <Route
-                              key={section.id}
-                              path={`${BASE_PATHS.CUSTOM_PAGES}/${
-                                section.id
-                              }/:id`}
-                              render={({ match, ...rest }) => (
-                                <LoadableCustomSectionPage
-                                  {...rest}
-                                  key={match.params.id}
-                                  id={match.params.id}
-                                  sectionId={section.id}
-                                />
-                              )}
-                            />
-                          ))}
-                          <Route
-                            path={BASE_PATHS.DESIGN_TOKENS}
-                            exact
-                            render={() => {
-                              const [firstTokenGroup] = data.tokenGroups;
-                              if (firstTokenGroup) {
-                                return (
-                                  <Redirect
-                                    to={`${BASE_PATHS.DESIGN_TOKENS}/${
-                                      firstTokenGroup.id
-                                    }`}
-                                  />
-                                );
-                              }
-                              return (
-                                <LoadableBadRoute
-                                  title="No Design Tokens Found"
-                                  subtitle="Not so fast"
-                                  message="We're having trouble finding your design tokens. Make sure you've properly configured `bedrock.config.js` to point to your entry design token yaml file, and that you've properly defined your design tokens. See the documentation at getbedrock.com for more details."
-                                />
-                              );
-                            }}
-                          />
-                          <Route
-                            path={`${BASE_PATHS.DESIGN_TOKENS}/all`}
-                            exact
-                            render={props => <LoadableAllTokens {...props} />}
-                          />
-
                           <Route
                             path={BASE_PATHS.PATTERNS}
                             exact
@@ -279,15 +227,6 @@ class App extends React.Component {
                               )}
                             />
                           )}
-                          <Route
-                            path={`${BASE_PATHS.DESIGN_TOKENS}/:id`}
-                            render={({ match }) => (
-                              <LoadableDesignTokenGroup
-                                id={match.params.id}
-                                key={match.params.id}
-                              />
-                            )}
-                          />
                           <Route
                             path={`${BASE_PATHS.DOCS}/:id`}
                             render={({ match }) => (
@@ -364,6 +303,27 @@ class App extends React.Component {
                             path="/changelog"
                             component={LoadableChangelogPage}
                           />
+                          {customSections &&
+                            customSections.map(section =>
+                              section.pages.map(page => {
+                                const path = `/${section.id}/${page.id}`;
+                                return (
+                                  <Route
+                                    key={path}
+                                    path={path}
+                                    render={() => (
+                                      <LoadableCustomPage
+                                        path={path}
+                                        sectionTitle={section.title}
+                                        sectionId={section.id}
+                                        title={page.title}
+                                        pageId={page.id}
+                                      />
+                                    )}
+                                  />
+                                );
+                              }),
+                            )}
                           <Route path="*" render={() => <LoadableBadRoute />} />
                           <Redirect to="/" />
                         </Switch>

@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "@basalt/bedrock-core": "^0.29.0",
-    "react-jsonschema-form": "1.0.7"
+    "react-jsonschema-form": "1.0.7",
+    "shortid": "^2.2.14"
   },
   "devDependencies": {
     "prop-types": "^15.0.0",

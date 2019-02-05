@@ -29,12 +29,12 @@ function NavList({ items }) {
               className={`nav-list__item nav-list__item--${
                 isHeading ? 'heading' : 'subheading'
               }`}
-              key={id}
+              key={id + path}
             >
               <h4>{path ? <NavLink to={path}>{title}</NavLink> : title}</h4>
             </li>
           ) : (
-            <li className="nav-list__item" key={id}>
+            <li className="nav-list__item" key={id + path}>
               <NavLink to={path} exact>
                 {title}
               </NavLink>

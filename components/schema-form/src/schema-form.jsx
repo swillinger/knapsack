@@ -8,7 +8,7 @@ import ObjectFieldTemplate from './custom-templates/custom-object';
 import CustomArrayField from './custom-templates/array-field';
 import CustomField from './custom-templates/custom-field';
 import CheckboxWidget from './custom-templates/checkbox-widget';
-import CheckboxesWidget from './custom-templates/checkboxes-widget';
+// import CheckboxesWidget from './custom-templates/checkboxes-widget';
 
 /* eslint-disable no-console */
 export default class SchemaForm extends React.Component {
@@ -58,7 +58,7 @@ export default class SchemaForm extends React.Component {
           widgets={{
             // can add any of our own OR replace any of these core ones: https://github.com/mozilla-services/react-jsonschema-form/tree/master/src/components/widgets
             CheckboxWidget,
-            CheckboxesWidget,
+            // CheckboxesWidget,
           }}
         >
           {!this.props.hasSubmit && <span />}

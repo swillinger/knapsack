@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Toggle } from '@basalt/bedrock-atoms';
+import shortid from 'shortid';
 
 function selectValue(value, selected, all) {
   const at = all.indexOf(value);
@@ -31,7 +32,7 @@ function CheckboxesWidget(props) {
           enumDisabled && enumDisabled.indexOf(option.value) !== -1;
         const disabledCls =
           disabled || itemDisabled || readonly ? 'disabled' : '';
-        const itemId = `${id}_${index}`;
+        const itemId = `${id}_${index}_${shortid.generate()}`;
         return (
           <div
             style={{

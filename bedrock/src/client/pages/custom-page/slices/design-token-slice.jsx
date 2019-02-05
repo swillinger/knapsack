@@ -85,7 +85,7 @@ export const designTokenDemoSlice = {
      */
     getTags(tokens) {
       const allTags = new Set();
-      tokens.forEach(({ tags = [] }) => allTags.add(...tags));
+      tokens.forEach(({ tags = [] }) => tags.forEach(t => allTags.add(t)));
       return [...allTags].filter(Boolean);
     }
 

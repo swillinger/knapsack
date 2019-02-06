@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { convertColor, hasOpacity } from '@basalt/bedrock-utils';
-import { Select } from '@basalt/bedrock-atoms';
+import { convertColor, hasOpacity, parseColor } from '@basalt/bedrock-utils';
+import { Select, Button } from '@basalt/bedrock-atoms';
 import {
   SwatchWrapper,
   RightLabel,
@@ -12,6 +12,36 @@ import {
   CopyToClipboardWrapper,
   SwatchesWrapper,
 } from './color-swatch.styles';
+
+/**
+ * Creates Sketch Palette file format from tokens
+ * Requires Sketch Palettes plugin
+ * @link https://github.com/andrewfiorillo/sketch-palettes
+ * @param {BedrockDesignToken[]} tokens
+ * @return {string}
+ */
+function tokensToSketchPalettes(tokens) {
+  return JSON.stringify({
+    compatibleVersion: '2.0',
+    pluginVersion: '2.14',
+    // {
+    //   red: 0.035,
+    //   green: 0.11800000000000001,
+    //   blue: 0.259,
+    //   alpha: 0.019999999552965164,
+    // },
+    colors: tokens.map(({ value }) => {
+      const color = convertColor(value, 'rgb');
+      const { r, g, b, alpha = 1 } = parseColor(color);
+      return {
+        red: r / 255,
+        green: g / 255,
+        blue: b / 255,
+        alpha,
+      };
+    }),
+  });
+}
 
 const ColorSwatch = ({ color, format }) => {
   const colorValue = convertColor(color.value, format);
@@ -94,6 +124,11 @@ class ColorSwatches extends Component {
   }
 
   render() {
+    const blob = new window.Blob([tokensToSketchPalettes(this.props.colors)], {
+      type: 'application/json',
+    });
+    const blobURL = window.URL.createObjectURL(blob);
+
     const colorSwatches = this.props.colors.map(color => (
       <ColorSwatch key={color.name} color={color} format={this.state.format} />
     ));
@@ -113,6 +148,21 @@ class ColorSwatches extends Component {
               this.setState({ format: value });
             }}
           />
+          <div style={{ marginLeft: 'auto' }}>
+            <span>
+              <a
+                href="https://github.com/andrewfiorillo/sketch-palettes"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Sketch Palette plugin
+              </a>{' '}
+              format:{' '}
+            </span>
+            <a href={blobURL} download="my-sketch.sketchpalette">
+              <Button>Download Sketch Palette</Button>
+            </a>
+          </div>
         </RightLabel>
         <SwatchesWrapper>{colorSwatches}</SwatchesWrapper>
       </div>

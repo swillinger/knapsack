@@ -66,6 +66,14 @@ export function convertColor(initialColor, format) {
 }
 
 /**
+ * @param {string} color
+ * @return {Object}
+ */
+export function parseColor(color) {
+  return Color(color).object();
+}
+
+/**
  * Has Opacity
  * Returns true if a color has opacity
  * @param {string} color - Css color string in any format

@@ -64,3 +64,8 @@ export function convertColor(initialColor, format) {
       return initialColor;
   }
 }
+
+export function hasOpacity(color) {
+  const theColor = Color(color);
+  return !!(theColor.rgb().array().length === 4);
+}

@@ -51,7 +51,6 @@ export const SwatchColor = styled.div`
 export const SwatchInfo = styled.div`
   padding: 5px;
   background-color: ${props => (props.colorValue ? props.colorValue : 'auto')};
-  margin-top: auto;
 `;
 
 export const RightLabel = styled.div`

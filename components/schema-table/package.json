@@ -16,11 +16,11 @@
   },
   "devDependencies": {
     "prop-types": "^15.0.0",
-    "react": "^16.6.0"
+    "react": "^16.8.0"
   },
   "peerDependencies": {
     "prop-types": "^15.0.0",
-    "react": "^16.6.0",
+    "react": "^16.8.0",
     "styled-components": "^4.0.2"
   },
   "files": [

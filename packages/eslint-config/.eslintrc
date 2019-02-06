@@ -6,7 +6,7 @@
     "prettier/react"
     //    "plugin:promise/recommended" @todo turn this back and .then() fix every error
   ],
-  "plugins": ["prettier", "jest", "jsdoc", "promise", "graphql"],
+  "plugins": ["prettier", "jest", "jsdoc", "promise", "graphql", "react-hooks"],
   "env": {
     "jest/globals": true
   },
@@ -47,6 +47,7 @@
       "forbid": ["any", "array"]
     }],
     "react/jsx-key": [2],
+    "react-hooks/rules-of-hooks": "error",
     "react/no-array-index-key": [2],
     "react/no-danger": [0],
     "react/require-extension": [0],

@@ -59,6 +59,11 @@ const ColorSwatch = ({ color, format }) => {
             </CopyToClipboardWrapper>
           </h6>
         )}
+        {color.comment && (
+          <p>
+            <small>{color.comment}</small>
+          </p>
+        )}
       </SwatchInfo>
       <SwatchColorGradientBackground>
         <SwatchColor

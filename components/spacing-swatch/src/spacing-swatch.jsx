@@ -1,19 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connectToContext } from '@basalt/bedrock-core';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { SpacingOuter, SpacingWrapper } from './spacing-swatch.styles';
+import { CopyToClipboardWrapper } from '../../color-swatch/src/color-swatch.styles';
 
 const SpacingSwatch = ({ space, color }) => (
   <SpacingWrapper>
     <SpacingOuter space={space.value} color={color} />
     <div>
-      <h5>
-        Name: <code>{space.name}</code>
-      </h5>
-      <h5>
-        Value: <code>{space.value}</code>
-      </h5>
+      {space.code && (
+        <h6>
+          <CopyToClipboardWrapper>
+            <CopyToClipboard
+              text={space.code}
+              onCopy={() => window.alert(`"${space.code}" copied to clipboard`)} // @todo improve
+            >
+              <code>{space.code}</code>
+            </CopyToClipboard>
+          </CopyToClipboardWrapper>
+          <br />
+          <CopyToClipboardWrapper>
+            <CopyToClipboard
+              text={space.value}
+              onCopy={() =>
+                window.alert(`"${space.value}" copied to clipboard`)
+              } // @todo improve
+            >
+              <code>{space.value}</code>
+            </CopyToClipboard>
+          </CopyToClipboardWrapper>
+          {space.comment && (
+            <h6>
+              <small>{space.comment}</small>
+            </h6>
+          )}
+        </h6>
+      )}
     </div>
+    <div />
   </SpacingWrapper>
 );
 

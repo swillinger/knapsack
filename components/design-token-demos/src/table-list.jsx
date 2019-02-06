@@ -12,6 +12,10 @@ export const DesignTokenTable = ({ tokens }) => {
       data={tokens}
       columns={[
         {
+          Header: 'Code',
+          accessor: 'code',
+        },
+        {
           Header: 'Value',
           accessor: 'value',
         },
@@ -22,10 +26,6 @@ export const DesignTokenTable = ({ tokens }) => {
         {
           Header: 'Tags',
           accessor: 'tags',
-        },
-        {
-          Header: 'Code',
-          accessor: 'code',
         },
         {
           Header: 'Comments',

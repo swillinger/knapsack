@@ -12,10 +12,6 @@ export const DesignTokenTable = ({ tokens }) => {
       data={tokens}
       columns={[
         {
-          Header: 'Name',
-          accessor: 'name',
-        },
-        {
           Header: 'Value',
           accessor: 'value',
         },
@@ -24,8 +20,16 @@ export const DesignTokenTable = ({ tokens }) => {
           accessor: 'category',
         },
         {
+          Header: 'Tags',
+          accessor: 'tags',
+        },
+        {
           Header: 'Code',
           accessor: 'code',
+        },
+        {
+          Header: 'Comments',
+          accessor: 'comment',
         },
       ]}
       showPagination={false}

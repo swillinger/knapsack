@@ -64,3 +64,14 @@ export function convertColor(initialColor, format) {
       return initialColor;
   }
 }
+
+/**
+ * Has Opacity
+ * Returns true if a color has opacity
+ * @param {string} color - Css color string in any format
+ * @return {boolean} - Returns true if the color has opacity, false if it is solid
+ */
+export function hasOpacity(color) {
+  const theColor = Color(color);
+  return !!(theColor.rgb().array().length === 4);
+}

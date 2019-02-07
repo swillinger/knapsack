@@ -49,6 +49,32 @@ const saveQuery = gql`
   }
 `;
 
+const AddSliceForm = ({ addSlice, index }) => (
+  <SchemaForm
+    schema={{
+      type: 'object',
+      $schema: 'http://json-schema.org/draft-07/schema',
+      properties: {
+        slice: {
+          title: 'Add Slice',
+          type: 'string',
+          enum: bedrockSlices.map(b => b.id),
+          enumNames: bedrockSlices.map(b => b.title || b.id),
+        },
+      },
+    }}
+    onChange={({ formData }) => {
+      if (!formData.slice) return;
+      addSlice(index, formData.slice);
+    }}
+  />
+);
+
+AddSliceForm.propTypes = {
+  addSlice: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
+};
+
 class CustomPage extends React.Component {
   static contextType = BedrockContext;
 
@@ -65,6 +91,7 @@ class CustomPage extends React.Component {
     this.moveSliceUp = this.moveSliceUp.bind(this);
     this.deleteSlice = this.deleteSlice.bind(this);
     this.setSliceData = this.setSliceData.bind(this);
+    this.addSlice = this.addSlice.bind(this);
   }
 
   componentDidMount() {
@@ -96,6 +123,25 @@ class CustomPage extends React.Component {
       prevState.slices.splice(index, 1, {
         ...oldSlice,
         data,
+      });
+      return {
+        slices: prevState.slices,
+      };
+    });
+  }
+
+  /**
+   * @param {number} index
+   * @param {string} sliceId
+   * @return {void} - sets state
+   */
+  addSlice(index, sliceId) {
+    const slice = bedrockSlices.find(b => b.id === sliceId);
+    this.setState(prevState => {
+      prevState.slices.splice(index, 0, {
+        id: shortid.generate(),
+        blockId: sliceId,
+        data: slice.initialData,
       });
       return {
         slices: prevState.slices,
@@ -193,50 +239,27 @@ class CustomPage extends React.Component {
           )}
         </header>
 
-        {isEditing && (
-          <SchemaForm
-            schema={{
-              type: 'object',
-              $schema: 'http://json-schema.org/draft-07/schema',
-              properties: {
-                slice: {
-                  title: 'Add Slice',
-                  type: 'string',
-                  enum: bedrockSlices.map(b => b.id),
-                  enumNames: bedrockSlices.map(b => b.title || b.id),
-                },
-              },
-            }}
-            onChange={({ formData }) => {
-              if (!formData.slice) return;
-              const slice = bedrockSlices.find(b => b.id === formData.slice);
-              this.setState(prevState => ({
-                slices: [
-                  {
-                    id: shortid.generate(),
-                    blockId: formData.slice,
-                    data: slice.initialData,
-                  },
-                  ...prevState.slices,
-                ],
-              }));
-            }}
-          />
-        )}
-
         {slices.map((slice, sliceIndex) => (
-          <CustomSlice
-            key={slice.id}
-            slice={slice}
-            sliceIndex={sliceIndex}
-            slicesLength={slices.length}
-            isEditing={isEditing}
-            setSliceData={this.setSliceData}
-            deleteSlice={this.deleteSlice}
-            moveSliceUp={this.moveSliceUp}
-            moveSliceDown={this.moveSliceDown}
-          />
+          <>
+            {isEditing && (
+              <AddSliceForm addSlice={this.addSlice} index={sliceIndex} />
+            )}
+            <CustomSlice
+              key={slice.id}
+              slice={slice}
+              sliceIndex={sliceIndex}
+              slicesLength={slices.length}
+              isEditing={isEditing}
+              setSliceData={this.setSliceData}
+              deleteSlice={this.deleteSlice}
+              moveSliceUp={this.moveSliceUp}
+              moveSliceDown={this.moveSliceDown}
+            />
+          </>
         ))}
+        {isEditing && (
+          <AddSliceForm addSlice={this.addSlice} index={slices.length} />
+        )}
       </PageWithSidebar>
     );
   }

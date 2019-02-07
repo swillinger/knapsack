@@ -52,6 +52,7 @@ function PatternTemplateSlice({
   const schemaProps = {
     patternId: {
       type: 'string',
+      title: 'Pattern',
       enum: patterns.map(p => p.id),
       enumNames: patterns.map(p => p.meta.title),
     },
@@ -61,6 +62,7 @@ function PatternTemplateSlice({
     const { templates } = patterns.find(p => p.id === patternId);
     schemaProps.templateId = {
       type: 'string',
+      title: 'Template',
       enum: templates.map(t => t.id),
       enumNames: templates.map(t => t.title),
       default: templates.map(t => t.id)[0],

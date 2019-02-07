@@ -22,9 +22,8 @@ const webpack = require('webpack');
 // const Visualizer = require('webpack-visualizer-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlTemplate = require('html-webpack-template');
 const DashboardPlugin = require('webpack-dashboard/plugin');
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const WebappWebpackPlugin = require('webapp-webpack-plugin');
 const { resolve } = require('path');
 // const bedrockSettingsSchema = require('../schemas/bedrock.config.schema.json');
 const features = require('../lib/features');
@@ -131,7 +130,6 @@ function createWebPackConfig(userConfig) {
     // stats: 'none',
     plugins: [
       // new Stylish(), @todo consider re-enabling later, needed to for debugging
-      new webpack.NamedModulesPlugin(),
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify(process.env.NODE_ENV),
@@ -140,25 +138,21 @@ function createWebPackConfig(userConfig) {
       }),
       // new Visualizer(), // view at output-dir/stats.html
       new DashboardPlugin(),
-      new FaviconsWebpackPlugin(
+      new WebappWebpackPlugin(
         resolve(__dirname, '../client/assets/favicon.png'),
       ),
       // https://github.com/jaketrent/html-webpack-template
       // template: https://github.com/jaketrent/html-webpack-template/blob/master/index.ejs
       new HtmlWebpackPlugin({
-        template: HtmlTemplate,
-        inject: false,
+        // template: HtmlTemplate,
+        inject: true,
         // title: config.settings.site.title,
         title: 'Bedrock',
         appMountId: 'app',
         cache: false,
         mobile: true,
+        hash: true,
         filename: '../index.html',
-        links: [
-          // code highlighting styles
-          'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/darcula.min.css',
-        ],
-        scripts: [].filter(x => x),
         window: {
           //   bedrockSettings: config.settings,
           bedrock: {
@@ -185,6 +179,7 @@ function createWebPackConfig(userConfig) {
     optimization: {
       minimize: isProd,
       // minimizer: [new TerserPlugin()],
+      namedModules: true,
       namedChunks: true,
       runtimeChunk: 'single',
       // https://itnext.io/react-router-and-webpack-v4-code-splitting-using-splitchunksplugin-f0a48f110312

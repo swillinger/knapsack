@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import gql from 'graphql-tag';
 import SchemaForm from '@basalt/bedrock-schema-form';
-import PatternStage from '../../pattern-view/pattern-stage';
+import TemplateView from '../../pattern-view/template-view';
 import { gqlQuery } from '../../../data';
 
 // @todo remove this and fix
@@ -12,10 +12,7 @@ function PatternTemplateSlice({
   setSliceData,
   data: sliceData = {},
 }) {
-  const [formData, setFormData] = useState({
-    patternId: sliceData.patternId,
-    templateId: sliceData.templateId,
-  });
+  const [formData, setFormData] = useState(sliceData);
   const [patterns, setPatterns] = useState([]);
 
   useEffect(() => {
@@ -46,10 +43,11 @@ function PatternTemplateSlice({
   }, []);
   if (patterns.length === 0) return <div>Loading...</div>;
 
-  const { patternId, templateId } = formData;
-  let templateSchema;
-  let templateData;
-  let hasSchema = false;
+  const {
+    patternId,
+    templateId,
+    options: { showReadme, demoSize, showSchemaForm } = {},
+  } = formData;
 
   const schemaProps = {
     patternId: {
@@ -67,15 +65,31 @@ function PatternTemplateSlice({
       enumNames: templates.map(t => t.title),
       default: templates.map(t => t.id)[0],
     };
-    if (templateId) {
-      const template = templates.find(t => t.id === templateId);
-      templateData = template.demoDatas ? template.demoDatas[0] : {};
-      if (template.schema) {
-        templateSchema = template.schema;
-        hasSchema = true;
-      }
-    }
   }
+
+  schemaProps.options = {
+    type: 'object',
+    title: 'Display Options',
+    properties: {
+      showReadme: {
+        type: 'boolean',
+        title: 'Show Readme',
+        default: true,
+      },
+      showSchemaForm: {
+        type: 'boolean',
+        title: 'Show Schema Form',
+        default: true,
+      },
+      demoSize: {
+        type: 'string',
+        title: 'Demo Size',
+        enum: ['s', 'm', 'l', 'full'],
+        enumNames: ['Small', 'Medium', 'Large', 'Full'],
+        default: 'l',
+      },
+    },
+  };
 
   return (
     <div>
@@ -88,15 +102,7 @@ function PatternTemplateSlice({
             properties: schemaProps,
           }}
           uiSchema={{
-            classNames: 'rjsf-custom-object-grid-2',
-            tokens: {
-              tags: {
-                'ui:widget': 'checkboxes',
-                'ui:options': {
-                  inline: true,
-                },
-              },
-            },
+            classNames: 'rjsf-custom-object-grid-3',
           }}
           onChange={({ formData: newFormData }) => {
             if (newFormData.patternId === formData.patternId) {
@@ -121,13 +127,14 @@ function PatternTemplateSlice({
 
       <div>
         {patternId && templateId && (
-          <PatternStage
+          <TemplateView
             templateId={templateId}
-            patternId={patternId}
-            schema={templateSchema}
-            data={templateData}
-            hasSchema={hasSchema}
-            handleNewData={() => {}}
+            id={patternId}
+            isVerbose={false}
+            isReadmeShown={showReadme}
+            demoSize={demoSize}
+            isTitleShown={false}
+            isSchemaFormShown={showSchemaForm}
           />
         )}
       </div>

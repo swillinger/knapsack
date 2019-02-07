@@ -81,36 +81,6 @@ class TemplateView extends Component {
       demoDataIndex: 0,
       data: null,
     };
-    // this.setData = this.setData.bind(this);
-  }
-
-  componentDidMount() {
-    const { websocketsPort } = this.context.meta;
-    if (this.context.features.enableTemplatePush && websocketsPort) {
-      this.socket = new window.WebSocket(`ws://localhost:${websocketsPort}`);
-
-      // this.socket.addEventListener('open', event => {
-      //   this.socket.send('Hello Server!', event);
-      // });
-
-      this.socket.addEventListener('message', event => {
-        const { ext } = JSON.parse(event.data);
-        // console.log('Message from server ', ext, event.data);
-        if (ext !== '.twig') {
-          // @todo improve. Need to refresh data.
-          // this.setState({ meta: null });
-        }
-      });
-    }
-  }
-
-  componentWillUnmount() {
-    if (
-      this.context.features.enableTemplatePush &&
-      this.context.meta.websocketsPort
-    ) {
-      this.socket.close(1000, 'componentWillUnmount called');
-    }
   }
 
   render() {
@@ -166,7 +136,9 @@ class TemplateView extends Component {
             <>
               <OverviewWrapper>
                 <FlexWrapper>
-                  {!this.props.isVerbose && <h3>{title}</h3>}
+                  {!this.props.isVerbose && this.props.isTitleShown && (
+                    <h3>{title}</h3>
+                  )}
                   <DemoGridControls>
                     <Button>
                       <a
@@ -227,6 +199,7 @@ class TemplateView extends Component {
                 <PatternStage
                   templateId={templateId}
                   hasSchema={hasSchema}
+                  isSchemaFormShown={this.props.isSchemaFormShown}
                   key={`${patternId}-${templateId}`}
                   schema={schema}
                   uiSchema={uiSchema}
@@ -242,7 +215,7 @@ class TemplateView extends Component {
                 />
               </OverviewWrapper>
 
-              {readme && (
+              {this.props.isReadmeShown && readme && (
                 <Mutation
                   mutation={updateReadme}
                   refetchQueries={() => [
@@ -338,6 +311,9 @@ class TemplateView extends Component {
 TemplateView.defaultProps = {
   isVerbose: true,
   demoSize: 'full',
+  isReadmeShown: true,
+  isTitleShown: true,
+  isSchemaFormShown: true,
 };
 
 TemplateView.propTypes = {
@@ -345,6 +321,9 @@ TemplateView.propTypes = {
   templateId: PropTypes.string.isRequired,
   isVerbose: PropTypes.bool,
   demoSize: PropTypes.string,
+  isReadmeShown: PropTypes.bool,
+  isTitleShown: PropTypes.bool,
+  isSchemaFormShown: PropTypes.bool,
 };
 
 export default TemplateView;

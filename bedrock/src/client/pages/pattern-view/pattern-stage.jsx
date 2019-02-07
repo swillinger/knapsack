@@ -51,6 +51,8 @@ class PatternStage extends React.Component {
   }
 
   render() {
+    const isSchemaFormShown =
+      this.props.hasSchema && this.props.isSchemaFormShown;
     return (
       <>
         <DemoGrid size={this.props.demoSize}>
@@ -66,7 +68,7 @@ class PatternStage extends React.Component {
               />
             </Resizable>
           </DemoStage>
-          {this.props.hasSchema && (
+          {isSchemaFormShown && (
             <SchemaFormWrapper size={this.props.demoSize}>
               <SchemaFormWrapperInner size={this.props.demoSize}>
                 <h4>Edit Form</h4>
@@ -133,6 +135,7 @@ PatternStage.defaultProps = {
   demoSize: 'l',
   uiSchema: {},
   isInline: false,
+  isSchemaFormShown: false,
 };
 
 PatternStage.propTypes = {
@@ -142,6 +145,7 @@ PatternStage.propTypes = {
   schema: PropTypes.object.isRequired,
   uiSchema: PropTypes.object,
   isInline: PropTypes.bool,
+  isSchemaFormShown: PropTypes.bool,
   hasSchema: PropTypes.bool.isRequired,
   demoSize: PropTypes.string,
   handleNewData: PropTypes.func.isRequired,

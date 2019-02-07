@@ -55,7 +55,7 @@ export const DosAndDontsWrapper = styled.div`
     justify-content: space-between;
     padding: 0;
     & > * {
-      max-width: 50%;
+      width: 50%;
     }
   }
 `;

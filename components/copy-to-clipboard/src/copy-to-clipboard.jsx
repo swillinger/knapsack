@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { CopyToClipboard as ReactCopyToClipboard } from 'react-copy-to-clipboard';
-import { CopiedText } from './copy-to-clipboard.styles';
 
 function CopyToClipboard(props) {
   const { snippet } = props;
   const [hadCopied, setHasCopied] = useState(false);
 
+  const codeStyle = {
+    transition: 'background-color ease-in-out .5s',
+  };
+
+  if (hadCopied) {
+    codeStyle.backgroundColor = '#6ed300';
+  }
   return (
     <span style={{ cursor: 'pointer' }}>
       <ReactCopyToClipboard
@@ -16,9 +22,10 @@ function CopyToClipboard(props) {
           setTimeout(() => setHasCopied(false), 2000);
         }}
       >
-        <code>{snippet}</code>
+        <code title="Click to copy" style={codeStyle}>
+          {hadCopied ? 'Copied' : snippet}
+        </code>
       </ReactCopyToClipboard>
-      <CopiedText hasCopied={hadCopied}>Copied</CopiedText>
     </span>
   );
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import SchemaForm from '@basalt/bedrock-schema-form';
+import CopyToClipboard from '@basalt/bedrock-copy-to-clipboard';
 import {
   DesignTokenTable,
   // AnimationDemo,
@@ -10,7 +11,6 @@ import {
   // FontFamilyDemo,
   // FontSizeDemo,
   // FontWeightDemo,
-  RawValuesDemo,
   SpacingDemo,
   TextColorDemo,
   TextShadowDemo,
@@ -41,11 +41,6 @@ const demos = [
     render: props => <ColorSwatches colors={props.tokens} />,
   },
   {
-    id: 'background-color',
-    title: 'Background Color (duplicate of Color Swatches @todo remove)',
-    render: props => <ColorSwatches colors={props.tokens} />,
-  },
-  {
     id: 'spacing',
     title: 'Spacing',
     render: SpacingDemo,
@@ -61,9 +56,22 @@ const demos = [
     title: 'Table List',
   },
   {
-    id: 'raw-values',
-    title: 'Raw Values',
-    render: RawValuesDemo,
+    id: 'simple-list',
+    title: 'Simple List',
+    render: ({ tokens }) => {
+      if (!tokens) return null;
+      return (
+        <ul>
+          {tokens.map(token => (
+            <li key={token.name}>
+              <CopyToClipboard snippet={token.code} /> -{' '}
+              <CopyToClipboard snippet={token.value} />{' '}
+              {token.comment && <span> {token.comment}</span>}
+            </li>
+          ))}
+        </ul>
+      );
+    },
   },
   {
     id: 'box-shadow',
@@ -89,6 +97,18 @@ const demos = [
     id: 'border-radius',
     title: 'Border Radius',
     render: BorderRadiusDemo,
+  },
+  {
+    id: 'raw-values',
+    title: 'Raw Values',
+    render: ({ tokens }) => (
+      <details open>
+        <summary>Raw Values</summary>
+        <pre>
+          <code>{JSON.stringify(tokens, null, '  ')}</code>
+        </pre>
+      </details>
+    ),
   },
   // {
   //   id: 'font-family',

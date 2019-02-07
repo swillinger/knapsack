@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-// to be kept inline with `DesignToken[]`
+// to be kept inline with `BedrockDesignToken[]`
 export const demoPropTypes = {
   tokens: PropTypes.arrayOf(
     PropTypes.shape({

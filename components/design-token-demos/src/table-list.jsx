@@ -2,7 +2,6 @@ import React from 'react';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import { containsString } from '@basalt/bedrock-utils';
-import { TOKEN_CATS } from '../constants';
 import { demoPropTypes } from './utils';
 
 export const DesignTokenTable = ({ tokens }) => {
@@ -44,7 +43,5 @@ export const DesignTokenTable = ({ tokens }) => {
     />
   );
 };
-
-DesignTokenTable.tokenCategory = TOKEN_CATS.TABLE_LIST;
 
 DesignTokenTable.propTypes = demoPropTypes;

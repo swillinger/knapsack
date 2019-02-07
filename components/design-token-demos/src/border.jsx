@@ -1,8 +1,8 @@
 import React from 'react';
-import { TOKEN_CATS } from '../constants';
 import { demoPropTypes } from './utils';
+import { BordersDemoBox } from './styles';
 
-export const HrColorDemo = ({ tokens }) => {
+export const BorderDemo = ({ tokens }) => {
   if (!tokens) return null;
   return tokens.map(token => (
     <div key={token.name}>
@@ -11,17 +11,13 @@ export const HrColorDemo = ({ tokens }) => {
         <code>: {token.value}</code>
       </h4>
       {token.comment && <small>{token.comment}</small>}
-      <hr
+      <BordersDemoBox
         style={{
-          borderColor: token.value,
-          borderWidth: '1px',
-          borderStyle: 'solid',
+          border: token.value,
         }}
       />
     </div>
   ));
 };
 
-HrColorDemo.tokenCategory = TOKEN_CATS.HR_COLOR;
-
-HrColorDemo.propTypes = demoPropTypes;
+BorderDemo.propTypes = demoPropTypes;

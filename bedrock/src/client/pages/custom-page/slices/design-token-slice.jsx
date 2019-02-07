@@ -1,8 +1,22 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { plugins } from '@basalt/bedrock-core';
 import SchemaForm from '@basalt/bedrock-schema-form';
-import { TOKEN_CATS } from '@basalt/bedrock-design-token-demos/constants';
+import {
+  DesignTokenTable,
+  // AnimationDemo,
+  BorderRadiusDemo,
+  BorderDemo,
+  BoxShadowDemo,
+  // FontFamilyDemo,
+  // FontSizeDemo,
+  // FontWeightDemo,
+  RawValuesDemo,
+  SpacingDemo,
+  TextColorDemo,
+  TextShadowDemo,
+} from '@basalt/bedrock-design-token-demos';
+import ColorSwatches from '@basalt/bedrock-color-swatch';
+import BreakpointsDemo from '@basalt/bedrock-breakpoints-demo';
 import { gqlQuery } from '../../../data';
 import { containsString } from '../../../utils/string-helpers';
 
@@ -19,6 +33,74 @@ import { containsString } from '../../../utils/string-helpers';
 function hasItemsInItems(arrayA, arrayB) {
   return arrayA.some(a => arrayB.includes(a));
 }
+
+const demos = [
+  {
+    id: 'color-swatch',
+    title: 'Color Swatches',
+    render: props => <ColorSwatches colors={props.tokens} />,
+  },
+  {
+    id: 'spacing',
+    title: 'Spacing',
+    render: SpacingDemo,
+  },
+  {
+    id: 'media-query',
+    title: 'Media Queries',
+    render: props => <BreakpointsDemo breakpoints={props.tokens} />,
+  },
+  {
+    render: DesignTokenTable,
+    id: 'table-list',
+    title: 'Table List',
+  },
+  {
+    id: 'raw-values',
+    title: 'Raw Values',
+    render: RawValuesDemo,
+  },
+  {
+    id: 'box-shadow',
+    title: 'Box Shadow',
+    render: BoxShadowDemo,
+  },
+  {
+    id: 'text-shadow',
+    title: 'Text Shadow',
+    render: TextShadowDemo,
+  },
+  {
+    id: 'text-color',
+    title: 'Text Color',
+    render: TextColorDemo,
+  },
+  {
+    id: 'border',
+    title: 'Border',
+    render: BorderDemo,
+  },
+  {
+    id: 'border-radius',
+    title: 'Border Radius',
+    render: BorderRadiusDemo,
+  },
+  // {
+  //   id: 'font-family',
+  //   title: 'Font Family',
+  //   render: FontFamilyDemo,
+  // },
+  // {
+  //   id: 'font-size',
+  //   title: 'Font Size',
+  //   render: FontSizeDemo,
+  // },
+  // {
+  //   id: 'font-weight',
+  //   title: 'font-weight',
+  //   render: FontWeightDemo,
+  // },
+];
 
 export const designTokenDemoSlice = {
   id: 'design-token-slice',
@@ -129,13 +211,26 @@ export const designTokenDemoSlice = {
         tokens = tokens.filter(t => containsString(t.name, name));
       }
 
-      let Demo = () => <p>no demo...</p>;
-      const designTokenCategoryDemo = plugins.designTokenCategoryDemos[demoId];
-      if (designTokenCategoryDemo) {
-        Demo = designTokenCategoryDemo.render;
-      }
+      let Demo = () => (
+        <div>
+          <p>
+            No demo with id <code>{demoId}</code> found, it should be one of
+            these:
+          </p>
+          <ul>
+            {demos.map(d => (
+              <li key={d.id}>
+                <code>{d.id}</code>
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
 
-      const availableDemoIds = Object.values(TOKEN_CATS);
+      const demo = demos.find(d => d.id === demoId);
+      if (demo) {
+        Demo = demo.render;
+      }
 
       return (
         <div>
@@ -181,7 +276,8 @@ export const designTokenDemoSlice = {
                       id: {
                         type: 'string',
                         title: 'Demo',
-                        enum: availableDemoIds,
+                        enum: demos.map(d => d.id),
+                        enumNames: demos.map(d => d.title),
                         default: 'raw-values',
                       },
                     },

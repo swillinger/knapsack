@@ -16,42 +16,10 @@
  */
 import global from 'global';
 
-/**
- * @typedef {Object} DesignTokenPage
- * @prop {string} id
- * @prop {string} title
- * @prop {string} path
- * @prop {string} [description]
- * @prop {string[]} tokenCategories
- * @prop {() => React.ReactElement} render
- */
-
-/**
- * @typedef {Object} DesignTokenGroup
- * @prop {string} id
- * @prop {() => React.ReactElement} render
- */
-
 class PluginStore {
   constructor() {
     this.plugins = {};
     this.homePage = null;
-    this.designTokenCategoryDemos = {};
-    this.designTokensGroupPages = {};
-  }
-
-  /**
-   * @return {DesignTokenPage[]}
-   */
-  get designTokensPages() {
-    return Object.values(this.designTokensGroupPages);
-  }
-
-  /**
-   * @return {DesignTokenGroup[]}
-   */
-  get designTokensCategoryDemos() {
-    return Object.values(this.designTokenCategoryDemos);
   }
 
   /**
@@ -72,35 +40,6 @@ class PluginStore {
    */
   setHomePage({ render }) {
     this.homePage = { render };
-  }
-
-  /**
-   * @param {DesignTokenGroup} opt
-   * @return {void}
-   */
-  addDesignTokenCategoryDemo({ id, render }) {
-    this.designTokenCategoryDemos[id] = { id, render };
-  }
-
-  /**
-   * @param {DesignTokenPage} config
-   * @return {void}
-   */
-  addDesignTokensGroupPage({
-    id,
-    title,
-    description = '',
-    tokenCategories,
-    render,
-  }) {
-    this.designTokensGroupPages[id] = {
-      id,
-      title,
-      description,
-      path: `/design-tokens/${id}`,
-      tokenCategories,
-      render,
-    };
   }
 
   loadPlugins(api) {

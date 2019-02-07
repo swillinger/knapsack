@@ -62,11 +62,9 @@ function createWebPackConfig(userConfig) {
   /** @type {webpack.Configuration} */
   const webpackConfig = {
     entry: {
-      main: [
-        resolve(__dirname, '../client/'),
-        resolve(__dirname, '../client/design-tokens-setup'),
-        config.pluginSetupFile,
-      ].filter(x => x),
+      main: [resolve(__dirname, '../client/'), config.pluginSetupFile].filter(
+        x => x,
+      ),
     },
     output: {
       filename: '[name].bundle.[hash].js',

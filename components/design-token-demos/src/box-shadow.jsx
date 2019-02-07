@@ -1,7 +1,6 @@
 import React from 'react';
 import { CopyToClipboardWrapper } from '@basalt/bedrock-color-swatch/src/color-swatch.styles';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { TOKEN_CATS } from '../constants';
 import { demoPropTypes } from './utils';
 import { ShadowDemoBox } from './styles';
 
@@ -46,7 +45,5 @@ export const BoxShadowDemo = ({ tokens }) => {
     </ShadowDemoBox>
   ));
 };
-
-BoxShadowDemo.tokenCategory = TOKEN_CATS.BOX_SHADOW;
 
 BoxShadowDemo.propTypes = demoPropTypes;

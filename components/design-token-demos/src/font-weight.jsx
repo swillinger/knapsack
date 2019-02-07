@@ -1,5 +1,4 @@
 import React from 'react';
-import { TOKEN_CATS } from '../constants';
 import { demoPropTypes } from './utils';
 import { TypographyChildrenDemoWrapper } from './styles';
 
@@ -19,7 +18,5 @@ export const FontWeightDemo = ({ tokens }) => {
     </TypographyChildrenDemoWrapper>
   ));
 };
-
-FontWeightDemo.tokenCategory = TOKEN_CATS.FONT_WEIGHT;
 
 FontWeightDemo.propTypes = demoPropTypes;

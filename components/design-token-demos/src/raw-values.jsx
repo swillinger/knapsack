@@ -1,5 +1,4 @@
 import React from 'react';
-import { TOKEN_CATS } from '../constants';
 import { demoPropTypes } from './utils';
 
 export const RawValuesDemo = ({ tokens }) => {
@@ -25,7 +24,5 @@ export const RawValuesDemo = ({ tokens }) => {
     </ul>
   );
 };
-
-RawValuesDemo.tokenCategory = TOKEN_CATS.RAW_VALUES;
 
 RawValuesDemo.propTypes = demoPropTypes;

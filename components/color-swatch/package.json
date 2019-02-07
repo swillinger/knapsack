@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "@basalt/bedrock-atoms": "^0.30.0-alpha.0",
+    "@basalt/bedrock-copy-to-clipboard": "^0.30.0-alpha.0",
     "@basalt/bedrock-core": "^0.29.0",
-    "@basalt/bedrock-utils": "^0.30.0-alpha.0",
-    "react-copy-to-clipboard": "^5.0.1"
+    "@basalt/bedrock-utils": "^0.30.0-alpha.0"
   },
   "devDependencies": {
     "prop-types": "^15.0.0",

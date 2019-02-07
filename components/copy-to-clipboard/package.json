@@ -1,7 +1,7 @@
 {
   "name": "@basalt/bedrock-copy-to-clipboard",
   "license": "UNLICENSED",
-  "version": "0.30.0-alpha.0",
+  "version": "0.30.0-alpha.2",
   "description": "Wrapper that allows a user to click the content and copy-to-clipboard.",
   "module": "dist/copy-to-clipboard.js",
   "main": "dist/copy-to-clipboard.js",
@@ -21,12 +21,12 @@
   },
   "author": "Basalt (https://basalt.io/)",
   "dependencies": {
-    "@basalt/bedrock-atoms": "^0.30.0-alpha.0",
-    "@basalt/bedrock-breakpoints-demo": "^0.29.0",
-    "@basalt/bedrock-color-swatch": "^0.30.0-alpha.0",
-    "@basalt/bedrock-core": "^0.29.0",
-    "@basalt/bedrock-spacing-swatch": "^0.29.0",
-    "@basalt/bedrock-utils": "^0.30.0-alpha.0",
+    "@basalt/bedrock-atoms": "^0.30.0-alpha.2",
+    "@basalt/bedrock-breakpoints-demo": "^0.30.0-alpha.2",
+    "@basalt/bedrock-color-swatch": "^0.30.0-alpha.2",
+    "@basalt/bedrock-core": "^0.30.0-alpha.2",
+    "@basalt/bedrock-spacing-swatch": "^0.30.0-alpha.2",
+    "@basalt/bedrock-utils": "^0.30.0-alpha.2",
     "react-copy-to-clipboard": "^5.0.1",
     "react-table": "^6.9.0"
   },

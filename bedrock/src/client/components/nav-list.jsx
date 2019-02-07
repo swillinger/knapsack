@@ -39,13 +39,13 @@ function NavList({ items }) {
               <li className="nav-list__item" key={id + path}>
                 <NavLink to={path} exact>
                   {title}
+                  {status && (
+                    <PatternStatusIcon
+                      color={status.color}
+                      title={status.title}
+                    />
+                  )}
                 </NavLink>
-                {status && (
-                  <PatternStatusIcon
-                    color={status.color}
-                    title={status.title}
-                  />
-                )}
               </li>
             ),
         )}

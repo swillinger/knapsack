@@ -19,6 +19,11 @@ import styled from 'styled-components';
 export const PatternHeader = styled.header`
   position: relative;
   margin-bottom: 2rem;
+  display: grid;
+  grid: 2fr / 1fr;
+  @media screen and (min-width: 951px) {
+    grid: 1fr / 1fr 350px;
+  }
 `;
 
 export const OverviewWrapper = styled.div`

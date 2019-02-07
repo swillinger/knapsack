@@ -41,6 +41,11 @@ const demos = [
     render: props => <ColorSwatches colors={props.tokens} />,
   },
   {
+    id: 'background-color',
+    title: 'Background Color (duplicate of Color Swatches @todo remove)',
+    render: props => <ColorSwatches colors={props.tokens} />,
+  },
+  {
     id: 'spacing',
     title: 'Spacing',
     render: SpacingDemo,

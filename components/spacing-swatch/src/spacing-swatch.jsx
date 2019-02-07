@@ -13,11 +13,7 @@ const SpacingSwatch = ({ space, color }) => (
           <CopyToClipboard snippet={space.code} />
           <br />
           <CopyToClipboard snippet={space.value} />
-          {space.comment && (
-            <h6>
-              <small>{space.comment}</small>
-            </h6>
-          )}
+          {space.comment && <small>{space.comment}</small>}
         </h6>
       )}
     </div>

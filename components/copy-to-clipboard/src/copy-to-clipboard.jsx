@@ -5,20 +5,20 @@ import { CopiedText } from './copy-to-clipboard.styles';
 
 function CopyToClipboard(props) {
   const { snippet } = props;
-  const [count, setCount] = useState(false);
+  const [hadCopied, setHasCopied] = useState(false);
 
   return (
     <span style={{ cursor: 'pointer' }}>
       <ReactCopyToClipboard
         text={snippet}
         onCopy={() => {
-          setCount(true);
-          setTimeout(() => setCount(false), 2000);
+          setHasCopied(true);
+          setTimeout(() => setHasCopied(false), 2000);
         }}
       >
         <code>{snippet}</code>
       </ReactCopyToClipboard>
-      <CopiedText hasCopied={count}>Copied</CopiedText>
+      <CopiedText hasCopied={hadCopied}>Copied</CopiedText>
     </span>
   );
 }

@@ -43,7 +43,7 @@ export const DemoGridControls = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.7rem;
   margin-left: auto;
   > * {
     margin: 0 0.25rem;

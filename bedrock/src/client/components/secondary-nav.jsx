@@ -28,7 +28,6 @@ import { flattenArray } from '@basalt/bedrock-utils';
 import urlJoin from 'url-join';
 import { FaTimes } from 'react-icons/fa';
 import NavList from './nav-list';
-import { PatternStatusIcon } from './atoms';
 import { containsString } from '../utils/string-helpers';
 import { BASE_PATHS } from '../../lib/constants';
 import { enableUiCreatePattern } from '../../lib/features';
@@ -156,17 +155,8 @@ class SecondaryNav extends Component {
               patternItems.push({
                 id: pattern.id,
                 // title: pattern.meta.title,
-                title: (
-                  <span>
-                    {pattern.meta.title}
-                    {status && (
-                      <PatternStatusIcon
-                        color={status.color}
-                        title={status.title}
-                      />
-                    )}
-                  </span>
-                ),
+                status,
+                title: pattern.meta.title,
                 path: urlJoin(BASE_PATHS.PATTERN, pattern.id),
               });
             });

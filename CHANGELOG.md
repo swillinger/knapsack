@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.30.0](https://github.com/basaltinc/bedrock/compare/v0.30.0-alpha.4...v0.30.0) (2019-02-08)
+
+
+### Bug Fixes
+
+* remove nested h6 ([afffebb](https://github.com/basaltinc/bedrock/commit/afffebb))
+
+
+### Features
+
+* add dos and donts slice ([eea8914](https://github.com/basaltinc/bedrock/commit/eea8914))
+* add simple-list and raw values ([a4973af](https://github.com/basaltinc/bedrock/commit/a4973af))
+* can Add Slice between each slice ([bf4524b](https://github.com/basaltinc/bedrock/commit/bf4524b))
+
+
+
+
+
 ## [0.29.6](https://github.com/basaltinc/bedrock/compare/v0.29.5...v0.29.6) (2019-01-30)
 
 

@@ -1,7 +1,7 @@
 {
   "name": "@basalt/bedrock-code-block",
   "license": "GPL-2.0-or-later",
-  "version": "0.30.0-alpha.2",
+  "version": "0.30.0",
   "description": "A Bedrock component that helps build Design Systems",
   "module": "dist/code-block.js",
   "main": "dist/code-block.js",
@@ -11,10 +11,10 @@
     "watch": "yarn build --watch"
   },
   "dependencies": {
-    "@basalt/bedrock-atoms": "^0.30.0-alpha.2",
-    "@basalt/bedrock-core": "^0.30.0-alpha.2",
-    "@basalt/bedrock-pretty-code": "^0.30.0-alpha.2",
-    "@basalt/bedrock-utils": "^0.30.0-alpha.2"
+    "@basalt/bedrock-atoms": "^0.30.0",
+    "@basalt/bedrock-core": "^0.30.0",
+    "@basalt/bedrock-pretty-code": "^0.30.0",
+    "@basalt/bedrock-utils": "^0.30.0"
   },
   "devDependencies": {
     "prop-types": "^15.0.0",

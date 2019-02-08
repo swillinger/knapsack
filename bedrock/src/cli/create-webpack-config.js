@@ -18,12 +18,16 @@
 //   validateSchemaAndAssignDefaults,
 // } = require('@basalt/bedrock-schema-utils');
 const webpack = require('webpack');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 // const Stylish = require('webpack-stylish');
 // const Visualizer = require('webpack-visualizer-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const cssnano = require('cssnano');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const DashboardPlugin = require('webpack-dashboard/plugin');
 const WebappWebpackPlugin = require('webapp-webpack-plugin');
+const postcssPresetEnv = require('postcss-preset-env');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { resolve } = require('path');
 // const bedrockSettingsSchema = require('../schemas/bedrock.config.schema.json');
 const features = require('../lib/features');
@@ -104,6 +108,53 @@ function createWebPackConfig(userConfig) {
           ],
         },
         {
+          test: /\.scss?$/,
+          exclude: /\.css?$/,
+          use: [
+            {
+              loader: isProd ? MiniCssExtractPlugin.loader : 'style-loader',
+            },
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 2,
+                sourceMap: true,
+                // import: false,
+                // url: false,
+              },
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                ident: 'postcss',
+                plugins: () => [
+                  postcssPresetEnv({
+                    browsers: ['last 2 versions'],
+                  }),
+                ],
+              },
+            },
+            {
+              loader: 'resolve-url-loader',
+              options: {
+                debug: false,
+              },
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                sourceMap: true,
+                // includePaths: [],
+                // scss data that will be available to ALL files
+                // data: '',
+                outputStyle: isProd ? 'compressed' : 'expanded',
+                // Enables the line number and file where a selector is defined to be emitted into the compiled CSS as a comment. Useful for debugging, especially when using imports and mixins.
+                sourceComments: false,
+              },
+            },
+          ],
+        },
+        {
           test: /\.(woff(2)?|ttf|eot)?$/,
           use: [
             {
@@ -130,6 +181,7 @@ function createWebPackConfig(userConfig) {
     // stats: 'none',
     plugins: [
       // new Stylish(), @todo consider re-enabling later, needed to for debugging
+      new webpack.NamedModulesPlugin(),
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify(process.env.NODE_ENV),
@@ -159,6 +211,20 @@ function createWebPackConfig(userConfig) {
             features,
           },
         },
+      }),
+      new MiniCssExtractPlugin({
+        // Options similar to the same options in webpackOptions.output
+        // both options are optional
+        filename: '[name].css',
+        chunkFilename: '[id].css',
+      }),
+      new OptimizeCssAssetsPlugin({
+        // assetNameRegExp: /\.optimize\.css$/g,
+        cssProcessor: cssnano,
+        cssProcessorPluginOptions: {
+          preset: ['default', { discardComments: { removeAll: true } }],
+        },
+        canPrint: true,
       }),
     ],
     performance: {

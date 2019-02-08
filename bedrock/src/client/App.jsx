@@ -52,6 +52,7 @@ import {
   LoadableBadRoute,
 } from './loadable-components';
 import { BASE_PATHS } from '../lib/constants';
+import './style.scss';
 
 const FeedbackPage = React.lazy(() =>
   import(/* webpackChunkName: "feedback-page" */ './pages/feedback'),

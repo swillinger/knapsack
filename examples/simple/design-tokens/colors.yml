@@ -2,6 +2,7 @@ props:
   c-blue:
     value: '{!primary_color}'
     comment: ima blue color
+    subcat: asdf
   c-blue-text:
     value: '{!primary_color}'
     category: text-color
@@ -82,3 +83,4 @@ imports:
 global:
   type: color
   category: background-color
+  subcat: asdf2

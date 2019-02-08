@@ -23,6 +23,10 @@ export const NavListStyled = styled.nav`
     align-items: center;
     position: relative;
   }
+  .nav-list__item > a {
+    line-height: 20px;
+    margin-top: 7px;
+  }
   .nav-list__item--heading {
     h4 {
       margin-top: 1.5rem;

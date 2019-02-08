@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-// to be kept inline with `DesignToken[]`
+// to be kept inline with `BedrockDesignToken[]`
 export const demoPropTypes = {
   tokens: PropTypes.arrayOf(
     PropTypes.shape({
@@ -8,8 +8,8 @@ export const demoPropTypes = {
       value: PropTypes.string.isRequired,
       originalValue: PropTypes.string,
       category: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
       comment: PropTypes.string,
+      code: PropTypes.string,
     }).isRequired,
   ).isRequired,
 };

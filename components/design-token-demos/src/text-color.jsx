@@ -1,5 +1,4 @@
 import React from 'react';
-import { TOKEN_CATS } from '../constants';
 import { demoPropTypes } from './utils';
 import { StyledTextColorDemo } from './styles';
 
@@ -17,7 +16,5 @@ export const TextColorDemo = ({ tokens }) => {
     </StyledTextColorDemo>
   ));
 };
-
-TextColorDemo.tokenCategory = TOKEN_CATS.TEXT_COLOR;
 
 TextColorDemo.propTypes = demoPropTypes;

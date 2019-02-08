@@ -21,5 +21,8 @@ import App from './App';
 document.addEventListener('DOMContentLoaded', () => {
   const { bedrock = {} } = window;
   const { features = {} } = bedrock;
+  const mountEl = document.createElement('div');
+  mountEl.setAttribute('id', 'app');
+  document.body.appendChild(mountEl);
   ReactDom.render(<App features={features} />, document.getElementById('app'));
 });

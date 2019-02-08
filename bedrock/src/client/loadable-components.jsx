@@ -27,14 +27,20 @@ export const LoadableFooter = Loadable({
   loading: Spinner,
 });
 
-export const LoadableDesignTokenGroup = Loadable({
+export const LoadableCustomPage = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "design-token-group" */ './pages/design-tokens/design-token-group'),
+    import(/* webpackChunkName: "custom-slices-page" */ './pages/custom-page/custom-page'),
   loading: Spinner,
 });
 
 export const LoadableDocPage = Loadable({
   loader: () => import(/* webpackChunkName: "doc-page" */ './pages/doc'),
+  loading: Spinner,
+});
+
+export const LoadableChangelogPage = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "changlog-page" */ './pages/changelog'),
   loading: Spinner,
 });
 
@@ -150,18 +156,6 @@ export const LoadableVariationDemo = Loadable({
 export const LoadableSettingsPage = Loadable({
   loader: () =>
     import(/* webpackChunkName: "patterns-page" */ './pages/settings'),
-  loading: Spinner,
-});
-
-export const LoadableCustomSectionPage = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "custom-section-page" */ './pages/custom-section-page'),
-  loading: Spinner,
-});
-
-export const LoadableAllTokens = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "all-tokens" */ './pages/design-tokens/all-page'),
   loading: Spinner,
 });
 

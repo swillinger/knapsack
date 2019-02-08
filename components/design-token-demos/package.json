@@ -1,7 +1,7 @@
 {
   "name": "@basalt/bedrock-design-token-demos",
   "license": "UNLICENSED",
-  "version": "0.29.0",
+  "version": "0.30.0-alpha.2",
   "description": "A collection of design token category demos that each show off a single CSS property.",
   "module": "dist/index.js",
   "main": "dist/index.js",
@@ -12,20 +12,23 @@
   },
   "devDependencies": {
     "prop-types": "^15.0.0",
-    "react": "^16.6.0"
+    "react": "^16.8.0"
   },
   "peerDependencies": {
     "prop-types": "^15.0.0",
-    "react": "^16.6.0",
+    "react": "^16.8.0",
     "styled-components": "^4.0.2"
   },
   "author": "Basalt (https://basalt.io/)",
   "dependencies": {
-    "@basalt/bedrock-atoms": "^0.29.0",
-    "@basalt/bedrock-breakpoints-demo": "^0.29.0",
-    "@basalt/bedrock-color-swatch": "^0.29.0",
-    "@basalt/bedrock-core": "^0.29.0",
-    "@basalt/bedrock-spacing-swatch": "^0.29.0"
+    "@basalt/bedrock-atoms": "^0.30.0-alpha.2",
+    "@basalt/bedrock-breakpoints-demo": "^0.30.0-alpha.2",
+    "@basalt/bedrock-color-swatch": "^0.30.0-alpha.2",
+    "@basalt/bedrock-copy-to-clipboard": "^0.30.0-alpha.2",
+    "@basalt/bedrock-core": "^0.30.0-alpha.2",
+    "@basalt/bedrock-spacing-swatch": "^0.30.0-alpha.2",
+    "@basalt/bedrock-utils": "^0.30.0-alpha.2",
+    "react-table": "^6.9.0"
   },
   "files": [
     "./dist",

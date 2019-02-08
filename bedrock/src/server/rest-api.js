@@ -21,7 +21,10 @@ const md = require('marked');
 const highlight = require('highlight.js');
 const qs = require('qs');
 const log = require('../cli/log');
-const { BASE_PATHS } = require('../lib/constants');
+const {
+  BASE_PATHS,
+  // PERMISSIONS
+} = require('../lib/constants');
 const { enableUiSettings } = require('../lib/features');
 const { getRole } = require('./auth');
 
@@ -46,35 +49,6 @@ function getRoutes(config) {
       message: 'Welcome to the API!',
     });
   });
-
-  // if (config.designTokens) {
-  //   config.designTokens.forEach(designToken => {
-  //     const url = urlJoin(config.baseUrl, 'design-token', designToken.id);
-  //     // console.log(`Setting up "${url}" api endpoint...`);
-  //     registerEndpoint(url);
-  //     router.get(url, async (req, res) => {
-  //       try {
-  //         const tokens = await designToken.get(req.query);
-  //         // console.log(`Responding on "${url}" api endpoint with: `, tokens);
-  //         res.send({
-  //           ok: true,
-  //           data: tokens,
-  //         });
-  //       } catch (err) {
-  //         res.send({
-  //           ok: false,
-  //           message: err.toString(),
-  //         });
-  //       }
-  //     });
-  //   });
-  //
-  //   const url2 = urlJoin(config.baseUrl, 'design-tokens');
-  //   registerEndpoint(url2);
-  //   router.get(url2, async (req, res) => {
-  //     res.send(config.designTokens);
-  //   });
-  // }
 
   if (patternManifest) {
     const url = urlJoin(config.baseUrl, '/render');
@@ -256,13 +230,6 @@ function getRoutes(config) {
     });
   }
 
-  const url2 = urlJoin(config.baseUrl, 'sections');
-  registerEndpoint(url2);
-  router.get(url2, async (req, res) => {
-    const { sections = [] } = config;
-    res.send(sections);
-  });
-
   const url3 = urlJoin(config.baseUrl, 'settings');
   registerEndpoint(url3);
   router.get(url3, async (req, res) => {
@@ -291,6 +258,21 @@ function getRoutes(config) {
     const role = getRole(req);
     res.send(role.permissions);
   });
+
+  // const url7 = urlJoin(config.baseUrl, 'upload');
+  // registerEndpoint(url7);
+  // router.post(url7, (req, res) => {
+  //   const role = getRole(req);
+  //   const canWrite = role.permissions.includes(PERMISSIONS.WRITE);
+  //   if (!canWrite) {
+  //     res.status(403).send({
+  //       ok: false,
+  //       message:
+  //         'You do not have write permissions so you cannot upload any file',
+  //     });
+  //   } else {
+  //   }
+  // });
 
   return router;
 }

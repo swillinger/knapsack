@@ -1,7 +1,7 @@
 {
   "name": "@basalt/eslint-config-bedrock",
   "license": "GPL-2.0-or-later",
-  "version": "0.29.0",
+  "version": "0.30.0-alpha.2",
   "description": "Eslint config and deps.",
   "main": ".eslintrc",
   "scripts": {},
@@ -19,6 +19,7 @@
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-react-hooks": "^1.0.1",
     "typescript-eslint-parser": "^20.0.0"
   },
   "author": "Basalt (https://basalt.io/)",

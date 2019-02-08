@@ -54,9 +54,6 @@ export const CustomFieldWrapper = styled.div`
       font-weight: bold;
       color: black;
     }
-    > label {
-      display: none;
-    }
   }
   .field-radio-group {
     display: flex;

@@ -14,9 +14,9 @@
     You should have received a copy of the GNU General Public License along
     with Bedrock; if not, see <https://www.gnu.org/licenses>.
  */
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import md from 'marked';
+import marked from 'marked';
 import styled from 'styled-components';
 import { Button } from '@basalt/bedrock-atoms';
 
@@ -29,71 +29,54 @@ const DocumentationHeader = styled.div`
   justify-content: space-between;
 `;
 
-export default class MdBlock extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      md: props.md,
-      editing: false,
-    };
-    this.handleEditingToggle = this.handleEditingToggle.bind(this);
-  }
+const MdBlock = ({ title, isEditable, md: initialMd, handleSave }) => {
+  const [md, setMd] = useState(initialMd);
+  const [editing, setEditing] = useState(false);
 
-  handleEditingToggle() {
-    const { handleSave } = this.props;
-    const { editing, md: markdown } = this.state;
-    /* Toggling "editing" state to false implies a save */
-    if (editing && handleSave) {
-      handleSave(markdown);
-    }
-    this.setState(prevState => ({ editing: !prevState.editing }));
-  }
+  if (!md) return null;
+  const html = marked.parse(md);
+  let editArea;
 
-  render() {
-    if (!this.props.md) return null;
-    const { title, isEditable } = this.props;
-    const { editing } = this.state;
-    const html = md.parse(this.state.md);
-    let editArea;
-
-    if (editing && isEditable) {
-      editArea = (
-        <textarea
-          value={this.state.md}
-          onChange={e => {
-            this.setState({ md: e.target.value });
-          }}
-          style={{
-            width: '50%',
-          }}
-        />
-      );
-    }
-
-    return (
-      <DocumentationWrapper>
-        <DocumentationHeader>
-          {title && <h4>{title}</h4>}
-          {isEditable && (
-            <Button
-              onClick={this.handleEditingToggle}
-              style={{ marginLeft: 'auto' }}
-            >
-              {editing ? 'Save' : 'Edit'}
-            </Button>
-          )}
-        </DocumentationHeader>
-        <div style={{ marginBottom: '10px', display: 'flex' }}>
-          <div
-            dangerouslySetInnerHTML={{ __html: html }}
-            style={{ width: editing ? '50%' : '100%' }}
-          />
-          {editArea}
-        </div>
-      </DocumentationWrapper>
+  if (editing && isEditable) {
+    editArea = (
+      <textarea
+        value={md}
+        onChange={e => setMd(e.target.value)}
+        style={{
+          width: '50%',
+        }}
+      />
     );
   }
-}
+
+  return (
+    <DocumentationWrapper>
+      <DocumentationHeader>
+        {title && <h4>{title}</h4>}
+        {isEditable && (
+          <Button
+            onClick={() => {
+              if (editing && handleSave) {
+                handleSave(md);
+              }
+              setEditing(prevEditing => !prevEditing);
+            }}
+            style={{ marginLeft: 'auto' }}
+          >
+            {editing ? 'Save' : 'Edit'}
+          </Button>
+        )}
+      </DocumentationHeader>
+      <div style={{ marginBottom: '10px', display: 'flex' }}>
+        <div
+          dangerouslySetInnerHTML={{ __html: html }}
+          style={{ width: editing ? '50%' : '100%' }}
+        />
+        {editArea}
+      </div>
+    </DocumentationWrapper>
+  );
+};
 
 MdBlock.defaultProps = {
   isEditable: false,
@@ -107,3 +90,5 @@ MdBlock.propTypes = {
   title: PropTypes.string,
   handleSave: PropTypes.func,
 };
+
+export default MdBlock;

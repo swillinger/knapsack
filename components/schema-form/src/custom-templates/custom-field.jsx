@@ -3,7 +3,6 @@ import {
   RadioInputWrapper,
   SelectStyledWrapper,
   TextInputWrapper,
-  Toggle,
   Tooltip,
 } from '@basalt/bedrock-atoms';
 import { CustomFieldWrapper, InfoIcon } from './custom-templates.styles';
@@ -39,11 +38,6 @@ export default function CustomField(props) {
     );
   } else if (textWrapperInputs.includes(inputSchema.type)) {
     inputContent = <TextInputWrapper>{children}</TextInputWrapper>;
-  } else if (
-    inputSchema.type === 'boolean' ||
-    uiSchema['ui:widget'] === 'checkboxes'
-  ) {
-    inputContent = <Toggle>{children}</Toggle>;
   } else {
     inputContent = children;
   }
@@ -53,7 +47,7 @@ export default function CustomField(props) {
     <CustomFieldWrapper className={classNames}>
       <label htmlFor={id} className="field-label">
         {label}
-        {required ? '*' : null}
+        {label && required ? '*' : null}
         {fieldDescription && (
           <Tooltip tooltipContent={fieldDescription} position="top">
             <InfoIcon />

@@ -39,14 +39,20 @@ const headerQuery = gql`
         title
         logo
       }
+      customSections {
+        id
+        title
+        showInMainMenu
+        pages {
+          id
+          title
+        }
+      }
     }
     pageBuilderPages {
       id
     }
     patterns {
-      id
-    }
-    tokenGroups {
       id
     }
     docs {
@@ -97,14 +103,9 @@ class Header extends React.Component {
   }
 
   // @todo refactor
-  static renderLinks({ settings, docs }) {
+  static renderLinks({ settings: { parentBrand, customSections = [] }, docs }) {
     return (
       <ul>
-        <li>
-          <SiteHeaderNavLink to={BASE_PATHS.DESIGN_TOKENS}>
-            Design Tokens
-          </SiteHeaderNavLink>
-        </li>
         <li>
           <SiteHeaderNavLink to={`${BASE_PATHS.PATTERNS}/all`}>
             Patterns
@@ -128,17 +129,27 @@ class Header extends React.Component {
           </SiteHeaderNavLink>
         </li>
         {/* @todo Reimplement header nav for custom sections once implemented with gql */}
-        {/* {sections.map(section => ( */}
-        {/* <li key={section.id}> */}
-        {/* <SiteHeaderNavLink to={section.items[0].path}> */}
-        {/* {section.title} */}
-        {/* </SiteHeaderNavLink> */}
-        {/* </li> */}
-        {/* ))} */}
-        {settings.parentBrand.title && settings.parentBrand.homepage && (
+        {customSections &&
+          customSections.length > 0 &&
+          customSections
+            .filter(section => section.showInMainMenu)
+            .map(section => {
+              if (section.pages.length === 0) return null;
+              const [firstPage] = section.pages;
+              const path = `/${section.id}/${firstPage.id}`;
+              // For each section, we'll use the section title, but link to the first page in that section
+              return (
+                <li key={path}>
+                  <SiteHeaderNavLink to={path}>
+                    {section.title}
+                  </SiteHeaderNavLink>
+                </li>
+              );
+            })}
+        {parentBrand.title && parentBrand.homepage && (
           <li>
             <a
-              href={settings.parentBrand.homepage}
+              href={parentBrand.homepage}
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -146,14 +157,14 @@ class Header extends React.Component {
                 textDecoration: 'none',
               }}
             >
-              {(settings.parentBrand.logo && (
+              {(parentBrand.logo && (
                 <img
-                  src={settings.parentBrand.logo}
-                  alt={settings.parentBrand.title}
+                  src={parentBrand.logo}
+                  alt={parentBrand.title}
                   style={{ height: '1rem' }}
                 />
               )) ||
-                settings.parentBrand.title}
+                parentBrand.title}
             </a>
           </li>
         )}

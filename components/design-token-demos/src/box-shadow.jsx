@@ -1,5 +1,5 @@
 import React from 'react';
-import { TOKEN_CATS } from '../constants';
+import CopyToClipboard from '@basalt/bedrock-copy-to-clipboard';
 import { demoPropTypes } from './utils';
 import { ShadowDemoBox } from './styles';
 
@@ -13,10 +13,20 @@ export const BoxShadowDemo = ({ tokens }) => {
       }}
     >
       <h4>{token.name}</h4>
+      {token.code && (
+        <h6>
+          <CopyToClipboard snippet={token.code} />
+          <br />
+          <CopyToClipboard snippet={token.value} />
+        </h6>
+      )}
+      {token.comment && (
+        <p>
+          <small>{token.comment}</small>
+        </p>
+      )}
     </ShadowDemoBox>
   ));
 };
-
-BoxShadowDemo.tokenCategory = TOKEN_CATS.BOX_SHADOW;
 
 BoxShadowDemo.propTypes = demoPropTypes;

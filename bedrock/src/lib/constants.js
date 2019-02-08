@@ -27,7 +27,6 @@ const PERMISSIONS = {
 const BASE_PATHS = {
   PATTERN: '/pattern',
   PATTERNS: '/patterns',
-  DESIGN_TOKENS: '/design-tokens',
   PAGES: '/pages',
   CUSTOM_PAGES: '/custom-pages',
   GRAPHIQL_PLAYGROUND: '/graphql-playground',

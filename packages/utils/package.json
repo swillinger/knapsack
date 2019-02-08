@@ -1,7 +1,7 @@
 {
   "name": "@basalt/bedrock-utils",
   "license": "GPL-2.0-or-later",
-  "version": "0.29.0",
+  "version": "0.30.0-alpha.2",
   "description": "A Bedrock component that helps build Design Systems",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -10,10 +10,11 @@
     "build:js": "babel --config-file @basalt/bedrock-babel-config/es --source-maps --ignore 'src/*.test.js' --extensions .js,.ts --out-dir dist/ src/",
     "build:types": "tsc",
     "build": "rm -rf dist && yarn build:js",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "watch": "yarn build --watch"
   },
   "dependencies": {
-    "@basalt/bedrock-core": "^0.29.0",
+    "@basalt/bedrock-core": "^0.30.0-alpha.2",
     "color": "^3.0.0"
   },
   "devDependencies": {

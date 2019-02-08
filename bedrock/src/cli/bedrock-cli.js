@@ -16,10 +16,13 @@
     with Bedrock; if not, see <https://www.gnu.org/licenses>.
  */
 const program = require('commander');
-const { existsSync } = require('fs-extra');
+const { existsSync, readFile } = require('fs-extra');
 const portfinder = require('portfinder');
 const { join, resolve, dirname, relative } = require('path');
-const { validateUniqueIdsInArray } = require('@basalt/bedrock-schema-utils');
+const {
+  validateUniqueIdsInArray,
+  validateDataAgainstSchema,
+} = require('@basalt/bedrock-schema-utils');
 const { BedrockRendererBase } = require('../server/renderer-base');
 const log = require('./log');
 const { bedrockEvents, EVENTS } = require('../server/events');
@@ -27,6 +30,9 @@ const { Patterns } = require('../server/patterns');
 const { serve } = require('../server/server');
 const { version } = require('../../package.json');
 const { dirExistsOrExit, fileExistsOrExit } = require('../server/server-utils');
+const {
+  bedrockDesignTokensSchema,
+} = require('../schemas/bedrock-design-tokens.schema');
 const { build, testPatternRenders } = require('./commands');
 // const webpack = require('./webpack');
 
@@ -63,7 +69,6 @@ function processConfig(userConfig, from) {
     patterns,
     public: publicDir,
     dist,
-    designTokens,
     css,
     js,
     docsDir,
@@ -72,7 +77,6 @@ function processConfig(userConfig, from) {
   } = userConfig;
   const config = {
     patterns: patterns.map(p => resolve(from, p)),
-    designTokens: resolve(from, designTokens),
     public: resolve(from, publicDir),
     css: css ? css.map(x => (x.startsWith('http') ? x : resolve(from, x))) : [],
     js: js ? js.map(x => (x.startsWith('http') ? x : resolve(from, x))) : [],
@@ -126,7 +130,6 @@ function processConfig(userConfig, from) {
   });
 
   // @todo check if `config.patterns` exists; but can't now as it can contain globs
-  fileExistsOrExit(config.designTokens);
   dirExistsOrExit(config.public);
   if (config.docsDir) dirExistsOrExit(config.docsDir);
   if (config.css) config.css.forEach(c => fileExistsOrExit(c));
@@ -146,18 +149,57 @@ function processConfig(userConfig, from) {
     }
   });
 
+  {
+    const { message, ok } = validateDataAgainstSchema(
+      bedrockDesignTokensSchema,
+      config.designTokens.data,
+    );
+
+    if (!ok) {
+      log.error(message);
+      process.exit(1);
+    }
+  }
+
+  {
+    const { ok, message } = validateUniqueIdsInArray(
+      config.designTokens.data.tokens,
+      'name',
+    );
+    if (!ok) {
+      log.error(`Error in Design Tokens. ${message}`);
+      process.exit(1);
+    }
+  }
+
+  if (config.designTokens.createCodeSnippet) {
+    config.designTokens.data.tokens = config.designTokens.data.tokens.map(
+      token => {
+        if (token.code) return token;
+        return {
+          ...token,
+          code: config.designTokens.createCodeSnippet(token),
+        };
+      },
+    );
+  }
   bedrockEvents.emit(EVENTS.CONFIG_READY, config);
 
   return config;
 }
 
 /**
+ * @param {BedrockConfig} config
  * @return {Promise<BedrockMeta>}
  */
-async function getMeta() {
+async function getMeta(config) {
   return {
     websocketsPort: await portfinder.getPortPromise(),
     bedrockVersion: version,
+    changelog: config.changelog
+      ? await readFile(config.changelog, 'utf8')
+      : null,
+    version: config.version,
   };
 }
 
@@ -199,7 +241,7 @@ log.verbose('All templateRenderers init done');
 
 program.command('serve').action(async () => {
   log.info('Serving...');
-  const meta = await getMeta();
+  const meta = await getMeta(config);
   await serve({
     config,
     meta,
@@ -214,7 +256,7 @@ program.command('build').action(async () => {
 
 program.command('start').action(async () => {
   log.info('Starting...');
-  const meta = await getMeta();
+  const meta = await getMeta(config);
   const templateRendererWatches = config.templateRenderers.filter(t => t.watch);
 
   return Promise.all([

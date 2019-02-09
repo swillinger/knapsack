@@ -16,6 +16,7 @@
     "test": "run-s test:*"
   },
   "dependencies": {
+    "@basalt/bedrock-schema-utils": "^0.30.0",
     "apollo-boost": "^0.1.22",
     "apollo-server-express": "^2.2.6",
     "body-parser": "1.18.3",
@@ -52,7 +53,6 @@
     "@basalt/bedrock-design-token-demos": "^0.30.0",
     "@basalt/bedrock-schema-form": "^0.30.0",
     "@basalt/bedrock-schema-table": "^0.30.0",
-    "@basalt/bedrock-schema-utils": "^0.30.0",
     "@basalt/bedrock-smart-grid": "^0.30.0",
     "@basalt/bedrock-spacing-swatch": "^0.30.0",
     "@basalt/bedrock-spinner": "^0.30.0",

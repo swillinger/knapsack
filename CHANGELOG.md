@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.1](https://github.com/basaltinc/bedrock/compare/v0.31.0...v0.31.1) (2019-02-12)
+
+
+### Bug Fixes
+
+* adding url-join back in ([ab178d3](https://github.com/basaltinc/bedrock/commit/ab178d3))
+
+
+
+
+
 # [0.31.0](https://github.com/basaltinc/bedrock/compare/v0.30.0...v0.31.0) (2019-02-12)
 
 

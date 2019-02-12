@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.31.0](https://github.com/basaltinc/bedrock/compare/v0.30.0...v0.31.0) (2019-02-12)
+
+
+### Bug Fixes
+
+* release nudge ([5f47060](https://github.com/basaltinc/bedrock/commit/5f47060))
+
+
+### Features
+
+* trim deps and add scss ([b0a0eb2](https://github.com/basaltinc/bedrock/commit/b0a0eb2))
+
+
+
+
+
 # [0.30.0](https://github.com/basaltinc/bedrock/compare/v0.30.0-alpha.4...v0.30.0) (2019-02-08)
 
 

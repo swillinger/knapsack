@@ -1,7 +1,7 @@
 {
   "name": "create-bedrock",
   "license": "GPL-2.0-or-later",
-  "version": "0.30.0",
+  "version": "0.31.0",
   "preferGlobal": true,
   "description": "A Bedrock component that helps build Design Systems",
   "bin": "bin/index.js",

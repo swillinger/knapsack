@@ -39,6 +39,7 @@
     "qs": "^6.6.0",
     "query-string": "^6.1.0",
     "shortid": "^2.2.14",
+    "url-join": "^4.0.0",
     "webpack": "^4.27.1",
     "webpack-manifest-plugin": "^2.0.4",
     "ws": "^6.1.2"

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.32.1](https://github.com/basaltinc/bedrock/compare/v0.32.0...v0.32.1) (2019-02-13)
+
+
+### Bug Fixes
+
+* address issue with pattern schema form text input jumping ([#186](https://github.com/basaltinc/bedrock/issues/186)) ([f8ed250](https://github.com/basaltinc/bedrock/commit/f8ed250))
+
+
+
+
+
 # [0.32.0](https://github.com/basaltinc/bedrock/compare/v0.31.1...v0.32.0) (2019-02-13)
 
 

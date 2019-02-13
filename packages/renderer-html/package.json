@@ -8,7 +8,7 @@
     "fs-extra": "^7.0.1"
   },
   "peerDependencies": {
-    "@basalt/bedrock": "^0.23.0"
+    "@basalt/bedrock": "^0.32.0"
   },
   "author": "Basalt (https://basalt.io/)",
   "publishConfig": {

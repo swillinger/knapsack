@@ -261,6 +261,7 @@ class PatternViewPage extends Component {
                     <TemplateView
                       id={this.props.id}
                       templateId={templateId}
+                      key={`${this.props.id}-${templateId}`}
                       demoSize={this.state.demoSize || defaultDemoSize}
                       isVerbose
                     />

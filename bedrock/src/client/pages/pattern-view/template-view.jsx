@@ -178,6 +178,8 @@ class TemplateView extends Component {
     });
     const externalUrl = `/api/render?${queryString}`;
 
+    const showSchemaForm = this.props.isSchemaFormShown && hasSchema;
+
     return (
       <>
         <OverviewWrapper>
@@ -241,12 +243,8 @@ class TemplateView extends Component {
             </DemoGridControls>
           </FlexWrapper>
 
-          <DemoGrid
-            size={this.props.isSchemaFormShown ? this.props.demoSize : 'full'}
-          >
-            <DemoStage
-              size={this.props.isSchemaFormShown ? this.props.demoSize : 'full'}
-            >
+          <DemoGrid size={showSchemaForm ? this.props.demoSize : 'full'}>
+            <DemoStage size={showSchemaForm ? this.props.demoSize : 'full'}>
               <Template
                 patternId={this.props.id}
                 templateId={this.props.templateId}
@@ -255,7 +253,7 @@ class TemplateView extends Component {
                 isResizable
               />
             </DemoStage>
-            {this.props.isSchemaFormShown && (
+            {showSchemaForm && (
               <SchemaFormWrapper size={this.props.demoSize}>
                 <SchemaFormWrapperInner size={this.props.demoSize}>
                   <h4>Edit Form</h4>

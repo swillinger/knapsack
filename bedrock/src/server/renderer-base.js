@@ -38,37 +38,28 @@ class BedrockRendererBase {
     `;
   }
 
-  getFoot({ jsUrls = [] } = {}) {
+  getFoot({ jsUrls = [], inlineJs = '', inlineCss = '' } = {}) {
     return `
     ${jsUrls.map(jsUrl => `<script src="${jsUrl}"></script>`).join('')}
-<style>
-  /*body {*/
-    /*display: flex;*/
-    /*justify-content: center;*/
-    /*align-items: center;*/
-  /*}*/
- 
-</style>
- <script>
-  /**
-  * Prevents the natural click behavior of any links within the iframe.
-  * Otherwise the iframe reloads with the current page or follows the url provided.
-  */
-  const links = Array.prototype.slice.call(document.querySelectorAll('a'));
-  links.forEach(function(link) {
-    link.addEventListener('click', function(e){e.preventDefault();});
-  });
-</script>
+<style>${inlineCss}</style>
+<script>${inlineJs}</script>
 </body>
 </html>
     `;
   }
 
-  wrapHtml({ html, cssUrls = [], jsUrls = [], headJsUrls = [] }) {
+  wrapHtml({
+    html,
+    cssUrls = [],
+    jsUrls = [],
+    headJsUrls = [],
+    inlineJs = '',
+    inlineCss = '',
+  }) {
     return `
 ${this.getHead({ cssUrls, headJsUrls })}
 <div>${html}</div>
-${this.getFoot({ jsUrls })}
+${this.getFoot({ jsUrls, inlineJs, inlineCss })}
 `;
   }
 

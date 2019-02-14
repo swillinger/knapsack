@@ -685,6 +685,7 @@ class Patterns {
    * @param {boolean} [opt.wrapHtml=true] - Should it wrap HTML results with `<head>` and include assets?
    * @param {Object} [opt.data] - Data to pass to template
    * @param {boolean} [opt.isInIframe=false] - Will this be in an iFrame?
+   * @param {number} [opt.websocketsPort]
    * @return {Promise<BedrockTemplateRenderResults>}
    */
   async render({
@@ -693,6 +694,7 @@ class Patterns {
     wrapHtml = true,
     data = {},
     isInIframe = false,
+    websocketsPort,
   }) {
     const pattern = this.getPattern(patternId);
     let [template] = pattern.templates;
@@ -712,6 +714,31 @@ class Patterns {
 
     if (!renderedTemplate.ok) return renderedTemplate;
     if (wrapHtml) {
+      const inlineJS = [];
+
+      if (isInIframe) {
+        inlineJS.push(`
+/**
+  * Prevents the natural click behavior of any links within the iframe.
+  * Otherwise the iframe reloads with the current page or follows the url provided.
+  */
+const links = Array.prototype.slice.call(document.querySelectorAll('a'));
+links.forEach(function(link) {
+  link.addEventListener('click', function(e){e.preventDefault();});
+});
+        `);
+      }
+
+      if (!isInIframe && websocketsPort) {
+        inlineJS.push(`
+if ('WebSocket' in window && location.hostname === 'localhost') {
+  var socket = new window.WebSocket('ws://localhost:8000');
+  socket.addEventListener('message', function() {
+    window.location.reload();
+  });
+}
+          `);
+      }
       const wrappedHtml = renderer.wrapHtml({
         html: renderedTemplate.html,
         headJsUrls: [
@@ -721,6 +748,7 @@ class Patterns {
         ].filter(x => x),
         cssUrls: this.rootRelativeCSS,
         jsUrls: this.rootRelativeJs,
+        inlineJs: inlineJS.join('\n'),
       });
       return {
         ...renderedTemplate,

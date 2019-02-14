@@ -40,7 +40,6 @@ import {
 import {
   DemoGrid,
   DemoStage,
-  Resizable,
   SchemaFormWrapper,
   SchemaFormWrapperInner,
 } from './pattern-stage.styles';
@@ -248,14 +247,13 @@ class TemplateView extends Component {
             <DemoStage
               size={this.props.isSchemaFormShown ? this.props.demoSize : 'full'}
             >
-              <Resizable>
-                <Template
-                  patternId={this.props.id}
-                  templateId={this.props.templateId}
-                  data={data}
-                  showDataUsed={false}
-                />
-              </Resizable>
+              <Template
+                patternId={this.props.id}
+                templateId={this.props.templateId}
+                data={data}
+                showDataUsed={false}
+                isResizable
+              />
             </DemoStage>
             {this.props.isSchemaFormShown && (
               <SchemaFormWrapper size={this.props.demoSize}>

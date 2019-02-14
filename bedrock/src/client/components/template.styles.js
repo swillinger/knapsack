@@ -14,23 +14,33 @@
     You should have received a copy of the GNU General Public License along
     with Bedrock; if not, see <https://www.gnu.org/licenses>.
  */
-import React from 'react';
-import Twig from './twig';
+import styled from 'styled-components';
 
-const Template = props => {
-  const TheTemplate = Twig;
-  // @todo add React support
-  // if (props.template.endsWith('.twig')) {
-  //   TheTemplate = Twig;
-  // } else {
-  //   console.error(
-  //     'uh oh!!! Template did not return Twig. Fix that and then get a better error :P @todo',
-  //   ); // @todo
-  // }
-  return <TheTemplate {...props} />;
-};
+export const IFrameWrapper = styled.div`
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+`;
 
-// @todo fix proptypes being lifted up
-Template.propTypes = Twig.propTypes;
+export const Resizable = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+  resize: horizontal;
+  overflow: hidden;
+  padding: 10px;
+  width: 100%;
+  max-width: ${props => props.size || '100%'};
+  background-color: rgba(77, 77, 77, 0.15);
+`;
 
-export default Template;
+export const SizeTab = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 20px;
+  padding: 3px;
+  height: 18px;
+  line-height: 18px;
+  font-size: 10px;
+`;

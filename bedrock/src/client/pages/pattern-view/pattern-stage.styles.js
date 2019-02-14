@@ -45,18 +45,6 @@ export const DemoStage = styled.div`
   }
 `;
 
-export const Resizable = styled.div`
-  display: flex;
-  justify-content: center;
-  position: relative;
-  resize: horizontal;
-  overflow: hidden;
-  padding: 10px;
-  width: 100%;
-  max-width: ${props => props.size || '100%'};
-  background-color: rgba(77, 77, 77, 0.15);
-`;
-
 export const DemoGrid = styled.div`
   display: block;
   position: relative;

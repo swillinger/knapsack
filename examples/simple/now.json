@@ -1,6 +1,6 @@
 {
   "name": "bedrock-example-simple",
-  "alias": "simple.demo.getbedrock.com",
+  "alias": "simple-demo.getbedrock.com",
   "version": 1,
   "type": "docker",
   "scale": {

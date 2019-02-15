@@ -16,5 +16,5 @@ action "deploy" {
   secrets = [
     "ZEIT_TOKEN",
   ]
-  args = "deploy examples/simple"
+  args = "deploy examples/simple --team=basalt"
 }

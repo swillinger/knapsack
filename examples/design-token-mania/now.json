@@ -1,0 +1,15 @@
+{
+  "name": "bedrock-example-design-token-mania",
+  "alias": "design-token-mania.demo.getbedrock.com",
+  "version": 1,
+  "type": "docker",
+  "scale": {
+    "sfo1": {
+      "min": 1,
+      "max": 1
+    }
+  },
+  "features": {
+    "cloud": "v1"
+  }
+}

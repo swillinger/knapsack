@@ -1,0 +1,16 @@
+{% if url %}
+  <a
+    href="{{ url }}"
+    class="btn {{ outlined ? 'btn-outline-' ~ style : 'btn-' ~ style }} {{ disabled ? 'disabled' : '' }} {{ size != md ? 'btn-' ~ size : '' }}"
+  >
+    {{ text }}
+  </a>
+{% else %}
+  <button
+    type="button"
+    class="btn {{ outlined ? 'btn-outline-' ~ style : 'btn-' ~ style }} {{ size != md ? 'btn-' ~ size : '' }}"
+    {{ disabled ? 'disabled' : '' }}
+  >
+    {{ text }}
+  </button>
+{% endif %}

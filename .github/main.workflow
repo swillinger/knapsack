@@ -9,6 +9,7 @@ action "master-branch-filter" {
   args = "branch master"
 }
 
+# Now Deploy
 action "deploy" {
   needs = "master-branch-filter"
   uses = "actions/zeit-now@master"

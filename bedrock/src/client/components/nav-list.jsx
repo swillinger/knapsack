@@ -18,28 +18,36 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { NavListStyled } from './nav-list.styles';
+import { PatternStatusIcon } from './atoms';
 
 function NavList({ items }) {
   return (
     <NavListStyled>
       <ul className="nav-list">
-        {items.map(({ title, isHeading, isSubHeading, id, path }) =>
-          isHeading || isSubHeading ? (
-            <li
-              className={`nav-list__item nav-list__item--${
-                isHeading ? 'heading' : 'subheading'
-              }`}
-              key={id}
-            >
-              <h4>{path ? <NavLink to={path}>{title}</NavLink> : title}</h4>
-            </li>
-          ) : (
-            <li className="nav-list__item" key={id}>
-              <NavLink to={path} exact>
-                {title}
-              </NavLink>
-            </li>
-          ),
+        {items.map(
+          ({ title, isHeading, isSubHeading, id, path, status = null }) =>
+            isHeading || isSubHeading ? (
+              <li
+                className={`nav-list__item nav-list__item--${
+                  isHeading ? 'heading' : 'subheading'
+                }`}
+                key={id + path}
+              >
+                <h4>{path ? <NavLink to={path}>{title}</NavLink> : title}</h4>
+              </li>
+            ) : (
+              <li className="nav-list__item" key={id + path}>
+                <NavLink to={path} exact>
+                  {title}
+                  {status && (
+                    <PatternStatusIcon
+                      color={status.color}
+                      title={status.title}
+                    />
+                  )}
+                </NavLink>
+              </li>
+            ),
         )}
       </ul>
     </NavListStyled>

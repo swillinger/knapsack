@@ -21,11 +21,12 @@ import Spinner from '@basalt/bedrock-spinner';
 import { Button, Details, StatusMessage } from '@basalt/bedrock-atoms';
 import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
 import { BedrockContext } from '@basalt/bedrock-core';
-import { Query, Mutation } from 'react-apollo';
+import SchemaForm from '@basalt/bedrock-schema-form';
+import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import qs from 'qs';
 import MdBlock from '../../components/md-block';
-import PatternStage from './pattern-stage';
+import Template from '../../components/template';
 import {
   LoadableSchemaTable,
   LoadableVariationDemo,
@@ -36,6 +37,13 @@ import {
   DemoGridControls,
   OverviewWrapper,
 } from './pattern-view-page.styles';
+import {
+  DemoGrid,
+  DemoStage,
+  SchemaFormWrapper,
+  SchemaFormWrapperInner,
+} from './pattern-stage.styles';
+import { gqlQuery } from '../../data';
 
 const patternQuery = gql`
   query TemplateView($id: ID) {
@@ -79,258 +87,261 @@ class TemplateView extends Component {
     super(props);
     this.state = {
       demoDataIndex: 0,
-      data: null,
+      demoDatas: [],
+      data: {},
+      hasSchema: false,
+      schema: null,
+      uiSchema: null,
+      isInline: null,
+      title: null,
+      ready: false,
     };
-    // this.setData = this.setData.bind(this);
+    this.handleTemplateQuery = this.handleTemplateQuery.bind(this);
   }
 
   componentDidMount() {
-    const { websocketsPort } = this.context.meta;
-    if (this.context.features.enableTemplatePush && websocketsPort) {
-      this.socket = new window.WebSocket(`ws://localhost:${websocketsPort}`);
-
-      // this.socket.addEventListener('open', event => {
-      //   this.socket.send('Hello Server!', event);
-      // });
-
-      this.socket.addEventListener('message', event => {
-        const { ext } = JSON.parse(event.data);
-        // console.log('Message from server ', ext, event.data);
-        if (ext !== '.twig') {
-          // @todo improve. Need to refresh data.
-          // this.setState({ meta: null });
-        }
-      });
-    }
+    this.handleTemplateQuery();
   }
 
-  componentWillUnmount() {
-    if (
-      this.context.features.enableTemplatePush &&
-      this.context.meta.websocketsPort
-    ) {
-      this.socket.close(1000, 'componentWillUnmount called');
-    }
+  handleTemplateQuery() {
+    gqlQuery({
+      gqlQueryObj: patternQuery,
+      variables: {
+        id: this.props.id,
+      },
+    })
+      .then(({ loading, error, data }) => {
+        if (loading) return <Spinner />;
+        if (error) return console.error('gql error', { error });
+        const { templates } = data.pattern;
+
+        const {
+          schema,
+          uiSchema,
+          isInline,
+          doc: readme,
+          title,
+          demoDatas,
+        } = templates.find(t => t.id === this.props.templateId);
+
+        const hasSchema = !!(
+          schema &&
+          schema.properties &&
+          Object.keys(schema.properties).length > 0
+        );
+
+        let datas = [{}];
+        if (demoDatas) {
+          datas = demoDatas;
+        } else if (hasSchema && schema.examples && schema.examples.length > 0) {
+          datas = schema.examples;
+        }
+
+        this.setState({
+          demoDataIndex: 0,
+          demoDatas: datas,
+          data: datas[0],
+          hasSchema,
+          schema,
+          readme,
+          uiSchema,
+          isInline,
+          title,
+          ready: true,
+        });
+      })
+      .catch(console.log.bind(console));
   }
 
   render() {
+    const {
+      demoDataIndex,
+      demoDatas,
+      data,
+      hasSchema,
+      schema,
+      readme,
+      uiSchema,
+      isInline,
+      title,
+      ready,
+    } = this.state;
+
+    if (!ready) return <div>Loading</div>;
+
+    const queryString = qs.stringify({
+      templateId: this.props.templateId,
+      patternId: this.props.id,
+      data: qs.stringify(this.state.data),
+      isInIframe: false,
+      wrapHtml: true,
+    });
+    const externalUrl = `/api/render?${queryString}`;
+
+    const showSchemaForm = this.props.isSchemaFormShown && hasSchema;
+
     return (
-      <Query query={patternQuery} variables={{ id: this.props.id }}>
-        {({ loading, error, data: response }) => {
-          if (loading) return <Spinner />;
-          if (error)
-            return <StatusMessage type="error" message={error.message} />;
-          const { templates, id: patternId } = response.pattern;
-
-          const {
-            schema,
-            uiSchema,
-            isInline,
-            id: templateId,
-            doc: readme,
-            title,
-            demoDatas,
-          } = templates.find(t => t.id === this.props.templateId);
-          // const dosAndDonts = schema.dosAndDonts ? schema.dosAndDonts : [];
-          const hasSchema = !!(
-            schema &&
-            schema.properties &&
-            Object.keys(schema.properties).length > 0
-          );
-
-          let datas = [{}];
-          if (demoDatas) {
-            datas = demoDatas;
-          } else if (
-            hasSchema &&
-            schema.examples &&
-            schema.examples.length > 0
-          ) {
-            datas = schema.examples;
-          }
-
-          const queryString = qs.stringify({
-            templateId: this.props.templateId,
-            patternId: this.props.id,
-            data: qs.stringify(
-              this.state.data
-                ? this.state.data
-                : datas[this.state.demoDataIndex],
-            ),
-            isInIframe: false,
-            wrapHtml: true,
-          });
-          const externalUrl = `/api/render?${queryString}`;
-
-          return (
-            <>
-              <OverviewWrapper>
-                <FlexWrapper>
-                  {!this.props.isVerbose && <h3>{title}</h3>}
-                  <DemoGridControls>
-                    <Button>
-                      <a
-                        href={externalUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Open in new window
-                      </a>
+      <>
+        <OverviewWrapper>
+          <FlexWrapper>
+            {!this.props.isVerbose && this.props.isTitleShown && (
+              <h3>{title}</h3>
+            )}
+            <DemoGridControls>
+              <Button>
+                <a href={externalUrl} target="_blank" rel="noopener noreferrer">
+                  Open in new window
+                </a>
+              </Button>
+              {demoDatas.length > 1 && (
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  <div
+                    style={{
+                      paddingRight: '3px',
+                      marginRight: '5px',
+                    }}
+                  >
+                    Demos:
+                  </div>
+                  <div>
+                    <Button
+                      type="button"
+                      className="button button--size-small"
+                      disabled={this.state.demoDataIndex < 1}
+                      onClick={() => {
+                        this.setState(prevState => ({
+                          demoDataIndex: prevState.demoDataIndex - 1,
+                          data:
+                            prevState.demoDatas[prevState.demoDataIndex - 1],
+                        }));
+                      }}
+                    >
+                      <FaCaretLeft />
                     </Button>
-                    {datas.length > 1 && (
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <div
-                          style={{
-                            paddingRight: '3px',
-                            marginRight: '5px',
-                          }}
-                        >
-                          Demos:
-                        </div>
-                        <div>
-                          <Button
-                            type="button"
-                            className="button button--size-small"
-                            disabled={this.state.demoDataIndex < 1}
-                            onClick={() => {
-                              this.setState(prevState => ({
-                                demoDataIndex: prevState.demoDataIndex - 1,
-                              }));
-                            }}
-                          >
-                            <FaCaretLeft />
-                          </Button>
-                          <Button
-                            type="button"
-                            className="button button--size-small"
-                            disabled={
-                              this.state.demoDataIndex === datas.length - 1
-                            }
-                            onClick={() => {
-                              this.setState(prevState => ({
-                                demoDataIndex: prevState.demoDataIndex + 1,
-                              }));
-                            }}
-                          >
-                            <FaCaretRight />
-                          </Button>
-                        </div>
-                      </div>
-                    )}
-                  </DemoGridControls>
-                </FlexWrapper>
-                <PatternStage
-                  templateId={templateId}
-                  hasSchema={hasSchema}
-                  key={`${patternId}-${templateId}`}
-                  schema={schema}
-                  uiSchema={uiSchema}
-                  data={datas[this.state.demoDataIndex]}
-                  demoSize={hasSchema ? this.props.demoSize : 'full'}
-                  isInline={isInline}
-                  patternId={this.props.id}
-                  handleNewData={newData => {
-                    this.setState({
-                      data: newData,
+                    <Button
+                      type="button"
+                      className="button button--size-small"
+                      disabled={demoDataIndex === demoDatas.length - 1}
+                      onClick={() => {
+                        this.setState(prevState => ({
+                          demoDataIndex: prevState.demoDataIndex + 1,
+                          data:
+                            prevState.demoDatas[prevState.demoDataIndex + 1],
+                        }));
+                      }}
+                    >
+                      <FaCaretRight />
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </DemoGridControls>
+          </FlexWrapper>
+
+          <DemoGrid size={showSchemaForm ? this.props.demoSize : 'full'}>
+            <DemoStage size={showSchemaForm ? this.props.demoSize : 'full'}>
+              <Template
+                patternId={this.props.id}
+                templateId={this.props.templateId}
+                data={data}
+                showDataUsed={false}
+                isResizable
+              />
+            </DemoStage>
+            {showSchemaForm && (
+              <SchemaFormWrapper size={this.props.demoSize}>
+                <SchemaFormWrapperInner size={this.props.demoSize}>
+                  <h4>Edit Form</h4>
+                  <SchemaForm
+                    schema={schema}
+                    formData={this.state.data}
+                    onChange={({ formData }) => {
+                      this.setState({
+                        data: formData,
+                      });
+                    }}
+                    uiSchema={uiSchema}
+                    isInline={isInline}
+                  />
+                </SchemaFormWrapperInner>
+              </SchemaFormWrapper>
+            )}
+          </DemoGrid>
+        </OverviewWrapper>
+
+        {this.props.isReadmeShown && readme && (
+          <Mutation
+            mutation={updateReadme}
+            refetchQueries={() => [
+              {
+                query: patternQuery,
+                variables: {
+                  id: this.props.id,
+                },
+              },
+            ]}
+          >
+            {(setPatternTemplateReadme, { error: mutationError }) => {
+              const { id } = this.props;
+              if (mutationError)
+                return (
+                  <StatusMessage message={mutationError.message} type="error" />
+                );
+              return (
+                <MdBlock
+                  md={readme}
+                  key={`${this.props.id}-${this.props.templateId}`}
+                  isEditable={this.context.permissions.includes('write')}
+                  title="Documentation"
+                  handleSave={newReadme => {
+                    setPatternTemplateReadme({
+                      variables: {
+                        id,
+                        templateId: this.props.templateId,
+                        readme: newReadme,
+                      },
                     });
+
+                    // @todo Refactor this so a reload is not needed
+                    // window.location.reload();
                   }}
                 />
-              </OverviewWrapper>
+              );
+            }}
+          </Mutation>
+        )}
 
-              {readme && (
-                <Mutation
-                  mutation={updateReadme}
-                  refetchQueries={() => [
-                    {
-                      query: patternQuery,
-                      variables: {
-                        id: patternId,
-                      },
-                    },
-                  ]}
-                >
-                  {(setPatternTemplateReadme, { error: mutationError }) => {
-                    const { id } = this.props;
-                    if (mutationError)
-                      return (
-                        <StatusMessage
-                          message={mutationError.message}
-                          type="error"
-                        />
-                      );
-                    return (
-                      <MdBlock
-                        md={readme}
-                        key={`${patternId}-${templateId}`}
-                        isEditable={this.context.permissions.includes('write')}
-                        title="Documentation"
-                        handleSave={newReadme => {
-                          setPatternTemplateReadme({
-                            variables: {
-                              id,
-                              templateId,
-                              readme: newReadme,
-                            },
-                          });
+        {this.props.isVerbose && hasSchema && (
+          <>
+            <div>
+              <h4>Properties</h4>
+              <p>
+                The following properties make up the data that defines each
+                instance of this component.
+              </p>
+              <Details open>
+                <summary>Props Table</summary>
+                <LoadableSchemaTable schema={schema} />
+              </Details>
+            </div>
 
-                          // @todo Refactor this so a reload is not needed
-                          // window.location.reload();
-                        }}
-                      />
-                    );
-                  }}
-                </Mutation>
-              )}
-
-              {this.props.isVerbose && (
-                <>
-                  {hasSchema && (
-                    <>
-                      <div>
-                        <h4>Properties</h4>
-                        <p>
-                          The following properties make up the data that defines
-                          each instance of this component.
-                        </p>
-                        <Details open>
-                          <summary>Props Table</summary>
-                          <LoadableSchemaTable schema={schema} />
-                        </Details>
-                      </div>
-
-                      <LoadableVariationDemo
-                        schema={schema}
-                        templateId={templateId}
-                        patternId={patternId}
-                        data={datas[this.state.demoDataIndex]}
-                        key={`${patternId}-${templateId}-${
-                          this.state.demoDataIndex
-                        }`}
-                      />
-                    </>
-                  )}
-
-                  {/* {dosAndDonts.map(item => ( */}
-                  {/* <DosAndDonts */}
-                  {/* key={JSON.stringify(item)} */}
-                  {/* title={item.title} */}
-                  {/* description={item.description} */}
-                  {/* items={item.items} */}
-                  {/* /> */}
-                  {/* ))} */}
-
-                  {/* <ApiDemo endpoint={this.apiEndpoint} /> */}
-                </>
-              )}
-            </>
-          );
-        }}
-      </Query>
+            <LoadableVariationDemo
+              schema={schema}
+              templateId={this.props.templateId}
+              patternId={this.props.id}
+              data={demoDatas[this.state.demoDataIndex]}
+              key={`${this.props.id}-${this.props.templateId}-${
+                this.state.demoDataIndex
+              }`}
+            />
+          </>
+        )}
+      </>
     );
   }
 }
@@ -338,6 +349,9 @@ class TemplateView extends Component {
 TemplateView.defaultProps = {
   isVerbose: true,
   demoSize: 'full',
+  isReadmeShown: true,
+  isTitleShown: true,
+  isSchemaFormShown: true,
 };
 
 TemplateView.propTypes = {
@@ -345,6 +359,9 @@ TemplateView.propTypes = {
   templateId: PropTypes.string.isRequired,
   isVerbose: PropTypes.bool,
   demoSize: PropTypes.string,
+  isReadmeShown: PropTypes.bool,
+  isTitleShown: PropTypes.bool,
+  isSchemaFormShown: PropTypes.bool,
 };
 
 export default TemplateView;

@@ -38,13 +38,14 @@ const query = gql`
   {
     meta {
       bedrockVersion
+      changelog
     }
-    settings {
-      parentBrand {
-        homepage
-        title
-      }
-    }
+    #    settings {
+    #      parentBrand {
+    #        homepage
+    #        title
+    #      }
+    #    }
   }
 `;
 
@@ -61,6 +62,10 @@ class Footer extends Component {
         {({ loading, error, data }) => {
           if (loading) return <Spinner />;
           if (error) return <p>Error :(</p>;
+          const {
+            meta: { bedrockVersion, changelog },
+            // settings: { parentBrand },
+          } = data;
           return (
             <FooterWrapper>
               <FooterInner>
@@ -70,14 +75,17 @@ class Footer extends Component {
                       <Link to="/settings">Site Settings</Link>
                     </FooterMenuItem>
                   )}
+                  {changelog && (
+                    <FooterMenuItem>
+                      <Link to="/changelog">Changelog</Link>
+                    </FooterMenuItem>
+                  )}
                   <FooterMenuItem>
                     <Link to="/feedback">Feedback</Link>
                   </FooterMenuItem>
                 </FooterMenu>
                 <FooterBuiltOn>
-                  <FooterBuiltOnInner>
-                    {data.meta.bedrockVersion}
-                  </FooterBuiltOnInner>
+                  <FooterBuiltOnInner>{bedrockVersion}</FooterBuiltOnInner>
                   <a
                     href="https://www.getbedrock.com/"
                     target="_blank"

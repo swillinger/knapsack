@@ -1,5 +1,4 @@
 import React from 'react';
-import { TOKEN_CATS } from '../constants';
 import { demoPropTypes } from './utils';
 import { BordersDemoBox } from './styles';
 
@@ -22,7 +21,5 @@ export const BorderColorDemo = ({ tokens }) => {
     </div>
   ));
 };
-
-BorderColorDemo.tokenCategory = TOKEN_CATS.BORDER_COLOR;
 
 BorderColorDemo.propTypes = demoPropTypes;

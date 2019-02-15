@@ -11,8 +11,14 @@ interface BedrockSettings {
     /** image url */
     logo?: string;
     title?: string;
-  },
-  designTokens: {
-    groups: any[],
-  },
+  };
+  customSections: {
+    id: string;
+    title: string;
+    showInMainMenu: boolean;
+    pages: {
+      id: string;
+      title: string;
+    }[];
+  }[];
 }

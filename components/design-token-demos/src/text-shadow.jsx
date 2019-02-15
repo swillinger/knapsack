@@ -1,6 +1,5 @@
 import React from 'react';
 import { ShadowDemoBox } from '@basalt/bedrock/src/client/pages/design-tokens/shadows-page.styles';
-import { TOKEN_CATS } from '../constants';
 import { demoPropTypes } from './utils';
 
 export const TextShadowDemo = ({ tokens }) => {
@@ -18,7 +17,5 @@ export const TextShadowDemo = ({ tokens }) => {
     </ShadowDemoBox>
   ));
 };
-
-TextShadowDemo.tokenCategory = TOKEN_CATS.TEXT_SHADOW;
 
 TextShadowDemo.propTypes = demoPropTypes;

@@ -38,21 +38,21 @@ import ErrorCatcher from './utils/error-catcher';
 import { apiUrlBase } from './data';
 import {
   LoadablePatternView,
-  LoadableCustomSectionPage,
   LoadableGraphiqlPage,
   LoadablePageBuilderLandingPage,
   LoadablePatternsPage,
   LoadablePageBuilder,
   LoadableSettingsPage,
-  LoadableDesignTokenGroup,
+  LoadableCustomPage,
   LoadablePatternEdit,
   LoadablePatternNew,
   LoadableHome,
-  LoadableAllTokens,
   LoadableDocPage,
+  LoadableChangelogPage,
   LoadableBadRoute,
 } from './loadable-components';
 import { BASE_PATHS } from '../lib/constants';
+import './style.scss';
 
 const FeedbackPage = React.lazy(() =>
   import(/* webpackChunkName: "feedback-page" */ './pages/feedback'),
@@ -63,7 +63,6 @@ class App extends React.Component {
     super(props);
     this.state = {
       settings: {},
-      sections: [],
       permissions: [],
       meta: {},
       ready: false,
@@ -101,18 +100,6 @@ class App extends React.Component {
         .then(permissions => ({
           permissions,
         })),
-      window
-        .fetch(`${this.apiEndpoint}/sections`)
-        .then(res => res.json())
-        .then(sections => ({
-          sections: sections.map(section => ({
-            ...section,
-            items: section.items.map(item => ({
-              path: `/pages/${section.id}/${item.id}`,
-              ...item,
-            })),
-          })),
-        })),
     ]);
 
     const initialState = Object.assign({}, ...results);
@@ -138,13 +125,24 @@ class App extends React.Component {
     // @todo consider removing; we're not using it anymore
     const query = gql`
       {
-        tokenGroups {
-          id
-          title
-          path
+        settings {
+          customSections {
+            id
+            title
+            pages {
+              id
+              title
+            }
+          }
         }
         patterns {
           id
+          templates {
+            id
+          }
+          meta {
+            showAllTemplates
+          }
         }
         docs {
           id
@@ -164,6 +162,9 @@ class App extends React.Component {
             }) => {
               if (loading) return <Spinner />;
               if (error) return <p>Error</p>;
+              const {
+                settings: { customSections },
+              } = data;
               return (
                 <BedrockContextProvider value={cruxContext}>
                   <ThemeProvider theme={cruxContext.theme}>
@@ -198,51 +199,6 @@ class App extends React.Component {
                               <LoadablePageBuilderLandingPage {...props} />
                             )}
                           />
-                          {this.state.sections.map(section => (
-                            <Route
-                              key={section.id}
-                              path={`${BASE_PATHS.CUSTOM_PAGES}/${
-                                section.id
-                              }/:id`}
-                              render={({ match, ...rest }) => (
-                                <LoadableCustomSectionPage
-                                  {...rest}
-                                  key={match.params.id}
-                                  id={match.params.id}
-                                  sectionId={section.id}
-                                />
-                              )}
-                            />
-                          ))}
-                          <Route
-                            path={BASE_PATHS.DESIGN_TOKENS}
-                            exact
-                            render={() => {
-                              const [firstTokenGroup] = data.tokenGroups;
-                              if (firstTokenGroup) {
-                                return (
-                                  <Redirect
-                                    to={`${BASE_PATHS.DESIGN_TOKENS}/${
-                                      firstTokenGroup.id
-                                    }`}
-                                  />
-                                );
-                              }
-                              return (
-                                <LoadableBadRoute
-                                  title="No Design Tokens Found"
-                                  subtitle="Not so fast"
-                                  message="We're having trouble finding your design tokens. Make sure you've properly configured `bedrock.config.js` to point to your entry design token yaml file, and that you've properly defined your design tokens. See the documentation at getbedrock.com for more details."
-                                />
-                              );
-                            }}
-                          />
-                          <Route
-                            path={`${BASE_PATHS.DESIGN_TOKENS}/all`}
-                            exact
-                            render={props => <LoadableAllTokens {...props} />}
-                          />
-
                           <Route
                             path={BASE_PATHS.PATTERNS}
                             exact
@@ -279,15 +235,6 @@ class App extends React.Component {
                             />
                           )}
                           <Route
-                            path={`${BASE_PATHS.DESIGN_TOKENS}/:id`}
-                            render={({ match }) => (
-                              <LoadableDesignTokenGroup
-                                id={match.params.id}
-                                key={match.params.id}
-                              />
-                            )}
-                          />
-                          <Route
                             path={`${BASE_PATHS.DOCS}/:id`}
                             render={({ match }) => (
                               <LoadableDocPage
@@ -323,6 +270,57 @@ class App extends React.Component {
                           )}
                           <Route
                             path={`${BASE_PATHS.PATTERN}/:id`}
+                            exact
+                            render={({ match }) => {
+                              const pattern = data.patterns.find(
+                                p => match.params.id === p.id,
+                              );
+                              if (!pattern) {
+                                return (
+                                  <LoadableBadRoute
+                                    title={`Pattern "${
+                                      match.params.id
+                                    }" was not found in the system`}
+                                    subtitle="Hold your horses"
+                                    message={`We're having trouble finding the pattern "${
+                                      match.params.id
+                                    }" you requested. Please double check your url and the pattern meta.`}
+                                  />
+                                );
+                              }
+
+                              const [firstTemplate] = pattern.templates;
+                              if (!firstTemplate) {
+                                return (
+                                  <LoadableBadRoute
+                                    title={`Pattern "${
+                                      match.params.id
+                                    }" was found, but it did not having any templates in the system`}
+                                    subtitle="Hold your horses"
+                                    message={`We're having trouble finding the pattern "${
+                                      match.params.id
+                                    }" you requested. Please double check your url and the pattern meta.`}
+                                  />
+                                );
+                              }
+
+                              if (pattern && firstTemplate) {
+                                const templateId = pattern.meta.showAllTemplates
+                                  ? 'all'
+                                  : firstTemplate.id;
+                                return (
+                                  <Redirect
+                                    to={`${BASE_PATHS.PATTERN}/${
+                                      match.params.id
+                                    }/${templateId}`}
+                                  />
+                                );
+                              }
+                            }}
+                          />
+
+                          <Route
+                            path={`${BASE_PATHS.PATTERN}/:id/:templateId`}
                             render={({ match, ...rest }) => {
                               if (
                                 data.patterns
@@ -332,7 +330,8 @@ class App extends React.Component {
                                 return (
                                   <LoadablePatternView
                                     {...rest}
-                                    id={match.params.id}
+                                    patternId={match.params.id}
+                                    templateId={match.params.templateId}
                                     size="m"
                                     key={match.params.id}
                                   />
@@ -359,6 +358,31 @@ class App extends React.Component {
                               </React.Suspense>
                             )}
                           />
+                          <Route
+                            path="/changelog"
+                            component={LoadableChangelogPage}
+                          />
+                          {customSections &&
+                            customSections.map(section =>
+                              section.pages.map(page => {
+                                const path = `/${section.id}/${page.id}`;
+                                return (
+                                  <Route
+                                    key={path}
+                                    path={path}
+                                    render={() => (
+                                      <LoadableCustomPage
+                                        path={path}
+                                        sectionTitle={section.title}
+                                        sectionId={section.id}
+                                        title={page.title}
+                                        pageId={page.id}
+                                      />
+                                    )}
+                                  />
+                                );
+                              }),
+                            )}
                           <Route path="*" render={() => <LoadableBadRoute />} />
                           <Redirect to="/" />
                         </Switch>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { TOKEN_CATS } from '../constants';
 import { demoPropTypes } from './utils';
 import { StyledFontSizeDemo } from './styles';
 
@@ -19,7 +18,5 @@ export const FontSizeDemo = ({ tokens }) => {
     </StyledFontSizeDemo>
   ));
 };
-
-FontSizeDemo.tokenCategory = TOKEN_CATS.FONT_SIZE;
 
 FontSizeDemo.propTypes = demoPropTypes;

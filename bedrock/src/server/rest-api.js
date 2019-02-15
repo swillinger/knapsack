@@ -21,7 +21,10 @@ const md = require('marked');
 const highlight = require('highlight.js');
 const qs = require('qs');
 const log = require('../cli/log');
-const { BASE_PATHS } = require('../lib/constants');
+const {
+  BASE_PATHS,
+  // PERMISSIONS
+} = require('../lib/constants');
 const { enableUiSettings } = require('../lib/features');
 const { getRole } = require('./auth');
 
@@ -32,12 +35,54 @@ md.setOptions({
   highlight: code => highlight.highlightAuto(code).value,
 });
 
+/**
+ * Parse QueryString, decode non-strings
+ * Changes strings like `'true'` to `true` amoung others like numbers
+ * @param {string} querystring
+ * @return {Object}
+ */
+function qsParse(querystring) {
+  return qs.parse(querystring, {
+    // This custom decoder is for turning values like `foo: "true"` into `foo: true`, along with Integers, null, and undefined.
+    // https://github.com/ljharb/qs/issues/91#issuecomment-437926409
+    decoder(str, decoder, charset) {
+      const strWithoutPlus = str.replace(/\+/g, ' ');
+      if (charset === 'iso-8859-1') {
+        // unescape never throws, no try...catch needed:
+        return strWithoutPlus.replace(/%[0-9a-f]{2}/gi, unescape);
+      }
+
+      if (/^(\d+|\d*\.\d+)$/.test(str)) {
+        return parseFloat(str);
+      }
+
+      const keywords = {
+        true: true,
+        false: false,
+        null: null,
+        undefined,
+      };
+      if (str in keywords) {
+        return keywords[str];
+      }
+
+      // utf-8
+      try {
+        return decodeURIComponent(strWithoutPlus);
+      } catch (e) {
+        return strWithoutPlus;
+      }
+    },
+  });
+}
+
 function getRoutes(config) {
   const {
     registerEndpoint,
     patternManifest,
     pageBuilder,
     settingsStore,
+    meta: { websocketsPort },
   } = config;
 
   router.get(config.baseUrl, (req, res) => {
@@ -46,35 +91,6 @@ function getRoutes(config) {
       message: 'Welcome to the API!',
     });
   });
-
-  // if (config.designTokens) {
-  //   config.designTokens.forEach(designToken => {
-  //     const url = urlJoin(config.baseUrl, 'design-token', designToken.id);
-  //     // console.log(`Setting up "${url}" api endpoint...`);
-  //     registerEndpoint(url);
-  //     router.get(url, async (req, res) => {
-  //       try {
-  //         const tokens = await designToken.get(req.query);
-  //         // console.log(`Responding on "${url}" api endpoint with: `, tokens);
-  //         res.send({
-  //           ok: true,
-  //           data: tokens,
-  //         });
-  //       } catch (err) {
-  //         res.send({
-  //           ok: false,
-  //           message: err.toString(),
-  //         });
-  //       }
-  //     });
-  //   });
-  //
-  //   const url2 = urlJoin(config.baseUrl, 'design-tokens');
-  //   registerEndpoint(url2);
-  //   router.get(url2, async (req, res) => {
-  //     res.send(config.designTokens);
-  //   });
-  // }
 
   if (patternManifest) {
     const url = urlJoin(config.baseUrl, '/render');
@@ -85,41 +101,12 @@ function getRoutes(config) {
         patternId,
         templateId,
         data: dataString = '{}',
-        isInIframe = false,
-        wrapHtml = true,
+        isInIframe: isInIframeString = 'false',
+        wrapHtml: wrapHtmlString = 'true',
       } = query;
-      const data = qs.parse(dataString, {
-        // This custom decoder is for turning values like `foo: "true"` into `foo: true`, along with Integers, null, and undefined.
-        // https://github.com/ljharb/qs/issues/91#issuecomment-437926409
-        decoder(str, decoder, charset) {
-          const strWithoutPlus = str.replace(/\+/g, ' ');
-          if (charset === 'iso-8859-1') {
-            // unescape never throws, no try...catch needed:
-            return strWithoutPlus.replace(/%[0-9a-f]{2}/gi, unescape);
-          }
-
-          if (/^(\d+|\d*\.\d+)$/.test(str)) {
-            return parseFloat(str);
-          }
-
-          const keywords = {
-            true: true,
-            false: false,
-            null: null,
-            undefined,
-          };
-          if (str in keywords) {
-            return keywords[str];
-          }
-
-          // utf-8
-          try {
-            return decodeURIComponent(strWithoutPlus);
-          } catch (e) {
-            return strWithoutPlus;
-          }
-        },
-      });
+      const data = qsParse(dataString);
+      const isInIframe = isInIframeString === 'true';
+      const wrapHtml = wrapHtmlString === 'true';
 
       const results = await patternManifest.render({
         patternId,
@@ -127,6 +114,7 @@ function getRoutes(config) {
         data,
         wrapHtml,
         isInIframe,
+        websocketsPort,
       });
 
       if (results.ok) {
@@ -256,13 +244,6 @@ function getRoutes(config) {
     });
   }
 
-  const url2 = urlJoin(config.baseUrl, 'sections');
-  registerEndpoint(url2);
-  router.get(url2, async (req, res) => {
-    const { sections = [] } = config;
-    res.send(sections);
-  });
-
   const url3 = urlJoin(config.baseUrl, 'settings');
   registerEndpoint(url3);
   router.get(url3, async (req, res) => {
@@ -291,6 +272,21 @@ function getRoutes(config) {
     const role = getRole(req);
     res.send(role.permissions);
   });
+
+  // const url7 = urlJoin(config.baseUrl, 'upload');
+  // registerEndpoint(url7);
+  // router.post(url7, (req, res) => {
+  //   const role = getRole(req);
+  //   const canWrite = role.permissions.includes(PERMISSIONS.WRITE);
+  //   if (!canWrite) {
+  //     res.status(403).send({
+  //       ok: false,
+  //       message:
+  //         'You do not have write permissions so you cannot upload any file',
+  //     });
+  //   } else {
+  //   }
+  // });
 
   return router;
 }

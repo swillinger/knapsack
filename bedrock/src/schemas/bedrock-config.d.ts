@@ -5,43 +5,54 @@ interface BedrockTemplateRenderResults {
 }
 
 interface BedrockTemplateRenderer {
-  id: string
+  id: string;
   test: (theTemplatePath: string) => boolean;
   render: (opt: {
-    template: BedrockPatternTemplate,
-    pattern: BedrockPattern,
-    data?: object,
-  }) => Promise<BedrockTemplateRenderResults>,
+    template: BedrockPatternTemplate;
+    pattern: BedrockPattern;
+    data?: object;
+  }) => Promise<BedrockTemplateRenderResults>;
   build?: (opt: {
-    config: BedrockConfig,
-    templatePaths: string[],
-  }) => Promise<void>,
+    config: BedrockConfig;
+    templatePaths: string[];
+  }) => Promise<void>;
   watch?: (opt: {
-    config: BedrockConfig,
-    templatePaths: string[],
-  }) => Promise<void>,
+    config: BedrockConfig;
+    templatePaths: string[];
+  }) => Promise<void>;
   init?: (opt: {
-    config: BedrockConfig,
-    templatePaths: string[],
-    allPatterns: BedrockPattern[],
-  }) => void,
+    config: BedrockConfig;
+    templatePaths: string[];
+    allPatterns: BedrockPattern[];
+  }) => void;
   wrapHtml: (opt: {
-    html: string,
-    cssUrls?: string[],
-    jsUrls?: string[],
-    headJsUrls?: string[]
-  }) => string,
-  getHead: (opt: {
-    cssUrls?: string[],
-    headJsUrls?: string[],
+    html: string;
+    cssUrls?: string[];
+    jsUrls?: string[];
+    headJsUrls?: string[];
+    inlineJs?: string;
+    inlineCss?: string;
   }) => string;
+  getHead: (opt: { cssUrls?: string[]; headJsUrls?: string[] }) => string;
   getFoot: (opt: {
-    jsUrls?: string[],
+    jsUrls?: string[];
+    inlineJs?: string;
+    inlineCss?: string;
   }) => string;
-  onChange: (opt: { path: string }) => void,
-  onAdd: (opt: { path: string }) => void,
-  onRemove: (opt: { path: string }) => void,
+  onChange: (opt: { path: string }) => void;
+  onAdd: (opt: { path: string }) => void;
+  onRemove: (opt: { path: string }) => void;
   // renderString: (template: string, data?: object) => Promise<BedrockTemplateRenderResults>,
+}
+
+interface BedrockDesignToken {
+  name: string;
+  value: string;
+  category: string;
+  tags?: string[];
+  originalValue: string;
+  code?: string;
+  comment?: string;
 }
 
 interface BedrockConfig {
@@ -61,9 +72,16 @@ interface BedrockConfig {
   js?: string[];
   /** Derived from `js` */
   rootRelativeJs?: string[];
-  templateRenderers: BedrockTemplateRenderer[],
-  designTokens: string;
+  templateRenderers: BedrockTemplateRenderer[];
+  designTokens: {
+    createCodeSnippet?: (BedrockDesignToken) => string;
+    data: {
+      tokens: BedrockDesignToken[];
+    };
+  };
   docsDir?: string;
+  changelog?: string;
+  version?: string;
 }
 
 interface BedrockUserConfig extends BedrockConfig {
@@ -71,5 +89,5 @@ interface BedrockUserConfig extends BedrockConfig {
    * Alias for `templateRenderers`
    * @deprecated
    */
-  templates?: BedrockTemplateRenderer[],
+  templates?: BedrockTemplateRenderer[];
 }

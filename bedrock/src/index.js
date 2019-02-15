@@ -4,6 +4,10 @@ const { BedrockRendererBase } = require('./server/renderer-base');
 const {
   BedrockRendererWebpackBase,
 } = require('./server/renderer-webpack-base');
+const {
+  styleDictionaryBedrockFormat,
+  theoBedrockFormat,
+} = require('./server/design-tokens');
 
 module.exports = {
   BedrockRendererBase,
@@ -11,4 +15,6 @@ module.exports = {
   bedrockEvents,
   EVENTS,
   log,
+  styleDictionaryBedrockFormat,
+  theoBedrockFormat,
 };

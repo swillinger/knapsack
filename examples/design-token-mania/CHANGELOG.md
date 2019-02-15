@@ -3,6 +3,70 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.32.4](https://github.com/basaltinc/bedrock/compare/v0.32.3...v0.32.4) (2019-02-15)
+
+**Note:** Version bump only for package @basalt/bedrock-example-design-token-mania
+
+
+
+
+
+## [0.32.3](https://github.com/basaltinc/bedrock/compare/v0.32.2...v0.32.3) (2019-02-14)
+
+**Note:** Version bump only for package @basalt/bedrock-example-design-token-mania
+
+
+
+
+
+## [0.32.2](https://github.com/basaltinc/bedrock/compare/v0.32.1...v0.32.2) (2019-02-14)
+
+**Note:** Version bump only for package @basalt/bedrock-example-design-token-mania
+
+
+
+
+
+## [0.32.1](https://github.com/basaltinc/bedrock/compare/v0.32.0...v0.32.1) (2019-02-13)
+
+**Note:** Version bump only for package @basalt/bedrock-example-design-token-mania
+
+
+
+
+
+# [0.32.0](https://github.com/basaltinc/bedrock/compare/v0.31.1...v0.32.0) (2019-02-13)
+
+**Note:** Version bump only for package @basalt/bedrock-example-design-token-mania
+
+
+
+
+
+## [0.31.1](https://github.com/basaltinc/bedrock/compare/v0.31.0...v0.31.1) (2019-02-12)
+
+**Note:** Version bump only for package @basalt/bedrock-example-design-token-mania
+
+
+
+
+
+# [0.31.0](https://github.com/basaltinc/bedrock/compare/v0.30.0...v0.31.0) (2019-02-12)
+
+**Note:** Version bump only for package @basalt/bedrock-example-design-token-mania
+
+
+
+
+
+# [0.30.0](https://github.com/basaltinc/bedrock/compare/v0.30.0-alpha.4...v0.30.0) (2019-02-08)
+
+**Note:** Version bump only for package @basalt/bedrock-example-design-token-mania
+
+
+
+
+
 ## [0.29.6](https://github.com/basaltinc/bedrock/compare/v0.29.5...v0.29.6) (2019-01-30)
 
 **Note:** Version bump only for package @basalt/bedrock-example-design-token-mania

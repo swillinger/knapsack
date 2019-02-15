@@ -19,6 +19,11 @@ import styled from 'styled-components';
 export const PatternHeader = styled.header`
   position: relative;
   margin-bottom: 2rem;
+  display: grid;
+  grid: 2fr / 1fr;
+  @media screen and (min-width: 951px) {
+    grid: 1fr / 1fr 350px;
+  }
 `;
 
 export const OverviewWrapper = styled.div`
@@ -38,7 +43,7 @@ export const DemoGridControls = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.7rem;
   margin-left: auto;
   > * {
     margin: 0 0.25rem;

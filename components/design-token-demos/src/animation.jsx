@@ -1,5 +1,4 @@
 import React from 'react';
-import { TOKEN_CATS } from '../constants';
 import { demoPropTypes } from './utils';
 // import { DemoTransitionMove, DemoTransitionOpacity, } from './styles';
 
@@ -42,7 +41,5 @@ export const AnimationDemo = ({ tokens }) => {
     </>
   );
 };
-
-AnimationDemo.tokenCategory = TOKEN_CATS.ANIMATION;
 
 AnimationDemo.propTypes = demoPropTypes;

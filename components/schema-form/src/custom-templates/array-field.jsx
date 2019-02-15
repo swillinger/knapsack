@@ -15,7 +15,7 @@ export default function CustomArrayField(props) {
   const numberofItems = props.items.length;
   return (
     <div id={`field-array--${props.idSchema.$id}`} className={props.className}>
-      <details>
+      <details open={props.uiSchema['ui:detailsOpen'] === true}>
         <summary>{props.title}</summary>
         {props.items &&
           props.items.map(element => (
@@ -86,6 +86,12 @@ export default function CustomArrayField(props) {
   );
 }
 
+CustomArrayField.defaultProps = {
+  uiSchema: {
+    'ui:detailsOpen': false,
+  },
+};
+
 CustomArrayField.propTypes = {
   /* eslint-disable-next-line react/boolean-prop-naming */
   canAdd: PropTypes.bool.isRequired,
@@ -94,4 +100,5 @@ CustomArrayField.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
   onAddClick: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
+  uiSchema: PropTypes.object,
 };

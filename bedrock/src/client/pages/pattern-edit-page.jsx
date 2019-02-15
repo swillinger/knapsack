@@ -152,6 +152,14 @@ class PatternEdit extends Component {
                             });
                           }
                         }}
+                        uiSchema={{
+                          uses: {
+                            'ui:widget': 'checkboxes',
+                            'ui:options': {
+                              inline: true,
+                            },
+                          },
+                        }}
                       />
                     </>
                   );

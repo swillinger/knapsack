@@ -18,13 +18,16 @@
 //   validateSchemaAndAssignDefaults,
 // } = require('@basalt/bedrock-schema-utils');
 const webpack = require('webpack');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 // const Stylish = require('webpack-stylish');
 // const Visualizer = require('webpack-visualizer-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const cssnano = require('cssnano');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlTemplate = require('html-webpack-template');
 const DashboardPlugin = require('webpack-dashboard/plugin');
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const WebappWebpackPlugin = require('webapp-webpack-plugin');
+const postcssPresetEnv = require('postcss-preset-env');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { resolve } = require('path');
 // const bedrockSettingsSchema = require('../schemas/bedrock.config.schema.json');
 const features = require('../lib/features');
@@ -62,11 +65,9 @@ function createWebPackConfig(userConfig) {
   /** @type {webpack.Configuration} */
   const webpackConfig = {
     entry: {
-      main: [
-        resolve(__dirname, '../client/'),
-        resolve(__dirname, '../client/design-tokens-setup'),
-        config.pluginSetupFile,
-      ].filter(x => x),
+      main: [resolve(__dirname, '../client/'), config.pluginSetupFile].filter(
+        x => x,
+      ),
     },
     output: {
       filename: '[name].bundle.[hash].js',
@@ -107,6 +108,53 @@ function createWebPackConfig(userConfig) {
           ],
         },
         {
+          test: /\.scss?$/,
+          exclude: /\.css?$/,
+          use: [
+            {
+              loader: isProd ? MiniCssExtractPlugin.loader : 'style-loader',
+            },
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 2,
+                sourceMap: true,
+                // import: false,
+                // url: false,
+              },
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                ident: 'postcss',
+                plugins: () => [
+                  postcssPresetEnv({
+                    browsers: ['last 2 versions'],
+                  }),
+                ],
+              },
+            },
+            {
+              loader: 'resolve-url-loader',
+              options: {
+                debug: false,
+              },
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                sourceMap: true,
+                // includePaths: [],
+                // scss data that will be available to ALL files
+                // data: '',
+                outputStyle: isProd ? 'compressed' : 'expanded',
+                // Enables the line number and file where a selector is defined to be emitted into the compiled CSS as a comment. Useful for debugging, especially when using imports and mixins.
+                sourceComments: false,
+              },
+            },
+          ],
+        },
+        {
           test: /\.(woff(2)?|ttf|eot)?$/,
           use: [
             {
@@ -142,25 +190,21 @@ function createWebPackConfig(userConfig) {
       }),
       // new Visualizer(), // view at output-dir/stats.html
       new DashboardPlugin(),
-      new FaviconsWebpackPlugin(
+      new WebappWebpackPlugin(
         resolve(__dirname, '../client/assets/favicon.png'),
       ),
       // https://github.com/jaketrent/html-webpack-template
       // template: https://github.com/jaketrent/html-webpack-template/blob/master/index.ejs
       new HtmlWebpackPlugin({
-        template: HtmlTemplate,
-        inject: false,
+        // template: HtmlTemplate,
+        inject: true,
         // title: config.settings.site.title,
         title: 'Bedrock',
         appMountId: 'app',
         cache: false,
         mobile: true,
+        hash: true,
         filename: '../index.html',
-        links: [
-          // code highlighting styles
-          'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/darcula.min.css',
-        ],
-        scripts: [].filter(x => x),
         window: {
           //   bedrockSettings: config.settings,
           bedrock: {
@@ -168,11 +212,25 @@ function createWebPackConfig(userConfig) {
           },
         },
       }),
+      new MiniCssExtractPlugin({
+        // Options similar to the same options in webpackOptions.output
+        // both options are optional
+        filename: '[name].css',
+        chunkFilename: '[id].css',
+      }),
+      new OptimizeCssAssetsPlugin({
+        // assetNameRegExp: /\.optimize\.css$/g,
+        cssProcessor: cssnano,
+        cssProcessorPluginOptions: {
+          preset: ['default', { discardComments: { removeAll: true } }],
+        },
+        canPrint: true,
+      }),
     ],
     performance: {
       hints: isProd ? 'error' : false,
-      maxAssetSize: 510000,
-      maxEntrypointSize: 510000,
+      maxAssetSize: 610000,
+      maxEntrypointSize: 610000,
       // if this function returns false it is not included in performance calculation
       assetFilter: assetFilename => {
         if (assetFilename.includes('graphiql')) {
@@ -187,6 +245,7 @@ function createWebPackConfig(userConfig) {
     optimization: {
       minimize: isProd,
       // minimizer: [new TerserPlugin()],
+      namedModules: true,
       namedChunks: true,
       runtimeChunk: 'single',
       // https://itnext.io/react-router-and-webpack-v4-code-splitting-using-splitchunksplugin-f0a48f110312

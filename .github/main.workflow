@@ -78,14 +78,11 @@ action "alias design-token-mania" {
   secrets = ["ZEIT_TOKEN"]
 }
 
-workflow "Lint" {
-  on = "push"
-  resolves = [
-    "ESLint checks",
-  ]
-}
-
 action "ESLint checks" {
   uses = "gimenete/eslint-action@1.0"
   secrets = ["GITHUB_TOKEN"]
+}
+
+action "GitHub Action for Slack" {
+  uses = "Ilshidur/action-slack@92bd3e50cb4f2b64a6a37d20db2cf723e08f1f7f"
 }

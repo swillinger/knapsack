@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.32.3](https://github.com/basaltinc/bedrock/compare/v0.32.2...v0.32.3) (2019-02-14)
+
+
+### Bug Fixes
+
+* template view with no schema ([83890c7](https://github.com/basaltinc/bedrock/commit/83890c7))
+
+
+
+
+
 ## [0.32.2](https://github.com/basaltinc/bedrock/compare/v0.32.1...v0.32.2) (2019-02-14)
 
 

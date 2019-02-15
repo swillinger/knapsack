@@ -82,7 +82,6 @@ workflow "Lint" {
   on = "push"
   resolves = [
     "ESLint checks",
-    "new-action",
   ]
 }
 

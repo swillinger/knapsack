@@ -1,0 +1,23 @@
+<div class="home-page">
+  <h2>ima homepage</h2>
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+  {% include '@components/hero.twig' with {
+    title: "I'm a Hero!",
+    body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit..',
+    img: '/images/imagePlaceholder1.png',
+  } %}
+  {% include '@components/card.twig' with     {
+    title: "I'm a Card Title",
+    body:
+    "I'm a body - Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    img: '/images/imagePlaceholder1.png',
+    align: 'left',
+  } %}
+  {% include '@components/card.twig' with     {
+    title: "I'm a Card Titles",
+    body:
+    "I'm a body - Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    img: '/images/imagePlaceholder1.png',
+    align: 'right',
+  } %}
+</div>

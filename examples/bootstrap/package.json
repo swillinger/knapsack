@@ -1,0 +1,25 @@
+{
+  "name": "@basalt/bedrock-example-bootstrap",
+  "license": "ISC",
+  "version": "0.29.6",
+  "description": "",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "build": "NODE_ENV=production node $NODE_DEBUG_OPTION ./node_modules/.bin/bedrock build",
+    "build:tokens": "theo ./design-tokens/tokens.yml --transform web --format raw.json,scss,html --dest ./assets/dist/tokens",
+    "serve": "NODE_ENV=production node $NODE_DEBUG_OPTION ./node_modules/.bin/bedrock serve",
+    "start": "node $NODE_DEBUG_OPTION ./node_modules/.bin/bedrock start",
+    "test": "bedrock test"
+  },
+  "dependencies": {
+    "@basalt/bedrock": "^0.29.6",
+    "@basalt/bedrock-renderer-html": "^0.29.0",
+    "@basalt/bedrock-renderer-twig": "^0.29.0",
+    "@basalt/demo-data": "^0.5.1"
+  },
+  "devDependencies": {
+    "theo": "^8.0.0"
+  },
+  "author": ""
+}

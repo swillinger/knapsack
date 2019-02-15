@@ -137,6 +137,12 @@ class App extends React.Component {
         }
         patterns {
           id
+          templates {
+            id
+          }
+          meta {
+            showAllTemplates
+          }
         }
         docs {
           id
@@ -264,6 +270,57 @@ class App extends React.Component {
                           )}
                           <Route
                             path={`${BASE_PATHS.PATTERN}/:id`}
+                            exact
+                            render={({ match }) => {
+                              const pattern = data.patterns.find(
+                                p => match.params.id === p.id,
+                              );
+                              if (!pattern) {
+                                return (
+                                  <LoadableBadRoute
+                                    title={`Pattern "${
+                                      match.params.id
+                                    }" was not found in the system`}
+                                    subtitle="Hold your horses"
+                                    message={`We're having trouble finding the pattern "${
+                                      match.params.id
+                                    }" you requested. Please double check your url and the pattern meta.`}
+                                  />
+                                );
+                              }
+
+                              const [firstTemplate] = pattern.templates;
+                              if (!firstTemplate) {
+                                return (
+                                  <LoadableBadRoute
+                                    title={`Pattern "${
+                                      match.params.id
+                                    }" was found, but it did not having any templates in the system`}
+                                    subtitle="Hold your horses"
+                                    message={`We're having trouble finding the pattern "${
+                                      match.params.id
+                                    }" you requested. Please double check your url and the pattern meta.`}
+                                  />
+                                );
+                              }
+
+                              if (pattern && firstTemplate) {
+                                const templateId = pattern.meta.showAllTemplates
+                                  ? 'all'
+                                  : firstTemplate.id;
+                                return (
+                                  <Redirect
+                                    to={`${BASE_PATHS.PATTERN}/${
+                                      match.params.id
+                                    }/${templateId}`}
+                                  />
+                                );
+                              }
+                            }}
+                          />
+
+                          <Route
+                            path={`${BASE_PATHS.PATTERN}/:id/:templateId`}
                             render={({ match, ...rest }) => {
                               if (
                                 data.patterns
@@ -273,7 +330,8 @@ class App extends React.Component {
                                 return (
                                   <LoadablePatternView
                                     {...rest}
-                                    id={match.params.id}
+                                    patternId={match.params.id}
+                                    templateId={match.params.templateId}
                                     size="m"
                                     key={match.params.id}
                                   />

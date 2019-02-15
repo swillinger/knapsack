@@ -45,7 +45,6 @@ const query = gql`
         title
         description
         type
-        showAllTemplates
         demoSize
         status
       }
@@ -64,25 +63,24 @@ class PatternViewPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showAllTemplates: null,
       isFullScreen: false,
       demoSize: '',
-      currentTemplate: {
-        name: '',
-        id: '',
-      },
     };
   }
 
   render() {
+    const { patternId, templateId } = this.props;
+
     return (
       <ErrorCatcher>
         <PageWithSidebar {...this.props} isFullScreen={this.state.isFullScreen}>
-          <Query query={query} variables={{ id: this.props.id }}>
+          <Query query={query} variables={{ id: patternId }}>
             {({ loading, error, data: response }) => {
               if (loading) return <Spinner />;
               if (error)
                 return <StatusMessage type="error" message={error.message} />;
+
+              const showAllTemplates = templateId === 'all';
 
               const { pattern, patternStatuses } = response;
               const { templates, meta } = pattern;
@@ -91,23 +89,12 @@ class PatternViewPage extends Component {
                 description,
                 type,
                 demoSize: defaultDemoSize,
-                showAllTemplates: defaultShowAllTemplates,
                 status: statusId,
               } = meta;
-              const templateId = this.state.currentTemplate.id
-                ? this.state.currentTemplate.id
-                : templates[0].id;
+
               const demoSize = this.state.demoSize
                 ? this.state.demoSize
                 : defaultDemoSize;
-              const currentlySelectedTemplate = templates.find(
-                t => t.id === templateId,
-              );
-
-              const showAllTemplates =
-                typeof this.state.showAllTemplates === 'boolean'
-                  ? this.state.showAllTemplates
-                  : defaultShowAllTemplates;
 
               let hasSchema;
               if (showAllTemplates) {
@@ -121,6 +108,10 @@ class PatternViewPage extends Component {
                   )
                 );
               } else {
+                const currentlySelectedTemplate = templates.find(
+                  t => t.id === templateId,
+                );
+
                 hasSchema = !!(
                   currentlySelectedTemplate.schema &&
                   currentlySelectedTemplate.schema.properties &&
@@ -199,9 +190,7 @@ class PatternViewPage extends Component {
                         </Button>
 
                         {this.context.permissions.includes('write') && (
-                          <Link
-                            to={`${BASE_PATHS.PATTERN}/${this.props.id}/edit`}
-                          >
+                          <Link to={`${BASE_PATHS.PATTERN}/${patternId}/edit`}>
                             <Button>Edit Meta</Button>
                           </Link>
                         )}
@@ -213,7 +202,7 @@ class PatternViewPage extends Component {
                             }?${queryString.stringify({
                               query: gqlToString(query),
                               variables: JSON.stringify({
-                                id: this.props.id,
+                                id: patternId,
                               }),
                             })}`}
                           >
@@ -231,11 +220,9 @@ class PatternViewPage extends Component {
                               title: t.title,
                             }))}
                             handleChange={value => {
-                              this.setState({
-                                currentTemplate: templates.find(
-                                  t => t.id === value,
-                                ),
-                              });
+                              this.props.history.push(
+                                `${BASE_PATHS.PATTERN}/${patternId}/${value}`,
+                              );
                             }}
                           />
                         )}
@@ -244,11 +231,19 @@ class PatternViewPage extends Component {
                           <Button
                             type="button"
                             className="button button--size-small"
-                            onClick={() =>
-                              this.setState({
-                                showAllTemplates: !showAllTemplates,
-                              })
-                            }
+                            onClick={() => {
+                              if (templateId === 'all') {
+                                this.props.history.push(
+                                  `${BASE_PATHS.PATTERN}/${patternId}/${
+                                    templates[0].id
+                                  }`,
+                                );
+                              } else {
+                                this.props.history.push(
+                                  `${BASE_PATHS.PATTERN}/${patternId}/all`,
+                                );
+                              }
+                            }}
                           >
                             {showAllTemplates ? 'Show One' : 'Show All'}
                           </Button>
@@ -259,9 +254,9 @@ class PatternViewPage extends Component {
 
                   {!showAllTemplates && (
                     <TemplateView
-                      id={this.props.id}
+                      id={patternId}
                       templateId={templateId}
-                      key={`${this.props.id}-${templateId}`}
+                      key={`${patternId}-${templateId}`}
                       demoSize={this.state.demoSize || defaultDemoSize}
                       isVerbose
                     />
@@ -271,7 +266,7 @@ class PatternViewPage extends Component {
                     templates.map(template => (
                       <div key={template.id}>
                         <TemplateView
-                          id={this.props.id}
+                          id={patternId}
                           key={template.id}
                           templateId={template.id}
                           demoSize={this.state.demoSize || defaultDemoSize}
@@ -304,7 +299,11 @@ class PatternViewPage extends Component {
 PatternViewPage.defaultProps = {};
 
 PatternViewPage.propTypes = {
-  id: PropTypes.string.isRequired,
+  patternId: PropTypes.string.isRequired,
+  templateId: PropTypes.string.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default PatternViewPage;

@@ -60,3 +60,12 @@ action "alias design-token-mania" {
   args = "alias --local-config=./examples/design-token-mania/now.json --team=basalt"
   secrets = ["ZEIT_TOKEN"]
 }
+
+workflow "Lint" {
+  on = "push"
+  resolves = ["ESLint checks"]
+}
+
+action "ESLint checks" {
+  uses = "gimenete/eslint-action@1.0"
+}

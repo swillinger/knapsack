@@ -4,6 +4,7 @@ workflow "Deploy" {
     "alias simple",
     "alias design-token-mania",
     "alias multi-template",
+    "alias bootstrap",
   ]
 }
 
@@ -40,6 +41,22 @@ action "deploy/design-token-mania" {
   args = "deploy examples/design-token-mania --team=basalt"
 }
 
+action "deploy/bootstrap" {
+  needs = "master-branch-filter"
+  uses = "actions/zeit-now@master"
+  secrets = [
+    "ZEIT_TOKEN",
+  ]
+  args = "deploy examples/bootstrap --team=basalt"
+}
+
+action "alias bootstrap" {
+  uses = "actions/zeit-now@master"
+  needs = ["deploy/bootstrap"]
+  args = "alias --local-config=./examples/bootstrap/now.json --team=basalt"
+  secrets = ["ZEIT_TOKEN"]
+}
+
 action "alias multi-template" {
   uses = "actions/zeit-now@master"
   needs = ["deploy/multi-templates"]
@@ -61,11 +78,11 @@ action "alias design-token-mania" {
   secrets = ["ZEIT_TOKEN"]
 }
 
-workflow "Lint" {
-  on = "push"
-  resolves = ["ESLint checks"]
-}
-
 action "ESLint checks" {
   uses = "gimenete/eslint-action@1.0"
+  secrets = ["GITHUB_TOKEN"]
+}
+
+action "GitHub Action for Slack" {
+  uses = "Ilshidur/action-slack@92bd3e50cb4f2b64a6a37d20db2cf723e08f1f7f"
 }

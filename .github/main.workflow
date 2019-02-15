@@ -4,6 +4,7 @@ workflow "Deploy" {
     "alias simple",
     "alias design-token-mania",
     "alias multi-template",
+    "alias bootstrap",
   ]
 }
 
@@ -40,6 +41,22 @@ action "deploy/design-token-mania" {
   args = "deploy examples/design-token-mania --team=basalt"
 }
 
+action "deploy/bootstrap" {
+  needs = "master-branch-filter"
+  uses = "actions/zeit-now@master"
+  secrets = [
+    "ZEIT_TOKEN",
+  ]
+  args = "deploy examples/bootstrap --team=basalt"
+}
+
+action "alias bootstrap" {
+  uses = "actions/zeit-now@master"
+  needs = ["deploy/bootstrap"]
+  args = "alias --local-config=./examples/bootstrap/now.json --team=basalt"
+  secrets = ["ZEIT_TOKEN"]
+}
+
 action "alias multi-template" {
   uses = "actions/zeit-now@master"
   needs = ["deploy/multi-templates"]
@@ -63,7 +80,10 @@ action "alias design-token-mania" {
 
 workflow "Lint" {
   on = "push"
-  resolves = ["ESLint checks"]
+  resolves = [
+    "ESLint checks",
+    "new-action",
+  ]
 }
 
 action "ESLint checks" {

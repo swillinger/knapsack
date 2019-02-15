@@ -1,7 +1,7 @@
 {
   "name": "@basalt/bedrock-example-bootstrap",
   "license": "ISC",
-  "version": "0.29.6",
+  "version": "0.33.0",
   "description": "",
   "private": true,
   "main": "index.js",

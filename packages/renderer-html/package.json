@@ -1,6 +1,6 @@
 {
   "name": "@basalt/bedrock-renderer-html",
-  "version": "0.32.1",
+  "version": "0.33.0",
   "description": "Render HTML",
   "main": "src/index.js",
   "scripts": {},

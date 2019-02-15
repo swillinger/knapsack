@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.33.0](https://github.com/basaltinc/bedrock/compare/v0.32.5...v0.33.0) (2019-02-15)
+
+
+### Features
+
+* add jumbotron to example/bootstrap ([5af34ee](https://github.com/basaltinc/bedrock/commit/5af34ee))
+
+
+
+
+
 ## [0.29.6](https://github.com/basaltinc/bedrock/compare/v0.29.5...v0.29.6) (2019-01-30)
 
 **Note:** Version bump only for package @basalt/bedrock-example-simple

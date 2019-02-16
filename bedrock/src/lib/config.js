@@ -32,55 +32,29 @@ const {
 } = require('../schemas/bedrock-design-tokens.schema');
 
 /**
- * Prepare user config: validate, convert all paths to absolute, assign defaults
- * @param {BedrockUserConfig} userConfig
- * @param {string} from
- * @returns {BedrockConfig}
- * @todo validate with schema and assign defaults
+ * Handle backwards compatibility of config
+ * @param {BedrockUserConfig} config
+ * @return {BedrockConfig}
  */
-function processConfig(userConfig, from) {
-  const {
-    patterns,
-    public: publicDir,
-    dist,
-    css,
-    js,
-    docsDir,
-    templates,
-    ...rest
-  } = userConfig;
-  const config = {
-    patterns: patterns.map(p => resolve(from, p)),
-    public: resolve(from, publicDir),
-    css: css ? css.map(x => (x.startsWith('http') ? x : resolve(from, x))) : [],
-    js: js ? js.map(x => (x.startsWith('http') ? x : resolve(from, x))) : [],
-    dist: resolve(from, dist),
-    docsDir: docsDir ? resolve(from, docsDir) : null,
-    ...rest,
-  };
-
+function convertOldConfig(config) {
   // @deprecated - remove in v1.0.0
-  if (templates) {
+  if (config.templates) {
     log.warn(
       'bedrock.config.js prop "templates" is deprecated and has been renamed to "templateRenderers", please rename with no change to config needed. The bots have moved your config to correct spot for now, but this will stop working at 1.0.0',
     );
-    config.templateRenderers = templates;
+    config.templateRenderers = config.templates;
+    delete config.templates;
   }
 
-  if (config.css) {
-    config.rootRelativeCSS = config.css.map(c => {
-      if (c.startsWith('http')) return c;
-      return `/${relative(config.public, c)}`;
-    });
-  }
+  return config;
+}
 
-  if (config.js) {
-    config.rootRelativeJs = config.js.map(j => {
-      if (j.startsWith('http')) return j;
-      return `/${relative(config.public, j)}`;
-    });
-  }
-
+/**
+ * @param {BedrockConfig} config
+ * @returns {boolean}
+ * @todo validate with schema and assign defaults
+ */
+function validateConfig(config) {
   const templateRendererResults = validateUniqueIdsInArray(
     config.templateRenderers,
   );
@@ -117,7 +91,9 @@ function processConfig(userConfig, from) {
       .filter(asset => asset.includes('..')).length;
     if (assetsNotPublicallyReachable > 0) {
       log.error(
-        `Some CSS or JS is not publically accessible! These must be either remote or places inside the "public" dir (${publicDir})`,
+        `Some CSS or JS is not publically accessible! These must be either remote or places inside the "public" dir (${
+          config.public
+        })`,
       );
       process.exit(1);
     }
@@ -157,6 +133,54 @@ function processConfig(userConfig, from) {
       },
     );
   }
+
+  return true;
+}
+
+/**
+ * Prepare user config: validate, convert all paths to absolute, assign defaults
+ * @param {BedrockUserConfig} userConfig
+ * @param {string} from
+ * @returns {BedrockConfig}
+ */
+function processConfig(userConfig, from) {
+  const {
+    patterns,
+    public: publicDir,
+    dist,
+    css,
+    js,
+    docsDir,
+    ...rest
+  } = convertOldConfig(userConfig);
+
+  const config = {
+    patterns: patterns.map(p => resolve(from, p)),
+    public: resolve(from, publicDir),
+    css: css ? css.map(x => (x.startsWith('http') ? x : resolve(from, x))) : [],
+    js: js ? js.map(x => (x.startsWith('http') ? x : resolve(from, x))) : [],
+    dist: resolve(from, dist),
+    docsDir: docsDir ? resolve(from, docsDir) : null,
+    ...rest,
+  };
+
+  if (config.css) {
+    config.rootRelativeCSS = config.css.map(c => {
+      if (c.startsWith('http')) return c;
+      return `/${relative(config.public, c)}`;
+    });
+  }
+
+  if (config.js) {
+    config.rootRelativeJs = config.js.map(j => {
+      if (j.startsWith('http')) return j;
+      return `/${relative(config.public, j)}`;
+    });
+  }
+
+  const ok = validateConfig(config);
+  if (!ok) process.exit(1);
+
   bedrockEvents.emit(EVENTS.CONFIG_READY, config);
 
   return config;

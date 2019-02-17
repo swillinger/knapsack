@@ -22,7 +22,6 @@ const config = {
   css: ['./public/css/bootstrap.css'],
   js: ['./public/js/bootstrap.bundle.js'],
   version,
-  docsDir: './docs',
   templateRenderers: [
     new HtmlRenderer(),
     new TwigRenderer({

@@ -2,16 +2,19 @@ module.exports = {
   animate: {
     duration: {
       normal: {
-        value: '0.15s',
+        value: '0.2s',
       },
       slow: {
-        value: '0.3s',
+        value: '0.4s',
       },
     },
     timing: {
-      default: {
+      linear: {
         value: 'linear',
         comment: 'This is the default browser setting',
+      },
+      ease: {
+        value: 'ease-in-out',
       },
     },
   },

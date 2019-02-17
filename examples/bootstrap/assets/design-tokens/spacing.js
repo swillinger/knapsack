@@ -1,55 +1,22 @@
 module.exports = {
   spacing: {
     xs: {
-      value: '5px',
-      tags: ['layout'],
+      value: '4px',
     },
     s: {
-      value: '10px',
-      tags: ['layout'],
-    },
-    bullets: {
-      value: '12px',
-      tags: ['layout'],
-      comment: 'For use with bullet lists',
+      value: '8px',
     },
     m: {
-      value: '15px',
-      tags: ['layout'],
+      value: '16px',
     },
     l: {
-      value: '20px',
-      tags: ['layout'],
+      value: '32px',
     },
     xl: {
-      value: '25px',
-      tags: ['layout'],
+      value: '48px',
     },
     xxl: {
-      value: '30px',
-      tags: ['layout'],
-    },
-    xxxl: {
-      value: '40px',
-      tags: ['layout'],
-    },
-    xxxxl: {
-      value: '45px',
-      tags: ['layout'],
-    },
-    whitespace: {
-      relative: {
-        value: '1.25em',
-      },
-      s: {
-        value: '{spacing.xs.value}',
-      },
-      m: {
-        value: '{spacing.m.value}',
-      },
-      l: {
-        value: '{spacing.xxxxl.value}',
-      },
+      value: '64px',
     },
   },
 };

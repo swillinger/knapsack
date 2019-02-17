@@ -1,37 +1,31 @@
 module.exports = {
   breakpoint: {
     width: {
-      medium: {
-        value: '480px',
+      sm: {
+        value: '576px',
       },
-      large: {
+      md: {
         value: '768px',
       },
-      xlarge: {
+      lg: {
         value: '992px',
       },
-      xxlarge: {
+      xl: {
         value: '1200px',
-      },
-      xxxlarge: {
-        value: '1400px',
       },
     },
     'media-query': {
-      medium: {
-        value: 'screen and (min-width: {breakpoint.width.medium.value})',
+      sm: {
+        value: 'screen and (min-width: {breakpoint.width.sm.value})',
       },
-      large: {
-        value: 'screen and (min-width: {breakpoint.width.large.value})',
+      md: {
+        value: 'screen and (min-width: {breakpoint.width.md.value})',
       },
-      xlarge: {
-        value: 'screen and (min-width: {breakpoint.width.xlarge.value})',
+      lg: {
+        value: 'screen and (min-width: {breakpoint.width.lg.value})',
       },
-      xxlarge: {
-        value: 'screen and (min-width: {breakpoint.width.xxlarge.value})',
-      },
-      xxxlarge: {
-        value: 'screen and (min-width: {breakpoint.width.xxxlarge.value})',
+      xl: {
+        value: 'screen and (min-width: {breakpoint.width.xl.value})',
       },
     },
   },

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.34.0](https://github.com/basaltinc/bedrock/compare/v0.33.3...v0.34.0) (2019-02-17)
+
+
+### Features
+
+* add more tokens and custom docs ([0bb124f](https://github.com/basaltinc/bedrock/commit/0bb124f))
+
+
+
+
+
 ## [0.33.3](https://github.com/basaltinc/bedrock/compare/v0.33.2...v0.33.3) (2019-02-16)
 
 **Note:** Version bump only for package @basalt/bedrock-monorepo

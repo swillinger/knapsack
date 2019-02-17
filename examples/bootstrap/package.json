@@ -6,10 +6,13 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "build": "NODE_ENV=production node $NODE_DEBUG_OPTION ./node_modules/.bin/bedrock build",
-    "build:tokens": "theo ./design-tokens/tokens.yml --transform web --format raw.json,scss,html --dest ./assets/dist/tokens",
+    "build": "NODE_ENV=production run-s --print-name clean build:tokens build:bedrock",
+    "build:bedrock": "NODE_ENV=production node $NODE_DEBUG_OPTION ./node_modules/.bin/bedrock build",
+    "build:tokens": "style-dictionary build --config ./style-dictionary.config.js",
+    "clean": "rm -rf ./assets/design-tokens/dist",
     "serve": "NODE_ENV=production node $NODE_DEBUG_OPTION ./node_modules/.bin/bedrock serve",
-    "start": "node $NODE_DEBUG_OPTION ./node_modules/.bin/bedrock start",
+    "start": "run-s clean build:tokens start:bedrock",
+    "start:bedrock": "node $NODE_DEBUG_OPTION ./node_modules/.bin/bedrock start",
     "test": "bedrock test"
   },
   "dependencies": {
@@ -19,7 +22,7 @@
     "@basalt/demo-data": "^0.5.1"
   },
   "devDependencies": {
-    "theo": "^8.0.0"
+    "style-dictionary": "^2.7.0"
   },
   "author": ""
 }

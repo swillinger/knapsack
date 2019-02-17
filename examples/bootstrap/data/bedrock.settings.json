@@ -7,6 +7,19 @@
     "title": "",
     "homepage": ""
   },
+  "customSections": [
+    {
+      "id": "design-tokens",
+      "title": "Design Tokens",
+      "showInMainMenu": true,
+      "pages": [
+        {
+          "id": "colors",
+          "title": "Colors"
+        }
+      ]
+    }
+  ],
   "designTokens": {
     "groups": [
       {

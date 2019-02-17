@@ -10,16 +10,19 @@ StyleDictionary.registerFormat({
   name: 'custom-sass-map-flat',
   formatter: template(
     readFileSync(
-      join(__dirname, '../scripts/style-dictionary/sass-map-flat.template'),
+      join(__dirname, './scripts/sass-map-flat.template'),
     ),
   ),
 });
 
+const buildPath = './assets/design-tokens/dist/';
+const prefix = 'bs';
+
 module.exports = {
-  source: ['src/core/design-tokens/**/*.{json,js}'],
+  source: ['assets/design-tokens/**/*.{json,js}'],
   platforms: {
     scss: {
-      prefix: 'msk',
+      prefix,
       transforms: [
         'attribute/cti',
         'name/cti/kebab',
@@ -27,7 +30,7 @@ module.exports = {
         'content/icon',
         'color/css',
       ],
-      buildPath: './src/core/dist/',
+      buildPath,
       files: [
         {
           destination: 'design-tokens.scss',
@@ -45,8 +48,8 @@ module.exports = {
     },
     js: {
       transforms: ['name/cti/camel'],
-      buildPath: './src/core/dist/',
-      prefix: 'msk',
+      buildPath,
+      prefix,
       files: [
         {
           destination: 'design-tokens.json',
@@ -60,8 +63,8 @@ module.exports = {
     },
     bedrock: {
       transforms: ['attribute/cti', 'name/cti/kebab'],
-      buildPath: './src/core/dist/',
-      prefix: 'msk',
+      buildPath,
+      prefix,
       files: [
         {
           destination: 'bedrock-design-tokens.json',

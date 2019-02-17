@@ -1,0 +1,25 @@
+{
+  "pages": [
+    {
+      "path": "/design-tokens/colors",
+      "slices": [
+        {
+          "id": "KYHJXi3eV",
+          "blockId": "design-token-slice",
+          "data": {
+            "tokens": {
+              "category": "color",
+              "tags": [
+                "color",
+                "core"
+              ]
+            },
+            "demo": {
+              "id": "color-swatch"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

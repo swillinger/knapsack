@@ -7,3 +7,4 @@ vendor
 dist
 *.log
 /crux
+data/bedrock.custom-pages.json

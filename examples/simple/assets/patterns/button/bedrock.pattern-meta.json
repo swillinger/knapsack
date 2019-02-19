@@ -7,5 +7,6 @@
     "inSlice"
   ],
   "hasIcon": true,
-  "demoSize": "m"
+  "demoSize": "m",
+  "demoBackground": "white"
 }

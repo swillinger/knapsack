@@ -46,6 +46,7 @@ const query = gql`
         description
         type
         demoSize
+        demoBackground
         status
       }
     }
@@ -65,6 +66,7 @@ class PatternViewPage extends Component {
     this.state = {
       isFullScreen: false,
       demoSize: '',
+      demoBackground: '',
     };
   }
 
@@ -89,12 +91,17 @@ class PatternViewPage extends Component {
                 description,
                 type,
                 demoSize: defaultDemoSize,
+                demoBackground: defaultDemoBackground,
                 status: statusId,
               } = meta;
 
               const demoSize = this.state.demoSize
                 ? this.state.demoSize
                 : defaultDemoSize;
+
+              const demoBackground = this.state.demoBackground
+                ? this.state.demoBackground
+                : defaultDemoBackground;
 
               let hasSchema;
               if (showAllTemplates) {
@@ -173,6 +180,29 @@ class PatternViewPage extends Component {
                             label="Stage Size"
                           />
                         )}
+                      </DemoGridControls>
+                      <DemoGridControls>
+                        <Select
+                          items={[
+                            {
+                              value: 'transparent',
+                              title: 'Transparent',
+                            },
+                            {
+                              value: 'white',
+                              title: 'White',
+                            },
+                            {
+                              value: 'grey',
+                              title: 'Grey',
+                            },
+                          ]}
+                          value={demoBackground}
+                          handleChange={newDemoBackground =>
+                            this.setState({ demoBackground: newDemoBackground })
+                          }
+                          label="Stage Background"
+                        />
                       </DemoGridControls>
                       <DemoGridControls>
                         <Button
@@ -258,6 +288,9 @@ class PatternViewPage extends Component {
                       templateId={templateId}
                       key={`${patternId}-${templateId}`}
                       demoSize={this.state.demoSize || defaultDemoSize}
+                      demoBackground={
+                        this.state.demoBackground || defaultDemoBackground
+                      }
                       isVerbose
                     />
                   )}
@@ -270,6 +303,9 @@ class PatternViewPage extends Component {
                           key={template.id}
                           templateId={template.id}
                           demoSize={this.state.demoSize || defaultDemoSize}
+                          demoBackground={
+                            this.state.demoBackground || defaultDemoBackground
+                          }
                           isVerbose={!showAllTemplates}
                         />
                         <br />

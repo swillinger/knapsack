@@ -65,6 +65,7 @@ const patternsTypeDef = gql`
     uiSchema: JSON
     isInline: Boolean
     demoSize: String
+    demoBackground: String
   }
 
   type PatternType {
@@ -97,6 +98,12 @@ const patternsTypeDef = gql`
     full
   }
 
+  enum PatternDemoBackground {
+    transparent
+    white
+    grey
+  }
+
   type PatternMeta {
     title: String!
     description: String
@@ -106,6 +113,7 @@ const patternsTypeDef = gql`
     hasIcon: Boolean
     dosAndDonts: [PatternDoAndDont]
     demoSize: PatternDemoSize
+    demoBackground: PatternDemoBackground
     showAllTemplates: Boolean
   }
 

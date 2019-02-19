@@ -22,11 +22,18 @@ export const DemoStage = styled.div`
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
-  background-image: linear-gradient(45deg, hsl(0, 0%, 90%) 25%, transparent 25%),
-    linear-gradient(-45deg, hsl(0, 0%, 90%) 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, hsl(0, 0%, 90%) 75%),
-    linear-gradient(-45deg, transparent 75%, hsl(0, 0%, 90%) 75%);
-  background-size: 20px 20px;
+  ${({ demoBackground }) => {
+    switch (demoBackground) {
+      case 'transparent':
+        return 'background-image: linear-gradient(45deg, hsl(0, 0%, 90%) 25%, transparent 25%), linear-gradient(-45deg, hsl(0, 0%, 90%) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, hsl(0, 0%, 90%) 75%), linear-gradient(-45deg, transparent 75%, hsl(0, 0%, 90%) 75%); background-size: 20px 20px;';
+      case 'white':
+        return 'background-color: white;';
+      case 'grey':
+        return 'background-color: lightgrey';
+      default:
+        return 'background-image: linear-gradient(45deg, hsl(0, 0%, 90%) 25%, transparent 25%), linear-gradient(-45deg, hsl(0, 0%, 90%) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, hsl(0, 0%, 90%) 75%), linear-gradient(-45deg, transparent 75%, hsl(0, 0%, 90%) 75%);';
+    }
+  }};
   background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
   width: 100%;
   @media (min-width: 900px) {

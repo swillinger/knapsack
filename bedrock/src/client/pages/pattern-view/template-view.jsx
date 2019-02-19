@@ -57,6 +57,7 @@ const patternQuery = gql`
         uiSchema
         doc
         demoSize
+        demoBackground
         demoDatas
       }
     }
@@ -244,13 +245,17 @@ class TemplateView extends Component {
           </FlexWrapper>
 
           <DemoGrid size={showSchemaForm ? this.props.demoSize : 'full'}>
-            <DemoStage size={showSchemaForm ? this.props.demoSize : 'full'}>
+            <DemoStage
+              size={showSchemaForm ? this.props.demoSize : 'full'}
+              demoBackground={this.props.demoBackground}
+            >
               <Template
                 patternId={this.props.id}
                 templateId={this.props.templateId}
                 data={data}
                 showDataUsed={false}
                 isResizable
+                demoBackground={this.props.demoBackground}
               />
             </DemoStage>
             {showSchemaForm && (
@@ -352,6 +357,7 @@ TemplateView.defaultProps = {
   isReadmeShown: true,
   isTitleShown: true,
   isSchemaFormShown: true,
+  demoBackground: 'transparent',
 };
 
 TemplateView.propTypes = {
@@ -362,6 +368,7 @@ TemplateView.propTypes = {
   isReadmeShown: PropTypes.bool,
   isTitleShown: PropTypes.bool,
   isSchemaFormShown: PropTypes.bool,
+  demoBackground: PropTypes.string,
 };
 
 export default TemplateView;

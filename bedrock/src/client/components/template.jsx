@@ -22,7 +22,13 @@ import shortid from 'shortid';
 import qs from 'qs';
 import { IFrameWrapper, Resizable, SizeTab } from './template.styles';
 
-function Template({ templateId, patternId, data = {}, isResizable = false }) {
+function Template({
+  templateId,
+  patternId,
+  demoBackground,
+  data = {},
+  isResizable = false,
+}) {
   const makeId = () => `${patternId}-${templateId}-${shortid.generate()}`;
 
   const [id, setId] = useState(makeId());
@@ -40,6 +46,7 @@ function Template({ templateId, patternId, data = {}, isResizable = false }) {
     isInIframe: true,
     wrapHtml: true,
     cacheBuster: shortid.generate(),
+    demoBackground,
   });
 
   const htmlUrl = `/api/render?${query}`;
@@ -127,7 +134,7 @@ function Template({ templateId, patternId, data = {}, isResizable = false }) {
   if (isResizable) {
     return (
       <IFrameWrapper ref={resizeRef}>
-        <Resizable>
+        <Resizable demoBackground={demoBackground}>
           {content}
           {width && <SizeTab>{width}px</SizeTab>}
         </Resizable>
@@ -147,6 +154,7 @@ Template.propTypes = {
   patternId: PropTypes.string.isRequired,
   data: PropTypes.object,
   isResizable: PropTypes.bool,
+  demoBackground: PropTypes.string,
 };
 
 export default Template;

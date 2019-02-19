@@ -32,7 +32,18 @@ export const Resizable = styled.div`
   padding: 10px;
   width: 100%;
   max-width: ${props => props.size || '100%'};
-  background-color: rgba(77, 77, 77, 0.15);
+  ${({ demoBackground }) => {
+    switch (demoBackground) {
+      case 'transparent':
+        return 'background-color: rgba(77, 77, 77, 0.15);';
+      case 'white':
+        return 'background-color: transparent; border: 1px solid lightgrey;';
+      case 'grey':
+        return 'background-color: transparent; border: 1px solid white;';
+      default:
+        return 'background-color: rgba(77, 77, 77, 0.15);';
+    }
+  }};
 `;
 
 export const SizeTab = styled.div`

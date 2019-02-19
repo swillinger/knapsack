@@ -119,5 +119,13 @@ module.exports = {
       enumNames: ['Small', 'Medium', 'Large', 'full'],
       default: 'l',
     },
+    demoBackground: {
+      title: 'Demo Background',
+      type: 'string',
+      description: 'Background color for demo stage',
+      enum: ['transparent', 'grey', 'white'],
+      enumNames: ['Transparent', 'Grey', 'White'],
+      default: 'transparent',
+    },
   },
 };

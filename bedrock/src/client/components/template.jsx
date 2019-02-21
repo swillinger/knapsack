@@ -39,7 +39,7 @@ function Template({ templateId, patternId, data = {}, isResizable = false }) {
     data: qs.stringify(data),
     isInIframe: true,
     wrapHtml: true,
-    cacheBuster: shortid.generate(),
+    cacheBuster: id,
   });
 
   const htmlUrl = `/api/render?${query}`;

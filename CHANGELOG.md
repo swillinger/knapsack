@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.35.0](https://github.com/basaltinc/bedrock/compare/v0.34.2...v0.35.0) (2019-02-23)
+
+
+### Features
+
+* add demo-urls cli command ([0e3ef23](https://github.com/basaltinc/bedrock/commit/0e3ef23))
+
+
+
+
+
 ## [0.34.2](https://github.com/basaltinc/bedrock/compare/v0.34.1...v0.34.2) (2019-02-23)
 
 

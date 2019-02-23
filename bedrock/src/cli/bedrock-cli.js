@@ -16,15 +16,14 @@
     with Bedrock; if not, see <https://www.gnu.org/licenses>.
  */
 const program = require('commander');
-const { existsSync } = require('fs-extra');
 const { join, dirname } = require('path');
 const log = require('./log');
 const { bedrockEvents, EVENTS } = require('../server/events');
-const { Patterns } = require('../server/patterns');
 const { serve } = require('../server/server');
 const { version } = require('../../package.json');
 const { build, testPatternRenders } = require('./commands');
-const { processConfig, getMeta } = require('../lib/config');
+const { getMeta } = require('../lib/config');
+const { bootstrapFromConfigFile } = require('../lib/bootstrap');
 
 program
   .version(version)
@@ -48,49 +47,15 @@ const isDevMode = !dirname(__dirname)
 if (isDevMode) log.info('Bedrock Dev Mode on');
 
 const configPath = join(process.cwd(), 'bedrock.config.js');
-if (!existsSync(configPath)) {
-  log.error('Could not find bedrock.config.js file in CWD.');
-  process.exit(1);
-}
 
-/** @type {BedrockConfig} */
-const config = processConfig(require(configPath), dirname(configPath));
-
-const patterns = new Patterns({
-  newPatternDir: config.newPatternDir,
-  patternPaths: config.patterns,
-  dataDir: config.data,
-  templateRenderers: config.templateRenderers,
-  rootRelativeCSS: config.rootRelativeCSS,
-  rootRelativeJs: config.rootRelativeJs,
-});
+const { patterns, config } = bootstrapFromConfigFile(configPath);
 
 const allTemplatePaths = patterns.getAllTemplatePaths();
-
-config.templateRenderers.forEach(templateRenderer => {
-  if (templateRenderer.init) {
-    templateRenderer.init({
-      config,
-      allPatterns: patterns.getPatterns(),
-      templatePaths: allTemplatePaths.filter(t => templateRenderer.test(t)),
-    });
-    log.info('Init done', null, `templateRenderer:${templateRenderer.id}`);
-  }
-});
-log.verbose('All templateRenderers init done');
-// const userPkgPath = join(process.cwd(), 'package.json');
-// let userPkg = {};
-// if (existsSync(userPkgPath)) userPkg = require(userPkgPath); // eslint-disable-line
-// const { scripts } = userPkg;
 
 program.command('serve').action(async () => {
   log.info('Serving...');
   const meta = await getMeta(config);
-  await serve({
-    config,
-    meta,
-    patterns,
-  });
+  await serve({ meta });
 });
 
 program.command('build').action(async () => {
@@ -113,11 +78,7 @@ program.command('start').action(async () => {
         ),
       }),
     ),
-    serve({
-      config,
-      meta,
-      patterns,
-    }),
+    serve({ meta }),
   ])
     .then(() => log.info('Started!', null, 'start'))
     .catch(err => {

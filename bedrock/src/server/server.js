@@ -28,42 +28,36 @@ const { enableTemplatePush } = require('../lib/features');
 const { getRole } = require('./auth');
 const { PERMISSIONS, BASE_PATHS } = require('../lib/constants');
 const {
-  PageBuilder,
   pageBuilderPagesTypeDef,
   pageBuilderPagesResolvers,
 } = require('./page-builder');
-const { Settings, settingsTypeDef, settingsResolvers } = require('./settings');
+const { settingsTypeDef, settingsResolvers } = require('./settings');
+const { customPagesResolvers, customPagesTypeDef } = require('./custom-pages');
+const { docsTypeDef, docsResolvers } = require('./docs');
 const {
-  customPagesResolvers,
-  customPagesTypeDef,
-  CustomPages,
-} = require('./custom-pages');
-const { Docs, docsTypeDef, docsResolvers } = require('./docs');
-const {
-  DesignTokens,
   designTokensTypeDef,
   designTokensResolvers,
 } = require('./design-tokens');
-// Need `Pattens` in so JsDoc works
-// eslint-disable-next-line no-unused-vars
-const { Patterns, patternsResolvers, patternsTypeDef } = require('./patterns');
+const { patternsResolvers, patternsTypeDef } = require('./patterns');
+const { getBrain } = require('../lib/bootstrap');
 
 /**
  * @param {Object} opt
- * @param {BedrockConfig} opt.config
- * @param {Patterns} opt.patterns
  * @param {BedrockMeta} opt.meta
  * @returns {Promise<void>}
  */
-async function serve({ config, meta, patterns }) {
+async function serve({ meta }) {
+  const {
+    patterns,
+    customPages,
+    pageBuilderPages,
+    settings,
+    tokens,
+    docs,
+    config,
+  } = getBrain();
   const port = process.env.BEDROCK_PORT || 3999;
   const bedrockDistDir = join(__dirname, '../../dist/');
-
-  const settings = new Settings({ dataDir: config.data });
-  const pageBuilderPages = new PageBuilder({ dataDir: config.data });
-  const customPages = new CustomPages({ dataDir: config.data });
-  const tokens = new DesignTokens(config.designTokens);
-  const docs = new Docs({ docsDir: config.docsDir });
 
   const metaTypeDef = gql`
     type Meta {
@@ -134,8 +128,8 @@ async function serve({ config, meta, patterns }) {
         customPages,
       };
     },
-    // playground: true,
-    // introspection: true,
+    playground: true,
+    introspection: true,
   });
 
   const app = express();
@@ -179,15 +173,6 @@ async function serve({ config, meta, patterns }) {
   //   );
   // }
 
-  // const designTokens = new DesignTokens({
-  //   tokenPath: config.designTokens,
-  // });
-
-  // const tokens = {
-  //   tokens: await designTokens.getTokens(),
-  //   categories: await designTokens.allCategoriesUsed,
-  // };
-
   const endpoints = [];
 
   /**
@@ -226,23 +211,40 @@ async function serve({ config, meta, patterns }) {
     // disabling prettier so it's possible to keep indenting semi-similar to how it'd be done with templates, please try and keep it tidy and consistent!
     res.send(`
 <ul>
-${patternDemos.map(patternDemo => `
+${patternDemos
+  .map(
+    patternDemo => `
   <li>
-    Pattern: <a href="${BASE_PATHS.PATTERN}/${patternDemo.id}" target="_blank">${patternDemo.title}</a>
+    Pattern: <a href="${BASE_PATHS.PATTERN}/${
+      patternDemo.id
+    }" target="_blank">${patternDemo.title}</a>
     <ul>
-      ${patternDemo.templates.map(template => `
+      ${patternDemo.templates
+        .map(
+          template => `
         <li>
-          Template: <a href="${BASE_PATHS.PATTERN}/${patternDemo.id}/${template.id}" target="_blank">${template.title}</a>
+          Template: <a href="${BASE_PATHS.PATTERN}/${patternDemo.id}/${
+            template.id
+          }" target="_blank">${template.title}</a>
           <ul>
-            ${template.demoUrls.map((demoUrl, i) => `
-              <li><a href="${demoUrl}" target="_blank">Demo Data ${i + 1}</a></li>
-            `).join('\n')}
+            ${template.demoUrls
+              .map(
+                (demoUrl, i) => `
+              <li><a href="${demoUrl}" target="_blank">Demo Data ${i +
+                  1}</a></li>
+            `,
+              )
+              .join('\n')}
           </ul>
         </li>
-      `).join('\n')}
+      `,
+        )
+        .join('\n')}
     </ul>
   </li>
-`).join('\n')}
+`,
+  )
+  .join('\n')}
 </ul>
     `);
     /* eslint-enable prettier/prettier */

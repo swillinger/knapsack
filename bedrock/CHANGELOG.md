@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.34.2](https://github.com/basaltinc/bedrock/compare/v0.34.1...v0.34.2) (2019-02-23)
+
+
+### Bug Fixes
+
+* consolidate pattern template demoDatas logic ([ce9a2da](https://github.com/basaltinc/bedrock/commit/ce9a2da))
+
+
+
+
+
 ## [0.34.1](https://github.com/basaltinc/bedrock/compare/v0.34.0...v0.34.1) (2019-02-21)
 
 

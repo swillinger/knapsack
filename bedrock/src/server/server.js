@@ -26,7 +26,7 @@ const { bedrockEvents, EVENTS } = require('./events');
 const { getRoutes } = require('./rest-api');
 const { enableTemplatePush } = require('../lib/features');
 const { getRole } = require('./auth');
-const { PERMISSIONS } = require('../lib/constants');
+const { PERMISSIONS, BASE_PATHS } = require('../lib/constants');
 const {
   PageBuilder,
   pageBuilderPagesTypeDef,
@@ -217,6 +217,36 @@ async function serve({ config, meta, patterns }) {
   });
 
   app.use(restApiRoutes);
+
+  // This page is mainly so IE can get a list of links to view the individual templates outside of the system
+  app.route('/demo-urls').get((req, res) => {
+    const patternDemos = patterns.getPatternsDemoUrls();
+
+    /* eslint-disable prettier/prettier */
+    // disabling prettier so it's possible to keep indenting semi-similar to how it'd be done with templates, please try and keep it tidy and consistent!
+    res.send(`
+<ul>
+${patternDemos.map(patternDemo => `
+  <li>
+    Pattern: <a href="${BASE_PATHS.PATTERN}/${patternDemo.id}" target="_blank">${patternDemo.title}</a>
+    <ul>
+      ${patternDemo.templates.map(template => `
+        <li>
+          Template: <a href="${BASE_PATHS.PATTERN}/${patternDemo.id}/${template.id}" target="_blank">${template.title}</a>
+          <ul>
+            ${template.demoUrls.map((demoUrl, i) => `
+              <li><a href="${demoUrl}" target="_blank">Demo Data ${i + 1}</a></li>
+            `).join('\n')}
+          </ul>
+        </li>
+      `).join('\n')}
+    </ul>
+  </li>
+`).join('\n')}
+</ul>
+    `);
+    /* eslint-enable prettier/prettier */
+  });
 
   // Since this is a Single Page App, we will send all html requests to the `index.html` file in the dist
   app.use('*', (req, res, next) => {

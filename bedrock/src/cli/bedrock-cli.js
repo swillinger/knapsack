@@ -134,5 +134,20 @@ program.command('test').action(async () => {
   bedrockEvents.emit(EVENTS.SHUTDOWN);
 });
 
+program.command('demo-urls').action(() => {
+  const patternDemos = patterns.getPatternsDemoUrls();
+
+  patternDemos.forEach(patternDemo => {
+    patternDemo.templates.forEach(template => {
+      const urlList = template.demoUrls.join('\n');
+      console.log(`
+${patternDemo.id} - ${template.id}    
+${urlList}`);
+    });
+  });
+
+  process.exit(0);
+});
+
 program.parse(process.argv);
 if (!program.args.length) program.help();

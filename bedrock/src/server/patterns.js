@@ -336,8 +336,28 @@ function createPatternsData(patternsDirs, templateRenderers) {
             doc = fs.readFileSync(docPath, 'utf8');
           }
 
+          const { schema, demoDatas } = template;
+
+          const hasSchema = !!(
+            schema &&
+            schema.properties &&
+            Object.keys(schema.properties).length > 0
+          );
+
+          let datas = [{}];
+          if (demoDatas) {
+            datas = demoDatas;
+          } else if (
+            hasSchema &&
+            schema.examples &&
+            schema.examples.length > 0
+          ) {
+            datas = schema.examples;
+          }
+
           return {
             ...template,
+            demoDatas: datas,
             absolutePath: templatePath,
             doc,
           };

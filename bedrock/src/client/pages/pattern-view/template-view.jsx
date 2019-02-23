@@ -130,17 +130,10 @@ class TemplateView extends Component {
           Object.keys(schema.properties).length > 0
         );
 
-        let datas = [{}];
-        if (demoDatas) {
-          datas = demoDatas;
-        } else if (hasSchema && schema.examples && schema.examples.length > 0) {
-          datas = schema.examples;
-        }
-
         this.setState({
           demoDataIndex: 0,
-          demoDatas: datas,
-          data: datas[0],
+          demoDatas,
+          data: demoDatas[0],
           hasSchema,
           schema,
           readme,

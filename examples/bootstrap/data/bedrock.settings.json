@@ -7,6 +7,50 @@
     "title": "",
     "homepage": ""
   },
+  "customSections": [
+    {
+      "id": "design-tokens",
+      "title": "Design Tokens",
+      "showInMainMenu": true,
+      "pages": [
+        {
+          "id": "animation",
+          "title": "Animation"
+        },
+        {
+          "id": "colors",
+          "title": "Colors"
+        },
+        {
+          "id": "breakpoint",
+          "title": "Breakpoints"
+        },
+        {
+          "id": "spacing",
+          "title": "Spacing"
+        },
+        {
+          "id": "shadows",
+          "title": "Shadows"
+        }
+      ]
+    },
+    {
+      "id": "documentation",
+      "title": "Docs",
+      "showInMainMenu": true,
+      "pages": [
+        {
+          "id": "intro",
+          "title": "Introduction"
+        },
+        {
+          "id": "accessibility",
+          "title": "Accessibility"
+        }
+      ]
+    }
+  ],
   "designTokens": {
     "groups": [
       {

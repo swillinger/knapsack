@@ -45,8 +45,8 @@ function Template({
     data: qs.stringify(data),
     isInIframe: true,
     wrapHtml: true,
+    cacheBuster: id,
     assetSetId,
-    cacheBuster: shortid.generate(),
   });
 
   const htmlUrl = `/api/render?${query}`;

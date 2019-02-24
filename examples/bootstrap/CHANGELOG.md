@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.36.0](https://github.com/basaltinc/bedrock/compare/v0.35.0...v0.36.0) (2019-02-23)
+
+**Note:** Version bump only for package @basalt/bedrock-example-bootstrap
+
+
+
+
+
+# [0.35.0](https://github.com/basaltinc/bedrock/compare/v0.34.2...v0.35.0) (2019-02-23)
+
+**Note:** Version bump only for package @basalt/bedrock-example-bootstrap
+
+
+
+
+
+## [0.34.2](https://github.com/basaltinc/bedrock/compare/v0.34.1...v0.34.2) (2019-02-23)
+
+**Note:** Version bump only for package @basalt/bedrock-example-bootstrap
+
+
+
+
+
+## [0.34.1](https://github.com/basaltinc/bedrock/compare/v0.34.0...v0.34.1) (2019-02-21)
+
+**Note:** Version bump only for package @basalt/bedrock-example-bootstrap
+
+
+
+
+
+# [0.34.0](https://github.com/basaltinc/bedrock/compare/v0.33.3...v0.34.0) (2019-02-17)
+
+
+### Features
+
+* add more tokens and custom docs ([0bb124f](https://github.com/basaltinc/bedrock/commit/0bb124f))
+
+
+
+
+
+## [0.33.3](https://github.com/basaltinc/bedrock/compare/v0.33.2...v0.33.3) (2019-02-16)
+
+**Note:** Version bump only for package @basalt/bedrock-example-bootstrap
+
+
+
+
+
 ## [0.33.2](https://github.com/basaltinc/bedrock/compare/v0.33.1...v0.33.2) (2019-02-16)
 
 **Note:** Version bump only for package @basalt/bedrock-example-bootstrap

@@ -181,4 +181,6 @@ type BedrockPatternTemplate = {
   uiSchema?: UiSchema;
   isInline?: IsInline;
   assetSets: BedrockAssetSet[];
+  demoDatas?: Object[];
+  demoUrls: string[];
 };

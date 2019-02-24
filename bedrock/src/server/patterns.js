@@ -28,6 +28,7 @@ const chokidar = require('chokidar');
 const {
   version: iframeResizerVersion,
 } = require('iframe-resizer/package.json');
+const qs = require('qs');
 const { bedrockEvents, EVENTS } = require('./events');
 const { FileDb } = require('./db');
 const patternSchema = require('../schemas/pattern.schema');
@@ -76,6 +77,7 @@ const patternsTypeDef = gql`
     docPath: String
     doc: String
     demoDatas: [JSON]
+    demoUrls: [String]
     uiSchema: JSON
     isInline: Boolean
     demoSize: String
@@ -405,6 +407,37 @@ function createPatternsData(
             doc = fs.readFileSync(docPath, 'utf8');
           }
 
+          const { schema, demoDatas, id: templateId } = template;
+
+          const hasSchema = !!(
+            schema &&
+            schema.properties &&
+            Object.keys(schema.properties).length > 0
+          );
+
+          let datas = [{}];
+          if (demoDatas) {
+            datas = demoDatas;
+          } else if (
+            hasSchema &&
+            schema.examples &&
+            schema.examples.length > 0
+          ) {
+            datas = schema.examples;
+          }
+
+          const demoUrls = datas.map(data => {
+            const queryString = qs.stringify({
+              templateId,
+              patternId: pattern.id,
+              data,
+              isInIframe: false,
+              wrapHtml: true,
+            });
+
+            return `/api/render?${queryString}`;
+          });
+
           let assetSets = [];
           if (template.assetSets) {
             assetSets = scanAssetSets(template.assetSets);
@@ -418,6 +451,8 @@ function createPatternsData(
 
           return {
             ...template,
+            demoDatas: datas,
+            demoUrls,
             absolutePath: templatePath,
             assetSets,
             doc,
@@ -763,6 +798,31 @@ class Patterns {
 
   setPatternSettings(settings) {
     this.db.setAll(settings);
+  }
+
+  /**
+   * @param {string} patternId
+   * @return {{ id: string, title: string, demoUrls: string[] }[]}
+   */
+  getPatternDemoUrls(patternId) {
+    const pattern = this.getPattern(patternId);
+
+    return pattern.templates.map(template => ({
+      id: template.id,
+      title: template.title,
+      demoUrls: template.demoUrls,
+    }));
+  }
+
+  /**
+   * @return {{templates: {id: string, title: string, demoUrls: string[]}[], id: Id, title: Title}[]}
+   */
+  getPatternsDemoUrls() {
+    return this.getPatterns().map(pattern => ({
+      id: pattern.id,
+      title: pattern.meta.title,
+      templates: this.getPatternDemoUrls(pattern.id),
+    }));
   }
 
   watch() {

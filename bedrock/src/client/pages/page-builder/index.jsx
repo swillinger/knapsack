@@ -56,6 +56,8 @@ const query = gql`
         path
         schema
         title
+        demoDatas
+        uiSchema
       }
       meta {
         description
@@ -274,17 +276,18 @@ class Playground extends Component {
    * @returns {void} - sets state
    */
   handleAddSlice(patternId, templateId) {
-    const { schema, uiSchema } = this.getTemplateFromPatternId(
-      patternId,
-      templateId,
-    );
+    const {
+      schema,
+      uiSchema,
+      demoDatas = [{}],
+    } = this.getTemplateFromPatternId(patternId, templateId);
     const id = shortid.generate();
     this.setState(prevState => {
       prevState.slices.splice(prevState.editFormInsertionIndex, 0, {
         id,
         patternId,
         templateId,
-        data: schema.examples ? schema.examples[0] : {},
+        data: demoDatas[0],
       });
       return {
         slices: prevState.slices,

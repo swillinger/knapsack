@@ -1,3 +1,8 @@
+const {
+  bootstrap,
+  bootstrapFromConfigFile,
+  getBrain,
+} = require('./lib/bootstrap');
 const { bedrockEvents, EVENTS } = require('./server/events');
 const log = require('./cli/log');
 const { BedrockRendererBase } = require('./server/renderer-base');
@@ -17,4 +22,7 @@ module.exports = {
   log,
   styleDictionaryBedrockFormat,
   theoBedrockFormat,
+  bootstrapFromConfigFile,
+  bootstrap,
+  getBrain,
 };

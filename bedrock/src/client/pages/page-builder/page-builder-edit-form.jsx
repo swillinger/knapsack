@@ -30,19 +30,21 @@ const PageBuilderEditForm = ({
 }) => (
   <div>
     <h4>Edit</h4>
-    <PlaygroundStyledSchemaForm
-      schema={schema}
-      uiSchema={uiSchema}
-      formData={data}
-      onChange={handleChange}
-      onError={handleError}
-      onSubmit={() =>
-        console.log(
-          'Playground Edit Form was submitted, but it is not wired up to anything....',
-        )
-      }
-      debug
-    />
+    {schema && (
+      <PlaygroundStyledSchemaForm
+        schema={schema}
+        uiSchema={uiSchema}
+        formData={data}
+        onChange={handleChange}
+        onError={handleError}
+        onSubmit={() =>
+          console.log(
+            'Playground Edit Form was submitted, but it is not wired up to anything....',
+          )
+        }
+        debug
+      />
+    )}
     <Button
       onClick={handleHideEditForm}
       onKeyPress={handleHideEditForm}

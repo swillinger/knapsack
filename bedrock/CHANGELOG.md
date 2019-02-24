@@ -3,6 +3,66 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.36.0](https://github.com/basaltinc/bedrock/compare/v0.35.0...v0.36.0) (2019-02-23)
+
+
+### Features
+
+* go to /demo-urls for simple link list of all demos ([1c3424e](https://github.com/basaltinc/bedrock/commit/1c3424e))
+
+
+
+
+
+# [0.35.0](https://github.com/basaltinc/bedrock/compare/v0.34.2...v0.35.0) (2019-02-23)
+
+
+### Features
+
+* add demo-urls cli command ([0e3ef23](https://github.com/basaltinc/bedrock/commit/0e3ef23))
+
+
+
+
+
+## [0.34.2](https://github.com/basaltinc/bedrock/compare/v0.34.1...v0.34.2) (2019-02-23)
+
+
+### Bug Fixes
+
+* consolidate pattern template demoDatas logic ([ce9a2da](https://github.com/basaltinc/bedrock/commit/ce9a2da))
+
+
+
+
+
+## [0.34.1](https://github.com/basaltinc/bedrock/compare/v0.34.0...v0.34.1) (2019-02-21)
+
+
+### Bug Fixes
+
+* template resize does not re-fetch ([0a39021](https://github.com/basaltinc/bedrock/commit/0a39021))
+
+
+
+
+
+# [0.34.0](https://github.com/basaltinc/bedrock/compare/v0.33.3...v0.34.0) (2019-02-17)
+
+**Note:** Version bump only for package @basalt/bedrock
+
+
+
+
+
+## [0.33.3](https://github.com/basaltinc/bedrock/compare/v0.33.2...v0.33.3) (2019-02-16)
+
+**Note:** Version bump only for package @basalt/bedrock
+
+
+
+
+
 ## [0.33.2](https://github.com/basaltinc/bedrock/compare/v0.33.1...v0.33.2) (2019-02-16)
 
 **Note:** Version bump only for package @basalt/bedrock

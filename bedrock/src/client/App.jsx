@@ -222,18 +222,6 @@ class App extends React.Component {
                               />
                             )}
                           />
-                          {this.state.permissions.includes('write') && (
-                            <Route
-                              path={`${BASE_PATHS.PATTERN}/:id/edit`}
-                              render={({ match, ...rest }) => (
-                                <LoadablePatternEdit
-                                  {...rest}
-                                  id={match.params.id}
-                                  key={match.params.id}
-                                />
-                              )}
-                            />
-                          )}
                           <Route
                             path={`${BASE_PATHS.DOCS}/:id`}
                             render={({ match }) => (
@@ -268,6 +256,20 @@ class App extends React.Component {
                               )}
                             />
                           )}
+
+                          {this.state.permissions.includes('write') && (
+                            <Route
+                              path={`${BASE_PATHS.PATTERN}/:id/edit`}
+                              render={({ match, ...rest }) => (
+                                <LoadablePatternEdit
+                                  {...rest}
+                                  id={match.params.id}
+                                  key={match.params.id}
+                                />
+                              )}
+                            />
+                          )}
+
                           <Route
                             path={`${BASE_PATHS.PATTERN}/:id`}
                             exact

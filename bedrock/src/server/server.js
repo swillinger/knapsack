@@ -212,8 +212,6 @@ async function serve({ config, meta, patterns }) {
     templateRenderers: config.templateRenderers,
     pageBuilder: pageBuilderPages,
     settingsStore: settings,
-    css: config.rootRelativeCSS,
-    js: config.rootRelativeJs,
   });
 
   app.use(restApiRoutes);

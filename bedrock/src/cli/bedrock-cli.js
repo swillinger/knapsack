@@ -53,16 +53,19 @@ if (!existsSync(configPath)) {
   process.exit(1);
 }
 
+const configPathBase = dirname(configPath);
+
 /** @type {BedrockConfig} */
-const config = processConfig(require(configPath), dirname(configPath));
+const config = processConfig(require(configPath), configPathBase);
 
 const patterns = new Patterns({
   newPatternDir: config.newPatternDir,
   patternPaths: config.patterns,
   dataDir: config.data,
   templateRenderers: config.templateRenderers,
-  rootRelativeCSS: config.rootRelativeCSS,
-  rootRelativeJs: config.rootRelativeJs,
+  assetSets: config.assetSets,
+  publicDir: config.public,
+  configPathBase,
 });
 
 const allTemplatePaths = patterns.getAllTemplatePaths();

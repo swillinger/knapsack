@@ -17,7 +17,7 @@ class BedrockRendererBase {
     return theTemplatePath.endsWith(this.extension);
   }
 
-  getHead({ cssUrls = [], headJsUrls = [] }) {
+  getHead({ cssUrls = [], headJsUrls = [], inlineHead = '' }) {
     return `
     <!doctype html>
     <html lang="en">
@@ -33,16 +33,23 @@ class BedrockRendererBase {
           ${headJsUrls
             .map(jsUrl => `<script src="${jsUrl}"></script>`)
             .join('')}
+          ${inlineHead}
     </head>
     <body>
     `;
   }
 
-  getFoot({ jsUrls = [], inlineJs = '', inlineCss = '' } = {}) {
+  getFoot({
+    jsUrls = [],
+    inlineJs = '',
+    inlineCss = '',
+    inlineFoot = '',
+  } = {}) {
     return `
     ${jsUrls.map(jsUrl => `<script src="${jsUrl}"></script>`).join('')}
 <style>${inlineCss}</style>
 <script>${inlineJs}</script>
+${inlineFoot}
 </body>
 </html>
     `;
@@ -55,11 +62,13 @@ class BedrockRendererBase {
     headJsUrls = [],
     inlineJs = '',
     inlineCss = '',
+    inlineHead = '',
+    inlineFoot = '',
   }) {
     return `
-${this.getHead({ cssUrls, headJsUrls })}
+${this.getHead({ cssUrls, headJsUrls, inlineHead })}
 <div>${html}</div>
-${this.getFoot({ jsUrls, inlineJs, inlineCss })}
+${this.getFoot({ jsUrls, inlineJs, inlineCss, inlineFoot })}
 `;
   }
 

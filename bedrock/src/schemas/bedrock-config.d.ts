@@ -32,6 +32,8 @@ interface BedrockTemplateRenderer {
     headJsUrls?: string[];
     inlineJs?: string;
     inlineCss?: string;
+    inlineHead?: string;
+    inlineFoot?: string;
   }) => string;
   getHead: (opt: { cssUrls?: string[]; headJsUrls?: string[] }) => string;
   getFoot: (opt: {
@@ -55,6 +57,34 @@ interface BedrockDesignToken {
   comment?: string;
 }
 
+interface BedrockAssetSet {
+  id: string;
+  title: string;
+  assets: {
+    src: string;
+    publicPath: string;
+    type: string;
+    sizeKb: string;
+    sizeRaw: number;
+  }[];
+  inlineCss?: string;
+  inlineJs?: string;
+  inlineHead?: string;
+  inlineFoot?: string;
+}
+
+interface BedrockAssetSetUserConfig {
+  id: string;
+  title: string;
+  assets: {
+    src: string;
+  }[];
+  inlineCss?: string;
+  inlineJs?: string;
+  inlineHead?: string;
+  inlineFoot?: string;
+}
+
 interface BedrockConfig {
   patterns: string[];
   newPatternDir: string;
@@ -64,6 +94,7 @@ interface BedrockConfig {
   data: string;
   /** Hosted by bedrock server. Place compiled Design System css and js as well as images and other assets needed by bedrock */
   public: string;
+  assetSets: BedrockAssetSetUserConfig[];
   /** Paths to css assets located within the public directory or absolute URL */
   css?: string[];
   /** Derived from `css` */

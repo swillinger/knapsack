@@ -103,6 +103,7 @@ function getRoutes(config) {
         data: dataString = '{}',
         isInIframe: isInIframeString = 'false',
         wrapHtml: wrapHtmlString = 'true',
+        assetSetId,
       } = query;
       const data = qsParse(dataString);
       const isInIframe = isInIframeString === 'true';
@@ -115,6 +116,7 @@ function getRoutes(config) {
         wrapHtml,
         isInIframe,
         websocketsPort,
+        assetSetId,
       });
 
       if (results.ok) {
@@ -126,6 +128,7 @@ function getRoutes(config) {
           data,
           wrapHtml,
           isInIframe,
+          assetSetId,
         });
         res.send(results.message);
       }

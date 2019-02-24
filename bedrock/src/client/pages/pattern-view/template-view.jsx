@@ -18,7 +18,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Spinner from '@basalt/bedrock-spinner';
-import { Button, Details, StatusMessage } from '@basalt/bedrock-atoms';
+import { Button, Details, Select, StatusMessage } from '@basalt/bedrock-atoms';
 import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
 import { BedrockContext } from '@basalt/bedrock-core';
 import SchemaForm from '@basalt/bedrock-schema-form';
@@ -58,6 +58,10 @@ const patternQuery = gql`
         doc
         demoSize
         demoDatas
+        assetSets {
+          id
+          title
+        }
       }
     }
   }
@@ -95,6 +99,8 @@ class TemplateView extends Component {
       isInline: null,
       title: null,
       ready: false,
+      assetSetId: null,
+      assetSets: null,
     };
     this.handleTemplateQuery = this.handleTemplateQuery.bind(this);
   }
@@ -122,6 +128,7 @@ class TemplateView extends Component {
           doc: readme,
           title,
           demoDatas,
+          assetSets,
         } = templates.find(t => t.id === this.props.templateId);
 
         const hasSchema = !!(
@@ -147,6 +154,8 @@ class TemplateView extends Component {
           uiSchema,
           isInline,
           title,
+          assetSetId: assetSets[0].id,
+          assetSets,
           ready: true,
         });
       })
@@ -165,6 +174,8 @@ class TemplateView extends Component {
       isInline,
       title,
       ready,
+      assetSetId,
+      assetSets,
     } = this.state;
 
     if (!ready) return <div>Loading</div>;
@@ -175,6 +186,7 @@ class TemplateView extends Component {
       data: qs.stringify(this.state.data),
       isInIframe: false,
       wrapHtml: true,
+      assetSetId,
     });
     const externalUrl = `/api/render?${queryString}`;
 
@@ -193,6 +205,23 @@ class TemplateView extends Component {
                   Open in new window
                 </a>
               </Button>
+
+              {assetSets && assetSets.length > 1 && (
+                <Select
+                  items={assetSets.map(assetSet => ({
+                    title: assetSet.title,
+                    value: assetSet.id,
+                  }))}
+                  handleChange={newAssetSetId => {
+                    this.setState({
+                      assetSetId: newAssetSetId,
+                    });
+                  }}
+                  value={assetSetId}
+                  label="Asset Sets"
+                />
+              )}
+
               {demoDatas.length > 1 && (
                 <div
                   style={{
@@ -248,8 +277,8 @@ class TemplateView extends Component {
               <Template
                 patternId={this.props.id}
                 templateId={this.props.templateId}
+                assetSetId={assetSetId}
                 data={data}
-                showDataUsed={false}
                 isResizable
               />
             </DemoStage>

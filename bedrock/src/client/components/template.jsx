@@ -22,7 +22,13 @@ import shortid from 'shortid';
 import qs from 'qs';
 import { IFrameWrapper, Resizable, SizeTab } from './template.styles';
 
-function Template({ templateId, patternId, data = {}, isResizable = false }) {
+function Template({
+  templateId,
+  patternId,
+  data = {},
+  assetSetId,
+  isResizable = false,
+}) {
   const makeId = () => `${patternId}-${templateId}-${shortid.generate()}`;
 
   const [id, setId] = useState(makeId());
@@ -39,6 +45,7 @@ function Template({ templateId, patternId, data = {}, isResizable = false }) {
     data: qs.stringify(data),
     isInIframe: true,
     wrapHtml: true,
+    assetSetId,
     cacheBuster: shortid.generate(),
   });
 

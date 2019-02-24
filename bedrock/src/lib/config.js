@@ -17,7 +17,7 @@
  */
 const { readFile } = require('fs-extra');
 const portfinder = require('portfinder');
-const { resolve, relative } = require('path');
+const { resolve } = require('path');
 const {
   validateUniqueIdsInArray,
   validateDataAgainstSchema,
@@ -26,7 +26,7 @@ const { BedrockRendererBase } = require('../server/renderer-base');
 const log = require('../cli/log');
 const { bedrockEvents, EVENTS } = require('../server/events');
 const { version } = require('../../package.json');
-const { dirExistsOrExit, fileExistsOrExit } = require('../server/server-utils');
+const { dirExistsOrExit } = require('../server/server-utils');
 const {
   bedrockDesignTokensSchema,
 } = require('../schemas/bedrock-design-tokens.schema');
@@ -80,24 +80,10 @@ function validateConfig(config) {
   // @todo check if `config.patterns` exists; but can't now as it can contain globs
   dirExistsOrExit(config.public);
   if (config.docsDir) dirExistsOrExit(config.docsDir);
-  if (config.css) config.css.forEach(c => fileExistsOrExit(c));
-  if (config.js) config.js.forEach(j => fileExistsOrExit(j));
-
-  // checking to make sure all CSS and JS paths are inside the `config.public` directory
-  [config.js, config.css].forEach(assets => {
-    const assetsNotPublicallyReachable = assets
-      .filter(asset => !asset.startsWith('http'))
-      .map(asset => relative(config.public, asset))
-      .filter(asset => asset.includes('..')).length;
-    if (assetsNotPublicallyReachable > 0) {
-      log.error(
-        `Some CSS or JS is not publically accessible! These must be either remote or places inside the "public" dir (${
-          config.public
-        })`,
-      );
-      process.exit(1);
-    }
-  });
+  if (config.assetSets.length === 0) {
+    log.error('You need at least 1 "assetSets" defined in bedrock.config.js');
+    process.exit(1);
+  }
 
   {
     const { message, ok } = validateDataAgainstSchema(
@@ -157,26 +143,10 @@ function processConfig(userConfig, from) {
   const config = {
     patterns: patterns.map(p => resolve(from, p)),
     public: resolve(from, publicDir),
-    css: css ? css.map(x => (x.startsWith('http') ? x : resolve(from, x))) : [],
-    js: js ? js.map(x => (x.startsWith('http') ? x : resolve(from, x))) : [],
     dist: resolve(from, dist),
     docsDir: docsDir ? resolve(from, docsDir) : null,
     ...rest,
   };
-
-  if (config.css) {
-    config.rootRelativeCSS = config.css.map(c => {
-      if (c.startsWith('http')) return c;
-      return `/${relative(config.public, c)}`;
-    });
-  }
-
-  if (config.js) {
-    config.rootRelativeJs = config.js.map(j => {
-      if (j.startsWith('http')) return j;
-      return `/${relative(config.public, j)}`;
-    });
-  }
 
   const ok = validateConfig(config);
   if (!ok) process.exit(1);

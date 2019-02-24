@@ -17,8 +17,9 @@
 const { gql } = require('apollo-server-express');
 const GraphQLJSON = require('graphql-type-json');
 const fs = require('fs-extra');
-const { join, relative } = require('path');
+const { join, relative, resolve, parse } = require('path');
 const globby = require('globby');
+const { getFileSizes } = require('get-file-sizes');
 const {
   validateSchemaAndAssignDefaults,
   validateUniqueIdsInArray,
@@ -31,7 +32,7 @@ const { bedrockEvents, EVENTS } = require('./events');
 const { FileDb } = require('./db');
 const patternSchema = require('../schemas/pattern.schema');
 const patternMetaSchema = require('../schemas/pattern-meta.schema');
-const { writeJson, fileExists } = require('./server-utils');
+const { writeJson, fileExists, fileExistsOrExit } = require('./server-utils');
 const log = require('../cli/log');
 const { FILE_NAMES } = require('../lib/constants');
 
@@ -51,6 +52,19 @@ const patternsTypeDef = gql`
     items: [PatternDoAndDontItem!]!
   }
 
+  type PatternAsset {
+    src: String!
+    publicPath: String!
+    sizeRaw: String
+    sizeKb: String
+  }
+
+  type PatternAssetSet {
+    id: ID!
+    title: String!
+    assets: [PatternAsset]
+  }
+
   type PatternTemplate {
     "JSON Schema"
     schema: JSON
@@ -65,6 +79,7 @@ const patternsTypeDef = gql`
     uiSchema: JSON
     isInline: Boolean
     demoSize: String
+    assetSets: [PatternAssetSet]
   }
 
   type PatternType {
@@ -248,11 +263,65 @@ async function writeAllFiles(dir, config) {
 }
 
 /**
+ * @param {string} url
+ * @return {boolean}
+ */
+function isRemoteUrl(url) {
+  return url.startsWith('http') || url.startsWith('//');
+}
+
+/**
+ * @param {Object} opt
+ * @param {BedrockAssetSetUserConfig[]} opt.assetSets
+ * @param {string} opt.publicDir
+ * @param {string} opt.configPathBase
+ * @return {BedrockAssetSet[]}
+ */
+function processAssetSets({ assetSets, publicDir, configPathBase }) {
+  return assetSets.map(assetSet => ({
+    ...assetSet,
+    assets: assetSet.assets.map(asset => {
+      const isRemote = isRemoteUrl(asset.src);
+      const src = isRemote ? asset.src : resolve(configPathBase, asset.src);
+
+      if (!isRemote) {
+        fileExistsOrExit(src);
+        if (relative(publicDir, src).includes('..')) {
+          log.error(
+            `Some CSS or JS is not publically accessible! These must be either remote or places inside the "public" dir (${publicDir})`,
+          );
+          process.exit(1);
+        }
+      }
+
+      const { ext } = parse(src);
+      const [size] = getFileSizes([src]);
+
+      return {
+        src,
+        // isInHead: asset.isInHead === true,
+        publicPath: isRemote ? src : `/${relative(publicDir, src)}`,
+        type: ext.replace('.', ''),
+        sizeRaw: size.sizeRaw,
+        sizeKb: size.sizeKb,
+      };
+    }),
+  }));
+}
+
+/**
  * @param {string[]} patternsDirs
  * @param {BedrockTemplateRenderer[]} templateRenderers
+ * @param {function(BedrockAssetSetUserConfig[]): BedrockAssetSet[]} scanAssetSets
+ * @param {BedrockAssetSet[]} globalAssetSets
  * @returns {BedrockPattern[]}
  */
-function createPatternsData(patternsDirs, templateRenderers) {
+function createPatternsData(
+  patternsDirs,
+  templateRenderers,
+  scanAssetSets,
+  globalAssetSets,
+) {
   const patterns = [];
 
   patternsDirs.forEach(dir => {
@@ -336,9 +405,21 @@ function createPatternsData(patternsDirs, templateRenderers) {
             doc = fs.readFileSync(docPath, 'utf8');
           }
 
+          let assetSets = [];
+          if (template.assetSets) {
+            assetSets = scanAssetSets(template.assetSets);
+          }
+
+          globalAssetSets.forEach(globalAssetSet => {
+            if (!assetSets.some(a => a.id === globalAssetSet.id)) {
+              assetSets.push(globalAssetSet);
+            }
+          });
+
           return {
             ...template,
             absolutePath: templatePath,
+            assetSets,
             doc,
           };
         });
@@ -420,9 +501,10 @@ class Patterns {
    * @param {Object} opt
    * @param {string} opt.newPatternDir
    * @param {string[]} opt.patternPaths
+   * @param {string} opt.publicDir
+   * @param {string} opt.configPathBase
    * @param {string} opt.dataDir
-   * @param {string[]} opt.rootRelativeJs
-   * @param {string[]} opt.rootRelativeCSS
+   * @param {BedrockAssetSetUserConfig[]} opt.assetSets
    * @param {BedrockTemplateRenderer[]} opt.templateRenderers
    */
   constructor({
@@ -430,8 +512,9 @@ class Patterns {
     patternPaths,
     dataDir,
     templateRenderers,
-    rootRelativeJs,
-    rootRelativeCSS,
+    assetSets,
+    publicDir,
+    configPathBase,
   }) {
     this.db = new FileDb({
       dbDir: dataDir,
@@ -463,6 +546,20 @@ class Patterns {
       },
     });
 
+    /**
+     * @param {BedrockAssetSetUserConfig[]} newAssetSets
+     * @return {BedrockAssetSet[]}
+     */
+    this.scanAssetSets = newAssetSets =>
+      processAssetSets({
+        assetSets: newAssetSets,
+        publicDir,
+        configPathBase,
+      });
+
+    /** @type {BedrockAssetSet[]} */
+    this.globalAssetSets = this.scanAssetSets(assetSets);
+
     /** @type {string} */
     this.newPatternDir = newPatternDir;
     /** @type {string[]} */
@@ -471,10 +568,6 @@ class Patterns {
     this.dataDir = dataDir;
 
     this.templateRenderers = templateRenderers;
-    /** @type {string[]} */
-    this.rootRelativeCSS = rootRelativeCSS;
-    /** @type {string[]} */
-    this.rootRelativeJs = rootRelativeJs;
 
     /** @type {string[]} */
     this.patternsDirs = getPatternsDirs(this.patternPaths);
@@ -483,6 +576,8 @@ class Patterns {
     this.allPatterns = createPatternsData(
       this.patternsDirs,
       this.templateRenderers,
+      this.scanAssetSets,
+      this.globalAssetSets,
     );
   }
 
@@ -491,6 +586,8 @@ class Patterns {
     this.allPatterns = createPatternsData(
       this.patternsDirs,
       this.templateRenderers,
+      this.scanAssetSets,
+      this.globalAssetSets,
     );
   }
 
@@ -555,6 +652,26 @@ class Patterns {
       });
     });
     return allTemplatePaths;
+  }
+
+  getAllAssetPaths(includeRemote = false) {
+    const paths = new Set();
+    const patterns = this.getPatterns();
+    patterns.forEach(pattern => {
+      pattern.templates.forEach(template => {
+        template.assetSets.forEach(({ assets }) => {
+          assets.forEach(asset => {
+            if (includeRemote) {
+              paths.add(asset.src);
+            } else if (!isRemoteUrl(asset.src)) {
+              paths.add(asset.src);
+            }
+          });
+        });
+      });
+    });
+
+    return [...paths];
   }
 
   /**
@@ -671,6 +788,10 @@ class Patterns {
       );
     });
 
+    // @todo watch pattern assets
+    const localAssetPaths = this.getAllAssetPaths(false);
+    // console.log({ localAssetPaths });
+
     watcher.on('all', (event, path) => {
       bedrockEvents.emit(EVENTS.PATTERN_CONFIG_CHANGED, { event, path });
       this.updatePatternsData();
@@ -685,6 +806,7 @@ class Patterns {
    * @param {boolean} [opt.wrapHtml=true] - Should it wrap HTML results with `<head>` and include assets?
    * @param {Object} [opt.data] - Data to pass to template
    * @param {boolean} [opt.isInIframe=false] - Will this be in an iFrame?
+   * @param {string} [opt.assetSetId] - Asset Set Id
    * @param {number} [opt.websocketsPort]
    * @return {Promise<BedrockTemplateRenderResults>}
    */
@@ -695,6 +817,7 @@ class Patterns {
     data = {},
     isInIframe = false,
     websocketsPort,
+    assetSetId,
   }) {
     const pattern = this.getPattern(patternId);
     let [template] = pattern.templates;
@@ -713,11 +836,24 @@ class Patterns {
     });
 
     if (!renderedTemplate.ok) return renderedTemplate;
+
     if (wrapHtml) {
-      const inlineJS = [];
+      const assetSet = assetSetId
+        ? template.assetSets.find(a => a.id === assetSetId)
+        : template.assetSets[0];
+
+      const {
+        assets,
+        inlineJs = '',
+        inlineCss = '',
+        inlineFoot = '',
+        inlineHead = '',
+      } = assetSet;
+
+      const inlineJSs = [inlineJs];
 
       if (isInIframe) {
-        inlineJS.push(`
+        inlineJSs.push(`
 /**
   * Prevents the natural click behavior of any links within the iframe.
   * Otherwise the iframe reloads with the current page or follows the url provided.
@@ -730,7 +866,7 @@ links.forEach(function(link) {
       }
 
       if (!isInIframe && websocketsPort) {
-        inlineJS.push(`
+        inlineJSs.push(`
 if ('WebSocket' in window && location.hostname === 'localhost') {
   var socket = new window.WebSocket('ws://localhost:8000');
   socket.addEventListener('message', function() {
@@ -746,9 +882,16 @@ if ('WebSocket' in window && location.hostname === 'localhost') {
             ? `https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/${iframeResizerVersion}/iframeResizer.contentWindow.min.js`
             : '',
         ].filter(x => x),
-        cssUrls: this.rootRelativeCSS,
-        jsUrls: this.rootRelativeJs,
-        inlineJs: inlineJS.join('\n'),
+        cssUrls: assets
+          .filter(asset => asset.type === 'css')
+          .map(asset => asset.publicPath),
+        jsUrls: assets
+          .filter(asset => asset.type === 'js')
+          .map(asset => asset.publicPath),
+        inlineJs: inlineJSs.join('\n'),
+        inlineCss,
+        inlineHead,
+        inlineFoot,
       });
       return {
         ...renderedTemplate,

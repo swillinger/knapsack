@@ -39,6 +39,36 @@
           "type": "object"
         }
       },
+      "assetSets": {
+        "title": "Asset Sets",
+        "description": "Can override global ones with same id.",
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["id", "title", "assets"],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "assets": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["src"],
+                "properties": {
+                  "src": {
+                    "type": "string",
+                    "description": "Path or url to a CSS or JS file to load."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "selector": {
         "title": "CSS Selector",
         "type": "string"

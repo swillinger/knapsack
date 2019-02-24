@@ -151,8 +151,6 @@ function processConfig(userConfig, from) {
     patterns,
     public: publicDir,
     dist,
-    css,
-    js,
     docsDir,
     ...rest
   } = convertOldConfig(userConfig);

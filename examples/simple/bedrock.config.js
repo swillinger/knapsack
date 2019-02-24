@@ -32,9 +32,6 @@ const config = {
         {
           src: './public/assets/simple.css',
         },
-        {
-          src: './public/assets/script.js',
-        },
       ],
     },
   ],

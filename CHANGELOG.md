@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.37.0](https://github.com/basaltinc/bedrock/compare/v0.36.0...v0.37.0) (2019-02-24)
+
+
+### Features
+
+* full access via programatic Node.js to everything ([fd7d3ad](https://github.com/basaltinc/bedrock/commit/fd7d3ad))
+* setup assetSets to replace config.{css,js} ([c672e32](https://github.com/basaltinc/bedrock/commit/c672e32))
+
+
+
+
+
 # [0.36.0](https://github.com/basaltinc/bedrock/compare/v0.35.0...v0.36.0) (2019-02-23)
 
 

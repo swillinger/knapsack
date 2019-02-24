@@ -1,7 +1,7 @@
 {
   "name": "@basalt/bedrock-tabbed-panel",
   "license": "GPL-2.0-or-later",
-  "version": "0.36.0",
+  "version": "0.37.0",
   "description": "A Bedrock component that helps build Design Systems",
   "module": "dist/tabbed-panel.js",
   "main": "dist/tabbed-panel.js",
@@ -21,7 +21,7 @@
   },
   "author": "Basalt (https://basalt.io/)",
   "dependencies": {
-    "@basalt/bedrock-core": "^0.36.0"
+    "@basalt/bedrock-core": "^0.37.0"
   },
   "files": [
     "./dist"

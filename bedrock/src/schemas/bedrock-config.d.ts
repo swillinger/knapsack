@@ -95,14 +95,6 @@ interface BedrockConfig {
   /** Hosted by bedrock server. Place compiled Design System css and js as well as images and other assets needed by bedrock */
   public: string;
   assetSets: BedrockAssetSetUserConfig[];
-  /** Paths to css assets located within the public directory or absolute URL */
-  css?: string[];
-  /** Derived from `css` */
-  rootRelativeCSS?: string[];
-  /** Paths to js assets located within the public directory or absolute URL */
-  js?: string[];
-  /** Derived from `js` */
-  rootRelativeJs?: string[];
   templateRenderers: BedrockTemplateRenderer[];
   designTokens: {
     createCodeSnippet?: (BedrockDesignToken) => string;
@@ -121,4 +113,17 @@ interface BedrockUserConfig extends BedrockConfig {
    * @deprecated
    */
   templates?: BedrockTemplateRenderer[];
+
+  /**
+   * Paths to css assets located within the public directory or absolute URL
+   * Use assetSets
+   * @deprecated
+   * */
+  css?: string[];
+
+  /**
+   * Use assetSets
+   * @deprecated
+   */
+  js?: string[];
 }

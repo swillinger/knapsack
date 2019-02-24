@@ -848,13 +848,19 @@ class Patterns {
       );
     });
 
-    // @todo watch pattern assets
-    const localAssetPaths = this.getAllAssetPaths(false);
-    // console.log({ localAssetPaths });
-
     watcher.on('all', (event, path) => {
       bedrockEvents.emit(EVENTS.PATTERN_CONFIG_CHANGED, { event, path });
       this.updatePatternsData();
+    });
+
+    const localAssetPaths = this.getAllAssetPaths(false);
+
+    const assetWatcher = chokidar.watch(localAssetPaths, {
+      ignoreInitial: true,
+    });
+
+    assetWatcher.on('all', (event, path) => {
+      bedrockEvents.emit(EVENTS.PATTERN_ASSET_CHANGED, { event, path });
     });
   }
 

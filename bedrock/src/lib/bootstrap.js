@@ -35,16 +35,18 @@ let brain = {
 /**
  * Take config and then start up the whole system!
  * @param {BedrockConfig} config
+ * @param {string} [configPathBase=process.cwd()] - path that config file paths are relative from
  * @return {BedrockBrain}
  */
-function bootstrap(config) {
+function bootstrap(config, configPathBase = process.cwd()) {
   const patterns = new Patterns({
     newPatternDir: config.newPatternDir,
     patternPaths: config.patterns,
     dataDir: config.data,
     templateRenderers: config.templateRenderers,
-    rootRelativeCSS: config.rootRelativeCSS,
-    rootRelativeJs: config.rootRelativeJs,
+    assetSets: config.assetSets,
+    publicDir: config.public,
+    configPathBase,
   });
 
   config.templateRenderers.forEach(templateRenderer => {
@@ -93,8 +95,9 @@ function bootstrapFromConfigFile(configPath) {
     : resolve(configPath);
   fileExistsOrExit(absoluteConfigPath);
   const userConfig = require(absoluteConfigPath); // eslint-disable-line global-require
-  const config = processConfig(userConfig, dirname(absoluteConfigPath));
-  return bootstrap(config);
+  const configPathBase = dirname(absoluteConfigPath);
+  const config = processConfig(userConfig, configPathBase);
+  return bootstrap(config, configPathBase);
 }
 
 /**

@@ -24,8 +24,20 @@ const config = {
   dist: './dist',
   public: './public',
   data: './data',
-  css: ['./public/assets/simple.css'],
-  // js: ['./public/assets/script.js'],
+  assetSets: [
+    {
+      id: 'default',
+      title: 'Default',
+      assets: [
+        {
+          src: './public/assets/simple.css',
+        },
+        {
+          src: './public/assets/script.js',
+        },
+      ],
+    },
+  ],
   changelog: './CHANGELOG.md',
   version,
   docsDir: './docs',

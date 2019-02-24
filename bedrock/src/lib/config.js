@@ -46,6 +46,23 @@ function convertOldConfig(config) {
     delete config.templates;
   }
 
+  if (config.css || config.js) {
+    const assetSet = {
+      id: 'default',
+      title: 'Default',
+      assets: [],
+    };
+    if (config.css) {
+      config.css.forEach(src => assetSet.assets.push({ src }));
+      delete config.css;
+    }
+    if (config.js) {
+      config.js.forEach(src => assetSet.assets.push({ src }));
+      delete config.js;
+    }
+    config.assetSets = [assetSet];
+  }
+
   return config;
 }
 

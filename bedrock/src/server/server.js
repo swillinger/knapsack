@@ -20,7 +20,6 @@ const { mergeSchemas, makeExecutableSchema } = require('graphql-tools');
 const WebSocket = require('ws');
 const bodyParser = require('body-parser');
 const { join } = require('path');
-const chokidar = require('chokidar');
 const log = require('../cli/log');
 const { bedrockEvents, EVENTS } = require('./events');
 const { getRoutes } = require('./rest-api');
@@ -312,13 +311,9 @@ ${patternDemos
       }, 100);
     });
 
-    const assetsToWatch = [...config.css, ...config.js].filter(
-      file => !file.startsWith('http') || !file.startsWith('//'),
-    );
-    const watcher = chokidar.watch(assetsToWatch, { ignoreInitial: true });
-    watcher.on('all', (event, path) => {
+    bedrockEvents.on(EVENTS.PATTERN_ASSET_CHANGED, ({ path }) => {
       setTimeout(() => {
-        announcePatternChange({ event, path });
+        announcePatternChange({ event: 'changed', path });
       }, 100);
     });
   }

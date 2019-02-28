@@ -211,42 +211,26 @@ class PatternViewPage extends Component {
                         </Button>
                       </DemoGridControls>
                       <DemoGridControls>
-                        {!showAllTemplates && templates.length > 1 && (
+                        {templates.length > 1 && (
                           <Select
                             label="Template"
                             value={templateId}
-                            items={templates.map(t => ({
-                              value: t.id,
-                              title: t.title,
-                            }))}
+                            items={[
+                              {
+                                value: 'all',
+                                title: 'Show All',
+                              },
+                              ...templates.map(t => ({
+                                value: t.id,
+                                title: t.title,
+                              })),
+                            ]}
                             handleChange={value => {
                               this.props.history.push(
                                 `${BASE_PATHS.PATTERN}/${patternId}/${value}`,
                               );
                             }}
                           />
-                        )}
-
-                        {templates.length > 1 && (
-                          <Button
-                            type="button"
-                            className="button button--size-small"
-                            onClick={() => {
-                              if (templateId === 'all') {
-                                this.props.history.push(
-                                  `${BASE_PATHS.PATTERN}/${patternId}/${
-                                    templates[0].id
-                                  }`,
-                                );
-                              } else {
-                                this.props.history.push(
-                                  `${BASE_PATHS.PATTERN}/${patternId}/all`,
-                                );
-                              }
-                            }}
-                          >
-                            {showAllTemplates ? 'Show One' : 'Show All'}
-                          </Button>
                         )}
                       </DemoGridControls>
                     </div>

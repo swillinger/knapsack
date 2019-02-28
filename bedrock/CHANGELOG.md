@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.37.1](https://github.com/basaltinc/bedrock/compare/v0.37.0...v0.37.1) (2019-02-28)
+
+
+### Bug Fixes
+
+* move template show all button into template select ([0833b94](https://github.com/basaltinc/bedrock/commit/0833b94))
+* remove feedback page ([0220a8a](https://github.com/basaltinc/bedrock/commit/0220a8a))
+
+
+
+
+
 # [0.37.0](https://github.com/basaltinc/bedrock/compare/v0.36.0...v0.37.0) (2019-02-24)
 
 

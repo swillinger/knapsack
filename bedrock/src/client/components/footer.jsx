@@ -80,9 +80,6 @@ class Footer extends Component {
                       <Link to="/changelog">Changelog</Link>
                     </FooterMenuItem>
                   )}
-                  <FooterMenuItem>
-                    <Link to="/feedback">Feedback</Link>
-                  </FooterMenuItem>
                 </FooterMenu>
                 <FooterBuiltOn>
                   <FooterBuiltOnInner>{bedrockVersion}</FooterBuiltOnInner>

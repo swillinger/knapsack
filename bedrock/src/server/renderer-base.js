@@ -29,10 +29,13 @@ class BedrockRendererBase {
               cssUrl =>
                 `<link rel="stylesheet" type="text/css" href="${cssUrl}">`,
             )
-            .join('')}
+            .join('\n')}
           ${headJsUrls
-            .map(jsUrl => `<script src="${jsUrl}"></script>`)
-            .join('')}
+            .map(
+              jsUrl =>
+                `<script src="${jsUrl}" type="text/javascript"></script>`,
+            )
+            .join('\n')}
           ${inlineHead}
     </head>
     <body>
@@ -46,7 +49,9 @@ class BedrockRendererBase {
     inlineFoot = '',
   } = {}) {
     return `
-    ${jsUrls.map(jsUrl => `<script src="${jsUrl}"></script>`).join('')}
+    ${jsUrls
+      .map(jsUrl => `<script src="${jsUrl}" type="text/javascript"></script>`)
+      .join('\n')}
 <style>${inlineCss}</style>
 <script>${inlineJs}</script>
 ${inlineFoot}

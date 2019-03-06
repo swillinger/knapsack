@@ -4,6 +4,9 @@
   "description": "Render React",
   "main": "src/index.js",
   "scripts": {},
+  "dependencies": {
+    "camelcase": "^4.1.0"
+  },
   "peerDependencies": {
     "@basalt/bedrock": "^0.32.0",
     "react": "^15.0.0 || ^16.0.0",

@@ -243,6 +243,7 @@ class PatternViewPage extends Component {
                       key={`${patternId}-${templateId}`}
                       demoSize={this.state.demoSize || defaultDemoSize}
                       isVerbose
+                      isCodeBlockShown
                     />
                   )}
 

@@ -89,6 +89,10 @@ ${this.getFoot({ jsUrls, inlineJs, inlineCss, inlineFoot })}
     bedrockEvents.emit(EVENTS.PATTERN_TEMPLATE_REMOVED, { path });
   }
 
+  getUsage() {
+    return '';
+  }
+
   watch({ config, templatePaths }) {
     return new Promise((resolve, reject) => {
       const watcher = chokidar.watch(templatePaths, {

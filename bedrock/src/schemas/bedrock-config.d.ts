@@ -6,6 +6,8 @@ interface BedrockTemplateRenderResults {
 
 interface BedrockTemplateRenderer {
   id: string;
+  extension: string;
+  language?: string;
   test: (theTemplatePath: string) => boolean;
   render: (opt: {
     template: BedrockPatternTemplate;
@@ -45,6 +47,11 @@ interface BedrockTemplateRenderer {
   onAdd: (opt: { path: string }) => void;
   onRemove: (opt: { path: string }) => void;
   // renderString: (template: string, data?: object) => Promise<BedrockTemplateRenderResults>,
+  getUsage?: (opt: {
+    patternId: string;
+    template: BedrockPatternTemplate;
+    data?: Object;
+  }) => Promise<string>;
 }
 
 interface BedrockDesignToken {

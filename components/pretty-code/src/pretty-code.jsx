@@ -53,6 +53,8 @@ export const languageList = [
   'bash',
 ].filter(lang => availableLanguages.includes(lang));
 
+export const isLanguageSupported = lang => languageList.includes(lang);
+
 availableLanguages.sort();
 
 const CodeSnippet = ({ language, code = '' }) => {

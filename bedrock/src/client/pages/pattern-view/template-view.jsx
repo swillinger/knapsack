@@ -27,6 +27,7 @@ import gql from 'graphql-tag';
 import qs from 'qs';
 import MdBlock from '../../components/md-block';
 import Template from '../../components/template';
+import TemplateCodeBlock from './template-code-block';
 import {
   LoadableSchemaTable,
   LoadableVariationDemo,
@@ -67,7 +68,6 @@ const patternQuery = gql`
   }
 `;
 
-// @todo UpdateReadme needs to work for each template doc
 const updateReadme = gql`
   mutation UpdateReadme($id: ID!, $templateId: ID!, $readme: String!) {
     setPatternTemplateReadme(
@@ -296,6 +296,16 @@ class TemplateView extends Component {
           </DemoGrid>
         </OverviewWrapper>
 
+        {this.props.isCodeBlockShown && (
+          <div>
+            <TemplateCodeBlock
+              patternId={this.props.id}
+              templateId={this.props.templateId}
+              data={data}
+            />
+          </div>
+        )}
+
         {this.props.isReadmeShown && readme && (
           <Mutation
             mutation={updateReadme}
@@ -328,9 +338,6 @@ class TemplateView extends Component {
                         readme: newReadme,
                       },
                     });
-
-                    // @todo Refactor this so a reload is not needed
-                    // window.location.reload();
                   }}
                 />
               );
@@ -374,6 +381,7 @@ TemplateView.defaultProps = {
   isReadmeShown: true,
   isTitleShown: true,
   isSchemaFormShown: true,
+  isCodeBlockShown: false,
 };
 
 TemplateView.propTypes = {
@@ -384,6 +392,7 @@ TemplateView.propTypes = {
   isReadmeShown: PropTypes.bool,
   isTitleShown: PropTypes.bool,
   isSchemaFormShown: PropTypes.bool,
+  isCodeBlockShown: PropTypes.bool,
 };
 
 export default TemplateView;

@@ -140,9 +140,22 @@ const patternsTypeDef = gql`
     message: String
   }
 
+  type TemplateCode {
+    usage: String
+    data: JSON
+    templateSrc: String
+    html: String
+    language: String
+  }
+
   type Query {
     patterns: [Pattern]
     pattern(id: ID): Pattern
+    templateCode(
+      patternId: String
+      templateId: String
+      data: JSON
+    ): TemplateCode
     patternTypes: [PatternType]
     patternType(id: ID): PatternType
     patternStatuses: [PatternStatus]
@@ -449,6 +462,8 @@ function createPatternsData(
             }
           });
 
+          const src = fs.readFileSync(templatePath, 'utf8');
+
           return {
             ...template,
             demoDatas: datas,
@@ -456,6 +471,7 @@ function createPatternsData(
             absolutePath: templatePath,
             assetSets,
             doc,
+            src,
           };
         });
 
@@ -825,6 +841,60 @@ class Patterns {
     }));
   }
 
+  /**
+   * Get code strings to help with how this template is used
+   * @param {Object} opt
+   * @param {string} opt.patternId
+   * @param {string} opt.templateId
+   * @param {Object} [opt.data] - data passed to template
+   * @return {BedrockPatternTemplateCode}
+   */
+  async getTemplateCode({ patternId, templateId, data }) {
+    const pattern = this.getPattern(patternId);
+    const template = pattern.templates.find(t => t.id === templateId);
+    const renderer = this.templateRenderers.find(t =>
+      t.test(template.absolutePath),
+    );
+
+    let language = 'bash';
+    if (renderer.language) {
+      language = renderer.language; // eslint-disable-line
+    } else if (renderer.extension) {
+      language = renderer.extension.replace('.', '');
+    }
+
+    const results = await Promise.all([
+      renderer
+        .getUsage({ patternId, template, data })
+        .then(usage => ({ usage })),
+      this.render({
+        patternId,
+        templateId,
+        data,
+        wrapHtml: false,
+        isInIframe: false,
+      }).then(({ ok, html, message }) => {
+        if (!ok) {
+          log.error(`Error trying to getTemplateCode(): ${message}`, {
+            patternId,
+            templateId,
+            html,
+            message,
+          });
+          throw new Error(message);
+        }
+        return {
+          html,
+        };
+      }),
+    ]);
+
+    return results.reduce((prev, current) => Object.assign(prev, current), {
+      language,
+      templateSrc: template.src,
+    });
+  }
+
   watch() {
     const configFilesToWatch = [];
     this.allPatterns.forEach(pattern => {
@@ -972,6 +1042,11 @@ const patternsResolvers = {
   Query: {
     patterns: (parent, args, { patterns }) => patterns.getPatterns(),
     pattern: (parent, { id }, { patterns }) => patterns.getPattern(id),
+    templateCode: async (
+      parent,
+      { patternId, templateId, data },
+      { patterns },
+    ) => patterns.getTemplateCode({ patternId, templateId, data }),
     patternTypes: (parent, args, { patterns }) => patterns.getPatternTypes(),
     patternType: (parent, { id }, { patterns }) => patterns.getPatternType(id),
     patternStatuses: (parent, args, { patterns }) =>

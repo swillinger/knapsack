@@ -1,5 +1,13 @@
 const { BedrockRendererWebpackBase } = require('@basalt/bedrock');
+const camelCase = require('camelcase');
 const { copyReactAssets } = require('./utils');
+
+/* eslint-disable class-methods-use-this */
+
+function upperCamelCase(str) {
+  const cased = camelCase(str);
+  return cased.charAt(0).toUpperCase() + cased.slice(1);
+}
 
 class BedrockReactRenderer extends BedrockRendererWebpackBase {
   constructor({ webpackConfig, webpack }) {
@@ -44,6 +52,17 @@ document.addEventListener('DOMContentLoaded', () => {
       ok: true,
       html,
     };
+  }
+
+  async getUsage({ patternId, data = {} }) {
+    // @todo show how to `import` the React component
+    return `
+const data = ${JSON.stringify(data, null, '  ')};
+
+function Example() {
+  return <${upperCamelCase(patternId)} {...data} />;
+}
+    `.trim();
   }
 }
 

@@ -1,6 +1,8 @@
 const { BedrockRendererBase } = require('@basalt/bedrock');
 const fs = require('fs-extra');
 
+/* eslint-disable class-methods-use-this */
+
 class BedrockHtmlRenderer extends BedrockRendererBase {
   constructor() {
     super({
@@ -21,6 +23,10 @@ class BedrockHtmlRenderer extends BedrockRendererBase {
         message: error.message,
       };
     }
+  }
+
+  async getUsage({ template }) {
+    return fs.readFile(template.absolutePath, 'utf8');
   }
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "@basalt/bedrock-renderer-react",
-  "version": "0.38.0",
+  "version": "0.38.1",
   "description": "Render React",
   "main": "src/index.js",
   "scripts": {},

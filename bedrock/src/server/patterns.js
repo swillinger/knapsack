@@ -848,7 +848,7 @@ class Patterns {
    * @param {string} opt.patternId
    * @param {string} opt.templateId
    * @param {Object} [opt.data] - data passed to template
-   * @return {BedrockPatternTemplateCode}
+   * @return {Promise<BedrockPatternTemplateCode>}
    */
   async getTemplateCode({ patternId, templateId, data }) {
     const pattern = this.getPattern(patternId);
@@ -890,9 +890,16 @@ class Patterns {
       }),
     ]);
 
-    return results.reduce((prev, current) => Object.assign(prev, current), {
+    const mergedResults = results.reduce(
+      (prev, current) => Object.assign(prev, current),
+      {},
+    );
+    return Object.assign({}, mergedResults, {
       language,
       templateSrc: template.src,
+      html: '',
+      usage: '',
+      data,
     });
   }
 

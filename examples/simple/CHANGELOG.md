@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.38.0](https://github.com/basaltinc/bedrock/compare/v0.37.2...v0.38.0) (2019-03-06)
+
+
+### Bug Fixes
+
+* add hideCodeBlock option ([714c7f8](https://github.com/basaltinc/bedrock/commit/714c7f8))
+
+
+
+
+
 ## [0.37.2](https://github.com/basaltinc/bedrock/compare/v0.37.1...v0.37.2) (2019-02-28)
 
 **Note:** Version bump only for package @basalt/bedrock-example-simple

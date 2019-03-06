@@ -302,7 +302,7 @@ class TemplateView extends Component {
         </OverviewWrapper>
 
         {this.props.isCodeBlockShown && !hideCodeBlock && (
-          <div>
+          <div style={{ marginBottom: '1rem' }}>
             <TemplateCodeBlock
               patternId={this.props.id}
               templateId={this.props.templateId}

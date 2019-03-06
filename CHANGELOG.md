@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.38.2](https://github.com/basaltinc/bedrock/compare/v0.38.1...v0.38.2) (2019-03-06)
+
+
+### Bug Fixes
+
+* code block spacing ([3218ecb](https://github.com/basaltinc/bedrock/commit/3218ecb))
+
+
+
+
+
 ## [0.38.1](https://github.com/basaltinc/bedrock/compare/v0.38.0...v0.38.1) (2019-03-06)
 
 

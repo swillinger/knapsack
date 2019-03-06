@@ -894,13 +894,17 @@ class Patterns {
       (prev, current) => Object.assign(prev, current),
       {},
     );
-    return Object.assign({}, mergedResults, {
-      language,
-      templateSrc: template.src,
-      html: '',
-      usage: '',
-      data,
-    });
+    return Object.assign(
+      {},
+      {
+        language,
+        templateSrc: template.src,
+        html: '',
+        usage: '',
+        data,
+      },
+      mergedResults,
+    );
   }
 
   watch() {

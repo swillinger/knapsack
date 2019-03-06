@@ -59,6 +59,7 @@ const patternQuery = gql`
         doc
         demoSize
         demoDatas
+        hideCodeBlock
         assetSets {
           id
           title
@@ -101,6 +102,7 @@ class TemplateView extends Component {
       ready: false,
       assetSetId: null,
       assetSets: null,
+      hideCodeBlock: null,
     };
     this.handleTemplateQuery = this.handleTemplateQuery.bind(this);
   }
@@ -129,6 +131,7 @@ class TemplateView extends Component {
           title,
           demoDatas,
           assetSets,
+          hideCodeBlock,
         } = templates.find(t => t.id === this.props.templateId);
 
         const hasSchema = !!(
@@ -149,6 +152,7 @@ class TemplateView extends Component {
           title,
           assetSetId: assetSets[0].id,
           assetSets,
+          hideCodeBlock,
           ready: true,
         });
       })
@@ -169,6 +173,7 @@ class TemplateView extends Component {
       ready,
       assetSetId,
       assetSets,
+      hideCodeBlock,
     } = this.state;
 
     if (!ready) return <div>Loading</div>;
@@ -296,7 +301,7 @@ class TemplateView extends Component {
           </DemoGrid>
         </OverviewWrapper>
 
-        {this.props.isCodeBlockShown && (
+        {this.props.isCodeBlockShown && !hideCodeBlock && (
           <div>
             <TemplateCodeBlock
               patternId={this.props.id}

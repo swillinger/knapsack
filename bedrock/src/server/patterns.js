@@ -82,6 +82,7 @@ const patternsTypeDef = gql`
     isInline: Boolean
     demoSize: String
     assetSets: [PatternAssetSet]
+    hideCodeBlock: Boolean
   }
 
   type PatternType {

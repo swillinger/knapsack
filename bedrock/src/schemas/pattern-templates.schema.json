@@ -69,6 +69,12 @@
           }
         }
       },
+      "hideCodeBlock": {
+        "type": "boolean",
+        "title": "Hide Usage Code Block",
+        "default": false,
+        "description": "If the 'Usage', 'Data', 'Template Source', 'HTML' tabbed code block should be shown"
+      },
       "selector": {
         "title": "CSS Selector",
         "type": "string"

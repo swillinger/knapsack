@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.38.1](https://github.com/basaltinc/bedrock/compare/v0.38.0...v0.38.1) (2019-03-06)
+
+
+### Bug Fixes
+
+* getTemplateCode merge ([f1c3d90](https://github.com/basaltinc/bedrock/commit/f1c3d90))
+
+
+
+
+
 # [0.38.0](https://github.com/basaltinc/bedrock/compare/v0.37.2...v0.38.0) (2019-03-06)
 
 

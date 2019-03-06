@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.38.0](https://github.com/basaltinc/bedrock/compare/v0.37.2...v0.38.0) (2019-03-06)
+
+**Note:** Version bump only for package @basalt/bedrock-spinner
+
+
+
+
+
 # [0.37.0](https://github.com/basaltinc/bedrock/compare/v0.36.0...v0.37.0) (2019-02-24)
 
 **Note:** Version bump only for package @basalt/bedrock-spinner

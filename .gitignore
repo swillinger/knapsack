@@ -7,3 +7,5 @@ vendor
 dist
 *.log
 /crux
+/cypress/videos
+/cypress/screenshots

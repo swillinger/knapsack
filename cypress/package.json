@@ -1,0 +1,14 @@
+{
+  "name": "@basalt/bedrock-cypress",
+  "private": true,
+  "version": "0.38.2",
+  "scripts": {
+    "cypress": "cypress",
+    "cypress:run": "percy exec -- cypress run",
+    "cypress:open": "yarn cypress open"
+  },
+  "devDependencies": {
+    "cypress": "^3.1.5",
+    "@percy/cypress": "^1.0.2"
+  }
+}

@@ -131,9 +131,3 @@ export const DemoTransitionMove = styled.div`
     left: calc(100% - 8px);
   }
 `;
-
-export const ReactTableWrapper = styled.div`
-  .ReactTable .rt-table .rt-tbody .rt-td:first-child {
-    background: inherit;
-  }
-`;

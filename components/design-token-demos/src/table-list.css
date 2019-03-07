@@ -1,0 +1,3 @@
+.ReactTable .rt-table .rt-tbody .rt-td:first-child {
+  background: unset;
+}

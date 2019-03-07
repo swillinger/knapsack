@@ -2,7 +2,7 @@
   "name": "@basalt/bedrock",
   "license": "GPL-2.0-or-later",
   "description": "Build Design Systems on top of Bedrock, by Basalt",
-  "version": "0.38.2",
+  "version": "0.38.3",
   "author": "Basalt (https://basalt.io/)",
   "main": "src/index.js",
   "bin": {
@@ -50,7 +50,7 @@
     "@basalt/bedrock-atoms": "^0.38.2",
     "@basalt/bedrock-babel-config": "^0.38.2",
     "@basalt/bedrock-breakpoints-demo": "^0.38.2",
-    "@basalt/bedrock-code-block": "^0.38.2",
+    "@basalt/bedrock-code-block": "^0.38.3",
     "@basalt/bedrock-color-contrast-block": "^0.38.2",
     "@basalt/bedrock-color-swatch": "^0.38.2",
     "@basalt/bedrock-copy-to-clipboard": "^0.38.2",

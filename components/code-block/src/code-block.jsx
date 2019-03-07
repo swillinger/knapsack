@@ -27,7 +27,7 @@ const CodeBlock = ({ items = [] }) => {
     ),
   }));
 
-  return <TabbedPanel bleed="0" color="component" items={tabs} />;
+  return <TabbedPanel bleed="10px" color="component" items={tabs} />;
 };
 
 CodeBlock.propTypes = {

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.39.0](https://github.com/basaltinc/bedrock/compare/v0.38.3...v0.39.0) (2019-03-07)
+
+
+### Features
+
+* nesting schema tables ([#198](https://github.com/basaltinc/bedrock/issues/198)) ([db99ee7](https://github.com/basaltinc/bedrock/commit/db99ee7))
+
+
+
+
+
 ## [0.38.3](https://github.com/basaltinc/bedrock/compare/v0.38.2...v0.38.3) (2019-03-07)
 
 

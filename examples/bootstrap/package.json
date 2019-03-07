@@ -1,7 +1,7 @@
 {
   "name": "@basalt/bedrock-example-bootstrap",
   "license": "ISC",
-  "version": "0.38.3",
+  "version": "0.39.0",
   "description": "",
   "private": true,
   "main": "index.js",
@@ -16,9 +16,9 @@
     "test": "bedrock test"
   },
   "dependencies": {
-    "@basalt/bedrock": "^0.38.3",
-    "@basalt/bedrock-renderer-html": "^0.38.2",
-    "@basalt/bedrock-renderer-twig": "^0.38.2",
+    "@basalt/bedrock": "^0.39.0",
+    "@basalt/bedrock-renderer-html": "^0.39.0",
+    "@basalt/bedrock-renderer-twig": "^0.39.0",
     "@basalt/demo-data": "^0.5.1"
   },
   "devDependencies": {

@@ -11,7 +11,7 @@ workflow "Deploy" {
 # Filter for master branch
 action "master-branch-filter" {
   uses = "actions/bin/filter@master"
-  args = "branch master"
+  args = "branch feature/example-deploys"
 }
 
 action "deploy/simple" {

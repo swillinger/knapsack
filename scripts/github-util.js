@@ -17,7 +17,11 @@ function githubPost(path, requestBody) {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `token ${GITHUB_TOKEN}`,
-        Accept: 'application/vnd.github.v3+json',
+        Accept: [
+          'application/vnd.github.v3+json',
+          'application/vnd.github.ant-man-preview+json',
+          'application/vnd.github.flash-preview+json',
+        ].join(', '),
         'Cache-Control': 'no-cache',
         'User-Agent': 'EvanLovely',
       },

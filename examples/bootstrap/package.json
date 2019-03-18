@@ -19,7 +19,8 @@
     "@basalt/bedrock": "^0.39.0",
     "@basalt/bedrock-renderer-html": "^0.39.0",
     "@basalt/bedrock-renderer-twig": "^0.39.0",
-    "@basalt/demo-data": "^0.5.1"
+    "@basalt/demo-data": "^0.5.1",
+    "lodash.template": "^4.4.0"
   },
   "devDependencies": {
     "style-dictionary": "^2.7.0"

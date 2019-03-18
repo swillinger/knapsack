@@ -18,6 +18,7 @@ const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const { join } = require('path');
 const chokidar = require('chokidar');
+const os = require('os');
 const { bedrockEvents, EVENTS } = require('./events');
 
 /**
@@ -37,7 +38,9 @@ class FileDb {
     // @todo kebab-case `name`
     // @todo should this read a pre-existing file first?
     const dbPath = join(dbDir, `${name}.json`);
-    const adapter = new FileSync(dbPath);
+    const adapter = new FileSync(dbPath, {
+      serialize: data => JSON.stringify(data, null, 2) + os.EOL,
+    });
     const db = low(adapter);
 
     // Set some defaults (required if your JSON file is empty)

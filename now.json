@@ -1,7 +1,7 @@
 {
-  "name": "crux",
-  "alias": "crux",
+  "name": "bedrock",
   "type": "docker",
+  "version": 1,
   "scale": {
     "sfo1": {
       "min": 0,

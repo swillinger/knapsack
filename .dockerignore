@@ -5,3 +5,5 @@ vendor
 /.vscode
 *.log
 /crux
+/apps
+/cypress

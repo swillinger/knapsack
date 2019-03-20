@@ -8,15 +8,12 @@ workflow "Deploy" {
     "gh-deploy/bootstrap",
     "gh-deploy/design-token-mania",
     "gh-deploy/multi-templates",
-    #"cypress",
   ]
+
+  #"cypress",
 }
 
 # Filter for master branch
-action "master-branch-filter" {
-  uses = "actions/bin/filter@master"
-  args = "branch master"
-}
 
 action "deploy/simple" {
   needs = "now init"
@@ -230,7 +227,6 @@ action "gh-deploy/multi-templates" {
 
 action "now init" {
   uses = "actions/zeit-now@666edee2f3632660e9829cb6801ee5b7d47b303d"
-  needs = ["master-branch-filter"]
   secrets = ["ZEIT_TOKEN"]
   runs = ["sh", "-c", "now whoami --token=$ZEIT_TOKEN && mkdir .github/artifacts/ "]
 }

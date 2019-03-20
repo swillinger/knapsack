@@ -48,7 +48,7 @@ action "deploy/bootstrap" {
   secrets = [
     "ZEIT_TOKEN",
   ]
-  args = "deploy --env EXAMPLE=bootstrap --local-config=./examples/bootstrap/now.json --meta GITHUB_SHA=$GITHUB_SHA --team=basalt --target staging"
+  args = "deploy --env EXAMPLE=bootstrap --local-config=./examples/bootstrap/now.json --meta GITHUB_SHA=$GITHUB_SHA --team=basalt"
 }
 
 action "ESLint checks" {

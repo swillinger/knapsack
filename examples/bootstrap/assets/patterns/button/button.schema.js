@@ -67,13 +67,5 @@ module.exports = {
     }
   },
   examples: [
-    {
-      text: 'Click Here',
-      url: 'https://basalt.io',
-      style: 'primary',
-      size: 'md',
-      disabled: false,
-      outlined: false,
-    },
   ],
 };

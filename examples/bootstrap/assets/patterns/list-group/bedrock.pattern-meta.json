@@ -1,0 +1,11 @@
+{
+  "title": "List Group",
+  "description": "Provide contextual feedback messages for typical user actions with the handful of available and flexible list-group messages.",
+  "type": "molecules",
+  "status": "ready",
+  "uses": [
+    "inSlice"
+  ],
+  "hasIcon": false,
+  "demoSize": "m"
+}

@@ -1,0 +1,11 @@
+{
+  "title": "Figure",
+  "description": "Display related images and text with the figure component in Bootstrap.",
+  "type": "molecules",
+  "status": "inProgress",
+  "uses": [
+    "inSlice"
+  ],
+  "hasIcon": false,
+  "demoSize": "m"
+}

@@ -1,0 +1,38 @@
+{% set classes = [
+  'table',
+  dark ? 'table-dark',
+  striped ? 'table-striped',
+  bordered ? 'table-bordered',
+  hoverable ? 'table-hover',
+] %}
+
+<table class="{{ classes|join(' ') }}">
+
+  {% if caption %}
+    <caption>{{ caption }}</caption>
+  {% endif %}
+
+  {% if thead %}
+    <thead {% if thead.colorScheme %}class="thead-{{ thead.colorScheme }}"{% endif %}>
+      <tr>
+        {% for cell in thead.cells %}
+        <th scope="col">{{ cell.text }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+  {% endif %}
+
+  {% if tbody %}
+    <tbody>
+      {% for row in tbody %}
+        <tr {% if row.rowColorScheme %}class="table-{{ row.rowColorScheme }}"{% endif %}>
+          <th scope="row">{{ row.rowHeader }}</th>
+          {% for cell in row.cells %}
+          <td>{{ cell.text }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  {% endif %}
+
+</table>

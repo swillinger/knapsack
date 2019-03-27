@@ -11,6 +11,10 @@
     {
       "id": "pages",
       "title": "Pages"
+    },
+    {
+      "id": "layouts",
+      "title": "Layouts"
     }
   ],
   "patternStatuses": [

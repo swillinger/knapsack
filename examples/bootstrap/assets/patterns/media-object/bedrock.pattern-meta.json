@@ -1,0 +1,11 @@
+{
+  "title": "Media Object",
+  "description": "Use Bootstrap’s custom media-object to help build complex and repetitive components where some media is positioned alongside content that doesn’t wrap around said media. It does this with only two required classes thanks to flexbox.",
+  "type": "molecules",
+  "status": "ready",
+  "uses": [
+    "inSlice"
+  ],
+  "hasIcon": false,
+  "demoSize": "m"
+}

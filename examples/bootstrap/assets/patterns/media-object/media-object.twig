@@ -1,0 +1,53 @@
+{% if mediaObjects|length > 1 %}
+
+<ul class="list-unstyled">
+  {% for mediaObject in mediaObjects %}
+  <li class="media {% if loop.index > 1 %}my-4{% endif %}">
+    <img src="{{ mediaObject.mediaImg }}" class="mr-3 align-self-{{ mediaObject.mediaAlignment }}" >
+    <div class="media-body">
+      <h5 class="mt-0 mb-1">{{ mediaObject.mediaHeading }}</h5>
+      {{ mediaObject.mediaBody }}
+      {% if mediaObject.nestedObjects %}
+        {% for nestedObject in mediaObject.nestedObjects %}
+          <div class="media mt-3">
+          <img src="{{ nestedObject.nestedImg }}" class="mr-3 align-self-{{ nestedObject.nestedAlignment }}" >
+          <div class="nested-body">
+            <h5 class="mt-0">{{ nestedObject.nestedHeading }}</h5>
+            {{ nestedObject.nestedBody }}
+          {% endfor %}
+          {% for nestedObject in nestedObjects %}
+          </div>
+        </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+
+{% else %}
+
+{% for mediaObject in mediaObjects %}
+<div class="media">
+  <img src="{{ mediaObject.mediaImg }}" class="mr-3 align-self-{{ mediaObject.mediaAlignment }}" >
+  <div class="media-body">
+    <h5 class="mt-0">{{ mediaObject.mediaHeading }}</h5>
+    {{ mediaObject.mediaBody }}
+    {% if mediaObject.nestedObjects %}
+      {% for nestedObject in mediaObject.nestedObjects %}
+        <div class="media mt-3">
+          <img src="{{ nestedObject.nestedImg }}" class="mr-3 align-self-{{ nestedObject.nestedAlignment }}" >
+          <div class="nested-body">
+            <h5 class="mt-0">{{ nestedObject.nestedHeading }}</h5>
+            {{ nestedObject.nestedBody }}
+            {% endfor %}
+            {% for nestedObject in nestedObjects %}
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>
+{% endfor %}
+
+{% endif %}

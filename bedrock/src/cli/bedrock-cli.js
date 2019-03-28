@@ -66,14 +66,15 @@ program.command('build').action(async () => {
   const patternDemos = patterns.getPatternsDemoUrls();
   const patternsMeta = patternDemos.map(patternDemo => {
     const { templates } = patternDemo;
-    return templates.map(template => ({
-      id: `${patternDemo.id}-${template.id}`,
+    return {
       patternTitle: patternDemo.title,
       patternId: patternDemo.id,
-      templateTitle: template.title,
-      templateId: template.id,
-      demoUrls: template.demoUrls,
-    }));
+      templates: templates.map(template => ({
+        templateTitle: template.title,
+        templateId: template.id,
+        demoUrls: template.demoUrls,
+      })),
+    };
   });
 
   const metaPath = join(config.dist, 'meta.json');

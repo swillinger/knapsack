@@ -1,11 +1,11 @@
 {
   "name": "@basalt/bedrock-plugin-custom-homepage",
   "license": "GPL-2.0-or-later",
-  "version": "0.39.0",
+  "version": "0.40.0",
   "description": "A Bedrock plugin for setting a custom home page",
   "scripts": {},
   "dependencies": {
-    "@basalt/bedrock-core": "^0.39.0"
+    "@basalt/bedrock-core": "^0.40.0"
   },
   "peerDependencies": {
     "react": "^16.8.0"

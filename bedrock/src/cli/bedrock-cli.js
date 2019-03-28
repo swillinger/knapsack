@@ -67,11 +67,11 @@ program.command('build').action(async () => {
   const patternsMeta = patternDemos.map(patternDemo => {
     const { templates } = patternDemo;
     return {
-      patternTitle: patternDemo.title,
-      patternId: patternDemo.id,
+      title: patternDemo.title,
+      id: patternDemo.id,
       templates: templates.map(template => ({
-        templateTitle: template.title,
-        templateId: template.id,
+        title: template.title,
+        id: template.id,
         demoUrls: template.demoUrls,
       })),
     };

@@ -64,10 +64,13 @@ program.command('build').action(async () => {
 
   // writing meta
   const patternDemos = patterns.getPatternsDemoUrls();
-  const demoUrls = patternDemos.map(patternDemo => {
+  const patternsMeta = patternDemos.map(patternDemo => {
     const { templates } = patternDemo;
     return templates.map(template => ({
+      id: `${patternDemo.id}-${template.id}`,
+      patternTitle: patternDemo.title,
       patternId: patternDemo.id,
+      templateTitle: template.title,
       templateId: template.id,
       demoUrls: template.demoUrls,
     }));
@@ -76,7 +79,16 @@ program.command('build').action(async () => {
   const metaPath = join(config.dist, 'meta.json');
 
   ensureDirSync(config.dist);
-  writeFileSync(metaPath, JSON.stringify({ demoUrls }, null, '  '));
+  writeFileSync(
+    metaPath,
+    JSON.stringify(
+      {
+        patterns: patternsMeta,
+      },
+      null,
+      '  ',
+    ),
+  );
 
   bedrockEvents.emit(EVENTS.SHUTDOWN);
 });

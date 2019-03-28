@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.1](https://github.com/basaltinc/bedrock/compare/v0.40.0...v0.40.1) (2019-03-28)
+
+
+### Bug Fixes
+
+* further meta.json tweaks ([55bbcec](https://github.com/basaltinc/bedrock/commit/55bbcec))
+* generalize meta.json data ([0a3a0a9](https://github.com/basaltinc/bedrock/commit/0a3a0a9))
+* nest meta.json data more accurately ([8077adb](https://github.com/basaltinc/bedrock/commit/8077adb))
+
+
+
+
+
 # [0.40.0](https://github.com/basaltinc/bedrock/compare/v0.39.2...v0.40.0) (2019-03-28)
 
 

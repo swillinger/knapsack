@@ -17,6 +17,7 @@
  */
 const program = require('commander');
 const { join, dirname } = require('path');
+const { writeFileSync, ensureDirSync } = require('fs-extra');
 const log = require('./log');
 const { bedrockEvents, EVENTS } = require('../server/events');
 const { serve } = require('../server/server');
@@ -60,6 +61,23 @@ program.command('serve').action(async () => {
 
 program.command('build').action(async () => {
   await build(config, allTemplatePaths);
+
+  // writing meta
+  const patternDemos = patterns.getPatternsDemoUrls();
+  const demoUrls = patternDemos.map(patternDemo => {
+    const { templates } = patternDemo;
+    return templates.map(template => ({
+      patternId: patternDemo.id,
+      templateId: template.id,
+      demoUrls: template.demoUrls,
+    }));
+  });
+
+  const metaPath = join(config.dist, 'meta.json');
+
+  ensureDirSync(config.dist);
+  writeFileSync(metaPath, JSON.stringify({ demoUrls }, null, '  '));
+
   bedrockEvents.emit(EVENTS.SHUTDOWN);
 });
 
@@ -93,21 +111,6 @@ program.command('test').action(async () => {
   const allPatterns = await patterns.getPatterns();
   await testPatternRenders(allPatterns, patterns);
   bedrockEvents.emit(EVENTS.SHUTDOWN);
-});
-
-program.command('demo-urls').action(() => {
-  const patternDemos = patterns.getPatternsDemoUrls();
-
-  patternDemos.forEach(patternDemo => {
-    patternDemo.templates.forEach(template => {
-      const urlList = template.demoUrls.join('\n');
-      console.log(`
-${patternDemo.id} - ${template.id}    
-${urlList}`);
-    });
-  });
-
-  process.exit(0);
 });
 
 program.parse(process.argv);

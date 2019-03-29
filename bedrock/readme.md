@@ -1,6 +1,6 @@
 # Bedrock
 
-See [Bedrock docs](https://wwww.getbedrock.com/docs) for more info.
+See [Bedrock docs](https://www.getbedrock.com/docs) for more info.
 
 ## How to install
 

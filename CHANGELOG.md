@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.2](https://github.com/basaltinc/bedrock/compare/v0.40.1...v0.40.2) (2019-03-29)
+
+
+### Bug Fixes
+
+* docs link in readme ([245ff1f](https://github.com/basaltinc/bedrock/commit/245ff1f))
+* meta demoUrls now include assetSets variations ([3d6858e](https://github.com/basaltinc/bedrock/commit/3d6858e))
+* remove requirement for global assetSets since templates can include them ([d81bf92](https://github.com/basaltinc/bedrock/commit/d81bf92))
+
+
+
+
+
 ## [0.40.1](https://github.com/basaltinc/bedrock/compare/v0.40.0...v0.40.1) (2019-03-28)
 
 

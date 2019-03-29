@@ -97,10 +97,6 @@ function validateConfig(config) {
   // @todo check if `config.patterns` exists; but can't now as it can contain globs
   dirExistsOrExit(config.public);
   if (config.docsDir) dirExistsOrExit(config.docsDir);
-  if (config.assetSets.length === 0) {
-    log.error('You need at least 1 "assetSets" defined in bedrock.config.js');
-    process.exit(1);
-  }
 
   {
     const { message, ok } = validateDataAgainstSchema(

@@ -429,6 +429,17 @@ function createPatternsData(
             Object.keys(schema.properties).length > 0
           );
 
+          let assetSets = [];
+          if (template.assetSets) {
+            assetSets = scanAssetSets(template.assetSets);
+          }
+
+          globalAssetSets.forEach(globalAssetSet => {
+            if (!assetSets.some(a => a.id === globalAssetSet.id)) {
+              assetSets.push(globalAssetSet);
+            }
+          });
+
           let datas = [{}];
           if (demoDatas) {
             datas = demoDatas;
@@ -440,27 +451,19 @@ function createPatternsData(
             datas = schema.examples;
           }
 
-          const demoUrls = datas.map(data => {
-            const queryString = qs.stringify({
-              templateId,
-              patternId: pattern.id,
-              data,
-              isInIframe: false,
-              wrapHtml: true,
+          const demoUrls = [];
+          datas.forEach(data => {
+            assetSets.forEach(assetSet => {
+              const queryString = qs.stringify({
+                patternId: pattern.id,
+                templateId,
+                assetSetId: assetSet.id,
+                isInIframe: false,
+                wrapHtml: true,
+                data,
+              });
+              demoUrls.push(`/api/render?${queryString}`);
             });
-
-            return `/api/render?${queryString}`;
-          });
-
-          let assetSets = [];
-          if (template.assetSets) {
-            assetSets = scanAssetSets(template.assetSets);
-          }
-
-          globalAssetSets.forEach(globalAssetSet => {
-            if (!assetSets.some(a => a.id === globalAssetSet.id)) {
-              assetSets.push(globalAssetSet);
-            }
           });
 
           const src = fs.readFileSync(templatePath, 'utf8');

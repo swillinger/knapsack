@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.3](https://github.com/basaltinc/bedrock/compare/v0.40.2...v0.40.3) (2019-04-07)
+
+
+### Bug Fixes
+
+* allow global assetSets to be empty ([#228](https://github.com/basaltinc/bedrock/issues/228)) ([8592237](https://github.com/basaltinc/bedrock/commit/8592237))
+
+
+
+
+
 ## [0.40.2](https://github.com/basaltinc/bedrock/compare/v0.40.1...v0.40.2) (2019-03-29)
 
 **Note:** Version bump only for package @basalt/bedrock-example-bootstrap

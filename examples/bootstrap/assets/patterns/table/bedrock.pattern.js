@@ -1,4 +1,8 @@
 const schema = require('./table.schema');
+const {
+  bootstrap,
+  material
+} = require('../../../bedrock.asset-sets');
 
 module.exports = {
   id: 'table',
@@ -10,6 +14,7 @@ module.exports = {
       title: 'Table - Twig',
       docPath: './README-twig.md',
       schema,
+      assetSets: [bootstrap],
     },
     {
       alias: '@components/table.html',
@@ -17,6 +22,7 @@ module.exports = {
       id: 'table-html',
       title: 'Table - Html',
       docPath: './README-html.md',
+      assetSets: [bootstrap],
     },
   ],
 };

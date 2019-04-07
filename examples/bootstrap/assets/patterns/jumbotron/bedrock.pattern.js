@@ -1,15 +1,12 @@
 const schema = require('./jumbotron.schema');
+const {
+  bootstrap,
+  material
+} = require('../../../bedrock.asset-sets');
 
 module.exports = {
   id: 'jumbotron',
   templates: [
-    {
-      alias: '@components/jumbotron.html',
-      path: './jumbotron.html',
-      id: 'jumbotron-html',
-      title: 'Jumbotron - Html',
-      docPath: './README-html.md',
-    },
     {
       alias: '@components/jumbotron.twig',
       path: './jumbotron.twig',
@@ -17,6 +14,15 @@ module.exports = {
       title: 'Jumbotron - Twig',
       docPath: './README-twig.md',
       schema,
+      assetSets: [bootstrap],
+    },
+    {
+      alias: '@components/jumbotron.html',
+      path: './jumbotron.html',
+      id: 'jumbotron-html',
+      title: 'Jumbotron - Html',
+      docPath: './README-html.md',
+      assetSets: [bootstrap],
     },
   ],
 };

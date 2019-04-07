@@ -3,7 +3,7 @@ module.exports = {
   type: 'object',
   title: 'breadcrumb',
   description: 'Indicate the current page’s location within a navigational hierarchy that automatically adds separators via CSS.',
-  required: ['message'],
+  required: ['breadcrumbItems'],
   properties: {
     breadcrumbItems: {
       type: 'array',
@@ -20,11 +20,6 @@ module.exports = {
           link: {
             type: 'string',
             title: 'Item Link',
-          },
-          active: {
-            type: 'boolean',
-            title: 'Current Active Page',
-            default: false,
           },
         },
       },
@@ -44,7 +39,6 @@ module.exports = {
         {
           text: 'Data',
           link: '#',
-          active: true,
         },
       ],
     },

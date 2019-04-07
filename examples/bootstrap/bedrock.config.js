@@ -19,8 +19,8 @@ const config = {
   dist: './dist',
   public: './public',
   data: './data',
-  css: ['./public/css/bootstrap.css'],
-  js: ['./public/js/bootstrap.bundle.js'],
+  // not setting here since we declare it on each template
+  assetSets: [],
   version,
   templateRenderers: [
     new HtmlRenderer(),

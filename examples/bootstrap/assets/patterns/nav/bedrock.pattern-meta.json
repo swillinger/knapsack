@@ -1,0 +1,11 @@
+{
+  "title": "NavBar",
+  "description": "Indicate the current page’s location.",
+  "type": "molecules",
+  "status": "ready",
+  "uses": [
+    "inSlice"
+  ],
+  "hasIcon": false,
+  "demoSize": "full"
+}

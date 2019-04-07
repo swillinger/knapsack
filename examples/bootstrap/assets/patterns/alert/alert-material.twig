@@ -1,0 +1,9 @@
+{% set classes = [
+  'mdc-alert',
+  'mdc-button',
+  'mdc-button--' ~ variant|default('raised'),
+] | merge(classes|default([])) %}
+
+<div class="{{ classes|join(' ') }}" role="alert" style="width: 100%">
+  {{ message }}
+</div>

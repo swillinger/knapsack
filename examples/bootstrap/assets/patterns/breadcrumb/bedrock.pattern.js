@@ -1,4 +1,8 @@
 const schema = require('./breadcrumb.schema');
+const {
+  bootstrap,
+  material
+} = require('../../../bedrock.asset-sets');
 
 module.exports = {
   id: 'breadcrumb',
@@ -10,6 +14,7 @@ module.exports = {
       title: 'Breadcrumb - Twig',
       docPath: './README-twig.md',
       schema,
+      assetSets: [bootstrap],
     },
     {
       alias: '@components/breadcrumb.html',
@@ -17,6 +22,7 @@ module.exports = {
       id: 'breadcrumb-html',
       title: 'Breadcrumb - Html',
       docPath: './README-html.md',
+      assetSets: [bootstrap],
     },
   ],
 };

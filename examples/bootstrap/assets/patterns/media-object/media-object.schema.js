@@ -72,12 +72,12 @@ module.exports = {
         {
           mediaHeading: 'Media Heading',
           mediaBody: 'Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.',
-          mediaImg: 'https://placeimg.com/64/64/nature',
+          mediaImg: '/images/demoImg1.jpg',
           nestedObjects: [
             {
               nestedHeading: 'Media Heading',
               nestedBody: 'Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.',
-              nestedImg: 'https://placeimg.com/64/64/nature',
+              nestedImg: '/images/demoImg2.jpg',
             }
           ]
         },
@@ -88,17 +88,17 @@ module.exports = {
         {
           mediaHeading: 'Media Heading',
           mediaBody: 'Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.',
-          mediaImg: 'https://placeimg.com/64/64/nature',
+          mediaImg: '/images/demoImg3.jpg',
         },
         {
           mediaHeading: 'Media Heading',
           mediaBody: 'Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.',
-          mediaImg: 'https://placeimg.com/64/64/nature',
+          mediaImg: '/images/demoImg4.jpg',
         },
         {
           mediaHeading: 'Media Heading',
           mediaBody: 'Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.',
-          mediaImg: 'https://placeimg.com/64/64/nature',
+          mediaImg: '/images/demoImg1.jpg',
         },
       ],
     },

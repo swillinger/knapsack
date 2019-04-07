@@ -1,9 +1,10 @@
-const buttonSchema = require('../button/button.schema');
+const { bootstrapButtonSchema, materialButtonSchema } = require('../button/button.schema');
+const { bootstrapListGroupSchema } = require('../list-group/list-group.schema');
 
-const { text, url, style } = buttonSchema.properties;
+const { text, url, style } = bootstrapButtonSchema.properties;
+const materialButton = materialButtonSchema.properties;
 
-
-module.exports = {
+const bootstrapCardSchema = {
   $schema: 'http://json-schema.org/draft-07/schema',
   type: 'object',
   title: 'Card',
@@ -33,21 +34,7 @@ module.exports = {
       enumNames: ['Left', 'Center', 'Right'],
       default: 'left',
     },
-    list: {
-      type: 'array',
-      title: 'List',
-      items: {
-        type: 'object',
-        title: 'List Item',
-        required: ['listText'],
-        properties: {
-          listText: {
-            type: 'string',
-            title: 'List Text',
-          },
-        },
-      },
-    },
+    list: bootstrapListGroupSchema,
     imgSrc: {
       type: 'string',
       title: 'Image Source',
@@ -89,7 +76,7 @@ module.exports = {
     {
       cardTitle: 'Card Title',
       cardBody: 'Some quick example text to build on the card title and make up the bulk of the card\'s content.',
-      imgSrc: 'https://placeimg.com/640/480/nature',
+      imgSrc: '/images/demoImg2.jpg',
       imgAlt: 'Nature Picture',
       button: {
         text: 'Go somewhere',
@@ -102,17 +89,28 @@ module.exports = {
       cardTitle: 'Card Title',
       cardSubTitle: 'Card SubTitle',
       cardBody: 'Some quick example text to build on the card title and make up the bulk of the card\'s content.',
-      list: [
-        {
-          listText: 'List Item 1',
-        },
-        {
-          listText: 'List Item 2',
-        },
-        {
-          listText: 'List Item 3',
-        },
-      ],
+      list: {
+        flush: true,
+        listItems: [
+          {
+            itemText: 'Cras justo odio',
+            active: true,
+          },
+          {
+            itemText: 'Dapibus ac facilisis in',
+          },
+          {
+            itemText: 'Morbi leo risus',
+            disabled: true,
+          },
+          {
+            itemText: 'Porta ac consectetur ac',
+          },
+          {
+            itemText: 'Vestibulum at eros',
+          },
+        ],
+      },
       links: [
         {
           linkText: 'Link 1',
@@ -125,4 +123,65 @@ module.exports = {
       ],
     },
   ],
+};
+
+const materialCardSchema = {
+  $schema: 'http://json-schema.org/draft-07/schema',
+  type: 'object',
+  title: 'Card',
+  description: 'A Card for containing content',
+  required: ['cardTitle', 'cardBody', 'imgSrc'],
+  properties: {
+    cardTitle: {
+      type: 'string',
+      title: 'Body Title',
+    },
+    cardSubTitle: {
+      type: 'string',
+      title: 'Body Sub Title',
+    },
+    cardBody: {
+      type: 'string',
+      title: 'Card Body Text',
+    },
+    imgSrc: {
+      type: 'string',
+      title: 'Image Source',
+    },
+    buttons: {
+      type: 'array',
+      title: 'Buttons',
+      items: {
+        type: 'object',
+        title: 'Button',
+        properties: materialButton,
+      },
+    },
+  },
+  examples: [
+    {
+      cardTitle: 'Card Title',
+      cardSubTitle: 'Card SubTitle',
+      cardBody: 'Some quick example text to build on the card title and make up the bulk of the card\'s content.',
+      imgSrc: '/images/demoImg1.jpg',
+      buttons: [
+        {
+          text: 'Go somewhere',
+          url: '#',
+          variant: 'text',
+        },
+      ],
+    },
+    {
+      cardTitle: 'Card Title',
+      cardSubTitle: 'Card SubTitle',
+      imgSrc: '/images/demoImg4.jpg',
+      cardBody: 'Some quick example text to build on the card title and make up the bulk of the card\'s content.',
+    },
+  ],
+};
+
+module.exports = {
+  bootstrapCardSchema,
+  materialCardSchema,
 };

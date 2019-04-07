@@ -1,21 +1,4 @@
 Bootstrap's card is a flexible and extensible content container. It includes options for headers and footers, a wide variety of content, contextual background colors, and powerful display options. If you’re familiar with Bootstrap 3, cards replace our old panels, wells, and thumbnails. Similar functionality to those components is available as modifier classes for cards.
-           
-#### Example Usage
-
-```twig
-{% include '@components/card.twig' with {
-  cardTitle: 'Card Title',
-  cardBody: 
-    'Some quick example text to build on the card title and make up the bulk of the card\'s content.',
-  imgSrc: 'https://placeimg.com/640/480/nature',
-  imgAlt: 'Nature Picture',
-  button: {
-    text: 'Go somewhere',
-    url: '#',
-    style: 'primary',
-  },
-} %}
-```
 
 #### Content Types
 

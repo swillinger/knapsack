@@ -19,11 +19,10 @@
 
     {% if list %}
       </div>
-        <ul class="list-group list-group-flush">
-        {% for listItem in list %}
-          <li class="list-group-item">{{ listItem.listText }}</li>
-        {% endfor %}
-        </ul>
+        {% include '@components/list-group.twig' with {
+          flush: list.flush,
+          listItems: list.listItems,
+        } only %}
       <div class="card-body">
     {% endif %}
 

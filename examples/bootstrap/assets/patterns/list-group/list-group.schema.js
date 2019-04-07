@@ -1,4 +1,4 @@
-module.exports = {
+const bootstrapListGroupSchema = {
   $schema: 'http://json-schema.org/draft-07/schema',
   type: 'object',
   title: 'List Group',
@@ -111,3 +111,72 @@ module.exports = {
     },
   ],
 };
+
+const materialListGroupSchema = {
+  $schema: 'http://json-schema.org/draft-07/schema',
+  type: 'object',
+  title: 'List Group',
+  description: 'Provide contextual feedback messages for typical user actions with the handful of available and flexible list-group messages.',
+  required: ['listItems'],
+  properties: {
+    subheader: {
+        title: 'Sub Header',
+        type: 'string',
+    },
+    listItems: {
+      type: 'array',
+      title: 'List Items',
+      items: {
+        type: 'object',
+        title: 'List Item',
+        required: ['itemText'],
+        properties: {
+          itemText: {
+            type: 'string',
+            title: 'List Item Text',
+          },
+          secondaryText: {
+            type: 'string',
+            title: 'List Item Secondary Text'
+          },
+          disabled: {
+            type: 'boolean',
+            title: 'Disabled',
+            default: false,
+          },
+        },
+      },
+    },
+
+  },
+  examples: [
+    {
+      listItems: [
+        {
+          itemText: 'Cras justo odio',
+          secondaryText: 'Secondary Text',
+        },
+        {
+          itemText: 'Dapibus ac facilisis in',
+        },
+        {
+          itemText: 'Morbi leo risus',
+          disabled: true,
+        },
+        {
+          itemText: 'Porta ac consectetur ac',
+          secondaryText: 'Secondary Text',
+        },
+        {
+          itemText: 'Vestibulum at eros',
+        },
+      ],
+    },
+  ],
+};
+
+module.exports = {
+  bootstrapListGroupSchema,
+  materialListGroupSchema,
+};
+

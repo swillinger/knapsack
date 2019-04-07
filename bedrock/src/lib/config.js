@@ -156,6 +156,7 @@ function processConfig(userConfig, from) {
     public: resolve(from, publicDir),
     dist: resolve(from, dist),
     docsDir: docsDir ? resolve(from, docsDir) : null,
+    assetSets: userConfig.assetSets || [],
     ...rest,
   };
 

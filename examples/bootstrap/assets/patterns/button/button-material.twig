@@ -1,0 +1,9 @@
+{% set classes = [
+  'mdc-button',
+  'mdc-button--' ~ variant|default('raised'),
+  dense ? 'mdc-button--dense',
+] | merge(classes|default([])) %}
+
+<button class="{{ classes|join(' ') }}" {% if disabled %}disabled{% endif %}>
+  <span class="mdc-button__label">{{ text }}</span>
+</button>

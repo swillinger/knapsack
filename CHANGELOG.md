@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.6](https://github.com/basaltinc/bedrock/compare/v0.40.5...v0.40.6) (2019-04-08)
+
+
+### Bug Fixes
+
+* add docs-site/now.json ([76ac22f](https://github.com/basaltinc/bedrock/commit/76ac22f))
+* add path to now.json for docs site ([fa87684](https://github.com/basaltinc/bedrock/commit/fa87684))
+* amend docs site version commit ([e2631d1](https://github.com/basaltinc/bedrock/commit/e2631d1))
+* disable auto docs-site versioning ([edbb293](https://github.com/basaltinc/bedrock/commit/edbb293))
+* docs deploy w/o cd ([dca6c49](https://github.com/basaltinc/bedrock/commit/dca6c49))
+* git add new versioned docs ([add25ac](https://github.com/basaltinc/bedrock/commit/add25ac))
+* update config docs, add gifs ([040b1ee](https://github.com/basaltinc/bedrock/commit/040b1ee))
+
+
+### Features
+
+* docs site ([f9d9f08](https://github.com/basaltinc/bedrock/commit/f9d9f08))
+
+
+
+
+
 ## [0.40.5](https://github.com/basaltinc/bedrock/compare/v0.40.4...v0.40.5) (2019-04-08)
 
 

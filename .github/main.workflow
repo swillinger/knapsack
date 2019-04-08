@@ -8,6 +8,12 @@ workflow "Deploy" {
     "gh-deploy/bootstrap",
     "gh-deploy/design-token-mania",
     "gh-deploy/multi-templates",
+  ]
+}
+
+workflow "Tagged:Deploy" {
+  on = "push"
+  resolves = [
     "tagged:deploy:docs",
   ]
 }

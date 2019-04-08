@@ -8,6 +8,7 @@ workflow "Deploy" {
     "gh-deploy/bootstrap",
     "gh-deploy/design-token-mania",
     "gh-deploy/multi-templates",
+    "deploy:docs2",
   ]
 
   #"cypress",
@@ -256,4 +257,26 @@ action "deploy:docs" {
   needs = ["build:docs"]
   secrets = ["ZEIT_TOKEN"]
   args = "deploy --platform-version 2 docs-site/build/bedrock --name bedrock-docs --meta GITHUB_SHA=$GITHUB_SHA --scope=basalt --target staging"
+}
+
+action "deploy:docs2" {
+  uses = "actions/zeit-now@666edee2f3632660e9829cb6801ee5b7d47b303d"
+  needs = ["build/docs"]
+  secrets = ["ZEIT_TOKEN"]
+  #args = "deploy --platform-version 2 docs-site/build/bedrock --name bedrock-docs --meta GITHUB_SHA=$GITHUB_SHA --scope=basalt --target staging"
+  runs = ["sh", "-c", "now deploy --platform-version 2 docs-site/build/bedrock --name bedrock-docs --meta GITHUB_SHA=$GITHUB_SHA --scope=basalt --target production && now alias bedrock-docs --scope=basalt --name bedrock-docs"]
+}
+
+action "install" {
+  uses = "actions/npm@59b64a598378f31e49cb76f27d6f3312b582f680"
+  needs = ["master-branch-filter"]
+  runs = "yarn"
+  args = "install"
+}
+
+action "build/docs" {
+  uses = "actions/npm@59b64a598378f31e49cb76f27d6f3312b582f680"
+  needs = ["install"]
+  runs = "yarn"
+  args = "build:docs"
 }

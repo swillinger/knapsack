@@ -1,7 +1,7 @@
 {
   "name": "@basalt/bedrock-spacing-swatch",
   "license": "GPL-2.0-or-later",
-  "version": "0.44.0",
+  "version": "0.45.0",
   "description": "A Bedrock component that helps build Design Systems",
   "module": "dist/spacing-swatch.js",
   "main": "dist/spacing-swatch.js",
@@ -21,8 +21,8 @@
   },
   "author": "Basalt (https://basalt.io/)",
   "dependencies": {
-    "@basalt/bedrock-copy-to-clipboard": "^0.44.0",
-    "@basalt/bedrock-core": "^0.44.0"
+    "@basalt/bedrock-copy-to-clipboard": "^0.45.0",
+    "@basalt/bedrock-core": "^0.45.0"
   },
   "files": [
     "./dist"

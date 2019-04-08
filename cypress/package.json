@@ -1,7 +1,7 @@
 {
   "name": "@basalt/bedrock-cypress",
   "private": true,
-  "version": "0.44.0",
+  "version": "0.45.0",
   "scripts": {
     "cypress": "cypress",
     "cypress:run": "percy exec -- cypress run",

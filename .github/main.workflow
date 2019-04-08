@@ -83,7 +83,7 @@ workflow "Smoke Tests" {
 }
 
 action "Not Tag" {
-  uses = "actions/bin/filter@d820d56839906464fb7a57d1b4e1741cf5183efa"
+  uses = "actions/bin/filter@master"
   args = "not tag"
 }
 
@@ -144,7 +144,7 @@ action "test:examples" {
 }
 
 action "Filters for GitHub Actions" {
-  uses = "actions/bin/filter@d820d56839906464fb7a57d1b4e1741cf5183efa"
+  uses = "actions/bin/filter@master"
   needs = ["deploy/simple"]
   args = "branch master"
 }
@@ -157,7 +157,7 @@ action "alias/simple" {
 }
 
 action "Filters for GitHub Actions-1" {
-  uses = "actions/bin/filter@d820d56839906464fb7a57d1b4e1741cf5183efa"
+  uses = "actions/bin/filter@master"
   needs = ["deploy/bootstrap"]
   args = "branch master"
 }
@@ -170,7 +170,7 @@ action "alias/bootstrap" {
 }
 
 action "Filters for GitHub Actions-2" {
-  uses = "actions/bin/filter@d820d56839906464fb7a57d1b4e1741cf5183efa"
+  uses = "actions/bin/filter@master"
   needs = ["deploy/design-token-mania"]
   args = "branch master"
 }
@@ -183,7 +183,7 @@ action "alias/design-token-mania" {
 }
 
 action "Filters for GitHub Actions-3" {
-  uses = "actions/bin/filter@d820d56839906464fb7a57d1b4e1741cf5183efa"
+  uses = "actions/bin/filter@master"
   needs = ["deploy/multi-templates"]
   args = "branch master"
 }
@@ -331,7 +331,7 @@ action "tagged:build:docs" {
 }
 
 action "isTagged" {
-  uses = "actions/bin/filter@3c98a2679187369a2116d4f311568596d3725740"
+  uses = "actions/bin/filter@master"
   args = "tag"
 }
 

@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.45.1](https://github.com/basaltinc/bedrock/compare/v0.45.0...v0.45.1) (2019-04-08)
+
+
+### Bug Fixes
+
+* deploy tagged docs site ([b44f5f8](https://github.com/basaltinc/bedrock/commit/b44f5f8))
+* docs-site bump ([6edd86e](https://github.com/basaltinc/bedrock/commit/6edd86e))
+* move tagged deploy to own workflow ([e8838ae](https://github.com/basaltinc/bedrock/commit/e8838ae))
+* update GH actions filter to master ([918435d](https://github.com/basaltinc/bedrock/commit/918435d))
+
+
+
+
+
 # [0.45.0](https://github.com/basaltinc/bedrock/compare/v0.40.6...v0.45.0) (2019-04-08)
 
 

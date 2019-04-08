@@ -8,7 +8,7 @@
     "build": "docusaurus-build",
     "publish-gh-pages": "docusaurus-publish",
     "write-translations": "docusaurus-write-translations",
-    "version": "docusaurus-version $npm_package_version && yarn build && git add . && git commit --amend --no-edit",
+    "TODO-version": "docusaurus-version $npm_package_version && yarn build && git add . && git commit --amend --no-edit",
     "rename-version": "docusaurus-rename-version"
   },
   "devDependencies": {

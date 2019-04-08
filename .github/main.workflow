@@ -8,14 +8,12 @@ workflow "Deploy" {
     "gh-deploy/bootstrap",
     "gh-deploy/design-token-mania",
     "gh-deploy/multi-templates",
-    "deploy:docs2",
+    "tagged:deploy:docs",
   ]
-
-  #"cypress",
 }
 
 # Filter for master branch
-action "master-branch-filter" {
+action "isMaster" {
   uses = "actions/bin/filter@master"
   args = "branch master"
 }
@@ -233,9 +231,19 @@ action "gh-deploy/multi-templates" {
 
 action "now init" {
   uses = "actions/zeit-now@666edee2f3632660e9829cb6801ee5b7d47b303d"
-  needs = ["master-branch-filter"]
   secrets = ["ZEIT_TOKEN"]
   runs = ["sh", "-c", "now whoami --token=$ZEIT_TOKEN && mkdir .github/artifacts/ "]
+  needs = ["isMaster"]
+
+  #"cypress",
+
+  # action "cypress" {
+  #   uses = "docker://cypress/browsers:chrome67"
+  #   needs = ["gh-deploy/simple"]
+  #   args = ""
+  #   runs = ["sh", "-c", "ls .github/artifacts/ && cat .github/artifacts/*.txt && export CYPRESS_BASE_URL=$(cat .github/artifacts/now-url--simple.txt) && echo \"CYPRESS_BASE_URL is: $CYPRESS_BASE_URL\" && yarn && yarn cypress:run"]
+  #   secrets = ["PERCY_TOKEN"]
+  # }
 }
 
 action "E2E Simple" {
@@ -259,24 +267,92 @@ action "deploy:docs" {
   args = "deploy --platform-version 2 docs-site/build/bedrock --name bedrock-docs --meta GITHUB_SHA=$GITHUB_SHA --scope=basalt --target staging"
 }
 
-action "deploy:docs2" {
+action "tagged:deploy:docs" {
   uses = "actions/zeit-now@666edee2f3632660e9829cb6801ee5b7d47b303d"
-  needs = ["build/docs"]
   secrets = ["ZEIT_TOKEN"]
   args = "deploy docs-site/build/bedrock --local-config=docs-site/now.json --meta GITHUB_SHA=$GITHUB_SHA --scope=basalt --target production"
+  needs = ["tagged:build:docs"]
+
+  #"cypress",
+
+  # action "cypress" {
+  #   uses = "docker://cypress/browsers:chrome67"
+  #   needs = ["gh-deploy/simple"]
+  #   args = ""
+  #   runs = ["sh", "-c", "ls .github/artifacts/ && cat .github/artifacts/*.txt && export CYPRESS_BASE_URL=$(cat .github/artifacts/now-url--simple.txt) && echo \"CYPRESS_BASE_URL is: $CYPRESS_BASE_URL\" && yarn && yarn cypress:run"]
+  #   secrets = ["PERCY_TOKEN"]
+  # }
+
   #runs = ["sh", "-c", "cd docs-site/ && now deploy build/bedrock --local-config=now.json --token=$ZEIT_TOKEN --meta GITHUB_SHA=$GITHUB_SHA --scope=basalt --target production"]
 }
 
 action "install" {
   uses = "actions/npm@59b64a598378f31e49cb76f27d6f3312b582f680"
-  needs = ["master-branch-filter"]
   runs = "yarn"
   args = "install"
+  needs = ["isMaster"]
+
+  #"cypress",
+
+  # action "cypress" {
+  #   uses = "docker://cypress/browsers:chrome67"
+  #   needs = ["gh-deploy/simple"]
+  #   args = ""
+  #   runs = ["sh", "-c", "ls .github/artifacts/ && cat .github/artifacts/*.txt && export CYPRESS_BASE_URL=$(cat .github/artifacts/now-url--simple.txt) && echo \"CYPRESS_BASE_URL is: $CYPRESS_BASE_URL\" && yarn && yarn cypress:run"]
+  #   secrets = ["PERCY_TOKEN"]
+  # }
+
+  #runs = ["sh", "-c", "cd docs-site/ && now deploy build/bedrock --local-config=now.json --token=$ZEIT_TOKEN --meta GITHUB_SHA=$GITHUB_SHA --scope=basalt --target production"]
 }
 
-action "build/docs" {
+action "tagged:build:docs" {
   uses = "actions/npm@59b64a598378f31e49cb76f27d6f3312b582f680"
-  needs = ["install"]
   runs = "yarn"
   args = "build:docs"
+  needs = ["tagged:install"]
+
+  #"cypress",
+
+  # action "cypress" {
+  #   uses = "docker://cypress/browsers:chrome67"
+  #   needs = ["gh-deploy/simple"]
+  #   args = ""
+  #   runs = ["sh", "-c", "ls .github/artifacts/ && cat .github/artifacts/*.txt && export CYPRESS_BASE_URL=$(cat .github/artifacts/now-url--simple.txt) && echo \"CYPRESS_BASE_URL is: $CYPRESS_BASE_URL\" && yarn && yarn cypress:run"]
+  #   secrets = ["PERCY_TOKEN"]
+  # }
+
+  #runs = ["sh", "-c", "cd docs-site/ && now deploy build/bedrock --local-config=now.json --token=$ZEIT_TOKEN --meta GITHUB_SHA=$GITHUB_SHA --scope=basalt --target production"]
 }
+
+action "isTagged" {
+  uses = "actions/bin/filter@3c98a2679187369a2116d4f311568596d3725740"
+  args = "tag"
+}
+
+action "tagged:install" {
+  uses = "actions/npm@59b64a598378f31e49cb76f27d6f3312b582f680"
+  runs = "yarn"
+  args = "install"
+  needs = ["isTagged"]
+
+  #"cypress",
+
+  # action "cypress" {
+  #   uses = "docker://cypress/browsers:chrome67"
+  #   needs = ["gh-deploy/simple"]
+  #   args = ""
+  #   runs = ["sh", "-c", "ls .github/artifacts/ && cat .github/artifacts/*.txt && export CYPRESS_BASE_URL=$(cat .github/artifacts/now-url--simple.txt) && echo \"CYPRESS_BASE_URL is: $CYPRESS_BASE_URL\" && yarn && yarn cypress:run"]
+  #   secrets = ["PERCY_TOKEN"]
+  # }
+
+  #runs = ["sh", "-c", "cd docs-site/ && now deploy build/bedrock --local-config=now.json --token=$ZEIT_TOKEN --meta GITHUB_SHA=$GITHUB_SHA --scope=basalt --target production"]
+} #"cypress",
+
+# action "cypress" {
+#   uses = "docker://cypress/browsers:chrome67"
+#   needs = ["gh-deploy/simple"]
+#   args = ""
+#   runs = ["sh", "-c", "ls .github/artifacts/ && cat .github/artifacts/*.txt && export CYPRESS_BASE_URL=$(cat .github/artifacts/now-url--simple.txt) && echo \"CYPRESS_BASE_URL is: $CYPRESS_BASE_URL\" && yarn && yarn cypress:run"]
+#   secrets = ["PERCY_TOKEN"]
+# }
+#runs = ["sh", "-c", "cd docs-site/ && now deploy build/bedrock --local-config=now.json --token=$ZEIT_TOKEN --meta GITHUB_SHA=$GITHUB_SHA --scope=basalt --target production"]

@@ -264,7 +264,7 @@ action "deploy:docs2" {
   needs = ["build/docs"]
   secrets = ["ZEIT_TOKEN"]
   #args = "deploy --platform-version 2 docs-site/build/bedrock --name bedrock-docs --meta GITHUB_SHA=$GITHUB_SHA --scope=basalt --target staging"
-  runs = ["sh", "-c", "now deploy --platform-version 2 docs-site/build/bedrock --name bedrock-docs --token=$ZEIT_TOKEN --meta GITHUB_SHA=$GITHUB_SHA --scope=basalt --target production && now alias bedrock-docs --scope=basalt --token=$ZEIT_TOKEN"]
+  runs = ["sh", "-c", "cd docs-site/ && now deploy build/bedrock --token=$ZEIT_TOKEN --meta GITHUB_SHA=$GITHUB_SHA --scope=basalt --target production"]
 }
 
 action "install" {

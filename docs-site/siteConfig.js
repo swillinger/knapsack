@@ -44,7 +44,7 @@ const siteConfig = {
 
   disableHeaderTitle: true,
   docsSideNavCollapsible: false,
-  editUrl: 'https://github.com/basaltinc/bedrock/blob/feature/docs-site/docs/',
+  editUrl: 'https://github.com/basaltinc/bedrock/blob/master/docs/',
 
   // If you have users set above, you add it here:
   users,

@@ -1,7 +1,7 @@
 {
   "name": "@basalt/bedrock-example-bootstrap",
   "license": "ISC",
-  "version": "0.43.0",
+  "version": "0.44.0",
   "description": "",
   "private": true,
   "main": "index.js",
@@ -16,9 +16,9 @@
     "test": "bedrock test"
   },
   "dependencies": {
-    "@basalt/bedrock": "^0.43.0",
-    "@basalt/bedrock-renderer-html": "^0.43.0",
-    "@basalt/bedrock-renderer-twig": "^0.43.0",
+    "@basalt/bedrock": "^0.44.0",
+    "@basalt/bedrock-renderer-html": "^0.44.0",
+    "@basalt/bedrock-renderer-twig": "^0.44.0",
     "@basalt/demo-data": "^0.5.1",
     "lodash.template": "^4.4.0"
   },

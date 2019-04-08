@@ -1,0 +1,15 @@
+{
+  "docs": {
+    "Getting Started": [
+      "getting-started",
+      "requirements",
+      "config"
+    ],
+    "Patterns": [
+      "patterns-overview"
+    ],
+    "Design Tokens": [
+      "design-tokens"
+    ]
+  }
+}

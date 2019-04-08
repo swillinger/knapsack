@@ -1,0 +1,15 @@
+{
+  "version-0.40.2-docs": {
+    "Getting Started": [
+      "version-0.40.2-getting-started",
+      "version-0.40.2-requirements",
+      "version-0.40.2-config"
+    ],
+    "Patterns": [
+      "version-0.40.2-patterns-overview"
+    ],
+    "Design Tokens": [
+      "version-0.40.2-design-tokens"
+    ]
+  }
+}

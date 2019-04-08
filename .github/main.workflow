@@ -8,8 +8,9 @@ workflow "Deploy" {
     "gh-deploy/bootstrap",
     "gh-deploy/design-token-mania",
     "gh-deploy/multi-templates",
-    #"cypress",
   ]
+
+  #"cypress",
 }
 
 # Filter for master branch
@@ -72,6 +73,7 @@ workflow "Smoke Tests" {
     "test:examples",
     "build:private",
     "E2E Simple",
+    "deploy:docs",
   ]
 }
 
@@ -240,4 +242,18 @@ action "E2E Simple" {
   needs = ["yarn install"]
   runs = "bash"
   args = "./scripts/e2e-simple.sh"
+}
+
+action "build:docs" {
+  uses = "actions/npm@59b64a598378f31e49cb76f27d6f3312b582f680"
+  needs = ["yarn install"]
+  runs = "yarn"
+  args = "build:docs"
+}
+
+action "deploy:docs" {
+  uses = "actions/zeit-now@666edee2f3632660e9829cb6801ee5b7d47b303d"
+  needs = ["build:docs"]
+  secrets = ["ZEIT_TOKEN"]
+  args = "deploy --platform-version 2 docs-site/build/bedrock --name bedrock-docs --meta GITHUB_SHA=$GITHUB_SHA --scope=basalt --target staging"
 }

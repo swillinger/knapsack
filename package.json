@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "build:bedrock": "FORCE_COLOR=1 lerna run build --scope @basalt/bedrock",
+    "build:docs": "FORCE_COLOR=1 lerna run build --scope @basalt/bedrock-docs-site",
     "build:pkgs": "FORCE_COLOR=1 lerna run build --no-private --ignore @basalt/bedrock",
     "build:private": "lerna run --stream --bail --concurrency 1 build --scope @basalt/bedrock-example*",
     "build:storybook": "lerna run build --stream --bail --scope @basalt/bedrock-storybook",
     "build": "run-s build:pkgs build:bedrock",
-    "build:all": "run-s build build:private",
+    "build:all": "run-s build build:docs build:private",
     "cypress:run": "cd cypress && yarn cypress:run",
     "cypress:open": "cd cypress && yarn cypress:open",
     "watch": "FORCE_COLOR=1 lerna run watch --parallel --no-private",
@@ -44,6 +45,7 @@
       "bedrock",
       "cypress",
       "apps/*",
+      "docs-site",
       "examples/*",
       "components/*",
       "packages/*"

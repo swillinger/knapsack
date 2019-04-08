@@ -9,3 +9,6 @@ dist
 /crux
 /cypress/videos
 /cypress/screenshots
+/docs-site/build
+/docs-site/i18n
+

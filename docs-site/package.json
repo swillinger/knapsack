@@ -1,0 +1,17 @@
+{
+  "name": "@basalt/bedrock-docs-site",
+  "private": true,
+  "version": "0.40.2",
+  "scripts": {
+    "examples": "docusaurus-examples",
+    "start": "docusaurus-start",
+    "build": "docusaurus-build",
+    "publish-gh-pages": "docusaurus-publish",
+    "write-translations": "docusaurus-write-translations",
+    "version": "docusaurus-version $npm_package_version && yarn build",
+    "rename-version": "docusaurus-rename-version"
+  },
+  "devDependencies": {
+    "docusaurus": "^1.8.0"
+  }
+}

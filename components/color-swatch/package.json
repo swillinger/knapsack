@@ -1,7 +1,7 @@
 {
   "name": "@basalt/bedrock-color-swatch",
   "license": "GPL-2.0-or-later",
-  "version": "0.42.0",
+  "version": "0.43.0",
   "description": "A Bedrock component that helps build Design Systems",
   "module": "dist/color-swatch.js",
   "main": "dist/color-swatch.js",
@@ -11,10 +11,10 @@
     "watch": "yarn build --watch"
   },
   "dependencies": {
-    "@basalt/bedrock-atoms": "^0.42.0",
-    "@basalt/bedrock-copy-to-clipboard": "^0.42.0",
-    "@basalt/bedrock-core": "^0.42.0",
-    "@basalt/bedrock-utils": "^0.42.0"
+    "@basalt/bedrock-atoms": "^0.43.0",
+    "@basalt/bedrock-copy-to-clipboard": "^0.43.0",
+    "@basalt/bedrock-core": "^0.43.0",
+    "@basalt/bedrock-utils": "^0.43.0"
   },
   "devDependencies": {
     "prop-types": "^15.0.0",

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.45.2](https://github.com/basaltinc/bedrock/compare/v0.45.1...v0.45.2) (2019-04-11)
+
+
+### Bug Fixes
+
+* adjust docs deploy name ([6953be0](https://github.com/basaltinc/bedrock/commit/6953be0))
+* correct docs site deploy ([065a50f](https://github.com/basaltinc/bedrock/commit/065a50f))
+
+
+
+
+
 ## [0.45.1](https://github.com/basaltinc/bedrock/compare/v0.45.0...v0.45.1) (2019-04-08)
 
 

@@ -270,13 +270,13 @@ action "deploy:docs" {
   uses = "actions/zeit-now@666edee2f3632660e9829cb6801ee5b7d47b303d"
   needs = ["build:docs"]
   secrets = ["ZEIT_TOKEN"]
-  args = "deploy --platform-version 2 docs-site/build/bedrock --name bedrock-docs --meta GITHUB_SHA=$GITHUB_SHA --scope=basalt --target staging"
+  args = "deploy --platform-version 2 --local-config=docs-site/now.json docs-site/build/bedrock --name bedrock-docs --meta GITHUB_SHA=$GITHUB_SHA --scope=basalt --target staging"
 }
 
 action "tagged:deploy:docs" {
   uses = "actions/zeit-now@666edee2f3632660e9829cb6801ee5b7d47b303d"
   secrets = ["ZEIT_TOKEN"]
-  args = "deploy docs-site/build/bedrock --local-config=docs-site/now.json --meta GITHUB_SHA=$GITHUB_SHA --scope=basalt --target production"
+  args = "deploy docs-site/build/bedrock  --local-config=docs-site/now.json --meta GITHUB_SHA=$GITHUB_SHA --scope=basalt --target production"
   needs = ["tagged:build:docs"]
 
   #"cypress",

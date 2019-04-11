@@ -1,10 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  FormIconButton,
-  FormIconTray,
-  FormArrayItem,
-} from '@knapsack/atoms';
+import { FormIconButton, FormIconTray, FormArrayItem } from '@knapsack/atoms';
 
 import upArrow from '../assets/angle-up.svg';
 import downArrow from '../assets/angle-down.svg';

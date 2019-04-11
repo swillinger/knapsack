@@ -24,11 +24,7 @@ import {
 } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import Spinner from '@knapsack/spinner';
-import {
-  KnapsackContextProvider,
-  baseContext,
-  plugins,
-} from '@knapsack/core';
+import { KnapsackContextProvider, baseContext, plugins } from '@knapsack/core';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider, Query } from 'react-apollo';
 import { InMemoryCache } from 'apollo-cache-inmemory';

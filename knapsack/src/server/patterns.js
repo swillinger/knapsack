@@ -23,7 +23,7 @@ const { getFileSizes } = require('get-file-sizes');
 const {
   validateSchemaAndAssignDefaults,
   validateUniqueIdsInArray,
-} = require('@basalt/knapsack-schema-utils');
+} = require('@knapsack/schema-utils');
 const chokidar = require('chokidar');
 const {
   version: iframeResizerVersion,

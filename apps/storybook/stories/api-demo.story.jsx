@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
-import ApiDemo from '@basalt/knapsack-api-demo';
+import ApiDemo from '@knapsack/api-demo';
 
 storiesOf('Api Demo', module).add(
   'Overview',

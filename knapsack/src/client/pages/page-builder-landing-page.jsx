@@ -25,8 +25,8 @@ import {
   Button,
   TwoUp,
   StatusMessage,
-} from '@basalt/knapsack-atoms';
-import { connectToContext, contextPropTypes } from '@basalt/knapsack-core';
+} from '@knapsack/atoms';
+import { connectToContext, contextPropTypes } from '@knapsack/core';
 import { apiUrlBase } from '../data';
 import { BASE_PATHS } from '../../lib/constants';
 import PageWithSidebar from '../layouts/page-with-sidebar';

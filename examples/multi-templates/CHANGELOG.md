@@ -5,7 +5,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.45.0](https://github.com/basaltinc/knapsack/compare/v0.40.6...v0.45.0) (2019-04-08)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -13,7 +13,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.44.0](https://github.com/basaltinc/knapsack/compare/v0.40.6...v0.44.0) (2019-04-08)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -21,7 +21,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.43.0](https://github.com/basaltinc/knapsack/compare/v0.40.6...v0.43.0) (2019-04-08)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -29,7 +29,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.42.0](https://github.com/basaltinc/knapsack/compare/v0.40.6...v0.42.0) (2019-04-08)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -37,7 +37,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.41.0](https://github.com/basaltinc/knapsack/compare/v0.40.6...v0.41.0) (2019-04-08)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -45,7 +45,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.40.3](https://github.com/basaltinc/knapsack/compare/v0.40.2...v0.40.3) (2019-04-07)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -53,7 +53,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.40.2](https://github.com/basaltinc/knapsack/compare/v0.40.1...v0.40.2) (2019-03-29)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -61,7 +61,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.40.1](https://github.com/basaltinc/knapsack/compare/v0.40.0...v0.40.1) (2019-03-28)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -69,7 +69,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.40.0](https://github.com/basaltinc/knapsack/compare/v0.39.2...v0.40.0) (2019-03-28)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -77,7 +77,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.39.2](https://github.com/basaltinc/knapsack/compare/v0.39.1...v0.39.2) (2019-03-27)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -85,7 +85,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.39.0](https://github.com/basaltinc/knapsack/compare/v0.38.3...v0.39.0) (2019-03-07)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -93,7 +93,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.38.3](https://github.com/basaltinc/knapsack/compare/v0.38.2...v0.38.3) (2019-03-07)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -101,7 +101,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.38.2](https://github.com/basaltinc/knapsack/compare/v0.38.1...v0.38.2) (2019-03-06)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -109,7 +109,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.38.1](https://github.com/basaltinc/knapsack/compare/v0.38.0...v0.38.1) (2019-03-06)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -117,7 +117,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.38.0](https://github.com/basaltinc/knapsack/compare/v0.37.2...v0.38.0) (2019-03-06)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -125,7 +125,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.37.2](https://github.com/basaltinc/knapsack/compare/v0.37.1...v0.37.2) (2019-02-28)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -133,7 +133,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.37.1](https://github.com/basaltinc/knapsack/compare/v0.37.0...v0.37.1) (2019-02-28)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -141,7 +141,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.37.0](https://github.com/basaltinc/knapsack/compare/v0.36.0...v0.37.0) (2019-02-24)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -149,7 +149,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.36.0](https://github.com/basaltinc/knapsack/compare/v0.35.0...v0.36.0) (2019-02-23)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -157,7 +157,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.35.0](https://github.com/basaltinc/knapsack/compare/v0.34.2...v0.35.0) (2019-02-23)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -165,7 +165,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.34.2](https://github.com/basaltinc/knapsack/compare/v0.34.1...v0.34.2) (2019-02-23)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -173,7 +173,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.34.1](https://github.com/basaltinc/knapsack/compare/v0.34.0...v0.34.1) (2019-02-21)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -181,7 +181,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.34.0](https://github.com/basaltinc/knapsack/compare/v0.33.3...v0.34.0) (2019-02-17)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -189,7 +189,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.33.3](https://github.com/basaltinc/knapsack/compare/v0.33.2...v0.33.3) (2019-02-16)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -197,7 +197,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.33.2](https://github.com/basaltinc/knapsack/compare/v0.33.1...v0.33.2) (2019-02-16)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -205,7 +205,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.33.0](https://github.com/basaltinc/knapsack/compare/v0.32.5...v0.33.0) (2019-02-15)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -213,7 +213,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.32.4](https://github.com/basaltinc/knapsack/compare/v0.32.3...v0.32.4) (2019-02-15)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -221,7 +221,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.32.3](https://github.com/basaltinc/knapsack/compare/v0.32.2...v0.32.3) (2019-02-14)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -240,7 +240,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.32.1](https://github.com/basaltinc/knapsack/compare/v0.32.0...v0.32.1) (2019-02-13)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -248,7 +248,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.32.0](https://github.com/basaltinc/knapsack/compare/v0.31.1...v0.32.0) (2019-02-13)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -256,7 +256,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.31.1](https://github.com/basaltinc/knapsack/compare/v0.31.0...v0.31.1) (2019-02-12)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -264,7 +264,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.31.0](https://github.com/basaltinc/knapsack/compare/v0.30.0...v0.31.0) (2019-02-12)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -272,7 +272,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.30.0](https://github.com/basaltinc/knapsack/compare/v0.30.0-alpha.4...v0.30.0) (2019-02-08)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -280,7 +280,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.29.6](https://github.com/basaltinc/knapsack/compare/v0.29.5...v0.29.6) (2019-01-30)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -288,7 +288,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.29.5](https://github.com/basaltinc/knapsack/compare/v0.29.4...v0.29.5) (2019-01-30)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -296,7 +296,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.29.4](https://github.com/basaltinc/knapsack/compare/v0.29.3...v0.29.4) (2019-01-28)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -304,7 +304,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.29.3](https://github.com/basaltinc/knapsack/compare/v0.29.2...v0.29.3) (2019-01-28)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -312,7 +312,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.29.2](https://github.com/basaltinc/knapsack/compare/v0.29.1...v0.29.2) (2019-01-24)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -320,7 +320,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.29.1](https://github.com/basaltinc/knapsack/compare/v0.29.0...v0.29.1) (2019-01-23)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -339,7 +339,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.28.5](https://github.com/basaltinc/knapsack/compare/v0.28.4...v0.28.5) (2019-01-22)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -347,7 +347,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.28.4](https://github.com/basaltinc/knapsack/compare/v0.28.3...v0.28.4) (2019-01-22)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -355,7 +355,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.28.3](https://github.com/basaltinc/knapsack/compare/v0.28.2...v0.28.3) (2019-01-22)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -363,7 +363,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.28.2](https://github.com/basaltinc/knapsack/compare/v0.28.1...v0.28.2) (2019-01-22)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -371,7 +371,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.28.1](https://github.com/basaltinc/knapsack/compare/v0.28.0...v0.28.1) (2019-01-22)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -390,7 +390,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.27.2](https://github.com/basaltinc/knapsack/compare/v0.27.1...v0.27.2) (2019-01-15)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -398,7 +398,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.27.1](https://github.com/basaltinc/knapsack/compare/v0.27.0...v0.27.1) (2019-01-07)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -417,7 +417,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.26.1](https://github.com/basaltinc/knapsack/compare/v0.26.0...v0.26.1) (2019-01-04)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -436,7 +436,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.25.1](https://github.com/basaltinc/knapsack/compare/v0.25.0...v0.25.1) (2019-01-03)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -456,7 +456,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.24.1](https://github.com/basaltinc/knapsack/compare/v0.24.0...v0.24.1) (2018-12-29)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -464,7 +464,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.24.0](https://github.com/basaltinc/knapsack/compare/v0.23.0...v0.24.0) (2018-12-27)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -472,7 +472,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.23.0](https://github.com/basaltinc/knapsack/compare/v0.22.0...v0.23.0) (2018-12-26)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -480,7 +480,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.22.0](https://github.com/basaltinc/knapsack/compare/v0.21.0...v0.22.0) (2018-12-25)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -499,7 +499,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.20.5](https://github.com/basaltinc/knapsack/compare/v0.20.4...v0.20.5) (2018-12-18)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -507,7 +507,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.20.4](https://github.com/basaltinc/knapsack/compare/v0.20.3...v0.20.4) (2018-12-15)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -515,7 +515,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.20.3](https://github.com/basaltinc/knapsack/compare/v0.20.2...v0.20.3) (2018-12-14)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -523,7 +523,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.20.2](https://github.com/basaltinc/knapsack/compare/v0.20.1...v0.20.2) (2018-12-14)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 
@@ -531,7 +531,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.20.1](https://github.com/basaltinc/knapsack/compare/v0.20.0...v0.20.1) (2018-12-14)
 
-**Note:** Version bump only for package @basalt/knapsack-example-multi-templates
+**Note:** Version bump only for package @knapsack/example-multi-templates
 
 
 

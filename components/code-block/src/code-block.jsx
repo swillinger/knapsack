@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TabbedPanel from '@basalt/knapsack-tabbed-panel';
-import PrettyCode from '@basalt/knapsack-pretty-code';
+import TabbedPanel from '@knapsack/tabbed-panel';
+import PrettyCode from '@knapsack/pretty-code';
 
 export {
   availableLanguages,
   languageList,
   isLanguageSupported,
-} from '@basalt/knapsack-pretty-code';
+} from '@knapsack/pretty-code';
 
 const CodeBlock = ({ items = [] }) => {
   if (items.length === 0) {

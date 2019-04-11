@@ -15,7 +15,7 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import Loadable from 'react-loadable';
-import Spinner from '@basalt/knapsack-spinner';
+import Spinner from '@knapsack/spinner';
 
 export const LoadableHeader = Loadable({
   loader: () => import(/* webpackChunkName: "header" */ './components/header'),
@@ -143,7 +143,7 @@ export const LoadableSecondaryNav = Loadable({
 
 export const LoadableSchemaTable = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "schema-table" */ '@basalt/knapsack-schema-table'),
+    import(/* webpackChunkName: "schema-table" */ '@knapsack/schema-table'),
   loading: Spinner,
 });
 

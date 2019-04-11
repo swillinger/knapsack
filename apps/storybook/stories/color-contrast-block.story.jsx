@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
-import ColorContrastBlock from '@basalt/knapsack-color-contrast-block';
+import ColorContrastBlock from '@knapsack/color-contrast-block';
 
 storiesOf('ColorContrastBlock', module).add(
   'Overview',

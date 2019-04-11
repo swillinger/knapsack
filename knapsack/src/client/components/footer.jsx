@@ -17,8 +17,8 @@
 import React, { Component } from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import Spinner from '@basalt/knapsack-spinner';
-import { KnapsackContext } from '@basalt/knapsack-core';
+import Spinner from '@knapsack/spinner';
+import { KnapsackContext } from '@knapsack/core';
 import { Link } from 'react-router-dom';
 import {
   FooterWrapper,

@@ -15,9 +15,9 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React, { Component } from 'react';
-import Spinner from '@basalt/knapsack-spinner';
-import { Button, Select, StatusMessage } from '@basalt/knapsack-atoms';
-import { KnapsackContext } from '@basalt/knapsack-core';
+import Spinner from '@knapsack/spinner';
+import { Button, Select, StatusMessage } from '@knapsack/atoms';
+import { KnapsackContext } from '@knapsack/core';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';

@@ -1,5 +1,5 @@
 ```
-npm install @basalt/knapsack-renderer-react --save
+npm install @knapsack/renderer-react --save
 ```
 
 ## Usage
@@ -7,7 +7,7 @@ npm install @basalt/knapsack-renderer-react --save
 In `knapsack.config.js`:
 
 ```js
-const ReactRenderer = require('@basalt/knapsack-renderer-react');
+const ReactRenderer = require('@knapsack/renderer-react');
 const webpack = require('webpack');
 const webpackConfig = require('./webpack.config');
 

@@ -4,7 +4,7 @@ import {
   SelectStyledWrapper,
   TextInputWrapper,
   Tooltip,
-} from '@basalt/knapsack-atoms';
+} from '@knapsack/atoms';
 import { CustomFieldWrapper, InfoIcon } from './custom-templates.styles';
 
 /* eslint-disable react/prop-types */

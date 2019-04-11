@@ -1,13 +1,13 @@
 {
-  "name": "@basalt/knapsack-monorepo",
+  "name": "@knapsack/monorepo",
   "license": "GPL-2.0-or-later",
   "private": true,
   "scripts": {
     "build:knapsack": "FORCE_COLOR=1 lerna run build --scope @basalt/knapsack",
-    "build:docs": "FORCE_COLOR=1 lerna run build --scope @basalt/knapsack-docs-site",
+    "build:docs": "FORCE_COLOR=1 lerna run build --scope @knapsack/docs-site",
     "build:pkgs": "FORCE_COLOR=1 lerna run build --no-private --ignore @basalt/knapsack",
-    "build:private": "lerna run --stream --bail --concurrency 1 build --scope @basalt/knapsack-example*",
-    "build:storybook": "lerna run build --stream --bail --scope @basalt/knapsack-storybook",
+    "build:private": "lerna run --stream --bail --concurrency 1 build --scope @knapsack/example*",
+    "build:storybook": "lerna run build --stream --bail --scope @knapsack/storybook",
     "build": "run-s build:pkgs build:knapsack",
     "build:all": "run-s build build:docs build:private",
     "cypress:run": "cd cypress && yarn cypress:run",
@@ -34,9 +34,9 @@
     "test:knapsack": "lerna run --stream --bail --scope @basalt/knapsack test",
     "test:cypress": "start-server-and-test serve:simple http://localhost:3999 cypress:run",
     "test:examples": "run-s test:ex-1 test:ex-2 test:ex-3",
-    "test:ex-1": "lerna run --stream --bail --scope @basalt/knapsack-example-design-token-mania test",
-    "test:ex-2": "lerna run --stream --bail --scope @basalt/knapsack-example-simple test",
-    "test:ex-3": "lerna run --stream --bail --scope @basalt/knapsack-example-multi-templates test",
+    "test:ex-1": "lerna run --stream --bail --scope @knapsack/example-design-token-mania test",
+    "test:ex-2": "lerna run --stream --bail --scope @knapsack/example-simple test",
+    "test:ex-3": "lerna run --stream --bail --scope @knapsack/example-multi-templates test",
     "up": "yarn upgrade-interactive --latest",
     "uuid": "node -e \"process.stdout.write(require('uuid/v4')()) \" | pbcopy && echo 'uuid copied' "
   },
@@ -51,10 +51,10 @@
       "packages/*"
     ],
     "nohoist": [
-      "@basalt/knapsack-storybook/babel-core",
-      "@basalt/knapsack-storybook/babel-core/**",
-      "@basalt/knapsack-storybook/babel-register",
-      "@basalt/knapsack-storybook/babel-register/**"
+      "@knapsack/storybook/babel-core",
+      "@knapsack/storybook/babel-core/**",
+      "@knapsack/storybook/babel-register",
+      "@knapsack/storybook/babel-register/**"
     ]
   },
   "config": {

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { convertColor, hasOpacity, parseColor } from '@basalt/knapsack-utils';
-import { Select, Button } from '@basalt/knapsack-atoms';
-import CopyToClipboard from '@basalt/knapsack-copy-to-clipboard';
+import { convertColor, hasOpacity, parseColor } from '@knapsack/utils';
+import { Select, Button } from '@knapsack/atoms';
+import CopyToClipboard from '@knapsack/copy-to-clipboard';
 import {
   SwatchWrapper,
   RightLabel,

@@ -4,7 +4,7 @@ import { withKnobs } from '@storybook/addon-knobs';
 import {
   KnapsackContextProvider,
   KnapsackContextConsumer,
-} from '@basalt/knapsack-core';
+} from '@knapsack/core';
 import { ThemeProvider } from 'styled-components';
 
 const req = require.context('../stories', true, /\.story\.jsx$/);

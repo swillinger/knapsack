@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import qs from 'query-string';
-import SchemaForm from '@basalt/knapsack-schema-form';
-import SchemaTable from '@basalt/knapsack-schema-table';
-import { Details } from '@basalt/knapsack-atoms';
+import SchemaForm from '@knapsack/schema-form';
+import SchemaTable from '@knapsack/schema-table';
+import { Details } from '@knapsack/atoms';
 import { PostOrGet } from './api-demo.styles';
 
 class ApiDemo extends React.Component {

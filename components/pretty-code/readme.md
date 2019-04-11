@@ -1,5 +1,5 @@
 # Knapsack Pretty Code
 
 ```
-npm install --save @basalt/knapsack-pretty-code
+npm install --save @knapsack/pretty-code
 ```

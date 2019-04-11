@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import gql from 'graphql-tag';
-import SchemaForm from '@basalt/knapsack-schema-form';
+import SchemaForm from '@knapsack/schema-form';
 import TemplateView from '../../pattern-view/template-view';
 import { gqlQuery } from '../../../data';
 

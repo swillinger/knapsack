@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
-import BreakpointsDemo from '@basalt/knapsack-breakpoints-demo';
+import BreakpointsDemo from '@knapsack/breakpoints-demo';
 
 storiesOf('Breakpoints', module).add(
   'Overview',

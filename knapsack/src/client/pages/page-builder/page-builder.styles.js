@@ -15,7 +15,7 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import styled, { keyframes, css } from 'styled-components';
-import SchemaForm from '@basalt/knapsack-schema-form';
+import SchemaForm from '@knapsack/schema-form';
 import { Link } from 'react-router-dom';
 
 // index.js

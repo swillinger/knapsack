@@ -16,7 +16,7 @@
  */
 // const {
 //   validateSchemaAndAssignDefaults,
-// } = require('@basalt/knapsack-schema-utils');
+// } = require('@knapsack/schema-utils');
 const webpack = require('webpack');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 // const Stylish = require('webpack-stylish');
@@ -88,7 +88,7 @@ function createWebPackConfig(userConfig) {
           include: [resolve(__dirname, '../../src')],
           exclude: [/(node_modules)/],
           options: {
-            extends: require.resolve('@basalt/knapsack-babel-config/es'),
+            extends: require.resolve('@knapsack/babel-config/es'),
             cacheDirectory: true,
           },
         },

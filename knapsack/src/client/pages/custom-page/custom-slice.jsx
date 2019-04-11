@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import shortid from 'shortid';
-import { Button } from '@basalt/knapsack-atoms';
-import SchemaForm from '@basalt/knapsack-schema-form';
+import { Button } from '@knapsack/atoms';
+import SchemaForm from '@knapsack/schema-form';
 import knapsackSlices from './slices';
 
 class CustomSlice extends React.Component {

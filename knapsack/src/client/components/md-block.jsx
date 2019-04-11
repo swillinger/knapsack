@@ -18,7 +18,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import marked from 'marked';
 import styled from 'styled-components';
-import { Button } from '@basalt/knapsack-atoms';
+import { Button } from '@knapsack/atoms';
 
 const DocumentationWrapper = styled.div`
   margin-bottom: 2rem;

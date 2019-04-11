@@ -205,7 +205,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.39.2](https://github.com/basaltinc/knapsack/compare/v0.39.1...v0.39.2) (2019-03-27)
 
-**Note:** Version bump only for package @basalt/knapsack-monorepo
+**Note:** Version bump only for package @knapsack/monorepo
 
 
 
@@ -213,7 +213,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.39.1](https://github.com/basaltinc/knapsack/compare/v0.39.0...v0.39.1) (2019-03-07)
 
-**Note:** Version bump only for package @basalt/knapsack-monorepo
+**Note:** Version bump only for package @knapsack/monorepo
 
 
 
@@ -371,7 +371,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.33.3](https://github.com/basaltinc/knapsack/compare/v0.33.2...v0.33.3) (2019-02-16)
 
-**Note:** Version bump only for package @basalt/knapsack-monorepo
+**Note:** Version bump only for package @knapsack/monorepo
 
 
 
@@ -379,7 +379,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.33.2](https://github.com/basaltinc/knapsack/compare/v0.33.1...v0.33.2) (2019-02-16)
 
-**Note:** Version bump only for package @basalt/knapsack-monorepo
+**Note:** Version bump only for package @knapsack/monorepo
 
 
 
@@ -387,7 +387,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.33.1](https://github.com/basaltinc/knapsack/compare/v0.33.0...v0.33.1) (2019-02-16)
 
-**Note:** Version bump only for package @basalt/knapsack-monorepo
+**Note:** Version bump only for package @knapsack/monorepo
 
 
 
@@ -414,7 +414,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.32.5](https://github.com/basaltinc/knapsack/compare/v0.32.4...v0.32.5) (2019-02-15)
 
-**Note:** Version bump only for package @basalt/knapsack-monorepo
+**Note:** Version bump only for package @knapsack/monorepo
 
 
 
@@ -556,7 +556,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.29.3](https://github.com/basaltinc/knapsack/compare/v0.29.2...v0.29.3) (2019-01-28)
 
-**Note:** Version bump only for package @basalt/knapsack-monorepo
+**Note:** Version bump only for package @knapsack/monorepo
 
 
 
@@ -860,7 +860,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.20.5](https://github.com/basaltinc/knapsack/compare/v0.20.4...v0.20.5) (2018-12-18)
 
-**Note:** Version bump only for package @basalt/knapsack-monorepo
+**Note:** Version bump only for package @knapsack/monorepo
 
 
 
@@ -975,7 +975,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.17.6](https://github.com/basaltinc/knapsack/compare/v0.17.5...v0.17.6) (2018-12-11)
 
-**Note:** Version bump only for package @basalt/knapsack-monorepo
+**Note:** Version bump only for package @knapsack/monorepo
 
 
 
@@ -994,7 +994,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.17.4](https://github.com/basaltinc/knapsack/compare/v0.17.3...v0.17.4) (2018-12-10)
 
-**Note:** Version bump only for package @basalt/knapsack-monorepo
+**Note:** Version bump only for package @knapsack/monorepo
 
 
 
@@ -1043,7 +1043,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.17.0](https://github.com/basaltinc/knapsack/compare/v0.16.6...v0.17.0) (2018-12-08)
 
-**Note:** Version bump only for package @basalt/knapsack-monorepo
+**Note:** Version bump only for package @knapsack/monorepo
 
 
 
@@ -1074,7 +1074,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.16.4](https://github.com/basaltinc/knapsack/compare/v0.16.3...v0.16.4) (2018-12-06)
 
-**Note:** Version bump only for package @basalt/knapsack-monorepo
+**Note:** Version bump only for package @knapsack/monorepo
 
 
 
@@ -1097,7 +1097,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.16.2](https://github.com/basaltinc/knapsack/compare/v0.16.1...v0.16.2) (2018-12-06)
 
-**Note:** Version bump only for package @basalt/knapsack-monorepo
+**Note:** Version bump only for package @knapsack/monorepo
 
 
 
@@ -1105,7 +1105,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.16.1](https://github.com/basaltinc/knapsack/compare/v0.16.1-alpha.6...v0.16.1) (2018-12-06)
 
-**Note:** Version bump only for package @basalt/knapsack-monorepo
+**Note:** Version bump only for package @knapsack/monorepo
 
 
 
@@ -1205,7 +1205,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.12.3](https://github.com/basaltinc/knapsack/compare/v0.12.2...v0.12.3) (2018-11-29)
 
-**Note:** Version bump only for package @basalt/knapsack-monorepo
+**Note:** Version bump only for package @knapsack/monorepo
 
 
 
@@ -1409,4 +1409,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.7.3](https://github.com/basaltinc/knapsack/compare/v0.7.2...v0.7.3) (2018-11-26)
 
-**Note:** Version bump only for package @basalt/knapsack-monorepo
+**Note:** Version bump only for package @knapsack/monorepo

@@ -17,10 +17,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FaPlus, FaMinus } from 'react-icons/fa';
-import SchemaForm from '@basalt/knapsack-schema-form';
-import TabbedPanel from '@basalt/knapsack-tabbed-panel';
-import { Checkerboard } from '@basalt/knapsack-atoms';
-import { getTypeColor } from '@basalt/knapsack-core';
+import SchemaForm from '@knapsack/schema-form';
+import TabbedPanel from '@knapsack/tabbed-panel';
+import { Checkerboard } from '@knapsack/atoms';
+import { getTypeColor } from '@knapsack/core';
 import Template from './template';
 import {
   VariationsWrapper,

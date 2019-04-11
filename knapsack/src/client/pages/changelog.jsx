@@ -15,10 +15,10 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import Spinner from '@basalt/knapsack-spinner';
+import Spinner from '@knapsack/spinner';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import { StatusMessage } from '@basalt/knapsack-atoms';
+import { StatusMessage } from '@knapsack/atoms';
 import MdBlock from '../components/md-block';
 import PageWithSidebar from '../layouts/page-with-sidebar';
 

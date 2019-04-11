@@ -16,14 +16,14 @@
  */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Spinner from '@basalt/knapsack-spinner';
-import SchemaForm from '@basalt/knapsack-schema-form';
-import { uniqueArray } from '@basalt/knapsack-utils';
-import { connectToContext } from '@basalt/knapsack-core';
+import Spinner from '@knapsack/spinner';
+import SchemaForm from '@knapsack/schema-form';
+import { uniqueArray } from '@knapsack/utils';
+import { connectToContext } from '@knapsack/core';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import queryString from 'query-string';
-import { Button } from '@basalt/knapsack-atoms';
+import { Button } from '@knapsack/atoms';
 import PatternGrid from '../components/pattern-grid';
 import PageWithSidebar from '../layouts/page-with-sidebar';
 import { BASE_PATHS } from '../../lib/constants';

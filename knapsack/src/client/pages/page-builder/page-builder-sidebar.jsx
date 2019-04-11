@@ -21,7 +21,7 @@ import {
   ClearFilterButton,
   TypeToFilter,
   TypeToFilterInputWrapper,
-} from '@basalt/knapsack-atoms';
+} from '@knapsack/atoms';
 import { FaTimes } from 'react-icons/fa';
 import PageBuilderEditForm from './page-builder-edit-form';
 import PlaygroundSidebarPatternListItem from './page-builder-pattern-list-item';

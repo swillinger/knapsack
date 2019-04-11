@@ -1,5 +1,5 @@
 {
-  "name": "@basalt/knapsack-renderer-html",
+  "name": "@knapsack/renderer-html",
   "version": "0.45.0",
   "description": "Render HTML",
   "main": "src/index.js",

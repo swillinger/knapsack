@@ -1,7 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import SchemaForm from '@basalt/knapsack-schema-form';
-import CopyToClipboard from '@basalt/knapsack-copy-to-clipboard';
+import SchemaForm from '@knapsack/schema-form';
+import CopyToClipboard from '@knapsack/copy-to-clipboard';
 import {
   DesignTokenTable,
   // AnimationDemo,
@@ -14,9 +14,9 @@ import {
   SpacingDemo,
   TextColorDemo,
   TextShadowDemo,
-} from '@basalt/knapsack-design-token-demos';
-import ColorSwatches from '@basalt/knapsack-color-swatch';
-import BreakpointsDemo from '@basalt/knapsack-breakpoints-demo';
+} from '@knapsack/design-token-demos';
+import ColorSwatches from '@knapsack/color-swatch';
+import BreakpointsDemo from '@knapsack/breakpoints-demo';
 import { gqlQuery } from '../../../data';
 import { containsString } from '../../../utils/string-helpers';
 

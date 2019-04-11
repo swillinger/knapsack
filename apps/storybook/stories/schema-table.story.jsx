@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
-import SchemaTable from '@basalt/knapsack-schema-table';
+import SchemaTable from '@knapsack/schema-table';
 
 const { image, paragraph, text } = require('@basalt/demo-data');
 

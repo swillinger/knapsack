@@ -17,11 +17,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
-import { Button } from '@basalt/knapsack-atoms';
-import { KnapsackContext } from '@basalt/knapsack-core';
-import SchemaForm from '@basalt/knapsack-schema-form';
+import { Button } from '@knapsack/atoms';
+import { KnapsackContext } from '@knapsack/core';
+import SchemaForm from '@knapsack/schema-form';
 import arrayMove from 'array-move';
-import Spinner from '@basalt/knapsack-spinner';
+import Spinner from '@knapsack/spinner';
 import shortid from 'shortid';
 import knapsackSlices from './slices';
 import { gqlQuery } from '../../data';

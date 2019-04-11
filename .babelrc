@@ -1,3 +1,3 @@
 {
-  "extends": "@basalt/knapsack-babel-config"
+  "extends": "@knapsack/babel-config"
 }

@@ -15,11 +15,11 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import { connectToContext } from '@basalt/knapsack-core';
+import { connectToContext } from '@knapsack/core';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import Spinner from '@basalt/knapsack-spinner';
-import { StatusMessage } from '@basalt/knapsack-atoms';
+import Spinner from '@knapsack/spinner';
+import { StatusMessage } from '@knapsack/atoms';
 import {
   HomeSplashCore,
   EyeBrow,

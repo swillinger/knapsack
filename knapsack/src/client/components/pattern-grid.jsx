@@ -17,8 +17,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { connectToContext, contextPropTypes } from '@basalt/knapsack-core';
-import SmartGrid from '@basalt/knapsack-smart-grid';
+import { connectToContext, contextPropTypes } from '@knapsack/core';
+import SmartGrid from '@knapsack/smart-grid';
 import {
   StyledPatternGridListItem,
   PatternGridListItemDescription,

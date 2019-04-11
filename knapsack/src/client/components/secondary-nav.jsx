@@ -22,9 +22,9 @@ import {
   TypeToFilter,
   TypeToFilterInputWrapper,
   ClearFilterButton,
-} from '@basalt/knapsack-atoms';
-import Spinner from '@basalt/knapsack-spinner';
-import { flattenArray } from '@basalt/knapsack-utils';
+} from '@knapsack/atoms';
+import Spinner from '@knapsack/spinner';
+import { flattenArray } from '@knapsack/utils';
 import urlJoin from 'url-join';
 import { FaTimes } from 'react-icons/fa';
 import NavList from './nav-list';

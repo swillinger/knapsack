@@ -1,12 +1,12 @@
 {
-  "name": "@basalt/knapsack-atoms",
+  "name": "@knapsack/atoms",
   "license": "GPL-2.0-or-later",
   "version": "0.45.0",
   "description": "A Knapsack component that helps build Design Systems",
   "module": "dist/atoms.js",
   "main": "dist/atoms.js",
   "scripts": {
-    "build": "babel --config-file @basalt/knapsack-babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
+    "build": "babel --config-file @knapsack/babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
     "prepublishOnly": "yarn build",
     "watch": "yarn build --watch"
   },
@@ -21,7 +21,7 @@
   },
   "author": "Basalt (https://basalt.io/)",
   "dependencies": {
-    "@basalt/knapsack-core": "^0.45.0"
+    "@knapsack/core": "^0.45.0"
   },
   "files": [
     "./dist"

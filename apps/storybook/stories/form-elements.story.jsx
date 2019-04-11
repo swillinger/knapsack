@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { TextInputWrapper, Select } from '@basalt/knapsack-atoms';
+import { TextInputWrapper, Select } from '@knapsack/atoms';
 import { action } from '@storybook/addon-actions';
 
 storiesOf('Form Elements', module)

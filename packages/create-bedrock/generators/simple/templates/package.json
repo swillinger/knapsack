@@ -14,8 +14,8 @@
   },
   "dependencies": {
     "@basalt/knapsack": "^<%= knapsackVersion %>",
-    "@basalt/knapsack-renderer-html": "^<%= knapsackVersion %>",
-    "@basalt/knapsack-renderer-twig": "^<%= knapsackVersion %>",
+    "@knapsack/renderer-html": "^<%= knapsackVersion %>",
+    "@knapsack/renderer-twig": "^<%= knapsackVersion %>",
     "@basalt/demo-data": "^0.5.1",
     "theo": "^8.1.1"
   },

@@ -15,7 +15,7 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import SpacingSwatches from '@basalt/knapsack-spacing-swatch';
+import SpacingSwatches from '@knapsack/spacing-swatch';
 
 import makeDesignTokensPage, {
   propTypes,

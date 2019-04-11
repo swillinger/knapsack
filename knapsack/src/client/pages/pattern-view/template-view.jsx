@@ -17,11 +17,11 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Spinner from '@basalt/knapsack-spinner';
-import { Button, Details, Select, StatusMessage } from '@basalt/knapsack-atoms';
+import Spinner from '@knapsack/spinner';
+import { Button, Details, Select, StatusMessage } from '@knapsack/atoms';
 import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
-import { KnapsackContext } from '@basalt/knapsack-core';
-import SchemaForm from '@basalt/knapsack-schema-form';
+import { KnapsackContext } from '@knapsack/core';
+import SchemaForm from '@knapsack/schema-form';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import qs from 'qs';

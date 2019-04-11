@@ -17,13 +17,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
-import { plugins } from '@basalt/knapsack-core';
-import Spinner from '@basalt/knapsack-spinner';
+import { plugins } from '@knapsack/core';
+import Spinner from '@knapsack/spinner';
 import 'react-table/react-table.css';
 import { Query } from 'react-apollo';
 import { Link } from 'react-router-dom';
 import gql from 'graphql-tag';
-import { StatusMessage, Button } from '@basalt/knapsack-atoms';
+import { StatusMessage, Button } from '@knapsack/atoms';
 import { gqlToString } from '../../data';
 import { BASE_PATHS } from '../../../lib/constants';
 import PageWithSidebar from '../../layouts/page-with-sidebar';

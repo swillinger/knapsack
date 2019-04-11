@@ -1,6 +1,6 @@
 # Knapsack Code Block
 
 ```
-npm install --save @basalt/knapsack-code-block
+npm install --save @knapsack/code-block
 ```
 

@@ -16,9 +16,9 @@
  */
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import { connectToContext } from '@basalt/knapsack-core';
-import SchemaForm from '@basalt/knapsack-schema-form';
-import { StatusMessage } from '@basalt/knapsack-atoms';
+import { connectToContext } from '@knapsack/core';
+import SchemaForm from '@knapsack/schema-form';
+import { StatusMessage } from '@knapsack/atoms';
 import urlJoin from 'url-join';
 import patternMetaSchema from '../../schemas/pattern-meta.schema';
 import { apiUrlBase } from '../data';

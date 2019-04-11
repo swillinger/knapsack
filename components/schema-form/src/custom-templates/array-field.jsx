@@ -4,7 +4,7 @@ import {
   FormIconButton,
   FormIconTray,
   FormArrayItem,
-} from '@basalt/knapsack-atoms';
+} from '@knapsack/atoms';
 
 import upArrow from '../assets/angle-up.svg';
 import downArrow from '../assets/angle-down.svg';

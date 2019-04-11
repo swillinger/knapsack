@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Toggle } from '@basalt/knapsack-atoms';
+import { Toggle } from '@knapsack/atoms';
 import shortid from 'shortid';
 
 function selectValue(value, selected, all) {

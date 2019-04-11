@@ -15,8 +15,8 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import ColorSwatches from '@basalt/knapsack-color-swatch';
-import ColorContrastBlock from '@basalt/knapsack-color-contrast-block';
+import ColorSwatches from '@knapsack/color-swatch';
+import ColorContrastBlock from '@knapsack/color-contrast-block';
 import {
   ColorsDemoBox,
   TextColorDemo,

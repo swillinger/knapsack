@@ -15,14 +15,14 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import Spinner from '@basalt/knapsack-spinner';
+import Spinner from '@knapsack/spinner';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-// import { plugins } from '@basalt/knapsack-core';
-import { Button, StatusMessage } from '@basalt/knapsack-atoms';
+// import { plugins } from '@knapsack/core';
+import { Button, StatusMessage } from '@knapsack/atoms';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-// import { TokenCategory } from '@basalt/knapsack-design-token-demos';
+// import { TokenCategory } from '@knapsack/design-token-demos';
 import { Link } from 'react-router-dom';
 import queryString from 'query-string';
 import PageWithSidebar from '../../layouts/page-with-sidebar';

@@ -1,5 +1,5 @@
 {
-  "name": "@basalt/knapsack-utils",
+  "name": "@knapsack/utils",
   "license": "GPL-2.0-or-later",
   "version": "0.45.0",
   "description": "A Knapsack component that helps build Design Systems",
@@ -7,18 +7,18 @@
   "module": "dist/index.js",
   "types": "src/index.d.ts",
   "scripts": {
-    "build:js": "babel --config-file @basalt/knapsack-babel-config/es --source-maps --ignore 'src/*.test.js' --extensions .js,.ts --out-dir dist/ src/",
+    "build:js": "babel --config-file @knapsack/babel-config/es --source-maps --ignore 'src/*.test.js' --extensions .js,.ts --out-dir dist/ src/",
     "build:types": "tsc",
     "build": "rm -rf dist && yarn build:js",
     "prepublishOnly": "npm run build",
     "watch": "yarn build --watch"
   },
   "dependencies": {
-    "@basalt/knapsack-core": "^0.45.0",
+    "@knapsack/core": "^0.45.0",
     "color": "^3.0.0"
   },
   "devDependencies": {
-    "@basalt/knapsack-babel-config": "^0.45.0"
+    "@knapsack/babel-config": "^0.45.0"
   },
   "author": "Basalt (https://basalt.io/)",
   "publishConfig": {

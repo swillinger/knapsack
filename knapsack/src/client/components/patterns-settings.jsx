@@ -15,9 +15,9 @@
  with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React, { Component } from 'react';
-import SchemaForm from '@basalt/knapsack-schema-form';
+import SchemaForm from '@knapsack/schema-form';
 import gql from 'graphql-tag';
-import { KnapsackContext } from '@basalt/knapsack-core';
+import { KnapsackContext } from '@knapsack/core';
 import { gqlQuery } from '../data';
 
 const query = gql`

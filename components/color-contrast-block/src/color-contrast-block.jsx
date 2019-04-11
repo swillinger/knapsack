@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { convertColor } from '@basalt/knapsack-utils';
-import { Details, Select } from '@basalt/knapsack-atoms';
-import Spinner from '@basalt/knapsack-spinner';
+import { convertColor } from '@knapsack/utils';
+import { Details, Select } from '@knapsack/atoms';
+import Spinner from '@knapsack/spinner';
 import {
   ColorContrastPlayground,
   AccessibilityInfo,

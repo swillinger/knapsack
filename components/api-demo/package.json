@@ -1,20 +1,20 @@
 {
-  "name": "@basalt/knapsack-api-demo",
+  "name": "@knapsack/api-demo",
   "license": "GPL-2.0-or-later",
   "version": "0.45.0",
   "description": "A Knapsack component that helps build Design Systems",
   "module": "dist/api-demo.js",
   "main": "dist/api-demo.js",
   "scripts": {
-    "build": "babel --config-file @basalt/knapsack-babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
+    "build": "babel --config-file @knapsack/babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
     "prepublishOnly": "yarn build",
     "watch": "yarn build --watch"
   },
   "dependencies": {
-    "@basalt/knapsack-atoms": "^0.45.0",
-    "@basalt/knapsack-core": "^0.45.0",
-    "@basalt/knapsack-schema-form": "^0.45.0",
-    "@basalt/knapsack-schema-table": "^0.45.0",
+    "@knapsack/atoms": "^0.45.0",
+    "@knapsack/core": "^0.45.0",
+    "@knapsack/schema-form": "^0.45.0",
+    "@knapsack/schema-table": "^0.45.0",
     "query-string": "^6.1.0"
   },
   "devDependencies": {

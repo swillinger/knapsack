@@ -15,7 +15,7 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import Spinner from '@basalt/knapsack-spinner';
+import Spinner from '@knapsack/spinner';
 import {
   DemoTransitionMove,
   DemoTransitionOpacity,

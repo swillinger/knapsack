@@ -17,8 +17,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { connectToContext, contextPropTypes } from '@basalt/knapsack-core';
-import { Select, Button } from '@basalt/knapsack-atoms';
+import { connectToContext, contextPropTypes } from '@knapsack/core';
+import { Select, Button } from '@knapsack/atoms';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import {
   PatternListItemDescription,

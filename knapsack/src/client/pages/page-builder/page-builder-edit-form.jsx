@@ -16,7 +16,7 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@basalt/knapsack-atoms';
+import { Button } from '@knapsack/atoms';
 import { PlaygroundStyledSchemaForm } from './page-builder.styles';
 
 const PageBuilderEditForm = ({

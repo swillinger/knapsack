@@ -1,5 +1,5 @@
 {
-  "name": "@basalt/knapsack-renderer-react",
+  "name": "@knapsack/renderer-react",
   "version": "0.45.0",
   "description": "Render React",
   "main": "src/index.js",

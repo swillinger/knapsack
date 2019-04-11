@@ -1,6 +1,6 @@
-const HtmlRenderer = require('@basalt/knapsack-renderer-html');
-const TwigRenderer = require('@basalt/knapsack-renderer-twig');
-const ReactRenderer = require('@basalt/knapsack-renderer-react');
+const HtmlRenderer = require('@knapsack/renderer-html');
+const TwigRenderer = require('@knapsack/renderer-twig');
+const ReactRenderer = require('@knapsack/renderer-react');
 const { theoKnapsackFormat } = require('@basalt/knapsack');
 const theo = require('theo');
 const webpack = require('webpack');

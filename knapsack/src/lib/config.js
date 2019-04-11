@@ -21,7 +21,7 @@ const { resolve } = require('path');
 const {
   validateUniqueIdsInArray,
   validateDataAgainstSchema,
-} = require('@basalt/knapsack-schema-utils');
+} = require('@knapsack/schema-utils');
 const { KnapsackRendererBase } = require('../server/renderer-base');
 const log = require('../cli/log');
 const { knapsackEvents, EVENTS } = require('../server/events');

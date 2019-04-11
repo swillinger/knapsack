@@ -29,7 +29,7 @@ describe('github-utils', () => {
 
 ## [0.12.3](https://github.com/basaltinc/knapsack/compare/v0.12.2...v0.12.3) (2018-11-29)
 
-**Note:** Version bump only for package @basalt/knapsack-monorepo
+**Note:** Version bump only for package @knapsack/monorepo
 
 
 

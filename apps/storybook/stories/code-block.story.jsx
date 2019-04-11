@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
-import CodeBlock from '@basalt/bedrock-code-block';
+import CodeBlock from '@basalt/knapsack-code-block';
 
 const twigCodeExample = `{% include '@components/_logo.twig' with {
   "imgSrc": "/assets/images/logos/main.png",

@@ -1,9 +1,9 @@
-const { BedrockRendererBase } = require('@basalt/bedrock');
+const { KnapsackRendererBase } = require('@basalt/knapsack');
 const TwigRenderer = require('@basalt/twig-renderer');
 
 /* eslint-disable class-methods-use-this */
 
-class BedrockTwigRenderer extends BedrockRendererBase {
+class KnapsackTwigRenderer extends KnapsackRendererBase {
   constructor(config) {
     super({
       id: 'twig',
@@ -28,4 +28,4 @@ class BedrockTwigRenderer extends BedrockRendererBase {
   }
 }
 
-module.exports = BedrockTwigRenderer;
+module.exports = KnapsackTwigRenderer;

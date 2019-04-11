@@ -1,9 +1,9 @@
-const { BedrockRendererBase } = require('@basalt/bedrock');
+const { KnapsackRendererBase } = require('@basalt/knapsack');
 const fs = require('fs-extra');
 
 /* eslint-disable class-methods-use-this */
 
-class BedrockHtmlRenderer extends BedrockRendererBase {
+class KnapsackHtmlRenderer extends KnapsackRendererBase {
   constructor() {
     super({
       id: 'html',
@@ -30,4 +30,4 @@ class BedrockHtmlRenderer extends BedrockRendererBase {
   }
 }
 
-module.exports = BedrockHtmlRenderer;
+module.exports = KnapsackHtmlRenderer;

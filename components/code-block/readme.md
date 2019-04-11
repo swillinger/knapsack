@@ -1,6 +1,6 @@
-# Bedrock Code Block
+# Knapsack Code Block
 
 ```
-npm install --save @basalt/bedrock-code-block
+npm install --save @basalt/knapsack-code-block
 ```
 

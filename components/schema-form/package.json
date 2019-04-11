@@ -1,17 +1,17 @@
 {
-  "name": "@basalt/bedrock-schema-form",
+  "name": "@basalt/knapsack-schema-form",
   "license": "GPL-2.0-or-later",
   "version": "0.45.0",
-  "description": "A Bedrock component that helps build Design Systems",
+  "description": "A Knapsack component that helps build Design Systems",
   "module": "dist/schema-form.js",
   "main": "dist/schema-form.js",
   "scripts": {
-    "build": "babel --config-file @basalt/bedrock-babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
+    "build": "babel --config-file @basalt/knapsack-babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
     "prepublishOnly": "yarn build",
     "watch": "yarn build --watch"
   },
   "dependencies": {
-    "@basalt/bedrock-core": "^0.45.0",
+    "@basalt/knapsack-core": "^0.45.0",
     "react-jsonschema-form": "1.0.7",
     "shortid": "^2.2.14"
   },

@@ -5,13 +5,13 @@ title: Design Tokens
 
 Design tokens are named entities for identifying, storing, and accessing the most basic layer of a design system. Design tokens include colors, spacing, typography, animation and other values that make up a design language. Assigning these core values to design tokens is an effective way to create a more scalable, maintainable, and intentional system.
 
-Bedrock provides users the ability to organize, view and query design tokens. Bedrock uses [Theo](https://www.npmjs.com/package/theo), a library which allows users to define design tokens in an intuitive, agnostic manner and then retrieve those design tokens in the format of their choice. As your design system grows, design tokens allow for scalability.
+Knapsack provides users the ability to organize, view and query design tokens. Knapsack uses [Theo](https://www.npmjs.com/package/theo), a library which allows users to define design tokens in an intuitive, agnostic manner and then retrieve those design tokens in the format of their choice. As your design system grows, design tokens allow for scalability.
 
 ## Design Token Categories
 
 Design Token Categories is a method of organizing Design Tokens based on their intended use. For example, the Design Token Category `text-color` is a collection of all colors that are intended to be used for text. 
 
-Bedrock supports the following Design Token Categories:
+Knapsack supports the following Design Token Categories:
 
 - `box-shadow`
 - `inner-shadow`
@@ -35,13 +35,13 @@ See [Theo Docs](https://github.com/salesforce-ux/theo) for more information on a
 
 ## Design Token Groups
 
-Design Token Groups are unique to Bedrock and allow users to organize Design Token Categories into groups to best suit the needs of a given design system. For example, the group `Colors` may include `text-color`, `border-color`, and `background-color`. 
+Design Token Groups are unique to Knapsack and allow users to organize Design Token Categories into groups to best suit the needs of a given design system. For example, the group `Colors` may include `text-color`, `border-color`, and `background-color`. 
 
 Any given Design Token Category can belong to multiple groups. For example `text-color` may be part of the `Colors` group as wells as a `Fonts` group.
 
 ## Example Design Token Files
 
-`tokens.yml` - This is the entry file identified in `bedrock.config.js`.
+`tokens.yml` - This is the entry file identified in `knapsack.config.js`.
 ```yaml
 imports:
   - ./alias.yml

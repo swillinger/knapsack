@@ -1,7 +1,7 @@
 # https://www.netlifycms.org/docs/intro
 backend:
   name: github
-  repo: basaltinc/bedrock
+  repo: basaltinc/knapsack
   branch: master
 
 publish_mode: editorial_workflow

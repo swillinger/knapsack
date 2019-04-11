@@ -2,7 +2,7 @@ const { bootstrapButtonSchema, materialButtonSchema } = require('./button.schema
 const {
   bootstrap,
   material,
-} = require('../../../bedrock.asset-sets');
+} = require('../../../knapsack.asset-sets');
 
 module.exports = {
   id: 'button',

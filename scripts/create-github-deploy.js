@@ -53,7 +53,7 @@ async function go() {
   console.log(latestDeploy);
   console.log('----');
 
-  const { id } = await githubPost('/repos/basaltinc/bedrock/deployments', {
+  const { id } = await githubPost('/repos/basaltinc/knapsack/deployments', {
     ref: GITHUB_SHA,
     auto_merge: false,
     // description: '',
@@ -73,13 +73,13 @@ async function go() {
     process.exit(1);
   }
 
-  // bedrock-example-bootstrap-qmskhenrxq.now.sh
+  // knapsack-example-bootstrap-qmskhenrxq.now.sh
   const deployUrl = `https://${latestDeploy.url}`;
   // qmskhenrxq
   const deployId = latestDeploy.url
     .replace(`${latestDeploy.name}-`, '')
     .replace('.now.sh', '');
-  // https://zeit.co/basalt/bedrock-example-bootstrap/deployment/qmskhenrxq/logs
+  // https://zeit.co/basalt/knapsack-example-bootstrap/deployment/qmskhenrxq/logs
   const logUrl = `https://zeit.co/basalt/${
     latestDeploy.name
   }/deployment/${deployId}/logs`;
@@ -91,7 +91,7 @@ async function go() {
   });
 
   const deployStatusResults = await githubPost(
-    `/repos/basaltinc/bedrock/deployments/${id}/statuses`,
+    `/repos/basaltinc/knapsack/deployments/${id}/statuses`,
     {
       state: 'success',
       environment: name,

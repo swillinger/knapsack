@@ -1,7 +1,7 @@
 const schema = require('./media-object.schema');
 const {
   bootstrap,
-} = require('../../../bedrock.asset-sets');
+} = require('../../../knapsack.asset-sets');
 
 module.exports = {
   id: 'media-object',

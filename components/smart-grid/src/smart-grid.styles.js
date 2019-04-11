@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { breakpoints } from '@basalt/bedrock-core';
+import { breakpoints } from '@basalt/knapsack-core';
 
 const gutter = 16; // px
 

@@ -2,7 +2,7 @@ const schema = require('./jumbotron.schema');
 const {
   bootstrap,
   material
-} = require('../../../bedrock.asset-sets');
+} = require('../../../knapsack.asset-sets');
 
 module.exports = {
   id: 'jumbotron',

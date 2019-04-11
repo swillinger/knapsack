@@ -1,15 +1,15 @@
 ```
-npm install @basalt/bedrock-renderer-twig --save
+npm install @basalt/knapsack-renderer-twig --save
 ```
 
 ## Usage
 
-In `bedrock.config.js`:
+In `knapsack.config.js`:
 
 The config passed into `new TwigRenderer()` is passed directly to [`@basalt/twig-renderer`](https://github.com/basaltinc/twig-renderer), see there for config details.
 
 ```js
-const HtmlRenderer = require('@basalt/bedrock-renderer-html');
+const HtmlRenderer = require('@basalt/knapsack-renderer-html');
 
 const config = {
   // rest of config here

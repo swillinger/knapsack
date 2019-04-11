@@ -22,7 +22,7 @@ const users = [
 ];
 
 const siteConfig = {
-  title: 'Bedrock Docs', // Title for your website.
+  title: 'Knapsack Docs', // Title for your website.
   tagline: 'A website for testing',
   url: 'https://your-docusaurus-test-site.com', // Your website URL
   baseUrl: '/', // Base URL for your project */
@@ -31,7 +31,7 @@ const siteConfig = {
   //   baseUrl: '/test-site/',
 
   // Used for publishing and more
-  projectName: 'bedrock',
+  projectName: 'knapsack',
   organizationName: 'basaltinc',
 
   // For no header links in the top nav bar -> headerLinks: [],
@@ -44,14 +44,14 @@ const siteConfig = {
 
   disableHeaderTitle: true,
   docsSideNavCollapsible: false,
-  editUrl: 'https://github.com/basaltinc/bedrock/blob/master/docs/',
+  editUrl: 'https://github.com/basaltinc/knapsack/blob/master/docs/',
 
   // If you have users set above, you add it here:
   users,
 
   /* path to images for header/footer */
-  headerIcon: 'img/bedrock.png',
-  footerIcon: 'img/bedrock.png',
+  headerIcon: 'img/knapsack.png',
+  footerIcon: 'img/knapsack.png',
   favicon: 'img/favicon.ico',
 
   /* Colors for website */
@@ -91,8 +91,8 @@ const siteConfig = {
   cleanUrl: true,
 
   // Open Graph and Twitter card images.
-  ogImage: 'img/bedrock.png',
-  twitterImage: 'img/bedrock.png',
+  ogImage: 'img/knapsack.png',
+  twitterImage: 'img/knapsack.png',
 
   // Show documentation's last contributor's name.
   enableUpdateBy: true,
@@ -102,12 +102,12 @@ const siteConfig = {
 
   twitter: true,
 
-  // @todo enable Google Analytics. This id was the one used on `getbedrock.com` from the `bedrock-site` repo
+  // @todo enable Google Analytics. This id was the one used on `getbedrock.com` from the `knapsack-site` repo
   // gaTrackingId: 'UA-107417461-3',
 
   // You may provide arbitrary config keys to be used as needed by your
   // template. For example, if you need your repo's URL...
-  repoUrl: 'https://github.com/basaltinc/bedrock',
+  repoUrl: 'https://github.com/basaltinc/knapsack',
 };
 
 module.exports = siteConfig;

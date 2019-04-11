@@ -1,20 +1,20 @@
 {
-  "name": "@basalt/bedrock-monorepo",
+  "name": "@basalt/knapsack-monorepo",
   "license": "GPL-2.0-or-later",
   "private": true,
   "scripts": {
-    "build:bedrock": "FORCE_COLOR=1 lerna run build --scope @basalt/bedrock",
-    "build:docs": "FORCE_COLOR=1 lerna run build --scope @basalt/bedrock-docs-site",
-    "build:pkgs": "FORCE_COLOR=1 lerna run build --no-private --ignore @basalt/bedrock",
-    "build:private": "lerna run --stream --bail --concurrency 1 build --scope @basalt/bedrock-example*",
-    "build:storybook": "lerna run build --stream --bail --scope @basalt/bedrock-storybook",
-    "build": "run-s build:pkgs build:bedrock",
+    "build:knapsack": "FORCE_COLOR=1 lerna run build --scope @basalt/knapsack",
+    "build:docs": "FORCE_COLOR=1 lerna run build --scope @basalt/knapsack-docs-site",
+    "build:pkgs": "FORCE_COLOR=1 lerna run build --no-private --ignore @basalt/knapsack",
+    "build:private": "lerna run --stream --bail --concurrency 1 build --scope @basalt/knapsack-example*",
+    "build:storybook": "lerna run build --stream --bail --scope @basalt/knapsack-storybook",
+    "build": "run-s build:pkgs build:knapsack",
     "build:all": "run-s build build:docs build:private",
     "cypress:run": "cd cypress && yarn cypress:run",
     "cypress:open": "cd cypress && yarn cypress:open",
     "watch": "FORCE_COLOR=1 lerna run watch --parallel --no-private",
     "clean": "lerna clean --yes && rm -rf node_modules",
-    "cli:test": "rm -rf examples/create-bedrock-results && cd examples && ../node_modules/.bin/create-bedrock create-bedrock-results && cd .. && yarn && cd examples/create-bedrock-results && yarn start",
+    "cli:test": "rm -rf examples/create-knapsack-results && cd examples && ../node_modules/.bin/create-knapsack create-knapsack-results && cd .. && yarn && cd examples/create-knapsack-results && yarn start",
     "commit": "git-cz",
     "dashboard": "webpack-dashboard",
     "jest": "jest",
@@ -23,26 +23,26 @@
     "lint:js:fix": "yarn lint:js --fix",
     "lint:style": "stylelint '**/*.{js,jsx}'",
     "lint:style:fix": "stylelint '**/*.{js,jsx}' --fix",
-    "open:prs": "open https://github.com/basaltinc/bedrock/pulls",
-    "open:pr": "open https://github.com/basaltinc/bedrock/compare",
-    "open:repo": "open https://github.com/basaltinc/bedrock",
-    "open:ci": "open https://circleci.com/gh/basaltinc/bedrock",
+    "open:prs": "open https://github.com/basaltinc/knapsack/pulls",
+    "open:pr": "open https://github.com/basaltinc/knapsack/compare",
+    "open:repo": "open https://github.com/basaltinc/knapsack",
+    "open:ci": "open https://circleci.com/gh/basaltinc/knapsack",
     "pick": "pick-npm-run-all",
     "reset": "yarn clean && yarn install --silent && FORCE_COLOR=1 run-s --print-label build:*",
     "serve:simple": "cd examples/simple && yarn serve",
-    "test": "run-s lint:style lint:js jest test:bedrock test:examples test:cypress",
-    "test:bedrock": "lerna run --stream --bail --scope @basalt/bedrock test",
+    "test": "run-s lint:style lint:js jest test:knapsack test:examples test:cypress",
+    "test:knapsack": "lerna run --stream --bail --scope @basalt/knapsack test",
     "test:cypress": "start-server-and-test serve:simple http://localhost:3999 cypress:run",
     "test:examples": "run-s test:ex-1 test:ex-2 test:ex-3",
-    "test:ex-1": "lerna run --stream --bail --scope @basalt/bedrock-example-design-token-mania test",
-    "test:ex-2": "lerna run --stream --bail --scope @basalt/bedrock-example-simple test",
-    "test:ex-3": "lerna run --stream --bail --scope @basalt/bedrock-example-multi-templates test",
+    "test:ex-1": "lerna run --stream --bail --scope @basalt/knapsack-example-design-token-mania test",
+    "test:ex-2": "lerna run --stream --bail --scope @basalt/knapsack-example-simple test",
+    "test:ex-3": "lerna run --stream --bail --scope @basalt/knapsack-example-multi-templates test",
     "up": "yarn upgrade-interactive --latest",
     "uuid": "node -e \"process.stdout.write(require('uuid/v4')()) \" | pbcopy && echo 'uuid copied' "
   },
   "workspaces": {
     "packages": [
-      "bedrock",
+      "knapsack",
       "cypress",
       "apps/*",
       "docs-site",
@@ -51,10 +51,10 @@
       "packages/*"
     ],
     "nohoist": [
-      "@basalt/bedrock-storybook/babel-core",
-      "@basalt/bedrock-storybook/babel-core/**",
-      "@basalt/bedrock-storybook/babel-register",
-      "@basalt/bedrock-storybook/babel-register/**"
+      "@basalt/knapsack-storybook/babel-core",
+      "@basalt/knapsack-storybook/babel-core/**",
+      "@basalt/knapsack-storybook/babel-register",
+      "@basalt/knapsack-storybook/babel-register/**"
     ]
   },
   "config": {
@@ -89,10 +89,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/basaltinc/bedrock"
+    "url": "https://github.com/basaltinc/knapsack"
   },
   "homepage": "https://getbedrock.com",
   "bugs": {
-    "url": "https://github.com/basaltinc/bedrock/issues"
+    "url": "https://github.com/basaltinc/knapsack/issues"
   }
 }

@@ -1,11 +1,11 @@
 {
-  "name": "@basalt/bedrock-plugin-custom-homepage",
+  "name": "@basalt/knapsack-plugin-custom-homepage",
   "license": "GPL-2.0-or-later",
   "version": "0.45.0",
-  "description": "A Bedrock plugin for setting a custom home page",
+  "description": "A Knapsack plugin for setting a custom home page",
   "scripts": {},
   "dependencies": {
-    "@basalt/bedrock-core": "^0.45.0"
+    "@basalt/knapsack-core": "^0.45.0"
   },
   "peerDependencies": {
     "react": "^16.8.0"

@@ -53,7 +53,7 @@ function githubPost(path, requestBody) {
  * @link https://developer.github.com/v3/repos/releases/#create-a-release
  */
 async function createRelease(tag, body) {
-  await githubPost('/repos/basaltinc/bedrock/releases', {
+  await githubPost('/repos/basaltinc/knapsack/releases', {
     tag_name: tag,
     target_commitish: 'master',
     name: tag,
@@ -70,7 +70,7 @@ async function createRelease(tag, body) {
  * @link https://developer.github.com/v3/issues/comments/#create-a-comment
  */
 async function commentOnIssue(issue, comment) {
-  return githubPost(`/repos/basaltinc/bedrock/issues/${issue}/comments`, {
+  return githubPost(`/repos/basaltinc/knapsack/issues/${issue}/comments`, {
     body: comment,
   });
 }
@@ -81,7 +81,7 @@ async function commentOnIssue(issue, comment) {
  * @returns {{ issues: number[] }}
  */
 function parseChangelog(changelog) {
-  const [, ...others] = changelog.split('bedrock/issues/');
+  const [, ...others] = changelog.split('knapsack/issues/');
   const issueResults = new Set(
     others.map(item => parseInt(item.match(/^\d*/)[0], 10)),
   );

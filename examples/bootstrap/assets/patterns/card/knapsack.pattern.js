@@ -2,7 +2,7 @@ const { bootstrapCardSchema, materialCardSchema } = require('./card.schema');
 const {
   bootstrap,
   material
-} = require('../../../bedrock.asset-sets');
+} = require('../../../knapsack.asset-sets');
 
 module.exports = {
   id: 'card',

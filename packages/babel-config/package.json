@@ -1,5 +1,5 @@
 {
-  "name": "@basalt/bedrock-babel-config",
+  "name": "@basalt/knapsack-babel-config",
   "license": "GPL-2.0-or-later",
   "version": "0.45.0",
   "description": "Babel config and deps.",

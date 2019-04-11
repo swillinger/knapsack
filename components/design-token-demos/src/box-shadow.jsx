@@ -1,5 +1,5 @@
 import React from 'react';
-import CopyToClipboard from '@basalt/bedrock-copy-to-clipboard';
+import CopyToClipboard from '@basalt/knapsack-copy-to-clipboard';
 import { demoPropTypes } from './utils';
 import { ShadowDemoBox } from './styles';
 

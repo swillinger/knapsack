@@ -1,17 +1,17 @@
 ```
-npm install @basalt/bedrock-renderer-react --save
+npm install @basalt/knapsack-renderer-react --save
 ```
 
 ## Usage
 
-In `bedrock.config.js`:
+In `knapsack.config.js`:
 
 ```js
-const ReactRenderer = require('@basalt/bedrock-renderer-react');
+const ReactRenderer = require('@basalt/knapsack-renderer-react');
 const webpack = require('webpack');
 const webpackConfig = require('./webpack.config');
 
-/** @type {BedrockUserConfig} */
+/** @type {KnapsackUserConfig} */
 const config = {
   // rest of config ...
   templateRenderers: [

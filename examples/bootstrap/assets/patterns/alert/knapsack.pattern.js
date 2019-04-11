@@ -2,7 +2,7 @@ const { bootstrapAlertSchema, materialAlertSchema } = require('./alert.schema');
 const {
   bootstrap,
   material
-} = require('../../../bedrock.asset-sets');
+} = require('../../../knapsack.asset-sets');
 
 module.exports = {
   id: 'alert',

@@ -1,5 +1,5 @@
 {
-  "name": "bedrock-example-simple",
+  "name": "knapsack-example-simple",
   "alias": "simple.demo.getbedrock.com",
   "version": 1,
   "type": "docker",

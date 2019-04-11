@@ -2,7 +2,7 @@ const { bootstrapNavSchema, materialNavSchema } = require('./nav.schema');
 const {
   bootstrap,
   material
-} = require('../../../bedrock.asset-sets');
+} = require('../../../knapsack.asset-sets');
 
 module.exports = {
   id: 'nav',

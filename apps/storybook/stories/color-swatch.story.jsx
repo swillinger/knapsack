@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
-import ColorSwatches from '@basalt/bedrock-color-swatch';
+import ColorSwatches from '@basalt/knapsack-color-swatch';
 
 storiesOf('ColorSwatch', module).add(
   'Overview',

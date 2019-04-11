@@ -1,5 +1,5 @@
 {
-  "name": "bedrock",
+  "name": "knapsack",
   "type": "docker",
   "version": 1,
   "scale": {

@@ -6,16 +6,16 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "build": "NODE_ENV=production bedrock build",
+    "build": "NODE_ENV=production knapsack build",
     "build:tokens": "theo ./design-tokens/tokens.yml --transform web --format raw.json,scss,html --dest ./assets/dist/tokens",
-    "serve": "NODE_ENV=production bedrock serve",
-    "start": "bedrock start",
-    "test": "bedrock test"
+    "serve": "NODE_ENV=production knapsack serve",
+    "start": "knapsack start",
+    "test": "knapsack test"
   },
   "dependencies": {
-    "@basalt/bedrock": "^<%= bedrockVersion %>",
-    "@basalt/bedrock-renderer-html": "^<%= bedrockVersion %>",
-    "@basalt/bedrock-renderer-twig": "^<%= bedrockVersion %>",
+    "@basalt/knapsack": "^<%= knapsackVersion %>",
+    "@basalt/knapsack-renderer-html": "^<%= knapsackVersion %>",
+    "@basalt/knapsack-renderer-twig": "^<%= knapsackVersion %>",
     "@basalt/demo-data": "^0.5.1",
     "theo": "^8.1.1"
   },

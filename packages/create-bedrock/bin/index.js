@@ -4,7 +4,7 @@ const { join } = require('path');
 const init = require('../lib/init');
 const { version } = require('../package.json');
 
-console.log(`Creating Bedrock with v${version}...`);
+console.log(`Creating Knapsack with v${version}...`);
 program
   .version(version)
   .option('--force', 'Overwrite existing files')
@@ -27,6 +27,6 @@ init({
   // @todo enable options passed in from cli
   name,
   dir: join(process.cwd(), name),
-  bedrockVersion: version,
+  knapsackVersion: version,
   force: program.force,
 }).then(() => console.log('all done'));

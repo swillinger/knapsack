@@ -1,5 +1,5 @@
 {
-  "name": "create-bedrock-demo-dev",
+  "name": "create-knapsack-demo-dev",
   "alias": "dev.demo.getbedrock.com",
   "version": 1,
   "type": "docker",

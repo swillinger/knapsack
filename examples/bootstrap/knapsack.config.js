@@ -1,13 +1,13 @@
-const HtmlRenderer = require('@basalt/bedrock-renderer-html');
-const TwigRenderer = require('@basalt/bedrock-renderer-twig');
-const { theoBedrockFormat } = require('@basalt/bedrock');
+const HtmlRenderer = require('@basalt/knapsack-renderer-html');
+const TwigRenderer = require('@basalt/knapsack-renderer-twig');
+const { theoKnapsackFormat } = require('@basalt/knapsack');
 // const theo = require('theo');
-const designTokens = require('./assets/design-tokens/dist/bedrock-design-tokens');
+const designTokens = require('./assets/design-tokens/dist/knapsack-design-tokens');
 const { version } = require('./package.json');
 
-// const format = theoBedrockFormat(theo);
+// const format = theoKnapsackFormat(theo);
 
-/** @type {BedrockUserConfig} */
+/** @type {KnapsackUserConfig} */
 const config = {
   // patterns: ['./assets/patterns/*', './assets/pages/*'], @todo create full page examples
   patterns: ['./assets/patterns/*'],

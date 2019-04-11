@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
-import SchemaForm from '@basalt/bedrock-schema-form';
+import SchemaForm from '@basalt/knapsack-schema-form';
 import { boolean } from '@storybook/addon-knobs';
 
 function schemaFormDemo(data) {

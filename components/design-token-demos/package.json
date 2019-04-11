@@ -1,12 +1,12 @@
 {
-  "name": "@basalt/bedrock-design-token-demos",
+  "name": "@basalt/knapsack-design-token-demos",
   "license": "UNLICENSED",
   "version": "0.45.0",
   "description": "A collection of design token category demos that each show off a single CSS property.",
   "module": "dist/index.js",
   "main": "dist/index.js",
   "scripts": {
-    "build": "babel --config-file @basalt/bedrock-babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
+    "build": "babel --config-file @basalt/knapsack-babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
     "prepublishOnly": "yarn build",
     "watch": "yarn build --watch"
   },
@@ -21,13 +21,13 @@
   },
   "author": "Basalt (https://basalt.io/)",
   "dependencies": {
-    "@basalt/bedrock-atoms": "^0.45.0",
-    "@basalt/bedrock-breakpoints-demo": "^0.45.0",
-    "@basalt/bedrock-color-swatch": "^0.45.0",
-    "@basalt/bedrock-copy-to-clipboard": "^0.45.0",
-    "@basalt/bedrock-core": "^0.45.0",
-    "@basalt/bedrock-spacing-swatch": "^0.45.0",
-    "@basalt/bedrock-utils": "^0.45.0",
+    "@basalt/knapsack-atoms": "^0.45.0",
+    "@basalt/knapsack-breakpoints-demo": "^0.45.0",
+    "@basalt/knapsack-color-swatch": "^0.45.0",
+    "@basalt/knapsack-copy-to-clipboard": "^0.45.0",
+    "@basalt/knapsack-core": "^0.45.0",
+    "@basalt/knapsack-spacing-swatch": "^0.45.0",
+    "@basalt/knapsack-utils": "^0.45.0",
     "react-table": "^6.9.0"
   },
   "files": [

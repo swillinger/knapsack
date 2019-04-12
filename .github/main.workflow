@@ -330,9 +330,9 @@ action "tagged:build:docs" {
   #runs = ["sh", "-c", "cd docs-site/ && now deploy build/bedrock --local-config=now.json --token=$ZEIT_TOKEN --meta GITHUB_SHA=$GITHUB_SHA --scope=basalt --target production"]
 }
 
-action "isM" {
+action "isMaster2" {
   uses = "actions/bin/filter@master"
-  args = "master"
+  args = "branch master"
 
   # action "cypress" {
   #   uses = "docker://cypress/browsers:chrome67"
@@ -393,7 +393,7 @@ action "tagged:install" {
   uses = "actions/npm@59b64a598378f31e49cb76f27d6f3312b582f680"
   runs = "yarn"
   args = "install"
-  needs = ["isM"]
+  needs = ["isMaster2"]
 
   # action "cypress" {
   #   uses = "docker://cypress/browsers:chrome67"

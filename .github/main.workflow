@@ -276,7 +276,7 @@ action "deploy:docs" {
 action "tagged:deploy:docs" {
   uses = "actions/zeit-now@666edee2f3632660e9829cb6801ee5b7d47b303d"
   secrets = ["ZEIT_TOKEN"]
-  args = "deploy docs-site/build/bedrock  --local-config=docs-site/now.json --meta GITHUB_SHA=$GITHUB_SHA --scope=basalt --target production"
+  args = "deploy --platform-version 2 docs-site/build/bedrock  --local-config=docs-site/now.json --meta GITHUB_SHA=$GITHUB_SHA --scope=basalt --target production"
   needs = ["tagged:build:docs"]
 
   #"cypress",

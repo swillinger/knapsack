@@ -1,6 +1,6 @@
 # Knapsack
 
-See [Knapsack docs](https://www.getbedrock.com/docs) for more info.
+See [Knapsack docs](https://www.getknapsack.com/docs) for more info.
 
 ## How to install
 

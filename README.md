@@ -4,7 +4,7 @@
 
 ## Demos
 
-- Demo: <https://demo.getbedrock.com>
+- Demo: <https://demo.getknapsack.com>
 - Basalt's Design System, Crux, built on Knapsack: <https://design.basalt.io>
 
 ## Requirements
@@ -14,7 +14,7 @@
 ## Starting
 
 - Look at our [`./examples` folder](https://github.com/basaltinc/knapsack/tree/master/examples) to see how this can be implemented
-- [See docs here](https://www.getbedrock.com/docs) 
+- [See docs here](https://www.getknapsack.com/docs) 
 
 Spin up a starter setup with these commands:
 

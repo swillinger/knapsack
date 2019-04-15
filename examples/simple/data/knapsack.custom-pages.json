@@ -2,7 +2,34 @@
   "pages": [
     {
       "path": "/design-tokens/colors",
-      "slices": []
+      "slices": [
+        {
+          "id": "CXI_y4TDn",
+          "blockId": "design-token-slice",
+          "data": {
+            "tokens": {
+              "category": "background-color",
+              "tags": []
+            },
+            "demo": {
+              "id": "color-swatch"
+            }
+          }
+        },
+        {
+          "id": "co68_JV-2",
+          "blockId": "design-token-slice",
+          "data": {
+            "tokens": {
+              "category": "text-color",
+              "tags": []
+            },
+            "demo": {
+              "id": "text-color"
+            }
+          }
+        }
+      ]
     }
   ]
 }

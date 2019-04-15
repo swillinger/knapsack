@@ -1,21 +1,21 @@
 {
-  "name": "@knapsack/example-design-token-mania",
+  "name": "@basalt/bedrock-example-design-token-mania",
   "license": "ISC",
-  "version": "0.45.0",
+  "version": "0.45.3",
   "description": "",
   "private": true,
   "main": "index.js",
   "scripts": {
-    "build": "NODE_ENV=production node $NODE_DEBUG_OPTION ./node_modules/.bin/knapsack build",
+    "build": "NODE_ENV=production node $NODE_DEBUG_OPTION ./node_modules/.bin/bedrock build",
     "build:tokens": "theo ./design-tokens/tokens.yml --transform web --format raw.json,scss,html --dest ./assets/dist/tokens",
-    "serve": "NODE_ENV=production node $NODE_DEBUG_OPTION ./node_modules/.bin/knapsack serve",
-    "start": "node $NODE_DEBUG_OPTION ./node_modules/.bin/knapsack start",
-    "test": "knapsack test"
+    "serve": "NODE_ENV=production node $NODE_DEBUG_OPTION ./node_modules/.bin/bedrock serve",
+    "start": "node $NODE_DEBUG_OPTION ./node_modules/.bin/bedrock start",
+    "test": "bedrock test"
   },
   "dependencies": {
-    "@basalt/knapsack": "^0.45.0",
-    "@knapsack/renderer-html": "^0.45.0",
-    "@knapsack/renderer-twig": "^0.45.0",
+    "@basalt/bedrock": "^0.45.3",
+    "@basalt/bedrock-renderer-html": "^0.45.0",
+    "@basalt/bedrock-renderer-twig": "^0.45.0",
     "@basalt/demo-data": "^0.5.1"
   },
   "devDependencies": {

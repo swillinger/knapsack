@@ -8,35 +8,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-* docs test ([505124d](https://github.com/basaltinc/bedrock/commit/505124d))
-* docs version ([f9d97e3](https://github.com/basaltinc/bedrock/commit/f9d97e3))
 * release bump ([2f1199e](https://github.com/basaltinc/bedrock/commit/2f1199e))
-
-
-
-
-
-## [0.45.2](https://github.com/basaltinc/bedrock/compare/v0.45.1...v0.45.2) (2019-04-11)
-
-
-### Bug Fixes
-
-* adjust docs deploy name ([6953be0](https://github.com/basaltinc/bedrock/commit/6953be0))
-* correct docs site deploy ([065a50f](https://github.com/basaltinc/bedrock/commit/065a50f))
-
-
-
-
-
-## [0.45.1](https://github.com/basaltinc/bedrock/compare/v0.45.0...v0.45.1) (2019-04-08)
-
-
-### Bug Fixes
-
-* deploy tagged docs site ([b44f5f8](https://github.com/basaltinc/bedrock/commit/b44f5f8))
-* docs-site bump ([6edd86e](https://github.com/basaltinc/bedrock/commit/6edd86e))
-* move tagged deploy to own workflow ([e8838ae](https://github.com/basaltinc/bedrock/commit/e8838ae))
-* update GH actions filter to master ([918435d](https://github.com/basaltinc/bedrock/commit/918435d))
 
 
 
@@ -44,20 +16,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.45.0](https://github.com/basaltinc/bedrock/compare/v0.40.6...v0.45.0) (2019-04-08)
 
-
-### Bug Fixes
-
-* correct docs-site repo base url ([c79dca9](https://github.com/basaltinc/bedrock/commit/c79dca9))
-* docs-site postversion re-assigns git tag ([ed122ef](https://github.com/basaltinc/bedrock/commit/ed122ef))
-* docs-site script version => postversion ([61f403a](https://github.com/basaltinc/bedrock/commit/61f403a))
-* proper git clean at end of e2e test ([2ce21f6](https://github.com/basaltinc/bedrock/commit/2ce21f6))
-* re-enable auto docs-site versioning ([ae820a9](https://github.com/basaltinc/bedrock/commit/ae820a9))
-* revert docs-site postversion commit amend ([fed0588](https://github.com/basaltinc/bedrock/commit/fed0588))
-
-
-### Features
-
-* docs site ([289ffd7](https://github.com/basaltinc/bedrock/commit/289ffd7))
+**Note:** Version bump only for package @basalt/bedrock
 
 
 
@@ -65,18 +24,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.44.0](https://github.com/basaltinc/bedrock/compare/v0.40.6...v0.44.0) (2019-04-08)
 
-
-### Bug Fixes
-
-* correct docs-site repo base url ([c79dca9](https://github.com/basaltinc/bedrock/commit/c79dca9))
-* docs-site postversion re-assigns git tag ([ed122ef](https://github.com/basaltinc/bedrock/commit/ed122ef))
-* docs-site script version => postversion ([61f403a](https://github.com/basaltinc/bedrock/commit/61f403a))
-* re-enable auto docs-site versioning ([ae820a9](https://github.com/basaltinc/bedrock/commit/ae820a9))
-
-
-### Features
-
-* docs site ([289ffd7](https://github.com/basaltinc/bedrock/commit/289ffd7))
+**Note:** Version bump only for package @basalt/bedrock
 
 
 
@@ -84,17 +32,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.43.0](https://github.com/basaltinc/bedrock/compare/v0.40.6...v0.43.0) (2019-04-08)
 
-
-### Bug Fixes
-
-* correct docs-site repo base url ([c79dca9](https://github.com/basaltinc/bedrock/commit/c79dca9))
-* docs-site script version => postversion ([61f403a](https://github.com/basaltinc/bedrock/commit/61f403a))
-* re-enable auto docs-site versioning ([ae820a9](https://github.com/basaltinc/bedrock/commit/ae820a9))
-
-
-### Features
-
-* docs site ([289ffd7](https://github.com/basaltinc/bedrock/commit/289ffd7))
+**Note:** Version bump only for package @basalt/bedrock
 
 
 
@@ -102,17 +40,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.42.0](https://github.com/basaltinc/bedrock/compare/v0.40.6...v0.42.0) (2019-04-08)
 
-
-### Bug Fixes
-
-* correct docs-site repo base url ([c79dca9](https://github.com/basaltinc/bedrock/commit/c79dca9))
-* docs-site script version => postversion ([61f403a](https://github.com/basaltinc/bedrock/commit/61f403a))
-* re-enable auto docs-site versioning ([ae820a9](https://github.com/basaltinc/bedrock/commit/ae820a9))
-
-
-### Features
-
-* docs site ([289ffd7](https://github.com/basaltinc/bedrock/commit/289ffd7))
+**Note:** Version bump only for package @basalt/bedrock
 
 
 
@@ -120,61 +48,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.41.0](https://github.com/basaltinc/bedrock/compare/v0.40.6...v0.41.0) (2019-04-08)
 
-
-### Bug Fixes
-
-* correct docs-site repo base url ([c79dca9](https://github.com/basaltinc/bedrock/commit/c79dca9))
-* docs-site script version => postversion ([61f403a](https://github.com/basaltinc/bedrock/commit/61f403a))
-* re-enable auto docs-site versioning ([ae820a9](https://github.com/basaltinc/bedrock/commit/ae820a9))
-
-
-### Features
-
-* docs site ([289ffd7](https://github.com/basaltinc/bedrock/commit/289ffd7))
-
-
-
-
-
-## [0.40.6](https://github.com/basaltinc/bedrock/compare/v0.40.5...v0.40.6) (2019-04-08)
-
-
-### Bug Fixes
-
-* add docs-site/now.json ([76ac22f](https://github.com/basaltinc/bedrock/commit/76ac22f))
-* add path to now.json for docs site ([fa87684](https://github.com/basaltinc/bedrock/commit/fa87684))
-* amend docs site version commit ([e2631d1](https://github.com/basaltinc/bedrock/commit/e2631d1))
-* disable auto docs-site versioning ([edbb293](https://github.com/basaltinc/bedrock/commit/edbb293))
-* docs deploy w/o cd ([dca6c49](https://github.com/basaltinc/bedrock/commit/dca6c49))
-* git add new versioned docs ([add25ac](https://github.com/basaltinc/bedrock/commit/add25ac))
-* update config docs, add gifs ([040b1ee](https://github.com/basaltinc/bedrock/commit/040b1ee))
-
-
-### Features
-
-* docs site ([f9d9f08](https://github.com/basaltinc/bedrock/commit/f9d9f08))
-
-
-
-
-
-## [0.40.5](https://github.com/basaltinc/bedrock/compare/v0.40.4...v0.40.5) (2019-04-08)
-
-
-### Bug Fixes
-
-* docs deploy and index page ([0739c10](https://github.com/basaltinc/bedrock/commit/0739c10))
-
-
-
-
-
-## [0.40.4](https://github.com/basaltinc/bedrock/compare/v0.40.3...v0.40.4) (2019-04-08)
-
-
-### Bug Fixes
-
-* create docs site ([#230](https://github.com/basaltinc/bedrock/issues/230)) ([5dc6c61](https://github.com/basaltinc/bedrock/commit/5dc6c61))
+**Note:** Version bump only for package @basalt/bedrock
 
 
 
@@ -230,15 +104,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.39.2](https://github.com/basaltinc/bedrock/compare/v0.39.1...v0.39.2) (2019-03-27)
 
-**Note:** Version bump only for package @basalt/bedrock-monorepo
-
-
-
-
-
-## [0.39.1](https://github.com/basaltinc/bedrock/compare/v0.39.0...v0.39.1) (2019-03-07)
-
-**Note:** Version bump only for package @basalt/bedrock-monorepo
+**Note:** Version bump only for package @basalt/bedrock
 
 
 
@@ -246,10 +112,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.39.0](https://github.com/basaltinc/bedrock/compare/v0.38.3...v0.39.0) (2019-03-07)
 
-
-### Features
-
-* nesting schema tables ([#198](https://github.com/basaltinc/bedrock/issues/198)) ([db99ee7](https://github.com/basaltinc/bedrock/commit/db99ee7))
+**Note:** Version bump only for package @basalt/bedrock
 
 
 
@@ -257,10 +120,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.38.3](https://github.com/basaltinc/bedrock/compare/v0.38.2...v0.38.3) (2019-03-07)
 
-
-### Bug Fixes
-
-* code block padding ([822a0aa](https://github.com/basaltinc/bedrock/commit/822a0aa))
+**Note:** Version bump only for package @basalt/bedrock
 
 
 
@@ -385,10 +245,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.34.0](https://github.com/basaltinc/bedrock/compare/v0.33.3...v0.34.0) (2019-02-17)
 
-
-### Features
-
-* add more tokens and custom docs ([0bb124f](https://github.com/basaltinc/bedrock/commit/0bb124f))
+**Note:** Version bump only for package @basalt/bedrock
 
 
 
@@ -396,7 +253,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.33.3](https://github.com/basaltinc/bedrock/compare/v0.33.2...v0.33.3) (2019-02-16)
 
-**Note:** Version bump only for package @basalt/bedrock-monorepo
+**Note:** Version bump only for package @basalt/bedrock
 
 
 
@@ -404,15 +261,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.33.2](https://github.com/basaltinc/bedrock/compare/v0.33.1...v0.33.2) (2019-02-16)
 
-**Note:** Version bump only for package @basalt/bedrock-monorepo
-
-
-
-
-
-## [0.33.1](https://github.com/basaltinc/bedrock/compare/v0.33.0...v0.33.1) (2019-02-16)
-
-**Note:** Version bump only for package @basalt/bedrock-monorepo
+**Note:** Version bump only for package @basalt/bedrock
 
 
 
@@ -420,26 +269,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.33.0](https://github.com/basaltinc/bedrock/compare/v0.32.5...v0.33.0) (2019-02-15)
 
-
-### Features
-
-* add button html examples ([0c0cab5](https://github.com/basaltinc/bedrock/commit/0c0cab5))
-* add jumbotron to example/bootstrap ([5af34ee](https://github.com/basaltinc/bedrock/commit/5af34ee))
-* add twig and schema for button ([2a50595](https://github.com/basaltinc/bedrock/commit/2a50595))
-* start bootstrap example package ([3000f9c](https://github.com/basaltinc/bedrock/commit/3000f9c))
-
-
-### Reverts
-
-* chore: update deploy alias ([5233e55](https://github.com/basaltinc/bedrock/commit/5233e55))
-
-
-
-
-
-## [0.32.5](https://github.com/basaltinc/bedrock/compare/v0.32.4...v0.32.5) (2019-02-15)
-
-**Note:** Version bump only for package @basalt/bedrock-monorepo
+**Note:** Version bump only for package @basalt/bedrock
 
 
 
@@ -484,7 +314,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 * address issue with pattern schema form text input jumping ([#186](https://github.com/basaltinc/bedrock/issues/186)) ([f8ed250](https://github.com/basaltinc/bedrock/commit/f8ed250))
-* update renderer peerDeps ([bcd9458](https://github.com/basaltinc/bedrock/commit/bcd9458))
 
 
 
@@ -515,11 +344,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 # [0.31.0](https://github.com/basaltinc/bedrock/compare/v0.30.0...v0.31.0) (2019-02-12)
 
 
-### Bug Fixes
-
-* release nudge ([5f47060](https://github.com/basaltinc/bedrock/commit/5f47060))
-
-
 ### Features
 
 * trim deps and add scss ([b0a0eb2](https://github.com/basaltinc/bedrock/commit/b0a0eb2))
@@ -529,11 +353,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 # [0.30.0](https://github.com/basaltinc/bedrock/compare/v0.30.0-alpha.4...v0.30.0) (2019-02-08)
-
-
-### Bug Fixes
-
-* remove nested h6 ([afffebb](https://github.com/basaltinc/bedrock/commit/afffebb))
 
 
 ### Features
@@ -581,7 +400,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.29.3](https://github.com/basaltinc/bedrock/compare/v0.29.2...v0.29.3) (2019-01-28)
 
-**Note:** Version bump only for package @basalt/bedrock-monorepo
+**Note:** Version bump only for package @basalt/bedrock
 
 
 
@@ -688,17 +507,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 * markdown per template ([#179](https://github.com/basaltinc/bedrock/issues/179)) ([cd338ba](https://github.com/basaltinc/bedrock/commit/cd338ba)), closes [#180](https://github.com/basaltinc/bedrock/issues/180)
-
-
-
-
-
-## [0.27.2](https://github.com/basaltinc/bedrock/compare/v0.27.1...v0.27.2) (2019-01-15)
-
-
-### Bug Fixes
-
-* update twig-renderer ([47eeeb9](https://github.com/basaltinc/bedrock/commit/47eeeb9))
 
 
 
@@ -815,7 +623,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 * create BedrockRendererWebpackBase ([5d6ded3](https://github.com/basaltinc/bedrock/commit/5d6ded3))
-* new React templateRenderer ([cd8923d](https://github.com/basaltinc/bedrock/commit/cd8923d))
 
 
 
@@ -835,11 +642,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * validate templateRenderer instance ([b6adb3f](https://github.com/basaltinc/bedrock/commit/b6adb3f))
 
 
-### Performance Improvements
-
-* **bedrock-renderer-twig:** improve prod speed ([6e85515](https://github.com/basaltinc/bedrock/commit/6e85515))
-
-
 
 
 
@@ -856,7 +658,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 * add caching headers for internal files ([7aa345b](https://github.com/basaltinc/bedrock/commit/7aa345b))
 * add json utils ([cfb6c65](https://github.com/basaltinc/bedrock/commit/cfb6c65))
-* add outputDirName prop for templateRenderers ([b4036cb](https://github.com/basaltinc/bedrock/commit/b4036cb))
 * templateRenderers gain init method ([beae716](https://github.com/basaltinc/bedrock/commit/beae716))
 * templateRenderers now get more info in render ([91407ff](https://github.com/basaltinc/bedrock/commit/91407ff))
 * templateRenderers now have build and watch methods ([9a0a0a3](https://github.com/basaltinc/bedrock/commit/9a0a0a3))
@@ -885,7 +686,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.20.5](https://github.com/basaltinc/bedrock/compare/v0.20.4...v0.20.5) (2018-12-18)
 
-**Note:** Version bump only for package @basalt/bedrock-monorepo
+**Note:** Version bump only for package @basalt/bedrock
 
 
 
@@ -908,7 +709,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 * **bedrock:** server ignores pattern dirs with no bedrock.pattern.js file ([3d5e089](https://github.com/basaltinc/bedrock/commit/3d5e089)), closes [#164](https://github.com/basaltinc/bedrock/issues/164)
-* **bedrock-example-design-token-mania:** update template config ([10d7350](https://github.com/basaltinc/bedrock/commit/10d7350))
 
 
 
@@ -941,7 +741,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-* Add Syntax Highlighting - PR [#160](https://github.com/basaltinc/bedrock/issues/160) ([9effc44](https://github.com/basaltinc/bedrock/commit/9effc44)), closes [#83](https://github.com/basaltinc/bedrock/issues/83)
 * multiple template renderer support ([1563ec0](https://github.com/basaltinc/bedrock/commit/1563ec0)), closes [#162](https://github.com/basaltinc/bedrock/issues/162)
 
 
@@ -1000,7 +799,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.17.6](https://github.com/basaltinc/bedrock/compare/v0.17.5...v0.17.6) (2018-12-11)
 
-**Note:** Version bump only for package @basalt/bedrock-monorepo
+**Note:** Version bump only for package @basalt/bedrock
 
 
 
@@ -1019,7 +818,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.17.4](https://github.com/basaltinc/bedrock/compare/v0.17.3...v0.17.4) (2018-12-10)
 
-**Note:** Version bump only for package @basalt/bedrock-monorepo
+**Note:** Version bump only for package @basalt/bedrock
 
 
 
@@ -1031,7 +830,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 * **bedrock:** add Docs header menu item ([a7053fa](https://github.com/basaltinc/bedrock/commit/a7053fa))
-* release script ([16d8ad0](https://github.com/basaltinc/bedrock/commit/16d8ad0))
 
 
 
@@ -1044,11 +842,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 * **bedrock:** improve css and js config paths ([#146](https://github.com/basaltinc/bedrock/issues/146)) ([9539a54](https://github.com/basaltinc/bedrock/commit/9539a54)), closes [#145](https://github.com/basaltinc/bedrock/issues/145)
 * **bedrock:** type fix on config processing ([f8ad374](https://github.com/basaltinc/bedrock/commit/f8ad374))
-
-
-### Features
-
-* setup releases ([fdf7fca](https://github.com/basaltinc/bedrock/commit/fdf7fca)), closes [#145](https://github.com/basaltinc/bedrock/issues/145)
 
 
 
@@ -1068,7 +861,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.17.0](https://github.com/basaltinc/bedrock/compare/v0.16.6...v0.17.0) (2018-12-08)
 
-**Note:** Version bump only for package @basalt/bedrock-monorepo
+
+### Features
+
+* releasing Bedrock publically! setup Travis CI ([99bc547](https://github.com/basaltinc/bedrock/commit/99bc547))
 
 
 
@@ -1079,7 +875,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-* ci release tweak ([c4b0c0f](https://github.com/basaltinc/bedrock/commit/c4b0c0f))
 * server will let through requests to "/admin" ([4bd3cd2](https://github.com/basaltinc/bedrock/commit/4bd3cd2))
 
 
@@ -1099,7 +894,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.16.4](https://github.com/basaltinc/bedrock/compare/v0.16.3...v0.16.4) (2018-12-06)
 
-**Note:** Version bump only for package @basalt/bedrock-monorepo
+**Note:** Version bump only for package @basalt/bedrock
 
 
 
@@ -1122,7 +917,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.16.2](https://github.com/basaltinc/bedrock/compare/v0.16.1...v0.16.2) (2018-12-06)
 
-**Note:** Version bump only for package @basalt/bedrock-monorepo
+**Note:** Version bump only for package @basalt/bedrock
 
 
 
@@ -1130,7 +925,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.16.1](https://github.com/basaltinc/bedrock/compare/v0.16.1-alpha.6...v0.16.1) (2018-12-06)
 
-**Note:** Version bump only for package @basalt/bedrock-monorepo
+**Note:** Version bump only for package @basalt/bedrock
 
 
 
@@ -1230,7 +1025,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.12.3](https://github.com/basaltinc/bedrock/compare/v0.12.2...v0.12.3) (2018-11-29)
 
-**Note:** Version bump only for package @basalt/bedrock-monorepo
+**Note:** Version bump only for package @basalt/bedrock
 
 
 
@@ -1243,18 +1038,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 * **bedrock:** fix playground controls toggle ([47c598a](https://github.com/basaltinc/bedrock/commit/47c598a)), closes [#25](https://github.com/basaltinc/bedrock/issues/25)
 
-* **bedrock:** fix playground controls toggle ([47c598a](https://github.com/basaltinc/bedrock/commit/47c598a)), closes [#25](https://github.com/basaltinc/bedrock/issues/25)
-
-
-### Performance Improvements
-
-* **bedrock-atoms:** remove jittery tooltip animation ([fd5a5f1](https://github.com/basaltinc/bedrock/commit/fd5a5f1))
-
-### Performance Improvements
-
-* **bedrock:** parent brand link opens in new tab ([2e4fdf0](https://github.com/basaltinc/bedrock/commit/2e4fdf0))
-
-
 
 
 
@@ -1265,7 +1048,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 * **bedrock:** update footer message ([884489f](https://github.com/basaltinc/bedrock/commit/884489f))
-* **create-bedrock:** alter parentBrand url ([76cd4e7](https://github.com/basaltinc/bedrock/commit/76cd4e7))
 
 
 
@@ -1277,11 +1059,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 * **bedrock:** fix schemaform icons ([3d69f74](https://github.com/basaltinc/bedrock/commit/3d69f74)), closes [#54](https://github.com/basaltinc/bedrock/issues/54)
-
-
-### Features
-
-* demo buttons used in card ([2dfd265](https://github.com/basaltinc/bedrock/commit/2dfd265))
 
 
 
@@ -1311,10 +1088,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.10.2](https://github.com/basaltinc/bedrock/compare/v0.10.1...v0.10.2) (2018-11-28)
 
-
-### Bug Fixes
-
-* ensure now deploy uses latest create-bedrock pkg ([233c426](https://github.com/basaltinc/bedrock/commit/233c426))
+**Note:** Version bump only for package @basalt/bedrock
 
 
 
@@ -1333,11 +1107,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 # [0.10.0](https://github.com/basaltinc/bedrock/compare/v0.9.1...v0.10.0) (2018-11-28)
-
-
-### Bug Fixes
-
-* ensure releases don't trigger another build ([8cf3b98](https://github.com/basaltinc/bedrock/commit/8cf3b98))
 
 
 ### Features
@@ -1372,11 +1141,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 # [0.8.0](https://github.com/basaltinc/bedrock/compare/v0.7.7...v0.8.0) (2018-11-27)
-
-
-### Bug Fixes
-
-* **bedrock-utils:** preventing weird typescript bug from breaking install ([b11d53f](https://github.com/basaltinc/bedrock/commit/b11d53f))
 
 
 ### Features
@@ -1414,7 +1178,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-* setting up tooling around commitlint and releases ([11fcaf2](https://github.com/basaltinc/bedrock/commits/11fcaf2))
 * **bedrock:** fix pattern meta edit page ([92394fd](https://github.com/basaltinc/bedrock/commits/92394fd)), closes [#48](https://github.com/basaltinc/bedrock/issues/48) [#34](https://github.com/basaltinc/bedrock/issues/34) [#32](https://github.com/basaltinc/bedrock/issues/32)
 
 
@@ -1423,10 +1186,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.7.4](https://github.com/basaltinc/bedrock/compare/v0.7.3...v0.7.4) (2018-11-26)
 
-
-### Bug Fixes
-
-* **code-block:** add install docs ([0315bc0](https://github.com/basaltinc/bedrock/commits/0315bc0)), closes [#1](https://github.com/basaltinc/bedrock/issues/1)
+**Note:** Version bump only for package @basalt/bedrock
 
 
 
@@ -1434,4 +1194,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.7.3](https://github.com/basaltinc/bedrock/compare/v0.7.2...v0.7.3) (2018-11-26)
 
-**Note:** Version bump only for package @basalt/bedrock-monorepo
+**Note:** Version bump only for package @basalt/bedrock

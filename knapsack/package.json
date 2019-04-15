@@ -1,12 +1,12 @@
 {
-  "name": "@basalt/knapsack",
+  "name": "@basalt/bedrock",
   "license": "GPL-2.0-or-later",
-  "description": "Build Design Systems on top of Knapsack, by Basalt",
-  "version": "0.45.0",
+  "description": "Build Design Systems on top of Bedrock, by Basalt",
+  "version": "0.45.3",
   "author": "Basalt (https://basalt.io/)",
   "main": "src/index.js",
   "bin": {
-    "knapsack": "src/cli/knapsack-cli.js"
+    "bedrock": "src/cli/bedrock-cli.js"
   },
   "scripts": {
     "build": "rm -rf dist && NODE_ENV=production webpack-cli --hide-modules --progress --config ./webpack.config.js",
@@ -16,7 +16,7 @@
     "test": "run-s test:*"
   },
   "dependencies": {
-    "@knapsack/schema-utils": "^0.45.0",
+    "@basalt/bedrock-schema-utils": "^0.45.0",
     "apollo-boost": "^0.1.22",
     "apollo-server-express": "^2.2.6",
     "body-parser": "1.18.3",
@@ -46,25 +46,25 @@
     "ws": "^6.1.2"
   },
   "devDependencies": {
-    "@knapsack/api-demo": "^0.45.0",
-    "@knapsack/atoms": "^0.45.0",
-    "@knapsack/babel-config": "^0.45.0",
-    "@knapsack/breakpoints-demo": "^0.45.0",
-    "@knapsack/code-block": "^0.45.0",
-    "@knapsack/color-contrast-block": "^0.45.0",
-    "@knapsack/color-swatch": "^0.45.0",
-    "@knapsack/copy-to-clipboard": "^0.45.0",
-    "@knapsack/core": "^0.45.0",
-    "@knapsack/design-token-demos": "^0.45.0",
-    "@knapsack/schema-form": "^0.45.0",
-    "@knapsack/schema-table": "^0.45.0",
-    "@knapsack/smart-grid": "^0.45.0",
-    "@knapsack/spacing-swatch": "^0.45.0",
-    "@knapsack/spinner": "^0.45.0",
-    "@knapsack/tabbed-panel": "^0.45.0",
-    "@knapsack/utils": "^0.45.0",
+    "@basalt/bedrock-api-demo": "^0.45.0",
+    "@basalt/bedrock-atoms": "^0.45.0",
+    "@basalt/bedrock-babel-config": "^0.45.0",
+    "@basalt/bedrock-breakpoints-demo": "^0.45.0",
+    "@basalt/bedrock-code-block": "^0.45.0",
+    "@basalt/bedrock-color-contrast-block": "^0.45.0",
+    "@basalt/bedrock-color-swatch": "^0.45.0",
+    "@basalt/bedrock-copy-to-clipboard": "^0.45.0",
+    "@basalt/bedrock-core": "^0.45.0",
+    "@basalt/bedrock-design-token-demos": "^0.45.0",
+    "@basalt/bedrock-schema-form": "^0.45.0",
+    "@basalt/bedrock-schema-table": "^0.45.0",
+    "@basalt/bedrock-smart-grid": "^0.45.0",
+    "@basalt/bedrock-spacing-swatch": "^0.45.0",
+    "@basalt/bedrock-spinner": "^0.45.0",
+    "@basalt/bedrock-tabbed-panel": "^0.45.0",
+    "@basalt/bedrock-utils": "^0.45.0",
     "@basalt/demo-data": "0.5.1",
-    "@knapsack/eslint-config-knapsack": "^0.45.0",
+    "@basalt/eslint-config-bedrock": "^0.45.0",
     "@types/chokidar": "^1.7.5",
     "@types/express": "^4.16.0",
     "@types/fs-extra": "^5.0.4",
@@ -122,11 +122,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/basaltinc/knapsack"
+    "url": "https://github.com/basaltinc/bedrock"
   },
-  "homepage": "https://knapsack.basalt.io",
+  "homepage": "https://getbedrock.com",
   "bugs": {
-    "url": "https://github.com/basaltinc/knapsack/issues"
+    "url": "https://github.com/basaltinc/bedrock/issues"
   },
   "publishConfig": {
     "access": "public"

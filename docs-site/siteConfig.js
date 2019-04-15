@@ -42,7 +42,7 @@ const siteConfig = {
     { blog: true, label: 'Blog' },
   ],
 
-  disableHeaderTitle: true,
+  disableHeaderTitle: false,
   docsSideNavCollapsible: false,
   editUrl: 'https://github.com/basaltinc/knapsack/blob/master/docs/',
 
@@ -50,8 +50,8 @@ const siteConfig = {
   users,
 
   /* path to images for header/footer */
-  headerIcon: 'img/knapsack.png',
-  footerIcon: 'img/knapsack.png',
+  // headerIcon: 'img/knapsack.png',
+  // footerIcon: 'img/knapsack.png',
   favicon: 'img/favicon.ico',
 
   /* Colors for website */

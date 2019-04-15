@@ -102,7 +102,7 @@ const siteConfig = {
 
   twitter: true,
 
-  // @todo enable Google Analytics. This id was the one used on `getknapsack.com` from the `knapsack-site` repo
+  // @todo enable Google Analytics. This id was the one used on `knapsack.basalt.io` from the `knapsack-site` repo
   // gaTrackingId: 'UA-107417461-3',
 
   // You may provide arbitrary config keys to be used as needed by your

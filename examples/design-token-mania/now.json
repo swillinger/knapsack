@@ -1,6 +1,6 @@
 {
   "name": "knapsack-example-design-token-mania",
-  "alias": "design-token-mania.demo.getbedrock.com",
+  "alias": "design-token-mania.demo.getknapsack.com",
   "version": 1,
   "type": "docker",
   "scale": {

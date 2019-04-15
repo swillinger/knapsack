@@ -4,7 +4,7 @@
 
 ## Demos
 
-- Demo: <https://demo.getbedrock.com>
+- Demo: <https://demo.getknapsack.com>
 - Basalt's Design System, Crux, built on Knapsack: <https://design.basalt.io>
 
 ## Requirements

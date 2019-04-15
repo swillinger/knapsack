@@ -28,7 +28,7 @@ import {
   X,
 } from './header.styles';
 import { BASE_PATHS } from '../../lib/constants';
-import knapsackLogo from '../assets/logo--orange.svg';
+import knapsackLogo from '../assets/knapsack-logo-trans.svg';
 
 const headerQuery = gql`
   {

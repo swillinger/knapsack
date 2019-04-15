@@ -28,11 +28,11 @@ import {
   FooterBuiltOn,
   FooterBuiltOnImg,
   FooterBuiltOnInner,
-  FooterCreatedByImg,
+  // FooterCreatedByImg,
   SubFooterWrapper,
 } from './footer.styles';
-import knapsackBranding from '../assets/built-on.svg';
-import createdBy from '../assets/created-by.svg';
+import knapsackBranding from '../assets/knapsack-bg-black-trans.svg';
+// import createdBy from '../assets/created-by.svg';
 
 const query = gql`
   {
@@ -82,21 +82,21 @@ class Footer extends Component {
                   )}
                 </FooterMenu>
                 <FooterBuiltOn>
-                  <FooterBuiltOnInner>{knapsackVersion}</FooterBuiltOnInner>
                   <a
-                    href="https://www.getbedrock.com/"
+                    href="https://knapsack.basalt.io"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <FooterBuiltOnImg src={knapsackBranding} alt="Knapsack" />
                   </a>
-                  <a
-                    href="https://basalt.io"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FooterCreatedByImg src={createdBy} alt="Created by" />
-                  </a>
+                  <FooterBuiltOnInner>v{knapsackVersion}</FooterBuiltOnInner>
+                  {/* <a */}
+                  {/*  href="https://basalt.io" */}
+                  {/*  target="_blank" */}
+                  {/*  rel="noopener noreferrer" */}
+                  {/* > */}
+                  {/*  <FooterCreatedByImg src={createdBy} alt="Created by" /> */}
+                  {/* </a> */}
                 </FooterBuiltOn>
               </FooterInner>
               <SubFooterWrapper>

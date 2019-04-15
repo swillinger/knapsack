@@ -75,17 +75,15 @@ export const FooterBuiltOn = styled.div`
 `;
 
 export const FooterBuiltOnImg = styled.img`
-  height: 40px;
+  height: 47px;
   width: auto;
   display: block;
 `;
 
 export const FooterBuiltOnInner = styled.div`
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.25;
-  position: absolute;
-  bottom: -3px;
-  left: 42px;
+  text-align: center;
 `;
 
 export const FooterCreatedByImg = styled.img`

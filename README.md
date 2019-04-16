@@ -1,6 +1,4 @@
-# Knapsack (soon to be renamed to Knapsack)
-
-> This is currently a technical preview while pre-v1.0.0; any feedback is very welcome! 
+# Knapsack (formerly Bedrock)
 
 ## Demos
 

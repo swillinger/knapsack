@@ -29,7 +29,9 @@ export const LoadableFooter = Loadable({
 
 export const LoadableCustomPage = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "custom-slices-page" */ './pages/custom-page/custom-page'),
+    import(
+      /* webpackChunkName: "custom-slices-page" */ './pages/custom-page/custom-page'
+    ),
   loading: Spinner,
 });
 
@@ -46,7 +48,9 @@ export const LoadableChangelogPage = Loadable({
 
 export const LoadablePatternView = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "pattern-view-page" */ './pages/pattern-view/pattern-view-page'),
+    import(
+      /* webpackChunkName: "pattern-view-page" */ './pages/pattern-view/pattern-view-page'
+    ),
   loading: Spinner,
 });
 
@@ -58,13 +62,17 @@ export const LoadableHome = Loadable({
 
 export const LoadablePatternEdit = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "pattern-edit-page" */ './pages/pattern-edit-page'),
+    import(
+      /* webpackChunkName: "pattern-edit-page" */ './pages/pattern-edit-page'
+    ),
   loading: Spinner,
 });
 
 export const LoadablePatternNew = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "pattern-new-page" */ './pages/pattern-new-page'),
+    import(
+      /* webpackChunkName: "pattern-new-page" */ './pages/pattern-new-page'
+    ),
   loading: Spinner,
 });
 
@@ -82,62 +90,82 @@ export const LoadablePageBuilder = Loadable({
 
 export const LoadablePageBuilderLandingPage = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "page-builder-landing-page" */ './pages/page-builder-landing-page'),
+    import(
+      /* webpackChunkName: "page-builder-landing-page" */ './pages/page-builder-landing-page'
+    ),
   loading: Spinner,
 });
 
 export const LoadableTransitions = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "transitions-page" */ './pages/design-tokens/transitions-page'),
+    import(
+      /* webpackChunkName: "transitions-page" */ './pages/design-tokens/transitions-page'
+    ),
   loading: Spinner,
 });
 
 export const LoadableBreakpoints = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "breakpoints-page" */ './pages/design-tokens/breakpoints-page'),
+    import(
+      /* webpackChunkName: "breakpoints-page" */ './pages/design-tokens/breakpoints-page'
+    ),
   loading: Spinner,
 });
 
 export const LoadableColors = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "colors-page" */ './pages/design-tokens/colors-page'),
+    import(
+      /* webpackChunkName: "colors-page" */ './pages/design-tokens/colors-page'
+    ),
   loading: Spinner,
 });
 
 export const LoadableShadows = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "shadows-page" */ './pages/design-tokens/shadows-page'),
+    import(
+      /* webpackChunkName: "shadows-page" */ './pages/design-tokens/shadows-page'
+    ),
   loading: Spinner,
 });
 
 export const LoadableBorders = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "borders-page" */ './pages/design-tokens/borders-page'),
+    import(
+      /* webpackChunkName: "borders-page" */ './pages/design-tokens/borders-page'
+    ),
   loading: Spinner,
 });
 
 export const LoadableSizings = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "sizings-page" */ './pages/design-tokens/sizings-page'),
+    import(
+      /* webpackChunkName: "sizings-page" */ './pages/design-tokens/sizings-page'
+    ),
   loading: Spinner,
 });
 
 export const LoadableTypography = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "typography" */ './pages/design-tokens/typography-page'),
+    import(
+      /* webpackChunkName: "typography" */ './pages/design-tokens/typography-page'
+    ),
   loading: Spinner,
 });
 
 export const LoadablePatternsPage = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "patterns-page" */ './pages/patterns-filterable-grid-page'),
+    import(
+      /* webpackChunkName: "patterns-page" */ './pages/patterns-filterable-grid-page'
+    ),
   loading: Spinner,
 });
 
 export const LoadableSecondaryNav = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "secondary-nav" */
-    './components/secondary-nav'),
+    import(
+      /* webpackChunkName: "secondary-nav" */
+      './components/secondary-nav'
+    ),
   loading: Spinner,
 });
 
@@ -149,7 +177,9 @@ export const LoadableSchemaTable = Loadable({
 
 export const LoadableVariationDemo = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "variation-demo" */ './components/variation-demo'),
+    import(
+      /* webpackChunkName: "variation-demo" */ './components/variation-demo'
+    ),
   loading: Spinner,
 });
 

@@ -17,7 +17,7 @@
 Spin up a starter setup with these commands:
 
 ```bash
-npx create-knapsack my-design-system
+npm create knapsack my-design-system
 cd my-design-system
 npm install
 npm start

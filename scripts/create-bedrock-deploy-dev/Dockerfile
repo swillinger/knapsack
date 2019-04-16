@@ -5,7 +5,7 @@ ARG CIRCLE_BUILD_URL
 RUN echo "CIRCLE_BUILD_URL: $CIRCLE_BUILD_URL"
 RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
 WORKDIR /app
-RUN npx create-bedrock@next my-site && cd my-site && npm install && npm run build
+RUN npx create-knapsack@next my-site && cd my-site && npm install && npm run build
 # COPY . .
 EXPOSE 3999
 # RUN npm install

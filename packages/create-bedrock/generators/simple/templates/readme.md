@@ -23,5 +23,5 @@ Open these browser windows:
 
 ## Config Files
 
-- `bedrock.config.js`
+- `knapsack.config.js`
 

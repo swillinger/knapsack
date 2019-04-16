@@ -1,11 +1,11 @@
 {
-  "name": "@basalt/bedrock-pretty-code",
+  "name": "@knapsack/pretty-code",
   "version": "0.45.0",
-  "description": "A Bedrock component for syntax highlighting code",
+  "description": "A Knapsack component for syntax highlighting code",
   "module": "dist/pretty-code.js",
   "main": "dist/pretty-code.js",
   "scripts": {
-    "build": "babel --config-file @basalt/bedrock-babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
+    "build": "babel --config-file @knapsack/babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
     "prepublishOnly": "yarn build",
     "watch": "yarn build --watch"
   },

@@ -1,5 +1,5 @@
 {
-  "name": "@basalt/bedrock-docs-site",
+  "name": "@knapsack/docs-site",
   "private": true,
   "version": "0.45.2",
   "scripts": {

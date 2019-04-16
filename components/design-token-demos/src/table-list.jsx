@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import { containsString } from '@basalt/bedrock-utils';
-import CopyToClipboard from '@basalt/bedrock-copy-to-clipboard';
+import { containsString } from '@knapsack/utils';
+import CopyToClipboard from '@knapsack/copy-to-clipboard';
 import { demoPropTypes } from './utils';
 import './table-list.css';
 

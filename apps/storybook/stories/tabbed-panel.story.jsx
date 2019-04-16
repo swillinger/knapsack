@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
-import TabbedPanel from '@basalt/bedrock-tabbed-panel';
+import TabbedPanel from '@knapsack/tabbed-panel';
 import { paragraph, title } from '@basalt/demo-data';
 
 const tabbedPanelItems = [

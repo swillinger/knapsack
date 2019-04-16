@@ -4,7 +4,7 @@ title: Configuration
 original_id: config
 ---
 
-### `bedrock.config.js`
+### `knapsack.config.js`
 
 This is the main config file. 
 

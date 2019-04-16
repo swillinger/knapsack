@@ -1,12 +1,12 @@
 {
-  "name": "@basalt/bedrock-core",
+  "name": "@knapsack/core",
   "license": "GPL-2.0-or-later",
   "version": "0.45.0",
-  "description": "The core of Bedrock",
+  "description": "The core of Knapsack",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
-    "build": "babel --config-file @basalt/bedrock-babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
+    "build": "babel --config-file @knapsack/babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
     "prepublishOnly": "yarn build",
     "watch": "yarn build --watch"
   },

@@ -1,9 +1,9 @@
 {
-  "name": "create-bedrock",
+  "name": "create-knapsack",
   "license": "GPL-2.0-or-later",
   "version": "0.45.0",
   "preferGlobal": true,
-  "description": "A Bedrock component that helps build Design Systems",
+  "description": "A Knapsack component that helps build Design Systems",
   "bin": "bin/index.js",
   "scripts": {},
   "dependencies": {

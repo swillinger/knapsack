@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-// @todo pull into Bedrock theming vars
+// @todo pull into Knapsack theming vars
 const statusColorSets = {
   info: {
     text: '#004085',

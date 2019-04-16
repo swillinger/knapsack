@@ -127,7 +127,7 @@ git clean -df
 
 # Install the app in a temporary location
 cd $temp_app_path
-npx create-bedrock test-app
+npx create-knapsack test-app
 cd test-app
 npm install
 echo 'Install successfull. Building...'
@@ -137,7 +137,7 @@ echo 'Build successfull!'
 # npm i -g now@latest --unsafe-perm
 # echo 'Hiding now deploy command as it contains a secret'
 # set +C
-# now --build-env NPM_TOKEN=@npm-token --token=$NOW_TOKEN --team=basalt --name='create-bedrock' --no-clipboard
+# now --build-env NPM_TOKEN=@npm-token --token=$NOW_TOKEN --team=basalt --name='create-knapsack' --no-clipboard
 # set -x
 
 echo 'Cleaning up...'

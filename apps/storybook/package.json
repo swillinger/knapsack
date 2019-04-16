@@ -1,5 +1,5 @@
 {
-  "name": "@basalt/bedrock-storybook",
+  "name": "@knapsack/storybook",
   "license": "ISC",
   "version": "0.45.0",
   "private": true,
@@ -10,7 +10,7 @@
     "start": "start-storybook -p 9001 -c .storybook"
   },
   "dependencies": {
-    "@basalt/bedrock-core": "^0.45.0",
+    "@knapsack/core": "^0.45.0",
     "@storybook/addon-actions": "^3.4.10",
     "@storybook/addon-info": "^3.4.10",
     "@storybook/react": "^3.4.10",

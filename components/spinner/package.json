@@ -1,12 +1,12 @@
 {
-  "name": "@basalt/bedrock-spinner",
+  "name": "@knapsack/spinner",
   "license": "GPL-2.0-or-later",
   "version": "0.45.0",
-  "description": "A Bedrock component that helps build Design Systems",
+  "description": "A Knapsack component that helps build Design Systems",
   "module": "dist/spinner.js",
   "main": "dist/spinner.js",
   "scripts": {
-    "build": "babel --config-file @basalt/bedrock-babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
+    "build": "babel --config-file @knapsack/babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
     "prepublishOnly": "yarn build",
     "watch": "yarn build --watch"
   },
@@ -21,7 +21,7 @@
   },
   "author": "Basalt (https://basalt.io/)",
   "dependencies": {
-    "@basalt/bedrock-core": "^0.45.0"
+    "@knapsack/core": "^0.45.0"
   },
   "files": [
     "./dist"

@@ -1,10 +1,10 @@
-const { styleDictionaryBedrockFormat } = require('@basalt/bedrock');
+const { styleDictionaryKnapsackFormat } = require('@basalt/knapsack');
 const StyleDictionary = require('style-dictionary');
 const template = require('lodash.template');
 const { readFileSync } = require('fs');
 const { join } = require('path');
 
-StyleDictionary.registerFormat(styleDictionaryBedrockFormat);
+StyleDictionary.registerFormat(styleDictionaryKnapsackFormat);
 
 StyleDictionary.registerFormat({
   name: 'custom-sass-map-flat',
@@ -61,14 +61,14 @@ module.exports = {
         // },
       ],
     },
-    bedrock: {
+    knapsack: {
       transforms: ['attribute/cti', 'name/cti/kebab'],
       buildPath,
       prefix,
       files: [
         {
-          destination: 'bedrock-design-tokens.json',
-          format: 'bedrock',
+          destination: 'knapsack-design-tokens.json',
+          format: 'knapsack',
         },
       ],
     },

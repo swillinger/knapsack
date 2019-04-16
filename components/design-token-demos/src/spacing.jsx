@@ -1,5 +1,5 @@
 import React from 'react';
-import SpacingSwatches from '@basalt/bedrock-spacing-swatch';
+import SpacingSwatches from '@knapsack/spacing-swatch';
 import { demoPropTypes } from './utils';
 
 export const SpacingDemo = ({ tokens }) => {

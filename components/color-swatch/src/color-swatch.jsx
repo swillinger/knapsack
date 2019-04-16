@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { convertColor, hasOpacity, parseColor } from '@basalt/bedrock-utils';
-import { Select, Button } from '@basalt/bedrock-atoms';
-import CopyToClipboard from '@basalt/bedrock-copy-to-clipboard';
+import { convertColor, hasOpacity, parseColor } from '@knapsack/utils';
+import { Select, Button } from '@knapsack/atoms';
+import CopyToClipboard from '@knapsack/copy-to-clipboard';
 import {
   SwatchWrapper,
   RightLabel,
@@ -16,7 +16,7 @@ import {
  * Creates Sketch Palette file format from tokens
  * Requires Sketch Palettes plugin
  * @link https://github.com/andrewfiorillo/sketch-palettes
- * @param {BedrockDesignToken[]} tokens
+ * @param {KnapsackDesignToken[]} tokens
  * @return {string}
  */
 function tokensToSketchPalettes(tokens) {

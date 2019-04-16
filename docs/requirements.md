@@ -9,12 +9,12 @@ title: Requirements
 
 ### Hosting & Deployment
 
-Bedrock is a powerful API-first design system builder, and is not a static site, so it needs a bit more than your classic design system hosting.
+Knapsack is a powerful API-first design system builder, and is not a static site, so it needs a bit more than your classic design system hosting.
 
-Bedrock is most easily hosted by a Docker container and we have a [Bedrock Docker on Docker Hub](https://hub.docker.com/r/basaltinc/bedrock) ready to use. Deployment using anything that can deploy Docker is setup by having a `Dockerfile` with this:
+Knapsack is most easily hosted by a Docker container and we have a [Knapsack Docker on Docker Hub](https://hub.docker.com/r/basaltinc/knapsack) ready to use. Deployment using anything that can deploy Docker is setup by having a `Dockerfile` with this:
 
 ```
-FROM basaltinc/bedrock:latest
+FROM basaltinc/knapsack:latest
 WORKDIR /app
 COPY . .
 EXPOSE 3999
@@ -55,7 +55,7 @@ now deploy
 now alias
 ```
 
-You can see a real example with how [Basalt](https://basalt.io) deploys our Design System, Crux, build on Bedrock:
+You can see a real example with how [Basalt](https://basalt.io) deploys our Design System, Crux, build on Knapsack:
 
 - [Repo here](https://github.com/basaltinc/crux/)
   - [`Dockerfile`](https://github.com/basaltinc/crux/blob/master/Dockerfile)

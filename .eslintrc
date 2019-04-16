@@ -1,7 +1,7 @@
 {
   "root": true,
   "plugins": ["cypress"],
-  "extends": ["@basalt/eslint-config-bedrock", "plugin:cypress/recommended"],
+  "extends": ["@knapsack", "plugin:cypress/recommended"],
   "env":{
     "cypress/globals": true
   }

@@ -63,7 +63,7 @@ class Footer extends React.Component {
               Twitter
             </a>
             <a
-              href="mailto:bedrock@basalt.io"
+              href="mailto:knapsack@basalt.io"
               target="_blank"
               rel="noreferrer noopener"
             >
@@ -73,12 +73,12 @@ class Footer extends React.Component {
           <div>
             <h5>More</h5>
             <a href={`${this.props.config.baseUrl}blog`}>Blog</a>
-            <a href="https://github.com/basaltinc/bedrock">GitHub</a>
+            <a href="https://github.com/basaltinc/knapsack">GitHub</a>
             <a
               className="github-button"
               href={this.props.config.repoUrl}
               data-icon="octicon-star"
-              data-count-href="/basaltinc/bedrock/stargazers"
+              data-count-href="/basaltinc/knapsack/stargazers"
               data-show-count="true"
               data-count-aria-label="# stargazers on GitHub"
               aria-label="Star this project on GitHub"

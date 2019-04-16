@@ -1,11 +1,11 @@
-# Bedrock
+# knapsack
 
-See [Bedrock docs](https://www.getbedrock.com/docs) for more info.
+See [knapsack docs](https://www.getknapsack.com/docs) for more info.
 
 ## How to install
 
 ```bash
-npx create-bedrock my-design-system
+npx create-knapsack my-design-system
 cd my-design-system
 npm install
 npm start

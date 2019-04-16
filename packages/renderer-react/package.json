@@ -1,5 +1,5 @@
 {
-  "name": "@basalt/bedrock-renderer-react",
+  "name": "@knapsack/renderer-react",
   "version": "0.45.0",
   "description": "Render React",
   "main": "src/index.js",
@@ -8,7 +8,7 @@
     "camelcase": "^4.1.0"
   },
   "peerDependencies": {
-    "@basalt/bedrock": "^0.32.0",
+    "@basalt/knapsack": "^0.32.0",
     "react": "^15.0.0 || ^16.0.0",
     "react-dom": "^15.0.0 || ^16.0.0",
     "webpack": "^4.0.0"

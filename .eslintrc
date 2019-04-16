@@ -1,7 +1,7 @@
 {
   "root": true,
   "plugins": ["cypress"],
-  "extends": ["@knapsack/eslint-config-knapsack", "plugin:cypress/recommended"],
+  "extends": ["@knapsack", "plugin:cypress/recommended"],
   "env":{
     "cypress/globals": true
   }

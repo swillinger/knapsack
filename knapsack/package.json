@@ -2,7 +2,7 @@
   "name": "@basalt/knapsack",
   "license": "GPL-2.0-or-later",
   "description": "Build Design Systems on top of knapsack, by Basalt",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Basalt (https://basalt.io/)",
   "main": "src/index.js",
   "bin": {

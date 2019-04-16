@@ -27,6 +27,8 @@ export const LoadableFooter = Loadable({
   loading: Spinner,
 });
 
+// @todo fix
+/* eslint-disable import/no-cycle */
 export const LoadableCustomPage = Loadable({
   loader: () =>
     import(
@@ -34,6 +36,7 @@ export const LoadableCustomPage = Loadable({
     ),
   loading: Spinner,
 });
+/* eslint-enable import/no-cycle */
 
 export const LoadableDocPage = Loadable({
   loader: () => import(/* webpackChunkName: "doc-page" */ './pages/doc'),
@@ -46,6 +49,8 @@ export const LoadableChangelogPage = Loadable({
   loading: Spinner,
 });
 
+// @todo fix
+/* eslint-disable import/no-cycle */
 export const LoadablePatternView = Loadable({
   loader: () =>
     import(
@@ -53,6 +58,7 @@ export const LoadablePatternView = Loadable({
     ),
   loading: Spinner,
 });
+/* eslint-enable import/no-cycle */
 
 export const LoadableHome = Loadable({
   loader: () =>

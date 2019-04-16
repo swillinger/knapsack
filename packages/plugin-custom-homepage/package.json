@@ -1,11 +1,11 @@
 {
   "name": "@knapsack/plugin-custom-homepage",
   "license": "GPL-2.0-or-later",
-  "version": "0.45.0",
+  "version": "1.0.0",
   "description": "A Knapsack plugin for setting a custom home page",
   "scripts": {},
   "dependencies": {
-    "@knapsack/core": "^0.45.0"
+    "@knapsack/core": "^1.0.0"
   },
   "peerDependencies": {
     "react": "^16.8.0"

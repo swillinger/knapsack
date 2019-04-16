@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/cypress",
   "private": true,
-  "version": "0.45.0",
+  "version": "1.0.0",
   "scripts": {
     "cypress": "cypress",
     "cypress:run": "percy exec -- cypress run",

@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/design-token-demos",
   "license": "UNLICENSED",
-  "version": "0.45.0",
+  "version": "1.0.0",
   "description": "A collection of design token category demos that each show off a single CSS property.",
   "module": "dist/index.js",
   "main": "dist/index.js",
@@ -21,13 +21,13 @@
   },
   "author": "Basalt (https://basalt.io/)",
   "dependencies": {
-    "@knapsack/atoms": "^0.45.0",
-    "@knapsack/breakpoints-demo": "^0.45.0",
-    "@knapsack/color-swatch": "^0.45.0",
-    "@knapsack/copy-to-clipboard": "^0.45.0",
-    "@knapsack/core": "^0.45.0",
-    "@knapsack/spacing-swatch": "^0.45.0",
-    "@knapsack/utils": "^0.45.0",
+    "@knapsack/atoms": "^1.0.0",
+    "@knapsack/breakpoints-demo": "^1.0.0",
+    "@knapsack/color-swatch": "^1.0.0",
+    "@knapsack/copy-to-clipboard": "^1.0.0",
+    "@knapsack/core": "^1.0.0",
+    "@knapsack/spacing-swatch": "^1.0.0",
+    "@knapsack/utils": "^1.0.0",
     "react-table": "^6.9.0"
   },
   "files": [

@@ -1,6 +1,6 @@
 {
   "name": "@knapsack/pretty-code",
-  "version": "0.45.0",
+  "version": "1.0.0",
   "description": "A Knapsack component for syntax highlighting code",
   "module": "dist/pretty-code.js",
   "main": "dist/pretty-code.js",

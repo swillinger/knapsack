@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/schema-table",
   "license": "GPL-2.0-or-later",
-  "version": "0.45.0",
+  "version": "1.0.0",
   "description": "A Knapsack component that helps build Design Systems",
   "module": "dist/schema-table.js",
   "main": "dist/schema-table.js",
@@ -11,7 +11,7 @@
     "watch": "yarn build --watch"
   },
   "dependencies": {
-    "@knapsack/core": "^0.45.0",
+    "@knapsack/core": "^1.0.0",
     "react-table": "^6.8.6"
   },
   "devDependencies": {

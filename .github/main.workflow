@@ -277,7 +277,7 @@ action "tagged:deploy:docs" {
   uses = "actions/zeit-now@666edee2f3632660e9829cb6801ee5b7d47b303d"
   secrets = ["ZEIT_TOKEN"]
   #args = "deploy --platform-version 2 docs-site/build/knapsack  --local-config=docs-site/now.json --meta GITHUB_SHA=$GITHUB_SHA --scope=basalt --target production"
-  runs = ["sh", "-c", "cp docs-site/now.json docs-site/build/knapsack && cd docs-site/build/knapsack && now deploy --scope=basalt --target production --meta GITHUB_SHA=$GITHUB_SHA --token $ZEIT_TOKEN"]
+  runs = ["sh", "-c", "cp docs-site/now.json docs-site/build/knapsack && cd docs-site/build/knapsack && now deploy --scope=basalt --target production --meta GITHUB_SHA=$GITHUB_SHA --token $ZEIT_TOKEN && now alias --scope basalt --token $ZEIT_TOKEN"]
   needs = ["tagged:build:docs"]
 
   #"cypress",

@@ -1,6 +1,6 @@
 {
   "name": "knapsack-example-bootstrap",
-  "alias": "bootstrap.demo.getknapsack.com",
+  "alias": "bootstrap.demo.getbedrock.com",
   "version": 1,
   "type": "docker",
   "scale": {

@@ -2,7 +2,7 @@
 
 ## Demos
 
-- Demo: <https://demo.getbedrock.com>
+- Demo: <https://bootstrap.demo.getbedrock.com>
 - Basalt's Design System, Crux, built on Knapsack: <https://design.basalt.io>
 
 ## Requirements
@@ -32,7 +32,3 @@ Open these browser windows:
 - `npm start` - Compile, start all watches and local server
 - `npm run build` - Compile with compression turned on
 - `npm run serve` - Start server
-
-
-
-

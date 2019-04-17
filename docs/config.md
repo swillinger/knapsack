@@ -1,8 +1,7 @@
 ---
-id: config
 title: Configuration
+id: config
 ---
-
 ### `knapsack.config.js`
 
 This is the main config file. 
@@ -19,7 +18,6 @@ const format = theoKnapsackFormat(theo);
 /** @type {KnapsackUserConfig} */
 const config = {
   patterns: ['./assets/patterns/*', './assets/pages/*'],
-  newPatternDir: './assets/patterns/',
   designTokens: {
     createCodeSnippet: token => `$${token.name}`,
     data: theo.convertSync({
@@ -71,5 +69,3 @@ const config = {
 
 module.exports = config;
 ```
-
-# Test header

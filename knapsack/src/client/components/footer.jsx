@@ -83,7 +83,7 @@ class Footer extends Component {
                 </FooterMenu>
                 <FooterBuiltOn>
                   <a
-                    href="https://knapsack.sh"
+                    href="https://knapsack.basalt.io"
                     target="_blank"
                     rel="noopener noreferrer"
                   >

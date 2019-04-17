@@ -12,7 +12,7 @@
 ## Starting
 
 - Look at our [`./examples` folder](https://github.com/basaltinc/knapsack/tree/master/examples) to see how this can be implemented
-- [See docs here](https://knapsack.sh) 
+- [See docs here](https://knapsack.basalt.io) 
 
 Spin up a starter setup with these commands:
 

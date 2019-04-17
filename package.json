@@ -91,7 +91,7 @@
     "type": "git",
     "url": "https://github.com/basaltinc/knapsack"
   },
-  "homepage": "https://knapsack.sh",
+  "homepage": "https://knapsack.basalt.io",
   "bugs": {
     "url": "https://github.com/basaltinc/knapsack/issues"
   }

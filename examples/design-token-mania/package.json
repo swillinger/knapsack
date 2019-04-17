@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/example-design-token-mania",
   "license": "ISC",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "private": true,
   "main": "index.js",
@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@basalt/demo-data": "^0.5.1",
-    "@basalt/knapsack": "^1.0.2",
+    "@basalt/knapsack": "^1.0.3",
     "@knapsack/renderer-html": "^1.0.0",
     "@knapsack/renderer-twig": "^1.0.0"
   },

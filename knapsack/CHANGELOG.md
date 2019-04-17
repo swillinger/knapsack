@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.6](https://github.com/basaltinc/knapsack/compare/v1.0.5...v1.0.6) (2019-04-17)
+
+
+### Bug Fixes
+
+* adding empty line in Knapsack readme (testing) ([a4b9251](https://github.com/basaltinc/knapsack/commit/a4b9251))
+* knapsack bump ([58b516e](https://github.com/basaltinc/knapsack/commit/58b516e))
+
+
+
+
+
 ## [1.0.5](https://github.com/basaltinc/knapsack/compare/v1.0.4...v1.0.5) (2019-04-17)
 
 **Note:** Version bump only for package @basalt/knapsack

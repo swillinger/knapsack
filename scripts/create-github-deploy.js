@@ -80,9 +80,7 @@ async function go() {
     .replace(`${latestDeploy.name}-`, '')
     .replace('.now.sh', '');
   // https://zeit.co/basalt/knapsack-example-bootstrap/deployment/qmskhenrxq/logs
-  const logUrl = `https://zeit.co/basalt/${
-    latestDeploy.name
-  }/deployment/${deployId}/logs`;
+  const logUrl = `https://zeit.co/basalt/${latestDeploy.name}/${deployId}/logs`;
 
   console.log({
     deployUrl,

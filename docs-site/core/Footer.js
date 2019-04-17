@@ -63,7 +63,7 @@ class Footer extends React.Component {
               Twitter
             </a>
             <a
-              href="mailto:knapsack@basalt.io"
+              href="mailto:hi@basalt.io"
               target="_blank"
               rel="noreferrer noopener"
             >

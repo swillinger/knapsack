@@ -1,6 +1,6 @@
 # Knapsack
 
-See [Knapsack docs](https://knapsack.basalt.io) for more info.
+See [Knapsack docs](https://knapsack.sh) for more info.
 
 ## How to install
 

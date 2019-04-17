@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/breakpoints-demo",
   "license": "GPL-2.0-or-later",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A Knapsack component that helps build Design Systems",
   "module": "dist/breakpoints-demo.js",
   "main": "dist/breakpoints-demo.js",

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.7](https://github.com/basaltinc/knapsack/compare/v1.0.6...v1.0.7) (2019-04-17)
+
+
+### Bug Fixes
+
+* update all demo deploys urls ([8a1818c](https://github.com/basaltinc/knapsack/commit/8a1818c))
+
+
+
+
+
 ## [1.0.6](https://github.com/basaltinc/knapsack/compare/v1.0.5...v1.0.6) (2019-04-17)
 
 

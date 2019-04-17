@@ -2,7 +2,7 @@
 
 ## Demos
 
-- Demo: <https://bootstrap.demo.getbedrock.com>
+- Demo: <https://demo-bootstrap.knapsack.basalt.io>
 - Basalt's Design System, Crux, built on Knapsack: <https://design.basalt.io>
 
 ## Requirements

@@ -104,7 +104,7 @@ class Footer extends Component {
                   Download or use of this software is governed by our license
                   agreement available{' '}
                   <a
-                    href="http://license.getbedrock.com"
+                    href="https://knapsack-license.now.sh"
                     target="_blank"
                     rel="noopener noreferrer"
                   >

@@ -1,6 +1,6 @@
 {
   "name": "create-knapsack-demo",
-  "alias": "demo.getbedrock.com",
+  "alias": "demo-create.knapsack.basalt.io",
   "version": 1,
   "type": "docker",
   "scale": {

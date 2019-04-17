@@ -129,7 +129,7 @@ git clean -df
 cd $temp_app_path
 npx create-knapsack test-app
 cd test-app
-npm install
+npm install --loglevel error
 echo 'Install successfull. Building...'
 npm run build
 echo 'Build successfull!'

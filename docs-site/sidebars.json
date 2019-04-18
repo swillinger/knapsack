@@ -7,7 +7,9 @@
       "config"
     ],
     "Patterns": [
-      "patterns-overview"
+      "patterns-overview",
+      "add-new-pattern",
+      "example-button"
     ],
     "Design Tokens": [
       "design-tokens"

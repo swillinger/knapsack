@@ -4,7 +4,7 @@ id: config
 ---
 ### `knapsack.config.js`
 
-This is the main config file. 
+This is the main config file!
 
 ```js
 const HtmlRenderer = require('@knapsack/renderer-html');

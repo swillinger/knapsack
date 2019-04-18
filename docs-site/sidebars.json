@@ -8,7 +8,8 @@
     ],
     "Patterns": [
       "patterns-overview",
-      "page-builder"
+      "page-builder",
+      "patterns-anatomy"
     ],
     "Design Tokens": [
       "design-tokens"

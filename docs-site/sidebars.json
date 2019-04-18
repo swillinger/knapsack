@@ -9,8 +9,12 @@
     ],
     "Patterns": [
       "patterns-overview",
-      "page-builder",
+      "add-new-pattern",
+      "example-button",
       "patterns-anatomy"
+    ],
+    "Page Builder": [
+      "page-builder",
     ],
     "Design Tokens": [
       "design-tokens"

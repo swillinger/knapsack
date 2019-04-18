@@ -7,10 +7,14 @@
       "config"
     ],
     "Patterns": [
-      "patterns-overview"
+      "patterns-overview",
+      "page-builder"
     ],
     "Design Tokens": [
       "design-tokens"
+    ],
+    "More Info": [
+      "about"
     ]
   }
 }

@@ -9,7 +9,9 @@
     "Patterns": [
       "patterns-overview",
       "add-new-pattern",
-      "example-button"
+      "example-button",
+      "page-builder",
+      "patterns-anatomy"
     ],
     "Design Tokens": [
       "design-tokens"

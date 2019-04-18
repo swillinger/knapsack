@@ -1,16 +1,22 @@
 {
   "docs": {
     "Getting Started": [
+      "intro",
       "getting-started",
       "requirements",
       "config",
       "ui-settings"
     ],
     "Patterns": [
-      "patterns-overview"
+      "patterns-overview",
+      "page-builder",
+      "patterns-anatomy"
     ],
     "Design Tokens": [
       "design-tokens"
+    ],
+    "More Info": [
+      "about"
     ]
   }
 }

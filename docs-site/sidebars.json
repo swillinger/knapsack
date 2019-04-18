@@ -4,7 +4,8 @@
       "intro",
       "getting-started",
       "requirements",
-      "config"
+      "config",
+      "ui-settings"
     ],
     "Patterns": [
       "patterns-overview",

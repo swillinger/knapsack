@@ -8087,10 +8087,10 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
-docusaurus@^1.8.0:
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/docusaurus/-/docusaurus-1.8.1.tgz#725298b092c7da265c2875057db31d80d0902e9b"
-  integrity sha512-pVKNe7Q+QICWnSvsVK4n+JixpD9zowlfNt99Ll70d//Umf0MQmKT9gH9LirXghYULFS3JQuPX4ryhXHtAV2BeA==
+docusaurus@next:
+  version "2.0.0-alpha.6"
+  resolved "https://registry.yarnpkg.com/docusaurus/-/docusaurus-2.0.0-alpha.6.tgz#3ea061ec8a6425cdb11ba6d839bb05a3d0aacbba"
+  integrity sha512-NjFsNyKDjPTu884sSIpGn3sHcfo85gsBtB9+Pm3HPuaj/gFu2EaNikIb9jvk4/EXyoZ4xnrU6Rtup4vdAxxfHQ==
   dependencies:
     "@babel/core" "^7.0.0"
     "@babel/plugin-proposal-class-properties" "^7.0.0"

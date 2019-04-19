@@ -3,10 +3,12 @@
   "license": "GPL-2.0-or-later",
   "version": "1.0.0",
   "description": "A Knapsack component that helps build Design Systems",
-  "module": "dist/schema-table.js",
-  "main": "dist/schema-table.js",
+  "module": "dist/schema-table-styled.js",
+  "main": "dist/schema-table.commonjs.js",
   "scripts": {
-    "build": "babel --config-file @knapsack/babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
+    "build:es": "babel --config-file @knapsack/babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
+    "build:cs": "babel --config-file @knapsack/babel-config ./src/schema-table.jsx --out-file dist/schema-table.commonjs.js ",
+    "build": "yarn build:es && yarn build:cs",
     "prepublishOnly": "yarn build",
     "watch": "yarn build --watch"
   },

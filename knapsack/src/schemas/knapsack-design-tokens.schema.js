@@ -1,5 +1,6 @@
 const knapsackDesignTokenSchema = {
   $schema: 'http://json-schema.org/draft-07/schema',
+  title: 'Knapsack Design Tokens',
   type: 'object',
   required: ['name', 'value', 'category'],
   properties: {

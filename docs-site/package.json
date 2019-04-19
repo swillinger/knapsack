@@ -12,6 +12,8 @@
     "rename-version": "docusaurus-rename-version"
   },
   "devDependencies": {
-    "docusaurus": "^1.8.0"
+    "@basalt/knapsack": "^1.0.5",
+    "@knapsack/schema-table": "^1.0.0",
+    "docusaurus": "next"
   }
 }

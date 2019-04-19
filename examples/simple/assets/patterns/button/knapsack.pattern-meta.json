@@ -4,8 +4,8 @@
   "type": "molecules",
   "status": "ready",
   "uses": [
-    "inSlice"
+    "inComponent"
   ],
   "hasIcon": true,
-  "demoSize": "m"
+  "demoSize": "s"
 }

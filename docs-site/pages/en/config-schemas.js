@@ -57,7 +57,6 @@ function ConfigSchemas(props) {
           <h2>Pattern Template Schema</h2>
           <SchemaTable schema={patternTemplates.items}/>
 
-          {/* @todo fix, having `Cannot read property 'title' of undefined` errors */}
           <h2>{designTokens.knapsackDesignTokenSchema.title}</h2>
           <SchemaTable schema={designTokens.knapsackDesignTokenSchema}/>
 

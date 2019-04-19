@@ -25,6 +25,7 @@ function ConfigSchemas(props) {
   const docsPart = `${docsUrl ? `${docsUrl}/` : ''}`;
   const langPart = `${language ? `${language}/` : ''}`;
   const docUrl = doc => `${baseUrl}${docsPart}${langPart}${doc}`;
+  console.log("Wubba Lubba Dub Dub: designTokens", designTokens);
 
   // const supportLinks = [
   //   {
@@ -58,8 +59,8 @@ function ConfigSchemas(props) {
           <SchemaTable schema={patternTemplates.items}/>
 
           {/* @todo fix, having `Cannot read property 'title' of undefined` errors */}
-          {/*<h2>{designTokens.title}</h2>*/}
-          {/*<SchemaTable schema={designTokens}/>*/}
+          <h2>{designTokens.knapsackDesignTokenSchema.title}</h2>
+          <SchemaTable schema={designTokens.knapsackDesignTokenSchema}/>
 
           <h2>{settings.title}</h2>
           <SchemaTable schema={settings}/>

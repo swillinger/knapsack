@@ -28,6 +28,9 @@ const knapsackDesignTokenSchema = {
         type: 'string',
       },
     },
+    meta: {
+      type: 'object',
+    },
   },
 };
 

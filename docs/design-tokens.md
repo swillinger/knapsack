@@ -45,7 +45,7 @@ const theo = require('theo');
 const format = theoKnapsackFormat(theo);
 
 // Generate design token data in a format ready for consumption in `knapsack.config.js`
-const data = theo.convertSync({
+const designTokenData = theo.convertSync({
    transform: {
      type: 'web',
      file: './path-to-your/tokens.yml',
@@ -54,13 +54,13 @@ const data = theo.convertSync({
  });
 
 
-// Assign your data to `config.designTokens.data`
+// Assign your design token data to `config.designTokens.data`
 const config = {
   patterns: ['./patterns/*'],
   newPatternDir: './patterns/',
   designTokens: {
     createCodeSnippet: token => `$${token.name}`,
-    data,
+    data: designTokenData,
   },
   dist: './dist',
   public: './public',
@@ -107,4 +107,29 @@ module.exports = {
     },
   },
 };
+```
+
+`knapsack.config.js`
+```javascript
+...
+
+// Import the json created by running style dictionary with the Knapsack formatter
+const designTokenData = require('./design-tokens/dist/knapsack-design-tokens'); 
+
+// Assign your design token data to `config.designTokens.data`
+const config = {
+  patterns: ['./patterns/*'],
+  newPatternDir: './patterns/',
+  designTokens: {
+    createCodeSnippet: token => `$${token.name}`,
+    data: designTokenData,
+  },
+  dist: './dist',
+  public: './public',
+  data: './data',
+  ... etc ...
+};
+
+module.exports = config;
+
 ```

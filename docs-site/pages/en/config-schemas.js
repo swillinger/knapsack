@@ -25,7 +25,6 @@ function ConfigSchemas(props) {
   const docsPart = `${docsUrl ? `${docsUrl}/` : ''}`;
   const langPart = `${language ? `${language}/` : ''}`;
   const docUrl = doc => `${baseUrl}${docsPart}${langPart}${doc}`;
-  console.log("Wubba Lubba Dub Dub: designTokens", designTokens);
 
   // const supportLinks = [
   //   {

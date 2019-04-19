@@ -2,7 +2,7 @@
   "name": "@basalt/knapsack",
   "license": "GPL-2.0-or-later",
   "description": "Build Design Systems on top of knapsack, by Basalt",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "author": "Basalt (https://basalt.io/)",
   "main": "src/index.js",
   "bin": {
@@ -47,7 +47,7 @@
   },
   "devDependencies": {
     "@basalt/demo-data": "0.5.1",
-    "@knapsack/api-demo": "^1.1.2",
+    "@knapsack/api-demo": "^1.1.3",
     "@knapsack/atoms": "^1.0.0",
     "@knapsack/babel-config": "^1.0.0",
     "@knapsack/breakpoints-demo": "^1.0.7",
@@ -59,7 +59,7 @@
     "@knapsack/design-token-demos": "^1.0.7",
     "@knapsack/eslint-config": "^1.0.0",
     "@knapsack/schema-form": "^1.0.0",
-    "@knapsack/schema-table": "^1.1.2",
+    "@knapsack/schema-table": "^1.1.3",
     "@knapsack/smart-grid": "^1.0.0",
     "@knapsack/spacing-swatch": "^1.0.7",
     "@knapsack/spinner": "^1.0.0",

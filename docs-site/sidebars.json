@@ -11,10 +11,10 @@
       "patterns-overview",
       "add-new-pattern",
       "example-button",
-      "patterns-anatomy"
+      "example-nesting-patterns"
     ],
     "Page Builder": [
-      "page-builder",
+      "page-builder"
     ],
     "Design Tokens": [
       "design-tokens"

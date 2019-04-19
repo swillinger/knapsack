@@ -5,9 +5,11 @@ title: Example: Button
 
 ## Example: Setting up a button
 
-- A "Button" Pattern
+Let's start with a small pattern example – a button! Here are the basic files and file contents needed to build a button in Knapsack. 
 
-`button/knapsack.pattern.js`
+_Note: This example does not include styles. Styles can be handled a number of ways, including through a button.scss file in this same directory — this will depend on your build setup._
+
+File: `button/knapsack.pattern.js`
 ```javascript
 const schema = require('./button.schema');
 
@@ -15,25 +17,29 @@ module.exports = {
   id: 'button',
   templates: [
     {
-      name: '@components/button.twig',
+      alias: '@components/button.twig',
+      path: './button.twig',
+      id: 'button',
+      title: 'Button',
+      docPath: './README.md',
       schema,
     },
   ],
 };
 ```
 
-`button/knapsack.pattern-meta.json`
+File: `button/knapsack.pattern-meta.json`
 ```json
 {
   "title": "Button",
-  "type": "component",
+  "type": "atom",
   "description": "A Button allows user to interact with the site.",
-  "uses": ["inSlice, inComponent"],
-  "demoSize": "m"
+  "uses": ["inComponent"],
+  "demoSize": "s"
 }
 ```
 
-`button/button.schema.js`
+File: `button/button.schema.js`
 ```javascript
 module.exports = {
   $schema: 'http://json-schema.org/draft-07/schema',
@@ -45,10 +51,12 @@ module.exports = {
     text: {
       type: 'string',
       title: 'Text',
+      description: 'This text will show as the button text'
     },
     url: {
       type: 'string',
       title: 'Url',
+      description: 'This URL will be the destination upon clicking the button'
     },
   },
   examples: [
@@ -56,87 +64,15 @@ module.exports = {
       text: 'Click Here',
       url: 'https://basalt.io',
     },
+    {
+      text: 'Learn More',
+      url: 'https://basalt.io/who-we-are',
+    },
   ],
 };
 ```
 
-`button/button.twig`
+File: `button/button.twig`
 ```twig
 <a class="button" href={{ url }}>{{ text }}</a>
-```
-
-## Example: Combining Schema to Define Nested Components
-
-- A "Card" component which uses the above defined "Button"
-
-`card/knapsack.pattern.js`
-```javascript
-const schema = require('./card.schema');
-
-module.exports = {
-  id: 'card',
-  templates: [
-    {
-      name: '@components/card.twig',
-      schema,
-    },
-  ],
-};
-```
-
-
-`card/knapsack.pattern-meta.json`
-```json
-{
-  "title": "Card",
-  "type": "component",
-  "description": "A Card that powers the internet",
-  "uses": ["inSlice"],
-  "demoSize": "m"
-}
-```
-
-`card/card.schema.js`
-```javascript
-const buttonSchema = require('../button/button.schema');
-
-module.exports = {
-  $schema: 'http://json-schema.org/draft-07/schema',
-  type: 'object',
-  title: 'Card',
-  description: 'A Card that powers the internet',
-  required: ['title', 'body'],
-  properties: {
-    title: {
-      type: 'string',
-      title: 'Title',
-    },
-    body: {
-      type: 'string',
-      title: 'Body',
-    },
-    buttons: {
-      title: 'Buttons',
-      type: 'array',
-      items: buttonSchema,
-    },
-  },
-  examples: [
-    {
-      title: "I'm a Card Title",
-      body:
-        "I'm a body - Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      buttons: [
-        {
-          text: 'Button one',
-          url: '/url-one'
-        },
-        {
-          text: 'Button two',
-          url: '/url-two'
-        }
-      ]
-    },
-  ],
-};
 ```

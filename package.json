@@ -30,7 +30,7 @@
     "pick": "pick-npm-run-all",
     "reset": "yarn clean && yarn install --silent && FORCE_COLOR=1 run-s --print-label build:*",
     "serve:simple": "cd examples/simple && yarn serve",
-    "test": "run-s lint:style lint:js jest test:knapsack test:examples test:cypress",
+    "test": "run-s lint:style lint:js jest test:knapsack test:examples",
     "test:prepush": "run-s lint:style lint:js jest",
     "test:knapsack": "lerna run --stream --bail --scope @basalt/knapsack test",
     "test:cypress": "start-server-and-test serve:simple http://localhost:3999 cypress:run",

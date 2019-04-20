@@ -34,6 +34,10 @@ jobs:
             - /usr/local/share/.cache/yarn/v2
           key: v1-dependencies-{{ checksum "yarn.lock" }}
 
+      - run: yarn build:all
+
+      - run: yarn test
+
       - run: ./scripts/ci.sh
 
 #      - run: yarn build:all

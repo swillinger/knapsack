@@ -75,6 +75,9 @@ class Footer extends Component {
                       <Link to="/settings">Site Settings</Link>
                     </FooterMenuItem>
                   )}
+                  <FooterMenuItem>
+                    <a href="https://knapsack.basalt.io/">Knapsack Docs</a>
+                  </FooterMenuItem>
                   {changelog && (
                     <FooterMenuItem>
                       <Link to="/changelog">Changelog</Link>

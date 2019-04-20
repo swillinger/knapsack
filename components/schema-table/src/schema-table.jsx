@@ -140,6 +140,8 @@ const SchemaTable = ({ schema }) => {
         if (cell.value === 'array') {
           displayedType = `array of ${`${cell.original.data.items.type}s` ||
             'any'}`;
+        } else if (typeof cell.value === 'object') {
+          displayedType = cell.value.join(' | ');
         }
         return (
           <span>

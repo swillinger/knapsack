@@ -37,6 +37,7 @@ const isProd = process.env.NODE_ENV === 'production';
 /**
  * @typedef {Object} CreateWebpackConfig
  * @prop {string} dist - The absolute path to where files will be written.
+ * @prop {boolean} useHtmlWebpackPlugin
  * @prop {string} [pluginSetupFile] - File that contains all the imported plugin register functions
  * @prop {string} [public] - The absolute path to where files will be available to the dev server.
  */
@@ -196,25 +197,6 @@ function createWebPackConfig(userConfig) {
       new WebappWebpackPlugin(
         resolve(__dirname, '../client/assets/favicon.png'),
       ),
-      // https://github.com/jaketrent/html-webpack-template
-      // template: https://github.com/jaketrent/html-webpack-template/blob/master/index.ejs
-      new HtmlWebpackPlugin({
-        // template: HtmlTemplate,
-        inject: true,
-        // title: config.settings.site.title,
-        title: 'Knapsack',
-        appMountId: 'app',
-        cache: false,
-        mobile: true,
-        hash: true,
-        filename: '../index.html',
-        window: {
-          //   knapsackSettings: config.settings,
-          knapsack: {
-            features,
-          },
-        },
-      }),
       new MiniCssExtractPlugin({
         // Options similar to the same options in webpackOptions.output
         // both options are optional
@@ -280,6 +262,30 @@ function createWebPackConfig(userConfig) {
   } else {
     webpackConfig.mode = 'development';
     webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
+  }
+
+  if (userConfig.useHtmlWebpackPlugin) {
+    webpackConfig.plugins.push(
+      // https://github.com/jaketrent/html-webpack-template
+      // template: https://github.com/jaketrent/html-webpack-template/blob/master/index.ejs
+      new HtmlWebpackPlugin({
+        // template: HtmlTemplate,
+        inject: true,
+        // title: config.settings.site.title,
+        title: 'Knapsack',
+        appMountId: 'app',
+        cache: false,
+        mobile: true,
+        hash: true,
+        filename: '../index.html',
+        window: {
+          //   knapsackSettings: config.settings,
+          knapsack: {
+            features,
+          },
+        },
+      }),
+    );
   }
 
   return {

@@ -5,6 +5,7 @@ const dist = join(__dirname, './static/dist');
 
 const baseConfig = createWebPackConfig({
   dist,
+  useHtmlWebpackPlugin: false,
 });
 
 const config = {

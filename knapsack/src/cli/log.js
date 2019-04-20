@@ -95,7 +95,7 @@ function setLogLevel(level) {
   log.level = level;
 }
 
-setLogLevel(process.env.knapsack_LOG_LEVEL || 'info');
+setLogLevel(process.env.KNAPSACK_LOG_LEVEL || 'info');
 
 module.exports = {
   error,

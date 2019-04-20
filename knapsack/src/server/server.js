@@ -55,7 +55,7 @@ async function serve({ meta }) {
     docs,
     config,
   } = getBrain();
-  const port = process.env.knapsack_PORT || 3999;
+  const port = process.env.KNAPSACK_PORT || 3999;
   const knapsackDistDir = join(__dirname, '../../dist/');
 
   const metaTypeDef = gql`

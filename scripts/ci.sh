@@ -6,8 +6,8 @@ cd "$(dirname "$0")"
 # Run everything from root of repo
 cd ..
 
-if [ "$TRAVIS_TAG" ]; then
-  echo "Tag build $TRAVIS_TAG"
+if [ "$CIRCLE_TAG" ]; then
+  echo "Tag build $CIRCLE_TAG"
   echo "========"
   echo "START: deploy"
   echo "========"
@@ -36,27 +36,14 @@ else
   echo "END: yarn test"
   echo "========"
 
-  if [[ "$TRAVIS_PULL_REQUEST" == "false" ]]; then
-    echo "========"
-    echo "START: e2e-simple"
-    echo "========"
-    git checkout $TRAVIS_BRANCH
-    ./scripts/e2e-simple.sh
-    echo "========"
-    echo "END: e2e-simple"
-    echo "========"
-  else
-    echo "Not doing e2e testing for this build"
-  fi
-
-  if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then
+  if [[ "$CIRCLE_BRANCH" == "master" ]]; then
     echo "On master branch"
     echo "========"
     echo "START: release"
     echo "========"
     ./scripts/release.sh
-    git pull origin "$TRAVIS_BRANCH"
-    git push origin "$TRAVIS_BRANCH" --follow-tags --no-verify
+    git pull origin "$CIRCLE_BRANCH"
+    git push origin "$CIRCLE_BRANCH" --follow-tags --no-verify
     echo "========"
     echo "END: release"
     echo "========"

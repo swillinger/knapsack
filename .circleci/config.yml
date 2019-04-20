@@ -38,13 +38,9 @@ jobs:
 
       - run: yarn test
 
-      - run: ./scripts/ci.sh
+      - run: ./scripts/e2e-simple.sh
 
-#      - run: yarn build:all
-#
-#      - run: yarn test
-#
-#      - run: ./scripts/e2e-simple.sh
+      - run: ./scripts/ci.sh
 
 #      - run:
 #          command: |

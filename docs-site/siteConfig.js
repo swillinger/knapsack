@@ -42,7 +42,7 @@ const siteConfig = {
     { blog: true, label: 'Blog' },
   ],
 
-  disableHeaderTitle: false,
+  disableHeaderTitle: true,
   docsSideNavCollapsible: false,
   editUrl: 'https://github.com/basaltinc/knapsack/blob/master/docs/',
 
@@ -50,14 +50,14 @@ const siteConfig = {
   users,
 
   /* path to images for header/footer */
-  // headerIcon: 'img/knapsack.png',
-  // footerIcon: 'img/knapsack.png',
+  headerIcon: 'img/knapsack.svg',
+  footerIcon: 'img/favicon.ico',
   favicon: 'img/favicon.ico',
 
   /* Colors for website */
   colors: {
-    primaryColor: 'rgb(26, 31, 76)',
-    secondaryColor: 'rgb(245, 111, 23)',
+    primaryColor: 'rgb(19, 27, 37)',
+    secondaryColor: 'rgb(237, 103, 44)',
   },
 
   /* Custom fonts for website */

@@ -57,6 +57,7 @@ function ConfigSchemas(props) {
           <h2>Pattern Template Schema</h2>
           <SchemaTable schema={patternTemplates.items}/>
 
+// a
           <h2>{designTokens.knapsackDesignTokenSchema.title}</h2>
           <SchemaTable schema={designTokens.knapsackDesignTokenSchema}/>
 
@@ -69,6 +70,7 @@ function ConfigSchemas(props) {
           <h2>{patternWithMeta.title}</h2>
           <SchemaTable schema={patternWithMeta}/>
 
+// a
           <h2>{patternFull.title}</h2>
           <SchemaTable schema={patternFull}/>
 

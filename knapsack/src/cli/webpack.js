@@ -57,6 +57,7 @@ function getWebpack(config) {
   const webpackConfig = createWebpackConfig({
     dist: config.dist,
     public: config.public,
+    useHtmlWebpackPlugin: true,
   });
   return webpack(webpackConfig);
 }

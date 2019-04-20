@@ -4,8 +4,10 @@
   "version": "1.1.6",
   "scripts": {
     "examples": "docusaurus-examples",
-    "start": "docusaurus-start",
-    "build": "docusaurus-build",
+    "start": "yarn build:wp && docusaurus-start",
+    "build:docs": "docusaurus-build",
+    "build:wp": "rm -rf ./static/dist && NODE_ENV=production webpack-cli --hide-modules --progress --config ./webpack.config.js",
+    "build": "y build:wp && build:docs",
     "publish-gh-pages": "docusaurus-publish",
     "write-translations": "docusaurus-write-translations",
     "Xversion": "docusaurus-version $npm_package_version && yarn build && git add . ",

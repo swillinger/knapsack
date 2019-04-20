@@ -6,13 +6,6 @@
  */
 
 const React = require('react');
-const { default: SchemaTable } = require('@knapsack/schema-table');
-const designTokens = require('@basalt/knapsack/src/schemas/knapsack-design-tokens.schema.js');
-const settings = require('@basalt/knapsack/src/schemas/knapsack.settings.schema.js');
-const patternTemplates = require('@basalt/knapsack/src/schemas/pattern-templates.schema.json');
-const patternMeta = require('@basalt/knapsack/src/schemas/pattern-meta.schema');
-const patternWithMeta = require('@basalt/knapsack/src/schemas/pattern-w-meta.schema');
-const patternFull = require('@basalt/knapsack/src/schemas/pattern.schema');
 
 const CompLibrary = require('../../core/CompLibrary.js');
 
@@ -54,30 +47,12 @@ function ConfigSchemas(props) {
           <header className="postHeader">
             <h1>Config Schemas</h1>
           </header>
-          <h2>Pattern Template Schema</h2>
-          <SchemaTable schema={patternTemplates.items}/>
-
-// a
-          <h2>{designTokens.knapsackDesignTokenSchema.title}</h2>
-          <SchemaTable schema={designTokens.knapsackDesignTokenSchema}/>
-
-          <h2>{settings.title}</h2>
-          <SchemaTable schema={settings}/>
-
-          <h2>{patternMeta.title}</h2>
-          <SchemaTable schema={patternMeta}/>
-
-          <h2>{patternWithMeta.title}</h2>
-          <SchemaTable schema={patternWithMeta}/>
-
-// a
-          <h2>{patternFull.title}</h2>
-          <SchemaTable schema={patternFull}/>
-
+          <div id="root--config-schemas"></div>
           {/*<p>This project is maintained by a dedicated group of people.</p>*/}
           {/*<GridBlock contents={supportLinks} layout="threeColumn"/>*/}
         </div>
       </Container>
+      <script src="/dist/main.bundle.js"></script>
     </div>
   );
 }

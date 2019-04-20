@@ -7,7 +7,7 @@
     "start": "yarn build:wp && docusaurus-start",
     "build:docs": "docusaurus-build",
     "build:wp": "rm -rf ./static/dist && NODE_ENV=production webpack-cli --hide-modules --progress --config ./webpack.config.js",
-    "build": "y build:wp && build:docs",
+    "build": "yarn build:wp && yarn build:docs",
     "publish-gh-pages": "docusaurus-publish",
     "write-translations": "docusaurus-write-translations",
     "Xversion": "docusaurus-version $npm_package_version && yarn build && git add . ",

@@ -80,7 +80,11 @@ const SchemaTable = ({ schema }) => {
         required: property.required || required.includes(propName),
       };
     });
-  } else if (schema.items && schema.items.type === 'object') {
+  } else if (
+    schema.items &&
+    schema.items.type === 'object' &&
+    schema.items.properties
+  ) {
     // if schema table is for an array of objects
     data = Object.keys(schema.items.properties).map(propName => {
       const property = schema.items.properties[propName];
@@ -91,7 +95,7 @@ const SchemaTable = ({ schema }) => {
         data: property,
       };
     });
-  } else {
+  } else if (schema.items) {
     // if schema table is for an array of anything except objects
     data = [
       {

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.7](https://github.com/basaltinc/knapsack/compare/v1.1.6...v1.1.7) (2019-04-20)
+
+
+### Bug Fixes
+
+* correct capitalization of env vars ([d95aa25](https://github.com/basaltinc/knapsack/commit/d95aa25))
+* docs build ([3cd0902](https://github.com/basaltinc/knapsack/commit/3cd0902))
+
+
+
+
+
 ## [1.1.6](https://github.com/basaltinc/knapsack/compare/v1.1.5...v1.1.6) (2019-04-20)
 
 **Note:** Version bump only for package @basalt/knapsack

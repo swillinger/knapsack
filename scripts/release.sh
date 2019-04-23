@@ -19,10 +19,8 @@ git config --global user.name "Knapsack Bot"
 cp ./scripts/.npmrc-ci ~/.npmrc
 PREV_VERSION=`git describe --abbrev=0`
 # see `lerna.json` for options
-GH_TOKEN=$GITHUB_TOKEN ./node_modules/.bin/lerna version --github-release --conventional-commits --yes
-echo 'done with lerna version'
-echo ''
-./node_modules/.bin/lerna publish --yes
+GH_TOKEN=$GITHUB_TOKEN ./node_modules/.bin/lerna publish --github-release --conventional-commits --yes
+
 CURRENT_VERSION=`git describe --abbrev=0`
 echo "Previous version: $PREV_VERSION Current Version: $CURRENT_VERSION"
 echo "changelog test output:"

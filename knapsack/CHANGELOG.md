@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.9](https://github.com/basaltinc/knapsack/compare/v1.1.8...v1.1.9) (2019-04-23)
+
+
+### Bug Fixes
+
+* correct release script ([c54ff42](https://github.com/basaltinc/knapsack/commit/c54ff42))
+
+
+
+
+
 ## [1.1.8](https://github.com/basaltinc/knapsack/compare/v1.1.7...v1.1.8) (2019-04-23)
 
 

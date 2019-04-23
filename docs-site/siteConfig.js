@@ -106,13 +106,13 @@ const siteConfig = {
   // gaTrackingId: 'UA-107417461-3',
 
   // Optionally customize the look and feel by following the DocSearch documentation: https://community.algolia.com/docsearch/styling.html
-  // You can also check your configuration in our GitHub repo: https://github.com/algolia/docsearch-configs/blob/master/configs/knapsack.json - Please open a pull request if want to leverage your configuration! 
+  // You can also check your configuration in our GitHub repo: https://github.com/algolia/docsearch-configs/blob/master/configs/knapsack.json - Please open a pull request if want to leverage your configuration!
   algolia: {
     apiKey: 'e6d6b6095afc5fc4db6a10647a23fa3f',
     indexName: 'knapsack',
-    algoliaOptions: {} // Optional, if provided by Algolia
+    algoliaOptions: {}, // Optional, if provided by Algolia
   },
-  
+
   // You may provide arbitrary config keys to be used as needed by your
   // template. For example, if you need your repo's URL...
   repoUrl: 'https://github.com/basaltinc/knapsack',

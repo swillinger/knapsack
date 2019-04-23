@@ -19,7 +19,7 @@ const urlJoin = require('url-join');
 const fs = require('fs-extra');
 const md = require('marked');
 const highlight = require('highlight.js');
-const qs = require('qs');
+const { qsParse } = require('./server-utils');
 const log = require('../cli/log');
 const {
   BASE_PATHS,
@@ -34,47 +34,6 @@ const router = express.Router();
 md.setOptions({
   highlight: code => highlight.highlightAuto(code).value,
 });
-
-/**
- * Parse QueryString, decode non-strings
- * Changes strings like `'true'` to `true` amoung others like numbers
- * @param {string} querystring
- * @return {Object}
- */
-function qsParse(querystring) {
-  return qs.parse(querystring, {
-    // This custom decoder is for turning values like `foo: "true"` into `foo: true`, along with Integers, null, and undefined.
-    // https://github.com/ljharb/qs/issues/91#issuecomment-437926409
-    decoder(str, decoder, charset) {
-      const strWithoutPlus = str.replace(/\+/g, ' ');
-      if (charset === 'iso-8859-1') {
-        // unescape never throws, no try...catch needed:
-        return strWithoutPlus.replace(/%[0-9a-f]{2}/gi, unescape);
-      }
-
-      if (/^(\d+|\d*\.\d+)$/.test(str)) {
-        return parseFloat(str);
-      }
-
-      const keywords = {
-        true: true,
-        false: false,
-        null: null,
-        undefined,
-      };
-      if (str in keywords) {
-        return keywords[str];
-      }
-
-      // utf-8
-      try {
-        return decodeURIComponent(strWithoutPlus);
-      } catch (e) {
-        return strWithoutPlus;
-      }
-    },
-  });
-}
 
 function getRoutes(config) {
   const {

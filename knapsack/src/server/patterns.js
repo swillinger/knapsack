@@ -28,7 +28,7 @@ const chokidar = require('chokidar');
 const {
   version: iframeResizerVersion,
 } = require('iframe-resizer/package.json');
-const qs = require('qs');
+const { qsStringify } = require('./server-utils');
 const { knapsackEvents, EVENTS } = require('./events');
 const { FileDb } = require('./db');
 const patternSchema = require('../schemas/pattern.schema');
@@ -287,6 +287,36 @@ function isRemoteUrl(url) {
 }
 
 /**
+ * Create a demo url
+ * @param {Object} opt
+ * @param {string} opt.patternId
+ * @param {string} opt.templateId
+ * @param {string} opt.assetSetId
+ * @param {boolean} [opt.isInIframe=false]
+ * @param {boolean} [opt.wrapHtml=true]
+ * @param {Object} [opt.data]
+ * @return {string}
+ */
+function createDemoUrl({
+  patternId,
+  templateId,
+  assetSetId,
+  isInIframe = false,
+  wrapHtml = true,
+  data = {},
+}) {
+  const queryString = qsStringify({
+    patternId,
+    templateId,
+    assetSetId,
+    isInIframe,
+    wrapHtml,
+    data,
+  });
+  return `/api/render?${queryString}`;
+}
+
+/**
  * @param {Object} opt
  * @param {KnapsackAssetSetUserConfig[]} opt.assetSets
  * @param {string} opt.publicDir
@@ -454,15 +484,16 @@ function createPatternsData(
           const demoUrls = [];
           datas.forEach(data => {
             assetSets.forEach(assetSet => {
-              const queryString = qs.stringify({
-                patternId: pattern.id,
-                templateId,
-                assetSetId: assetSet.id,
-                isInIframe: false,
-                wrapHtml: true,
-                data,
-              });
-              demoUrls.push(`/api/render?${queryString}`);
+              demoUrls.push(
+                createDemoUrl({
+                  patternId: pattern.id,
+                  templateId,
+                  assetSetId: assetSet.id,
+                  isInIframe: false,
+                  wrapHtml: true,
+                  data,
+                }),
+              );
             });
           });
 
@@ -818,6 +849,47 @@ class Patterns {
 
   setPatternSettings(settings) {
     this.db.setAll(settings);
+  }
+
+  /**
+   * @param {Object} opt
+   * @param {string} opt.patternId
+   * @param {string} [opt.templateId] - defaults to first template
+   * @param {string} [opt.assetSetId] - defaults to first assetSet
+   * @param {number} [opt.data]
+   * @param {number} [opt.demoDataIndex=0]
+   * @return {string}
+   */
+  getPatternDemoUrl({
+    patternId,
+    templateId,
+    assetSetId,
+    data,
+    demoDataIndex = 0,
+  }) {
+    const pattern = this.getPattern(patternId);
+    const template = templateId
+      ? pattern.templates.find(t => t.id === templateId)
+      : pattern.templates[0];
+
+    let demoData = data || {};
+    if (!data) {
+      if (typeof demoDataIndex === 'number') {
+        demoData = template.demoDatas[demoDataIndex];
+      }
+    }
+
+    const demoUrl = createDemoUrl({
+      patternId,
+      templateId: template.id,
+      assetSetId: assetSetId || template.assetSets[0].id,
+      data: demoData,
+      isInIframe: false,
+      wrapHtml: true,
+    });
+
+    // @todo throw errors if insufficient data
+    return demoUrl;
   }
 
   /**

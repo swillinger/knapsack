@@ -16,6 +16,7 @@
  */
 const fs = require('fs-extra');
 const os = require('os');
+const qs = require('qs');
 const log = require('../cli/log');
 
 /**
@@ -99,6 +100,58 @@ function dirExistsOrExit(dirPath, msg) {
   process.exit(1);
 }
 
+/**
+ * Parse QueryString, decode non-strings
+ * Changes strings like `'true'` to `true` among others like numbers
+ * @param {string} querystring
+ * @return {Object}
+ * @see qsStringify
+ */
+function qsParse(querystring) {
+  return qs.parse(querystring, {
+    // This custom decoder is for turning values like `foo: "true"` into `foo: true`, along with Integers, null, and undefined.
+    // https://github.com/ljharb/qs/issues/91#issuecomment-437926409
+    decoder(str, decoder, charset) {
+      const strWithoutPlus = str.replace(/\+/g, ' ');
+      if (charset === 'iso-8859-1') {
+        // unescape never throws, no try...catch needed:
+        return strWithoutPlus.replace(/%[0-9a-f]{2}/gi, unescape);
+      }
+
+      if (/^(\d+|\d*\.\d+)$/.test(str)) {
+        return parseFloat(str);
+      }
+
+      const keywords = {
+        true: true,
+        false: false,
+        null: null,
+        undefined,
+      };
+      if (str in keywords) {
+        return keywords[str];
+      }
+
+      // utf-8
+      try {
+        return decodeURIComponent(strWithoutPlus);
+      } catch (e) {
+        return strWithoutPlus;
+      }
+    },
+  });
+}
+
+/**
+ * Turn object of data into query string
+ * @param {Object} data
+ * @return {string}
+ * @see qsParse
+ */
+function qsStringify(data) {
+  return qs.stringify(data);
+}
+
 module.exports = {
   writeJson,
   readJson,
@@ -108,4 +161,6 @@ module.exports = {
   dirExists,
   fileExistsOrExit,
   dirExistsOrExit,
+  qsParse,
+  qsStringify,
 };

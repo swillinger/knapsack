@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.11](https://github.com/basaltinc/knapsack/compare/v1.1.10...v1.1.11) (2019-04-24)
+
+
+### Bug Fixes
+
+* breakpoints demo no longer overflows on narrow view ports ([66bce06](https://github.com/basaltinc/knapsack/commit/66bce06))
+
+
+
+
+
 ## [1.0.7](https://github.com/basaltinc/knapsack/compare/v1.0.6...v1.0.7) (2019-04-17)
 
 **Note:** Version bump only for package @knapsack/breakpoints-demo

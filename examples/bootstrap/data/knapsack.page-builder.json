@@ -133,5 +133,265 @@
       }
     ],
     "hasVisibleControls": true
+  },
+  "ajyFgFaT9": {
+    "id": "ajyFgFaT9",
+    "title": "Another Page Example",
+    "path": "/pages/ajyFgFaT9",
+    "description": "This is a second page example.",
+    "slices": [
+      {
+        "id": "9qU5wCPei",
+        "patternId": "nav",
+        "templateId": "nav-twig",
+        "data": {
+          "colorScheme": "dark",
+          "brand": {
+            "brandImg": "/images/knapsack_logo.png",
+            "brandName": "MyBrand"
+          },
+          "nav": {
+            "type": "default",
+            "navItems": [
+              {
+                "text": "Home",
+                "link": "#",
+                "active": true
+              },
+              {
+                "text": "Library",
+                "link": "#"
+              },
+              {
+                "text": "Data",
+                "link": "#"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "nWxdAUf_d",
+        "patternId": "breadcrumb",
+        "templateId": "breadcrumb-twig",
+        "data": {
+          "breadcrumbItems": [
+            {
+              "text": "Home",
+              "link": "#"
+            },
+            {
+              "text": "Library",
+              "link": "#"
+            },
+            {
+              "text": "Data",
+              "link": "#"
+            }
+          ]
+        }
+      },
+      {
+        "id": "COKgisVS6",
+        "patternId": "alert",
+        "templateId": "alert-twig",
+        "data": {
+          "message": "Success - something went right.",
+          "type": "success"
+        }
+      },
+      {
+        "id": "6dQp5UKpq",
+        "patternId": "jumbotron",
+        "templateId": "jumbotron-twig",
+        "data": {
+          "title": "Jumbotron",
+          "body": "Twenty four hour hydration and sheer color helps me look flawless even when faced with that unforgiving Jumbotron! - Lindsey Vonn",
+          "ctaText": "Button"
+        }
+      },
+      {
+        "id": "t0ZG47Bul",
+        "patternId": "card-grid",
+        "templateId": "twig",
+        "data": {
+          "cards": [
+            {
+              "cardTitle": "Card Title 1",
+              "cardSubTitle": "Card SubTitle",
+              "cardBody": "Some quick example text to build on the card title and make up the bulk of the card's content.",
+              "imgSrc": "/images/demoImg4.jpg",
+              "button": {
+                "text": "Go somewhere",
+                "url": "#",
+                "style": "primary"
+              }
+            },
+            {
+              "cardTitle": "Card Title 3",
+              "cardSubTitle": "Card SubTitle",
+              "cardBody": "Some quick example text to build on the card title and make up the bulk of the card's content.",
+              "imgSrc": "/images/demoImg2.jpg",
+              "button": {
+                "text": "Go somewhere",
+                "url": "#",
+                "style": "warning"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "ynYEfmTTz",
+        "patternId": "list-group",
+        "templateId": "list-group-twig",
+        "data": {
+          "flush": false,
+          "listItems": [
+            {
+              "itemText": "Cras justo odio",
+              "active": true
+            },
+            {
+              "itemText": "Dapibus ac facilisis in"
+            },
+            {
+              "itemText": "Morbi leo risus",
+              "disabled": true
+            },
+            {
+              "itemText": "Porta ac consectetur ac"
+            },
+            {
+              "itemText": "Vestibulum at eros"
+            }
+          ]
+        }
+      },
+      {
+        "id": "AdH1R596m",
+        "patternId": "card-grid",
+        "templateId": "twig",
+        "data": {
+          "cards": [
+            {
+              "cardTitle": "Card Title 2",
+              "cardSubTitle": "Card SubTitle",
+              "cardBody": "Some quick example text to build on the card title and make up the bulk of the card's content.",
+              "imgSrc": "/images/demoImg1.jpg",
+              "button": {
+                "text": "Go somewhere",
+                "url": "#",
+                "style": "secondary"
+              }
+            },
+            {
+              "cardTitle": "Card Title 3",
+              "cardSubTitle": "Card SubTitle",
+              "cardBody": "Some quick example text to build on the card title and make up the bulk of the card's content.",
+              "imgSrc": "/images/demoImg2.jpg",
+              "button": {
+                "text": "Go somewhere",
+                "url": "#",
+                "style": "warning"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "hasVisibleControls": true
+  },
+  "pauBMWCPr": {
+    "id": "pauBMWCPr",
+    "title": "A Third Example",
+    "path": "/pages/pauBMWCPr",
+    "description": "This is a third example.",
+    "slices": [
+      {
+        "id": "mjB1OKaTN",
+        "patternId": "nav",
+        "templateId": "nav-material-twig",
+        "data": {
+          "logo": "/images/knapsack_logo.png",
+          "title": "Knapsack",
+          "type": "standard",
+          "download": true,
+          "print": true,
+          "bookmark": true
+        }
+      },
+      {
+        "id": "lqV_YXZ_F",
+        "patternId": "breadcrumb",
+        "templateId": "breadcrumb-html",
+        "data": {}
+      },
+      {
+        "id": "E_gTj9H3m",
+        "patternId": "alert",
+        "templateId": "alert-material-twig",
+        "data": {
+          "message": "Success - something went right."
+        }
+      },
+      {
+        "id": "7EY7bF67d",
+        "patternId": "card-grid",
+        "templateId": "twig",
+        "data": {
+          "cards": [
+            {
+              "cardTitle": "Card Title 2",
+              "cardSubTitle": "Card SubTitle",
+              "cardBody": "Some quick example text to build on the card title and make up the bulk of the card's content.",
+              "imgSrc": "/images/demoImg1.jpg",
+              "button": {
+                "text": "Go somewhere",
+                "url": "#",
+                "style": "secondary"
+              }
+            },
+            {
+              "cardTitle": "Card Title 3",
+              "cardSubTitle": "Card SubTitle",
+              "cardBody": "Some quick example text to build on the card title and make up the bulk of the card's content.",
+              "imgSrc": "/images/demoImg2.jpg",
+              "button": {
+                "text": "Go somewhere",
+                "url": "#",
+                "style": "warning"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "mQYLCrTwR",
+        "patternId": "jumbotron",
+        "templateId": "jumbotron-html",
+        "data": {}
+      },
+      {
+        "id": "Ym93fURDC",
+        "patternId": "nav",
+        "templateId": "nav-material-twig",
+        "data": {
+          "logo": "/images/knapsack_logo.png",
+          "title": "Knapsack",
+          "type": "standard",
+          "download": true,
+          "print": true,
+          "bookmark": true
+        }
+      },
+      {
+        "id": "kdmLtzkNY",
+        "patternId": "table",
+        "templateId": "table-html",
+        "data": {}
+      }
+    ],
+    "hasVisibleControls": false
   }
 }

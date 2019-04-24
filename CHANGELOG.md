@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.10](https://github.com/basaltinc/knapsack/compare/v1.1.9...v1.1.10) (2019-04-24)
+
+
+### Bug Fixes
+
+* status message component defaults to info on bad type prop ([9051ba5](https://github.com/basaltinc/knapsack/commit/9051ba5))
+
+
+
+
+
 ## [1.1.9](https://github.com/basaltinc/knapsack/compare/v1.1.8...v1.1.9) (2019-04-23)
 
 

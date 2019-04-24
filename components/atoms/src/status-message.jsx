@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-// @todo pull into Knapsack theming vars
+const statusTypes = ['success', 'info', 'warning', 'error'];
 const statusColorSets = {
   info: {
     text: '#004085',
@@ -39,10 +39,9 @@ const StatusMessageWrapper = styled.aside`
 `;
 
 export function StatusMessage(props) {
+  const type = statusTypes.includes(props.type) ? props.type : 'info';
   return (
-    <StatusMessageWrapper type={props.type.trim()}>
-      {props.message}
-    </StatusMessageWrapper>
+    <StatusMessageWrapper type={type}>{props.message}</StatusMessageWrapper>
   );
 }
 

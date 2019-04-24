@@ -1,0 +1,29 @@
+{
+  "docs": {
+    "Getting Started": [
+      "intro",
+      "getting-started",
+      "requirements",
+      "config",
+      "ui-settings"
+    ],
+    "Patterns": [
+      "patterns-overview",
+      "add-new-pattern",
+      "example-button",
+      "example-nesting-patterns"
+    ],
+    "Page Builder": [
+      "page-builder"
+    ],
+    "Design Tokens": [
+      "design-tokens"
+    ],
+    "Demos": [
+      "demos"
+    ],
+    "More Info": [
+      "about"
+    ]
+  }
+}

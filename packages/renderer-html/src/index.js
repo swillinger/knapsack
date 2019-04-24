@@ -1,7 +1,9 @@
-const { BedrockRendererBase } = require('@basalt/bedrock');
+const { KnapsackRendererBase } = require('@basalt/knapsack');
 const fs = require('fs-extra');
 
-class BedrockHtmlRenderer extends BedrockRendererBase {
+/* eslint-disable class-methods-use-this */
+
+class KnapsackHtmlRenderer extends KnapsackRendererBase {
   constructor() {
     super({
       id: 'html',
@@ -22,6 +24,10 @@ class BedrockHtmlRenderer extends BedrockRendererBase {
       };
     }
   }
+
+  async getUsage({ template }) {
+    return fs.readFile(template.absolutePath, 'utf8');
+  }
 }
 
-module.exports = BedrockHtmlRenderer;
+module.exports = KnapsackHtmlRenderer;

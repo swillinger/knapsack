@@ -1,4 +1,4 @@
-/examples/create-bedrock-results
+/examples/create-knapsack-results
 node_modules
 .DS_Store
 .idea
@@ -7,3 +7,8 @@ vendor
 dist
 *.log
 /crux
+/cypress/videos
+/cypress/screenshots
+/docs-site/build
+/docs-site/i18n
+

@@ -1,5 +1,8 @@
 node_modules
 dist
 examples
-/packages/create-bedrock/generators/twig/templates/
+/packages/create-knapsack/generators/twig/templates/
 /crux
+# @todo remove and fix lint issues
+/docs-site/pages
+/docs-site/core

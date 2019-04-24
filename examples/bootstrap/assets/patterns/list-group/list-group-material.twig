@@ -1,0 +1,23 @@
+<div class="mdc-list-group">
+  {% if subheader %}
+  <h3 class="mdc-list-group__subheader">List Name</h3>
+  {% endif %}
+<ul class="mdc-list">
+  {% for item in listItems %}
+    {% set itemClasses = [
+      item.disabled ? 'mdc-list-item-disabled',
+    ] %}
+    <li class="mdc-list-item {{ itemClasses|join(' ') }}">
+      {% if item.secondaryText %}
+        <span class="mdc-list-item__text">
+          <span class="mdc-list-item__primary-text">{{ item.itemText }}</span>
+          <span class="mdc-list-item__secondary-text">{{ item.secondaryText }}</span>
+        </span>
+
+      {% else %}
+        <span class="mdc-list-item__text">{{ item.itemText }}</span>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
+</div>

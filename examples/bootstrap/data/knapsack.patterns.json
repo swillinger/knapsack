@@ -1,0 +1,37 @@
+{
+  "patternTypes": [
+    {
+      "id": "atoms",
+      "title": "Atoms"
+    },
+    {
+      "id": "molecules",
+      "title": "Molecules"
+    },
+    {
+      "id": "organisms",
+      "title": "Organisms"
+    },
+    {
+      "id": "layouts",
+      "title": "Layouts"
+    }
+  ],
+  "patternStatuses": [
+    {
+      "id": "draft",
+      "title": "Draft",
+      "color": "#9b9b9b"
+    },
+    {
+      "id": "inProgress",
+      "title": "In Progress",
+      "color": "#FC0"
+    },
+    {
+      "id": "ready",
+      "title": "Ready",
+      "color": "#2ECC40"
+    }
+  ]
+}

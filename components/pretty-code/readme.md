@@ -1,5 +1,5 @@
-# Bedrock Pretty Code
+# Knapsack Pretty Code
 
 ```
-npm install --save @basalt/bedrock-pretty-code
+npm install --save @knapsack/pretty-code
 ```

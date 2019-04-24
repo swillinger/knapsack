@@ -35,7 +35,7 @@ rl.on('close', async () => {
       issues.map(issue =>
         commentOnIssue(
           issue,
-          `Released in [${tag}](https://github.com/basaltinc/bedrock/releases/tag/${tag})`,
+          `Released in [${tag}](https://github.com/basaltinc/knapsack/releases/tag/${tag})`,
         ),
       ),
     );

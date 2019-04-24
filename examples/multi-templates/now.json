@@ -1,6 +1,6 @@
 {
-  "name": "bedrock-example-multi-templates",
-  "alias": "multi-templates.demo.getbedrock.com",
+  "name": "knapsack-demo-multi-templates",
+  "alias": "demo-multi-templates.knapsack.basalt.io",
   "version": 1,
   "type": "docker",
   "scale": {

@@ -1,11 +1,14 @@
-const { BedrockRendererBase } = require('@basalt/bedrock');
+const { KnapsackRendererBase } = require('@basalt/knapsack');
 const TwigRenderer = require('@basalt/twig-renderer');
 
-class BedrockTwigRenderer extends BedrockRendererBase {
+/* eslint-disable class-methods-use-this */
+
+class KnapsackTwigRenderer extends KnapsackRendererBase {
   constructor(config) {
     super({
       id: 'twig',
       extension: '.twig',
+      language: 'twig',
     });
     this.twigRenderer = new TwigRenderer({
       keepAlive: process.env.NODE_ENV === 'production',
@@ -16,6 +19,13 @@ class BedrockTwigRenderer extends BedrockRendererBase {
   async render({ template, data = {} }) {
     return this.twigRenderer.render(template.alias, data);
   }
+
+  async getUsage({ template, data = {} }) {
+    const { alias } = template;
+    return `
+{% include "${alias}" with ${JSON.stringify(data, null, '  ')} only %}
+    `.trim();
+  }
 }
 
-module.exports = BedrockTwigRenderer;
+module.exports = KnapsackTwigRenderer;

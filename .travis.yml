@@ -17,8 +17,10 @@ install:
 script:
 - ./scripts/ci.sh
 cache:
-- npm
-- yarn
+  npm: true
+  yarn: true
+  directories:
+    - ~/.cache
 notifications:
   email:
     on_success: never

@@ -1,7 +1,7 @@
 {
-  "name": "crux",
-  "alias": "crux",
+  "name": "knapsack",
   "type": "docker",
+  "version": 1,
   "scale": {
     "sfo1": {
       "min": 0,

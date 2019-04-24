@@ -1,11 +1,9 @@
-# Bedrock (soon to be renamed to Knapsack)
-
-> This is currently a technical preview while pre-v1.0.0; any feedback is very welcome! 
+# Knapsack (formerly Bedrock)
 
 ## Demos
 
-- Demo: <https://demo.getbedrock.com>
-- Basalt's Design System, Crux, built on Bedrock: <https://design.basalt.io>
+- Demo: <https://demo-bootstrap.knapsack.basalt.io>
+- Basalt's Design System, Crux, built on Knapsack: <https://design.basalt.io>
 
 ## Requirements
 
@@ -13,13 +11,13 @@
 
 ## Starting
 
-- Look at our [`./examples` folder](https://github.com/basaltinc/bedrock/tree/master/examples) to see how this can be implemented
-- [See docs here](https://www.getbedrock.com/docs) 
+- Look at our [`./examples` folder](https://github.com/basaltinc/knapsack/tree/master/examples) to see how this can be implemented
+- [See docs here](https://knapsack.basalt.io) 
 
 Spin up a starter setup with these commands:
 
 ```bash
-npx create-bedrock my-design-system
+npm create knapsack my-design-system
 cd my-design-system
 npm install
 npm start

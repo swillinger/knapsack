@@ -11,7 +11,7 @@ if [ "$TRAVIS_TAG" ]; then
   echo "========"
   echo "START: deploy"
   echo "========"
-  ./scripts/create-bedrock-deploy/deploy.sh;
+  ./scripts/create-knapsack-deploy/deploy.sh;
   echo "========"
   echo "END: deploy"
   echo "========"
@@ -50,15 +50,6 @@ else
   fi
 
   if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then
-    echo "========"
-    echo "START: e2e-simple"
-    echo "========"
-    git checkout $TRAVIS_BRANCH
-    ./scripts/e2e-simple.sh
-    echo "========"
-    echo "END: e2e-simple"
-    echo "========"
-
     echo "On master branch"
     echo "========"
     echo "START: release"

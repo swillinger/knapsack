@@ -117,6 +117,7 @@ npm whoami
 
 git status
 echo 'about to clean those ^^^'
+git reset
 git clean -df
 ./scripts/publish.sh prerelease --yes --force-publish=* --exact --npm-tag=latest --no-git-tag-version --no-push --registry="$custom_registry_url" --npm-client=npm
 
@@ -126,9 +127,9 @@ git clean -df
 
 # Install the app in a temporary location
 cd $temp_app_path
-npx create-bedrock test-app
+npx create-knapsack test-app
 cd test-app
-npm install
+npm install --loglevel error
 echo 'Install successfull. Building...'
 npm run build
 echo 'Build successfull!'
@@ -136,7 +137,7 @@ echo 'Build successfull!'
 # npm i -g now@latest --unsafe-perm
 # echo 'Hiding now deploy command as it contains a secret'
 # set +C
-# now --build-env NPM_TOKEN=@npm-token --token=$NOW_TOKEN --team=basalt --name='create-bedrock' --no-clipboard
+# now --build-env NPM_TOKEN=@npm-token --token=$NOW_TOKEN --team=basalt --name='create-knapsack' --no-clipboard
 # set -x
 
 echo 'Cleaning up...'

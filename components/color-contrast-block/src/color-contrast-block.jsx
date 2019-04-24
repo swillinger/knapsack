@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { convertColor } from '@basalt/bedrock-utils';
-import { Details, Select } from '@basalt/bedrock-atoms';
-import Spinner from '@basalt/bedrock-spinner';
+import { convertColor } from '@knapsack/utils';
+import { Details, Select } from '@knapsack/atoms';
+import Spinner from '@knapsack/spinner';
 import {
   ColorContrastPlayground,
   AccessibilityInfo,

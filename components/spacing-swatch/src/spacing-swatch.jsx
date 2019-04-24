@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connectToContext } from '@basalt/bedrock-core';
-import CopyToClipboard from '@basalt/bedrock-copy-to-clipboard';
+import { connectToContext } from '@knapsack/core';
+import CopyToClipboard from '@knapsack/copy-to-clipboard';
 import { SpacingOuter, SpacingWrapper } from './spacing-swatch.styles';
 
 const SpacingSwatch = ({ space, color }) => (

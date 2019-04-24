@@ -1,0 +1,14 @@
+{
+  "name": "@knapsack/cypress",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "cypress": "cypress",
+    "cypress:run": "percy exec -- cypress run",
+    "cypress:open": "yarn cypress open"
+  },
+  "devDependencies": {
+    "@percy/cypress": "^1.0.2",
+    "cypress": "^3.1.5"
+  }
+}

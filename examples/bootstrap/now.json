@@ -1,6 +1,6 @@
 {
-  "name": "bedrock-example-bootstrap",
-  "alias": "bootstrap.demo.getbedrock.com",
+  "name": "knapsack-demo-bootstrap",
+  "alias": "demo-bootstrap.knapsack.basalt.io",
   "version": 1,
   "type": "docker",
   "scale": {

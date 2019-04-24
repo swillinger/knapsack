@@ -1,0 +1,17 @@
+{% set classes = [
+  'list-group',
+  flush ? 'list-group-flush',
+] %}
+
+<ul class="{{ classes|join(' ') }}">
+  {% for item in listItems %}
+    {% set itemClasses = [
+      'list-group-item',
+      item.style ? 'list-group-item-' ~ item.style,
+      item.active ? 'active',
+      item.disabled ? 'disabled',
+    ] %}
+
+    <li class="{{ itemClasses|join(' ') }}">{{ item.itemText }}</li>
+  {% endfor %}
+</ul>

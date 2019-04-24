@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { getTypeColor } from '@basalt/bedrock-core';
+import { getTypeColor } from '@knapsack/core';
 import {
   ShadowWrap,
   DemoStage,

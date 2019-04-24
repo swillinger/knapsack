@@ -1,0 +1,15 @@
+<div class="card-grid" style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+  {% for card in cards %}
+    <div class="card-grid__card" style="margin: .25rem">
+      {% include '@components/card.twig' with {
+        cardTitle: card.cardTitle,
+        cardSubTitle: card.cardSubTitle,
+        cardBody: card.cardBody,
+        imgSrc: card.imgSrc,
+        list: card.list,
+        button: card.button,
+        links: card.links,
+      } only %}
+    </div>
+  {% endfor %}
+</div>

@@ -9,7 +9,7 @@ import {
   Select,
   StatusMessage,
   Tooltip,
-} from '@basalt/bedrock-atoms';
+} from '@knapsack/atoms';
 import { paragraph } from '@basalt/demo-data';
 
 storiesOf('Atoms', module)

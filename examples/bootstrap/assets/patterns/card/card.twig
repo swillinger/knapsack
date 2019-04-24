@@ -1,0 +1,42 @@
+{% set classes = [
+  'card',
+  textAlign ? 'text-' ~ textAlign|default('left'),
+] | merge(classes|default([])) %}
+
+<div class="{{ classes|join(' ') }}" style="width: 18rem;">
+  {% if cardHeader %}
+    <h5 class="card-header">{{ cardHeader }}</h5>
+  {% endif %}
+  {% if imgSrc %}
+    <img src="{{ imgSrc }}" class="card-img-top" alt="{{ imgAlt }}">
+  {% endif %}
+  <div class="card-body">
+    <h5 class="card-title">{{ cardTitle }}</h5>
+    {% if cardSubTitle %}
+      <h6 class="card-subtitle mb-2 text-muted">{{ cardSubTitle }}</h6>
+    {% endif %}
+    <p class="card-text">{{ cardBody }}</p>
+
+    {% if list %}
+      </div>
+        {% include '@components/list-group.twig' with {
+          flush: list.flush,
+          listItems: list.listItems,
+        } only %}
+      <div class="card-body">
+    {% endif %}
+
+    {% if links %}
+      {% for link in links %}
+        <a href="{{ link.linkUrl }}" class="card-link">{{ link.linkText }}</a>
+      {% endfor %}
+    {% elseif button.text %}
+      {% include '@components/button.twig' with {
+        text: button.text,
+        url: button.url,
+        style: button.style,
+      } only %}
+    {% endif %}
+
+  </div>
+</div>

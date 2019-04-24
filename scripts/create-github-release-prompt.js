@@ -51,7 +51,7 @@ function githubPost(path, requestBody) {
  * @link https://developer.github.com/v3/repos/releases/#create-a-release
  */
 async function createRelease(tag, body) {
-  await githubPost('/repos/basaltinc/bedrock/releases', {
+  await githubPost('/repos/basaltinc/knapsack/releases', {
     tag_name: tag,
     target_commitish: 'master',
     name: tag,
@@ -68,7 +68,7 @@ async function createRelease(tag, body) {
  * @link https://developer.github.com/v3/issues/comments/#create-a-comment
  */
 async function commentOnIssue(issue, comment) {
-  await githubPost(`/repos/basaltinc/bedrock/issues/${issue}/comments`, {
+  await githubPost(`/repos/basaltinc/knapsack/issues/${issue}/comments`, {
     body: comment,
   });
 }
@@ -95,7 +95,7 @@ inquirer
   .then(async ({ tag, body, issues }) => {
     const releaseResults = await createRelease(tag, body);
     console.log(
-      `👍 Released [${tag}](https://github.com/basaltinc/bedrock/releases/tag/${tag})`,
+      `👍 Released [${tag}](https://github.com/basaltinc/knapsack/releases/tag/${tag})`,
       releaseResults,
     );
     if (issues) {
@@ -103,7 +103,7 @@ inquirer
         issues.map(issue =>
           commentOnIssue(
             issue,
-            `Released in [${tag}](https://github.com/basaltinc/bedrock/releases/tag/${tag})`,
+            `Released in [${tag}](https://github.com/basaltinc/knapsack/releases/tag/${tag})`,
           ),
         ),
       );

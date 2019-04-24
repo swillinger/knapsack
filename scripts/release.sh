@@ -15,15 +15,17 @@ fi
 #test -e ~/.npmrc || cp ./scripts/.npmrc-ci ~/.npmrc
 # hmm.. that's not working; perhaps CI has `~/.npmrc`
 git config --global user.email $GITHUB_EMAIL
-git config --global user.name "Bedrock Bot"
+git config --global user.name "Knapsack Bot"
 cp ./scripts/.npmrc-ci ~/.npmrc
 PREV_VERSION=`git describe --abbrev=0`
 # see `lerna.json` for options
-./node_modules/.bin/lerna publish --conventional-commits --yes
+GH_TOKEN=$GITHUB_TOKEN ./node_modules/.bin/lerna publish --github-release --conventional-commits --yes
+
 CURRENT_VERSION=`git describe --abbrev=0`
 echo "Previous version: $PREV_VERSION Current Version: $CURRENT_VERSION"
 echo "changelog test output:"
 CHANGES="`git show $PREV_VERSION:CHANGELOG.md | diff -u - CHANGELOG.md | grep '^\+' | grep -v '^\++' | sed -E 's/^\+//'`"
-echo "Creating GitHub release and announcing to issues"
-echo "$CHANGES" | node ./scripts/create-github-release.js "$CURRENT_VERSION"
+#echo "Creating GitHub release and announcing to issues"
+echo "$CHANGES"
+#echo "$CHANGES" | node ./scripts/create-github-release.js "$CURRENT_VERSION"
 echo "END: changelog"

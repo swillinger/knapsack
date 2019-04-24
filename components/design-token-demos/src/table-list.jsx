@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import { containsString } from '@basalt/bedrock-utils';
-import CopyToClipboard from '@basalt/bedrock-copy-to-clipboard';
+import { containsString } from '@knapsack/utils';
+import CopyToClipboard from '@knapsack/copy-to-clipboard';
 import { demoPropTypes } from './utils';
-import { ReactTableWrapper } from './styles';
+import './table-list.css';
 
 const columnHeader = text => <div style={{ textAlign: 'left' }}>{text}</div>;
 const filterInput = ({ onChange }) => (
@@ -57,7 +57,7 @@ expanderToggle.propTypes = {
 export const DesignTokenTable = ({ tokens }) => {
   if (!tokens) return null;
   return (
-    <ReactTableWrapper>
+    <div>
       <ReactTable
         // Styling props
         className="-striped -highlight"
@@ -117,7 +117,7 @@ export const DesignTokenTable = ({ tokens }) => {
         // Expandable component
         SubComponent={expandableContent}
       />
-    </ReactTableWrapper>
+    </div>
   );
 };
 

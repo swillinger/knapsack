@@ -1,5 +1,5 @@
 node_modules
 dist
 vendor
-/packages/create-bedrock/generators/*/templates/
+/packages/create-knapsack/generators/*/templates/
 /crux

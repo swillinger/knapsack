@@ -1,17 +1,19 @@
 {
-  "name": "@basalt/bedrock-schema-table",
+  "name": "@knapsack/schema-table",
   "license": "GPL-2.0-or-later",
-  "version": "0.35.0",
-  "description": "A Bedrock component that helps build Design Systems",
-  "module": "dist/schema-table.js",
-  "main": "dist/schema-table.js",
+  "version": "1.1.7",
+  "description": "A Knapsack component that helps build Design Systems",
+  "module": "dist/schema-table-styled.js",
+  "main": "dist/schema-table.commonjs.js",
   "scripts": {
-    "build": "babel --config-file @basalt/bedrock-babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
+    "build:es": "babel --config-file @knapsack/babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
+    "build:cs": "babel --config-file @knapsack/babel-config ./src/schema-table.jsx --out-file dist/schema-table.commonjs.js ",
+    "build": "yarn build:es && yarn build:cs",
     "prepublishOnly": "yarn build",
     "watch": "yarn build --watch"
   },
   "dependencies": {
-    "@basalt/bedrock-core": "^0.35.0",
+    "@knapsack/core": "^1.0.0",
     "react-table": "^6.8.6"
   },
   "devDependencies": {

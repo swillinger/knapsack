@@ -1,0 +1,137 @@
+{
+  "Wc-p5CAcx": {
+    "id": "Wc-p5CAcx",
+    "title": "Simple Example",
+    "path": "/pages/Wc-p5CAcx",
+    "description": null,
+    "slices": [
+      {
+        "id": "mAWDYr1UJ",
+        "patternId": "nav",
+        "templateId": "nav-material-twig",
+        "data": {
+          "title": "Menu Title",
+          "type": "standard",
+          "download": true,
+          "print": true,
+          "bookmark": true
+        }
+      },
+      {
+        "id": "9KL5lReac",
+        "patternId": "card-grid",
+        "templateId": "twig-material",
+        "data": {
+          "cards": [
+            {
+              "cardTitle": "Card Title 2",
+              "cardSubTitle": "Card SubTitle",
+              "cardBody": "Some quick example text to build on the card title and make up the bulk of the card's content.",
+              "imgSrc": "https://placeimg.com/640/480/nature",
+              "buttons": [
+                {
+                  "text": "Go somewhere",
+                  "url": "#",
+                  "variant": "text"
+                }
+              ]
+            },
+            {
+              "cardTitle": "Card Title 1",
+              "cardSubTitle": "Card SubTitle",
+              "cardBody": "Some quick example text to build on the card title and make up the bulk of the card's content.",
+              "imgSrc": "https://placeimg.com/640/480/nature",
+              "buttons": [
+                {
+                  "text": "Go somewhere",
+                  "url": "#",
+                  "variant": "outlined"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "TC7ZQCFR2",
+        "patternId": "table",
+        "templateId": "table-twig",
+        "data": {
+          "dark": false,
+          "striped": true,
+          "bordered": false,
+          "hoverable": true,
+          "thead": {
+            "cells": [
+              {
+                "text": "#"
+              },
+              {
+                "text": "First"
+              },
+              {
+                "text": "Last"
+              },
+              {
+                "text": "Handle"
+              }
+            ]
+          },
+          "tbody": [
+            {
+              "rowHeader": "1",
+              "cells": [
+                {
+                  "text": "Mark"
+                },
+                {
+                  "text": "Otto"
+                },
+                {
+                  "text": "@mdo"
+                }
+              ]
+            },
+            {
+              "rowHeader": "2",
+              "cells": [
+                {
+                  "text": "Jacob"
+                },
+                {
+                  "text": "Thornton"
+                },
+                {
+                  "text": "@fbt"
+                }
+              ]
+            },
+            {
+              "rowHeader": "3",
+              "cells": [
+                {
+                  "text": "Larry"
+                },
+                {
+                  "text": "the Bird"
+                },
+                {
+                  "text": "@twitter"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "ezmbHP-Jz",
+        "patternId": "alert",
+        "templateId": "alert-material-twig",
+        "data": {
+          "message": "Success - something went right."
+        }
+      }
+    ],
+    "hasVisibleControls": true
+  }
+}

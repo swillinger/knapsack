@@ -1,7 +1,15 @@
-const { BedrockRendererWebpackBase } = require('@basalt/bedrock');
+const { KnapsackRendererWebpackBase } = require('@basalt/knapsack');
+const camelCase = require('camelcase');
 const { copyReactAssets } = require('./utils');
 
-class BedrockReactRenderer extends BedrockRendererWebpackBase {
+/* eslint-disable class-methods-use-this */
+
+function upperCamelCase(str) {
+  const cased = camelCase(str);
+  return cased.charAt(0).toUpperCase() + cased.slice(1);
+}
+
+class KnapsackReactRenderer extends KnapsackRendererWebpackBase {
   constructor({ webpackConfig, webpack }) {
     super({
       id: 'react',
@@ -24,12 +32,12 @@ class BedrockReactRenderer extends BedrockRendererWebpackBase {
     const html = `
 ${this.assets.map(asset => `<script src="${asset}"></script>`).join('')}
 <script src="${this.webpackManifest[`${id}.js`]}"></script>
-<div data-dev-note="Bedrock React Template Wrapper" data-id="${id}"></div>
+<div data-dev-note="Knapsack React Template Wrapper" data-id="${id}"></div>
 <script>
 // Selects the div right before this script tag
 const root = document.currentScript.previousElementSibling;
 document.addEventListener('DOMContentLoaded', () => {
-  const Component = window.bedrock['${id}'].default;
+  const Component = window.knapsack['${id}'].default;
   ReactDOM.render(
     React.createElement(
       Component, 
@@ -45,6 +53,17 @@ document.addEventListener('DOMContentLoaded', () => {
       html,
     };
   }
+
+  async getUsage({ patternId, data = {} }) {
+    // @todo show how to `import` the React component
+    return `
+const data = ${JSON.stringify(data, null, '  ')};
+
+function Example() {
+  return <${upperCamelCase(patternId)} {...data} />;
+}
+    `.trim();
+  }
 }
 
-module.exports = BedrockReactRenderer;
+module.exports = KnapsackReactRenderer;

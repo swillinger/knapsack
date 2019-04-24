@@ -1,0 +1,44 @@
+{% set classes = [
+  'navbar',
+  'navbar-expand-lg',
+  colorScheme ? 'navbar-' ~ colorScheme|default('light'),
+  colorScheme ? 'bg-' ~ colorScheme|default('light'),
+] %}
+
+{% set navClasses = [
+  'navbar-nav',
+  nav.textAlign == 'justified' ? 'nav-justified' : 'justify-content-' ~ nav.textAlign|default('start'),
+  nav.type == 'Default' ? 'flex-column' : 'nav-' ~ nav.type|default('default'),
+] %}
+
+<nav class="{{ classes|join(' ') }}">
+  {% if brand %}
+    <a class="navbar-brand" href="#">
+
+      {% if brand.brandImg %}
+        <img src="{{ brand.brandImg }}" width="30" height="30" alt="">
+      {% endif %}
+
+      {% if brand.brandName %}
+        {{ brand.brandName }}
+      {% endif %}
+
+    </a>
+  {% endif %}
+  {% if nav %}
+    <div class="collapse navbar-collapse">
+      <ul class="{{ navClasses|join(' ') }}">
+        {% for navItem in nav.navItems %}
+          {% set linkClasses = [
+            'nav-link',
+            navItem.active ? 'active',
+            navItem.disabled ? 'disabled',
+          ] %}
+          <li class="nav-item">
+            <a class="{{ linkClasses|join(' ') }}" href="{{ navItem.link }}">{{ navItem.text }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+</nav>

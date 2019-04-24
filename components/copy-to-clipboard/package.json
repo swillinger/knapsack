@@ -1,12 +1,12 @@
 {
-  "name": "@basalt/bedrock-copy-to-clipboard",
+  "name": "@knapsack/copy-to-clipboard",
   "license": "UNLICENSED",
-  "version": "0.35.0",
+  "version": "1.0.7",
   "description": "Wrapper that allows a user to click the content and copy-to-clipboard.",
   "module": "dist/copy-to-clipboard.js",
   "main": "dist/copy-to-clipboard.js",
   "scripts": {
-    "build": "babel --config-file @basalt/bedrock-babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
+    "build": "babel --config-file @knapsack/babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
     "prepublishOnly": "yarn build",
     "watch": "yarn build --watch"
   },
@@ -21,12 +21,12 @@
   },
   "author": "Basalt (https://basalt.io/)",
   "dependencies": {
-    "@basalt/bedrock-atoms": "^0.35.0",
-    "@basalt/bedrock-breakpoints-demo": "^0.35.0",
-    "@basalt/bedrock-color-swatch": "^0.35.0",
-    "@basalt/bedrock-core": "^0.35.0",
-    "@basalt/bedrock-spacing-swatch": "^0.35.0",
-    "@basalt/bedrock-utils": "^0.35.0",
+    "@knapsack/atoms": "^1.0.0",
+    "@knapsack/breakpoints-demo": "^1.0.7",
+    "@knapsack/color-swatch": "^1.0.7",
+    "@knapsack/core": "^1.0.0",
+    "@knapsack/spacing-swatch": "^1.0.7",
+    "@knapsack/utils": "^1.0.0",
     "react-copy-to-clipboard": "^5.0.1",
     "react-table": "^6.9.0"
   },

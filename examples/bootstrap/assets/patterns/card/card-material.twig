@@ -1,0 +1,26 @@
+<div class="mdc-card">
+  <div class="mdc-card__primary-action" tabindex="0">
+    <div class="my-card__media mdc-card__media mdc-card__media--16-9" style="background-image: url('{{ imgSrc }}')">
+    </div>
+  </div>
+  <div class="mdc-card__primary" style="padding: 0 1rem">
+    <h2 class="mdc-card__title mdc-typography mdc-typography--headline6" style="margin-bottom: 0">{{ cardTitle }}</h2>
+    <h3 class="mdc-card__subtitle mdc-typography mdc-typography--subtitle2" style="margin-top: 0px">{{ cardSubTitle }}</h3>
+  </div>
+  <div class="demo-card__secondary mdc-typography mdc-typography--body2" style="padding: 0 1rem">
+    {{ cardBody }}
+  </div>
+  <div class="mdc-card__actions" style="padding: 1rem">
+    {% if buttons %}
+        {% for button in buttons %}
+          {% include '@components/button-material.twig' with {
+            text: button.text,
+            url: button.url,
+            variant: button.variant,
+            dense: button.dense,
+            disabled: button.disabled,
+         } only %}
+        {% endfor %}
+    {% endif %}
+  </div>
+</div>

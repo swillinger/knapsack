@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShadowDemoBox } from '@basalt/bedrock/src/client/pages/design-tokens/shadows-page.styles';
+import { ShadowDemoBox } from '@basalt/knapsack/src/client/pages/design-tokens/shadows-page.styles';
 import { demoPropTypes } from './utils';
 
 export const TextShadowDemo = ({ tokens }) => {

@@ -1,0 +1,23 @@
+{
+  "title": "A Design System",
+  "subtitle": "A Simple Example of a Design System",
+  "slogan": "Don't repeat yourself",
+  "parentBrand": {
+    "logo": "",
+    "title": "",
+    "homepage": ""
+  },
+  "customSections": [
+    {
+      "id": "design-tokens",
+      "title": "Design Tokens",
+      "showInMainMenu": true,
+      "pages": [
+        {
+          "id": "colors",
+          "title": "Colors"
+        }
+      ]
+    }
+  ]
+}

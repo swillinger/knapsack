@@ -1,0 +1,11 @@
+{
+  "title": "Button",
+  "description": "A Button for clicking!",
+  "type": "molecules",
+  "status": "ready",
+  "uses": [
+    "inComponent"
+  ],
+  "hasIcon": true,
+  "demoSize": "s"
+}

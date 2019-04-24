@@ -1,20 +1,20 @@
 {
-  "name": "@basalt/bedrock-code-block",
+  "name": "@knapsack/code-block",
   "license": "GPL-2.0-or-later",
-  "version": "0.35.0",
-  "description": "A Bedrock component that helps build Design Systems",
+  "version": "1.0.0",
+  "description": "A Knapsack component that helps build Design Systems",
   "module": "dist/code-block.js",
   "main": "dist/code-block.js",
   "scripts": {
-    "build": "babel --config-file @basalt/bedrock-babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
+    "build": "babel --config-file @knapsack/babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
     "prepublishOnly": "yarn build",
     "watch": "yarn build --watch"
   },
   "dependencies": {
-    "@basalt/bedrock-atoms": "^0.35.0",
-    "@basalt/bedrock-core": "^0.35.0",
-    "@basalt/bedrock-pretty-code": "^0.35.0",
-    "@basalt/bedrock-utils": "^0.35.0"
+    "@knapsack/atoms": "^1.0.0",
+    "@knapsack/core": "^1.0.0",
+    "@knapsack/pretty-code": "^1.0.0",
+    "@knapsack/utils": "^1.0.0"
   },
   "devDependencies": {
     "prop-types": "^15.0.0",

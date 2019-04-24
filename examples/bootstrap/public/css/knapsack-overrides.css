@@ -1,0 +1,16 @@
+body {
+  height: auto;
+  padding: 1rem;
+  background-color: transparent;
+}
+body > div > * {
+  margin-bottom: 0 !important;
+}
+
+/*[data-theme="material"] .bootstrap {*/
+  /*display: none;*/
+/*}*/
+
+/*[data-theme="bootstrap"] .material {*/
+  /*display: none;*/
+/*}*/

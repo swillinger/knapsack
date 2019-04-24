@@ -1,3 +1,3 @@
-const baseBabelConfig = require('./bedrock-babel-config');
+const baseBabelConfig = require('./knapsack-babel-config');
 
 module.exports = baseBabelConfig();

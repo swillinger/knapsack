@@ -34,7 +34,7 @@ export const DeviceListItem = styled.li`
 `;
 
 export const DeviceWidthUl = styled.ul`
-  max-width: calc(75vw - 2 * ${props => props.theme.globals.spacing.l});
+  max-width: 20px;
   padding-top: 20px;
 `;
 

@@ -152,6 +152,36 @@ function qsStringify(data) {
   return qs.stringify(data);
 }
 
+/**
+ * Create a demo url
+ * @param {Object} opt
+ * @param {string} opt.patternId
+ * @param {string} opt.templateId
+ * @param {string} opt.assetSetId
+ * @param {boolean} [opt.isInIframe=false]
+ * @param {boolean} [opt.wrapHtml=true]
+ * @param {Object} [opt.data]
+ * @return {string}
+ */
+function createDemoUrl({
+  patternId,
+  templateId,
+  assetSetId,
+  isInIframe = false,
+  wrapHtml = true,
+  data = {},
+}) {
+  const queryString = qsStringify({
+    patternId,
+    templateId,
+    assetSetId,
+    isInIframe,
+    wrapHtml,
+    data,
+  });
+  return `/api/render?${queryString}`;
+}
+
 module.exports = {
   writeJson,
   readJson,
@@ -163,4 +193,5 @@ module.exports = {
   dirExistsOrExit,
   qsParse,
   qsStringify,
+  createDemoUrl,
 };

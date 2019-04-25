@@ -28,7 +28,7 @@ const chokidar = require('chokidar');
 const {
   version: iframeResizerVersion,
 } = require('iframe-resizer/package.json');
-const { qsStringify } = require('./server-utils');
+const { createDemoUrl } = require('./server-utils');
 const { knapsackEvents, EVENTS } = require('./events');
 const { FileDb } = require('./db');
 const patternSchema = require('../schemas/pattern.schema');
@@ -284,36 +284,6 @@ async function writeAllFiles(dir, config) {
  */
 function isRemoteUrl(url) {
   return url.startsWith('http') || url.startsWith('//');
-}
-
-/**
- * Create a demo url
- * @param {Object} opt
- * @param {string} opt.patternId
- * @param {string} opt.templateId
- * @param {string} opt.assetSetId
- * @param {boolean} [opt.isInIframe=false]
- * @param {boolean} [opt.wrapHtml=true]
- * @param {Object} [opt.data]
- * @return {string}
- */
-function createDemoUrl({
-  patternId,
-  templateId,
-  assetSetId,
-  isInIframe = false,
-  wrapHtml = true,
-  data = {},
-}) {
-  const queryString = qsStringify({
-    patternId,
-    templateId,
-    assetSetId,
-    isInIframe,
-    wrapHtml,
-    data,
-  });
-  return `/api/render?${queryString}`;
 }
 
 /**

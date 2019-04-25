@@ -13,6 +13,7 @@ const {
   styleDictionaryKnapsackFormat,
   theoKnapsackFormat,
 } = require('./server/design-tokens');
+const utils = require('./server/server-utils');
 
 module.exports = {
   KnapsackRendererBase,
@@ -25,4 +26,5 @@ module.exports = {
   bootstrapFromConfigFile,
   bootstrap,
   getBrain,
+  utils,
 };

@@ -177,7 +177,7 @@ function createDemoUrl({
     assetSetId,
     isInIframe,
     wrapHtml,
-    data,
+    data: qsStringify(data),
   });
   return `/api/render?${queryString}`;
 }

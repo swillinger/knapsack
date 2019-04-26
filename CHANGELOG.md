@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.13](https://github.com/basaltinc/knapsack/compare/v1.1.12...v1.1.13) (2019-04-26)
+
+
+### Bug Fixes
+
+* nested data in query stringify ([7e8a372](https://github.com/basaltinc/knapsack/commit/7e8a372))
+
+
+
+
+
 ## [1.1.12](https://github.com/basaltinc/knapsack/compare/v1.1.11...v1.1.12) (2019-04-25)
 
 

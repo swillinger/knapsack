@@ -91,7 +91,7 @@ function silly(msg, extra, prefix = '') {
  * @returns {void}
  */
 function setLogLevel(level) {
-  info(`Setting loglevel to ${level}`);
+  // info(`Setting loglevel to ${level}`);
   log.level = level;
 }
 

@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/example-bootstrap",
   "license": "ISC",
-  "version": "1.1.13",
+  "version": "1.1.14",
   "description": "",
   "private": true,
   "main": "index.js",
@@ -18,8 +18,8 @@
   "dependencies": {
     "@basalt/demo-data": "^0.5.1",
     "@basalt/knapsack": "^1.1.13",
-    "@knapsack/renderer-html": "^1.0.0",
-    "@knapsack/renderer-twig": "^1.0.0",
+    "@knapsack/renderer-html": "^1.1.14",
+    "@knapsack/renderer-twig": "^1.1.14",
     "lodash.template": "^4.4.0"
   },
   "devDependencies": {

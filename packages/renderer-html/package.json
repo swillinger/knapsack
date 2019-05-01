@@ -1,6 +1,6 @@
 {
   "name": "@knapsack/renderer-html",
-  "version": "1.0.0",
+  "version": "1.1.14",
   "description": "Render HTML",
   "main": "src/index.js",
   "scripts": {},

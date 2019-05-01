@@ -8,7 +8,7 @@
     "@basalt/twig-renderer": "^0.12.0"
   },
   "peerDependencies": {
-    "@basalt/knapsack": "^0.32.0"
+    "@basalt/knapsack": "^1.0.0"
   },
   "author": "Basalt (https://basalt.io/)",
   "publishConfig": {

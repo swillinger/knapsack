@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.15](https://github.com/basaltinc/knapsack/compare/v1.1.14...v1.1.15) (2019-05-01)
+
+
+### Bug Fixes
+
+* remove unneeded cli logging ([69026d7](https://github.com/basaltinc/knapsack/commit/69026d7))
+
+
+
+
+
 ## [1.1.14](https://github.com/basaltinc/knapsack/compare/v1.1.13...v1.1.14) (2019-05-01)
 
 

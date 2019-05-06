@@ -998,6 +998,7 @@ class Patterns {
    * @param {string} [opt.templateId] - Template Id
    * @param {boolean} [opt.wrapHtml=true] - Should it wrap HTML results with `<head>` and include assets?
    * @param {Object} [opt.data] - Data to pass to template
+   * @param {number} [opt.demoDataIndex] - Demo data index to pass to template
    * @param {boolean} [opt.isInIframe=false] - Will this be in an iFrame?
    * @param {string} [opt.assetSetId] - Asset Set Id
    * @param {number} [opt.websocketsPort]
@@ -1007,7 +1008,8 @@ class Patterns {
     patternId,
     templateId = '',
     wrapHtml = true,
-    data = {},
+    data,
+    demoDataIndex,
     isInIframe = false,
     websocketsPort,
     assetSetId,
@@ -1022,10 +1024,14 @@ class Patterns {
       t.test(template.absolutePath),
     );
 
+    const demoData = Number.isInteger(demoDataIndex)
+      ? template.demoDatas[demoDataIndex]
+      : null;
+
     const renderedTemplate = await renderer.render({
       pattern,
       template,
-      data,
+      data: demoData || data,
     });
 
     if (!renderedTemplate.ok) return renderedTemplate;

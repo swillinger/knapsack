@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.16](https://github.com/basaltinc/knapsack/compare/v1.1.15...v1.1.16) (2019-05-06)
+
+
+### Bug Fixes
+
+* render urls now can take `demoDataIndex` as param ([eda324e](https://github.com/basaltinc/knapsack/commit/eda324e))
+
+
+
+
+
 ## [1.1.15](https://github.com/basaltinc/knapsack/compare/v1.1.14...v1.1.15) (2019-05-01)
 
 

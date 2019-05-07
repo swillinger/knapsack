@@ -161,6 +161,7 @@ function qsStringify(data) {
  * @param {boolean} [opt.isInIframe=false]
  * @param {boolean} [opt.wrapHtml=true]
  * @param {Object} [opt.data]
+ * @param {number} [opt.demoDataIndex]
  * @return {string}
  */
 function createDemoUrl({
@@ -169,16 +170,24 @@ function createDemoUrl({
   assetSetId,
   isInIframe = false,
   wrapHtml = true,
-  data = {},
+  data,
+  demoDataIndex,
 }) {
-  const queryString = qsStringify({
+  const queryData = {
     patternId,
     templateId,
     assetSetId,
     isInIframe,
     wrapHtml,
-    data: qsStringify(data),
-  });
+  };
+
+  if (data) {
+    queryData.data = qsStringify(data);
+  } else if (typeof demoDataIndex === 'number') {
+    queryData.demoDataIndex = demoDataIndex;
+  }
+
+  const queryString = qsStringify(queryData);
   return `/api/render?${queryString}`;
 }
 

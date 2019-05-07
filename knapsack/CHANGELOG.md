@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.17](https://github.com/basaltinc/knapsack/compare/v1.1.16...v1.1.17) (2019-05-07)
+
+
+### Bug Fixes
+
+* createDemoUrl util function with demoDataIndex ([e3f4597](https://github.com/basaltinc/knapsack/commit/e3f4597))
+* render api with demoDataIndex but not data ([ecc1c84](https://github.com/basaltinc/knapsack/commit/ecc1c84))
+
+
+
+
+
 ## [1.1.16](https://github.com/basaltinc/knapsack/compare/v1.1.15...v1.1.16) (2019-05-06)
 
 

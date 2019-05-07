@@ -59,13 +59,13 @@ function getRoutes(config) {
       const {
         patternId,
         templateId,
-        data: dataString = '{}',
+        data: dataString,
         isInIframe: isInIframeString = 'false',
         wrapHtml: wrapHtmlString = 'true',
         assetSetId,
         demoDataIndex,
       } = query;
-      const data = qsParse(dataString);
+      const data = dataString ? qsParse(dataString) : dataString;
       const isInIframe = isInIframeString === 'true';
       const wrapHtml = wrapHtmlString === 'true';
 
@@ -90,6 +90,7 @@ function getRoutes(config) {
           wrapHtml,
           isInIframe,
           assetSetId,
+          message: results.message,
         });
         res.send(results.message);
       }

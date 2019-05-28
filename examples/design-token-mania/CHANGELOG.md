@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.18](https://github.com/basaltinc/knapsack/compare/v1.1.17...v1.1.18) (2019-05-28)
+
+**Note:** Version bump only for package @knapsack/example-design-token-mania
+
+
+
+
+
 ## [1.1.17](https://github.com/basaltinc/knapsack/compare/v1.1.16...v1.1.17) (2019-05-07)
 
 **Note:** Version bump only for package @knapsack/example-design-token-mania

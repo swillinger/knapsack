@@ -1031,7 +1031,7 @@ class Patterns {
     const renderedTemplate = await renderer.render({
       pattern,
       template,
-      data: demoData || data,
+      data: demoData || data || {},
     });
 
     if (!renderedTemplate.ok) return renderedTemplate;

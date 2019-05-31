@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.19](https://github.com/basaltinc/knapsack/compare/v1.1.18...v1.1.19) (2019-05-31)
+
+
+### Bug Fixes
+
+* add demo-urls link to footer ([dafeeb5](https://github.com/basaltinc/knapsack/commit/dafeeb5))
+
+
+
+
+
 ## [1.1.18](https://github.com/basaltinc/knapsack/compare/v1.1.17...v1.1.18) (2019-05-28)
 
 

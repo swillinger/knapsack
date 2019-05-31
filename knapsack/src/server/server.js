@@ -212,27 +212,22 @@ ${patternDemos
   .map(
     patternDemo => `
   <li>
-    Pattern: <a href="${BASE_PATHS.PATTERN}/${
-      patternDemo.id
-    }" target="_blank">${patternDemo.title}</a>
+    Pattern: ${patternDemo.title}
     <ul>
       ${patternDemo.templates
         .map(
           template => `
         <li>
-          Template: <a href="${BASE_PATHS.PATTERN}/${patternDemo.id}/${
-            template.id
-          }" target="_blank">${template.title}</a>
-          <ul>
+          Template: ${template.title}
+          <br>
             ${template.demoUrls
               .map(
                 (demoUrl, i) => `
-              <li><a href="${demoUrl}" target="_blank">Demo Data ${i +
-                  1}</a></li>
+              <a href="${demoUrl}" target="_blank">Demo Data ${i +
+                  1}</a>
             `,
               )
-              .join('\n')}
-          </ul>
+              .join(' - ')}
         </li>
       `,
         )

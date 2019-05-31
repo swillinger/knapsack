@@ -25,7 +25,7 @@ const { knapsackEvents, EVENTS } = require('./events');
 const { getRoutes } = require('./rest-api');
 const { enableTemplatePush } = require('../lib/features');
 const { getRole } = require('./auth');
-const { PERMISSIONS, BASE_PATHS } = require('../lib/constants');
+const { PERMISSIONS } = require('../lib/constants');
 const {
   pageBuilderPagesTypeDef,
   pageBuilderPagesResolvers,

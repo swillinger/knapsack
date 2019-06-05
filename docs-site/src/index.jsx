@@ -17,6 +17,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import ConfigSchemas from './config-schemas';
+import './style.scss';
 
 document.addEventListener('DOMContentLoaded', () => {
   const rootConfigSchemas = document.getElementById('root--config-schemas');

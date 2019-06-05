@@ -4,9 +4,11 @@
   "version": "1.1.19",
   "scripts": {
     "examples": "docusaurus-examples",
-    "start": "yarn build:wp && docusaurus-start",
+    "start": "yarn build:wp && run-p start:docs start:wp",
     "build:docs": "docusaurus-build",
+    "start:docs": "docusaurus-start",
     "build:wp": "rm -rf ./static/dist && NODE_ENV=production webpack-cli --hide-modules --progress --config ./webpack.config.js",
+    "start:wp": "webpack-cli --hide-modules --progress --config ./webpack.config.js --watch",
     "build": "yarn build:wp && yarn build:docs",
     "publish-gh-pages": "docusaurus-publish",
     "write-translations": "docusaurus-write-translations",
@@ -16,6 +18,8 @@
   "devDependencies": {
     "@basalt/knapsack": "^1.1.19",
     "@knapsack/schema-table": "^1.1.7",
+    "node-sass": "^4.0.0",
+    "npm-run-all": "^4.0.0",
     "docusaurus": "next"
   }
 }

@@ -20,6 +20,7 @@ const fs = require('fs-extra');
 const md = require('marked');
 const highlight = require('highlight.js');
 const { qsParse } = require('./server-utils');
+const { MemDb } = require('./db');
 const log = require('../cli/log');
 const {
   BASE_PATHS,
@@ -29,6 +30,7 @@ const { enableUiSettings } = require('../lib/features');
 const { getRole } = require('./auth');
 
 const router = express.Router();
+const memDb = new MemDb();
 
 // https://marked.js.org/#/USING_ADVANCED.md
 md.setOptions({
@@ -50,6 +52,31 @@ function getRoutes(config) {
       message: 'Welcome to the API!',
     });
   });
+
+  {
+    const url = urlJoin(config.baseUrl, 'big-data');
+    registerEndpoint(url, 'POST');
+    router.post(url, async (req, res) => {
+      const { body, headers } = req;
+      if (headers['content-type'] !== 'application/json') {
+        res.send({
+          ok: false,
+          message:
+            "Must send with a Header of 'Content-Type: application/json'",
+        });
+        return;
+      }
+
+      const hash = memDb.addData(body);
+      res.send({
+        ok: true,
+        message: `Data has been made and can be viewed with hash "${hash}"`,
+        data: {
+          hash,
+        },
+      });
+    });
+  }
 
   if (patternManifest) {
     const url = urlJoin(config.baseUrl, '/render');

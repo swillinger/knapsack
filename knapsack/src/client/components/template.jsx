@@ -19,7 +19,7 @@ import PropTypes from 'prop-types';
 import iframeResizer from 'iframe-resizer/js/iframeResizer'; // https://www.npmjs.com/package/iframe-resizer
 import { KnapsackContext } from '@knapsack/core';
 import shortid from 'shortid';
-import qs from 'qs';
+import { getTemplateUrl } from '../data';
 import { IFrameWrapper, Resizable, SizeTab } from './template.styles';
 
 function Template({
@@ -32,24 +32,13 @@ function Template({
   const makeId = () => `${patternId}-${templateId}-${shortid.generate()}`;
 
   const [id, setId] = useState(makeId());
+  const [htmlUrl, setHtmlUrl] = useState('/api/loading');
   const [width, setWidth] = useState(null);
   const iframeRef = useRef(null);
   const resizeRef = useRef(null);
   const {
     meta: { websocketsPort },
   } = useContext(KnapsackContext);
-
-  const query = qs.stringify({
-    templateId,
-    patternId,
-    data: qs.stringify(data),
-    isInIframe: true,
-    wrapHtml: true,
-    cacheBuster: id,
-    assetSetId,
-  });
-
-  const htmlUrl = `/api/render?${query}`;
 
   // Setup iFrame Resizer
   useEffect(() => {
@@ -112,6 +101,20 @@ function Template({
       socket.close(1000, 'unmounting');
     };
   }, []);
+
+  useEffect(() => {
+    getTemplateUrl({
+      patternId,
+      templateId,
+      data,
+      assetSetId,
+      isInIframe: true,
+      wrapHtml: true,
+      extraParams: { cacheBuster: id },
+    })
+      .then(setHtmlUrl)
+      .catch(console.log.bind(console));
+  }, [patternId, templateId, data, assetSetId]);
 
   const content = (
     <iframe

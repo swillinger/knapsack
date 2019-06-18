@@ -14,6 +14,8 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
+import qs from 'qs';
+
 export const apiUrlBase = '/api'; // @todo refactor
 export const graphqlBase = '/graphql';
 
@@ -66,4 +68,67 @@ export function gqlQuery({ query, gqlQueryObj, variables = {} }) {
     })
     .then(res => res.json())
     .catch(console.log.bind(console));
+}
+
+/**
+ * Save data up on server to be used in template rendering with `dataId` query param later
+ * @param {Object} data
+ * @returns {Promise<string>} dataId that is md5 hash
+ */
+export function saveData(data) {
+  return window
+    .fetch(`${apiUrlBase}/data`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    .then(res => res.json())
+    .then(results => {
+      if (!results.ok) {
+        console.error(
+          `Uh oh! Tried to save data by uploading it to '${apiUrlBase}/data' with no luck.`,
+          {
+            data,
+            results,
+          },
+        );
+      }
+      return results.data.hash;
+    })
+    .catch(console.log.bind(console));
+}
+
+/**
+ * @param {Object} opt
+ * @param {string} opt.patternId
+ * @param {string} [opt.templateId]
+ * @param {string} [opt.assetSetId]
+ * @param {boolean} [opt.wrapHtml]
+ * @param {boolean} [opt.isInIframe]
+ * @param {Object} [opt.extraParams] - extra query parameters added
+ * @returns {string} root relative url for viewing rendered pattern
+ */
+export async function getTemplateUrl({
+  patternId,
+  templateId,
+  assetSetId,
+  wrapHtml,
+  isInIframe,
+  data,
+  extraParams = {},
+}) {
+  const dataId = await saveData(data);
+  const query = {
+    patternId,
+    ...extraParams,
+  };
+  if (templateId) query.templateId = templateId;
+  if (assetSetId) query.assetSetId = assetSetId;
+  if (typeof wrapHtml === 'boolean') query.wrapHtml = wrapHtml;
+  if (typeof isInIframe === 'boolean') query.isInIframe = isInIframe;
+
+  return `/api/render?${qs.stringify({ ...query, dataId })}`;
 }

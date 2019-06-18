@@ -54,7 +54,7 @@ function getRoutes(config) {
   });
 
   {
-    const url = urlJoin(config.baseUrl, 'big-data');
+    const url = urlJoin(config.baseUrl, 'data');
     registerEndpoint(url, 'POST');
     router.post(url, async (req, res) => {
       const { body, headers } = req;
@@ -91,8 +91,23 @@ function getRoutes(config) {
         wrapHtml: wrapHtmlString = 'true',
         assetSetId,
         demoDataIndex,
+        dataId,
       } = query;
-      const data = dataString ? qsParse(dataString) : dataString;
+
+      const dataApproaches = [dataString, demoDataIndex, dataId].filter(Boolean)
+        .length;
+      if (dataApproaches > 1) {
+        const msg = `Error: trying to render using multiple data sources, choose one.`;
+        log.error(msg, { query });
+        res.send(`<p>${msg}</p>`);
+        return;
+      }
+
+      let data = dataString ? qsParse(dataString) : dataString;
+      if (dataId) {
+        data = memDb.getData(dataId);
+        console.log('using dataId', { dataId, data });
+      }
       const isInIframe = isInIframeString === 'true';
       const wrapHtml = wrapHtmlString === 'true';
 
@@ -257,6 +272,14 @@ function getRoutes(config) {
   router.get(url5, (req, res) => {
     res.send(config.meta);
   });
+
+  {
+    const url = urlJoin(config.baseUrl, 'loading');
+    registerEndpoint(url);
+    router.get(url, (req, res) => {
+      res.send(`<p>Loading...</p>`);
+    });
+  }
 
   const url6 = urlJoin(config.baseUrl, 'permissions');
   registerEndpoint(url6);

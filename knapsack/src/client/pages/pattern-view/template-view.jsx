@@ -24,7 +24,6 @@ import { KnapsackContext } from '@knapsack/core';
 import SchemaForm from '@knapsack/schema-form';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-import qs from 'qs';
 import MdBlock from '../../components/md-block';
 import Template from '../../components/template';
 import TemplateCodeBlock from './template-code-block';
@@ -44,7 +43,7 @@ import {
   SchemaFormWrapper,
   SchemaFormWrapperInner,
 } from './pattern-stage.styles';
-import { gqlQuery } from '../../data';
+import { gqlQuery, getTemplateUrl } from '../../data';
 
 const patternQuery = gql`
   query TemplateView($id: ID) {
@@ -178,16 +177,6 @@ class TemplateView extends Component {
 
     if (!ready) return <div>Loading</div>;
 
-    const queryString = qs.stringify({
-      templateId: this.props.templateId,
-      patternId: this.props.id,
-      data: qs.stringify(this.state.data),
-      isInIframe: false,
-      wrapHtml: true,
-      assetSetId,
-    });
-    const externalUrl = `/api/render?${queryString}`;
-
     const showSchemaForm = this.props.isSchemaFormShown && hasSchema;
 
     return (
@@ -198,10 +187,23 @@ class TemplateView extends Component {
               <h3>{title}</h3>
             )}
             <DemoGridControls>
-              <Button>
-                <a href={externalUrl} target="_blank" rel="noopener noreferrer">
-                  Open in new window
-                </a>
+              <Button
+                onClick={() => {
+                  getTemplateUrl({
+                    patternId: this.props.id,
+                    templateId: this.props.templateId,
+                    data: this.state.data,
+                    isInIframe: false,
+                    wrapHtml: true,
+                    assetSetId,
+                  })
+                    .then(externalUrl => {
+                      window.open(externalUrl, '_blank');
+                    })
+                    .catch(console.log.bind(console));
+                }}
+              >
+                Open in new window
               </Button>
 
               {assetSets && assetSets.length > 1 && (

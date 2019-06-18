@@ -452,7 +452,7 @@ function createPatternsData(
           }
 
           const demoUrls = [];
-          datas.forEach(data => {
+          datas.forEach((data, demoDataIndex) => {
             assetSets.forEach(assetSet => {
               demoUrls.push(
                 createDemoUrl({
@@ -461,7 +461,7 @@ function createPatternsData(
                   assetSetId: assetSet.id,
                   isInIframe: false,
                   wrapHtml: true,
-                  data,
+                  demoDataIndex,
                 }),
               );
             });
@@ -1015,6 +1015,12 @@ class Patterns {
     assetSetId,
   }) {
     const pattern = this.getPattern(patternId);
+    if (!pattern) {
+      return {
+        ok: false,
+        message: `Pattern not found: '${patternId}'`,
+      };
+    }
     let [template] = pattern.templates;
     if (templateId) {
       template = pattern.templates.find(t => t.id === templateId);

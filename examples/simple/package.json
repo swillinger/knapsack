@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/example-simple",
   "license": "ISC",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "",
   "private": true,
   "main": "index.js",
@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@basalt/demo-data": "^0.5.1",
-    "@basalt/knapsack": "^1.2.0",
+    "@basalt/knapsack": "^1.2.1",
     "@knapsack/renderer-html": "^1.1.14",
     "@knapsack/renderer-twig": "^1.1.14"
   },

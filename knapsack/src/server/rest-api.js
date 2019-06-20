@@ -106,7 +106,6 @@ function getRoutes(config) {
       let data = dataString ? qsParse(dataString) : dataString;
       if (dataId) {
         data = memDb.getData(dataId);
-        console.log('using dataId', { dataId, data });
       }
       const isInIframe = isInIframeString === 'true';
       const wrapHtml = wrapHtmlString === 'true';

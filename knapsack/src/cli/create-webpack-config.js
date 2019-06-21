@@ -38,6 +38,7 @@ const isProd = process.env.NODE_ENV === 'production';
  * @typedef {Object} CreateWebpackConfig
  * @prop {string} dist - The absolute path to where files will be written.
  * @prop {boolean} useHtmlWebpackPlugin
+ * @prop {boolean} [injectCssChanges=true] - if `false`, always generate a CSS file
  * @prop {string} [pluginSetupFile] - File that contains all the imported plugin register functions
  * @prop {string} [public] - The absolute path to where files will be available to the dev server.
  */
@@ -61,6 +62,8 @@ function createWebPackConfig(userConfig) {
 
   /** @type {CreateWebpackConfig} */
   const config = userConfig;
+
+  const { injectCssChanges = true } = config;
   // const config = results.data;
 
   /** @type {webpack.Configuration} */
@@ -116,7 +119,14 @@ function createWebPackConfig(userConfig) {
           exclude: /\.css?$/,
           use: [
             {
-              loader: isProd ? MiniCssExtractPlugin.loader : 'style-loader',
+              // @todo refactor for readability
+              /* eslint-disable no-nested-ternary */
+              loader: injectCssChanges
+                ? isProd
+                  ? MiniCssExtractPlugin.loader
+                  : 'style-loader'
+                : MiniCssExtractPlugin.loader,
+              /* eslint-enable no-nested-ternary */
             },
             {
               loader: 'css-loader',

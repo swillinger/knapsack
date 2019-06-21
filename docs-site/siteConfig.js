@@ -11,20 +11,37 @@
 // List of projects/orgs using your project for the users page.
 const users = [
   {
-    caption: 'Evan Lovely',
+    caption: 'I made Knapsack. You should use it!',
+    byline: 'Evan Lovely, CTO of Basalt',
     // You will need to prepend the image path with your baseUrl
     // if it is not '/', like: '/test-site/img/docusaurus.svg'.
     image:
       'https://pbs.twimg.com/profile_images/918231371759235073/6rWsdLOc_400x400.jpg',
-    infoLink: 'https://twitter.com/evanlovely?lang=en',
+    pinned: false,
+    id: 1,
+  },
+  {
+    caption:
+      'Unlike many of the existing tools out there — Pattern Lab, Fractal, Storybook, etc — Knapsack has design system know-how baked into it’s DNA!',
+    byline: 'Salem Ghoweri, Lead Frontend Architect, Pegasystems',
+    image: '/img/salemsquare.jpg',
     pinned: true,
+    id: 2,
+  },
+  {
+    caption:
+      'Knapsack fundamentally changes the way we think about building Design Systems.',
+    byline: 'Christopher Bloom, Dir. of Engineering, Phase2',
+    image: '/img/bloom.jpeg',
+    pinned: true,
+    id: 3,
   },
 ];
 
 const siteConfig = {
-  title: 'Knapsack Docs', // Title for your website.
-  tagline: 'A website for testing',
-  url: 'https://your-docusaurus-test-site.com', // Your website URL
+  title: 'Knapsack', // Title for your website.
+  tagline: 'By Basalt',
+  url: 'https://basalt.io', // Your website URL
   baseUrl: '/', // Base URL for your project */
   // For github.io type URLs, you would set the url and baseUrl like:
   //   url: 'https://facebook.github.io',
@@ -39,7 +56,6 @@ const siteConfig = {
     { doc: 'getting-started', label: 'Getting Started' },
     // { doc: 'config', label: 'Config' },
     { page: 'config-schemas', label: 'Config Schemas' },
-    { blog: true, label: 'Blog' },
   ],
 
   disableHeaderTitle: true,
@@ -57,7 +73,7 @@ const siteConfig = {
   /* Colors for website */
   colors: {
     primaryColor: 'rgb(19, 27, 37)',
-    secondaryColor: 'rgb(237, 103, 44)',
+    secondaryColor: 'rgb(0, 111, 182)',
   },
 
   /* Custom fonts for website */

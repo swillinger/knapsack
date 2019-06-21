@@ -2,19 +2,24 @@
 title: Introduction
 id: intro
 ---
-Welcome to Knapsack! Knapsack is an open source, scalable platform ideal for multi-brand design systems. Using Knapsack, you can get your own design system up and running quickly.
+## Welcome to Knapsack! ✨
+
+An open source, scalable platform that is ideal for multi-brand design systems, with Knapsack, you can get your own design system up and running quickly.
+
+What is a design system? The concept goes by many names you may have heard of, pattern library, atomic design, or design language, but in essence a design system is a series of components that can be reused in different combinations. Design systems allow you to manage design at scale, mixing and matching pieces to different effect.
+
 
 ## History
 
-Knapsack is the brain child of Evan Lovely, CTO of Basalt and co-maintainer of another open source project, Pattern Lab. Over the past few years, he and the rest of the Basalt team have gleaned learnings from implementing design systems across large organizations from myriad of industries. 
+Knapsack is the brain child of one Evan Lovely, CTO for Basalt and co-maintainer of another open source project, Pattern Lab. Over the past few years, he and the rest of the Basalt team have gleaned new ideas from implementing design systems for several industries across the spectrum of their business. Examining different ways to improve their technique to serve large organizations to the fullest extent possible.
 
-What they found: The current tools on the market enforce an unnecessary ceiling for teams looking to build a robust and flexible design system. This ceiling is commonly found by organizations that manage more than a few digital properties or sub-brands. 
+What they found is the current tools on the market enforce an unnecessary ceiling for teams looking to build a robust and flexible design system. This barrier is commonly found by organizations that manage more than a few digital properties or sub-brands. 
 
-The name is a recent change from its predecessor, Bedrock. Knapsack was born out of "The Knapsack Problem." 
+The name Knapsack, is a recent change from its predecessor, Bedrock, and was born out of "The Knapsack Problem." 
 
 ## What is Knapsack?
 
-Knapsack is an API-first framework and foundation for your single source of truth. This includes the ability to hold:
+Knapsack is an API-first framework, and the foundation for your single source of truth. This includes the ability to hold:
 
 \- Coded components, organized, and language-agnostic 
 
@@ -32,10 +37,10 @@ Knapsack is primarily used by front end developers, but provides immediate benef
 
 After the components are created in Knapsack, the platform can be used every day to maintain, evolve, and prune your design system. Benefits of this adoption includes:
 
-\- Rapid implementation and modification of components, cross-property\
-- Expand and prune your library through introduction and deprecation of patterns\
-- Integrate sub-brands into the global design system at your own pace\
-- Prototyping for Designers and Content Managers\
-- Understanding context, design intent and user journeys per digital property\
-- Managing versions at the component level\
+\- Rapid implementation and modification of components, across all properties and brands
+- Expand and prune your library through introduction and deprecation of patterns
+- Integrate sub-brands into the global design system at your own pace
+- Prototyping for Designers and Content Managers
+- Understanding context, design intent and user journeys per digital property
+- Managing versions at the component level
 - Integrate new employees and contracted agencies quickly

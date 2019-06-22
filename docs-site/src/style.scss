@@ -6,11 +6,15 @@
   --spacing-xxl: 40px;
   --spacing-xxxl: 50px;
   --color-primary: rgb(19, 27, 37);
-  --color-c2a: rgb(52, 62, 152);
+  --color-c2a: rgb(0, 111, 182);
   --color-gray: rgb(225,225,225);
   --color-blue-dark: rgb(26, 31, 76);
-  --background-gradient: linear-gradient(var(--color-primary) 0px, var(--color-c2a));
-  --background-gradient-reverse: linear-gradient(var(--color-c2a) 0px, var(--color-primary));
+  --color-knapsack-blue-light: #01a7cc;
+  --color-knapsack-blue-dark: #005f9c;
+  --color-knapsack-yellow-light: #ffaf00;
+  --color-knapsack-orange: #ff5b02;
+  --background-gradient-blue: linear-gradient(var(--color-knapsack-blue-light) 0px, var(--color-knapsack-blue-dark));
+  --background-gradient-yellow: linear-gradient(var(--color-knapsack-yellow-light) 0px, var(--color-knapsack-orange));
   --breathing-room: 80px 30px;
 }
 
@@ -28,13 +32,13 @@
     height: 125px;
     width: 100%;
     margin: 0px 50px 0px 0px;
-    background: linear-gradient(to right bottom, var(--color-c2a) 49.9%, transparent 50.1%);
+    background: linear-gradient(to right bottom, var(--color-knapsack-blue-dark) 49.9%, transparent 50.1%);
   }
 }
 
 .homeSplashFade {
   text-align: center;
-  background: var(--background-gradient);
+  background: var(--background-gradient-blue);
   padding: var(--breathing-room);
 
   .projectTitle {
@@ -54,7 +58,7 @@
     height: 125px;
     width: 100%;
     margin: 0px 50px 0px 0px;
-    background: linear-gradient(to left top, var(--color-c2a) 49.9%, transparent 50.1%);
+    background: linear-gradient(to left top, var(--color-knapsack-yellow-light) 49.9%, transparent 50.1%);
   }
   h1 {
     color: var(--color-c2a);
@@ -65,17 +69,20 @@
 }
 
 .gettingStartedBlock {
-  background: var(--background-gradient-reverse);
+  background: var(--background-gradient-yellow);
   padding: var(--breathing-room);
   color: #FFF;
   code {
-    background-color: rgba(26, 31, 76, 0.8);
+    background-color: rgb(255, 136, 3);
     display: block;
     font-family: monospace;
     font-size: 24px;
     max-width: 600px;
     padding: var(--spacing-xxl);
     margin: 0 auto 20px;
+    @media (max-width: 660px){
+      font-size: 18px;
+    }
   }
 }
 
@@ -88,7 +95,7 @@
     height: 125px;
     width: 100%;
     margin: 0px 50px 0px 0px;
-    background: linear-gradient(to right bottom, var(--color-primary) 49.9%, transparent 50.1%);
+    background: linear-gradient(to right bottom, var(--color-knapsack-orange) 49.9%, transparent 50.1%);
   }
   .inner {
     padding: var(--breathing-room);
@@ -111,7 +118,7 @@
     justify-content: center;
     padding: 20px;
     flex: 1 1 250px;
-    background: linear-gradient(rgb(245, 164, 38) 30%, rgb(245, 111, 23));
+    background: linear-gradient(#ffaf00 30%, #ff5b02);
     img {
       padding: 0;
       border: 0;
@@ -220,6 +227,11 @@
 }
 
 // Global elements
+@media (max-width: 1023px){
+  .navigationSlider .slidingNav ul {
+    background: var(--color-knapsack-blue-light);
+  }
+}
 .nav-footer {
   margin-top: var(--spacing-xxxl);
   .homepage-landing + & {

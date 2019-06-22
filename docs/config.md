@@ -1,6 +1,6 @@
 ---
 id: config
-title: Configuration
+title: Config
 ---
 
 ### `knapsack.config.js`
@@ -71,5 +71,3 @@ const config = {
 
 module.exports = config;
 ```
-
-# Test header

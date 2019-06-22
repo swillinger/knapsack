@@ -55,7 +55,7 @@ now deploy
 now alias
 ```
 
-You can see a real example with how [Basalt](https://basalt.io) deploys our Design System, Crux, build on Knapsack:
+You can see a real example with how [Basalt](https://basalt.io) deploys our design system, Crux, build on Knapsack:
 
 - [Repo here](https://github.com/basaltinc/crux/)
   - [`Dockerfile`](https://github.com/basaltinc/crux/blob/master/Dockerfile)

@@ -45,5 +45,10 @@ my-design-system
 └── readme.md
 ```
 
-Your `patterns` folder is where you'll place any new component files as a default, there's even a few examples in there already for you to get an idea of how they're structured. In the next section we're going to go through what some of the files in the root directory are doing before we jump into building.
+Your `patterns` folder is where you'll place any new component files as a default, there's even a few examples included already to get an idea of how they're structured. To see them on your dashboard view follow the header navigation link for `patterns`, and there will be three options in your pattern list:
 
+* Button
+* Hero
+* Card
+
+Go ahead and click on `button` to see the rendered component and it's attributes. In the next section we'll take a look at the what is going into making this component, and how we can edit it with our dashboard user interface.

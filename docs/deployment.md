@@ -1,11 +1,7 @@
 ---
-id: requirements
-title: Requirements
+id: deployment
+title: Deployment
 ---
-
-- [node.js 8+](https://nodejs.org/en)
-- [PHP 7](http://php.net) - Just need the `php` cli; not the ability to serve full php sites (aka PHP CGI nor Apache needed)
-
 
 ### Hosting & Deployment
 

@@ -3,9 +3,9 @@
     "Getting Started": [
       "intro",
       "getting-started",
-      "requirements",
       "config",
-      "ui-settings"
+      "ui-settings",
+      "deployment"
     ],
     "Patterns": [
       "patterns-overview",

@@ -44,9 +44,6 @@ function ConfigSchemas(props) {
       />
       <Container className="mainContainer documentContainer postContainer">
         <div className="post">
-          <header className="postHeader">
-            <h1>Config Schemas</h1>
-          </header>
           <div id="root--config-schemas"></div>
           {/*<p>This project is maintained by a dedicated group of people.</p>*/}
           {/*<GridBlock contents={supportLinks} layout="threeColumn"/>*/}

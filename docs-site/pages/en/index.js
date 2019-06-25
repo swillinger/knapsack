@@ -110,7 +110,7 @@ class Index extends React.Component {
         </code>
         <PromoSection>
           <a href={docUrl('getting-started')} className="button">Read the Docs</a>
-          <a href={siteConfig.repoUrl} className="button button--c2a" target="_blank">GitHub</a>
+          <a href={siteConfig.repoUrl} className="button" target="_blank">GitHub</a>
         </PromoSection>
       </div>
     );
@@ -190,7 +190,7 @@ class Index extends React.Component {
     };
 
     return (
-      <div>
+      <div className="homepage-landing">
         <HomeSplash siteConfig={siteConfig} language={language} />
         <div className="mainContainer">
           <Features />

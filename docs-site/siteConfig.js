@@ -22,7 +22,7 @@ const users = [
   },
   {
     caption:
-      'Unlike many of the existing tools out there — Pattern Lab, Fractal, Storybook, etc — Knapsack has design system know-how baked into it’s DNA!',
+      '"Unlike many of the existing tools out there — Pattern Lab, Fractal, Storybook, etc — Knapsack has design system know-how baked into it’s DNA!"',
     byline: 'Salem Ghoweri, Lead Frontend Architect, Pegasystems',
     image: '/img/salemsquare.jpg',
     pinned: true,
@@ -30,7 +30,7 @@ const users = [
   },
   {
     caption:
-      'Knapsack fundamentally changes the way we think about building Design Systems.',
+      '"Knapsack fundamentally changes the way we think about building design systems."',
     byline: 'Christopher Bloom, Dir. of Engineering, Phase2',
     image: '/img/bloom.jpeg',
     pinned: true,

@@ -3,7 +3,7 @@ id: demos
 title: Demo of Knapsack
 ---
 
-Here are a couple demos of Knapsack we put together. We hope they inspire you.
+Here are a couple Knapsack demos to check out. Hopefully they inspire you!
 
 #### Simple
 

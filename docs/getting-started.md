@@ -3,7 +3,7 @@ id: getting-started
 title: Getting Started
 ---
 
-The following tutorial will get you started with a new project, prompt the use of any requirements to run a new design system, explain what the files of your starting directory are doing for you, as well as take you through the steps of building a new component so you can really hit the ground running. 🏃 Let's get started!
+The following documentation will get you started with a new project, prompt the use of any requirements to run a new design system, explain what the files of your starting directory are doing for you, as well as take you through the steps of building a new component so you can really hit the ground running. 🏃 Let's get started!
 
 >Note: Knapsack requires Node.js 8 or higher, and PHP 7 - though only for the php cli, and not the ability to serve full php sites (i.e. PHP CGI nor Apache is needed).
 
@@ -45,10 +45,4 @@ my-design-system
 └── readme.md
 ```
 
-Your `patterns` folder is where you'll place any new component files as a default, there's even a few examples included already to get an idea of how they're structured. To see them on your dashboard view follow the header navigation link for `patterns`, and there will be three options in your pattern list:
-
-* Button
-* Hero
-* Card
-
-Go ahead and click on `button` to see the rendered component and it's attributes. In the next section we'll take a look at the what is going into making this component, and how we can edit it with our dashboard user interface.
+Now that we have our dashboard up let's take a look at how we can customize it with the browser's user interface to fit the style of our new project.

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/basaltinc/knapsack/compare/v1.3.0...v1.4.0) (2019-06-25)
+
+
+### Features
+
+* implement feedback from rochelle ([04a0738](https://github.com/basaltinc/knapsack/commit/04a0738))
+* update homepage to knapsack blue and yellow ([beaeb53](https://github.com/basaltinc/knapsack/commit/beaeb53))
+
+
+
+
+
 # [1.3.0](https://github.com/basaltinc/knapsack/compare/v1.2.1...v1.3.0) (2019-06-21)
 
 

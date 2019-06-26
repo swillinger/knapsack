@@ -15,7 +15,10 @@ Knapsack is the brain child of one Evan Lovely, CTO for Basalt and co-maintainer
 
 What they found is the current tools on the market enforce an unnecessary ceiling for teams looking to build a robust and flexible design system. This barrier is commonly found by organizations that manage more than a few digital properties or sub-brands. 
 
-The name Knapsack, is a recent change from its predecessor, Bedrock, and was born out of "The Knapsack Problem." 
+Thus the earliest iteration of this project, Bedrock, was born, but as it grew (and after a rather amusing situation with a product by the same name) we realized that our brand should be more in line with our goal. Knapsack was born out of an thought excercise known as "The Knapsack Problem".
+
+If you have a knapsack with a definite carrying capacity, and a set ammount of objects each with a different size and weight, how do you optimize packing with the best configuration possible? This is what we aim to provide, the tools to navigate this senario in the simplest terms for even the most complicated of combinations.
+
 
 ## What is Knapsack?
 
@@ -31,7 +34,7 @@ Knapsack is an API-first framework, and the foundation for your single source of
 
 ## Who uses Knapsack?
 
-Knapsack is primarily used by front end developers, but provides immediate benefit to designers, product owners, content producers, and project managers.
+Knapsack is primarily used by front end developers to build components, but the intuitive user interface provides immediate benefit to designers, product owners, content producers, and project managers.
 
 ## Ongoing Use
 

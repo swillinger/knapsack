@@ -28,10 +28,6 @@ my-design-system
 ├── assets
 |   └── patterns
 ├── data
-|   ├── knapsack.custom-pages.json
-|   ├── knapsack.page-builder.json
-|   ├── knapsack.patterns.json
-|   └── knapsack.settings.json
 ├── design-tokens
 ├── docs
 ├── public

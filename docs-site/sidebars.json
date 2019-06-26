@@ -3,9 +3,8 @@
     "Getting Started": [
       "intro",
       "getting-started",
-      "config",
-      "ui-settings",
-      "deployment"
+      "dashboard-settings",
+      "data"
     ],
     "Patterns": [
       "patterns-overview",
@@ -22,8 +21,9 @@
     "Demos": [
       "demos"
     ],
-    "More Info": [
-      "about"
+    "Production": [
+      "config",
+      "deployment"
     ]
   }
 }

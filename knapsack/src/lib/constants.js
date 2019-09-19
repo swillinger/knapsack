@@ -30,7 +30,7 @@ const BASE_PATHS = {
   PAGES: '/pages',
   CUSTOM_PAGES: '/custom-pages',
   GRAPHIQL_PLAYGROUND: '/graphql-playground',
-  DOCS: '/docs',
+  DOCS: '/docs-dir',
 };
 
 const FILE_NAMES = {

@@ -83,7 +83,7 @@ function Template({
     if (!websocketsPort) {
       return;
     }
-    const socket = new window.WebSocket(`ws://localhost:${websocketsPort}`);
+    const socket = new window.WebSocket(`wss://localhost:${websocketsPort}`);
     socket.addEventListener('message', messageEvent => {
       let messageData = { path: '' }; // eslint-disable-line no-unused-vars
       try {

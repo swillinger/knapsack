@@ -1,0 +1,110 @@
+on: push
+name: Deploy
+jobs:
+  isMaster:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: isMaster
+      uses: actions/bin/filter@master
+      with:
+        args: branch master
+    - name: now init
+      uses: actions/zeit-now@666edee2f3632660e9829cb6801ee5b7d47b303d
+      env:
+        ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
+      with:
+        entrypoint: sh
+        args: -c "now whoami --token=$ZEIT_TOKEN && mkdir .github/artifacts/ "
+    - name: deploy/simple
+      uses: actions/zeit-now@master
+      env:
+        ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
+      with:
+        args: deploy --env EXAMPLE=simple --local-config=./examples/simple/now.json
+          --meta GITHUB_SHA=${{ github.sha }} --team=basalt
+    - name: deploy/multi-templates
+      uses: actions/zeit-now@master
+      env:
+        ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
+      with:
+        args: deploy --env EXAMPLE=multi-templates --local-config=./examples/multi-templates/now.json
+          --meta GITHUB_SHA=${{ github.sha }} --team=basalt
+    - name: deploy/design-token-mania
+      uses: actions/zeit-now@master
+      env:
+        ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
+      with:
+        args: deploy --env EXAMPLE=design-token-mania --local-config=./examples/design-token-mania/now.json
+          --meta GITHUB_SHA=${{ github.sha }} --team=basalt
+    - name: deploy/bootstrap
+      uses: actions/zeit-now@master
+      env:
+        ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
+      with:
+        args: deploy --env EXAMPLE=bootstrap --local-config=./examples/bootstrap/now.json
+          --meta GITHUB_SHA=${{ github.sha }} --team=basalt
+    - name: Filters for GitHub Actions-3
+      uses: actions/bin/filter@master
+      with:
+        args: branch master
+    - name: Filters for GitHub Actions-1
+      uses: actions/bin/filter@master
+      with:
+        args: branch master
+    - name: Filters for GitHub Actions-2
+      uses: actions/bin/filter@master
+      with:
+        args: branch master
+    - name: Filters for GitHub Actions
+      uses: actions/bin/filter@master
+      with:
+        args: branch master
+    - name: gh-deploy/multi-templates
+      uses: actions/npm@59b64a598378f31e49cb76f27d6f3312b582f680
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
+      with:
+        entrypoint: node
+        args: scripts/create-github-deploy.js multi-templates
+    - name: gh-deploy/design-token-mania
+      uses: actions/npm@59b64a598378f31e49cb76f27d6f3312b582f680
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
+      with:
+        entrypoint: node
+        args: scripts/create-github-deploy.js design-token-mania
+    - name: gh-deploy/bootstrap
+      uses: actions/npm@59b64a598378f31e49cb76f27d6f3312b582f680
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
+      with:
+        entrypoint: node
+        args: scripts/create-github-deploy.js bootstrap
+    - name: alias/multi-templates
+      uses: actions/zeit-now@666edee2f3632660e9829cb6801ee5b7d47b303d
+      env:
+        ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
+      with:
+        args: alias --local-config=./examples/multi-templates/now.json --team=basalt
+    - name: alias/bootstrap
+      uses: actions/zeit-now@666edee2f3632660e9829cb6801ee5b7d47b303d
+      env:
+        ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
+      with:
+        args: alias --local-config=./examples/bootstrap/now.json --team=basalt
+    - name: alias/design-token-mania
+      uses: actions/zeit-now@666edee2f3632660e9829cb6801ee5b7d47b303d
+      env:
+        ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
+      with:
+        args: alias --local-config=./examples/design-token-mania/now.json --team=basalt
+    - name: alias/simple
+      uses: actions/zeit-now@666edee2f3632660e9829cb6801ee5b7d47b303d
+      env:
+        ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
+      with:
+        args: alias --local-config=./examples/simple/now.json --team=basalt

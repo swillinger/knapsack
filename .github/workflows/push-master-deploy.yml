@@ -1,0 +1,30 @@
+on: push
+name: Master:Deploy
+jobs:
+  isMaster2:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: isMaster2
+      uses: actions/bin/filter@master
+      with:
+        args: branch master
+    - name: tagged:install
+      uses: actions/npm@59b64a598378f31e49cb76f27d6f3312b582f680
+      with:
+        entrypoint: yarn
+        args: install
+    - name: tagged:build:docs
+      uses: docker://basaltinc/docker-node-php-base:latest
+      with:
+        entrypoint: yarn
+        args: build:all
+    - name: tagged:deploy:docs
+      uses: actions/zeit-now@666edee2f3632660e9829cb6801ee5b7d47b303d
+      env:
+        ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
+      with:
+        entrypoint: sh
+        args: -c "cp docs-site/now.json docs-site/build/knapsack && cd docs-site/build/knapsack
+          && now deploy --scope=basalt --target production --meta GITHUB_SHA=${{ github.sha
+          }} --token $ZEIT_TOKEN && now alias --scope basalt --token $ZEIT_TOKEN"

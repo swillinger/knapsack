@@ -1,8 +1,7 @@
 name: Main
 on: push
 jobs:
-  setup:
-#    name: Setup
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -10,39 +9,14 @@ jobs:
         with:
           node-version: '10.x'
       - run: yarn install --frozen-lockfile
-      - run: yarn build:pkgs
-      - run: yarn build:knapsack
-      - name: Upload code
-        uses: actions/upload-artifact@v1
-        with:
-          name: code
-          path: '**'
-
-  smoke-tests:
-    runs-on: ubuntu-latest
-    needs: [setup]
-    steps:
-      - name: Download code
-        uses: actions/download-artifact@v1
-        with:
-          name: code
+        #if:
+        #name:
+      - run: yarn build
       - run: yarn lint:style
       - run: yarn lint:js
+      - run: yarn test:knapsack
+      - run: yarn jest
       - run: yarn build:private
       - run: yarn build:docs
-  basic-tests:
-    runs-on: ubuntu-latest
-    needs: [setup]
-    steps:
-      - name: Download code
-        uses: actions/download-artifact@v1
-        with:
-          name: code
-      - run: yarn jest
-      - run: yarn test:knapsack
       - run: yarn test:examples
-  e2e-tests:
-    runs-on: ubuntu-latest
-    needs: [setup]
-    steps:
-      - run: yarn test:cypress
+#      - run: yarn test:cypress

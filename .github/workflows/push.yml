@@ -3,5 +3,6 @@ on: push
 jobs:
   mainJob:
     name: Main Job
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1

@@ -1,63 +1,112 @@
-# Javascript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
-version: 2
-jobs:
-  build:
+# Docs https://circleci.com/docs/2.0
+version: 2.1
+
+orbs:
+  cypress: cypress-io/cypress@1 # https://circleci.com/orbs/registry/orb/cypress-io/cypress
+
+# CircleCI maintains a library of pre-built images: https://circleci.com/docs/2.0/circleci-images/
+executors:
+  base:
     docker:
-      # base docker image
-      - image: basaltinc/docker-node-php-base
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
+      - image: basaltinc/docker-node-php-base:latest
+    working_directory: ~/repo
+  cypress-with-php:  # This is an extension of the Basaltinc Node + Php image used for Knapsack that includes global cypress dependencies
+    docker:
+      - image: basaltinc/docker-node-php-cypress:latest # https://cloud.docker.com/u/basaltinc/repository/docker/basaltinc/docker-node-php-cypress/general
+    working_directory: ~/repo
+  base-w-browsers:
+    docker:
+      - image: basaltinc/docker-node-php-browsers:latest
     working_directory: ~/repo
 
+
+# types: string, boolean, integer, enum, executor, steps, environment variable name ~ https://circleci.com/docs/2.0/reusing-config/#parameter-types
+commands:
+  deploy-to-now:
+    description: Deploy to now.sh
+    steps:
+      - run: mkdir ~/artifacts || true
+      - run: npm i --unsafe-perm -g now
+      - run:
+          command: now deploy --scope basalt --token $ZEIT_TOKEN && sleep 3
+          no_output_timeout: 20m
+      # @todo ensure this script grabs correct url from previous step
+      - run: ./scripts/create-github-deploy.js
+      - run: cat ~/artifacts/now-url.txt
+      - persist_to_workspace:
+          root: '~'
+          paths:
+            - artifacts/now-url.txt
+
+jobs:
+  setup:
+    executor: base
     steps:
       - checkout
-
-      # Download and cache dependencies
+      - run: mkdir ~/artifacts
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "yarn.lock" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run: yarn install --no-lockfile
-
+            - global
+            - v1-deps-{{ checksum "yarn.lock" }}
+      - run: yarn install --frozen-lockfile
       - save_cache:
+          key: global
           paths:
-            - node_modules
-            - /usr/local/share/.cache/yarn/v2
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+            - ~/.cache
+            - ~/.npm
+      - save_cache:
+          key: v1-deps-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/repo/node_modules
+      - run: yarn build
+      - run: yarn lint:js
+      - run: yarn lint:style
+      - run: yarn test:knapsack
+      - persist_to_workspace:
+          root: '~'
+          paths:
+            - repo
+            - artifacts
+            - .ssh
+            - .cache/Cypress
 
-      - run: yarn build:all
+  test--cypress:
+    executor: cypress-with-php
+    steps:
+      - attach_workspace:
+          at: '~'
+      - run: ./node_modules/.bin/cypress verify
+      - run: yarn test:cypress
 
-      - run: yarn test
+  test--basics:
+    executor: base
+    steps:
+      - attach_workspace:
+          at: '~'
+      - run: yarn jest
+      - run: yarn test:examples
 
-      - run: ./scripts/e2e-simple.sh
-
-      - run:
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              ./scripts/release.sh
-            fi
-
-            if [ "${CIRCLE_BRANCH}" == "develop" ]; then
-              #./scripts/prerelease.sh
-              echo 'placeholder for develop prerelease'
-            fi
-
-      - run:
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              ./scripts/create-knapsack-deploy/deploy.sh
-            fi
-
-            if [ "${CIRCLE_BRANCH}" == "develop" ]; then
-             # ./scripts/create-knapsack-deploy-dev/deploy.sh
-              echo 'placeholder for develop deploy'
-            fi
+workflows:
+  version: 2
+  main:
+    jobs:
+      - setup
+      - test--basics:
+          requires:
+            - setup
+      - test--cypress:
+          requires:
+            - setup
+#      - deploy--stage:
+#          requires:
+#            - setup
+#            - test--jest
+#            - test--cypress
+#          context: main tokens
+#      - release:
+#          requires:
+#            - setup
+#            - test--knapsack
+#            - test--jest
+#            - test--cypress
+#          context: main tokens

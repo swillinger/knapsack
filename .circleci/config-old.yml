@@ -1,0 +1,63 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      # base docker image
+      - image: basaltinc/docker-node-php-base
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/mongo:3.4.4
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "yarn.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run: yarn install --no-lockfile
+
+      - save_cache:
+          paths:
+            - node_modules
+            - /usr/local/share/.cache/yarn/v2
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+
+      - run: yarn build:all
+
+      - run: yarn test
+
+      - run: ./scripts/e2e-simple.sh
+
+      - run:
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              ./scripts/release.sh
+            fi
+
+            if [ "${CIRCLE_BRANCH}" == "develop" ]; then
+              #./scripts/prerelease.sh
+              echo 'placeholder for develop prerelease'
+            fi
+
+      - run:
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              ./scripts/create-knapsack-deploy/deploy.sh
+            fi
+
+            if [ "${CIRCLE_BRANCH}" == "develop" ]; then
+             # ./scripts/create-knapsack-deploy-dev/deploy.sh
+              echo 'placeholder for develop deploy'
+            fi

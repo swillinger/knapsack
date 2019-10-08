@@ -38,7 +38,7 @@ jobs:
 
       - run: yarn test
 
-      - run: ./scripts/e2e-simple.sh
+      - run: ./scripts/test-publish.sh
 
       - run:
           command: |

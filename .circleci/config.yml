@@ -86,16 +86,15 @@ jobs:
       - run: yarn lint:style
       - run: yarn test:knapsack
       - run: yarn jest
+      - run: yarn build:private
       - run: yarn test:examples
 
-  test--builds:
+  test--publish:
     executor: base
     steps:
       - attach_workspace:
           at: '~'
-      - run: yarn build:private
-      - run: yarn test:examples
-
+      - run: ./scripts/test-publish.sh
   docs:
     executor: base
     steps:
@@ -114,7 +113,7 @@ workflows:
       - test--cypress:
           requires:
             - setup
-      - test--builds:
+      - test--publish:
           requires:
             - setup
       - docs:

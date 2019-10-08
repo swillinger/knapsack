@@ -41,7 +41,7 @@ else
     echo "START: e2e-simple"
     echo "========"
     git checkout $TRAVIS_BRANCH
-    ./scripts/e2e-simple.sh
+    ./scripts/test-publish.sh
     echo "========"
     echo "END: e2e-simple"
     echo "========"

@@ -86,6 +86,14 @@ jobs:
       - run: yarn jest
       - run: yarn test:examples
 
+  test--builds:
+    executor: base
+    steps:
+      - attach_workspace:
+          at: '~'
+      - run: yarn build:private
+      - run: yarn test:examples
+
 workflows:
   version: 2
   main:
@@ -95,6 +103,9 @@ workflows:
           requires:
             - setup
       - test--cypress:
+          requires:
+            - setup
+      - test--builds:
           requires:
             - setup
 #      - deploy--stage:

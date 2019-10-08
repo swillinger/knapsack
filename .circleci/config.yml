@@ -48,9 +48,8 @@ jobs:
           keys:
             - global-{{ epoch }}
             - v1-deps-{{ checksum "yarn.lock" }}
-      - run: yarn cache dir # just want to see what directory it is in, might be in ~/.cache/yarn
       - run: yarn install --frozen-lockfile --cache-folder ~/.yarn-cache --prefer-offline
-      - run: ls ~/.cache
+      - run: ls ~/.cache/Cache
       - save_cache:
           key: global-{{ epoch }}
           paths:

@@ -104,6 +104,7 @@ jobs:
       - run: yarn build:docs
       - run: npm install --global now
       - run: cp docs-site/now.json docs-site/build/knapsack && cd docs-site/build/knapsack && now deploy --scope=basalt --target production --token $ZEIT_TOKEN && now alias --scope basalt --token $ZEIT_TOKEN
+        no_output_timeout: 20m
 
   release:
     executor: base

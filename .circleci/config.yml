@@ -48,6 +48,7 @@ jobs:
           keys:
             - global
             - v1-deps-{{ checksum "yarn.lock" }}
+      - run: yarn cache dir # just want to see what directory it is in, might be in ~/.cache/yarn
       - run: yarn install --frozen-lockfile --cache-folder ~/.yarn-cache
       - save_cache:
           key: global
@@ -60,9 +61,6 @@ jobs:
           paths:
             - ~/repo/node_modules
       - run: yarn build
-      - run: yarn lint:js
-      - run: yarn lint:style
-      - run: yarn test:knapsack
       - persist_to_workspace:
           root: '~'
           paths:
@@ -84,6 +82,9 @@ jobs:
     steps:
       - attach_workspace:
           at: '~'
+      - run: yarn lint:js
+      - run: yarn lint:style
+      - run: yarn test:knapsack
       - run: yarn jest
       - run: yarn test:examples
 

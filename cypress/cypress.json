@@ -1,6 +1,6 @@
 {
   "baseUrl": "http://localhost:3999",
-  "video": false,
+  "video": true,
   "fixturesFolder": "fixtures",
   "integrationFolder": "integration",
   "pluginsFile": "plugins/index.js",

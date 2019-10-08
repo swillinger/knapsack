@@ -42,7 +42,7 @@ jobs:
       uses: docker://basaltinc/docker-node-php-base:latest
       with:
         entrypoint: bash
-        args: ./scripts/e2e-simple.sh
+        args: ./scripts/test-publish.sh
     - name: build:private
       uses: docker://basaltinc/docker-node-php-base:latest
       with:

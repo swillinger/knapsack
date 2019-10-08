@@ -95,6 +95,7 @@ jobs:
       - attach_workspace:
           at: '~'
       - run: ./scripts/test-publish.sh
+
   docs:
     executor: base
     steps:

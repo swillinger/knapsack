@@ -139,3 +139,6 @@ workflows:
             - test--basics
             - test--cypress
             - test--publish
+          filters:
+            branches:
+              only: fix/ci # @todo change to master

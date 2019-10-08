@@ -1,8 +1,8 @@
 name: Main
 on: push
 jobs:
-  mainJob:
-    name: Main Job
+  setup:
+#    name: Setup
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -10,3 +10,22 @@ jobs:
         with:
           node-version: '10.x'
       - run: yarn install --frozen-lockfile
+      - run: yarn build:all
+  smoke-tests:
+    runs-on: ubuntu-latest
+    needs: [setup]
+    steps:
+      - run: yarn lint:style
+      - run: yarn lint:js
+  basic-tests:
+    runs-on: ubuntu-latest
+    needs: [setup]
+    steps:
+      - run: yarn jest
+      - run: yarn test:knapsack
+      - run: yarn test:examples
+  e2e-tests:
+    runs-on: ubuntu-latest
+    needs: [setup]
+    steps:
+      - run: yarn test:cypress

@@ -1,8 +1,7 @@
 name: Main
-on:
-  push:
-    jobs:
-      mainJob:
-        name: Main Job
-        steps:
-          - uses: actions/checkout@v1
+on: push
+jobs:
+  mainJob:
+    name: Main Job
+    steps:
+      - uses: actions/checkout@v1

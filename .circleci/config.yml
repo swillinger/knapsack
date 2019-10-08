@@ -102,6 +102,7 @@ jobs:
       - attach_workspace:
           at: '~'
       - run: yarn build:docs
+      - run: cp docs-site/now.json docs-site/build/knapsack && cd docs-site/build/knapsack && now deploy --scope=basalt --target production --token $ZEIT_TOKEN && now alias --scope basalt --token $ZEIT_TOKEN
 
 workflows:
   version: 2
@@ -120,6 +121,9 @@ workflows:
       - docs:
           requires:
             - setup
+          filters:
+            branches:
+              only: fix/ci # @todo change to master
 #      - deploy--stage:
 #          requires:
 #            - setup

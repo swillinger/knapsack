@@ -1,4 +1,4 @@
-on: push
+#on: push
 name: Master:Deploy
 jobs:
   isMaster2:

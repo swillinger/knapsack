@@ -94,6 +94,13 @@ jobs:
       - run: yarn build:private
       - run: yarn test:examples
 
+  docs:
+    executor: base
+    steps:
+      - attach_workspace:
+          at: '~'
+      - run: yarn build:docs
+
 workflows:
   version: 2
   main:
@@ -106,6 +113,9 @@ workflows:
           requires:
             - setup
       - test--builds:
+          requires:
+            - setup
+      - docs:
           requires:
             - setup
 #      - deploy--stage:

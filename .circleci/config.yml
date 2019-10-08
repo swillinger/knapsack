@@ -139,4 +139,3 @@ workflows:
             - test--basics
             - test--cypress
             - test--publish
-          context: main tokens

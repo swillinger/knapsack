@@ -19,7 +19,7 @@ git config --global user.name "BasaltBot"
 cp ./scripts/.npmrc-ci ~/.npmrc
 PREV_VERSION=`git describe --abbrev=0`
 # see `lerna.json` for options
-GH_TOKEN=$GITHUB_TOKEN ./node_modules/.bin/lerna publish --github-release --conventional-commits --yes
+./node_modules/.bin/lerna publish --create-release github --conventional-commits --yes
 
 CURRENT_VERSION=`git describe --abbrev=0`
 echo "Previous version: $PREV_VERSION Current Version: $CURRENT_VERSION"

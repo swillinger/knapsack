@@ -23,7 +23,7 @@ export const markdownSlice = {
     md: {
       'ui:widget': 'textarea',
       'ui:options': {
-        rows: 5,
+        rows: 15,
       },
     },
   },

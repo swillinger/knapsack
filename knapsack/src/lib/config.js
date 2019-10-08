@@ -77,9 +77,7 @@ function validateConfig(config) {
   );
   if (!templateRendererResults.ok) {
     log.error(
-      `Each templateRenderer must have a unique id, these do not: ${
-        templateRendererResults.duplicateIdList
-      }`,
+      `Each templateRenderer must have a unique id, these do not: ${templateRendererResults.duplicateIdList}`,
     );
     process.exit(1);
   }

@@ -28,9 +28,7 @@ const statusColorSets = {
 
 const StatusMessageWrapper = styled.aside`
   padding: ${({ theme }) =>
-    `${theme.globals.spacing.s} ${theme.globals.spacing.m} ${
-      theme.globals.spacing.xs
-    }`};
+    `${theme.globals.spacing.s} ${theme.globals.spacing.m} ${theme.globals.spacing.xs}`};
   margin-bottom: ${({ theme }) => theme.globals.spacing.l};
   border: solid 2px ${({ type }) => statusColorSets[type].border};
   background-color: ${({ type }) => statusColorSets[type].bg};

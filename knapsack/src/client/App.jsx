@@ -272,13 +272,9 @@ class App extends React.Component {
                               if (!pattern) {
                                 return (
                                   <LoadableBadRoute
-                                    title={`Pattern "${
-                                      match.params.id
-                                    }" was not found in the system`}
+                                    title={`Pattern "${match.params.id}" was not found in the system`}
                                     subtitle="Hold your horses"
-                                    message={`We're having trouble finding the pattern "${
-                                      match.params.id
-                                    }" you requested. Please double check your url and the pattern meta.`}
+                                    message={`We're having trouble finding the pattern "${match.params.id}" you requested. Please double check your url and the pattern meta.`}
                                   />
                                 );
                               }
@@ -287,13 +283,9 @@ class App extends React.Component {
                               if (!firstTemplate) {
                                 return (
                                   <LoadableBadRoute
-                                    title={`Pattern "${
-                                      match.params.id
-                                    }" was found, but it did not having any templates in the system`}
+                                    title={`Pattern "${match.params.id}" was found, but it did not having any templates in the system`}
                                     subtitle="Hold your horses"
-                                    message={`We're having trouble finding the pattern "${
-                                      match.params.id
-                                    }" you requested. Please double check your url and the pattern meta.`}
+                                    message={`We're having trouble finding the pattern "${match.params.id}" you requested. Please double check your url and the pattern meta.`}
                                   />
                                 );
                               }
@@ -304,9 +296,7 @@ class App extends React.Component {
                                   : firstTemplate.id;
                                 return (
                                   <Redirect
-                                    to={`${BASE_PATHS.PATTERN}/${
-                                      match.params.id
-                                    }/${templateId}`}
+                                    to={`${BASE_PATHS.PATTERN}/${match.params.id}/${templateId}`}
                                   />
                                 );
                               }
@@ -333,13 +323,9 @@ class App extends React.Component {
                               }
                               return (
                                 <LoadableBadRoute
-                                  title={`Pattern "${
-                                    match.params.id
-                                  }" was not found in the system`}
+                                  title={`Pattern "${match.params.id}" was not found in the system`}
                                   subtitle="Hold your horses"
-                                  message={`We're having trouble finding the pattern "${
-                                    match.params.id
-                                  }" you requested. Please double check your url and the pattern meta.`}
+                                  message={`We're having trouble finding the pattern "${match.params.id}" you requested. Please double check your url and the pattern meta.`}
                                 />
                               );
                             }}

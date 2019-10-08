@@ -50,9 +50,9 @@ const ColorSwatch = ({ color, format }) => {
         <h5>{color.name}</h5>
         {color.code && (
           <h6>
-            <CopyToClipboard snippet={color.code} />
+            Code: <CopyToClipboard snippet={color.code} />
             <br />
-            <CopyToClipboard snippet={colorValue} />
+            Value: <CopyToClipboard snippet={colorValue} />
           </h6>
         )}
         {color.comment && (

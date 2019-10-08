@@ -93,6 +93,7 @@ if (process.env.NODE_ENV !== 'production') {
     id: PropTypes.string.isRequired,
     options: PropTypes.shape({
       enumOptions: PropTypes.array,
+      enumDisabled: PropTypes.any, // @todo update to correct type
       inline: PropTypes.bool,
     }),
     value: PropTypes.any,

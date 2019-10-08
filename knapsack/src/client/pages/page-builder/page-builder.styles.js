@@ -55,9 +55,7 @@ function noIconStyles(props) {
   if (!props.thumb)
     return `
     background: #FFF;
-    padding: ${props.theme.globals.spacing.s} ${
-      props.theme.globals.spacing.s
-    } 3px;
+    padding: ${props.theme.globals.spacing.s} ${props.theme.globals.spacing.s} 3px;
     border: 1px solid ${props.theme.globals.colors.neutralLight};
   `;
 }

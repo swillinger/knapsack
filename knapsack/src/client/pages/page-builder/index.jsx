@@ -451,9 +451,7 @@ class Playground extends Component {
                     tabIndex={0}
                   >
                     <StatusMessage
-                      message={`Template for "${
-                        slice.patternId
-                      }" not found. Click to delete.`}
+                      message={`Template for "${slice.patternId}" not found. Click to delete.`}
                       type="warning"
                     />
                   </div>

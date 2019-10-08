@@ -53,6 +53,7 @@ SpacingSwatch.propTypes = {
     name: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
     comment: PropTypes.string.isRequired,
+    code: PropTypes.string,
   }).isRequired,
   color: PropTypes.string.isRequired,
 };

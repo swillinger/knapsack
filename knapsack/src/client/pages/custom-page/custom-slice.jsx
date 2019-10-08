@@ -119,10 +119,12 @@ CustomSlice.defaultProps = {};
 CustomSlice.propTypes = {
   slice: PropTypes.shape({
     id: PropTypes.string.isRequired,
+    blockId: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     render: PropTypes.func.isRequired,
     schema: PropTypes.object,
+    data: PropTypes.object,
     uiSchema: PropTypes.object,
     initialData: PropTypes.object,
   }).isRequired,

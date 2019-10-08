@@ -34,7 +34,7 @@ const MdBlock = ({ title, isEditable, md: initialMd, handleSave }) => {
   const [editing, setEditing] = useState(false);
 
   if (!md) return null;
-  const html = marked.parse(md);
+  const html = marked.parse(md.trim());
   let editArea;
 
   if (editing && isEditable) {

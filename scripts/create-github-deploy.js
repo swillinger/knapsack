@@ -110,9 +110,7 @@ async function go() {
 
   if (deployStatusResults.state !== 'success') {
     console.log(
-      `Uh oh! deployStatusResults.state is not 'success', it is ${
-        deployStatusResults.state
-      }`,
+      `Uh oh! deployStatusResults.state is not 'success', it is ${deployStatusResults.state}`,
     );
     process.exit(1);
   }

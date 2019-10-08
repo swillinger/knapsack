@@ -362,9 +362,7 @@ function createPatternsData(
           );
           // @todo show user better error messages like what fields are wrong
           console.error(
-            `Review the "${
-              FILE_NAMES.PATTERN_CONFIG
-            }" in that folder and compare to "pattern.schema.json"`,
+            `Review the "${FILE_NAMES.PATTERN_CONFIG}" in that folder and compare to "pattern.schema.json"`,
           );
           console.log();
           process.exit(1);
@@ -390,9 +388,7 @@ function createPatternsData(
 
           if (!fileExists(templatePath)) {
             log.error(
-              `Pattern ${pattern.id} has a template (${
-                template.id
-              }) with a path that cannot be found: ${templatePath}`,
+              `Pattern ${pattern.id} has a template (${template.id}) with a path that cannot be found: ${templatePath}`,
             );
             process.exit(1);
           }
@@ -400,9 +396,7 @@ function createPatternsData(
           // ensure we have a templateRenderer for this template
           if (templateRenderers.findIndex(t => t.test(templatePath)) === -1) {
             log.error(
-              `Pattern ${pattern.id} has a template ${
-                template.id
-              } with no associated renderer.`,
+              `Pattern ${pattern.id} has a template ${template.id} with no associated renderer.`,
             );
             process.exit(1);
           }
@@ -412,9 +406,7 @@ function createPatternsData(
             const docPath = join(dir, template.docPath);
             if (!fileExists(docPath)) {
               log.error(
-                `Template ${
-                  template.id
-                } has a doc path that points to a file that cannot be found: ${docPath}`,
+                `Template ${template.id} has a doc path that points to a file that cannot be found: ${docPath}`,
               );
               process.exit(1);
             }
@@ -495,9 +487,7 @@ function createPatternsData(
             results.message,
           );
           console.error(
-            `Review the "${
-              pattern.metaFilePath
-            }" in that folder and compare to "pattern.schema.json"`,
+            `Review the "${pattern.metaFilePath}" in that folder and compare to "pattern.schema.json"`,
             metaFilePath,
           );
           console.log();
@@ -523,9 +513,7 @@ function createPatternsData(
   const results = validateUniqueIdsInArray(patterns);
   if (!results.ok) {
     log.error(
-      `Each "knapsack.pattern.js" must have a unique "id", these do not: ${
-        results.duplicateIdList
-      }`,
+      `Each "knapsack.pattern.js" must have a unique "id", these do not: ${results.duplicateIdList}`,
       null,
       'patterns',
     );

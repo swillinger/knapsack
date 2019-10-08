@@ -50,6 +50,7 @@
     "react-hooks/rules-of-hooks": "error",
     "react/no-array-index-key": [2],
     "react/no-danger": [0],
+    "react/sort-comp": [0],
     "react/require-extension": [0],
     "strict": [0],
     "valid-jsdoc": ["error", {

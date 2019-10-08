@@ -371,9 +371,7 @@ class TemplateView extends Component {
               templateId={this.props.templateId}
               patternId={this.props.id}
               data={demoDatas[this.state.demoDataIndex]}
-              key={`${this.props.id}-${this.props.templateId}-${
-                this.state.demoDataIndex
-              }`}
+              key={`${this.props.id}-${this.props.templateId}-${this.state.demoDataIndex}`}
             />
           </>
         )}

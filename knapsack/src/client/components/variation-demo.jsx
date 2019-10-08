@@ -193,6 +193,7 @@ VariationDemo.propTypes = {
   prop: PropTypes.shape({
     title: PropTypes.string,
     description: PropTypes.string,
+    type: PropTypes.string,
     enum: PropTypes.array,
   }).isRequired,
   isExpanded: PropTypes.bool,

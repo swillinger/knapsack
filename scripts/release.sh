@@ -14,8 +14,8 @@ fi
 # if `~/.npmrc` does not exist, copy `./scripts/.npmrc-ci` there
 #test -e ~/.npmrc || cp ./scripts/.npmrc-ci ~/.npmrc
 # hmm.. that's not working; perhaps CI has `~/.npmrc`
-git config --global user.email $GITHUB_EMAIL
-git config --global user.name "Knapsack Bot"
+git config --global user.email "evanlovely+basaltbot@gmail.com"
+git config --global user.name "BasaltBot"
 cp ./scripts/.npmrc-ci ~/.npmrc
 PREV_VERSION=`git describe --abbrev=0`
 # see `lerna.json` for options

@@ -46,20 +46,20 @@ jobs:
       - run: mkdir ~/artifacts ~/.yarn-cache
       - restore_cache:
           keys:
-            - global
+            - global-{{ epoch }}
             - v1-deps-{{ checksum "yarn.lock" }}
       - run: yarn cache dir # just want to see what directory it is in, might be in ~/.cache/yarn
       - run: yarn install --frozen-lockfile --cache-folder ~/.yarn-cache
+      - run: ls ~/.cache
       - save_cache:
-          key: global
+          key: global-{{ epoch }}
           paths:
             - ~/.cache
-            - ~/.npm
-            - ~/.yarn-cache
       - save_cache:
           key: v1-deps-{{ checksum "yarn.lock" }}
           paths:
             - ~/repo/node_modules
+            - ~/.yarn-cache
       - run: yarn build
       - persist_to_workspace:
           root: '~'
@@ -102,7 +102,15 @@ jobs:
       - attach_workspace:
           at: '~'
       - run: yarn build:docs
+      - run: npm install --global now
       - run: cp docs-site/now.json docs-site/build/knapsack && cd docs-site/build/knapsack && now deploy --scope=basalt --target production --token $ZEIT_TOKEN && now alias --scope basalt --token $ZEIT_TOKEN
+
+  release:
+    executor: base
+    steps:
+      - attach_workspace:
+          at: '~'
+      - run: ./scripts/release.sh
 
 workflows:
   version: 2
@@ -125,17 +133,10 @@ workflows:
           filters:
             branches:
               only: fix/ci # @todo change to master
-
-#      - deploy--stage:
-#          requires:
-#            - setup
-#            - test--jest
-#            - test--cypress
-#          context: main tokens
-#      - release:
-#          requires:
-#            - setup
-#            - test--knapsack
-#            - test--jest
-#            - test--cypress
-#          context: main tokens
+      - release:
+          requires:
+            - setup
+            - test--basics
+            - test--cypress
+            - test--publish
+          context: main tokens

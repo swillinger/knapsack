@@ -12,13 +12,6 @@ A simple setup with minimal configuration.
 - [Simple Demo Site](https://demo-simple.knapsack.basalt.io/)
 - [Simple Demo Source Code](https://github.com/basaltinc/knapsack/tree/master/examples/simple)
   
-#### Design Tokens
-
-A example with lots of design tokens.
-
-- [DTM Demo Site](httpsn://demo-design-token-mania.knapsack.basalt.io/)
-- [DTM Demo Source Code](https://github.com/basaltinc/knapsack/tree/master/examples/design-token-mania)
-
 #### React and Twig (PHP) Together
   
 An example with multiple templating languages (including React and Twig).

@@ -43,17 +43,18 @@ jobs:
     executor: base
     steps:
       - checkout
-      - run: mkdir ~/artifacts
+      - run: mkdir ~/artifacts ~/.yarn-cache
       - restore_cache:
           keys:
             - global
             - v1-deps-{{ checksum "yarn.lock" }}
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --frozen-lockfile --cache-folder ~/.yarn-cache
       - save_cache:
           key: global
           paths:
             - ~/.cache
             - ~/.npm
+            - ~/.yarn-cache
       - save_cache:
           key: v1-deps-{{ checksum "yarn.lock" }}
           paths:

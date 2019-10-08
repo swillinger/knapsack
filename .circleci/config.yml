@@ -121,9 +121,11 @@ workflows:
       - docs:
           requires:
             - setup
+          context: main tokens
           filters:
             branches:
               only: fix/ci # @todo change to master
+
 #      - deploy--stage:
 #          requires:
 #            - setup

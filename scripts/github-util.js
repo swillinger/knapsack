@@ -1,6 +1,6 @@
 const http = require('https');
 
-const { GITHUB_TOKEN } = process.env;
+const { GH_TOKEN } = process.env;
 
 /**
  * @param {string} path
@@ -16,14 +16,14 @@ function githubPost(path, requestBody) {
       path,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `token ${GITHUB_TOKEN}`,
+        Authorization: `token ${GH_TOKEN}`,
         Accept: [
           'application/vnd.github.v3+json',
           'application/vnd.github.ant-man-preview+json',
           'application/vnd.github.flash-preview+json',
         ].join(', '),
         'Cache-Control': 'no-cache',
-        'User-Agent': 'EvanLovely',
+        'User-Agent': 'BasaltBot',
       },
     };
 

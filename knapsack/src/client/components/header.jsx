@@ -21,14 +21,13 @@ import gql from 'graphql-tag';
 import {
   SiteHeaderLink,
   Hamburger,
-  MobileNav,
   SiteHeaderNavLink,
   SiteHeaderLogo,
-  SiteNav,
   X,
 } from './header.styles';
 import { BASE_PATHS } from '../../lib/constants';
 import knapsackLogo from '../assets/knapsack-logo-trans.svg';
+import './header.scss';
 
 const headerQuery = gql`
   {
@@ -176,10 +175,10 @@ class Header extends React.Component {
     // If Mobile
     if (this.state.windowWidth <= 950) {
       return this.state.mobileNavVisible ? (
-        <MobileNav>
+        <div className="header__mobile-nav">
           {Header.renderLinks(data)}
           <X onClick={this.handleNavClick} />
-        </MobileNav>
+        </div>
       ) : (
         <Hamburger onClick={this.handleNavClick} />
       );
@@ -195,13 +194,13 @@ class Header extends React.Component {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>Error :(</p>;
           return (
-            <SiteNav>
+            <div className="header">
               <h3 style={{ margin: 0 }}>
                 <SiteHeaderLogo src={knapsackLogo} alt="Knapsack" />
                 <SiteHeaderLink to="/">{data.settings.title}</SiteHeaderLink>
               </h3>
               {this.renderNavigation(data)}
-            </SiteNav>
+            </div>
           );
         }}
       </Query>

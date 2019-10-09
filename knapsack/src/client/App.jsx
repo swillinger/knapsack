@@ -48,6 +48,7 @@ import {
   LoadableBadRoute,
 } from './loadable-components';
 import { BASE_PATHS } from '../lib/constants';
+import './global/variables.css';
 import './style.scss';
 
 class App extends React.Component {

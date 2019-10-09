@@ -198,11 +198,6 @@ export const baseTheme = {
       xxl: '64px',
     },
   },
-  header: {
-    accentColor: colors.yellow.base,
-    background: colors.blue.base,
-    fontFamily: fontFamilies.avenir.medium,
-  },
   headings: {
     h1: {
       color: colors.blue.base,

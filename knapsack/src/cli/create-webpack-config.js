@@ -157,13 +157,15 @@ function createWebPackConfig(userConfig) {
             {
               loader: 'sass-loader',
               options: {
-                sourceMap: true,
-                // includePaths: [],
-                // scss data that will be available to ALL files
-                // data: '',
-                outputStyle: isProd ? 'compressed' : 'expanded',
-                // Enables the line number and file where a selector is defined to be emitted into the compiled CSS as a comment. Useful for debugging, especially when using imports and mixins.
-                sourceComments: false,
+                sassOptions: {
+                  sourceMap: true,
+                  // includePaths: [],
+                  // scss data that will be available to ALL files
+                  // data: '',
+                  outputStyle: isProd ? 'compressed' : 'expanded',
+                  // Enables the line number and file where a selector is defined to be emitted into the compiled CSS as a comment. Useful for debugging, especially when using imports and mixins.
+                  sourceComments: false,
+                },
               },
             },
           ],

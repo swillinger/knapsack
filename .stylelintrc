@@ -1,10 +1,48 @@
 {
-  "processors": ["stylelint-processor-styled-components"],
   "extends": [
     "stylelint-config-recommended",
-    "stylelint-config-styled-components"
+    "stylelint-config-recommended-scss"
+  ],
+  "plugins": [
+    "stylelint-value-no-unknown-custom-properties",
   ],
   "rules": {
-    "no-descending-specificity": null
+    "csstools/value-no-unknown-custom-properties": [
+      true,
+      {
+        "importFrom": [
+          "./knapsack/src/client/global/variables.css"
+        ]
+      }
+    ],
+    "no-descending-specificity": null,
+    "at-rule-no-unknown": true,
+    "color-no-invalid-hex": true,
+    "color-no-hex": true,
+    "selector-max-id": 0,
+    "selector-max-class": 2,
+    "no-duplicate-selectors": true,
+    "block-no-empty": true,
+    "block-closing-brace-newline-before": "always-multi-line",
+    "block-closing-brace-space-before": "always-single-line",
+    "block-opening-brace-newline-after": "always-multi-line",
+    "block-opening-brace-space-after": "always-single-line",
+    "block-opening-brace-space-before": "always",
+    "indentation": [
+      2,
+      {
+        "ignore": [
+          "inside-parens",
+          "param",
+          "value"
+        ]
+      }
+    ],
+    "max-nesting-depth": [
+      3
+    ],
+    "no-eol-whitespace": true,
+    "no-extra-semicolons": true,
+    "no-missing-end-of-source-newline": true
   }
 }

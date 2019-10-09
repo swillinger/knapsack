@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/api-demo",
   "license": "GPL-2.0-or-later",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "A Knapsack component that helps build Design Systems",
   "module": "dist/api-demo.js",
   "main": "dist/api-demo.js",
@@ -11,7 +11,7 @@
     "watch": "yarn build --watch"
   },
   "dependencies": {
-    "@knapsack/atoms": "^1.4.1",
+    "@knapsack/atoms": "^1.4.2",
     "@knapsack/core": "^1.0.0",
     "@knapsack/schema-form": "^1.4.1",
     "@knapsack/schema-table": "^1.1.7",

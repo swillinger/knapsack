@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.1](https://github.com/basaltinc/knapsack/compare/v1.3.1...v1.4.1) (2019-10-09)
+
+**Note:** Version bump only for package @knapsack/schema-form
+
+
+
+
+
 # [1.0.0](https://github.com/basaltinc/bedrock/compare/v0.45.3...v1.0.0) (2019-04-16)
 
 

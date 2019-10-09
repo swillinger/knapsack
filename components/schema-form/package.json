@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/schema-form",
   "license": "GPL-2.0-or-later",
-  "version": "1.0.0",
+  "version": "1.4.1",
   "description": "A Knapsack component that helps build Design Systems",
   "module": "dist/schema-form.js",
   "main": "dist/schema-form.js",

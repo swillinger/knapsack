@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.1](https://github.com/basaltinc/knapsack/compare/v1.3.1...v1.4.1) (2019-10-09)
+
+
+### Bug Fixes
+
+* **knapsack:** docsDir base path /docs => /docs-dir ([547e1c1](https://github.com/basaltinc/knapsack/commit/547e1c1))
+* Firefox works by ensuring websockets are secure ([0080ebe](https://github.com/basaltinc/knapsack/commit/0080ebe))
+
+
+
+
+
 # [1.3.0](https://github.com/basaltinc/knapsack/compare/v1.2.1...v1.3.0) (2019-06-21)
 
 **Note:** Version bump only for package @basalt/knapsack

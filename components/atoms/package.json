@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/atoms",
   "license": "GPL-2.0-or-later",
-  "version": "1.1.10",
+  "version": "1.4.1",
   "description": "A Knapsack component that helps build Design Systems",
   "module": "dist/atoms.js",
   "main": "dist/atoms.js",

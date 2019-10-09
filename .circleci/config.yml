@@ -49,7 +49,7 @@ jobs:
             - global-{{ epoch }}
             - v1-deps-{{ checksum "yarn.lock" }}
       - run: yarn install --frozen-lockfile --cache-folder ~/.yarn-cache --prefer-offline
-      - run: ls ~/.cache/Cache
+      #- run: ls ~/.cache/Cache
       - save_cache:
           key: global-{{ epoch }}
           paths:
@@ -103,7 +103,7 @@ jobs:
       - run: yarn build:docs
       - run: npm install --global now
       - run: cp docs-site/now.json docs-site/build/knapsack && cd docs-site/build/knapsack && now deploy --scope=basalt --target production --token $ZEIT_TOKEN && now alias --scope basalt --token $ZEIT_TOKEN
-        no_output_timeout: 20m
+        # no_output_timeout: 20m # @todo re-enable after fixing circle configuration validation errors
 
   release:
     executor: base

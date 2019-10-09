@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/copy-to-clipboard",
   "license": "UNLICENSED",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "Wrapper that allows a user to click the content and copy-to-clipboard.",
   "module": "dist/copy-to-clipboard.js",
   "main": "dist/copy-to-clipboard.js",
@@ -21,11 +21,11 @@
   },
   "author": "Basalt (https://basalt.io/)",
   "dependencies": {
-    "@knapsack/atoms": "^1.4.2",
+    "@knapsack/atoms": "^1.4.3",
     "@knapsack/breakpoints-demo": "^1.1.11",
-    "@knapsack/color-swatch": "^1.4.2",
+    "@knapsack/color-swatch": "^1.4.3",
     "@knapsack/core": "^1.0.0",
-    "@knapsack/spacing-swatch": "^1.4.2",
+    "@knapsack/spacing-swatch": "^1.4.3",
     "@knapsack/utils": "^1.0.0",
     "react-copy-to-clipboard": "^5.0.1",
     "react-table": "^6.9.0"

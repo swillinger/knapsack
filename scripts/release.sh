@@ -21,7 +21,7 @@ git remote remove origin
 git remote add origin "https://${GH_TOKEN}@github.com/basaltinc/knapsack.git"
 echo "About to run 'lerna publish'..."
 # see `lerna.json` for options
-./node_modules/.bin/lerna publish --create-release github --conventional-commits --yes --no-push
+./node_modules/.bin/lerna publish --create-release github --conventional-commits --yes
 echo "DONE: 'lerna publish'"
 echo "------------"
 echo ""

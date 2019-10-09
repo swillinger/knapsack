@@ -1,5 +1,4 @@
 #!/bin/bash
-set -x
 set -e
 # Start in this directory even if ran elsewhere
 cd "$(dirname "$0")"
@@ -14,7 +13,7 @@ fi
 # if `~/.npmrc` does not exist, copy `./scripts/.npmrc-ci` there
 #test -e ~/.npmrc || cp ./scripts/.npmrc-ci ~/.npmrc
 # hmm.. that's not working; perhaps CI has `~/.npmrc`
-git config --global user.email "evanlovely+basaltbot@gmail.com"
+git config --global user.email "$GH_EMAIL"
 git config --global user.name "BasaltBot"
 cp ./scripts/.npmrc-ci ~/.npmrc
 PREV_VERSION=`git describe --abbrev=0`
@@ -26,14 +25,15 @@ echo "------------"
 echo ""
 
 echo "About to 'git push'..."
-# Push quietly to prevent showing the token in log
-git push -q origin "https://${GH_TOKEN}@github.com/basaltinc/knapsack.git" "$CIRCLE_BRANCH" --follow-tags --no-verify
+git remote remove origin
+git remote add origin "https://${GH_TOKEN}@github.com/basaltinc/knapsack.git"
+git push origin "$CIRCLE_BRANCH" --follow-tags --no-verify
 echo "DONE: 'git push"
 echo "------------"
 echo ""
 
 echo "About to run 'lerna publish'..."
-./node_modules/.bin/lerna publish --yes
+./node_modules/.bin/lerna publish from-git --yes
 echo "DONE: 'lerna publish'"
 echo "------------"
 echo ""

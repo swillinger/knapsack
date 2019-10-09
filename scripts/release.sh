@@ -17,29 +17,15 @@ git config --global user.email "$GH_EMAIL"
 git config --global user.name "BasaltBot"
 cp ./scripts/.npmrc-ci ~/.npmrc
 PREV_VERSION=`git describe --abbrev=0`
-# see `lerna.json` for options
-echo "About to run 'lerna version'..."
-./node_modules/.bin/lerna version --create-release github --conventional-commits --yes --no-push
-echo "DONE: 'lerna version'"
-echo "------------"
-echo ""
-
-echo "About to 'git push'..."
 git remote remove origin
 git remote add origin "https://${GH_TOKEN}@github.com/basaltinc/knapsack.git"
-git push origin "$CIRCLE_BRANCH" --follow-tags --no-verify
-echo "DONE: 'git push"
-echo "------------"
-echo ""
-
 echo "About to run 'lerna publish'..."
-./node_modules/.bin/lerna publish from-git --yes
+# see `lerna.json` for options
+./node_modules/.bin/lerna publish --create-release github --conventional-commits --yes --no-push
 echo "DONE: 'lerna publish'"
 echo "------------"
 echo ""
 
-echo ""
-echo "------------"
 echo "Legacy Changelog stuff below:"
 CURRENT_VERSION=`git describe --abbrev=0`
 echo "Previous version: $PREV_VERSION Current Version: $CURRENT_VERSION"

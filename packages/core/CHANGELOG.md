@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.1](https://github.com/basaltinc/knapsack/compare/v1.5.0...v1.5.1) (2019-10-10)
+
+
+### Bug Fixes
+
+* setup initial CSS vars ([#260](https://github.com/basaltinc/knapsack/issues/260)) ([4c0369a](https://github.com/basaltinc/knapsack/commit/4c0369a))
+
+
+
+
+
 # [1.0.0](https://github.com/basaltinc/bedrock/compare/v0.45.3...v1.0.0) (2019-04-16)
 
 

@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/tabbed-panel",
   "license": "GPL-2.0-or-later",
-  "version": "1.0.0",
+  "version": "1.5.1",
   "description": "A Knapsack component that helps build Design Systems",
   "module": "dist/tabbed-panel.js",
   "main": "dist/tabbed-panel.js",
@@ -21,7 +21,7 @@
   },
   "author": "Basalt (https://basalt.io/)",
   "dependencies": {
-    "@knapsack/core": "^1.0.0"
+    "@knapsack/core": "^1.5.1"
   },
   "files": [
     "./dist"

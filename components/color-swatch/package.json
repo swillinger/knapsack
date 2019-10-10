@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/color-swatch",
   "license": "GPL-2.0-or-later",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "A Knapsack component that helps build Design Systems",
   "module": "dist/color-swatch.js",
   "main": "dist/color-swatch.js",
@@ -11,10 +11,10 @@
     "watch": "yarn build --watch"
   },
   "dependencies": {
-    "@knapsack/atoms": "^1.5.0",
-    "@knapsack/copy-to-clipboard": "^1.5.0",
-    "@knapsack/core": "^1.0.0",
-    "@knapsack/utils": "^1.0.0"
+    "@knapsack/atoms": "^1.5.1",
+    "@knapsack/copy-to-clipboard": "^1.5.1",
+    "@knapsack/core": "^1.5.1",
+    "@knapsack/utils": "^1.5.1"
   },
   "devDependencies": {
     "prop-types": "^15.0.0",

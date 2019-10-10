@@ -73,7 +73,7 @@ jobs:
     steps:
       - attach_workspace:
           at: '~'
-      - run: ./node_modules/.bin/cypress verify
+      - run: ./node_modules/.bin/cypress verify || ./node_modules/.bin/cypress install # @todo Cache Cypress
       - run: yarn test:cypress
 
   test--basics:

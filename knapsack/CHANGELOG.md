@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.3](https://github.com/basaltinc/knapsack/compare/v1.5.2...v1.5.3) (2019-10-15)
+
+
+### Bug Fixes
+
+* handle both https and http with websockets ([256a44f](https://github.com/basaltinc/knapsack/commit/256a44f41bf91d56048928db86ec39c0f703307c))
+
+
+
+
+
 ## [1.5.2](https://github.com/basaltinc/knapsack/compare/v1.5.1...v1.5.2) (2019-10-15)
 
 

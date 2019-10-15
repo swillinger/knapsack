@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/atoms",
   "license": "GPL-2.0-or-later",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "A Knapsack component that helps build Design Systems",
   "module": "dist/atoms.js",
   "main": "dist/atoms.js",
@@ -21,7 +21,7 @@
   },
   "author": "Basalt (https://basalt.io/)",
   "dependencies": {
-    "@knapsack/core": "^1.5.1"
+    "@knapsack/core": "^1.5.2"
   },
   "files": [
     "./dist"

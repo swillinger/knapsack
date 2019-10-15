@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.2](https://github.com/basaltinc/knapsack/compare/v1.5.1...v1.5.2) (2019-10-15)
+
+
+### Bug Fixes
+
+* compile server to node v10 ([#263](https://github.com/basaltinc/knapsack/issues/263)) ([b3be4e6](https://github.com/basaltinc/knapsack/commit/b3be4e6d32b330cc7ac47eefbc7a5e3d57bdc92b))
+* correct cli permissions ([cb65b96](https://github.com/basaltinc/knapsack/commit/cb65b96b2359f9e7748a487e281732ea29a3b146))
+
+
+
+
+
 ## [1.5.1](https://github.com/basaltinc/knapsack/compare/v1.5.0...v1.5.1) (2019-10-10)
 
 

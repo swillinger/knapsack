@@ -16,7 +16,7 @@
  */
 import log from 'npmlog'; // https://www.npmjs.com/package/npmlog
 
-export function error(msg: string, extra = null, prefix = ''): void {
+export function error(msg: string, extra?: any, prefix = ''): void {
   if (extra) {
     log.error(prefix, msg, extra);
   } else {
@@ -24,7 +24,7 @@ export function error(msg: string, extra = null, prefix = ''): void {
   }
 }
 
-export function info(msg: string, extra = null, prefix = ''): void {
+export function info(msg: string, extra?: any, prefix = ''): void {
   if (extra) {
     log.info(prefix, msg, extra);
   } else {
@@ -32,7 +32,7 @@ export function info(msg: string, extra = null, prefix = ''): void {
   }
 }
 
-export function warn(msg: string, extra = null, prefix = ''): void {
+export function warn(msg: string, extra?: any, prefix = ''): void {
   if (extra) {
     log.warn(prefix, msg, extra);
   } else {
@@ -40,7 +40,7 @@ export function warn(msg: string, extra = null, prefix = ''): void {
   }
 }
 
-export function verbose(msg: string, extra = null, prefix = ''): void {
+export function verbose(msg: string, extra?: any, prefix = ''): void {
   if (extra) {
     log.verbose(prefix, msg, extra);
   } else {
@@ -48,7 +48,7 @@ export function verbose(msg: string, extra = null, prefix = ''): void {
   }
 }
 
-export function silly(msg: string, extra = null, prefix = ''): void {
+export function silly(msg: string, extra?: any, prefix = ''): void {
   if (extra) {
     log.silly(prefix, msg, extra);
   } else {

@@ -148,5 +148,3 @@ ColorSwatches.propTypes = {
 };
 
 export default ColorSwatches;
-
-/* eslint-enable no-useless-constructor react/prefer-stateless-function */

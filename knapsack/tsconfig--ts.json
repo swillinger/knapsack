@@ -1,0 +1,20 @@
+{
+  "extends": "../tsconfig.json",
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "src/client" // @todo remove and fix errors
+  ],
+  "compilerOptions": {
+    "declaration": true,
+    "declarationDir": "./dist",
+    "emitDeclarationOnly": true,
+    "noEmit": false,
+    "strict": false,
+    "allowJs": false,
+    "checkJs": false,
+    "outDir": "./dist",
+//    "rootDirs": ["./src", "./"]
+  }
+}

@@ -30,9 +30,7 @@ export function mapChild(child, i, depth) {
 
     return React.createElement(
       child.tagName,
-      Object.assign({ key: `fract-${depth}-${i}` }, child.properties, {
-        className,
-      }),
+      { key: `fract-${depth}-${i}`, ...child.properties, className },
       child.children && child.children.map(mapWithDepth(depth + 1)),
     );
   }

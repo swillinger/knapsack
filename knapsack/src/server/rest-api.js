@@ -20,7 +20,7 @@ const fs = require('fs-extra');
 const md = require('marked');
 const highlight = require('highlight.js');
 const { qsParse } = require('./server-utils');
-const { MemDb } = require('./db');
+const { MemDb } = require('./dbs/mem-db');
 const log = require('../cli/log');
 const {
   BASE_PATHS,

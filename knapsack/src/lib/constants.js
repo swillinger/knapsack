@@ -15,7 +15,7 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 
-const PERMISSIONS = {
+export const PERMISSIONS = {
   READ: 'read',
   WRITE: 'write',
 };
@@ -24,7 +24,7 @@ const PERMISSIONS = {
  * Base Paths for URLs
  * DO NOT INCLUDE TRAILING SLASH!
  */
-const BASE_PATHS = {
+export const BASE_PATHS = {
   PATTERN: '/pattern',
   PATTERNS: '/patterns',
   PAGES: '/pages',
@@ -33,14 +33,8 @@ const BASE_PATHS = {
   DOCS: '/docs-dir',
 };
 
-const FILE_NAMES = {
+export const FILE_NAMES = {
   PATTERN_CONFIG: 'knapsack.pattern.js',
   PATTERN_META: 'knapsack.pattern-meta.json',
   CONFIG: 'knapsack.config.js',
-};
-
-module.exports = {
-  BASE_PATHS,
-  FILE_NAMES,
-  PERMISSIONS,
 };

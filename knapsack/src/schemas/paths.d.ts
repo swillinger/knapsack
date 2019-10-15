@@ -5,5 +5,5 @@ export interface Paths {
   assets: {
     css: string[];
     js?: string[];
-  }
+  };
 }

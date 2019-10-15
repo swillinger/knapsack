@@ -2,7 +2,7 @@ const util = require('util'); // eslint-disable-line
 const path = require('path');
 
 module.exports = (baseConfig, env, defaultConfig) => {
-  defaultConfig.module.rules = defaultConfig.module.rules.map((rule) => {
+  defaultConfig.module.rules = defaultConfig.module.rules.map(rule => {
     if (rule.loader && rule.loader.includes('babel-loader')) {
       // Fixes the inability for babel-loader to process the components that are part of this monorepo
       rule.include.push(path.join(__dirname, '../../../components'));

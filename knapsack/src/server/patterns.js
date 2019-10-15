@@ -30,7 +30,7 @@ const {
 } = require('iframe-resizer/package.json');
 const { createDemoUrl } = require('./server-utils');
 const { knapsackEvents, EVENTS } = require('./events');
-const { FileDb } = require('./db');
+const { FileDb } = require('./dbs/file-db');
 const patternSchema = require('../schemas/pattern.schema');
 const patternMetaSchema = require('../schemas/pattern-meta.schema');
 const { writeJson, fileExists, fileExistsOrExit } = require('./server-utils');
@@ -180,7 +180,7 @@ const patternsTypeDef = gql`
 
 /**
  * @param {string} dir,
- * @param {Object} config - @todo document
+ * @param {object} config - @todo document
  * @returns {Promise<void>}
  */
 async function writeMeta(dir, config) {
@@ -193,7 +193,7 @@ async function writeMeta(dir, config) {
 
 /**
  * @param {string} dir
- * @param {Object} config
+ * @param {object} config
  * @return {Promise<void>}
  */
 async function writeEntry(dir, config) {
@@ -217,7 +217,7 @@ module.exports = {
 
 /**
  * @param {string} dir
- * @param {Object} config - @todo document
+ * @param {object} config - @todo document
  * @returns {Promise<void>}
  */
 async function writeSchema(dir, config) {
@@ -246,7 +246,7 @@ async function writeSchema(dir, config) {
 
 /**
  * @param {string} dir
- * @param {Object} config
+ * @param {object} config
  * @returns {Promise<void>}
  */
 async function writeTemplate(dir, config) {
@@ -266,7 +266,7 @@ async function writeTemplate(dir, config) {
 
 /**
  * @param {string} dir - The directory to write to
- * @param {Object} config - @todo document
+ * @param {object} config - @todo document
  * @returns {Promise<void[]>}
  */
 async function writeAllFiles(dir, config) {
@@ -287,7 +287,7 @@ function isRemoteUrl(url) {
 }
 
 /**
- * @param {Object} opt
+ * @param {object} opt
  * @param {KnapsackAssetSetUserConfig[]} opt.assetSets
  * @param {string} opt.publicDir
  * @param {string} opt.configPathBase
@@ -542,7 +542,7 @@ function getPatternsDirs(patternPaths) {
 
 class Patterns {
   /**
-   * @param {Object} opt
+   * @param {object} opt
    * @param {string} opt.newPatternDir
    * @param {string[]} opt.patternPaths
    * @param {string} opt.publicDir
@@ -810,7 +810,7 @@ class Patterns {
   }
 
   /**
-   * @param {Object} opt
+   * @param {object} opt
    * @param {string} opt.patternId
    * @param {string} [opt.templateId] - defaults to first template
    * @param {string} [opt.assetSetId] - defaults to first assetSet
@@ -877,10 +877,10 @@ class Patterns {
 
   /**
    * Get code strings to help with how this template is used
-   * @param {Object} opt
+   * @param {object} opt
    * @param {string} opt.patternId
    * @param {string} opt.templateId
-   * @param {Object} [opt.data] - data passed to template
+   * @param {object} [opt.data] - data passed to template
    * @return {Promise<KnapsackPatternTemplateCode>}
    */
   async getTemplateCode({ patternId, templateId, data }) {
@@ -927,17 +927,14 @@ class Patterns {
       (prev, current) => Object.assign(prev, current),
       {},
     );
-    return Object.assign(
-      {},
-      {
-        language,
-        templateSrc: template.src,
-        html: '',
-        usage: '',
-        data,
-      },
-      mergedResults,
-    );
+    return {
+      language,
+      templateSrc: template.src,
+      html: '',
+      usage: '',
+      data,
+      ...mergedResults,
+    };
   }
 
   watch() {
@@ -981,11 +978,11 @@ class Patterns {
 
   /**
    * Render template
-   * @param {Object} opt
+   * @param {object} opt
    * @param {string} opt.patternId - Pattern Id
    * @param {string} [opt.templateId] - Template Id
    * @param {boolean} [opt.wrapHtml=true] - Should it wrap HTML results with `<head>` and include assets?
-   * @param {Object} [opt.data] - Data to pass to template
+   * @param {object} [opt.data] - Data to pass to template
    * @param {number} [opt.demoDataIndex] - Demo data index to pass to template
    * @param {boolean} [opt.isInIframe=false] - Will this be in an iFrame?
    * @param {string} [opt.assetSetId] - Asset Set Id

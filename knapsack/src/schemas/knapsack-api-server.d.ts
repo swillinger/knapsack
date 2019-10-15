@@ -7,7 +7,7 @@ interface RenderResponse {
 interface PageBuilderSlice {
   id: string;
   patternId: string;
-  data: Object;
+  data: Record<string, any>;
 }
 
 interface PageBuilderPage {
@@ -20,7 +20,7 @@ interface PageBuilderPage {
 interface KnapsackCustomPageSlice {
   id: string;
   blockId: string;
-  data: Object;
+  data: Record<string, any>;
 }
 
 interface KnapsackCustomPage {

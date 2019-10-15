@@ -12,7 +12,7 @@ const { Docs } = require('../server/docs');
 let isReady = false;
 
 /**
- * @typedef {Object} KnapsackBrain
+ * @typedef {object} KnapsackBrain
  * @prop {Patterns} patterns
  * @prop {Settings} settings
  * @prop {PageBuilder} pageBuilderPages

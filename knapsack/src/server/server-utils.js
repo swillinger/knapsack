@@ -21,7 +21,7 @@ const log = require('../cli/log');
 
 /**
  * @param {string} fileName - path to where JSON file should be written
- * @param {Object} object - data to turn to JSON
+ * @param {object} object - data to turn to JSON
  * @return {Promise<void>}
  */
 function writeJson(fileName, object) {
@@ -30,7 +30,7 @@ function writeJson(fileName, object) {
 
 /**
  * @param {string} fileName - path to where JSON file should be read
- * @return {Promise<Object>}
+ * @return {Promise<object>}
  */
 function readJson(fileName) {
   return fs.readFile(fileName, 'utf8').then(file => JSON.parse(file));
@@ -38,7 +38,7 @@ function readJson(fileName) {
 
 /**
  * @param {string} fileName - path to where JSON file should be read
- * @return {Object}
+ * @return {object}
  */
 function readJsonSync(fileName) {
   return JSON.parse(fs.readFileSync(fileName, 'utf8'));
@@ -47,7 +47,7 @@ function readJsonSync(fileName) {
 /**
  * Get a NPM package's package.json as object
  * @param {string} pkg
- * @return {Object} - The package.json
+ * @return {object} - The package.json
  */
 function getPkg(pkg) {
   const pkgPath = require.resolve(`${pkg}/package.json`);
@@ -104,7 +104,7 @@ function dirExistsOrExit(dirPath, msg) {
  * Parse QueryString, decode non-strings
  * Changes strings like `'true'` to `true` among others like numbers
  * @param {string} querystring
- * @return {Object}
+ * @return {object}
  * @see qsStringify
  */
 function qsParse(querystring) {
@@ -144,7 +144,7 @@ function qsParse(querystring) {
 
 /**
  * Turn object of data into query string
- * @param {Object} data
+ * @param {object} data
  * @return {string}
  * @see qsParse
  */
@@ -154,13 +154,13 @@ function qsStringify(data) {
 
 /**
  * Create a demo url
- * @param {Object} opt
+ * @param {object} opt
  * @param {string} opt.patternId
  * @param {string} opt.templateId
  * @param {string} opt.assetSetId
  * @param {boolean} [opt.isInIframe=false]
  * @param {boolean} [opt.wrapHtml=true]
- * @param {Object} [opt.data]
+ * @param {object} [opt.data]
  * @param {number} [opt.demoDataIndex]
  * @return {string}
  */

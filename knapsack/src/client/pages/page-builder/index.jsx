@@ -152,7 +152,7 @@ class Playground extends Component {
   /**
    * Save Whole Example page to server via GraphQL mutation
    * @param {Function} setPageBuilderPage - The function provided by the GraphQL <Mutation> component
-   * @return {Promise<Object> | null} - Returns the structued object defined by the mutation.
+   * @return {Promise<object>|null} - Returns the structued object defined by the mutation.
    */
   async save(setPageBuilderPage) {
     if (!this.state.appContext.permissions.includes('write')) {
@@ -172,9 +172,7 @@ class Playground extends Component {
     const results = await setPageBuilderPage({
       variables: {
         id: this.props.id,
-        data: Object.assign({}, this.state.example, {
-          slices: this.state.slices,
-        }),
+        data: { ...this.state.example, slices: this.state.slices },
       },
     });
     if (results.data) {
@@ -346,7 +344,7 @@ class Playground extends Component {
 
   handleMetaFormChange(formData) {
     this.setState(prevState => ({
-      example: Object.assign({}, prevState.example, formData),
+      example: { ...prevState.example, ...formData },
       hasVisibleControls: formData.hasVisibleControls,
     }));
   }
@@ -410,7 +408,7 @@ class Playground extends Component {
         <PageWithSidebar {...props} sidebar={SideBarContent}>
           <MainContent hasVisibleControls={this.state.hasVisibleControls}>
             {this.state.hasVisibleControls && (
-              <React.Fragment>
+              <>
                 <h4 className="eyebrow">Prototyping Sandbox</h4>
                 <h2>{this.state.example.title}</h2>
 
@@ -420,7 +418,7 @@ class Playground extends Component {
                     type={this.state.statusType}
                   />
                 )}
-              </React.Fragment>
+              </>
             )}
             <StartInsertSlice
               onClick={() => this.handleStartInsertSlice(0)}

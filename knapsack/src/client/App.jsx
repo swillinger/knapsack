@@ -107,13 +107,14 @@ class App extends React.Component {
       return <Spinner />;
     }
 
-    const cruxContext = Object.assign({}, baseContext, {
+    const cruxContext = {
+      ...baseContext,
       settings: this.state.settings,
       features: this.props.features,
       meta: this.state.meta,
       permissions: this.state.permissions,
       setSettings: newSettings => this.setState({ settings: newSettings }),
-    });
+    };
 
     // @todo consider removing; we're not using it anymore
     const query = gql`

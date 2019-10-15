@@ -112,7 +112,7 @@ function PatternGridListItem({
 function PatternGrid(props) {
   const { enablePatternIcons } = props.context.features;
   return (
-    <React.Fragment>
+    <>
       {enablePatternIcons ? (
         <SmartGrid
           className="pattern-grid-wrapper"
@@ -139,7 +139,7 @@ function PatternGrid(props) {
           ))}
         </PatternGridList>
       )}
-    </React.Fragment>
+    </>
   );
 }
 

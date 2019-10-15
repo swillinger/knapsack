@@ -14,7 +14,7 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-const templates = require('./pattern-templates.schema.json');
+const templates = require('./pattern-templates.schema.js');
 
 module.exports = {
   title: 'PatternSchema',

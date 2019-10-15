@@ -41,7 +41,7 @@ const { patternsResolvers, patternsTypeDef } = require('./patterns');
 const { getBrain } = require('../lib/bootstrap');
 
 /**
- * @param {Object} opt
+ * @param {object} opt
  * @param {KnapsackMeta} opt.meta
  * @returns {Promise<void>}
  */
@@ -56,7 +56,7 @@ async function serve({ meta }) {
     config,
   } = getBrain();
   const port = process.env.KNAPSACK_PORT || 3999;
-  const knapsackDistDir = join(__dirname, '../../dist/');
+  const knapsackDistDir = join(__dirname, '../../dist/client');
 
   const metaTypeDef = gql`
     type Meta {
@@ -258,7 +258,7 @@ ${patternDemos
   let wss;
 
   /**
-   * @param {Object} data - Data to send to Websocket client
+   * @param {object} data - Data to send to Websocket client
    * @returns {boolean} - if successful
    * @todo improve `data` definition
    */

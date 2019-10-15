@@ -18,7 +18,7 @@ const log = require('npmlog'); // https://www.npmjs.com/package/npmlog
 
 /**
  * @param {string} msg
- * @param {Object|[]} [extra]
+ * @param {object|[]} [extra]
  * @param {string} [prefix=''] - Logging prefix
  * @returns {void}
  */
@@ -32,7 +32,7 @@ function error(msg, extra, prefix = '') {
 
 /**
  * @param {string} msg
- * @param {Object|[]} [extra]
+ * @param {object|[]} [extra]
  * @param {string} [prefix=''] - Logging prefix
  * @returns {void}
  */
@@ -46,7 +46,7 @@ function info(msg, extra, prefix = '') {
 
 /**
  * @param {string} msg
- * @param {Object|[]} [extra]
+ * @param {object|[]} [extra]
  * @param {string} [prefix=''] - Logging prefix
  * @returns {void}
  */
@@ -60,7 +60,7 @@ function warn(msg, extra, prefix = '') {
 
 /**
  * @param {string} msg
- * @param {Object|[]} [extra]
+ * @param {object|[]} [extra]
  * @param {string} [prefix=''] - Logging prefix
  * @returns {void}
  */
@@ -74,7 +74,7 @@ function verbose(msg, extra, prefix = '') {
 
 /**
  * @param {string} msg
- * @param {Object|[]} [extra]
+ * @param {object|[]} [extra]
  * @param {string} [prefix=''] - Logging prefix
  * @returns {void}
  */

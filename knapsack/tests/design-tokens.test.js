@@ -14,7 +14,7 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-const { DesignTokens } = require('../design-tokens');
+const { DesignTokens } = require('../dist/server/design-tokens');
 
 const tokens = new DesignTokens({
   data: {

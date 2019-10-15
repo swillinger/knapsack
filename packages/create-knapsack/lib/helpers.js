@@ -5,7 +5,7 @@ const os = require('os');
 /**
  * Sync Write Json
  * @param {string} fileName - path to file name of JSON file
- * @param {Object} object - Object to stringify and write
+ * @param {object} object - Object to stringify and write
  * @returns {void}
  */
 function writeJson(fileName, object) {
@@ -13,7 +13,7 @@ function writeJson(fileName, object) {
 }
 
 /**
- * @param {Object} packageJson - Contents of package.json
+ * @param {object} packageJson - Contents of package.json
  * @return {string} - path to new package.json file
  */
 function writePackageJson(packageJson) {

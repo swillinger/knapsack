@@ -34,7 +34,7 @@ class PluginStore {
   }
 
   /**
-   * @param {Object} options - Options to pass in
+   * @param {object} options - Options to pass in
    * @param {Function} options.render - Render function that pass props to custom component
    * @return {void} - Sets the Home page
    */

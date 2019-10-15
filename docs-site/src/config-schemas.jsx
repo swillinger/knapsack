@@ -22,7 +22,7 @@ import designTokens from '@basalt/knapsack/src/schemas/knapsack-design-tokens.sc
 // import patternWithMeta from '@basalt/knapsack/src/schemas/pattern-w-meta.schema';
 import patternFull from '@basalt/knapsack/src/schemas/pattern.schema';
 
-// const patternTemplates = require('@basalt/knapsack/src/schemas/pattern-templates.schema.json');
+// const patternTemplates = require('@basalt/knapsack/src/schemas/pattern-templates.schema.js');
 
 const ConfigSchemas = () => (
   <div className="post">

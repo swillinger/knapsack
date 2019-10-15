@@ -18,9 +18,8 @@ const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const { join } = require('path');
 const chokidar = require('chokidar');
-const md5 = require('md5');
 const os = require('os');
-const { knapsackEvents, EVENTS } = require('./events');
+const { knapsackEvents, EVENTS } = require('../events');
 
 /**
  * Creates a LoDash powered JSON file database, via `lowdb` that is created using the `_.chain` method.
@@ -30,10 +29,10 @@ const { knapsackEvents, EVENTS } = require('./events');
  */
 class FileDb {
   /**
-   * @param {Object} params
+   * @param {object} params
    * @param {string} params.dbDir
    * @param {string} params.name
-   * @param {Object} [params.defaults={}]
+   * @param {object} [params.defaults={}]
    */
   constructor({ dbDir, name, defaults = {} }) {
     // @todo kebab-case `name`
@@ -103,48 +102,6 @@ class FileDb {
   }
 }
 
-/**
- * Creates an in-memory database for temporary storage
- */
-class MemDb {
-  constructor() {
-    this.db = new Map();
-  }
-
-  /**
-   * @param {Object} data - data to store, must be serializable
-   * @returns {string} md5 hash used to retrieve data later
-   */
-  addData(data) {
-    const hash = md5(JSON.stringify(data));
-    if (this.db.has(hash)) return hash;
-    const time = new Date().getTime();
-    this.db.set(hash, {
-      accessed: 0,
-      dateCreated: time,
-      dateLastAccessed: time,
-      data,
-    });
-    return hash;
-  }
-
-  /**
-   * @param {string} hash - md5 hash of data to retrieve
-   * @returns {null | Object} - if data is found, then it's returned, if not then `null`
-   */
-  getData(hash) {
-    const item = this.db.get(hash);
-    if (!item) return null;
-    this.db.set(hash, {
-      ...item,
-      accessed: item.accessed + 1,
-      dateLastAccessed: new Date().getTime(),
-    });
-    return item.data;
-  }
-}
-
 module.exports = {
   FileDb,
-  MemDb,
 };

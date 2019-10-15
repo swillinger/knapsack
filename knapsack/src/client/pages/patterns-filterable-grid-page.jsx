@@ -92,7 +92,9 @@ class PatternsPage extends Component {
       .catch(console.log.bind(console));
   }
 
-  componentWillReceiveProps(nextProps) {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    // @todo refactor use of UNSAFE_componentWillReceiveProps
     if (nextProps.type !== this.props.type) {
       this.setState({
         formData: {

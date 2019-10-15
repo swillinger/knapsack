@@ -23,7 +23,7 @@ import { gqlQuery } from '../data';
 /**
  * Simply applies default graphql function
  * Instantiating this component with a 'fetcher' attribute will override the default
- * @param {Object} props - react props
+ * @param {object} props - react props
  * @returns {*}
  * @constructor
  */

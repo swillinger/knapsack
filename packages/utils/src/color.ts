@@ -67,7 +67,7 @@ export function convertColor(initialColor, format) {
 
 /**
  * @param {string} color
- * @return {Object}
+ * @return {object}
  */
 export function parseColor(color) {
   return Color(color).object();

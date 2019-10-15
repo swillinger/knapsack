@@ -1,10 +1,8 @@
 /**
  * This function takes a string and escapes any regex related characters
  * Intended to be used to "cleanse" user input of regex that causes failures when using string operators
- * @param {string} string - string with potential regex characters that need to be escaped
- * @returns {string}
  */
-export function escapeRegEx(string: string): boolean {
+export function escapeRegEx(string: string): string {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
 
@@ -16,7 +14,7 @@ export function escapeRegEx(string: string): boolean {
  * @param {string} needle - string being searched for
  * @returns {boolean}
  */
-export function containsString(haystack: string, needle: string): boolean {
+export function containsString(haystack, needle) {
   const needleNormalized = escapeRegEx(needle).toLowerCase();
   const haystackNormalized = escapeRegEx(haystack).toLowerCase();
   return haystackNormalized.search(needleNormalized) !== -1;

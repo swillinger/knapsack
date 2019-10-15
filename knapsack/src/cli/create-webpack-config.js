@@ -35,7 +35,7 @@ const features = require('../lib/features');
 const isProd = process.env.NODE_ENV === 'production';
 
 /**
- * @typedef {Object} CreateWebpackConfig
+ * @typedef {object} CreateWebpackConfig
  * @prop {string} dist - The absolute path to where files will be written.
  * @prop {boolean} useHtmlWebpackPlugin
  * @prop {boolean} [injectCssChanges=true] - if `false`, always generate a CSS file
@@ -46,7 +46,7 @@ const isProd = process.env.NODE_ENV === 'production';
 /**
  * @private
  * @param {CreateWebpackConfig} userConfig - @todo document
- * @return {Object} - WebPack config
+ * @return {object} - WebPack config
  */
 function createWebPackConfig(userConfig) {
   // @todo re-enable schema validation - this config comes from users

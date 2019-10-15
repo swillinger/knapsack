@@ -5,7 +5,7 @@
   "description": "A Knapsack component that helps build Design Systems",
   "main": "dist/schema-utils.js",
   "scripts": {
-    "build": "babel --config-file @knapsack/babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
+    "build": "babel --config-file @knapsack/babel-config --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
     "prepublishOnly": "yarn build",
     "watch": "yarn build --watch"
   },

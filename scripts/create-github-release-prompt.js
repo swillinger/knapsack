@@ -6,7 +6,7 @@ const { GITHUB_TOKEN } = process.env;
 
 /**
  * @param {string} path
- * @param {Object} requestBody
+ * @param {object} requestBody
  * @return {Promise<any>}
  */
 function githubPost(path, requestBody) {

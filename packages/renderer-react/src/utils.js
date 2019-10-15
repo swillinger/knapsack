@@ -4,14 +4,14 @@ const path = require('path');
 
 /**
  * @param {string} fileName - path to where JSON file should be read
- * @return {Object}
+ * @return {object}
  */
 const readJsonSync = fileName => JSON.parse(fs.readFileSync(fileName, 'utf8'));
 
 /**
  * Get a NPM package's package.json as object
  * @param {string} pkg
- * @return {Object} - The package.json
+ * @return {object} - The package.json
  */
 function getPkg(pkg) {
   const pkgPath = require.resolve(`${pkg}/package.json`, {

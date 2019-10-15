@@ -4,18 +4,26 @@
   "description": "Build Design Systems on top of knapsack, by Basalt",
   "version": "1.5.1",
   "author": "Basalt (https://basalt.io/)",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "bin": {
-    "knapsack": "src/cli/knapsack-cli.js"
+    "knapsack": "dist/cli/knapsack-cli.js"
   },
   "scripts": {
-    "build": "rm -rf dist && NODE_ENV=production webpack-cli --hide-modules --progress --config ./webpack.config.js",
-    "watch": "webpack-cli --config ./webpack.config.js --watch --hide-modules --progress",
-    "test:types": "tsc",
+    "build": "rm -rf dist && npm-run-all --parallel --aggregate-output --print-label build:*",
+    "build:client": "NODE_ENV=production webpack-cli --hide-modules --config ./webpack.config.js",
+    "build:server": "BABEL_ENV=cli babel --config-file @knapsack/babel-config --ignore 'src/client' --extensions .js,.ts --out-dir dist/ src/",
+    "watch:client": "webpack-cli --config ./webpack.config.js --watch --hide-modules --progress",
+    "watch:server": "yarn build:server --watch --verbose",
+    "watch": "run-p watch:*",
+    "start": "yarn watch",
+    "test:types:js": "tsc --project ./tsconfig--js.json",
+    "test:types:ts": "tsc --project ./tsconfig--ts.json",
+    "build:types": "tsc --project ./tsconfig--ts.json",
     "prepublishOnly": "yarn build",
-    "test": "run-s test:*"
+    "test": "run-s test:types:js test:types:ts"
   },
   "dependencies": {
+    "@knapsack/babel-config": "^1.0.0",
     "@knapsack/schema-utils": "^1.0.0",
     "apollo-boost": "^0.1.22",
     "apollo-server-express": "^2.2.6",
@@ -50,7 +58,6 @@
     "@basalt/demo-data": "0.5.1",
     "@knapsack/api-demo": "^1.5.1",
     "@knapsack/atoms": "^1.5.1",
-    "@knapsack/babel-config": "^1.0.0",
     "@knapsack/breakpoints-demo": "^1.5.1",
     "@knapsack/code-block": "^1.5.1",
     "@knapsack/color-contrast-block": "^1.5.1",

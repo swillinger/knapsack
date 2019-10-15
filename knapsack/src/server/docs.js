@@ -45,10 +45,10 @@ const docsTypeDef = gql`
 `;
 
 /**
- * @typedef {Object} Doc
+ * @typedef {object} Doc
  * @prop {string} content - markdown string
  * @prop {string} src - path to original Markdown source
- * @prop {Object} data - yaml front matter
+ * @prop {object} data - yaml front matter
  * @prop {string} data.title
  * @prop {number} data.order
  * @prop {string} html - HTML of Markdown contents
@@ -57,7 +57,7 @@ const docsTypeDef = gql`
 
 class Docs {
   /**
-   * @param {Object} opt
+   * @param {object} opt
    * @param {string} opt.docsDir
    */
   constructor({ docsDir }) {

@@ -16,7 +16,7 @@
  */
 const { gql } = require('apollo-server-express');
 const GraphQLJSON = require('graphql-type-json');
-const { FileDb } = require('./db');
+const { FileDb } = require('./dbs/file-db');
 
 const settingsTypeDef = gql`
   scalar JSON

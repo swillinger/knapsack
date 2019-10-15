@@ -16,7 +16,7 @@
  */
 const { gql } = require('apollo-server-express');
 const GraphQLJSON = require('graphql-type-json');
-const { FileDb } = require('./db');
+const { FileDb } = require('./dbs/file-db');
 
 const customPagesTypeDef = gql`
   scalar JSON
@@ -88,7 +88,7 @@ class CustomPages {
 
   /**
    * @param {string} path
-   * @param {Object} data
+   * @param {object} data
    * @return {KnapsackCustomPage}
    */
   setCustomPage(path, data) {

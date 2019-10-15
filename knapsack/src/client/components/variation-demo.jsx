@@ -45,7 +45,7 @@ export class VariationDemo extends Component {
 
   handleChange(data) {
     this.setState(prevState => ({
-      data: Object.assign({}, prevState.data, data.formData),
+      data: { ...prevState.data, ...data.formData },
     }));
   }
 
@@ -65,9 +65,7 @@ export class VariationDemo extends Component {
       // Items is either an enum of strings, or a boolean
       const items = prop.enum ? prop.enum : [true, false];
       content = items.map(item => {
-        const itemData = Object.assign({}, this.props.data, {
-          [propKey]: item,
-        });
+        const itemData = { ...this.props.data, [propKey]: item };
         return (
           <VariationItemExpanded
             key={JSON.stringify(itemData)}

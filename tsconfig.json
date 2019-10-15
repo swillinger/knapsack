@@ -11,7 +11,7 @@
     "outDir": "dist",
     "resolveJsonModule": true,
     "sourceMap": true,
-    "skipLibCheck": true,
+    "skipLibCheck": false,
     "target": "esnext"
   },
   "typeAcquisition": {
@@ -20,6 +20,7 @@
   "exclude": [
     "node_modules",
     "dist",
+    "**/*.test.js",
     "knapsack/src/client"
   ]
 }

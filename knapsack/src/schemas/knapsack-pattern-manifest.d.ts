@@ -2,7 +2,10 @@ interface KnapsackPatternManifest {
   config: KnapsackPatternManifestConfig;
   getPattern: (id: string) => PatternSchema;
   getPatterns: () => PatternSchema[];
-  setPatternMeta: (id: string, meta: PatternMetaSchema) => Promise<GenericResponse>;
+  setPatternMeta: (
+    id: string,
+    meta: PatternMetaSchema,
+  ) => Promise<GenericResponse>;
   getPatternMeta: (id: string) => PatternMetaSchema;
   createPatternFiles: (config: { id: string }) => Promise<GenericResponse>;
 }
@@ -183,13 +186,13 @@ type KnapsackPatternTemplate = {
   uiSchema?: UiSchema;
   isInline?: IsInline;
   assetSets: KnapsackAssetSet[];
-  demoDatas?: Object[];
+  demoDatas?: Record<string, any>[];
   demoUrls: string[];
 };
 
 interface KnapsackPatternTemplateCode {
   html: string;
-  data?: Object;
+  data?: Record<string, any>;
   templateSrc: string;
   usage: string;
   language: string;

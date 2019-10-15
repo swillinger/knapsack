@@ -19,11 +19,8 @@
 /**
  * Is Some Of This Array In That Array?
  * Are any of the items in arrayA in arrayB?
- * @param {Array} arrayA
- * @param {Array} arrayB
- * @return {boolean}
  */
-function hasItemsInItems(arrayA, arrayB) {
+export function hasItemsInItems(arrayA: any[], arrayB: any[]): boolean {
   return arrayA.some(a => arrayB.includes(a));
 }
 
@@ -32,7 +29,7 @@ function hasItemsInItems(arrayA, arrayB) {
  * @param {Array} ar - Array to make unique
  * @returns {Array} - A unique array
  */
-function uniqueArray(ar) {
+export function uniqueArray(ar) {
   const j = {};
   ar.forEach(v => {
     j[`${v}::${typeof v}`] = v;
@@ -46,7 +43,7 @@ function uniqueArray(ar) {
  * @return {Array}
  * @link https://stackoverflow.com/a/15030117
  */
-function flattenArray(arr) {
+export function flattenArray(arr) {
   return arr.reduce(
     (flat, toFlatten) =>
       flat.concat(
@@ -55,9 +52,3 @@ function flattenArray(arr) {
     [],
   );
 }
-
-module.exports = {
-  hasItemsInItems,
-  uniqueArray,
-  flattenArray,
-};

@@ -50,7 +50,7 @@ interface KnapsackTemplateRenderer {
   getUsage?: (opt: {
     patternId: string;
     template: KnapsackPatternTemplate;
-    data?: Object;
+    data?: Record<string, any>;
   }) => Promise<string>;
 }
 

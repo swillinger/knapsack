@@ -33,7 +33,7 @@ const ROLES = {
 /* eslint-disable no-unused-vars */
 
 /**
- * @param {Object} req - Is type `IncomingMessage` @todo set correctly
+ * @param {object} req - Is type `IncomingMessage` @todo set correctly
  * @returns {{ id: string, permissions: string[] }} - Role
  */
 function getRole(req) {

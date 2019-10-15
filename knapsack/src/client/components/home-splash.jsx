@@ -52,7 +52,6 @@ function bigWords(x) {
   // split up the title to individual words
   const titleWords = x.split(' ');
   // find the longest word
-  /** @type number */
   const longestLength = titleWords.sort((a, b) => b.length - a.length)[0]
     .length;
   let vw = 19;

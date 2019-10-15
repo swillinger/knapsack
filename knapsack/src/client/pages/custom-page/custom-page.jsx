@@ -114,7 +114,7 @@ class CustomPage extends React.Component {
 
   /**
    * @param {number} index
-   * @param {Object} data
+   * @param {object} data
    * @return {void}
    */
   setSliceData(index, data) {

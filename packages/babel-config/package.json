@@ -6,6 +6,9 @@
   "main": "index.js",
   "scripts": {},
   "dependencies": {
+    "@babel/runtime": "^7.2.0"
+  },
+  "devDependencies": {
     "@babel/cli": "^7.2.0",
     "@babel/core": "^7.2.0",
     "@babel/node": "^7.2.0",
@@ -18,7 +21,6 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.1.0",
     "@babel/register": "^7.0.0",
-    "@babel/runtime": "^7.2.0",
     "babel-core": "bridge",
     "babel-jest": "^24.1.0",
     "babel-plugin-styled-components": "^1.9.4",

@@ -15,7 +15,7 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 const { join } = require('path');
-const { dirExists } = require('../server-utils');
+const { dirExists } = require('../dist/server/server-utils');
 
 describe('server-utils', () => {
   test('dir exists', async () => {

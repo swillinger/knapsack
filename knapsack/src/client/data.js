@@ -31,11 +31,11 @@ export function gqlToString(gqlQueryObject) {
 /**
  * GraphQL Query
  * Must pass in `query` OR `gqlQuery`
- * @param {Object} obj
+ * @param {object} obj
  * @param {string | DocumentNode} [obj.query] - Plain GraphQL query
  * @param {DocumentNode} [obj.gqlQueryObj] - GraphQL query made from `gql`
- * @param {Object} [obj.variables] - GraphQL variables
- * @return {Promise<Object>}
+ * @param {object} [obj.variables] - GraphQL variables
+ * @return {Promise<object>}
  * @async
  */
 export function gqlQuery({ query, gqlQueryObj, variables = {} }) {
@@ -72,7 +72,7 @@ export function gqlQuery({ query, gqlQueryObj, variables = {} }) {
 
 /**
  * Save data up on server to be used in template rendering with `dataId` query param later
- * @param {Object} data
+ * @param {object} data
  * @returns {Promise<string>} dataId that is md5 hash
  */
 export function saveData(data) {
@@ -102,13 +102,13 @@ export function saveData(data) {
 }
 
 /**
- * @param {Object} opt
+ * @param {object} opt
  * @param {string} opt.patternId
  * @param {string} [opt.templateId]
  * @param {string} [opt.assetSetId]
  * @param {boolean} [opt.wrapHtml]
  * @param {boolean} [opt.isInIframe]
- * @param {Object} [opt.extraParams] - extra query parameters added
+ * @param {object} [opt.extraParams] - extra query parameters added
  * @returns {string} root relative url for viewing rendered pattern
  */
 export async function getTemplateUrl({

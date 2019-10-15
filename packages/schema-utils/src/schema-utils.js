@@ -26,7 +26,7 @@ const ajvDefaults = new Ajv({
  * Validate Schema itself (metaSchema)
  * Validates against contents of the `$schema` field
  * @link https://github.com/epoberezkin/ajv#validateschemaobject-schema---boolean
- * @param {Object} schema - JSON Schema
+ * @param {object} schema - JSON Schema
  * @return {{ok: boolean, message: string}} - True if valid
  */
 function validateSchema(schema) {
@@ -43,9 +43,9 @@ function validateSchema(schema) {
  * Validate Schema and Assign Defaults
  * Any `default` on properties will be added if that property is absent
  * @link https://github.com/epoberezkin/ajv#assigning-defaults
- * @param {Object} schema - JSON Schema
- * @param {Object} data - Data to validate
- * @return {{ok: boolean, message: string, data: Object}} - Results
+ * @param {object} schema - JSON Schema
+ * @param {object} data - Data to validate
+ * @return {{ok: boolean, message: string, data: object}} - Results
  */
 function validateSchemaAndAssignDefaults(schema, data) {
   const { ok, message } = validateSchema(schema);
@@ -57,7 +57,7 @@ function validateSchemaAndAssignDefaults(schema, data) {
     };
   }
 
-  const newData = Object.assign({}, data);
+  const newData = { ...data };
   // This `validate` function mutates `newData`, so that's why we created a new object above first.
   const isValid = !!ajvDefaults.validate(schema, newData);
   return {
@@ -70,8 +70,8 @@ function validateSchemaAndAssignDefaults(schema, data) {
 /**
  * Validate Data against Schema
  * @link https://github.com/epoberezkin/ajv
- * @param {Object} schema - JSON Schema
- * @param {Object} data - Data to validate
+ * @param {object} schema - JSON Schema
+ * @param {object} data - Data to validate
  * @return {{ok: boolean, message: string}} - Results
  */
 function validateDataAgainstSchema(schema, data) {
@@ -91,7 +91,7 @@ function validateDataAgainstSchema(schema, data) {
 }
 
 /**
- * @param {Object[]} items
+ * @param {Array<object>} items
  * @param {string} [key='id']
  * @return {{ ok: boolean, duplicates: any[], duplicateIdList: string, message: string }}
  */

@@ -45,8 +45,8 @@ const query = gql`
 
 /**
  * Matches values, both case insensitive and location insensitive
- * @param {Object} filter - column title as id and search term as value
- * @param {Object} row - each row in the table
+ * @param {object} filter - column title as id and search term as value
+ * @param {object} row - each row in the table
  * @returns {boolean} - true if fuzzy match successful
  */
 function basicFuzzyFilter(filter, row) {

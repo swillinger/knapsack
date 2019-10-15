@@ -46,7 +46,6 @@ class SpacingSwatches extends React.Component {
     );
   }
 }
-/* eslint-enable no-useless-constructor react/prefer-stateless-function */
 
 SpacingSwatch.propTypes = {
   space: PropTypes.shape({

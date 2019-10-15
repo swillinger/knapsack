@@ -14,15 +14,9 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-const log = require('npmlog'); // https://www.npmjs.com/package/npmlog
+import log from 'npmlog'; // https://www.npmjs.com/package/npmlog
 
-/**
- * @param {string} msg
- * @param {object|[]} [extra]
- * @param {string} [prefix=''] - Logging prefix
- * @returns {void}
- */
-function error(msg, extra, prefix = '') {
+export function error(msg: string, extra = null, prefix = ''): void {
   if (extra) {
     log.error(prefix, msg, extra);
   } else {
@@ -30,13 +24,7 @@ function error(msg, extra, prefix = '') {
   }
 }
 
-/**
- * @param {string} msg
- * @param {object|[]} [extra]
- * @param {string} [prefix=''] - Logging prefix
- * @returns {void}
- */
-function info(msg, extra, prefix = '') {
+export function info(msg: string, extra = null, prefix = ''): void {
   if (extra) {
     log.info(prefix, msg, extra);
   } else {
@@ -44,13 +32,7 @@ function info(msg, extra, prefix = '') {
   }
 }
 
-/**
- * @param {string} msg
- * @param {object|[]} [extra]
- * @param {string} [prefix=''] - Logging prefix
- * @returns {void}
- */
-function warn(msg, extra, prefix = '') {
+export function warn(msg: string, extra = null, prefix = ''): void {
   if (extra) {
     log.warn(prefix, msg, extra);
   } else {
@@ -58,13 +40,7 @@ function warn(msg, extra, prefix = '') {
   }
 }
 
-/**
- * @param {string} msg
- * @param {object|[]} [extra]
- * @param {string} [prefix=''] - Logging prefix
- * @returns {void}
- */
-function verbose(msg, extra, prefix = '') {
+export function verbose(msg: string, extra = null, prefix = ''): void {
   if (extra) {
     log.verbose(prefix, msg, extra);
   } else {
@@ -72,13 +48,7 @@ function verbose(msg, extra, prefix = '') {
   }
 }
 
-/**
- * @param {string} msg
- * @param {object|[]} [extra]
- * @param {string} [prefix=''] - Logging prefix
- * @returns {void}
- */
-function silly(msg, extra, prefix = '') {
+export function silly(msg: string, extra = null, prefix = ''): void {
   if (extra) {
     log.silly(prefix, msg, extra);
   } else {
@@ -86,22 +56,11 @@ function silly(msg, extra, prefix = '') {
   }
 }
 
-/**
- * @param {string} level - one of: error, warn, http, info, verbose, silly
- * @returns {void}
- */
-function setLogLevel(level) {
+type LogLevelValues = 'error' | 'warn' | 'http' | 'info' | 'verbose' | 'silly';
+
+export function setLogLevel(level: LogLevelValues): void {
   // info(`Setting loglevel to ${level}`);
   log.level = level;
 }
 
-setLogLevel(process.env.KNAPSACK_LOG_LEVEL || 'info');
-
-module.exports = {
-  error,
-  info,
-  warn,
-  verbose,
-  silly,
-  setLogLevel,
-};
+setLogLevel((process.env.KNAPSACK_LOG_LEVEL as LogLevelValues) || 'info');

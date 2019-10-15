@@ -60,6 +60,7 @@ jobs:
             - ~/repo/node_modules
             - ~/.yarn-cache
       - run: yarn build
+      - run: bash ./scripts/ensure-clean-git-repo.sh
       - persist_to_workspace:
           root: '~'
           paths:

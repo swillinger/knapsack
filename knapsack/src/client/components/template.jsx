@@ -83,7 +83,10 @@ function Template({
     if (!websocketsPort) {
       return;
     }
-    const socket = new window.WebSocket(`wss://localhost:${websocketsPort}`);
+    const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+    const socket = new window.WebSocket(
+      `${protocol}://localhost:${websocketsPort}`,
+    );
     socket.addEventListener('message', messageEvent => {
       let messageData = { path: '' }; // eslint-disable-line no-unused-vars
       try {

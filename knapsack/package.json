@@ -6,7 +6,7 @@
   "author": "Basalt (https://basalt.io/)",
   "main": "dist/index.js",
   "bin": {
-    "knapsack": "dist/cli/knapsack-cli.js"
+    "knapsack": "cli.js"
   },
   "scripts": {
     "build": "rm -rf dist && npm-run-all --parallel --aggregate-output --print-label build:*",

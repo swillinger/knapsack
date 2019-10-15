@@ -73,7 +73,6 @@ jobs:
     steps:
       - attach_workspace:
           at: '~'
-      - run: ./node_modules/.bin/lerna link
       - run: ./node_modules/.bin/cypress verify || ./node_modules/.bin/cypress install # @todo Cache Cypress
       - run: yarn test:cypress
 
@@ -82,7 +81,6 @@ jobs:
     steps:
       - attach_workspace:
           at: '~'
-      - run: ./node_modules/.bin/lerna link
       - run: yarn lint:js
       - run: yarn lint:ts
       - run: yarn lint:style
@@ -96,7 +94,6 @@ jobs:
     steps:
       - attach_workspace:
           at: '~'
-      - run: ./node_modules/.bin/lerna link
       - run: ./scripts/test-publish.sh
 
   docs:
@@ -104,7 +101,6 @@ jobs:
     steps:
       - attach_workspace:
           at: '~'
-      - run: ./node_modules/.bin/lerna link
       - run: yarn build:docs
       - run: npm install --global now
       - run: cp docs-site/now.json docs-site/build/knapsack && cd docs-site/build/knapsack && now deploy --scope=basalt --target production --token $ZEIT_TOKEN && now alias --scope basalt --token $ZEIT_TOKEN
@@ -114,7 +110,6 @@ jobs:
     steps:
       - attach_workspace:
           at: '~'
-      - run: ./node_modules/.bin/lerna link
       - run: ./scripts/release.sh
 
 workflows:

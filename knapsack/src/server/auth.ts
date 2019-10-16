@@ -15,11 +15,17 @@
  with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 
-const { PERMISSIONS } = require('../lib/constants');
+import express from 'express';
+import { PERMISSIONS } from '../lib/constants';
 
 const isProd = process.env.NODE_ENV === 'production';
 
-const ROLES = {
+export interface Role {
+  id: string;
+  permissions: string[];
+}
+
+export const ROLES: Record<'EDITOR' | 'ANONYMOUS', Role> = {
   EDITOR: {
     id: 'editor',
     permissions: [PERMISSIONS.READ, PERMISSIONS.WRITE],
@@ -32,11 +38,7 @@ const ROLES = {
 
 /* eslint-disable no-unused-vars */
 
-/**
- * @param {object} req - Is type `IncomingMessage` @todo set correctly
- * @returns {{ id: string, permissions: string[] }} - Role
- */
-function getRole(req) {
+export function getRole(req: express.Request): Role {
   let role = ROLES.ANONYMOUS;
   if (!isProd) {
     role = ROLES.EDITOR;
@@ -45,7 +47,3 @@ function getRole(req) {
 }
 
 /* eslint-enable no-unused-vars */
-
-module.exports = {
-  getRole,
-};

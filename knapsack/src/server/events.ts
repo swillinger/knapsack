@@ -1,11 +1,11 @@
-const EventEmitter = require('events');
-const util = require('util');
-const log = require('../cli/log');
+import EventEmitter from 'events';
+import util from 'util';
+import * as log from '../cli/log';
 
 class KnapsackEventEmitter extends EventEmitter {}
 
-const knapsackEvents = new KnapsackEventEmitter();
-const EVENTS = {
+export const knapsackEvents = new KnapsackEventEmitter();
+export const EVENTS = {
   CONFIG_READY: 'CONFIG_READY',
   PATTERNS_DATA_READY: 'PATTERNS_DATA_READY',
   PATTERN_TEMPLATE_ADDED: 'PATTERN_TEMPLATE_ADDED',
@@ -17,9 +17,10 @@ const EVENTS = {
 };
 
 Object.keys(EVENTS).forEach(event => {
+  const eventName = EVENTS[event];
   // each event should emit either nothing or a single object, no more
-  knapsackEvents.on(EVENTS[event], info => {
-    log.verbose(`event fired: ${EVENTS[event]}`, null, 'events');
+  knapsackEvents.on(eventName, info => {
+    log.verbose(`event fired: ${eventName}`, null, 'events');
     log.silly(
       '',
       util.inspect(info, {
@@ -29,8 +30,3 @@ Object.keys(EVENTS).forEach(event => {
     );
   });
 });
-
-module.exports = {
-  knapsackEvents,
-  EVENTS,
-};

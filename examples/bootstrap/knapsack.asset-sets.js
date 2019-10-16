@@ -9,7 +9,7 @@ module.exports = {
     // inlineJs: `document.body.setAttribute('data-theme', 'bootstrap');`,
     assets: [
       { src: './public/css/bootstrap.css' },
-      { src: './public/js/bootstrap.bundle.js' },
+      // { src: './public/js/bootstrap.bundle.js' },
       ...globalKnapsackOverrideArtifacts,
     ],
   },

@@ -16,8 +16,9 @@
     "watch:server": "yarn build:server --watch --verbose",
     "watch": "run-p watch:*",
     "start": "yarn watch",
-    "test:types:js": "tsc --project ./tsconfig--js.json",
+    "test:types:js": "tsc --project ./tsconfig.json",
     "test:types:ts": "tsc --project ./tsconfig--ts.json",
+    "test:types:ts:strict": "yarn test:types:ts --strict",
     "build:types": "tsc --project ./tsconfig--ts.json",
     "prepublishOnly": "yarn build",
     "test": "run-s test:types:js test:types:ts"

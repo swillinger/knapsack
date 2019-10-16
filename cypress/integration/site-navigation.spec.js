@@ -12,7 +12,7 @@ describe('Site Navigation', () => {
     cy.contains('Patterns').click();
     cy.url().should('include', '/patterns/all');
     cy.get('main > header h2').should('have.text', 'Patterns');
-    // cy.screenshot('Patterns All');
+    cy.screenshot('Patterns All');
     cy.get('.header')
       .contains('Page Builder')
       .click();

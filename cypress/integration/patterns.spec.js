@@ -13,6 +13,7 @@ describe('Patterns', () => {
       .type('Robots are awesome');
 
     cy.wait(2000); // eslint-disable-line
+    cy.screenshot('Card Pattern after edit');
 
     // https://github.com/cypress-io/cypress/issues/136#issuecomment-328100955
     cy.get('iframe:first').then($iframe => {

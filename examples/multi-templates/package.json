@@ -1,6 +1,6 @@
 {
   "name": "@knapsack/example-multi-templates",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "description": "",
   "private": true,
   "main": "index.js",
@@ -18,7 +18,7 @@
     "@babel/preset-env": "^7.2.0",
     "@babel/preset-react": "^7.0.0",
     "@basalt/demo-data": "^0.5.1",
-    "@basalt/knapsack": "^1.5.3",
+    "@basalt/knapsack": "^1.5.4",
     "@knapsack/renderer-html": "^1.1.14",
     "@knapsack/renderer-react": "^1.5.2",
     "@knapsack/renderer-twig": "^1.1.14",

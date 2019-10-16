@@ -7,5 +7,6 @@
     "inSlice"
   ],
   "hasIcon": false,
+  "showAllTemplates": false,
   "demoSize": "m"
 }

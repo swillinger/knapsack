@@ -75,6 +75,7 @@ jobs:
       - attach_workspace:
           at: '~'
       - run: ./node_modules/.bin/cypress verify || ./node_modules/.bin/cypress install # @todo Cache Cypress
+      - run: yarn workspace @knapsack/example-bootstrap build
       - run: yarn test:cypress
 
   test--basics:

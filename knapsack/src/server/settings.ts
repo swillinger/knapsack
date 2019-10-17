@@ -14,58 +14,21 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-const { gql } = require('apollo-server-express');
-const GraphQLJSON = require('graphql-type-json');
-const { FileDb } = require('./dbs/file-db');
+import GraphQLJSON from 'graphql-type-json';
+import { FileDb } from './dbs/file-db';
+import {
+  KnapsackSettings,
+  KnapsackSettingsStoreConfig,
+} from '../schemas/knapsack.settings';
+import { GenericResponse } from '../schemas/misc';
 
-const settingsTypeDef = gql`
-  scalar JSON
+export { settingsTypeDef } from '../schemas/knapsack.settings';
 
-  type CustomSectionMenuItem {
-    id: ID
-    title: String
-  }
+export class Settings {
+  db: FileDb;
 
-  type CustomSection {
-    id: ID
-    title: String
-    showInMainMenu: Boolean
-    pages: [CustomSectionMenuItem]
-  }
-
-  type SettingsParentBrand {
-    "URL to image"
-    logo: String
-    title: String
-    homepage: String
-  }
-
-  type Settings {
-    title: String!
-    subtitle: String
-    slogan: String
-    parentBrand: SettingsParentBrand
-    customSections: [CustomSection]
-  }
-
-  type Query {
-    settings: Settings
-    settingsAll: JSON
-  }
-
-  type Mutation {
-    setSettings(settings: JSON): Settings
-    setSettingsAll(settings: JSON): JSON
-  }
-`;
-
-class Settings {
-  /**
-   * @param {KnapsackSettingsStoreConfig} Object
-   */
-  constructor({ dataDir }) {
-    /** @type {KnapsackSettings} */
-    const defaults = {
+  constructor({ dataDir }: KnapsackSettingsStoreConfig) {
+    const defaults: KnapsackSettings = {
       title: 'My Title',
       parentBrand: {},
       customSections: [],
@@ -78,31 +41,19 @@ class Settings {
     });
   }
 
-  /**
-   * @param {string} id
-   * @return {any}
-   */
-  getSetting(id) {
+  getSetting(id: string): any {
     return this.db.get(id);
   }
 
-  /**
-   * @return {KnapsackSettings}
-   */
-  getSettings() {
+  getSettings(): KnapsackSettings {
     return this.db.getAll();
   }
 
-  setSettings(data) {
+  setSettings(data: any): void {
     this.db.setAll(data);
   }
 
-  /**
-   * @param {string} id
-   * @param {KnapsackSettings} data
-   * @return {{ok: boolean, message: string}}
-   */
-  setSetting(id, data) {
+  setSetting(id: string, data: KnapsackSettings): GenericResponse {
     // @todo validate
     try {
       this.db.set(id, data);
@@ -119,7 +70,7 @@ class Settings {
   }
 }
 
-const settingsResolvers = {
+export const settingsResolvers = {
   Query: {
     settings: (parent, args, { settings }) => settings.getSettings(),
     settingsAll: (parent, args, { settings }) => settings.getSettings(),
@@ -145,10 +96,4 @@ const settingsResolvers = {
     },
   },
   JSON: GraphQLJSON,
-};
-
-module.exports = {
-  Settings,
-  settingsTypeDef,
-  settingsResolvers,
 };

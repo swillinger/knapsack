@@ -14,12 +14,12 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-const low = require('lowdb');
-const FileSync = require('lowdb/adapters/FileSync');
-const { join } = require('path');
-const chokidar = require('chokidar');
-const os = require('os');
-const { knapsackEvents, EVENTS } = require('../events');
+import low from 'lowdb';
+import FileSync from 'lowdb/adapters/FileSync';
+import { join } from 'path';
+import chokidar from 'chokidar';
+import os from 'os';
+import { knapsackEvents, EVENTS } from '../events';
 
 /**
  * Creates a LoDash powered JSON file database, via `lowdb` that is created using the `_.chain` method.
@@ -27,14 +27,18 @@ const { knapsackEvents, EVENTS } = require('../events');
  * @link https://www.npmjs.com/package/lowdb
  * @link https://lodash.com/docs/4.17.11#chain
  */
-class FileDb {
-  /**
-   * @param {object} params
-   * @param {string} params.dbDir
-   * @param {string} params.name
-   * @param {object} [params.defaults={}]
-   */
-  constructor({ dbDir, name, defaults = {} }) {
+export class FileDb {
+  db: low.LowdbSync<any>;
+
+  constructor({
+    dbDir,
+    name,
+    defaults = {},
+  }: {
+    dbDir: string;
+    name: string;
+    defaults?: object;
+  }) {
     // @todo kebab-case `name`
     // @todo should this read a pre-existing file first?
     const dbPath = join(dbDir, `${name}.json`);
@@ -72,16 +76,21 @@ class FileDb {
     return this.db;
   }
 
-  get(key) {
+  get(key: string): any {
+    // @todo improve types
     return this.db.get(key).value();
   }
 
-  getAll() {
+  getAll(): any {
+    // @todo improve types
     return this.db.value();
   }
 
-  // https://lodash.com/docs/4.17.11#find
-  find(data) {
+  /**
+   * @link https://lodash.com/docs/4.17.11#find
+   */
+  find(data: any): any {
+    // @todo improve types
     return this.db.find(data).value();
   }
 
@@ -89,19 +98,17 @@ class FileDb {
     return this.db.values().value();
   }
 
-  set(key, value) {
+  set(key: string, value: any): any {
     return this.db.set(key, value).write();
   }
 
-  setAll(data) {
+  setAll(data: object): object {
+    // @todo improve types
     return this.db.setState(data).write();
   }
 
-  update(key, func) {
+  update(key: string, func: any): any {
+    // @todo improve types
     return this.db.update(key, func).write();
   }
 }
-
-module.exports = {
-  FileDb,
-};

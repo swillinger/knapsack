@@ -1,4 +1,4 @@
-/**
+/*
  *  Copyright (C) 2018 Basalt
     This file is part of Knapsack.
     Knapsack is free software; you can redistribute it and/or modify it
@@ -14,7 +14,74 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-module.exports = {
+import gql from 'graphql-tag';
+
+export interface KnapsackSettingsStoreConfig {
+  dataDir: string;
+}
+export interface KnapsackSettings {
+  title: string;
+  subtitle?: string;
+  slogan?: string;
+  parentBrand?: {
+    homepage?: string;
+    /** image url */
+    logo?: string;
+    title?: string;
+  };
+  customSections: {
+    id: string;
+    title: string;
+    showInMainMenu: boolean;
+    pages: {
+      id: string;
+      title: string;
+    }[];
+  }[];
+}
+
+export const settingsTypeDef = gql`
+  scalar JSON
+
+  type CustomSectionMenuItem {
+    id: ID
+    title: String
+  }
+
+  type CustomSection {
+    id: ID
+    title: String
+    showInMainMenu: Boolean
+    pages: [CustomSectionMenuItem]
+  }
+
+  type SettingsParentBrand {
+    "URL to image"
+    logo: String
+    title: String
+    homepage: String
+  }
+
+  type Settings {
+    title: String!
+    subtitle: String
+    slogan: String
+    parentBrand: SettingsParentBrand
+    customSections: [CustomSection]
+  }
+
+  type Query {
+    settings: Settings
+    settingsAll: JSON
+  }
+
+  type Mutation {
+    setSettings(settings: JSON): Settings
+    setSettingsAll(settings: JSON): JSON
+  }
+`;
+
+export const knapsackSettingsSchema = {
   $schema: 'http://json-schema.org/draft-07/schema',
   type: 'object',
   title: 'Knapsack Settings',

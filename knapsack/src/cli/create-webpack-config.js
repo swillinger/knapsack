@@ -46,7 +46,7 @@ const isProd = process.env.NODE_ENV === 'production';
 /**
  * @private
  * @param {CreateWebpackConfig} userConfig - @todo document
- * @return {object} - WebPack config
+ * @return {Object} - WebPack config
  */
 function createWebPackConfig(userConfig) {
   // @todo re-enable schema validation - this config comes from users
@@ -87,7 +87,7 @@ function createWebPackConfig(userConfig) {
           loader: require.resolve('ignore-loader'),
         },
         {
-          test: /\.(js|jsx|mjs)$/,
+          test: /\.(js|jsx|mjs|ts|tsx)$/,
           loader: require.resolve('babel-loader'),
           include: [
             resolve(__dirname, '../../src'),
@@ -187,7 +187,7 @@ function createWebPackConfig(userConfig) {
     devtool: isProd ? 'source-map' : 'cheap-module-source-map',
     resolve: {
       // symlinks: false, // @todo consider, but be careful
-      extensions: ['.mjs', '.jsx', '.js', '.json', '.css'],
+      extensions: ['.ts', '.tsx', '.mjs', '.jsx', '.js', '.json', '.css'],
       mainFields: ['module', 'main'],
       modules: ['node_modules', resolve(__dirname, 'node_modules')],
       alias: {

@@ -14,5 +14,6 @@ module.exports = {
   rules: {
     ...baseConfig.rules,
     'valid-jsdoc': [0],
+    '@typescript-eslint/no-explicit-any': [0],
   },
 };

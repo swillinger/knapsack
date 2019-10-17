@@ -1,5 +1,5 @@
-interface GenericResponse {
+export interface GenericResponse {
   ok: boolean;
-  message: string;
-  data: object;
+  message?: string;
+  data?: object;
 }

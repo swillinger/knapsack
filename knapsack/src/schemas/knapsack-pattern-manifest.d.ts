@@ -1,3 +1,6 @@
+import { KnapsackAssetSet } from './asset-sets';
+import { GenericResponse } from './misc';
+
 interface KnapsackPatternManifest {
   config: KnapsackPatternManifestConfig;
   getPattern: (id: string) => PatternSchema;
@@ -159,7 +162,7 @@ interface KnapsackPatternType {
   title: string;
 }
 
-interface KnapsackPattern {
+export interface KnapsackPattern {
   id: string;
   /**
    * Relative path to a JSON file that stores meta data for pattern. Schema for that file is in "pattern-meta.schema.json".
@@ -171,7 +174,7 @@ interface KnapsackPattern {
   dir: string;
 }
 
-type KnapsackPatternTemplate = {
+export type KnapsackPatternTemplate = {
   name: string;
   path: string;
   absolutePath: string;

@@ -1,3 +1,9 @@
+import { KnapsackAssetSetUserConfig } from './asset-sets';
+import {
+  KnapsackPattern,
+  KnapsackPatternTemplate,
+} from './knapsack-pattern-manifest.d';
+
 interface KnapsackTemplateRenderResults {
   ok: boolean;
   html?: string;
@@ -62,34 +68,6 @@ interface KnapsackDesignToken {
   originalValue: string;
   code?: string;
   comment?: string;
-}
-
-interface KnapsackAssetSet {
-  id: string;
-  title: string;
-  assets: {
-    src: string;
-    publicPath: string;
-    type: string;
-    sizeKb: string;
-    sizeRaw: number;
-  }[];
-  inlineCss?: string;
-  inlineJs?: string;
-  inlineHead?: string;
-  inlineFoot?: string;
-}
-
-interface KnapsackAssetSetUserConfig {
-  id: string;
-  title: string;
-  assets: {
-    src: string;
-  }[];
-  inlineCss?: string;
-  inlineJs?: string;
-  inlineHead?: string;
-  inlineFoot?: string;
 }
 
 interface KnapsackConfig {

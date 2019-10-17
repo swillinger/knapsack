@@ -1,18 +1,20 @@
-const md5 = require('md5');
+import md5 from 'md5';
 
 /**
  * Creates an in-memory database for temporary storage
  */
-class MemDb {
+export class MemDb {
+  db: Record<any, any>;
+
   constructor() {
     this.db = new Map();
   }
 
   /**
-   * @param {object} data - data to store, must be serializable
-   * @returns {string} md5 hash used to retrieve data later
+   * @param data - data to store, must be serializable
+   * @returns md5 hash used to retrieve data later
    */
-  addData(data) {
+  addData(data: object): string {
     const hash = md5(JSON.stringify(data));
     if (this.db.has(hash)) return hash;
     const time = new Date().getTime();
@@ -26,10 +28,10 @@ class MemDb {
   }
 
   /**
-   * @param {string} hash - md5 hash of data to retrieve
-   * @returns {null|object} - if data is found, then it's returned, if not then `null`
+   * @param hash - md5 hash of data to retrieve
+   * @returns if data is found, then it's returned, if not then `null`
    */
-  getData(hash) {
+  getData(hash: string): null | object {
     const item = this.db.get(hash);
     if (!item) return null;
     this.db.set(hash, {
@@ -40,7 +42,3 @@ class MemDb {
     return item.data;
   }
 }
-
-module.exports = {
-  MemDb,
-};

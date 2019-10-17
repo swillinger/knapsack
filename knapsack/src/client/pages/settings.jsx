@@ -21,7 +21,7 @@ import gql from 'graphql-tag';
 import Spinner from '@knapsack/spinner';
 import { StatusMessage } from '@knapsack/atoms';
 import { KnapsackContext } from '@knapsack/core';
-import knapsackSettingsSchema from '../../schemas/knapsack.settings.schema';
+import { knapsackSettingsSchema } from '../../schemas/knapsack.settings';
 import PageWithSidebar from '../layouts/page-with-sidebar';
 import PatternsSettings from '../components/patterns-settings';
 

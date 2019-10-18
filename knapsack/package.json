@@ -9,7 +9,7 @@
     "knapsack": "cli.js"
   },
   "scripts": {
-    "build": "rm -rf dist && npm-run-all --serial --aggregate-output --print-label build:server build:client build:types",
+    "build": "rm -rf dist && npm-run-all --serial --print-label build:server build:client build:types",
     "build:client": "NODE_ENV=production webpack-cli --hide-modules --config ./webpack.config.js",
     "build:server": "BABEL_ENV=cli babel --config-file @knapsack/babel-config --ignore 'src/client' --extensions .js,.ts --out-dir dist/ src/",
     "watch:client": "webpack-cli --config ./webpack.config.js --watch --hide-modules --progress",

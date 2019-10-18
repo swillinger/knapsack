@@ -14,20 +14,20 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-const express = require('express');
-const urlJoin = require('url-join');
-const fs = require('fs-extra');
-const md = require('marked');
-const highlight = require('highlight.js');
-const { qsParse } = require('./server-utils');
-const { MemDb } = require('./dbs/mem-db');
-const log = require('../cli/log');
-const {
+import express from 'express';
+import urlJoin from 'url-join';
+import fs from 'fs-extra';
+import md from 'marked';
+import highlight from 'highlight.js';
+import { qsParse } from './server-utils';
+import { MemDb } from './dbs/mem-db';
+import * as log from '../cli/log';
+import {
   BASE_PATHS,
   // PERMISSIONS
-} = require('../lib/constants');
-const { enableUiSettings } = require('../lib/features');
-const { getRole } = require('./auth');
+} from '../lib/constants';
+import { enableUiSettings } from '../lib/features';
+import { getRole } from './auth';
 
 const router = express.Router();
 const memDb = new MemDb();
@@ -37,7 +37,7 @@ md.setOptions({
   highlight: code => highlight.highlightAuto(code).value,
 });
 
-function getRoutes(config) {
+export function getRoutes(config) {
   const {
     registerEndpoint,
     patternManifest,
@@ -304,7 +304,3 @@ function getRoutes(config) {
 
   return router;
 }
-
-module.exports = {
-  getRoutes,
-};

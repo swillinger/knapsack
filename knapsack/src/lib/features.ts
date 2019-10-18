@@ -14,14 +14,12 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-const patternSchema = require('./pattern.schema');
-const patternMeta = require('./pattern-meta.schema');
 
-module.exports = {
-  ...patternSchema,
-  title: 'PatternWithMetaSchema',
-  properties: {
-    ...patternSchema.properties,
-    meta: patternMeta,
-  },
-};
+export const enableBlockquotes = false;
+export const enableUiSettings = true;
+// @todo fix ability to create new patterns via UI
+export const enableUiCreatePattern = false;
+export const enableTemplatePush = true;
+// @todo enablePatternIcons is not support in pattern-grid.jsx and playground-sidebar--pattern-list-item as of adoption of gql over REST API
+export const enablePatternIcons = false;
+export const enableCodeBlockLiveEdit = false;

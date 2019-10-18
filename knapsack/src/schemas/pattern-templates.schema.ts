@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   title: 'Pattern Templates Schema',
   description: 'Collections of template files and their schemas',
   type: 'array',

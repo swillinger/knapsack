@@ -14,30 +14,33 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-const { gql } = require('apollo-server-express');
-const GraphQLJSON = require('graphql-type-json');
-const fs = require('fs-extra');
-const { join, relative, resolve, parse } = require('path');
-const globby = require('globby');
-const { getFileSizes } = require('get-file-sizes');
-const {
+import { gql } from 'apollo-server-express';
+import GraphQLJSON from 'graphql-type-json';
+import fs from 'fs-extra';
+import { join, relative, resolve, parse } from 'path';
+import globby from 'globby';
+import { getFileSizes } from 'get-file-sizes';
+import {
   validateSchemaAndAssignDefaults,
   validateUniqueIdsInArray,
-} = require('@knapsack/schema-utils');
-const chokidar = require('chokidar');
-const {
-  version: iframeResizerVersion,
-} = require('iframe-resizer/package.json');
-const { createDemoUrl } = require('./server-utils');
-const { knapsackEvents, EVENTS } = require('./events');
-const { FileDb } = require('./dbs/file-db');
-const patternSchema = require('../schemas/pattern.schema');
-const patternMetaSchema = require('../schemas/pattern-meta.schema');
-const { writeJson, fileExists, fileExistsOrExit } = require('./server-utils');
-const log = require('../cli/log');
-const { FILE_NAMES } = require('../lib/constants');
+} from '@knapsack/schema-utils';
+import chokidar from 'chokidar';
+import { version as iframeResizerVersion } from 'iframe-resizer/package.json';
+import {
+  createDemoUrl,
+  writeJson,
+  fileExists,
+  fileExistsOrExit,
+} from './server-utils';
+import { knapsackEvents, EVENTS } from './events';
+import { FileDb } from './dbs/file-db';
+import patternSchema from '../schemas/pattern.schema';
+import patternMetaSchema from '../schemas/pattern-meta.schema';
 
-const patternsTypeDef = gql`
+import * as log from '../cli/log';
+import { FILE_NAMES } from '../lib/constants';
+
+export const patternsTypeDef = gql`
   scalar JSON
 
   type PatternDoAndDontItem {
@@ -180,7 +183,7 @@ const patternsTypeDef = gql`
 
 /**
  * @param {string} dir,
- * @param {object} config - @todo document
+ * @param {Object} config - @todo document
  * @returns {Promise<void>}
  */
 async function writeMeta(dir, config) {
@@ -193,7 +196,7 @@ async function writeMeta(dir, config) {
 
 /**
  * @param {string} dir
- * @param {object} config
+ * @param {Object} config
  * @return {Promise<void>}
  */
 async function writeEntry(dir, config) {
@@ -217,7 +220,7 @@ module.exports = {
 
 /**
  * @param {string} dir
- * @param {object} config - @todo document
+ * @param {Object} config - @todo document
  * @returns {Promise<void>}
  */
 async function writeSchema(dir, config) {
@@ -246,7 +249,7 @@ async function writeSchema(dir, config) {
 
 /**
  * @param {string} dir
- * @param {object} config
+ * @param {Object} config
  * @returns {Promise<void>}
  */
 async function writeTemplate(dir, config) {
@@ -266,7 +269,7 @@ async function writeTemplate(dir, config) {
 
 /**
  * @param {string} dir - The directory to write to
- * @param {object} config - @todo document
+ * @param {Object} config - @todo document
  * @returns {Promise<void[]>}
  */
 async function writeAllFiles(dir, config) {
@@ -287,7 +290,7 @@ function isRemoteUrl(url) {
 }
 
 /**
- * @param {object} opt
+ * @param {Object} opt
  * @param {KnapsackAssetSetUserConfig[]} opt.assetSets
  * @param {string} opt.publicDir
  * @param {string} opt.configPathBase
@@ -540,9 +543,9 @@ function getPatternsDirs(patternPaths) {
     );
 }
 
-class Patterns {
+export class Patterns {
   /**
-   * @param {object} opt
+   * @param {Object} opt
    * @param {string} opt.newPatternDir
    * @param {string[]} opt.patternPaths
    * @param {string} opt.publicDir
@@ -810,7 +813,7 @@ class Patterns {
   }
 
   /**
-   * @param {object} opt
+   * @param {Object} opt
    * @param {string} opt.patternId
    * @param {string} [opt.templateId] - defaults to first template
    * @param {string} [opt.assetSetId] - defaults to first assetSet
@@ -877,10 +880,10 @@ class Patterns {
 
   /**
    * Get code strings to help with how this template is used
-   * @param {object} opt
+   * @param {Object} opt
    * @param {string} opt.patternId
    * @param {string} opt.templateId
-   * @param {object} [opt.data] - data passed to template
+   * @param {Object} [opt.data] - data passed to template
    * @return {Promise<KnapsackPatternTemplateCode>}
    */
   async getTemplateCode({ patternId, templateId, data }) {
@@ -978,11 +981,11 @@ class Patterns {
 
   /**
    * Render template
-   * @param {object} opt
+   * @param {Object} opt
    * @param {string} opt.patternId - Pattern Id
    * @param {string} [opt.templateId] - Template Id
    * @param {boolean} [opt.wrapHtml=true] - Should it wrap HTML results with `<head>` and include assets?
-   * @param {object} [opt.data] - Data to pass to template
+   * @param {Object} [opt.data] - Data to pass to template
    * @param {number} [opt.demoDataIndex] - Demo data index to pass to template
    * @param {boolean} [opt.isInIframe=false] - Will this be in an iFrame?
    * @param {string} [opt.assetSetId] - Asset Set Id
@@ -1092,7 +1095,7 @@ if ('WebSocket' in window && location.hostname === 'localhost') {
   }
 }
 
-const patternsResolvers = {
+export const patternsResolvers = {
   Query: {
     patterns: (parent, args, { patterns }) => patterns.getPatterns(),
     pattern: (parent, { id }, { patterns }) => patterns.getPattern(id),
@@ -1155,10 +1158,4 @@ const patternsResolvers = {
     },
   },
   JSON: GraphQLJSON,
-};
-
-module.exports = {
-  Patterns,
-  patternsResolvers,
-  patternsTypeDef,
 };

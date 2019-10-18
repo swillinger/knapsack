@@ -15,16 +15,16 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-const program = require('commander');
-const { join, dirname } = require('path');
-const { writeFileSync, ensureDirSync } = require('fs-extra');
-const log = require('./log');
-const { knapsackEvents, EVENTS } = require('../server/events');
-const { serve } = require('../server/server');
-const { version } = require('../../package.json');
-const { build, testPatternRenders } = require('./commands');
-const { getMeta } = require('../lib/config');
-const { bootstrapFromConfigFile } = require('../lib/bootstrap');
+import program from 'commander';
+import { join, dirname } from 'path';
+import { writeFileSync, ensureDirSync } from 'fs-extra';
+import * as log from './log';
+import { knapsackEvents, EVENTS } from '../server/events';
+import { serve } from '../server/server';
+import { version } from '../../package.json';
+import { build, testPatternRenders } from './commands';
+import { getMeta } from '../lib/config';
+import { bootstrapFromConfigFile } from '../lib/bootstrap';
 
 program
   .version(version)

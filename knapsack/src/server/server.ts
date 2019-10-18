@@ -14,38 +14,35 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-const express = require('express');
-const { ApolloServer, gql } = require('apollo-server-express');
-const { mergeSchemas, makeExecutableSchema } = require('graphql-tools');
-const WebSocket = require('ws');
-const bodyParser = require('body-parser');
-const { join } = require('path');
-const log = require('../cli/log');
-const { knapsackEvents, EVENTS } = require('./events');
-const { getRoutes } = require('./rest-api');
-const { enableTemplatePush } = require('../lib/features');
-const { getRole } = require('./auth');
-const { PERMISSIONS } = require('../lib/constants');
-const {
+import express from 'express';
+import { ApolloServer, gql } from 'apollo-server-express';
+import { mergeSchemas, makeExecutableSchema } from 'graphql-tools';
+import WebSocket from 'ws';
+import bodyParser from 'body-parser';
+import { join } from 'path';
+import * as log from '../cli/log';
+import { knapsackEvents, EVENTS } from './events';
+import { getRoutes } from './rest-api';
+import { enableTemplatePush } from '../lib/features';
+import { getRole } from './auth';
+import { PERMISSIONS } from '../lib/constants';
+import {
   pageBuilderPagesTypeDef,
   pageBuilderPagesResolvers,
-} = require('./page-builder');
-const { settingsTypeDef, settingsResolvers } = require('./settings');
-const { customPagesResolvers, customPagesTypeDef } = require('./custom-pages');
-const { docsTypeDef, docsResolvers } = require('./docs');
-const {
-  designTokensTypeDef,
-  designTokensResolvers,
-} = require('./design-tokens');
-const { patternsResolvers, patternsTypeDef } = require('./patterns');
-const { getBrain } = require('../lib/bootstrap');
+} from './page-builder';
+import { settingsTypeDef, settingsResolvers } from './settings';
+import { customPagesResolvers, customPagesTypeDef } from './custom-pages';
+import { docsTypeDef, docsResolvers } from './docs';
+import { designTokensTypeDef, designTokensResolvers } from './design-tokens';
+import { patternsResolvers, patternsTypeDef } from './patterns';
+import { getBrain } from '../lib/bootstrap';
 
 /**
- * @param {object} opt
+ * @param {Object} opt
  * @param {KnapsackMeta} opt.meta
  * @returns {Promise<void>}
  */
-async function serve({ meta }) {
+export async function serve({ meta }) {
   const {
     patterns,
     customPages,
@@ -209,34 +206,34 @@ async function serve({ meta }) {
     res.send(`
 <ul>
 ${patternDemos
-  .map(
-    patternDemo => `
+        .map(
+          patternDemo => `
   <li>
     Pattern: ${patternDemo.title}
     <ul>
       ${patternDemo.templates
-        .map(
-          template => `
+              .map(
+                template => `
         <li>
           Template: ${template.title}
           <br>
             ${template.demoUrls
-              .map(
-                (demoUrl, i) => `
+                    .map(
+                      (demoUrl, i) => `
               <a href="${demoUrl}" target="_blank">Demo Data ${i +
-                  1}</a>
+                        1}</a>
             `,
-              )
-              .join(' - ')}
+                    )
+                    .join(' - ')}
         </li>
       `,
-        )
-        .join('\n')}
+              )
+              .join('\n')}
     </ul>
   </li>
 `,
-  )
-  .join('\n')}
+        )
+        .join('\n')}
 </ul>
     `);
     /* eslint-enable prettier/prettier */
@@ -258,7 +255,7 @@ ${patternDemos
   let wss;
 
   /**
-   * @param {object} data - Data to send to Websocket client
+   * @param {Object} data - Data to send to Websocket client
    * @returns {boolean} - if successful
    * @todo improve `data` definition
    */
@@ -313,7 +310,3 @@ ${patternDemos
     });
   }
 }
-
-module.exports = {
-  serve,
-};

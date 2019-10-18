@@ -15,21 +15,19 @@
  You should have received a copy of the GNU General Public License along
  with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-const { readFile } = require('fs-extra');
-const portfinder = require('portfinder');
-const { resolve } = require('path');
-const {
+import { readFile } from 'fs-extra';
+import portfinder from 'portfinder';
+import { resolve } from 'path';
+import {
   validateUniqueIdsInArray,
   validateDataAgainstSchema,
-} = require('@knapsack/schema-utils');
-const { KnapsackRendererBase } = require('../server/renderer-base');
-const log = require('../cli/log');
-const { knapsackEvents, EVENTS } = require('../server/events');
-const { version } = require('../../package.json');
-const { dirExistsOrExit } = require('../server/server-utils');
-const {
-  knapsackDesignTokensSchema,
-} = require('../schemas/knapsack-design-tokens.schema');
+} from '@knapsack/schema-utils';
+import { KnapsackRendererBase } from '../server/renderer-base';
+import * as log from '../cli/log';
+import { knapsackEvents, EVENTS } from '../server/events';
+import { version } from '../../package.json';
+import { dirExistsOrExit } from '../server/server-utils';
+import { knapsackDesignTokensSchema } from '../schemas/knapsack-design-tokens.schema';
 
 /**
  * Handle backwards compatibility of config
@@ -140,7 +138,7 @@ function validateConfig(config) {
  * @param {string} from
  * @returns {KnapsackConfig}
  */
-function processConfig(userConfig, from) {
+export function processConfig(userConfig, from) {
   const {
     patterns,
     public: publicDir,
@@ -170,7 +168,7 @@ function processConfig(userConfig, from) {
  * @param {KnapsackConfig} config
  * @return {Promise<KnapsackMeta>}
  */
-async function getMeta(config) {
+export async function getMeta(config) {
   return {
     websocketsPort: await portfinder.getPortPromise(),
     knapsackVersion: version,
@@ -180,8 +178,3 @@ async function getMeta(config) {
     version: config.version,
   };
 }
-
-module.exports = {
-  processConfig,
-  getMeta,
-};

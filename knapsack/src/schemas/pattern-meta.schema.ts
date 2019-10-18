@@ -14,7 +14,7 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-module.exports = {
+export default {
   $schema: 'http://json-schema.org/draft-07/schema',
   title: 'Pattern Meta Schema',
   type: 'object',

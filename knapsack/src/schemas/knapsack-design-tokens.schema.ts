@@ -1,4 +1,4 @@
-const knapsackDesignTokenSchema = {
+export const knapsackDesignTokenSchema = {
   $schema: 'http://json-schema.org/draft-07/schema',
   title: 'Knapsack Design Tokens',
   type: 'object',
@@ -34,7 +34,7 @@ const knapsackDesignTokenSchema = {
   },
 };
 
-const knapsackDesignTokensSchema = {
+export const knapsackDesignTokensSchema = {
   $schema: 'http://json-schema.org/draft-07/schema',
   type: 'object',
   required: ['tokens'],
@@ -44,9 +44,4 @@ const knapsackDesignTokensSchema = {
       items: knapsackDesignTokenSchema,
     },
   },
-};
-
-module.exports = {
-  knapsackDesignTokenSchema,
-  knapsackDesignTokensSchema,
 };

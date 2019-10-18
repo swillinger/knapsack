@@ -14,11 +14,11 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-const { gql } = require('apollo-server-express');
-const GraphQLJSON = require('graphql-type-json');
-const { FileDb } = require('./dbs/file-db');
+import { gql } from 'apollo-server-express';
+import GraphQLJSON from 'graphql-type-json';
+import { FileDb } from './dbs/file-db';
 
-const customPagesTypeDef = gql`
+export const customPagesTypeDef = gql`
   scalar JSON
 
   type Slice {
@@ -42,7 +42,7 @@ const customPagesTypeDef = gql`
   }
 `;
 
-class CustomPages {
+export class CustomPages {
   /**
    * @param {{ dataDir: string }} Object
    */
@@ -88,7 +88,7 @@ class CustomPages {
 
   /**
    * @param {string} path
-   * @param {object} data
+   * @param {Object} data
    * @return {KnapsackCustomPage}
    */
   setCustomPage(path, data) {
@@ -100,7 +100,7 @@ class CustomPages {
   }
 }
 
-const customPagesResolvers = {
+export const customPagesResolvers = {
   Query: {
     customPage: (parent, { path }, { customPages }) =>
       customPages.getCustomPage(path),
@@ -118,10 +118,4 @@ const customPagesResolvers = {
     },
   },
   JSON: GraphQLJSON,
-};
-
-module.exports = {
-  CustomPages,
-  customPagesTypeDef,
-  customPagesResolvers,
 };

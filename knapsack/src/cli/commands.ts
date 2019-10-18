@@ -1,7 +1,7 @@
-const { flattenArray } = require('../lib/utils');
-const log = require('./log');
+import { flattenArray } from '../lib/utils';
+import * as log from './log';
 
-async function build(config, allTemplatePaths) {
+export async function build(config, allTemplatePaths) {
   log.info('Building...');
   await Promise.all(
     config.templateRenderers.map(async templateRenderer => {
@@ -16,7 +16,7 @@ async function build(config, allTemplatePaths) {
   log.info('Knapsack built', null, 'build');
 }
 
-function testPatternRenders(allPatterns, patterns) {
+export function testPatternRenders(allPatterns, patterns) {
   return Promise.all(
     allPatterns.map(async pattern =>
       Promise.all(
@@ -80,8 +80,3 @@ function testPatternRenders(allPatterns, patterns) {
       process.exit(1);
     });
 }
-
-module.exports = {
-  testPatternRenders,
-  build,
-};

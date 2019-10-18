@@ -14,15 +14,14 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
+import patternSchema from './pattern.schema';
+import patternMeta from './pattern-meta.schema';
 
-// DO NOT USE ENV VARS IN HERE!!!!!
-module.exports = {
-  enableBlockquotes: false,
-  enableUiSettings: true,
-  // @todo fix ability to create new patterns via UI
-  enableUiCreatePattern: false,
-  enableTemplatePush: true,
-  // @todo enablePatternIcons is not support in pattern-grid.jsx and playground-sidebar--pattern-list-item as of adoption of gql over REST API
-  enablePatternIcons: false,
-  enableCodeBlockLiveEdit: false,
+export default {
+  ...patternSchema,
+  title: 'PatternWithMetaSchema',
+  properties: {
+    ...patternSchema.properties,
+    meta: patternMeta,
+  },
 };

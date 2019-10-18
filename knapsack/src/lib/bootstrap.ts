@@ -1,13 +1,13 @@
-const { isAbsolute, dirname, resolve } = require('path');
-const { fileExistsOrExit } = require('../server/server-utils');
-const { processConfig } = require('./config');
-const { Patterns } = require('../server/patterns');
-const log = require('../cli/log');
-const { PageBuilder } = require('../server/page-builder');
-const { Settings } = require('../server/settings');
-const { CustomPages } = require('../server/custom-pages');
-const { DesignTokens } = require('../server/design-tokens');
-const { Docs } = require('../server/docs');
+import { isAbsolute, dirname, resolve } from 'path';
+import { fileExistsOrExit } from '../server/server-utils';
+import { processConfig } from './config';
+import { Patterns } from '../server/patterns';
+import * as log from '../cli/log';
+import { PageBuilder } from '../server/page-builder';
+import { Settings } from '../server/settings';
+import { CustomPages } from '../server/custom-pages';
+import { DesignTokens } from '../server/design-tokens';
+import { Docs } from '../server/docs';
 
 let isReady = false;
 
@@ -38,7 +38,7 @@ let brain = {
  * @param {string} [configPathBase=process.cwd()] - path that config file paths are relative from
  * @return {KnapsackBrain}
  */
-function bootstrap(config, configPathBase = process.cwd()) {
+export function bootstrap(config, configPathBase = process.cwd()) {
   const patterns = new Patterns({
     newPatternDir: config.newPatternDir,
     patternPaths: config.patterns,
@@ -89,12 +89,12 @@ function bootstrap(config, configPathBase = process.cwd()) {
  * @param {string} configPath - path to `knapsack.config.js`
  * @return {KnapsackBrain}
  */
-function bootstrapFromConfigFile(configPath) {
+export function bootstrapFromConfigFile(configPath) {
   const absoluteConfigPath = isAbsolute(configPath)
     ? configPath
     : resolve(configPath);
   fileExistsOrExit(absoluteConfigPath);
-  const userConfig = require(absoluteConfigPath); // eslint-disable-line global-require
+  const userConfig = require(absoluteConfigPath); // eslint-disable-line
   const configPathBase = dirname(absoluteConfigPath);
   const config = processConfig(userConfig, configPathBase);
   return bootstrap(config, configPathBase);
@@ -104,7 +104,7 @@ function bootstrapFromConfigFile(configPath) {
  * Get the Brain created from a previous bootstrap
  * @return {KnapsackBrain}
  */
-function getBrain() {
+export function getBrain() {
   if (!isReady) {
     log.error(
       'Not ready yet! You cannot "getBrain()" before "bootstrap()" or "bootstrapFromConfigFile()" has been run',
@@ -113,9 +113,3 @@ function getBrain() {
   }
   return brain;
 }
-
-module.exports = {
-  bootstrap,
-  bootstrapFromConfigFile,
-  getBrain,
-};

@@ -14,14 +14,14 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-const { gql } = require('apollo-server-express');
-const globby = require('globby');
-const { join, parse } = require('path');
-const fs = require('fs-extra');
-const md = require('marked');
-const matter = require('gray-matter');
+import { gql } from 'apollo-server-express';
+import globby from 'globby';
+import { join, parse } from 'path';
+import fs from 'fs-extra';
+import md from 'marked';
+import matter from 'gray-matter';
 
-const docsTypeDef = gql`
+export const docsTypeDef = gql`
   type DocData {
     title: String!
   }
@@ -55,9 +55,9 @@ const docsTypeDef = gql`
  * @prop {string} id - filename with no extension or directory
  */
 
-class Docs {
+export class Docs {
   /**
-   * @param {object} opt
+   * @param {Object} opt
    * @param {string} opt.docsDir
    */
   constructor({ docsDir }) {
@@ -93,11 +93,8 @@ class Docs {
       }),
     );
 
-    // @ts-ignore
     return docs.sort((a, b) => {
-      // @ts-ignore
       if (a.data.order < b.data.order) return -1;
-      // @ts-ignore
       if (a.data.order > b.data.order) return 1;
       return 0;
     });
@@ -116,7 +113,7 @@ class Docs {
   }
 }
 
-const docsResolvers = {
+export const docsResolvers = {
   Query: {
     docs: (parent, args, { docs }) => docs.getDocs(),
     doc: (parent, { id }, { docs }) => docs.getDoc(id),
@@ -127,10 +124,4 @@ const docsResolvers = {
       return docs.setDoc(id, content, data);
     },
   },
-};
-
-module.exports = {
-  Docs,
-  docsTypeDef,
-  docsResolvers,
 };

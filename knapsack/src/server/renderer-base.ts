@@ -1,9 +1,9 @@
-const chokidar = require('chokidar');
-const { knapsackEvents, EVENTS } = require('./events');
-const log = require('../cli/log');
+import chokidar from 'chokidar';
+import { knapsackEvents, EVENTS } from './events';
+import * as log from '../cli/log';
 
 /* eslint-disable class-methods-use-this, no-empty-function, no-unused-vars */
-class KnapsackRendererBase {
+export class KnapsackRendererBase {
   constructor({ id, extension }) {
     /** @type {string} */
     this.id = id;
@@ -119,7 +119,3 @@ ${this.getFoot({ jsUrls, inlineJs, inlineCss, inlineFoot })}
     });
   }
 }
-
-module.exports = {
-  KnapsackRendererBase,
-};

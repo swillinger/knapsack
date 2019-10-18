@@ -1,11 +1,11 @@
-const fs = require('fs-extra');
-const path = require('path');
-const ManifestPlugin = require('webpack-manifest-plugin');
-const { knapsackEvents, EVENTS } = require('./events');
-const log = require('../cli/log');
-const { KnapsackRendererBase } = require('./renderer-base');
+import fs from 'fs-extra';
+import path from 'path';
+import ManifestPlugin from 'webpack-manifest-plugin';
+import { knapsackEvents, EVENTS } from './events';
+import * as log from '../cli/log';
+import { KnapsackRendererBase } from './renderer-base';
 
-class KnapsackRendererWebpackBase extends KnapsackRendererBase {
+export class KnapsackRendererWebpackBase extends KnapsackRendererBase {
   constructor({ id, extension, webpackConfig, webpack }) {
     super({
       id,
@@ -168,7 +168,3 @@ class KnapsackRendererWebpackBase extends KnapsackRendererBase {
     // overwriting so we can call event after webpack compiles
   }
 }
-
-module.exports = {
-  KnapsackRendererWebpackBase,
-};

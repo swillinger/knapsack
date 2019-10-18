@@ -14,11 +14,11 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-const { gql } = require('apollo-server-express');
-const GraphQLJSON = require('graphql-type-json');
-const { hasItemsInItems } = require('../lib/utils');
+import { gql } from 'apollo-server-express';
+import GraphQLJSON from 'graphql-type-json';
+import { hasItemsInItems } from '../lib/utils';
 
-const designTokensTypeDef = gql`
+export const designTokensTypeDef = gql`
   scalar JSON
 
   "A single value that can be assigned to a single CSS declaration"
@@ -38,7 +38,7 @@ const designTokensTypeDef = gql`
   }
 `;
 
-class DesignTokens {
+export class DesignTokens {
   constructor({ data: { tokens = [] } }) {
     this.tokens = tokens;
   }
@@ -60,7 +60,7 @@ class DesignTokens {
   }
 }
 
-const designTokensResolvers = {
+export const designTokensResolvers = {
   Query: {
     tokens: (parent, { category, tags }, { tokens }) =>
       tokens.getTokens(category, tags),
@@ -68,7 +68,7 @@ const designTokensResolvers = {
   JSON: GraphQLJSON,
 };
 
-const styleDictionaryKnapsackFormat = {
+export const styleDictionaryKnapsackFormat = {
   name: 'knapsack',
   formatter: ({ allProperties }) => {
     const tokens = allProperties.map(
@@ -92,7 +92,7 @@ const styleDictionaryKnapsackFormat = {
   },
 };
 
-function theoKnapsackFormat(theo) {
+export function theoKnapsackFormat(theo) {
   theo.registerFormat('knapsack', result => {
     /** @type {{aliases: Object, meta: Object, props: { type: string, comment?: string, category: string, value: string, originalValue: string, name: string }[] }} */
     const theoTokens = result.toJSON();
@@ -122,11 +122,3 @@ function theoKnapsackFormat(theo) {
     type: 'knapsack',
   };
 }
-
-module.exports = {
-  DesignTokens,
-  designTokensResolvers,
-  designTokensTypeDef,
-  styleDictionaryKnapsackFormat,
-  theoKnapsackFormat,
-};

@@ -14,11 +14,11 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-const { gql } = require('apollo-server-express');
-const GraphQLJSON = require('graphql-type-json');
-const { FileDb } = require('./dbs/file-db');
+import { gql } from 'apollo-server-express';
+import GraphQLJSON from 'graphql-type-json';
+import { FileDb } from './dbs/file-db';
 
-const pageBuilderPagesTypeDef = gql`
+export const pageBuilderPagesTypeDef = gql`
   scalar JSON
 
   type PageBuilderPageSlice {
@@ -46,7 +46,7 @@ const pageBuilderPagesTypeDef = gql`
   }
 `;
 
-class PageBuilder {
+export class PageBuilder {
   /**
    * @prop {string} dataDir - Directory to read/write examples files to
    */
@@ -94,7 +94,7 @@ class PageBuilder {
   }
 }
 
-const pageBuilderPagesResolvers = {
+export const pageBuilderPagesResolvers = {
   Query: {
     pageBuilderPage: (parent, { id }, { pageBuilderPages }) =>
       pageBuilderPages.getPageBuilderPage(id),
@@ -113,10 +113,4 @@ const pageBuilderPagesResolvers = {
     },
   },
   JSON: GraphQLJSON,
-};
-
-module.exports = {
-  PageBuilder,
-  pageBuilderPagesTypeDef,
-  pageBuilderPagesResolvers,
 };

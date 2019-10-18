@@ -14,42 +14,42 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-const fs = require('fs-extra');
-const os = require('os');
-const qs = require('qs');
-const log = require('../cli/log');
+import fs from 'fs-extra';
+import os from 'os';
+import qs from 'qs';
+import * as log from '../cli/log';
 
 /**
  * @param {string} fileName - path to where JSON file should be written
- * @param {object} object - data to turn to JSON
+ * @param {Object} object - data to turn to JSON
  * @return {Promise<void>}
  */
-function writeJson(fileName, object) {
+export function writeJson(fileName, object) {
   return fs.writeFile(fileName, JSON.stringify(object, null, 2) + os.EOL);
 }
 
 /**
  * @param {string} fileName - path to where JSON file should be read
- * @return {Promise<object>}
+ * @return {Promise<Object>}
  */
-function readJson(fileName) {
+export function readJson(fileName) {
   return fs.readFile(fileName, 'utf8').then(file => JSON.parse(file));
 }
 
 /**
  * @param {string} fileName - path to where JSON file should be read
- * @return {object}
+ * @return {Object}
  */
-function readJsonSync(fileName) {
+export function readJsonSync(fileName) {
   return JSON.parse(fs.readFileSync(fileName, 'utf8'));
 }
 
 /**
  * Get a NPM package's package.json as object
  * @param {string} pkg
- * @return {object} - The package.json
+ * @return {Object} - The package.json
  */
-function getPkg(pkg) {
+export function getPkg(pkg) {
   const pkgPath = require.resolve(`${pkg}/package.json`);
   return readJsonSync(pkgPath);
 }
@@ -58,7 +58,7 @@ function getPkg(pkg) {
  * @param {string} filePath
  * @return {boolean}
  */
-function fileExists(filePath) {
+export function fileExists(filePath) {
   try {
     return fs.statSync(filePath).isFile();
   } catch (err) {
@@ -70,7 +70,7 @@ function fileExists(filePath) {
  * @param {string} dirPath
  * @return {boolean}
  */
-function dirExists(dirPath) {
+export function dirExists(dirPath) {
   try {
     return fs.statSync(dirPath).isDirectory();
   } catch (err) {
@@ -83,7 +83,7 @@ function dirExists(dirPath) {
  * @param {string} [msg]
  * @return {void}
  */
-function fileExistsOrExit(filePath, msg) {
+export function fileExistsOrExit(filePath, msg) {
   if (fileExists(filePath)) return;
   log.error(msg || `This file does not exist! ${filePath}`);
   process.exit(1);
@@ -94,7 +94,7 @@ function fileExistsOrExit(filePath, msg) {
  * @param {string} [msg]
  * @return {void}
  */
-function dirExistsOrExit(dirPath, msg) {
+export function dirExistsOrExit(dirPath, msg) {
   if (dirExists(dirPath)) return;
   log.error(msg || `This folder does not exist! ${dirPath}`);
   process.exit(1);
@@ -104,10 +104,10 @@ function dirExistsOrExit(dirPath, msg) {
  * Parse QueryString, decode non-strings
  * Changes strings like `'true'` to `true` among others like numbers
  * @param {string} querystring
- * @return {object}
+ * @return {Object}
  * @see qsStringify
  */
-function qsParse(querystring) {
+export function qsParse(querystring) {
   return qs.parse(querystring, {
     // This custom decoder is for turning values like `foo: "true"` into `foo: true`, along with Integers, null, and undefined.
     // https://github.com/ljharb/qs/issues/91#issuecomment-437926409
@@ -144,27 +144,27 @@ function qsParse(querystring) {
 
 /**
  * Turn object of data into query string
- * @param {object} data
+ * @param {Object} data
  * @return {string}
  * @see qsParse
  */
-function qsStringify(data) {
+export function qsStringify(data) {
   return qs.stringify(data);
 }
 
 /**
  * Create a demo url
- * @param {object} opt
+ * @param {Object} opt
  * @param {string} opt.patternId
  * @param {string} opt.templateId
  * @param {string} opt.assetSetId
  * @param {boolean} [opt.isInIframe=false]
  * @param {boolean} [opt.wrapHtml=true]
- * @param {object} [opt.data]
+ * @param {Object} [opt.data]
  * @param {number} [opt.demoDataIndex]
  * @return {string}
  */
-function createDemoUrl({
+export function createDemoUrl({
   patternId,
   templateId,
   assetSetId,
@@ -190,17 +190,3 @@ function createDemoUrl({
   const queryString = qsStringify(queryData);
   return `/api/render?${queryString}`;
 }
-
-module.exports = {
-  writeJson,
-  readJson,
-  readJsonSync,
-  getPkg,
-  fileExists,
-  dirExists,
-  fileExistsOrExit,
-  dirExistsOrExit,
-  qsParse,
-  qsStringify,
-  createDemoUrl,
-};

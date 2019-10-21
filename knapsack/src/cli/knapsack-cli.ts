@@ -25,6 +25,7 @@ import { version } from '../../package.json';
 import { build, testPatternRenders } from './commands';
 import { getMeta } from '../lib/config';
 import { bootstrapFromConfigFile } from '../lib/bootstrap';
+import { KnapsackPattern } from '../schemas/patterns';
 
 program
   .version(version)
@@ -120,8 +121,7 @@ program.command('start').action(async () => {
 
 program.command('test').action(async () => {
   await build(config, allTemplatePaths);
-  /** @type {KnapsackPattern[]} */
-  const allPatterns = await patterns.getPatterns();
+  const allPatterns: KnapsackPattern[] = await patterns.getPatterns();
   await testPatternRenders(allPatterns, patterns);
   knapsackEvents.emit(EVENTS.SHUTDOWN);
 });

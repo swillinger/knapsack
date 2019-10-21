@@ -14,41 +14,26 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-import { gql } from 'apollo-server-express';
 import GraphQLJSON from 'graphql-type-json';
 import { hasItemsInItems } from '../lib/utils';
+import { KnapsackDesignToken } from '../schemas/design-tokens';
 
-export const designTokensTypeDef = gql`
-  scalar JSON
-
-  "A single value that can be assigned to a single CSS declaration"
-  type DesignToken {
-    category: String
-    name: String!
-    originalValue: String
-    value: String!
-    comment: String
-    code: String
-    tags: [String]
-    meta: JSON
-  }
-
-  type Query {
-    tokens(category: String, tags: [String]): [DesignToken]
-  }
-`;
+export { designTokensTypeDef } from '../schemas/design-tokens';
 
 export class DesignTokens {
-  constructor({ data: { tokens = [] } }) {
+  tokens: KnapsackDesignToken[];
+
+  constructor({
+    data: { tokens = [] },
+  }: {
+    data: {
+      tokens?: KnapsackDesignToken[];
+    };
+  }) {
     this.tokens = tokens;
   }
 
-  /**
-   * @param {string} [category]
-   * @param {string[]} [tags]
-   * @returns {KnapsackDesignToken[]}
-   */
-  getTokens(category = '', tags) {
+  getTokens(category = '', tags?: string[]): KnapsackDesignToken[] {
     let { tokens } = this;
     if (category) {
       tokens = tokens.filter(t => t.category === category);
@@ -94,8 +79,18 @@ export const styleDictionaryKnapsackFormat = {
 
 export function theoKnapsackFormat(theo) {
   theo.registerFormat('knapsack', result => {
-    /** @type {{aliases: Object, meta: Object, props: { type: string, comment?: string, category: string, value: string, originalValue: string, name: string }[] }} */
-    const theoTokens = result.toJSON();
+    const theoTokens: {
+      aliases: object;
+      meta: object;
+      props: {
+        type: string;
+        comment?: string;
+        category: string;
+        value: string;
+        originalValue: string;
+        name: string;
+      }[];
+    } = result.toJSON();
     const { props } = theoTokens;
     return {
       tokens: props.map(

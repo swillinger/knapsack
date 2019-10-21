@@ -1,13 +1,25 @@
 import chokidar from 'chokidar';
 import { knapsackEvents, EVENTS } from './events';
 import * as log from '../cli/log';
+import {
+  GetHeadParams,
+  GetFootParams,
+  KnapsackTemplateRendererBase,
+  KnapsackConfig,
+} from '../schemas/knapsack-config';
 
 /* eslint-disable class-methods-use-this, no-empty-function, no-unused-vars */
-export class KnapsackRendererBase {
-  constructor({ id, extension }) {
-    /** @type {string} */
+export class KnapsackRendererBase implements KnapsackTemplateRendererBase {
+  id: string;
+
+  extension: string;
+
+  outputDirName: string;
+
+  logPrefix: string;
+
+  constructor({ id, extension }: { id: string; extension: string }) {
     this.id = id;
-    /** @type {string} */
     this.extension = extension;
     this.outputDirName = `knapsack-renderer-${this.id}`;
     this.logPrefix = `templateRenderer:${this.id}`;
@@ -17,7 +29,11 @@ export class KnapsackRendererBase {
     return theTemplatePath.endsWith(this.extension);
   }
 
-  getHead({ cssUrls = [], headJsUrls = [], inlineHead = '' }) {
+  getHead({
+    cssUrls = [],
+    headJsUrls = [],
+    inlineHead = '',
+  }: GetHeadParams): string {
     return `
     <!doctype html>
     <html lang="en">
@@ -47,7 +63,7 @@ export class KnapsackRendererBase {
     inlineJs = '',
     inlineCss = '',
     inlineFoot = '',
-  } = {}) {
+  }: GetFootParams): string {
     return `
     ${jsUrls
       .map(jsUrl => `<script src="${jsUrl}" type="text/javascript"></script>`)
@@ -69,7 +85,10 @@ ${inlineFoot}
     inlineCss = '',
     inlineHead = '',
     inlineFoot = '',
-  }) {
+  }: {
+    html: string;
+  } & GetHeadParams &
+    GetFootParams): string {
     return `
 ${this.getHead({ cssUrls, headJsUrls, inlineHead })}
 <div>${html}</div>
@@ -77,23 +96,25 @@ ${this.getFoot({ jsUrls, inlineJs, inlineCss, inlineFoot })}
 `;
   }
 
-  onChange({ path }) {
+  onChange({ path }: { path: string }): void {
     knapsackEvents.emit(EVENTS.PATTERN_TEMPLATE_CHANGED, { path });
   }
 
-  onAdd({ path }) {
+  onAdd({ path }: { path: string }): void {
     knapsackEvents.emit(EVENTS.PATTERN_TEMPLATE_ADDED, { path });
   }
 
-  onRemove({ path }) {
+  onRemove({ path }: { path: string }): void {
     knapsackEvents.emit(EVENTS.PATTERN_TEMPLATE_REMOVED, { path });
   }
 
-  getUsage() {
-    return '';
-  }
-
-  watch({ config, templatePaths }) {
+  watch({
+    config,
+    templatePaths,
+  }: {
+    config: KnapsackConfig;
+    templatePaths: string[];
+  }): Promise<void> {
     return new Promise((resolve, reject) => {
       const watcher = chokidar.watch(templatePaths, {
         ignoreInitial: true,

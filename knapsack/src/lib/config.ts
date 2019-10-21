@@ -27,7 +27,7 @@ import * as log from '../cli/log';
 import { knapsackEvents, EVENTS } from '../server/events';
 import { version } from '../../package.json';
 import { dirExistsOrExit } from '../server/server-utils';
-import { knapsackDesignTokensSchema } from '../schemas/knapsack-design-tokens.schema';
+import { knapsackDesignTokensSchema } from '../schemas/design-tokens';
 
 /**
  * Handle backwards compatibility of config

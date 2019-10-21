@@ -20,45 +20,33 @@ import qs from 'qs';
 import * as log from '../cli/log';
 
 /**
- * @param {string} fileName - path to where JSON file should be written
- * @param {Object} object - data to turn to JSON
- * @return {Promise<void>}
+ * @param fileName - path to where JSON file should be written
+ * @param object - data to turn to JSON
  */
-export function writeJson(fileName, object) {
+export function writeJson(fileName: string, object: object): Promise<void> {
   return fs.writeFile(fileName, JSON.stringify(object, null, 2) + os.EOL);
 }
 
 /**
- * @param {string} fileName - path to where JSON file should be read
- * @return {Promise<Object>}
+ * @param fileName - path to where JSON file should be read
  */
-export function readJson(fileName) {
+export function readJson(fileName: string): Promise<object> {
   return fs.readFile(fileName, 'utf8').then(file => JSON.parse(file));
 }
 
-/**
- * @param {string} fileName - path to where JSON file should be read
- * @return {Object}
- */
-export function readJsonSync(fileName) {
+export function readJsonSync(fileName: string): object {
   return JSON.parse(fs.readFileSync(fileName, 'utf8'));
 }
 
 /**
  * Get a NPM package's package.json as object
- * @param {string} pkg
- * @return {Object} - The package.json
  */
-export function getPkg(pkg) {
+export function getPkg(pkg: string): object {
   const pkgPath = require.resolve(`${pkg}/package.json`);
   return readJsonSync(pkgPath);
 }
 
-/**
- * @param {string} filePath
- * @return {boolean}
- */
-export function fileExists(filePath) {
+export function fileExists(filePath: string): boolean {
   try {
     return fs.statSync(filePath).isFile();
   } catch (err) {
@@ -66,11 +54,7 @@ export function fileExists(filePath) {
   }
 }
 
-/**
- * @param {string} dirPath
- * @return {boolean}
- */
-export function dirExists(dirPath) {
+export function dirExists(dirPath: string): boolean {
   try {
     return fs.statSync(dirPath).isDirectory();
   } catch (err) {
@@ -78,23 +62,13 @@ export function dirExists(dirPath) {
   }
 }
 
-/**
- * @param {string} filePath
- * @param {string} [msg]
- * @return {void}
- */
-export function fileExistsOrExit(filePath, msg) {
+export function fileExistsOrExit(filePath: string, msg?: string): void {
   if (fileExists(filePath)) return;
   log.error(msg || `This file does not exist! ${filePath}`);
   process.exit(1);
 }
 
-/**
- * @param {string} dirPath
- * @param {string} [msg]
- * @return {void}
- */
-export function dirExistsOrExit(dirPath, msg) {
+export function dirExistsOrExit(dirPath: string, msg?: string): void {
   if (dirExists(dirPath)) return;
   log.error(msg || `This folder does not exist! ${dirPath}`);
   process.exit(1);
@@ -103,20 +77,14 @@ export function dirExistsOrExit(dirPath, msg) {
 /**
  * Parse QueryString, decode non-strings
  * Changes strings like `'true'` to `true` among others like numbers
- * @param {string} querystring
- * @return {Object}
  * @see qsStringify
  */
-export function qsParse(querystring) {
+export function qsParse(querystring: string): object {
   return qs.parse(querystring, {
     // This custom decoder is for turning values like `foo: "true"` into `foo: true`, along with Integers, null, and undefined.
     // https://github.com/ljharb/qs/issues/91#issuecomment-437926409
-    decoder(str, decoder, charset) {
+    decoder(str) {
       const strWithoutPlus = str.replace(/\+/g, ' ');
-      if (charset === 'iso-8859-1') {
-        // unescape never throws, no try...catch needed:
-        return strWithoutPlus.replace(/%[0-9a-f]{2}/gi, unescape);
-      }
 
       if (/^(\d+|\d*\.\d+)$/.test(str)) {
         return parseFloat(str);
@@ -144,25 +112,14 @@ export function qsParse(querystring) {
 
 /**
  * Turn object of data into query string
- * @param {Object} data
- * @return {string}
  * @see qsParse
  */
-export function qsStringify(data) {
+export function qsStringify(data: object): string {
   return qs.stringify(data);
 }
 
 /**
  * Create a demo url
- * @param {Object} opt
- * @param {string} opt.patternId
- * @param {string} opt.templateId
- * @param {string} opt.assetSetId
- * @param {boolean} [opt.isInIframe=false]
- * @param {boolean} [opt.wrapHtml=true]
- * @param {Object} [opt.data]
- * @param {number} [opt.demoDataIndex]
- * @return {string}
  */
 export function createDemoUrl({
   patternId,
@@ -172,8 +129,16 @@ export function createDemoUrl({
   wrapHtml = true,
   data,
   demoDataIndex,
-}) {
-  const queryData = {
+}: {
+  patternId: string;
+  templateId: string;
+  assetSetId: string;
+  isInIframe?: boolean;
+  wrapHtml?: boolean;
+  data?: object;
+  demoDataIndex?: number;
+}): string {
+  const queryData: { [k: string]: any } = {
     patternId,
     templateId,
     assetSetId,

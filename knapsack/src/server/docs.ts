@@ -56,12 +56,9 @@ export const docsTypeDef = gql`
  */
 
 export class Docs {
-  /**
-   * @param {Object} opt
-   * @param {string} opt.docsDir
-   */
-  constructor({ docsDir }) {
-    /** @type {string} */
+  docsDir: string;
+
+  constructor({ docsDir }: { docsDir: string }) {
     this.docsDir = docsDir;
   }
 

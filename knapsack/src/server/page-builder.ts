@@ -14,43 +14,23 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-import { gql } from 'apollo-server-express';
 import GraphQLJSON from 'graphql-type-json';
 import { FileDb } from './dbs/file-db';
+import { PageBuilderPage, PageBuilderSlice } from '../schemas/page-builder';
 
-export const pageBuilderPagesTypeDef = gql`
-  scalar JSON
-
-  type PageBuilderPageSlice {
-    id: ID!
-    patternId: ID!
-    templateId: ID!
-    data: JSON!
-  }
-
-  type PageBuilderPage {
-    id: ID!
-    title: String!
-    description: String
-    path: String!
-    slices: [PageBuilderPageSlice]!
-  }
-
-  type Query {
-    pageBuilderPage(id: ID): PageBuilderPage
-    pageBuilderPages: [PageBuilderPage]
-  }
-
-  type Mutation {
-    setPageBuilderPage(id: ID, data: JSON): PageBuilderPage
-  }
-`;
+export { pageBuilderPagesTypeDef } from '../schemas/page-builder';
 
 export class PageBuilder {
-  /**
-   * @prop {string} dataDir - Directory to read/write examples files to
-   */
-  constructor({ dataDir }) {
+  db: FileDb;
+
+  constructor({
+    dataDir,
+  }: {
+    /**
+     * Directory to read/write examples files to
+     */
+    dataDir: string;
+  }) {
     this.db = new FileDb({
       dbDir: dataDir,
       name: 'knapsack.page-builder',
@@ -58,27 +38,21 @@ export class PageBuilder {
     });
   }
 
-  /**
-   * @param {string} id
-   * @return {Promise<PageBuilderPage>}
-   */
-  async getPageBuilderPage(id) {
+  async getPageBuilderPage(id: string): Promise<PageBuilderPage> {
     return this.db.get(id);
   }
 
-  /**
-   * @return {Promise<PageBuilderPage[]>}
-   */
-  async getPageBuilderPages() {
+  async getPageBuilderPages(): Promise<PageBuilderPage[]> {
     return this.db.values();
   }
 
-  /**
-   * @param {string} id
-   * @param {PageBuilderPage} data
-   * @return {Promise<{ok: boolean, message: string}>}
-   */
-  async setPageBuilderPage(id, data) {
+  async setPageBuilderPage(
+    id: string,
+    data: PageBuilderPage,
+  ): Promise<{
+    ok: boolean;
+    message: string;
+  }> {
     try {
       this.db.set(id, data);
       return {

@@ -1,6 +1,7 @@
 import EventEmitter from 'events';
 import util from 'util';
 import * as log from '../cli/log';
+import { KnapsackPattern } from '../schemas/patterns';
 
 class KnapsackEventEmitter extends EventEmitter {}
 
@@ -15,6 +16,16 @@ export const EVENTS = {
   PATTERN_CONFIG_CHANGED: 'PATTERN_CONFIG_CHANGED',
   SHUTDOWN: 'SHUTDOWN',
 };
+
+export interface KnapsackEventsData {
+  PATTERNS_DATA_READY: KnapsackPattern[];
+}
+
+export function emitPatternsDataReady(
+  patterns: KnapsackEventsData['PATTERNS_DATA_READY'],
+) {
+  knapsackEvents.emit(EVENTS.PATTERNS_DATA_READY, patterns);
+}
 
 Object.keys(EVENTS).forEach(event => {
   const eventName = EVENTS[event];

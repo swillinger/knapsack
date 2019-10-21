@@ -1,25 +1,30 @@
 import { KnapsackAssetSetUserConfig } from './asset-sets';
-import {
-  KnapsackPattern,
-  KnapsackPatternTemplate,
-} from './knapsack-pattern-manifest.d';
+import { KnapsackPattern, KnapsackPatternTemplate } from './patterns';
+import { KnapsackDesignToken } from './design-tokens';
 
-interface KnapsackTemplateRenderResults {
+export interface KnapsackTemplateRenderResults {
   ok: boolean;
   html?: string;
   message?: string;
 }
 
-interface KnapsackTemplateRenderer {
+export interface GetHeadParams {
+  cssUrls?: string[];
+  headJsUrls?: string[];
+  inlineHead?: string;
+}
+export interface GetFootParams {
+  jsUrls?: string[];
+  inlineJs?: string;
+  inlineCss?: string;
+  inlineFoot?: string;
+}
+
+export interface KnapsackTemplateRendererBase {
   id: string;
   extension: string;
   language?: string;
   test: (theTemplatePath: string) => boolean;
-  render: (opt: {
-    template: KnapsackPatternTemplate;
-    pattern: KnapsackPattern;
-    data?: object;
-  }) => Promise<KnapsackTemplateRenderResults>;
   build?: (opt: {
     config: KnapsackConfig;
     templatePaths: string[];
@@ -33,26 +38,29 @@ interface KnapsackTemplateRenderer {
     templatePaths: string[];
     allPatterns: KnapsackPattern[];
   }) => void;
-  wrapHtml: (opt: {
-    html: string;
-    cssUrls?: string[];
-    jsUrls?: string[];
-    headJsUrls?: string[];
-    inlineJs?: string;
-    inlineCss?: string;
-    inlineHead?: string;
-    inlineFoot?: string;
-  }) => string;
-  getHead: (opt: { cssUrls?: string[]; headJsUrls?: string[] }) => string;
-  getFoot: (opt: {
-    jsUrls?: string[];
-    inlineJs?: string;
-    inlineCss?: string;
-  }) => string;
+  wrapHtml: (
+    opt: {
+      html: string;
+    } & GetHeadParams &
+      GetFootParams,
+  ) => string;
+  getHead: (opt: GetHeadParams) => string;
+  getFoot: (opt: GetFootParams) => string;
   onChange: (opt: { path: string }) => void;
   onAdd: (opt: { path: string }) => void;
   onRemove: (opt: { path: string }) => void;
-  // renderString: (template: string, data?: object) => Promise<KnapsackTemplateRenderResults>,
+}
+
+export interface KnapsackTemplateRenderer extends KnapsackTemplateRendererBase {
+  render: (opt: {
+    template: KnapsackPatternTemplate;
+    pattern: KnapsackPattern;
+    data?: object;
+  }) => Promise<KnapsackTemplateRenderResults>;
+  renderString?: (
+    template: string,
+    data?: object,
+  ) => Promise<KnapsackTemplateRenderResults>;
   getUsage?: (opt: {
     patternId: string;
     template: KnapsackPatternTemplate;
@@ -60,17 +68,7 @@ interface KnapsackTemplateRenderer {
   }) => Promise<string>;
 }
 
-interface KnapsackDesignToken {
-  name: string;
-  value: string;
-  category: string;
-  tags?: string[];
-  originalValue: string;
-  code?: string;
-  comment?: string;
-}
-
-interface KnapsackConfig {
+export interface KnapsackConfig {
   patterns: string[];
   newPatternDir: string;
   /** Output of knapsack build directory */
@@ -82,7 +80,7 @@ interface KnapsackConfig {
   assetSets: KnapsackAssetSetUserConfig[];
   templateRenderers: KnapsackTemplateRenderer[];
   designTokens: {
-    createCodeSnippet?: (KnapsackDesignToken) => string;
+    createCodeSnippet?: (token: KnapsackDesignToken) => string;
     data: {
       tokens: KnapsackDesignToken[];
     };
@@ -92,7 +90,7 @@ interface KnapsackConfig {
   version?: string;
 }
 
-interface KnapsackUserConfig extends KnapsackConfig {
+export interface KnapsackUserConfig extends KnapsackConfig {
   /**
    * Alias for `templateRenderers`
    * @deprecated

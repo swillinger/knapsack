@@ -16,12 +16,10 @@
     "watch:server": "yarn build:server --watch --verbose",
     "watch": "run-p watch:*",
     "start": "yarn watch",
-    "test:types:js": "tsc --project ./tsconfig.json",
-    "test:types:ts": "tsc --project ./tsconfig--ts.json",
-    "test:types:ts:strict": "yarn test:types:ts --strict",
-    "build:types": "tsc --project ./tsconfig--ts.json",
+    "test:types:strict": "yarn test:types:ts --strict",
+    "build:types": "tsc --project ./tsconfig.json",
     "prepublishOnly": "yarn build",
-    "test": "run-s test:types:js test:types:ts"
+    "test": "exit 0"
   },
   "dependencies": {
     "@knapsack/babel-config": "^1.5.2",
@@ -81,6 +79,7 @@
     "@types/graphql": "^14.0.3",
     "@types/lowdb": "^1.0.9",
     "@types/marked": "^0.4.2",
+    "@types/qs": "^6.5.3",
     "@types/url-join": "^0.8.2",
     "@types/webpack": "^4.4.21",
     "@types/ws": "^6.0.1",

@@ -1,12 +1,53 @@
 import fs from 'fs-extra';
 import path from 'path';
 import ManifestPlugin from 'webpack-manifest-plugin';
-import { knapsackEvents, EVENTS } from './events';
+import { knapsackEvents, EVENTS, KnapsackEventsData } from './events';
 import * as log from '../cli/log';
 import { KnapsackRendererBase } from './renderer-base';
+import {
+  KnapsackTemplateRendererBase,
+  KnapsackConfig,
+} from '../schemas/knapsack-config';
 
-export class KnapsackRendererWebpackBase extends KnapsackRendererBase {
-  constructor({ id, extension, webpackConfig, webpack }) {
+import { KnapsackPattern } from '../schemas/patterns';
+
+export class KnapsackRendererWebpackBase extends KnapsackRendererBase
+  implements KnapsackTemplateRendererBase {
+  webpack: typeof import('webpack');
+
+  webpackConfig: import('webpack').Configuration;
+
+  webpackEntry: {};
+
+  distDirAbsolute: string;
+
+  publicPath: string;
+
+  restartWebpackWatch: () => void;
+
+  webpackCompiler: import('webpack').Compiler;
+
+  webpackManifest: {
+    /**
+     * Maps normal name to root relative output
+     * i.e. `"card-react.js": "/knapsack-renderer-react/card-react.bundle.e5dc762abd3b4dfe5a96.js"`
+     */
+    [fileName: string]: string;
+  };
+
+  webpackWatcher: import('webpack').Compiler.Watching;
+
+  constructor({
+    id,
+    extension,
+    webpackConfig,
+    webpack,
+  }: {
+    id: string;
+    extension: string;
+    webpackConfig: import('webpack').Configuration;
+    webpack: typeof import('webpack');
+  }) {
     super({
       id,
       extension,
@@ -16,9 +57,9 @@ export class KnapsackRendererWebpackBase extends KnapsackRendererBase {
     this.webpackEntry = {};
   }
 
-  createWebpackCompiler(entry) {
+  createWebpackCompiler(entry: import('webpack').Entry) {
     const plugins = this.webpackConfig.plugins || [];
-    const newWebpackConfig = {
+    const newWebpackConfig: import('webpack').Configuration = {
       ...this.webpackConfig,
       entry,
       mode:
@@ -74,29 +115,38 @@ export class KnapsackRendererWebpackBase extends KnapsackRendererBase {
     return entry;
   }
 
-  init({ config, allPatterns }) {
+  init({
+    config,
+    allPatterns,
+  }: {
+    config: KnapsackConfig;
+    allPatterns: KnapsackPattern[];
+  }): void {
     this.distDirAbsolute = path.resolve(config.dist, this.outputDirName);
     this.publicPath = `/${path.relative(config.dist, this.distDirAbsolute)}/`;
     this.webpackEntry = this.createWebpackEntryFromPatterns(allPatterns);
     this.createWebpackCompiler(this.webpackEntry);
 
-    knapsackEvents.on(EVENTS.PATTERNS_DATA_READY, patterns => {
-      const entry = this.createWebpackEntryFromPatterns(patterns);
-      if (
-        Object.keys(this.webpackEntry)
-          .sort()
-          .toString() !==
-        Object.keys(entry)
-          .sort()
-          .toString()
-      ) {
-        this.webpackEntry = entry;
-        this.createWebpackCompiler(entry);
-        if (this.restartWebpackWatch) {
-          this.restartWebpackWatch();
+    knapsackEvents.on(
+      EVENTS.PATTERNS_DATA_READY,
+      (patterns: KnapsackEventsData['PATTERNS_DATA_READY']) => {
+        const entry = this.createWebpackEntryFromPatterns(patterns);
+        if (
+          Object.keys(this.webpackEntry)
+            .sort()
+            .toString() !==
+          Object.keys(entry)
+            .sort()
+            .toString()
+        ) {
+          this.webpackEntry = entry;
+          this.createWebpackCompiler(entry);
+          if (this.restartWebpackWatch) {
+            this.restartWebpackWatch();
+          }
         }
-      }
-    });
+      },
+    );
   }
 
   setManifest() {
@@ -110,7 +160,7 @@ export class KnapsackRendererWebpackBase extends KnapsackRendererBase {
       .catch(console.log.bind(console));
   }
 
-  build() {
+  build(): Promise<void> {
     return new Promise((resolve, reject) => {
       this.webpackCompiler.run(async (err, stats) => {
         if (err || stats.hasErrors()) {
@@ -124,7 +174,7 @@ export class KnapsackRendererWebpackBase extends KnapsackRendererBase {
     });
   }
 
-  webpackWatch() {
+  webpackWatch(): import('webpack').Compiler.Watching {
     log.verbose('Starting Webpack watch...', null, this.logPrefix);
     return this.webpackCompiler.watch({}, (err, stats) => {
       if (err || stats.hasErrors()) {

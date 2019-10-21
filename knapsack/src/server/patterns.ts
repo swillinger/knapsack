@@ -14,7 +14,6 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-import { gql } from 'apollo-server-express';
 import GraphQLJSON from 'graphql-type-json';
 import fs from 'fs-extra';
 import { join, relative, resolve, parse } from 'path';
@@ -32,154 +31,33 @@ import {
   fileExists,
   fileExistsOrExit,
 } from './server-utils';
-import { knapsackEvents, EVENTS } from './events';
+import { knapsackEvents, EVENTS, emitPatternsDataReady } from './events';
 import { FileDb } from './dbs/file-db';
-import patternSchema from '../schemas/pattern.schema';
-import patternMetaSchema from '../schemas/pattern-meta.schema';
-
 import * as log from '../cli/log';
 import { FILE_NAMES } from '../lib/constants';
+import {
+  patternSchema,
+  patternMetaSchema,
+  KnapsackPattern,
+  KnapsackPatternTemplate,
+  PatternMeta,
+  PatternWithMeta,
+  KnapsackPatternType,
+  KnapsackPatternStatus,
+  KnapsackPatternSettings,
+  KnapsackPatternTemplateCode,
+} from '../schemas/patterns';
+import { GenericResponse } from '../schemas/misc';
+import {
+  KnapsackTemplateRenderer,
+  KnapsackTemplateRenderResults,
+} from '../schemas/knapsack-config';
+import {
+  KnapsackAssetSet,
+  KnapsackAssetSetUserConfig,
+} from '../schemas/asset-sets';
 
-export const patternsTypeDef = gql`
-  scalar JSON
-
-  type PatternDoAndDontItem {
-    image: String!
-    caption: String
-    do: Boolean!
-  }
-
-  "Visual representations of what to do, and not to do, with components."
-  type PatternDoAndDont {
-    title: String
-    description: String
-    items: [PatternDoAndDontItem!]!
-  }
-
-  type PatternAsset {
-    src: String!
-    publicPath: String!
-    sizeRaw: String
-    sizeKb: String
-  }
-
-  type PatternAssetSet {
-    id: ID!
-    title: String!
-    assets: [PatternAsset]
-  }
-
-  type PatternTemplate {
-    "JSON Schema"
-    schema: JSON
-    "CSS Selector"
-    selector: String
-    id: ID!
-    path: String!
-    title: String!
-    docPath: String
-    doc: String
-    demoDatas: [JSON]
-    demoUrls: [String]
-    uiSchema: JSON
-    isInline: Boolean
-    demoSize: String
-    assetSets: [PatternAssetSet]
-    hideCodeBlock: Boolean
-  }
-
-  type PatternType {
-    id: ID!
-    title: String!
-    patterns: [Pattern]
-  }
-
-  type PatternStatus {
-    id: ID!
-    title: String!
-    color: String
-  }
-
-  type PatternSettings {
-    patternStatuses: [PatternStatus]
-    patternTypes: [PatternType]
-  }
-
-  enum PatternUses {
-    inSlice
-    inGrid
-    inComponent
-  }
-
-  enum PatternDemoSize {
-    s
-    m
-    l
-    full
-  }
-
-  type PatternMeta {
-    title: String!
-    description: String
-    type: ID
-    status: String
-    uses: [PatternUses]
-    hasIcon: Boolean
-    dosAndDonts: [PatternDoAndDont]
-    demoSize: PatternDemoSize
-    showAllTemplates: Boolean
-  }
-
-  type Pattern {
-    id: ID!
-    "Relative path to a JSON file that stores meta data for pattern. Schema for that file is in pattern-meta.schema.json."
-    metaFilePath: String
-    templates: [PatternTemplate]!
-    meta: PatternMeta
-  }
-
-  type PatternRenderResponse {
-    ok: Boolean!
-    html: String
-    message: String
-  }
-
-  type TemplateCode {
-    usage: String
-    data: JSON
-    templateSrc: String
-    html: String
-    language: String
-  }
-
-  type Query {
-    patterns: [Pattern]
-    pattern(id: ID): Pattern
-    templateCode(
-      patternId: String
-      templateId: String
-      data: JSON
-    ): TemplateCode
-    patternTypes: [PatternType]
-    patternType(id: ID): PatternType
-    patternStatuses: [PatternStatus]
-    patternSettings: PatternSettings
-    render(
-      patternId: ID
-      templateId: ID
-      wrapHtml: Boolean
-      data: JSON
-    ): PatternRenderResponse
-  }
-
-  type Mutation {
-    setPatternMeta(id: ID, meta: JSON): JSON
-    setPatternTypes(patternTypes: JSON): [PatternType]
-    setPatternStatuses(patternStatuses: JSON): [PatternStatus]
-    setPatternSettings(settings: JSON): PatternSettings
-    setPatternTemplateReadme(id: ID, templateId: ID, readme: String): Pattern
-  }
-`;
+export { patternsTypeDef } from '../schemas/patterns';
 
 /**
  * @param {string} dir,
@@ -281,22 +159,19 @@ async function writeAllFiles(dir, config) {
   ]);
 }
 
-/**
- * @param {string} url
- * @return {boolean}
- */
-function isRemoteUrl(url) {
+function isRemoteUrl(url: string): boolean {
   return url.startsWith('http') || url.startsWith('//');
 }
 
-/**
- * @param {Object} opt
- * @param {KnapsackAssetSetUserConfig[]} opt.assetSets
- * @param {string} opt.publicDir
- * @param {string} opt.configPathBase
- * @return {KnapsackAssetSet[]}
- */
-function processAssetSets({ assetSets, publicDir, configPathBase }) {
+function processAssetSets({
+  assetSets,
+  publicDir,
+  configPathBase,
+}: {
+  assetSets: KnapsackAssetSetUserConfig[];
+  publicDir: string;
+  configPathBase: string;
+}): KnapsackAssetSet[] {
   return assetSets.map(assetSet => ({
     ...assetSet,
     assets: assetSet.assets.map(asset => {
@@ -328,20 +203,13 @@ function processAssetSets({ assetSets, publicDir, configPathBase }) {
   }));
 }
 
-/**
- * @param {string[]} patternsDirs
- * @param {KnapsackTemplateRenderer[]} templateRenderers
- * @param {function(KnapsackAssetSetUserConfig[]): KnapsackAssetSet[]} scanAssetSets
- * @param {KnapsackAssetSet[]} globalAssetSets
- * @returns {KnapsackPattern[]}
- */
 function createPatternsData(
-  patternsDirs,
-  templateRenderers,
-  scanAssetSets,
-  globalAssetSets,
-) {
-  const patterns = [];
+  patternsDirs: string[],
+  templateRenderers: KnapsackTemplateRenderer[],
+  scanAssetSets: (arg0: KnapsackAssetSetUserConfig[]) => KnapsackAssetSet[],
+  globalAssetSets: KnapsackAssetSet[],
+): KnapsackPattern[] {
+  const patterns: KnapsackPattern[] = [];
 
   patternsDirs.forEach(dir => {
     // Clearing the `require()` cache so we can run this function many times
@@ -477,7 +345,7 @@ function createPatternsData(
 
         const metaFilePath = join(dir, FILE_NAMES.PATTERN_META);
         // eslint-disable-next-line
-        const patternMeta = require(metaFilePath);
+        const patternMeta: PatternMeta = require(metaFilePath);
         const metaResults = validateSchemaAndAssignDefaults(
           patternMetaSchema,
           patternMeta,
@@ -497,12 +365,11 @@ function createPatternsData(
           process.exit(1);
         }
 
-        /** @type {PatternWithMetaSchema} */
-        const patternWithMeta = {
+        const patternWithMeta: PatternWithMeta = {
           ...results.data,
           dir,
           metaFilePath, // replaces original relative one with absolute path
-          meta: metaResults.data,
+          meta: metaResults.data as PatternMeta,
         };
 
         patterns.push(patternWithMeta);
@@ -522,15 +389,12 @@ function createPatternsData(
     );
     process.exit(1);
   }
-  knapsackEvents.emit(EVENTS.PATTERNS_DATA_READY, patterns);
+  emitPatternsDataReady(patterns);
+  // knapsackEvents.emit(EVENTS.PATTERNS_DATA_READY, patterns);
   return patterns;
 }
 
-/**
- * @param {string[]} patternPaths
- * @return {string[]}
- */
-function getPatternsDirs(patternPaths) {
+function getPatternsDirs(patternPaths: string[]): string[] {
   return globby
     .sync(patternPaths, {
       expandDirectories: true,
@@ -544,16 +408,26 @@ function getPatternsDirs(patternPaths) {
 }
 
 export class Patterns {
-  /**
-   * @param {Object} opt
-   * @param {string} opt.newPatternDir
-   * @param {string[]} opt.patternPaths
-   * @param {string} opt.publicDir
-   * @param {string} opt.configPathBase
-   * @param {string} opt.dataDir
-   * @param {KnapsackAssetSetUserConfig[]} opt.assetSets
-   * @param {KnapsackTemplateRenderer[]} opt.templateRenderers
-   */
+  db: FileDb;
+
+  scanAssetSets: (
+    newAssetSets: KnapsackAssetSetUserConfig[],
+  ) => KnapsackAssetSet[];
+
+  globalAssetSets: KnapsackAssetSet[];
+
+  newPatternDir: string;
+
+  patternPaths: string[];
+
+  dataDir: string;
+
+  templateRenderers: KnapsackTemplateRenderer[];
+
+  patternsDirs: string[];
+
+  allPatterns: KnapsackPattern[];
+
   constructor({
     newPatternDir,
     patternPaths,
@@ -562,6 +436,14 @@ export class Patterns {
     assetSets,
     publicDir,
     configPathBase,
+  }: {
+    newPatternDir: string;
+    patternPaths: string[];
+    dataDir: string;
+    templateRenderers: KnapsackTemplateRenderer[];
+    assetSets: KnapsackAssetSetUserConfig[];
+    publicDir: string;
+    configPathBase: string;
   }) {
     this.db = new FileDb({
       dbDir: dataDir,
@@ -593,33 +475,18 @@ export class Patterns {
       },
     });
 
-    /**
-     * @param {KnapsackAssetSetUserConfig[]} newAssetSets
-     * @return {KnapsackAssetSet[]}
-     */
     this.scanAssetSets = newAssetSets =>
       processAssetSets({
         assetSets: newAssetSets,
         publicDir,
         configPathBase,
       });
-
-    /** @type {KnapsackAssetSet[]} */
     this.globalAssetSets = this.scanAssetSets(assetSets);
-
-    /** @type {string} */
     this.newPatternDir = newPatternDir;
-    /** @type {string[]} */
     this.patternPaths = patternPaths;
-    /** @type {string} */
     this.dataDir = dataDir;
-
     this.templateRenderers = templateRenderers;
-
-    /** @type {string[]} */
     this.patternsDirs = getPatternsDirs(this.patternPaths);
-
-    /** @type {KnapsackPattern[]} */
     this.allPatterns = createPatternsData(
       this.patternsDirs,
       this.templateRenderers,
@@ -638,37 +505,23 @@ export class Patterns {
     );
   }
 
-  /**
-   * @param {string} id
-   * @returns {KnapsackPattern}
-   */
-  getPattern(id) {
+  getPattern(id: string): KnapsackPattern {
     return this.allPatterns.find(p => p.id === id);
   }
 
-  /**
-   * @returns {KnapsackPattern[]}
-   */
-  getPatterns() {
+  getPatterns(): KnapsackPattern[] {
     return this.allPatterns;
   }
 
-  /**
-   * @param {string} id
-   * @returns {PatternMetaSchema}
-   */
-  getPatternMeta(id) {
+  getPatternMeta(id: string): PatternMeta {
     const pattern = this.getPattern(id);
-
     return pattern.meta;
   }
 
-  /**
-   * @param {string} id
-   * @param {PatternMetaSchema} meta
-   * @returns {Promise<GenericResponse>}
-   */
-  async setPatternMeta(id, meta) {
+  async setPatternMeta(
+    id: string,
+    meta: PatternMeta,
+  ): Promise<GenericResponse> {
     const pattern = this.getPattern(id);
     try {
       await writeJson(pattern.metaFilePath, meta);
@@ -689,9 +542,9 @@ export class Patterns {
 
   /**
    * Get all the pattern's template file paths
-   * @return {string[]} - Absolute paths to all template files
+   * @return - Absolute paths to all template files
    */
-  getAllTemplatePaths() {
+  getAllTemplatePaths(): string[] {
     const allTemplatePaths = [];
     this.allPatterns.forEach(pattern => {
       pattern.templates.forEach(template => {
@@ -701,8 +554,8 @@ export class Patterns {
     return allTemplatePaths;
   }
 
-  getAllAssetPaths(includeRemote = false) {
-    const paths = new Set();
+  getAllAssetPaths(includeRemote = false): string[] {
+    const paths: Set<string> = new Set();
     const patterns = this.getPatterns();
     patterns.forEach(pattern => {
       pattern.templates.forEach(template => {
@@ -721,13 +574,11 @@ export class Patterns {
     return [...paths];
   }
 
-  /**
-   * @param {string} id
-   * @param {string} templateId
-   * @param {string} readme
-   * @returns {Promise<void>}
-   */
-  async setPatternTemplateReadme(id, templateId, readme) {
+  async setPatternTemplateReadme(
+    id: string,
+    templateId: string,
+    readme: string,
+  ): Promise<void> {
     const pattern = this.getPattern(id);
     const { docPath = null } =
       pattern.templates.find(t => t.id === templateId) || {};
@@ -736,6 +587,9 @@ export class Patterns {
     await fs.writeFile(join(pattern.dir, docPath), readme);
   }
 
+  /**
+   * @deprecated
+   */
   async createPatternFiles(config) {
     const dir = join(this.newPatternDir, config.id);
     const exists = await fs.pathExists(dir);
@@ -760,13 +614,13 @@ export class Patterns {
     };
   }
 
-  /**
-   * @return {{ id: string, title: string, patterns: KnapsackPattern[] }[]}
-   */
-  getPatternTypes() {
+  getPatternTypes(): {
+    id: string;
+    title: string;
+    patterns: KnapsackPattern[];
+  }[] {
     const patterns = this.getPatterns();
-    /** @type {KnapsackPatternType[]} */
-    const patternTypes = this.db.get('patternTypes');
+    const patternTypes: KnapsackPatternType[] = this.db.get('patternTypes');
     return patternTypes.map(patternType => ({
       ...patternType,
       patterns: patterns.filter(
@@ -776,50 +630,43 @@ export class Patterns {
   }
 
   /**
-   * @param {string} id - ID of pattern type
-   * @return {{ id: string, title: string, patterns: KnapsackPattern[] }}
+   * @param id - ID of pattern type
    */
-  getPatternType(id) {
+  getPatternType(
+    id: string,
+  ): { id: string; title: string; patterns: KnapsackPattern[] } {
     return this.getPatternTypes().find(p => p.id === id);
   }
 
-  /**
-   * @param {KnapsackPatternType[]} patternTypes
-   * @return {KnapsackPatternType[]}
-   */
-  setPatternTypes(patternTypes) {
+  setPatternTypes(patternTypes: KnapsackPatternType[]): KnapsackPatternType[] {
     this.db.set('patternTypes', patternTypes);
     return this.db.get('patternTypes');
   }
 
-  getPatternStatuses() {
+  getPatternStatuses(): KnapsackPatternStatus[] {
     return this.db.get('patternStatuses');
   }
 
-  setPatternStatuses(patternStatuses) {
+  setPatternStatuses(
+    patternStatuses: KnapsackPatternStatus[],
+  ): KnapsackPatternStatus[] {
     this.db.set('patternStatuses', patternStatuses);
     return this.db.get('patternStatuses');
   }
 
-  getPatternSettings() {
+  getPatternSettings(): KnapsackPatternSettings {
     return {
       ...this.db.getAll(),
       patternTypes: this.getPatternTypes(),
     };
   }
 
-  setPatternSettings(settings) {
+  setPatternSettings(settings: KnapsackPatternSettings): void {
     this.db.setAll(settings);
   }
 
   /**
-   * @param {Object} opt
-   * @param {string} opt.patternId
-   * @param {string} [opt.templateId] - defaults to first template
-   * @param {string} [opt.assetSetId] - defaults to first assetSet
-   * @param {number} [opt.data]
-   * @param {number} [opt.demoDataIndex=0]
-   * @return {string}
+   * Get a URL where this can be viewed
    */
   getPatternDemoUrl({
     patternId,
@@ -827,7 +674,19 @@ export class Patterns {
     assetSetId,
     data,
     demoDataIndex = 0,
-  }) {
+  }: {
+    patternId: string;
+    /**
+     * defaults to first template
+     */
+    templateId?: string;
+    /**
+     * defaults to first assetSet
+     */
+    assetSetId?: string;
+    data?: object;
+    demoDataIndex?: number;
+  }): string {
     const pattern = this.getPattern(patternId);
     const template = templateId
       ? pattern.templates.find(t => t.id === templateId)
@@ -880,13 +739,16 @@ export class Patterns {
 
   /**
    * Get code strings to help with how this template is used
-   * @param {Object} opt
-   * @param {string} opt.patternId
-   * @param {string} opt.templateId
-   * @param {Object} [opt.data] - data passed to template
-   * @return {Promise<KnapsackPatternTemplateCode>}
    */
-  async getTemplateCode({ patternId, templateId, data }) {
+  async getTemplateCode({
+    patternId,
+    templateId,
+    data,
+  }: {
+    patternId: string;
+    templateId: string;
+    data?: object;
+  }): Promise<KnapsackPatternTemplateCode> {
     const pattern = this.getPattern(patternId);
     const template = pattern.templates.find(t => t.id === templateId);
     const renderer = this.templateRenderers.find(t =>
@@ -940,7 +802,7 @@ export class Patterns {
     };
   }
 
-  watch() {
+  watch(): void {
     const configFilesToWatch = [];
     this.allPatterns.forEach(pattern => {
       configFilesToWatch.push(
@@ -981,16 +843,6 @@ export class Patterns {
 
   /**
    * Render template
-   * @param {Object} opt
-   * @param {string} opt.patternId - Pattern Id
-   * @param {string} [opt.templateId] - Template Id
-   * @param {boolean} [opt.wrapHtml=true] - Should it wrap HTML results with `<head>` and include assets?
-   * @param {Object} [opt.data] - Data to pass to template
-   * @param {number} [opt.demoDataIndex] - Demo data index to pass to template
-   * @param {boolean} [opt.isInIframe=false] - Will this be in an iFrame?
-   * @param {string} [opt.assetSetId] - Asset Set Id
-   * @param {number} [opt.websocketsPort]
-   * @return {Promise<KnapsackTemplateRenderResults>}
    */
   async render({
     patternId,
@@ -1001,7 +853,28 @@ export class Patterns {
     isInIframe = false,
     websocketsPort,
     assetSetId,
-  }) {
+  }: {
+    patternId: string;
+    templateId?: string;
+    /**
+     * Should it wrap HTML results with `<head>` and include assets?
+     */
+    wrapHtml?: boolean;
+    /**
+     * Data to pass to template
+     */
+    data?: object;
+    /**
+     * Demo data index to pass to template
+     */
+    demoDataIndex?: number;
+    /**
+     * Will this be in an iFrame?
+     */
+    isInIframe?: boolean;
+    websocketsPort?: number;
+    assetSetId?: string;
+  }): Promise<KnapsackTemplateRenderResults> {
     const pattern = this.getPattern(patternId);
     if (!pattern) {
       return {

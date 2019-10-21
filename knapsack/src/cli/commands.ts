@@ -63,7 +63,7 @@ export function testPatternRenders(allPatterns, patterns) {
       });
 
       const ok = exitCode === 0;
-      const fails = patternResults.filter(p => p.ok).length;
+      const fails = (patternResults as any[]).filter(p => p.ok).length; // @todo remove `as`
       const msg = `${results.length} tests ran, ${fails} failed`;
 
       if (!ok) {

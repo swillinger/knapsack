@@ -14,39 +14,16 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-import { gql } from 'apollo-server-express';
 import GraphQLJSON from 'graphql-type-json';
 import { FileDb } from './dbs/file-db';
+import { KnapsackCustomPage } from '../schemas/custom-pages';
 
-export const customPagesTypeDef = gql`
-  scalar JSON
-
-  type Slice {
-    id: ID!
-    blockId: String!
-    data: JSON
-  }
-
-  type CustomPage {
-    path: ID!
-    slices: [Slice]
-  }
-
-  type Query {
-    customPages: [CustomPage]
-    customPage(path: ID): CustomPage
-  }
-
-  type Mutation {
-    setCustomPage(path: ID, customPage: JSON): CustomPage
-  }
-`;
+export { customPagesTypeDef } from '../schemas/custom-pages';
 
 export class CustomPages {
-  /**
-   * @param {{ dataDir: string }} Object
-   */
-  constructor({ dataDir }) {
+  db: FileDb['db'];
+
+  constructor({ dataDir }: { dataDir: string }) {
     const defaults = {
       pages: [],
     };
@@ -58,40 +35,24 @@ export class CustomPages {
     }).getDb();
   }
 
-  /**
-   * @param {string} path
-   * @return {KnapsackCustomPage}
-   */
-  getCustomPage(path) {
+  getCustomPage(path: string): KnapsackCustomPage {
     const page = this.getCustomPages().find(p => p.path === path);
     if (page) return page;
     return this.createCustomPage(path).find(p => p.path === path);
   }
 
-  /**
-   * @param {string} path
-   * @return {KnapsackCustomPage[]}
-   */
-  createCustomPage(path) {
+  createCustomPage(path: string): KnapsackCustomPage[] {
     return this.db
       .get('pages')
       .push({ path, slices: [] })
       .write();
   }
 
-  /**
-   * @return {KnapsackCustomPage[]}
-   */
-  getCustomPages() {
+  getCustomPages(): KnapsackCustomPage[] {
     return this.db.get('pages').value();
   }
 
-  /**
-   * @param {string} path
-   * @param {Object} data
-   * @return {KnapsackCustomPage}
-   */
-  setCustomPage(path, data) {
+  setCustomPage(path: string, data: object): KnapsackCustomPage {
     return this.db
       .get('pages')
       .find({ path })

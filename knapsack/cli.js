@@ -9,7 +9,7 @@ const currentNodeVersion = process.versions.node;
 const majorNodeVersion = parseInt(currentNodeVersion.split('.')[0], 10);
 
 // The minimum we want is node v8.9.0 which is LTS Carbon, released Oct 2017
-if (majorNodeVersion > 10) {
+if (majorNodeVersion < 10) {
   console.error(
     `You are running Node ${currentNodeVersion} and this requires Node 10 or higher. Please update your version of Node: https://nodejs.org/en/`,
   );

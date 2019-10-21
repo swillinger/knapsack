@@ -21,7 +21,7 @@ import { KnapsackCustomPage } from '../schemas/custom-pages';
 export { customPagesTypeDef } from '../schemas/custom-pages';
 
 export class CustomPages {
-  db: FileDb['db'];
+  db: FileDb;
 
   constructor({ dataDir }: { dataDir: string }) {
     const defaults = {
@@ -32,7 +32,7 @@ export class CustomPages {
       dbDir: dataDir,
       name: 'knapsack.custom-pages',
       defaults,
-    }).getDb();
+    });
   }
 
   getCustomPage(path: string): KnapsackCustomPage {
@@ -42,22 +42,29 @@ export class CustomPages {
   }
 
   createCustomPage(path: string): KnapsackCustomPage[] {
-    return this.db
-      .get('pages')
-      .push({ path, slices: [] })
-      .write();
+    const pages: KnapsackCustomPage[] = this.db.get('pages');
+    const newPage: KnapsackCustomPage = { path, slices: [] };
+    pages.push(newPage);
+    const newPages: KnapsackCustomPage[] = this.db.set('pages', pages);
+    return newPages;
   }
 
   getCustomPages(): KnapsackCustomPage[] {
     return this.db.get('pages').value();
   }
 
-  setCustomPage(path: string, data: object): KnapsackCustomPage {
-    return this.db
-      .get('pages')
-      .find({ path })
-      .assign({ ...data, path })
-      .write();
+  setCustomPage(path: string, data: KnapsackCustomPage): KnapsackCustomPage {
+    const pages: KnapsackCustomPage[] = this.db.get('pages');
+    const newPage: KnapsackCustomPage = {
+      ...data,
+      path,
+    };
+    const newPages = pages.map(page => {
+      if (page.path !== path) return page;
+      return newPage;
+    });
+    this.db.set('pages', newPages);
+    return newPage;
   }
 }
 

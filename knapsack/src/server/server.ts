@@ -38,7 +38,7 @@ import { patternsResolvers, patternsTypeDef } from './patterns';
 import { getBrain } from '../lib/bootstrap';
 
 /**
- * @param {Object} opt
+ * @param {object} opt
  * @param {KnapsackMeta} opt.meta
  * @returns {Promise<void>}
  */
@@ -255,7 +255,7 @@ ${patternDemos
   let wss;
 
   /**
-   * @param {Object} data - Data to send to Websocket client
+   * @param {object} data - Data to send to Websocket client
    * @returns {boolean} - if successful
    * @todo improve `data` definition
    */

@@ -61,7 +61,7 @@ export { patternsTypeDef } from '../schemas/patterns';
 
 /**
  * @param {string} dir,
- * @param {Object} config - @todo document
+ * @param {object} config - @todo document
  * @returns {Promise<void>}
  */
 async function writeMeta(dir, config) {
@@ -74,7 +74,7 @@ async function writeMeta(dir, config) {
 
 /**
  * @param {string} dir
- * @param {Object} config
+ * @param {object} config
  * @return {Promise<void>}
  */
 async function writeEntry(dir, config) {
@@ -98,7 +98,7 @@ module.exports = {
 
 /**
  * @param {string} dir
- * @param {Object} config - @todo document
+ * @param {object} config - @todo document
  * @returns {Promise<void>}
  */
 async function writeSchema(dir, config) {
@@ -127,7 +127,7 @@ async function writeSchema(dir, config) {
 
 /**
  * @param {string} dir
- * @param {Object} config
+ * @param {object} config
  * @returns {Promise<void>}
  */
 async function writeTemplate(dir, config) {
@@ -147,7 +147,7 @@ async function writeTemplate(dir, config) {
 
 /**
  * @param {string} dir - The directory to write to
- * @param {Object} config - @todo document
+ * @param {object} config - @todo document
  * @returns {Promise<void[]>}
  */
 async function writeAllFiles(dir, config) {

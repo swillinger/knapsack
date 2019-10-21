@@ -26,7 +26,7 @@ const isProd = process.env.NODE_ENV === 'production';
 /**
  * @private
  * @param {CreateWebpackConfig} userConfig - @todo document
- * @return {Object} - WebPack config
+ * @return {object} - WebPack config
  */
 function createWebPackConfig(userConfig) {
   /** @type {CreateWebpackConfig} */

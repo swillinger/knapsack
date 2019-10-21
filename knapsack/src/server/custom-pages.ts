@@ -38,26 +38,26 @@ export class CustomPages {
   getCustomPage(path: string): KnapsackCustomPage {
     const page = this.getCustomPages().find(p => p.path === path);
     if (page) return page;
-    return this.createCustomPage(path).find(p => p.path === path);
+    return this.createCustomPage(path);
   }
 
-  createCustomPage(path: string): KnapsackCustomPage[] {
-    const pages: KnapsackCustomPage[] = this.db.get('pages');
+  createCustomPage(path: string): KnapsackCustomPage {
+    const pages = this.getCustomPages();
     const newPage: KnapsackCustomPage = { path, slices: [] };
     pages.push(newPage);
-    const newPages: KnapsackCustomPage[] = this.db.set('pages', pages);
-    return newPages;
+    this.db.set('pages', pages);
+    return newPage;
   }
 
   getCustomPages(): KnapsackCustomPage[] {
-    return this.db.get('pages').value();
+    return this.db.get('pages');
   }
 
   setCustomPage(path: string, data: KnapsackCustomPage): KnapsackCustomPage {
     const pages: KnapsackCustomPage[] = this.db.get('pages');
     const newPage: KnapsackCustomPage = {
-      ...data,
       path,
+      ...data,
     };
     const newPages = pages.map(page => {
       if (page.path !== path) return page;

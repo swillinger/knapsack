@@ -23,7 +23,7 @@ import { StatusMessage } from '@knapsack/atoms';
 import Spinner from '@knapsack/spinner';
 import { KnapsackContext } from '@knapsack/core';
 import urlJoin from 'url-join';
-import patternMetaSchema from '../../schemas/pattern-meta.schema';
+import { patternMetaSchema } from '../../schemas/patterns';
 import PageWithSidebar from '../layouts/page-with-sidebar';
 import { BASE_PATHS } from '../../lib/constants';
 

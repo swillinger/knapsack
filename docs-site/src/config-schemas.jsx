@@ -16,11 +16,11 @@
  */
 import React from 'react';
 import SchemaTable from '@knapsack/schema-table';
-import designTokens from '@basalt/knapsack/src/schemas/knapsack-design-tokens.schema';
+import { knapsackDesignTokenSchema } from '@basalt/knapsack/src/schemas/design-tokens';
 // import settings from '@basalt/knapsack/src/schemas/knapsack.settings.schema';
 // import patternMeta from '@basalt/knapsack/src/schemas/pattern-meta.schema';
 // import patternWithMeta from '@basalt/knapsack/src/schemas/pattern-w-meta.schema';
-import patternFull from '@basalt/knapsack/src/schemas/pattern.schema';
+import { patternSchema } from '@basalt/knapsack/src/schemas/patterns';
 
 // const patternTemplates = require('@basalt/knapsack/src/schemas/pattern-templates.schema.js');
 
@@ -29,12 +29,12 @@ const ConfigSchemas = () => (
     <header className="postHeader">
       <h1>Config Schemas</h1>
     </header>
-    <h2>{patternFull.title}</h2>
-    <SchemaTable schema={patternFull} />
+    <h2>{patternSchema.title}</h2>
+    <SchemaTable schema={patternSchema} />
 
     {/* @todo fix, having `Cannot read property 'title' of undefined` errors */}
-    <h2>{designTokens.knapsackDesignTokenSchema.title}</h2>
-    <SchemaTable schema={designTokens.knapsackDesignTokenSchema} />
+    <h2>{knapsackDesignTokenSchema.title}</h2>
+    <SchemaTable schema={knapsackDesignTokenSchema} />
   </div>
 );
 

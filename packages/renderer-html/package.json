@@ -3,10 +3,12 @@
   "version": "1.1.14",
   "description": "Render HTML",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rm -rf dist && yarn build:js && yarn build:types",
+    "build": "yarn clean && yarn build:js",
     "build:js": "BABEL_ENV=cli babel --config-file @knapsack/babel-config --extensions .js,.ts --out-dir dist/ src/",
     "build:types": "tsc",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo",
     "test": "yarn build:types",
     "watch": "yarn build:js --watch"
   },

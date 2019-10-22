@@ -1,5 +1,5 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "../tsconfig.base.json",
   "include": [
     "src"
   ],
@@ -7,10 +7,10 @@
     "src/client" // @todo remove and fix errors
   ],
   "compilerOptions": {
-    // "composite": false,
-    "declarationDir": "./dist",
+     "composite": true,
+//    "declarationDir": "./dist",
     "outDir": "./dist",
-    // "outFile": "./dist/index.d.ts"
+//     "outFile": "./dist/index.d.ts"
     "rootDir": "./src",
     // "baseUrl": "./",
     /**

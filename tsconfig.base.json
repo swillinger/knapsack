@@ -17,7 +17,11 @@
     "strict": false,
     "allowJs": false,
     "checkJs": false,
-    "composite": true,
+    "composite": false,
+//    "rootDirs": [
+//      "./knapsack",
+//      "./packages/renderer-html"
+//    ],
     "baseUrl": "./",
     "paths": {
       "@basalt/knapsack": ["./knapsack/src"],

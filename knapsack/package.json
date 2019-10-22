@@ -10,7 +10,8 @@
     "knapsack": "cli.js"
   },
   "scripts": {
-    "build": "rm -rf dist && npm-run-all --serial --print-label build:server build:client build:types",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo",
+    "build": "yarn clean && npm-run-all --serial --print-label build:server build:client",
     "build:client": "NODE_ENV=production webpack-cli --hide-modules --config ./webpack.config.js",
     "build:server": "BABEL_ENV=cli babel --config-file @knapsack/babel-config --ignore 'src/client' --extensions .js,.ts --out-dir dist/ src/",
     "watch:client": "webpack-cli --config ./webpack.config.js --watch --hide-modules --progress",
@@ -19,7 +20,6 @@
     "start": "yarn watch",
     "test:types:strict": "yarn test:types:ts --strict",
     "build:types": "tsc",
-    "prepublishOnly": "yarn build",
     "test": "yarn build:types"
   },
   "dependencies": {

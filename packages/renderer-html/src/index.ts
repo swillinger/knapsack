@@ -1,9 +1,11 @@
-const { KnapsackRendererBase } = require('@basalt/knapsack');
-const fs = require('fs-extra');
+import { KnapsackRendererBase } from '@basalt/knapsack';
+import { KnapsackTemplateRenderer } from '@basalt/knapsack/src/schemas/knapsack-config';
+import fs from 'fs-extra';
 
 /* eslint-disable class-methods-use-this */
 
-class KnapsackHtmlRenderer extends KnapsackRendererBase {
+export default class KnapsackHtmlRenderer extends KnapsackRendererBase
+  implements KnapsackTemplateRenderer {
   constructor() {
     super({
       id: 'html',
@@ -29,5 +31,3 @@ class KnapsackHtmlRenderer extends KnapsackRendererBase {
     return fs.readFile(template.absolutePath, 'utf8');
   }
 }
-
-module.exports = KnapsackHtmlRenderer;

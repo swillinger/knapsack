@@ -2,8 +2,14 @@
   "name": "@knapsack/renderer-html",
   "version": "1.1.14",
   "description": "Render HTML",
-  "main": "src/index.js",
-  "scripts": {},
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rm -rf dist && yarn build:js && yarn build:types",
+    "build:js": "BABEL_ENV=cli babel --config-file @knapsack/babel-config --extensions .js,.ts --out-dir dist/ src/",
+    "build:types": "tsc",
+    "test": "yarn build:types",
+    "watch": "yarn build:js --watch"
+  },
   "dependencies": {
     "fs-extra": "^7.0.1"
   },

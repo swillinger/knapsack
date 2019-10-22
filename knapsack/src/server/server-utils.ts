@@ -30,7 +30,7 @@ export function writeJson(fileName: string, object: object): Promise<void> {
 /**
  * @param fileName - path to where JSON file should be read
  */
-export function readJson(fileName: string): Promise<object> {
+export function readJson(fileName: string): Promise<{ [k: string]: any }> {
   return fs.readFile(fileName, 'utf8').then(file => JSON.parse(file));
 }
 

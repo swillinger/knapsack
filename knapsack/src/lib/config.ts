@@ -17,7 +17,7 @@
  */
 import { readFile } from 'fs-extra';
 import portfinder from 'portfinder';
-import { resolve } from 'path';
+import { resolve, join } from 'path';
 import {
   validateUniqueIdsInArray,
   validateDataAgainstSchema,
@@ -25,8 +25,7 @@ import {
 import { KnapsackRendererBase } from '../server/renderer-base';
 import * as log from '../cli/log';
 import { knapsackEvents, EVENTS } from '../server/events';
-import { version } from '../../package.json';
-import { dirExistsOrExit } from '../server/server-utils';
+import { dirExistsOrExit, readJson } from '../server/server-utils';
 import { knapsackDesignTokensSchema } from '../schemas/design-tokens';
 
 /**
@@ -169,12 +168,13 @@ export function processConfig(userConfig, from) {
  * @return {Promise<KnapsackMeta>}
  */
 export async function getMeta(config) {
+  const { version } = await readJson(join(__dirname, '../../package.json'));
   return {
     websocketsPort: await portfinder.getPortPromise(),
     knapsackVersion: version,
     changelog: config.changelog
       ? await readFile(config.changelog, 'utf8')
       : null,
-    version: config.version,
+    version,
   };
 }

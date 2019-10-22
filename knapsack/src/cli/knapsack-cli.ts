@@ -17,15 +17,16 @@
  */
 import program from 'commander';
 import { join, dirname } from 'path';
-import { writeFileSync, ensureDirSync } from 'fs-extra';
+import { writeFileSync, ensureDirSync, readJSONSync } from 'fs-extra';
 import * as log from './log';
 import { knapsackEvents, EVENTS } from '../server/events';
 import { serve } from '../server/server';
-import { version } from '../../package.json';
 import { build, testPatternRenders } from './commands';
 import { getMeta } from '../lib/config';
 import { bootstrapFromConfigFile } from '../lib/bootstrap';
 import { KnapsackPattern } from '../schemas/patterns';
+
+const { version } = readJSONSync(join(__dirname, '../../package.json'));
 
 program
   .version(version)

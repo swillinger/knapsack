@@ -5,6 +5,7 @@
   "version": "1.5.4",
   "author": "Basalt (https://basalt.io/)",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "bin": {
     "knapsack": "cli.js"
   },
@@ -17,9 +18,9 @@
     "watch": "run-p watch:*",
     "start": "yarn watch",
     "test:types:strict": "yarn test:types:ts --strict",
-    "build:types": "tsc --project ./tsconfig.json",
+    "build:types": "tsc",
     "prepublishOnly": "yarn build",
-    "test": "exit 0"
+    "test": "yarn build:types"
   },
   "dependencies": {
     "@knapsack/babel-config": "^1.5.2",

@@ -7,14 +7,15 @@
     "src/client" // @todo remove and fix errors
   ],
   "compilerOptions": {
-    "declaration": true,
-    "declarationDir": "./dist",
-    "emitDeclarationOnly": true,
-    "noEmit": false,
-    "strict": false,
-    "allowJs": false,
-    "checkJs": false,
+    // "composite": false,
+    // "declarationDir": "./dist",
     "outDir": "./dist",
-    //    "rootDirs": ["./src", "./"]
+    // "outFile": "./dist/index.d.ts"
+    "rootDir": "./src",
+    /**
+    * Specifies the location where debugger should locate TypeScript files instead of source locations.Use this flag
+    if the sources will be located at run - time in a different location than that at design - time.The location specified will be embedded in the sourceMap to direct the debugger where the source files will be located.
+    */
+    // "sourceRoot": ""
   },
 }

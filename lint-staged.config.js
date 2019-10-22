@@ -1,7 +1,6 @@
 module.exports = {
   linters: {
-    '*.{js,jsx}': ['eslint --ext .js,.jsx --fix', 'git add'],
-    '*.ts': ['eslint --config ./.eslintrc--ts.js --ext .ts --fix', 'git add'],
+    '*.{js,jsx,ts,tsx}': ['yarn eslint --fix', 'git add'],
     '*.scss': ['stylelint --fix', 'git add'],
   },
   ignore: [],

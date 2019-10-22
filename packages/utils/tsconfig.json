@@ -1,19 +1,8 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "allowJs": false,
-    "checkJs": false,
-    "noEmit": false,
-    "declaration": true,
-    "emitDeclarationOnly": true,
+    "composite": true,
     "rootDir": "src",
     "outDir": "dist"
-  },
-  "exclude": [
-    "dist"
-  ]
-  // ,
-  // "references": [
-  //   {"path": "../core"}
-  // ]
+  }
 }

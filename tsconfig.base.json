@@ -1,0 +1,53 @@
+{
+  "files": [],
+  "compilerOptions": {
+    "lib": ["es5", "es6", "dom", "esnext", "es7"],
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "skipLibCheck": false,
+    "target": "esnext",
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "noEmit": false,
+    "strict": false,
+    "allowJs": false,
+    "checkJs": false,
+    "composite": false,
+//    "rootDirs": [
+//      "./knapsack",
+//      "./packages/renderer-html"
+//    ],
+    "baseUrl": "./",
+    "paths": {
+      "@basalt/knapsack": ["./knapsack/src"],
+      "@knapsack/*": [
+        "components/*",
+        "packages/*/src",
+        "packages/*"
+      ]
+    }
+  },
+  "typeAcquisition": {
+    "enable": true
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/dist",
+    "**/node_modules",
+    "**/*.test.js",
+    "knapsack/src/client"
+  ],
+  // "references": [{
+  //     "path": "./knapsack"
+  //   },
+  //   {
+  //     "path": "./packages/renderer-html"
+  //   },
+  // ]
+}

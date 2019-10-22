@@ -5,23 +5,22 @@
   "version": "1.5.4",
   "author": "Basalt (https://basalt.io/)",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "bin": {
     "knapsack": "cli.js"
   },
   "scripts": {
-    "build": "rm -rf dist && npm-run-all --parallel --aggregate-output --print-label build:*",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo",
+    "build": "yarn clean && npm-run-all --serial --print-label build:server build:client",
     "build:client": "NODE_ENV=production webpack-cli --hide-modules --config ./webpack.config.js",
     "build:server": "BABEL_ENV=cli babel --config-file @knapsack/babel-config --ignore 'src/client' --extensions .js,.ts --out-dir dist/ src/",
     "watch:client": "webpack-cli --config ./webpack.config.js --watch --hide-modules --progress",
     "watch:server": "yarn build:server --watch --verbose",
     "watch": "run-p watch:*",
     "start": "yarn watch",
-    "test:types:js": "tsc --project ./tsconfig.json",
-    "test:types:ts": "tsc --project ./tsconfig--ts.json",
-    "test:types:ts:strict": "yarn test:types:ts --strict",
-    "build:types": "tsc --project ./tsconfig--ts.json",
-    "prepublishOnly": "yarn build",
-    "test": "run-s test:types:js test:types:ts"
+    "test:types:strict": "yarn test:types:ts --strict",
+    "build:types": "tsc",
+    "test": "yarn build:types"
   },
   "dependencies": {
     "@knapsack/babel-config": "^1.5.2",
@@ -79,7 +78,9 @@
     "@types/fs-extra": "^5.0.4",
     "@types/globby": "^8.0.0",
     "@types/graphql": "^14.0.3",
+    "@types/lowdb": "^1.0.9",
     "@types/marked": "^0.4.2",
+    "@types/qs": "^6.5.3",
     "@types/url-join": "^0.8.2",
     "@types/webpack": "^4.4.21",
     "@types/ws": "^6.0.1",

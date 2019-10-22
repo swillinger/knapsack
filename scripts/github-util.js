@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 const http = require('https');
 
 const { GH_TOKEN } = process.env;

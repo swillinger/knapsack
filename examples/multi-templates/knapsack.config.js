@@ -1,6 +1,6 @@
 const HtmlRenderer = require('@knapsack/renderer-html');
 const TwigRenderer = require('@knapsack/renderer-twig');
-const ReactRenderer = require('@knapsack/renderer-react');
+const { KnapsackReactRenderer } = require('@knapsack/renderer-react');
 const { theoKnapsackFormat } = require('@basalt/knapsack');
 const theo = require('theo');
 const webpack = require('webpack');
@@ -32,7 +32,7 @@ const config = {
   version,
   docsDir: './docs',
   templateRenderers: [
-    new ReactRenderer({
+    new KnapsackReactRenderer({
       webpackConfig,
       webpack,
     }),

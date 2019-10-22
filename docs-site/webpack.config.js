@@ -1,5 +1,5 @@
 const { join } = require('path');
-const createWebPackConfig = require('@basalt/knapsack/src/cli/create-webpack-config');
+const createWebPackConfig = require('@basalt/knapsack/create-webpack-config');
 
 const dist = join(__dirname, './static/dist');
 

@@ -20,7 +20,7 @@ import { connectToContext } from '@knapsack/core';
 import SchemaForm from '@knapsack/schema-form';
 import { StatusMessage } from '@knapsack/atoms';
 import urlJoin from 'url-join';
-import patternMetaSchema from '../../schemas/pattern-meta.schema';
+import { patternMetaSchema } from '../../schemas/patterns';
 import { apiUrlBase } from '../data';
 import PageWithSidebar from '../layouts/page-with-sidebar';
 

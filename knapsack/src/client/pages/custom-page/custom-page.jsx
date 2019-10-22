@@ -240,7 +240,7 @@ class CustomPage extends React.Component {
         </header>
 
         {slices.map((slice, sliceIndex) => (
-          <>
+          <div key={slice.id}>
             {isEditing && (
               <AddSliceForm addSlice={this.addSlice} index={sliceIndex} />
             )}
@@ -255,7 +255,7 @@ class CustomPage extends React.Component {
               moveSliceUp={this.moveSliceUp}
               moveSliceDown={this.moveSliceDown}
             />
-          </>
+          </div>
         ))}
         {isEditing && (
           <AddSliceForm addSlice={this.addSlice} index={slices.length} />

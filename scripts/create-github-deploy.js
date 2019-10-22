@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+/* eslint-disable @typescript-eslint/camelcase */
 const { readFileSync, writeFileSync } = require('fs');
 const { join } = require('path');
 const { githubPost } = require('./github-util');

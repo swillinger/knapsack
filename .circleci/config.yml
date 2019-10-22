@@ -83,7 +83,6 @@ jobs:
       - attach_workspace:
           at: '~'
       - run: yarn lint:js
-      - run: yarn lint:ts
       - run: yarn lint:style
       - run: yarn test:knapsack
       - run: yarn jest

@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  parser: 'babel-eslint',
+  parser: '@typescript-eslint/parser',
   plugins: [
     'cypress',
     'prettier',
@@ -9,12 +9,14 @@ module.exports = {
     'promise',
     'graphql',
     'react-hooks',
+    '@typescript-eslint',
   ],
   extends: [
     'airbnb',
     'prettier',
     'prettier/react',
     'plugin:cypress/recommended',
+    // 'plugin:@typescript-eslint/recommended',
     //    "plugin:promise/recommended" @todo turn this back and .then() fix every error
   ],
   env: {
@@ -25,6 +27,30 @@ module.exports = {
     document: true,
     window: true,
   },
+  settings: {
+    'import/resolver': {
+      // use an array of glob patterns
+      typescript: {
+        alwaysTryTypes: true, // always try to resolve types under `<root/>@types` directory even it doesn't contain any source code, like `@types/unist`
+        // can glob
+        directory: ['./tsconfig.json'],
+      },
+    },
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
+  },
+  overrides: [
+    {
+      // enable the rule specifically for TypeScript files
+      files: ['*.ts', '*.tsx'],
+      extends: ['plugin:@typescript-eslint/recommended'],
+      rules: {
+        // "@typescript-eslint/explicit-function-return-type": ["error"]
+        'valid-jsdoc': [0],
+      },
+    },
+  ],
   rules: {
     'consistent-return': [0],
     'import/no-extraneous-dependencies': [0],
@@ -82,15 +108,5 @@ module.exports = {
     //    "graphql/template-strings": ["error", {
     //      "env": "literal"
     //    }]
-  },
-  settings: {
-    'import/resolver': {
-      // use an array of glob patterns
-      typescript: {
-        alwaysTryTypes: true, // always try to resolve types under `<root/>@types` directory even it doesn't contain any source code, like `@types/unist`
-        // can glob
-        directory: ['./tsconfig.json'],
-      },
-    },
   },
 };

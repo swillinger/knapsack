@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+/* eslint-disable @typescript-eslint/camelcase */
 const http = require('https');
 const inquirer = require('inquirer');
 

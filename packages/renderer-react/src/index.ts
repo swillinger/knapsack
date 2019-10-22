@@ -1,32 +1,67 @@
-const { KnapsackRendererWebpackBase } = require('@basalt/knapsack');
-const camelCase = require('camelcase');
-const { copyReactAssets } = require('./utils');
+import { KnapsackRendererWebpackBase } from '@basalt/knapsack';
+import {
+  KnapsackTemplateRenderer,
+  KnapsackConfig,
+  KnapsackTemplateRenderResults,
+} from '@basalt/knapsack/src/schemas/knapsack-config';
+import {
+  KnapsackPattern,
+  KnapsackPatternTemplate,
+} from '@basalt/knapsack/src/schemas/patterns';
+import camelCase from 'camelcase';
+import { copyReactAssets } from './utils';
 
 /* eslint-disable class-methods-use-this */
 
-function upperCamelCase(str) {
+function upperCamelCase(str: string): string {
   const cased = camelCase(str);
   return cased.charAt(0).toUpperCase() + cased.slice(1);
 }
 
-class KnapsackReactRenderer extends KnapsackRendererWebpackBase {
-  constructor({ webpackConfig, webpack }) {
+export class KnapsackReactRenderer extends KnapsackRendererWebpackBase
+  implements KnapsackTemplateRenderer {
+  assets: string[];
+
+  constructor({
+    webpackConfig,
+    webpack,
+  }: {
+    id: string;
+    extension: string;
+    webpackConfig: import('webpack').Configuration;
+    webpack: typeof import('webpack');
+  }) {
     super({
       id: 'react',
       extension: '.jsx',
       webpackConfig,
       webpack,
     });
-    /** @type {string[]} */
+
     this.assets = [];
   }
 
-  init({ config, allPatterns }) {
+  init({
+    config,
+    allPatterns,
+  }: {
+    config: KnapsackConfig;
+    templatePaths: string[];
+    allPatterns: KnapsackPattern[];
+  }): void {
     super.init({ config, allPatterns });
     this.assets = copyReactAssets(this.distDirAbsolute, this.publicPath);
   }
 
-  async render({ pattern, template, data }) {
+  async render({
+    pattern,
+    template,
+    data,
+  }: {
+    template: KnapsackPatternTemplate;
+    pattern: KnapsackPattern;
+    data?: object;
+  }): Promise<KnapsackTemplateRenderResults> {
     if (!this.webpackManifest) await this.setManifest();
     const id = `${pattern.id}-${template.id}`;
     const html = `
@@ -40,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const Component = window.knapsack['${id}'].default;
   ReactDOM.render(
     React.createElement(
-      Component, 
+      Component,
       ${JSON.stringify(data)}
     ),
   root);
@@ -65,5 +100,3 @@ function Example() {
     `.trim();
   }
 }
-
-module.exports = KnapsackReactRenderer;

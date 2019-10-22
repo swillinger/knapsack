@@ -19,9 +19,17 @@ if (majorNodeVersion < 10) {
 const cliFile = path.join(__dirname, './dist/cli/knapsack-cli.js');
 const clientIndexFile = path.join(__dirname, './dist/client/index.html');
 
-if (!fs.existsSync(cliFile) || !fs.existsSync(clientIndexFile)) {
+if (!fs.existsSync(cliFile)) {
   console.error(
     'The main cli entry file for Knapsack does not exists, which probably means that it was not built and you are developing Knapsack, so please run "yarn build" in this folder:',
+  );
+  console.error(__dirname);
+  process.exit(1);
+}
+
+if (!fs.existsSync(clientIndexFile)) {
+  console.error(
+    'The main client file for Knapsack does not exists, which probably means that it was not built and you are developing Knapsack, so please run "yarn build" in this folder:',
   );
   console.error(__dirname);
   process.exit(1);

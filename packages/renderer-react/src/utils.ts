@@ -1,31 +1,29 @@
-const { log } = require('@basalt/knapsack');
-const fs = require('fs-extra');
-const path = require('path');
+import { log } from '@basalt/knapsack';
+import fs from 'fs-extra';
+import path from 'path';
 
 /**
- * @param {string} fileName - path to where JSON file should be read
- * @return {object}
+ * @param fileName - path to where JSON file should be read
  */
-const readJsonSync = fileName => JSON.parse(fs.readFileSync(fileName, 'utf8'));
+const readJsonSync = (fileName: string): { [k: string]: any } =>
+  JSON.parse(fs.readFileSync(fileName, 'utf8'));
 
 /**
  * Get a NPM package's package.json as object
- * @param {string} pkg
- * @return {object} - The package.json
+ * @param pkg The Package Name
+ * @return The package.json
  */
-function getPkg(pkg) {
+function getPkg(pkg: string): { [k: string]: any } {
   const pkgPath = require.resolve(`${pkg}/package.json`, {
     paths: [process.cwd()],
   });
   return readJsonSync(pkgPath);
 }
 
-/**
- * @param {string} distDirAbsolute
- * @param {string} publicPath
- * @return {string[]}
- */
-function copyReactAssets(distDirAbsolute, publicPath) {
+export function copyReactAssets(
+  distDirAbsolute: string,
+  publicPath: string,
+): string[] {
   try {
     fs.ensureDirSync(distDirAbsolute);
     const { version: reactVersion } = getPkg('react');
@@ -77,7 +75,3 @@ function copyReactAssets(distDirAbsolute, publicPath) {
     process.exit(1);
   }
 }
-
-module.exports = {
-  copyReactAssets,
-};

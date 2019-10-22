@@ -14,13 +14,24 @@ export class KnapsackRendererBase implements KnapsackTemplateRendererBase {
 
   extension: string;
 
+  language: string;
+
   outputDirName: string;
 
   logPrefix: string;
 
-  constructor({ id, extension }: { id: string; extension: string }) {
+  constructor({
+    id,
+    extension,
+    language = '',
+  }: {
+    id: string;
+    extension: string;
+    language?: string;
+  }) {
     this.id = id;
     this.extension = extension;
+    this.language = language;
     this.outputDirName = `knapsack-renderer-${this.id}`;
     this.logPrefix = `templateRenderer:${this.id}`;
   }

@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/utils",
   "license": "GPL-2.0-or-later",
-  "version": "1.5.2",
+  "version": "1.6.0",
   "description": "A Knapsack component that helps build Design Systems",
   "main": "dist/index.js",
   "module": "dist/index.js",

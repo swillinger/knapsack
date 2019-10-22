@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/basaltinc/knapsack/compare/v1.5.4...v1.6.0) (2019-10-22)
+
+**Note:** Version bump only for package @knapsack/example-bootstrap
+
+
+
+
+
 ## [1.5.4](https://github.com/basaltinc/knapsack/compare/v1.5.3...v1.5.4) (2019-10-16)
 
 **Note:** Version bump only for package @knapsack/example-bootstrap

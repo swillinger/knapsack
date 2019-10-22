@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/code-block",
   "license": "GPL-2.0-or-later",
-  "version": "1.5.2",
+  "version": "1.6.0",
   "description": "A Knapsack component that helps build Design Systems",
   "module": "dist/code-block.js",
   "main": "dist/code-block.js",
@@ -14,7 +14,7 @@
     "@knapsack/atoms": "^1.5.2",
     "@knapsack/core": "^1.5.2",
     "@knapsack/pretty-code": "^1.5.2",
-    "@knapsack/utils": "^1.5.2"
+    "@knapsack/utils": "^1.6.0"
   },
   "devDependencies": {
     "prop-types": "^15.0.0",

@@ -4,7 +4,7 @@ import fs from 'fs-extra';
 
 /* eslint-disable class-methods-use-this */
 
-export default class KnapsackHtmlRenderer extends KnapsackRendererBase
+class KnapsackHtmlRenderer extends KnapsackRendererBase
   implements KnapsackTemplateRenderer {
   constructor() {
     super({
@@ -32,3 +32,6 @@ export default class KnapsackHtmlRenderer extends KnapsackRendererBase
     return fs.readFile(template.absolutePath, 'utf8');
   }
 }
+
+// @todo v3 - change to `export` - need to keep `module.exports` to preserve backwards compatibility
+module.exports = KnapsackHtmlRenderer;

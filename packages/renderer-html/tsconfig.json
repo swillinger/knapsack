@@ -6,7 +6,7 @@
   "compilerOptions": {
     "outDir": "./dist",
     "rootDir": "./src",
-    "baseUrl": "./"
+    // "baseUrl": "./"
     // "outFile": "./dist/index.d.ts",
   },
   "references": [{

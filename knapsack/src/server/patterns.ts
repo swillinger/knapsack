@@ -877,9 +877,11 @@ export class Patterns {
   }): Promise<KnapsackTemplateRenderResults> {
     const pattern = this.getPattern(patternId);
     if (!pattern) {
+      const message = `Pattern not found: '${patternId}'`;
       return {
         ok: false,
-        message: `Pattern not found: '${patternId}'`,
+        html: `<p>${message}</p>`,
+        message,
       };
     }
     let [template] = pattern.templates;

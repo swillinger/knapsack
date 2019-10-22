@@ -4,7 +4,7 @@ import { KnapsackDesignToken } from './design-tokens';
 
 export interface KnapsackTemplateRenderResults {
   ok: boolean;
-  html?: string;
+  html: string;
   message?: string;
 }
 

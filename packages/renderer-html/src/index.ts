@@ -22,6 +22,7 @@ export default class KnapsackHtmlRenderer extends KnapsackRendererBase
     } catch (error) {
       return {
         ok: false,
+        html: `<p>${error.message}<p>`,
         message: error.message,
       };
     }

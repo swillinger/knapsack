@@ -59,10 +59,7 @@ function createWebPackConfig(userConfig) {
         {
           test: /\.(js|jsx|mjs|ts|tsx)$/,
           loader: require.resolve('babel-loader'),
-          include: [
-            resolve(__dirname, './src'),
-            // resolve(process.cwd(), './src'),
-          ],
+          include: [resolve(__dirname, './src'), resolve(process.cwd())],
           exclude: [/(node_modules)/],
           options: {
             extends: require.resolve('@knapsack/babel-config/es'),

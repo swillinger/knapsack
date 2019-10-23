@@ -4,12 +4,12 @@
   "version": "1.5.4",
   "scripts": {
     "cypress": "cypress",
-    "Xcypress:run": "percy exec -- cypress run",
-    "cypress:run": "cypress run",
+    "cypress:run": "percy exec -- cypress run",
+    "Xcypress:run": "cypress run",
     "cypress:open": "yarn cypress open"
   },
   "devDependencies": {
-    "@percy/cypress": "^1.0.2",
+    "@percy/cypress": "^2.2.0",
     "cypress": "^3.4.1"
   }
 }

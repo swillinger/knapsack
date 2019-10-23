@@ -13,6 +13,7 @@ describe('Patterns', () => {
       .type('Robots are awesome');
 
     cy.wait(2000); // eslint-disable-line
+    cy.percySnapshot('Pattern: Card', { widths: [400, 1200] });
     cy.screenshot('Card Pattern after edit');
 
     // https://github.com/cypress-io/cypress/issues/136#issuecomment-328100955
@@ -36,6 +37,7 @@ describe('Patterns', () => {
       })
       .type('{selectall}')
       .type('Super Card');
+    cy.percySnapshot('Pattern Edit: Card', { widths: [400, 1200] });
 
     cy.get('main form select[id*="status"]')
       .then($select => {

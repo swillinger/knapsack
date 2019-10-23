@@ -4,6 +4,7 @@
     "src/**/*"
   ],
   "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.cache/tsconfig.tsbuildinfo",
     "composite": true,
     "outDir": "./dist",
     "rootDir": "./src"

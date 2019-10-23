@@ -8,7 +8,7 @@
     "build": "yarn clean && yarn build:js",
     "build:js": "BABEL_ENV=cli babel --config-file @knapsack/babel-config --extensions .js,.ts --out-dir dist/ src/",
     "build:types": "tsc",
-    "clean": "rm -rf dist tsconfig.tsbuildinfo",
+    "clean": "rm -rf dist ./node_modules/.cache/tsconfig.tsbuildinfo",
     "test": "yarn build:types",
     "watch": "yarn build:js --watch"
   },

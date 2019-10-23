@@ -10,7 +10,7 @@
     "knapsack": "cli.js"
   },
   "scripts": {
-    "clean": "rm -rf dist tsconfig.tsbuildinfo",
+    "clean": "rm -rf dist ./node_modules/.cache/tsconfig.tsbuildinfo",
     "build": "yarn clean && npm-run-all --serial --print-label build:server build:client",
     "build:client": "NODE_ENV=production webpack-cli --hide-modules --config ./webpack.config.js",
     "build:server": "BABEL_ENV=cli babel --config-file @knapsack/babel-config --ignore 'src/client' --extensions .js,.ts --out-dir dist/ src/",

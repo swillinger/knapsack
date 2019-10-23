@@ -7,7 +7,8 @@
     "src/client" // @todo remove and fix errors
   ],
   "compilerOptions": {
-     "composite": true,
+    "tsBuildInfoFile": "./node_modules/.cache/tsconfig.tsbuildinfo",
+    "composite": true,
 //    "declarationDir": "./dist",
     "outDir": "./dist",
 //     "outFile": "./dist/index.d.ts"

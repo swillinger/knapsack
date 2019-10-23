@@ -11,4 +11,3 @@ dist
 /cypress/screenshots
 /docs-site/build
 /docs-site/i18n
-tsconfig.tsbuildinfo

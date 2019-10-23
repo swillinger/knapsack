@@ -7,7 +7,7 @@
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "clean": "rm -rf dist tsconfig.tsbuildinfo",
+    "clean": "rm -rf dist ./node_modules/.cache/tsconfig.tsbuildinfo",
     "build:js": "babel --config-file @knapsack/babel-config/es --source-maps --ignore 'src/*.test.js' --extensions .js,.ts --out-dir dist/ src/",
     "build:types": "tsc",
     "build": "yarn clean && yarn build:js",

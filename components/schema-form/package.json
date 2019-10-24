@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/schema-form",
   "license": "GPL-2.0-or-later",
-  "version": "1.5.2",
+  "version": "1.7.0",
   "description": "A Knapsack component that helps build Design Systems",
   "module": "dist/schema-form.js",
   "main": "dist/schema-form.js",
@@ -11,7 +11,7 @@
     "watch": "yarn build --watch"
   },
   "dependencies": {
-    "@knapsack/core": "^1.5.2",
+    "@knapsack/core": "^1.7.0",
     "react-jsonschema-form": "1.0.7",
     "shortid": "^2.2.14"
   },

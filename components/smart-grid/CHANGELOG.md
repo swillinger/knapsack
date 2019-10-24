@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://github.com/basaltinc/knapsack/compare/v1.6.2...v1.7.0) (2019-10-24)
+
+
+### Features
+
+* change styling approach from Styled Components to Sass w CSS Custom Properties ([#267](https://github.com/basaltinc/knapsack/issues/267)) ([cc4ac38](https://github.com/basaltinc/knapsack/commit/cc4ac38e11c5cddd1b938b65380b5c4bcb31deca))
+
+
+
+
+
 # [1.0.0](https://github.com/basaltinc/bedrock/compare/v0.45.3...v1.0.0) (2019-04-16)
 
 

@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/spacing-swatch",
   "license": "GPL-2.0-or-later",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "A Knapsack component that helps build Design Systems",
   "module": "dist/spacing-swatch.js",
   "main": "dist/spacing-swatch.js",
@@ -20,8 +20,8 @@
   },
   "author": "Basalt (https://basalt.io/)",
   "dependencies": {
-    "@knapsack/copy-to-clipboard": "^1.6.0",
-    "@knapsack/core": "^1.5.2"
+    "@knapsack/copy-to-clipboard": "^1.7.0",
+    "@knapsack/core": "^1.7.0"
   },
   "files": [
     "./dist"

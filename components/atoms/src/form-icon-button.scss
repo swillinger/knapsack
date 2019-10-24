@@ -1,0 +1,27 @@
+.k-form-icon-button {
+  display: inline-block;
+  width: 21px;
+  height: 21px;
+  background-size: contain;
+  position: relative;
+  cursor: auto;
+
+  &__icon {
+    background-size: contain;
+    opacity: 0.25;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: 1;
+  }
+
+  &--active {
+    cursor: pointer;
+
+    &::after {
+      opacity: 1;
+    }
+  }
+}

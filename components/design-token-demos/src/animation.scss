@@ -1,0 +1,38 @@
+.dtd-animation__transition-opacity-demo {
+  background: var(--c-gray-light);
+  padding: var(--size-m);
+  margin-bottom: var(--size-m);
+  text-align: center;
+  border-radius: 0;
+  cursor: pointer;
+  max-width: 800px;
+  transition: opacity var(--anim-base);
+  &:hover {
+    opacity: 0;
+  }
+}
+
+.dtd-animation__transition-move-demo {
+  background: var(--c-gray-light);
+  padding: var(--size-m);
+  margin-bottom: var(--size-m);
+  text-align: center;
+  border-radius: 0;
+  cursor: pointer;
+  max-width: 800px;
+  position: relative;
+  &:after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    width: 3px;
+    top: 0;
+    left: 8px;
+    bottom: 0;
+    background: black;
+    transition: left var(--anim-base);
+  }
+  &:hover:after {
+    left: calc(100% - 8px);
+  }
+}

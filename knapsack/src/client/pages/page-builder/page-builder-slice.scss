@@ -1,0 +1,68 @@
+.page-builder-slice {
+  background: var(--c-white);
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  box-sizing: border-box;
+
+  &--changed {
+    animation: briefHighlight 1.5s;
+  }
+
+  &:active {
+    border: solid 1px var(--c-gray);
+  }
+
+  &__icon-wrapper {
+    background: var(--c-gray-xxlight);
+    border: solid 1px var(--c-gray);
+    box-sizing: border-box;
+    margin-bottom: 0;
+    height: 100%;
+    text-align: center;
+    padding: 0.5rem;
+    margin-left: 1rem;
+
+    &--active {
+      background: var(--c-yellow-xlight);
+      border-left: solid 1px var(--c-active);
+    }
+  }
+  &:active &__icon-wrapper {
+    background: var(--c-gray-xxlight);
+    border-color: var(--c-gray);
+    border-width: 0 0 0 1px;
+  }
+
+  &__icon {
+    display: block;
+    transition: all 0.3s ease;
+    width: 21px;
+    height: 21px;
+    background-size: contain;
+    position: relative;
+    cursor: pointer;
+    &:not(:last-child) {
+      margin-bottom: 0.5rem;
+    }
+    &:focus,
+    &:active {
+      outline: none;
+    }
+    & > svg {
+      width: 100%;
+      height: 100%;
+    }
+    &--disabled {
+      cursor: default;
+    }
+  }
+}
+
+@keyframes briefHighlight {
+  from {
+    box-shadow: 0 0 1.5rem var(--c-yellow-light);
+  } to {
+    box-shadow: none;
+  }
+}

@@ -20,7 +20,6 @@ import SpacingSwatches from '@knapsack/spacing-swatch';
 import makeDesignTokensPage, {
   propTypes,
 } from '../../utils/make-design-tokens-page';
-import { FontSizeDemo } from './typography-page.styles';
 import PageWithSidebar from '../../layouts/page-with-sidebar';
 
 function SizingsPage(props) {
@@ -46,17 +45,28 @@ function SizingsPage(props) {
         <div>
           <h3>Font sizes</h3>
           {fontSizes.map((fontSize, index) => (
-            <FontSizeDemo
+            <div
+              className="typography-page__font-size-demo"
               key={fontSize.name}
               index={index + 1}
               length={fontSizes.length}
-              fontSize={fontSize.value}
+              style={{
+                fontSize: fontSize.value,
+                borderBottom:
+                  fontSizes.length !== index + 1
+                    ? '1px dotted var(--c-gray-xlight)'
+                    : '',
+                paddingBottom:
+                  fontSizes.length !== index + 1 ? 'var(--size-m)' : '',
+                marginBottom:
+                  fontSizes.length !== index + 1 ? 'var(--size-l)' : '',
+              }}
             >
               <code>{fontSize.name}</code>: {fontSize.value} <br />
               <blockquote contentEditable suppressContentEditableWarning>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               </blockquote>
-            </FontSizeDemo>
+            </div>
           ))}
         </div>
       )}

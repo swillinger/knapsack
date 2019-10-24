@@ -1,0 +1,25 @@
+.page-builder-sidebar {
+  &__pattern-list-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  &__styled-link {
+    height: var(--util-btn-height);
+    line-height: var(--util-btn-height);
+    border: none;
+    color: var(--c-text-black);
+    font-size: 0.75rem;
+    font-weight: 400;
+    font-family: system-ui;
+    padding: 1px 7px 2px;
+    &:link,
+    &:visited {
+      color: var(--c-text-black);
+    }
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}

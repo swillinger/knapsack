@@ -1,0 +1,12 @@
+.playground-schema-form {
+  margin-bottom: 1rem;
+  & > .rjsf > div {
+    margin: 0;
+    & > label {
+      display: none;
+    }
+  }
+  label {
+    color: var(--c-primary);
+  }
+}

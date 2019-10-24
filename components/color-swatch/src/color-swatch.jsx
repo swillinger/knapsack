@@ -3,14 +3,7 @@ import PropTypes from 'prop-types';
 import { convertColor, hasOpacity, parseColor } from '@knapsack/utils';
 import { Select, Button } from '@knapsack/atoms';
 import CopyToClipboard from '@knapsack/copy-to-clipboard';
-import {
-  SwatchWrapper,
-  RightLabel,
-  SwatchColorGradientBackground,
-  SwatchColor,
-  SwatchInfo,
-  SwatchesWrapper,
-} from './color-swatch.styles';
+import './color-swatch.scss';
 
 /**
  * Creates Sketch Palette file format from tokens
@@ -45,8 +38,8 @@ function tokensToSketchPalettes(tokens) {
 const ColorSwatch = ({ color, format }) => {
   const colorValue = convertColor(color.value, format);
   return (
-    <SwatchWrapper>
-      <SwatchInfo>
+    <div className="color-swatch">
+      <div className="color-swatch__swatch-info">
         <h5>{color.name}</h5>
         {color.code && (
           <h6>
@@ -60,14 +53,17 @@ const ColorSwatch = ({ color, format }) => {
             <small>{color.comment}</small>
           </p>
         )}
-      </SwatchInfo>
-      <SwatchColorGradientBackground>
-        <SwatchColor
-          colorValue={color.value}
-          hasOpacity={hasOpacity(color.value)}
+      </div>
+      <div className="color-swatch__swatch-color-gradient-background">
+        <div
+          style={{
+            backgroundColor: color.value ? color.value : 'auto',
+            margin: hasOpacity(color.value) ? '20px' : '0',
+            height: `calc(100% - ${hasOpacity(color.value) ? '40px' : '0px'})`,
+          }}
         />
-      </SwatchColorGradientBackground>
-    </SwatchWrapper>
+      </div>
+    </div>
   );
 };
 
@@ -101,7 +97,7 @@ class ColorSwatches extends Component {
     /* eslint-disable jsx-a11y/label-has-for */
     return (
       <div>
-        <RightLabel>
+        <div className="color-swatch__right-label">
           Color Format:
           <Select
             value={this.state.format}
@@ -129,8 +125,8 @@ class ColorSwatches extends Component {
               <Button>Download Sketch Palette</Button>
             </a>
           </div>
-        </RightLabel>
-        <SwatchesWrapper>{colorSwatches}</SwatchesWrapper>
+        </div>
+        <div className="color-swatch__swatches-wrapper">{colorSwatches}</div>
       </div>
     );
   }

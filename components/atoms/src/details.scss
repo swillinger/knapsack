@@ -1,0 +1,25 @@
+.k-details {
+  background: var(--c-gray-xxlight);
+  padding: var(5px 7px 1px);
+  border: 1px solid var(--c-gray-xlight);
+  margin: 0 0 10px;
+
+  & > summary {
+    font-weight: bold;
+    font-size: 1.1rem;
+    outline: none;
+    user-select: none;
+    &:hover {
+      cursor: pointer;
+    }
+    &:active,
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &[open] {
+    background: var(--c-bg);
+    padding-bottom: 7px;
+  }
+}

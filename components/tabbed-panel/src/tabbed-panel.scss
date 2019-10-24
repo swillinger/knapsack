@@ -1,0 +1,50 @@
+.tabbed-panel {
+  &__demo-tabs-wrap {
+    margin: 0 0 -3px;
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  &__shadow-wrap {
+    position: relative;
+    border-radius: 0;
+    border-width: 1px 5px 1px 1px;
+    border-style: solid;
+  }
+
+  &__header-region {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    display: flex;
+    padding: 30px;
+    line-height: 1;
+    position: relative;
+    code {
+      color: var(--c-text-white);
+      background: inherit;
+    }
+  }
+
+  &__demo-stage {
+    background: var(--c-bg);
+    border-radius: 0;
+  }
+
+  &__demo-tab {
+    background: var(--c-bg);
+    outline: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  &__footer-region {
+    padding-top: 1.5rem;
+    margin-bottom: -0.5rem;
+
+    h5 {
+      margin-bottom: 0.5rem;
+    }
+  }
+}

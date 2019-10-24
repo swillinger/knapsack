@@ -3,23 +3,7 @@ import PropTypes from 'prop-types';
 import { convertColor } from '@knapsack/utils';
 import { Details, Select } from '@knapsack/atoms';
 import Spinner from '@knapsack/spinner';
-import {
-  ColorContrastPlayground,
-  AccessibilityInfo,
-  AccessabilityDropdowns,
-  AccessibilityResults,
-  LargeText,
-  Ratio,
-  SmallText,
-  ColorBlock,
-  ColorCompare,
-  ContrastWrapper,
-  ContrastInner,
-  Results,
-  RowWrapper,
-  Fade,
-  NewRatio,
-} from './color-contrast-block.styles';
+import './color-contrast-block.scss';
 
 class ColorContrastBlock extends React.Component {
   constructor(props) {
@@ -112,7 +96,10 @@ class ColorContrastBlock extends React.Component {
     const colorBlocks = this.state.allResults.map(result => (
       <Details key={result.bgColor.name}>
         <summary>{result.bgColor.name}</summary>
-        <ContrastInner key={result.bgColor.name} testing="testing">
+        <div
+          className="color-contrast-block__contrast-inner"
+          key={result.bgColor.name}
+        >
           <h3>{result.bgColor.name}</h3>
           <p className="col col--1">Variable</p>
           <p className="col col--2">Ratio</p>
@@ -120,43 +107,100 @@ class ColorContrastBlock extends React.Component {
           <p className="col col--4">AAA</p>
           <p className="col col--5">AA Large</p>
           <p className="col col--6">AAA Large</p>
-          <ColorBlock color={result.bgColor.value} />
-          <RowWrapper>
+          <div
+            className="color-contrast-block__color-block"
+            style={{
+              backgroundColor: result.bgColor.value
+                ? result.bgColor.value
+                : 'auto',
+            }}
+          />
+          <div className="color-contrast-block__row-wrapper">
             {result.comparisonResults.map(compared => (
-              <ColorCompare
-                color={result.bgColor.value}
+              <div
+                className="color-contrast-block__color-compare"
                 key={compared.comparedColor.name}
-                comparedColor={compared.comparedColor.value}
               >
-                <Fade comparedColor={compared.comparedColor.value} />
+                <div
+                  className="color-contrast-block__fade"
+                  comparedColor={compared.comparedColor.value}
+                  style={{
+                    background: `linear-gradient(
+                      to right,
+                      ${
+                        compared.comparedColor.value
+                          ? compared.comparedColor.value
+                          : 'auto'
+                      } 40%,
+                      transparent 80%
+                    )`,
+                  }}
+                />
                 <p>{compared.comparedColor.name}</p>
-                <NewRatio ratio={compared.contrast.ratio}>
+                <p
+                  className={`color-contrast-block__new-ratio
+                    ${
+                      compared.contrast.ratio > 4.5
+                        ? 'color-contrast-block__new-ratio--pass'
+                        : ''
+                    }`}
+                >
                   {compared.contrast.ratio}
-                </NewRatio>
-                <Results pass={compared.contrast.AAA}>
+                </p>
+                <p
+                  className={`color-contrast-block__results
+                    ${
+                      compared.contrast.AAA === 'pass'
+                        ? 'color-contrast-block__results--pass'
+                        : ''
+                    }`}
+                >
                   {compared.contrast.AAA}
-                </Results>
-                <Results pass={compared.contrast.AA}>
+                </p>
+                <p
+                  className={`color-contrast-block__results
+                    ${
+                      compared.contrast.AA === 'pass'
+                        ? 'color-contrast-block__results--pass'
+                        : ''
+                    }`}
+                >
                   {compared.contrast.AA}
-                </Results>
-                <Results pass={compared.contrast.AAALarge}>
+                </p>
+                <p
+                  className={`color-contrast-block__results
+                    ${
+                      compared.contrast.AAALarge === 'pass'
+                        ? 'color-contrast-block__results--pass'
+                        : ''
+                    }`}
+                >
                   {compared.contrast.AAALarge}
-                </Results>
-                <Results pass={compared.contrast.AALarge}>
+                </p>
+                <p
+                  className={`color-contrast-block__results
+                    ${
+                      compared.contrast.AALarge === 'pass'
+                        ? 'color-contrast-block__results--pass'
+                        : ''
+                    }`}
+                >
                   {compared.contrast.AALarge}
-                </Results>
-              </ColorCompare>
+                </p>
+              </div>
             ))}
-          </RowWrapper>
-        </ContrastInner>
+          </div>
+        </div>
       </Details>
     ));
     /* eslint-disable jsx-a11y/label-has-for */
     return (
       <div>
-        <ContrastWrapper>{colorBlocks}</ContrastWrapper>
+        <div className="color-contrast-block__contrast-wrapper">
+          {colorBlocks}
+        </div>
         <br />
-        <AccessabilityDropdowns>
+        <div className="color-contrast-block__accessability-dropdowns">
           Background Color:
           {this.props.bgColors.length > 0 && (
             <Select
@@ -189,47 +233,94 @@ class ColorContrastBlock extends React.Component {
               }}
             />
           )}
-        </AccessabilityDropdowns>
-        <ColorContrastPlayground bgColor={this.state.bgColor}>
-          <LargeText color={this.state.textColor}>
+        </div>
+        <div
+          className="color-contrast-block__playground"
+          style={{
+            backgroundColor: this.state.bgColor ? this.state.bgColor : 'none',
+          }}
+        >
+          <h3
+            className="color-contrast-block__large-text"
+            style={{
+              color: this.state.textColor,
+            }}
+          >
             Large Text looks like this
-          </LargeText>
-          <SmallText color={this.state.textColor}>
+          </h3>
+          <h5
+            className="color-contrast-block__small-text"
+            style={{
+              color: this.state.textColor,
+            }}
+          >
             small text looks like this
-          </SmallText>
-        </ColorContrastPlayground>
-        <AccessibilityInfo>
+          </h5>
+        </div>
+        <div className="color-contrast-block__accessibility-info">
           <p>
             WCAG AAA:{' '}
-            <AccessibilityResults pass={this.state.contrast.aaa}>
+            <span
+              className={`color-contrast-block__accessibility-results
+                ${
+                  this.state.contrast.aaa === 'pass'
+                    ? 'color-contrast-block__accessibility-results--pass'
+                    : ''
+                }`}
+            >
               {this.state.contrast.aaa}
-            </AccessibilityResults>
+            </span>
           </p>
           <p>
             WCAG AA:{' '}
-            <AccessibilityResults pass={this.state.contrast.aa}>
+            <span
+              className={`color-contrast-block__accessibility-results
+                ${
+                  this.state.contrast.aa === 'pass'
+                    ? 'color-contrast-block__accessibility-results--pass'
+                    : ''
+                }`}
+            >
               {this.state.contrast.aa}
-            </AccessibilityResults>
+            </span>
           </p>
           <p>
             WCAG AAA (Large Text):{' '}
-            <AccessibilityResults pass={this.state.contrast.aaaLarge}>
+            <span
+              className={`color-contrast-block__accessibility-results
+                ${
+                  this.state.contrast.aaaLarge === 'pass'
+                    ? 'color-contrast-block__accessibility-results--pass'
+                    : ''
+                }`}
+            >
               {this.state.contrast.aaaLarge}
-            </AccessibilityResults>
+            </span>
           </p>
           <p>
             WCAG AA (Large Text):{' '}
-            <AccessibilityResults pass={this.state.contrast.aaLarge}>
+            <span
+              className={`color-contrast-block__accessibility-results
+                ${
+                  this.state.contrast.aaLarge === 'pass'
+                    ? 'color-contrast-block__accessibility-results--pass'
+                    : ''
+                }`}
+            >
               {this.state.contrast.aaLarge}
-            </AccessibilityResults>
+            </span>
           </p>
           <p>
             WCAG Ratio:{' '}
-            <Ratio ratio={this.state.contrast.ratio}>
+            <span
+              className={`color-contrast-block__ratio
+                ${this.state.contrast.ratio >
+                  '4.5'} ? 'color-contrast-block__ratio--success' : ''`}
+            >
               {this.state.contrast.ratio}
-            </Ratio>
+            </span>
           </p>
-        </AccessibilityInfo>
+        </div>
         <br />
         <Details>
           <summary>WCAG Details</summary>

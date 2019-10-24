@@ -20,12 +20,8 @@ import PropTypes from 'prop-types';
 import { connectToContext, contextPropTypes } from '@knapsack/core';
 import { Select, Button } from '@knapsack/atoms';
 import { FaExternalLinkAlt } from 'react-icons/fa';
-import {
-  PatternListItemDescription,
-  PatternListItemThumb,
-  PatternListItemWrapper,
-} from './page-builder.styles';
 import { PageBuilderContext } from './page-builder-context';
+import './page-builder-pattern-list-item.scss';
 
 // @todo Get pattern icons working for this again
 // class PlaygroundSidebarPatternListItem extends Component {
@@ -58,7 +54,9 @@ import { PageBuilderContext } from './page-builder-context';
 //   render() {
 //     const { enablePatternIcons = false } = this.props.context.features || {};
 //     return (
-//       <PatternListItemWrapper
+//       <li
+//         className={`page-builder-pattern-list-item__item-wrapper
+//           ${enablePatternIcons ? 'page-builder-pattern-list-item__item-wrapper--thumb' : ''}`}
 //         key={this.props.pattern.id}
 //         thumb={enablePatternIcons}
 //         type="button"
@@ -76,7 +74,8 @@ import { PageBuilderContext } from './page-builder-context';
 //                 Pattern Icons is not a currently supported feature. Please
 //                 toggle feature flag enablePatternIcons to false.
 //               </span>
-//               <PatternListItemThumb
+//               <img
+//                 className="page-builder-pattern-list-item__thumb"
 //                 src={
 //                   this.props.pattern.meta.hasIcon
 //                     ? this.state.imgSrc
@@ -87,9 +86,9 @@ import { PageBuilderContext } from './page-builder-context';
 //               />
 //             </>
 //           ) : (
-//             <PatternListItemDescription>
+//             <div className="page-builder-pattern-list-item__description">
 //               {this.props.pattern.meta.description}
-//             </PatternListItemDescription>
+//             </div>
 //           )}
 //         </div>
 //         <Link
@@ -99,7 +98,7 @@ import { PageBuilderContext } from './page-builder-context';
 //         >
 //           Details <FaExternalLinkAlt size={8} />
 //         </Link>
-//       </PatternListItemWrapper>
+//       </li>
 //     );
 //   }
 // }
@@ -118,7 +117,13 @@ class PlaygroundSidebarPatternListItem extends Component {
     const { enablePatternIcons = false } = this.props.context.features || {};
     const { pattern } = this.props;
     return (
-      <PatternListItemWrapper
+      <li
+        className={`page-builder-pattern-list-item__item-wrapper
+          ${
+            enablePatternIcons
+              ? 'page-builder-pattern-list-item__item-wrapper--thumb'
+              : ''
+          }`}
         key={this.props.pattern.id}
         thumb={enablePatternIcons}
       >
@@ -130,18 +135,20 @@ class PlaygroundSidebarPatternListItem extends Component {
                 Pattern Icons is not a currently supported feature. Please
                 toggle feature flag enablePatternIcons to false.
               </span>
-              <PatternListItemThumb
+              <img
+                className="page-builder-pattern-list-item__thumb"
                 src={
                   /* this.props.pattern.meta.hasIcon ? this.state.imgSrc : this.defaultImgPath */ null
                 }
                 onError={/* this.handleMissingImg */ null}
-                alt={/* this.props.pattern.meta.title */ null}
+                // alt={this.props.pattern.meta.title}
+                alt=""
               />
             </>
           ) : (
-            <PatternListItemDescription>
+            <div className="page-builder-pattern-list-item__description">
               {pattern.meta.description}
-            </PatternListItemDescription>
+            </div>
           )}
         </div>
         <Select
@@ -177,7 +184,7 @@ class PlaygroundSidebarPatternListItem extends Component {
         >
           Details <FaExternalLinkAlt size={8} />
         </Link>
-      </PatternListItemWrapper>
+      </li>
     );
   }
 }

@@ -1,0 +1,28 @@
+.template__iframe-wrapper {
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+}
+
+.template__resizable {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+  resize: horizontal;
+  overflow: hidden;
+  padding: 10px;
+  width: 100%;
+  max-width: 100%;
+  background-color: rgba(77, 77, 77, 0.15);
+
+  &__size-tab {
+    position: absolute;
+    bottom: 0;
+    right: 20px;
+    padding: 3px;
+    height: 18px;
+    line-height: 18px;
+    font-size: 10px;
+  }
+}

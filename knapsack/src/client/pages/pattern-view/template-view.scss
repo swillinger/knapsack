@@ -1,0 +1,75 @@
+@import '../../global/breakpoints';
+
+.template-view__overview-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.template-view__flex-wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.template-view__demo-grid {
+  position: relative;
+  flex-grow: 1;
+
+  @media (max-width: $bp-large - 1) {
+    display: block !important;
+  }
+}
+
+.template-view__demo-stage {
+  background-image: linear-gradient(45deg, hsl(0, 0%, 90%) 25%, transparent 25%),
+    linear-gradient(-45deg, hsl(0, 0%, 90%) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, hsl(0, 0%, 90%) 75%),
+    linear-gradient(-45deg, transparent 75%, hsl(0, 0%, 90%) 75%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  width: 100%;
+
+  @media (max-width: $bp-large - 1) {
+    width: 100% !important;
+  }
+}
+
+.template-view__schema-form {
+  display: flex;
+  justify-content: center;
+  overflow: initial;
+  overflow-y: visible;
+  border: dotted 1px var(--c-gray-xlight);
+  position: relative;
+  padding: 0.5rem;
+  width: 100%;
+
+  @media (max-width: $bp-large - 1) {
+    width: 100% !important;
+  }
+
+  &__inner {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    max-width: 800px;
+
+    fieldset > legend,
+    fieldset > legend + p {
+      display: none;
+    }
+
+    form > div > label {
+      display: none;
+    }
+  }
+}

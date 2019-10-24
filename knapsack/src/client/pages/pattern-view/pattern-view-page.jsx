@@ -16,7 +16,12 @@
  */
 import React, { Component } from 'react';
 import Spinner from '@knapsack/spinner';
-import { Button, Select, StatusMessage } from '@knapsack/atoms';
+import {
+  Button,
+  Select,
+  StatusMessage,
+  PatternStatusIcon,
+} from '@knapsack/atoms';
 import { KnapsackContext } from '@knapsack/core';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -25,12 +30,12 @@ import queryString from 'query-string';
 import PropTypes from 'prop-types';
 import ErrorCatcher from '../../utils/error-catcher';
 // import DosAndDonts from '../../components/dos-and-donts';
-import { PatternStatusIcon } from '../../components/atoms';
 import { BASE_PATHS } from '../../../lib/constants';
 import { gqlToString } from '../../data';
 import PageWithSidebar from '../../layouts/page-with-sidebar';
 import TemplateView from './template-view';
-import { PatternHeader, DemoGridControls } from './pattern-view-page.styles';
+import './pattern-view-page.scss';
+import './shared/demo-grid-controls.scss';
 
 const query = gql`
   query PatternViewPage($id: ID) {
@@ -124,7 +129,7 @@ class PatternViewPage extends Component {
 
               return (
                 <>
-                  <PatternHeader>
+                  <header className="pattern-view-page">
                     <div>
                       <h4
                         className="eyebrow"
@@ -145,7 +150,7 @@ class PatternViewPage extends Component {
                       <p style={{ marginTop: '1rem' }}>{description}</p>
                     </div>
                     <div>
-                      <DemoGridControls>
+                      <div className="pattern-view-demo-grid-controls">
                         {hasSchema && (
                           <Select
                             items={[
@@ -173,8 +178,8 @@ class PatternViewPage extends Component {
                             label="Stage Size"
                           />
                         )}
-                      </DemoGridControls>
-                      <DemoGridControls>
+                      </div>
+                      <div className="pattern-view-demo-grid-controls">
                         <Button
                           type="button"
                           className="button button--size-small"
@@ -209,8 +214,8 @@ class PatternViewPage extends Component {
                             See API
                           </Link>
                         </Button>
-                      </DemoGridControls>
-                      <DemoGridControls>
+                      </div>
+                      <div className="pattern-view-demo-grid-controls">
                         {templates.length > 1 && (
                           <Select
                             label="Template"
@@ -232,9 +237,9 @@ class PatternViewPage extends Component {
                             }}
                           />
                         )}
-                      </DemoGridControls>
+                      </div>
                     </div>
-                  </PatternHeader>
+                  </header>
 
                   {!showAllTemplates && (
                     <TemplateView

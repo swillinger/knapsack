@@ -16,17 +16,12 @@
  */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { FaChevronLeft } from 'react-icons/fa';
 import ErrorCatcher from '../utils/error-catcher';
 import Header from '../components/header';
 import SecondaryNav from '../components/secondary-nav';
 import Footer from '../components/footer';
-import {
-  PageLayoutWithSidebar,
-  SidebarColumn,
-  SidebarStyled,
-  SidebarTrayHandle,
-  ToggleChevron,
-} from './page-with-sidebar.styles';
+import './page-with-sidebar.scss';
 
 class PageWithSidebar extends Component {
   constructor(props) {
@@ -50,21 +45,47 @@ class PageWithSidebar extends Component {
       (this.props.location && this.props.location.pathname) || this.props.path;
     if (!this.props.isFullScreen) {
       return (
-        <PageLayoutWithSidebar sidebarCollapsed={sidebarCollapsed.toString()}>
+        <div
+          className="page-with-sidebar"
+          style={{
+            gridTemplateColumns:
+              sidebarCollapsed.toString() === 'true' ? '45px 1fr' : '300px 1fr',
+          }}
+        >
           <Header pathname={pathname} />
-          <SidebarStyled sidebarCollapsed={sidebarCollapsed.toString()}>
-            <SidebarColumn sidebarCollapsed={sidebarCollapsed.toString()}>
+          <aside className="page-with-sidebar__sidebar">
+            <div
+              className={`
+                page-with-sidebar__sidebar__column
+                ${
+                  sidebarCollapsed.toString() === 'true'
+                    ? 'page-with-sidebar__sidebar__column--collapsed'
+                    : ''
+                }`}
+            >
               {sidebar || <SecondaryNav pathname={pathname} />}
-            </SidebarColumn>
-            <SidebarTrayHandle onClick={this.handleSidebarToggle}>
-              <ToggleChevron sidebarcollapsed={sidebarCollapsed.toString()} />
-            </SidebarTrayHandle>
-          </SidebarStyled>
+            </div>
+            <button
+              className="page-with-sidebar__sidebar__collapse-ctrl"
+              type="button"
+              onClick={this.handleSidebarToggle}
+            >
+              <FaChevronLeft
+                style={{
+                  marginTop: '50vh',
+                  transform:
+                    sidebarCollapsed.toString() === 'true'
+                      ? 'rotate(180deg)'
+                      : '',
+                }}
+              />
+            </button>
+          </aside>
           <ErrorCatcher>
             <main>{children}</main>
           </ErrorCatcher>
           <Footer />
-        </PageLayoutWithSidebar>
+        </div>
       );
     }
     return (

@@ -1,13 +1,19 @@
 :root {
   /* Color Palette */
+  --c-white: #ffffff;
+  --c-black: #000000;
+  
   --c-blue: hsl(200, 55%, 19%);
   --c-blue-light: hsl(200, 55%, 45%);
   --c-blue-xlight: hsl(165, 26%, 85%);
+  --c-blue-xxlight: hsl(198, 7%, 96%);
 
   --c-green: hsl(159, 20%, 17%);
   --c-green-ghost: hsl(120, 100%, 25%);
 
   --c-yellow: hsl(52, 74%, 54%);
+  --c-yellow-light: hsl(52, 77%, 88%);
+  --c-yellow-xlight: hsl(52, 7%, 100%);
   --c-yellow-ghost: hsl(30, 100%, 50%);
 
   --c-gray: hsl(240, 3%, 85%);
@@ -21,14 +27,23 @@
   --c-red-ghost: hsl(0, 100%, 50%);
 
   /* Semantic Colors */
+  --c-bg: var(--c-white);
   --c-bg-dark: var(--c-blue);
+
+  --c-text-black: var(--c-black);
+  --c-text-white: var(--c-white);
+
   --c-primary: var(--c-blue);
   --c-secondary: var(--c-green);
   --c-border: var(--c-gray);
+  --c-active: var(--c-yellow);
+
+  /* Base Font Size */
+  --base-font-size: 18px;
 
   /* Font Families */
-  --font-family-light: 'AvenirLight', Helvetica, sans-serif;
-  --font-family-medium: 'AvenirMedium', Helvetica, sans-serif;
+  --font-family-light: 'AvenirLight', serif, Helvetica, sans-serif;
+  --font-family-medium: 'AvenirMedium', serif, Helvetica, sans-serif;
 
   /* Sizing */
   --size-xxs: 2px;
@@ -39,17 +54,9 @@
   --size-xl: 50px;
   --size-xxl: 64px;
 
-  /* Breakpoints */
-  --bp-xsmall: 380px;
-  --bp-small: 450px;
-  --bp-medium: 700px;
-  --bp-large: 900px;
-  --bp-xlarge: 1100px;
-  --bp-xxlarge: 1300px;
-  --bp-xxxlarge: 1600px;
-
   /* Utils */
   --util-border: solid 1px var(--c-border);
+  --util-btn-height: 33px;
 
   /* Animations */
   --anim-speed-m: 0.3s;

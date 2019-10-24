@@ -19,28 +19,27 @@ import PropTypes from 'prop-types';
 import { BlockQuoteWrapper } from '@knapsack/atoms';
 import { connectToContext, contextPropTypes } from '@knapsack/core';
 import { apiUrlBase } from '../data';
-import {
-  ReleaseCommit,
-  CommitHash,
-  ReleaseDate,
-  ReleaseWrapper,
-  ReleaseVersion,
-} from './release-notes.styles';
+import './release-notes.scss';
 
 const releaseNote = items =>
   items.map(item => (
-    <ReleaseWrapper key={item.title}>
-      <ReleaseVersion>{item.title}</ReleaseVersion>
-      <ReleaseDate>{item.niceDate}</ReleaseDate>
+    <div className="release-notes" key={item.title}>
+      <h3>{item.title}</h3>
+      <h5>{item.niceDate}</h5>
       {item.commits.map(commit => (
-        <ReleaseCommit key={commit.shorthash}>
-          <CommitHash href={commit.href} target="_blank">
+        <p key={commit.shorthash}>
+          <a
+            className="release-notes__commit-hash"
+            href={commit.href}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {commit.shorthash}
-          </CommitHash>{' '}
+          </a>{' '}
           {commit.message}
-        </ReleaseCommit>
+        </p>
       ))}
-    </ReleaseWrapper>
+    </div>
   ));
 
 const ReleaseNoteList = ({ items }) => <div>{releaseNote(items)}</div>;

@@ -1,12 +1,13 @@
 import React from 'react';
 import CopyToClipboard from '@knapsack/copy-to-clipboard';
 import { demoPropTypes } from './utils';
-import { ShadowDemoBox } from './styles';
+import './box-shadow.scss';
 
 export const BoxShadowDemo = ({ tokens }) => {
   if (!tokens) return null;
   return tokens.map(token => (
-    <ShadowDemoBox
+    <div
+      className="dtd-box-shadow"
       key={token.name}
       style={{
         boxShadow: token.value,
@@ -25,7 +26,7 @@ export const BoxShadowDemo = ({ tokens }) => {
           <small>{token.comment}</small>
         </p>
       )}
-    </ShadowDemoBox>
+    </div>
   ));
 };
 

@@ -1,0 +1,13 @@
+.k-radio-input-wrapper {
+  .field-radio-group.field-radio-group {
+    min-height: 33px;
+    height: unset;
+  }
+
+  input {
+    margin-right: 8px;
+    + span {
+      font-size: 0.75rem;
+    }
+  }
+}

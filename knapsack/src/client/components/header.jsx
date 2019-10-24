@@ -15,16 +15,11 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { FaBars, FaTimes } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import {
-  SiteHeaderLink,
-  Hamburger,
-  SiteHeaderNavLink,
-  SiteHeaderLogo,
-  X,
-} from './header.styles';
 import { BASE_PATHS } from '../../lib/constants';
 import knapsackLogo from '../assets/knapsack-logo-trans.svg';
 import './header.scss';
@@ -106,26 +101,35 @@ class Header extends React.Component {
     return (
       <ul>
         <li>
-          <SiteHeaderNavLink to={`${BASE_PATHS.PATTERNS}/all`}>
+          <NavLink
+            className="header__nav-link"
+            to={`${BASE_PATHS.PATTERNS}/all`}
+          >
             Patterns
-          </SiteHeaderNavLink>
+          </NavLink>
         </li>
         <li>
-          <SiteHeaderNavLink to={BASE_PATHS.PAGES}>
+          <NavLink className="header__nav-link" to={BASE_PATHS.PAGES}>
             Page Builder
-          </SiteHeaderNavLink>
+          </NavLink>
         </li>
         {docs.length > 0 && (
           <li>
-            <SiteHeaderNavLink to={`${BASE_PATHS.DOCS}/${docs[0].id}`}>
+            <NavLink
+              className="header__nav-link"
+              to={`${BASE_PATHS.DOCS}/${docs[0].id}`}
+            >
               Docs
-            </SiteHeaderNavLink>
+            </NavLink>
           </li>
         )}
         <li>
-          <SiteHeaderNavLink to={BASE_PATHS.GRAPHIQL_PLAYGROUND}>
+          <NavLink
+            className="header__nav-link"
+            to={BASE_PATHS.GRAPHIQL_PLAYGROUND}
+          >
             API
-          </SiteHeaderNavLink>
+          </NavLink>
         </li>
         {/* @todo Reimplement header nav for custom sections once implemented with gql */}
         {customSections &&
@@ -139,9 +143,9 @@ class Header extends React.Component {
               // For each section, we'll use the section title, but link to the first page in that section
               return (
                 <li key={path}>
-                  <SiteHeaderNavLink to={path}>
+                  <NavLink className="header__nav-link" to={path}>
                     {section.title}
-                  </SiteHeaderNavLink>
+                  </NavLink>
                 </li>
               );
             })}
@@ -177,10 +181,13 @@ class Header extends React.Component {
       return this.state.mobileNavVisible ? (
         <div className="header__mobile-nav">
           {Header.renderLinks(data)}
-          <X onClick={this.handleNavClick} />
+          <FaTimes
+            className="header__hamburger-close"
+            onClick={this.handleNavClick}
+          />
         </div>
       ) : (
-        <Hamburger onClick={this.handleNavClick} />
+        <FaBars className="header__hamburger" onClick={this.handleNavClick} />
       );
     }
     // If Desktop
@@ -196,8 +203,14 @@ class Header extends React.Component {
           return (
             <div className="header">
               <h3 style={{ margin: 0 }}>
-                <SiteHeaderLogo src={knapsackLogo} alt="Knapsack" />
-                <SiteHeaderLink to="/">{data.settings.title}</SiteHeaderLink>
+                <img
+                  className="header__logo"
+                  src={knapsackLogo}
+                  alt="Knapsack"
+                />
+                <Link className="header__header-link" to="/">
+                  {data.settings.title}
+                </Link>
               </h3>
               {this.renderNavigation(data)}
             </div>

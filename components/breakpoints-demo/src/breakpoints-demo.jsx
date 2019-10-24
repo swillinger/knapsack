@@ -1,21 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import deviceWidths from './device-widths';
-import {
-  BreakpointListItem,
-  BreakpointsWrapper,
-  DeviceListItem,
-  DeviceWidthUl,
-} from './breakpoints-demo.styles';
+import './breakpoints-demo.scss';
 
 const BreakpointsItems = items =>
   items.map(item => (
-    <BreakpointListItem key={item.name} left={item.value}>
+    <li
+      className="breakpoints-demo__breakpoint-item"
+      key={item.name}
+      style={{
+        left: item.value,
+      }}
+    >
       <span className="label">
         {item.name}:<br />
         {item.value}
       </span>
-    </BreakpointListItem>
+    </li>
   ));
 
 const BreakpointList = ({ items }) => (
@@ -33,15 +34,23 @@ BreakpointList.propTypes = {
 
 const DeviceWidthsItems = items =>
   items.map(item => (
-    <DeviceListItem key={item.name} width={item.width}>
+    <li
+      className="breakpoints-demo__device-item"
+      key={item.name}
+      style={{
+        width: item.width,
+      }}
+    >
       <span className="label">
         {item.name}: {item.width}
       </span>
-    </DeviceListItem>
+    </li>
   ));
 
 const DeviceWidthList = ({ items }) => (
-  <DeviceWidthUl>{DeviceWidthsItems(items)}</DeviceWidthUl>
+  <ul className="breakpoints-demo__device-width-list">
+    {DeviceWidthsItems(items)}
+  </ul>
 );
 
 DeviceWidthList.propTypes = {
@@ -54,10 +63,10 @@ DeviceWidthList.propTypes = {
 };
 
 const BreakpointsDemo = ({ breakpoints }) => (
-  <BreakpointsWrapper>
+  <div className="breakpoints-demo__breakpoint-list">
     <BreakpointList items={breakpoints} />
     <DeviceWidthList items={deviceWidths} />
-  </BreakpointsWrapper>
+  </div>
 );
 
 BreakpointsDemo.propTypes = {

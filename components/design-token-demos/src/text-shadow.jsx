@@ -1,11 +1,11 @@
 import React from 'react';
-import { ShadowDemoBox } from '@basalt/knapsack/src/client/pages/design-tokens/shadows-page.styles';
 import { demoPropTypes } from './utils';
+import '@basalt/knapsack/src/client/pages/design-tokens/shadows-page.scss';
 
 export const TextShadowDemo = ({ tokens }) => {
   if (!tokens) return null;
   return tokens.map(token => (
-    <ShadowDemoBox key={token.name}>
+    <div className="shadow-page__demo-box" key={token.name}>
       <h4>{token.name}</h4>
       <p
         style={{
@@ -14,7 +14,7 @@ export const TextShadowDemo = ({ tokens }) => {
       >
         Lorem Ipsum
       </p>
-    </ShadowDemoBox>
+    </div>
   ));
 };
 

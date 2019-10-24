@@ -22,14 +22,12 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
 import Spinner from '@knapsack/spinner';
 import { KnapsackContextProvider, baseContext, plugins } from '@knapsack/core';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider, Query } from 'react-apollo';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
-import GlobalStyles from './globals/global-styles';
 import ErrorCatcher from './utils/error-catcher';
 import { apiUrlBase } from './data';
 import {
@@ -161,168 +159,111 @@ class App extends React.Component {
               } = data;
               return (
                 <KnapsackContextProvider value={cruxContext}>
-                  <ThemeProvider theme={cruxContext.theme}>
-                    <>
-                      <GlobalStyles />
-                      <Router>
-                        <Switch>
+                  <>
+                    <Router>
+                      <Switch>
+                        <Route
+                          path="/"
+                          exact
+                          render={props =>
+                            plugins.homePage ? (
+                              plugins.homePage.render()
+                            ) : (
+                              <LoadableHome {...props} />
+                            )
+                          }
+                        />
+                        <Route
+                          path={`${BASE_PATHS.PAGES}/:id`}
+                          render={({ match }) => (
+                            <LoadablePageBuilder
+                              id={match.params.id}
+                              appContext={this.state}
+                            />
+                          )}
+                        />
+                        <Route
+                          path={BASE_PATHS.PAGES}
+                          exact
+                          render={props => (
+                            <LoadablePageBuilderLandingPage {...props} />
+                          )}
+                        />
+                        <Route
+                          path={BASE_PATHS.PATTERNS}
+                          exact
+                          render={() => (
+                            <Redirect to={`${BASE_PATHS.PATTERNS}/all`} />
+                          )}
+                        />
+                        <Route
+                          path={`${BASE_PATHS.PATTERNS}/all`}
+                          exact
+                          render={props => (
+                            <LoadablePatternsPage type="all" {...props} />
+                          )}
+                        />
+                        <Route
+                          path={`${BASE_PATHS.PATTERNS}/:type`}
+                          render={({ match, ...props }) => (
+                            <LoadablePatternsPage
+                              type={match.params.type}
+                              {...props}
+                            />
+                          )}
+                        />
+                        <Route
+                          path={`${BASE_PATHS.DOCS}/:id`}
+                          render={({ match }) => (
+                            <LoadableDocPage
+                              id={match.params.id}
+                              key={match.params.id}
+                            />
+                          )}
+                        />
+                        {this.state.permissions.includes('write') && (
                           <Route
-                            path="/"
+                            path="/new-pattern"
                             exact
-                            render={props =>
-                              plugins.homePage ? (
-                                plugins.homePage.render()
-                              ) : (
-                                <LoadableHome {...props} />
-                              )
-                            }
+                            render={props => <LoadablePatternNew {...props} />}
                           />
+                        )}
+                        <Route
+                          path={`${BASE_PATHS.GRAPHIQL_PLAYGROUND}`}
+                          exact
+                          render={props => <LoadableGraphiqlPage {...props} />}
+                        />
+                        {this.state.permissions.includes('write') && (
                           <Route
-                            path={`${BASE_PATHS.PAGES}/:id`}
-                            render={({ match }) => (
-                              <LoadablePageBuilder
-                                id={match.params.id}
-                                appContext={this.state}
-                              />
-                            )}
-                          />
-                          <Route
-                            path={BASE_PATHS.PAGES}
+                            path="/settings"
                             exact
                             render={props => (
-                              <LoadablePageBuilderLandingPage {...props} />
+                              <LoadableSettingsPage {...props} />
                             )}
                           />
+                        )}
+
+                        {this.state.permissions.includes('write') && (
                           <Route
-                            path={BASE_PATHS.PATTERNS}
-                            exact
-                            render={() => (
-                              <Redirect to={`${BASE_PATHS.PATTERNS}/all`} />
-                            )}
-                          />
-                          <Route
-                            path={`${BASE_PATHS.PATTERNS}/all`}
-                            exact
-                            render={props => (
-                              <LoadablePatternsPage type="all" {...props} />
-                            )}
-                          />
-                          <Route
-                            path={`${BASE_PATHS.PATTERNS}/:type`}
-                            render={({ match, ...props }) => (
-                              <LoadablePatternsPage
-                                type={match.params.type}
-                                {...props}
-                              />
-                            )}
-                          />
-                          <Route
-                            path={`${BASE_PATHS.DOCS}/:id`}
-                            render={({ match }) => (
-                              <LoadableDocPage
+                            path={`${BASE_PATHS.PATTERN}/:id/edit`}
+                            render={({ match, ...rest }) => (
+                              <LoadablePatternEdit
+                                {...rest}
                                 id={match.params.id}
                                 key={match.params.id}
                               />
                             )}
                           />
-                          {this.state.permissions.includes('write') && (
-                            <Route
-                              path="/new-pattern"
-                              exact
-                              render={props => (
-                                <LoadablePatternNew {...props} />
-                              )}
-                            />
-                          )}
-                          <Route
-                            path={`${BASE_PATHS.GRAPHIQL_PLAYGROUND}`}
-                            exact
-                            render={props => (
-                              <LoadableGraphiqlPage {...props} />
-                            )}
-                          />
-                          {this.state.permissions.includes('write') && (
-                            <Route
-                              path="/settings"
-                              exact
-                              render={props => (
-                                <LoadableSettingsPage {...props} />
-                              )}
-                            />
-                          )}
+                        )}
 
-                          {this.state.permissions.includes('write') && (
-                            <Route
-                              path={`${BASE_PATHS.PATTERN}/:id/edit`}
-                              render={({ match, ...rest }) => (
-                                <LoadablePatternEdit
-                                  {...rest}
-                                  id={match.params.id}
-                                  key={match.params.id}
-                                />
-                              )}
-                            />
-                          )}
-
-                          <Route
-                            path={`${BASE_PATHS.PATTERN}/:id`}
-                            exact
-                            render={({ match }) => {
-                              const pattern = data.patterns.find(
-                                p => match.params.id === p.id,
-                              );
-                              if (!pattern) {
-                                return (
-                                  <LoadableBadRoute
-                                    title={`Pattern "${match.params.id}" was not found in the system`}
-                                    subtitle="Hold your horses"
-                                    message={`We're having trouble finding the pattern "${match.params.id}" you requested. Please double check your url and the pattern meta.`}
-                                  />
-                                );
-                              }
-
-                              const [firstTemplate] = pattern.templates;
-                              if (!firstTemplate) {
-                                return (
-                                  <LoadableBadRoute
-                                    title={`Pattern "${match.params.id}" was found, but it did not having any templates in the system`}
-                                    subtitle="Hold your horses"
-                                    message={`We're having trouble finding the pattern "${match.params.id}" you requested. Please double check your url and the pattern meta.`}
-                                  />
-                                );
-                              }
-
-                              if (pattern && firstTemplate) {
-                                const templateId = pattern.meta.showAllTemplates
-                                  ? 'all'
-                                  : firstTemplate.id;
-                                return (
-                                  <Redirect
-                                    to={`${BASE_PATHS.PATTERN}/${match.params.id}/${templateId}`}
-                                  />
-                                );
-                              }
-                            }}
-                          />
-
-                          <Route
-                            path={`${BASE_PATHS.PATTERN}/:id/:templateId`}
-                            render={({ match, ...rest }) => {
-                              if (
-                                data.patterns
-                                  .map(pattern => pattern.id)
-                                  .find(item => match.params.id === item)
-                              ) {
-                                return (
-                                  <LoadablePatternView
-                                    {...rest}
-                                    patternId={match.params.id}
-                                    templateId={match.params.templateId}
-                                    size="m"
-                                    key={match.params.id}
-                                  />
-                                );
-                              }
+                        <Route
+                          path={`${BASE_PATHS.PATTERN}/:id`}
+                          exact
+                          render={({ match }) => {
+                            const pattern = data.patterns.find(
+                              p => match.params.id === p.id,
+                            );
+                            if (!pattern) {
                               return (
                                 <LoadableBadRoute
                                   title={`Pattern "${match.params.id}" was not found in the system`}
@@ -330,39 +271,89 @@ class App extends React.Component {
                                   message={`We're having trouble finding the pattern "${match.params.id}" you requested. Please double check your url and the pattern meta.`}
                                 />
                               );
-                            }}
-                          />
-                          <Route
-                            path="/changelog"
-                            component={LoadableChangelogPage}
-                          />
-                          {customSections &&
-                            customSections.map(section =>
-                              section.pages.map(page => {
-                                const path = `/${section.id}/${page.id}`;
-                                return (
-                                  <Route
-                                    key={path}
-                                    path={path}
-                                    render={() => (
-                                      <LoadableCustomPage
-                                        path={path}
-                                        sectionTitle={section.title}
-                                        sectionId={section.id}
-                                        title={page.title}
-                                        pageId={page.id}
-                                      />
-                                    )}
-                                  />
-                                );
-                              }),
-                            )}
-                          <Route path="*" render={() => <LoadableBadRoute />} />
-                          <Redirect to="/" />
-                        </Switch>
-                      </Router>
-                    </>
-                  </ThemeProvider>
+                            }
+
+                            const [firstTemplate] = pattern.templates;
+                            if (!firstTemplate) {
+                              return (
+                                <LoadableBadRoute
+                                  title={`Pattern "${match.params.id}" was found, but it did not having any templates in the system`}
+                                  subtitle="Hold your horses"
+                                  message={`We're having trouble finding the pattern "${match.params.id}" you requested. Please double check your url and the pattern meta.`}
+                                />
+                              );
+                            }
+
+                            if (pattern && firstTemplate) {
+                              const templateId = pattern.meta.showAllTemplates
+                                ? 'all'
+                                : firstTemplate.id;
+                              return (
+                                <Redirect
+                                  to={`${BASE_PATHS.PATTERN}/${match.params.id}/${templateId}`}
+                                />
+                              );
+                            }
+                          }}
+                        />
+
+                        <Route
+                          path={`${BASE_PATHS.PATTERN}/:id/:templateId`}
+                          render={({ match, ...rest }) => {
+                            if (
+                              data.patterns
+                                .map(pattern => pattern.id)
+                                .find(item => match.params.id === item)
+                            ) {
+                              return (
+                                <LoadablePatternView
+                                  {...rest}
+                                  patternId={match.params.id}
+                                  templateId={match.params.templateId}
+                                  size="m"
+                                  key={match.params.id}
+                                />
+                              );
+                            }
+                            return (
+                              <LoadableBadRoute
+                                title={`Pattern "${match.params.id}" was not found in the system`}
+                                subtitle="Hold your horses"
+                                message={`We're having trouble finding the pattern "${match.params.id}" you requested. Please double check your url and the pattern meta.`}
+                              />
+                            );
+                          }}
+                        />
+                        <Route
+                          path="/changelog"
+                          component={LoadableChangelogPage}
+                        />
+                        {customSections &&
+                          customSections.map(section =>
+                            section.pages.map(page => {
+                              const path = `/${section.id}/${page.id}`;
+                              return (
+                                <Route
+                                  key={path}
+                                  path={path}
+                                  render={() => (
+                                    <LoadableCustomPage
+                                      path={path}
+                                      sectionTitle={section.title}
+                                      sectionId={section.id}
+                                      title={page.title}
+                                      pageId={page.id}
+                                    />
+                                  )}
+                                />
+                              );
+                            }),
+                          )}
+                        <Route path="*" render={() => <LoadableBadRoute />} />
+                        <Redirect to="/" />
+                      </Switch>
+                    </Router>
+                  </>
                 </KnapsackContextProvider>
               );
             }}

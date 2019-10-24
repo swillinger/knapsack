@@ -20,15 +20,8 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import Spinner from '@knapsack/spinner';
 import { StatusMessage } from '@knapsack/atoms';
-import {
-  HomeSplashCore,
-  EyeBrow,
-  HomeSplashWrapper,
-  Subtitle,
-  Title,
-  VersionTag,
-} from './home-splash.styles';
 import PageWithoutSidebar from '../layouts/page-without-sidebar';
+import './home-splash.scss';
 
 const query = gql`
   {
@@ -110,16 +103,26 @@ const HomeSplash = props => (
       } = data;
       return (
         <PageWithoutSidebar {...props}>
-          <HomeSplashWrapper>
-            <HomeSplashCore>
-              {settings.subtitle && <EyeBrow>{settings.subtitle}</EyeBrow>}
-              {settings.title && (
-                <Title vw={bigWords(settings.title)}>{settings.title}</Title>
+          <div className="home-splash">
+            <div className="home-splash__inner">
+              {settings.subtitle && (
+                <h2 className="home-splash__inner__eyebrow">
+                  {settings.subtitle}
+                </h2>
               )}
-              {settings.slogan && <Subtitle>{settings.slogan}</Subtitle>}
-              {version && <VersionTag>{version}</VersionTag>}
-            </HomeSplashCore>
-          </HomeSplashWrapper>
+              {settings.title && (
+                <h1 style={{ fontSize: `${bigWords(settings.title)}vw` }}>
+                  {settings.title}
+                </h1>
+              )}
+              {settings.slogan && (
+                <h2 className="home-splash__inner__subtitle">
+                  {settings.slogan}
+                </h2>
+              )}
+              {version && <p>{version}</p>}
+            </div>
+          </div>
         </PageWithoutSidebar>
       );
     }}

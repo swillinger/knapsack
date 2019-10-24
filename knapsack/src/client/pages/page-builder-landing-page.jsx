@@ -20,16 +20,12 @@ import { Link } from 'react-router-dom';
 import shortid from 'shortid';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import {
-  BlockQuoteWrapper,
-  Button,
-  TwoUp,
-  StatusMessage,
-} from '@knapsack/atoms';
+import { BlockQuoteWrapper, Button, StatusMessage } from '@knapsack/atoms';
 import { connectToContext, contextPropTypes } from '@knapsack/core';
 import { apiUrlBase } from '../data';
 import { BASE_PATHS } from '../../lib/constants';
 import PageWithSidebar from '../layouts/page-with-sidebar';
+import './page-builder-landing-page.scss';
 
 const examplesQuery = gql`
   {
@@ -109,7 +105,7 @@ class PageBuilderLandingPage extends Component {
                   <footer>Tadao Ando</footer>
                 </BlockQuoteWrapper>
               )}
-              <TwoUp>
+              <div className="page-builder-landing-page__two-up">
                 <div>
                   <h3>What is prototyping?</h3>
                   <p>
@@ -132,7 +128,7 @@ class PageBuilderLandingPage extends Component {
                     ))}
                   </ul>
                 </div>
-              </TwoUp>
+              </div>
               <div>
                 <h3>Create a New Page</h3>
                 {(this.props.context.permissions.includes('write') && (

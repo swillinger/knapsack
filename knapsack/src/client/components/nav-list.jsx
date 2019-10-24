@@ -17,18 +17,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import { NavListStyled } from './nav-list.styles';
-import { PatternStatusIcon } from './atoms';
+import { PatternStatusIcon } from '@knapsack/atoms';
+import './nav-list.scss';
 
 function NavList({ items }) {
   return (
-    <NavListStyled>
-      <ul className="nav-list">
+    <nav className="pattern-nav-list">
+      <ul>
         {items.map(
           ({ title, isHeading, isSubHeading, id, path, status = null }) =>
             isHeading || isSubHeading ? (
               <li
-                className={`nav-list__item nav-list__item--${
+                className={`pattern-nav-list__item pattern-nav-list__item--${
                   isHeading ? 'heading' : 'subheading'
                 }`}
                 key={id + path}
@@ -36,7 +36,7 @@ function NavList({ items }) {
                 <h4>{path ? <NavLink to={path}>{title}</NavLink> : title}</h4>
               </li>
             ) : (
-              <li className="nav-list__item" key={id + path}>
+              <li className="pattern-nav-list__item" key={id + path}>
                 <NavLink to={path} exact>
                   {title}
                   {status && (
@@ -50,7 +50,7 @@ function NavList({ items }) {
             ),
         )}
       </ul>
-    </NavListStyled>
+    </nav>
   );
 }
 

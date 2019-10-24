@@ -1,0 +1,36 @@
+.dtd-typography-children-demo-wrapper {
+  padding: 1rem 1rem 0;
+
+  p {
+    line-height: inherit;
+  }
+
+  blockquote::first-line {
+    font-weight: 800;
+  }
+
+  blockquote[contenteditable] {
+    border-top: 1px dashed transparent;
+    border-right: 1px dashed transparent;
+    border-bottom: 1px dashed transparent;
+    transition: all var(--anim-base);
+    &:focus {
+      outline: none;
+    }
+  }
+
+  blockquote[contenteditable]:hover {
+    border-top: 1px dashed var(--c-gray-light);
+    border-right: 1px dashed var(--c-gray-light);
+    border-bottom: 1px dashed var(--c-gray-light);
+  }
+
+  [contenteditable]:not(blockquote) {
+    border: 1px dashed transparent;
+    transition: all var(--anim-base);
+  }
+
+  [contenteditable]:not(blockquote):hover {
+    border: 1px dashed var(--c-gray-light);
+  }
+}

@@ -1,0 +1,10 @@
+.page-builder-landing-page__two-up {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 2.25rem;
+
+  &.page-builder-landing-page__two-up > * {
+    width: 48%;
+  }
+}

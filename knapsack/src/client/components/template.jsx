@@ -20,7 +20,7 @@ import iframeResizer from 'iframe-resizer/js/iframeResizer'; // https://www.npmj
 import { KnapsackContext } from '@knapsack/core';
 import shortid from 'shortid';
 import { getTemplateUrl } from '../data';
-import { IFrameWrapper, Resizable, SizeTab } from './template.styles';
+import './template.scss';
 
 function Template({
   templateId,
@@ -139,12 +139,14 @@ function Template({
 
   if (isResizable) {
     return (
-      <IFrameWrapper ref={resizeRef}>
-        <Resizable>
+      <div className="template__iframe-wrapper" ref={resizeRef}>
+        <div className="template__resizable">
           {content}
-          {width && <SizeTab>{width}px</SizeTab>}
-        </Resizable>
-      </IFrameWrapper>
+          {width && (
+            <div className="template__resiable__size-tab">{width}px</div>
+          )}
+        </div>
+      </div>
     );
   }
   return content;

@@ -15,11 +15,11 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import { BordersDemoBox } from './borders-page.styles';
 import makeDesignTokensPage, {
   propTypes,
 } from '../../utils/make-design-tokens-page';
 import PageWithSidebar from '../../layouts/page-with-sidebar';
+import './borders-page.scss';
 
 function BordersPage(props) {
   const {
@@ -38,7 +38,8 @@ function BordersPage(props) {
           <div>
             <h3>Border Color</h3>
             {borderColors.map(borderColor => (
-              <BordersDemoBox
+              <div
+                className="borders-page__demo-box"
                 key={borderColor.name}
                 style={{
                   borderColor: borderColor.value,
@@ -49,7 +50,7 @@ function BordersPage(props) {
                 <h4>{borderColor.name}</h4>
                 <h5>Value: {borderColor.value}</h5>
                 {borderColor.comment && <p>{borderColor.comment}</p>}
-              </BordersDemoBox>
+              </div>
             ))}
           </div>
         )}
@@ -60,7 +61,8 @@ function BordersPage(props) {
           <div>
             <h3>Border Radius</h3>
             {borderRadii.map(borderRadius => (
-              <BordersDemoBox
+              <div
+                className="borders-page__demo-box"
                 key={borderRadius.name}
                 style={{
                   borderRadius: borderRadius.value,
@@ -70,7 +72,7 @@ function BordersPage(props) {
                 <h4>{borderRadius.name}</h4>
                 <h5>Value: {borderRadius.value}</h5>
                 {borderRadius.comment && <p>{borderRadius.comment}</p>}
-              </BordersDemoBox>
+              </div>
             ))}
           </div>
         )}
@@ -81,7 +83,8 @@ function BordersPage(props) {
           <div>
             <h3>Border Style</h3>
             {borderStyles.map(borderStyle => (
-              <BordersDemoBox
+              <div
+                className="borders-page__demo-box"
                 key={borderStyle.name}
                 style={{
                   // borderStyle: borderStyle.value,
@@ -91,7 +94,7 @@ function BordersPage(props) {
                 <h4>{borderStyle.name}</h4>
                 <h5>Value: {borderStyle.value}</h5>
                 {borderStyle.comment && <p>{borderStyle.comment}</p>}
-              </BordersDemoBox>
+              </div>
             ))}
           </div>
         )}

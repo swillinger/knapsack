@@ -32,18 +32,9 @@ import {
   LoadableVariationDemo,
 } from '../../loadable-components';
 // import DosAndDonts from '../../components/dos-and-donts';
-import {
-  FlexWrapper,
-  DemoGridControls,
-  OverviewWrapper,
-} from './pattern-view-page.styles';
-import {
-  DemoGrid,
-  DemoStage,
-  SchemaFormWrapper,
-  SchemaFormWrapperInner,
-} from './pattern-stage.styles';
 import { gqlQuery, getTemplateUrl } from '../../data';
+import './template-view.scss';
+import './shared/demo-grid-controls.scss';
 
 const patternQuery = gql`
   query TemplateView($id: ID) {
@@ -179,14 +170,40 @@ class TemplateView extends Component {
 
     const showSchemaForm = this.props.isSchemaFormShown && hasSchema;
 
+    const calculateDemoStageWidth = size => {
+      switch (size) {
+        case 's':
+          return '33%';
+        case 'm':
+          return '50%';
+        case 'l':
+          return '67%';
+        default:
+          return '100%';
+      }
+    };
+
+    const calculateSchemaFormWidth = size => {
+      switch (size) {
+        case 's':
+          return '67%';
+        case 'm':
+          return '50%';
+        case 'l':
+          return '33%';
+        default:
+          return '100%';
+      }
+    };
+
     return (
       <>
-        <OverviewWrapper>
-          <FlexWrapper>
+        <div className="template-view__overview-wrapper">
+          <div className="template-view__flex-wrapper">
             {!this.props.isVerbose && this.props.isTitleShown && (
               <h3>{title}</h3>
             )}
-            <DemoGridControls>
+            <div className="pattern-view-demo-grid-controls">
               <Button
                 onClick={() => {
                   getTemplateUrl({
@@ -269,11 +286,25 @@ class TemplateView extends Component {
                   </div>
                 </div>
               )}
-            </DemoGridControls>
-          </FlexWrapper>
-
-          <DemoGrid size={showSchemaForm ? this.props.demoSize : 'full'}>
-            <DemoStage size={showSchemaForm ? this.props.demoSize : 'full'}>
+            </div>
+          </div>
+          <div
+            className="template-view__demo-grid"
+            style={{
+              display:
+                (showSchemaForm ? this.props.demoSize : 'full') === 'full'
+                  ? 'block'
+                  : 'flex',
+            }}
+          >
+            <div
+              className="template-view__demo-stage"
+              style={{
+                width: calculateDemoStageWidth(
+                  showSchemaForm ? this.props.demoSize : 'full',
+                ),
+              }}
+            >
               <Template
                 patternId={this.props.id}
                 templateId={this.props.templateId}
@@ -281,10 +312,21 @@ class TemplateView extends Component {
                 data={data}
                 isResizable
               />
-            </DemoStage>
+            </div>
             {showSchemaForm && (
-              <SchemaFormWrapper size={this.props.demoSize}>
-                <SchemaFormWrapperInner size={this.props.demoSize}>
+              <div
+                className="template-view__schema-form"
+                style={{
+                  width: calculateSchemaFormWidth(this.props.demoSize),
+                }}
+              >
+                <div
+                  className="template-view__schema-form__inner"
+                  size={this.props.demoSize}
+                  style={{
+                    position: this.props.demoSize === 'full' ? 'static' : '',
+                  }}
+                >
                   <h4>Edit Form</h4>
                   <SchemaForm
                     schema={schema}
@@ -297,11 +339,11 @@ class TemplateView extends Component {
                     uiSchema={uiSchema}
                     isInline={isInline}
                   />
-                </SchemaFormWrapperInner>
-              </SchemaFormWrapper>
+                </div>
+              </div>
             )}
-          </DemoGrid>
-        </OverviewWrapper>
+          </div>
+        </div>
 
         {this.props.isCodeBlockShown && !hideCodeBlock && (
           <div style={{ marginBottom: '1rem' }}>

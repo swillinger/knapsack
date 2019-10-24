@@ -20,7 +20,7 @@
     "color-no-invalid-hex": true,
     "color-no-hex": true,
     "selector-max-id": 0,
-    "selector-max-class": 2,
+    "selector-max-class": 3,
     "no-duplicate-selectors": true,
     "block-no-empty": true,
     "block-closing-brace-newline-before": "always-multi-line",

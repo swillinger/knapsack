@@ -1,0 +1,52 @@
+@import '../global/breakpoints';
+
+.home-splash {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+    text-align: right;
+    @media screen and (min-width: $bp-small) {
+      padding: 2rem;
+    }
+
+    &__eyebrow {
+      color: var(--c-gray-dark);
+      margin: 0 0 -0.25rem;
+      font-size: 3.75vw;
+      @media screen and (min-width: 600px) {
+        font-size: 2.75vw;
+      }
+      @media screen and (min-width: 1000px) {
+        margin: 0;
+      }
+    }
+
+    h1 {
+      line-height: 1;
+      @media screen and (min-width: 900px) {
+        font-size: 170px !important;
+      }
+    }
+
+    &__subtitle {
+      font-size: 4vw;
+      @media screen and (min-width: 600px) {
+        font-size: 3vw;
+      }
+    }
+
+    p {
+      margin-top: -1rem;
+      font-size: 3vw;
+      @media screen and (min-width: 600px) {
+        font-size: 2vw;
+      }
+    }
+  }
+}

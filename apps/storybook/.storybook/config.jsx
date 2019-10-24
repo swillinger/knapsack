@@ -2,7 +2,6 @@ import React from 'react';
 import { configure, addDecorator } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { KnapsackContextConsumer } from '@knapsack/core';
-import { ThemeProvider } from 'styled-components';
 
 const req = require.context('../stories', true, /\.story\.jsx$/);
 
@@ -12,13 +11,7 @@ function loadStories() {
 
 addDecorator(story => (
   <KnapsackContextConsumer>
-    {({ theme }) => (
-      <ThemeProvider theme={theme}>
-        <div style={{ fontSize: theme.globals.fontSize, maxWidth: 1100 }}>
-          {story()}
-        </div>
-      </ThemeProvider>
-    )}
+    <div style={{ fontSize: '18px', maxWidth: 1100 }}>{story()}</div>
   </KnapsackContextConsumer>
 ));
 

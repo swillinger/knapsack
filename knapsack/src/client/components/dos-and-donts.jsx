@@ -17,18 +17,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import DosAndDontsPanel from './dos-and-donts-panel';
-import { DosAndDontsWrapper } from './dos-and-donts.styles';
+import './dos-and-donts.scss';
 
 const DosAndDonts = props => (
   <div>
     {props.title && <h4>{props.title}</h4>}
     {props.description && <p>{props.description}</p>}
-    <DosAndDontsWrapper>
+    <div className="dos-and-donts__wrapper">
       {props.items &&
         props.items.map(item => (
           <DosAndDontsPanel key={item.image} item={item} />
         ))}
-    </DosAndDontsWrapper>
+    </div>
   </div>
 );
 

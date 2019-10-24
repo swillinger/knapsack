@@ -19,15 +19,15 @@ import PropTypes from 'prop-types';
 import Header from '../components/header';
 import Footer from '../components/footer';
 import ErrorCatcher from '../utils/error-catcher';
-import { PageLayoutWithoutSidebar } from './page-without-sidebar.styles';
+import './page-without-sidebar.scss';
 
 function PageWithoutSidebar({ children, ...rest }) {
   return (
-    <PageLayoutWithoutSidebar>
+    <div className="page-without-sidebar">
       <Header {...rest} />
       <ErrorCatcher>{children}</ErrorCatcher>
       <Footer />
-    </PageLayoutWithoutSidebar>
+    </div>
   );
 }
 

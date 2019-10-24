@@ -1,0 +1,17 @@
+.k-clear-filter-button {
+  border: 1px solid var(--c-gray-xlight);
+  border-left: none;
+  height: 33px;
+  width: 33px;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  & > i {
+    opacity: 0.5;
+  }
+}

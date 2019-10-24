@@ -1,6 +1,6 @@
 import React from 'react';
 import { demoPropTypes } from './utils';
-import { BordersDemoBox } from './styles';
+import './shared/border-demo-box.scss';
 
 export const BorderStyleDemo = ({ tokens }) => {
   if (!tokens) return null;
@@ -11,7 +11,8 @@ export const BorderStyleDemo = ({ tokens }) => {
         <code>: {token.value}</code>
       </h4>
       {token.comment && <small>{token.comment}</small>}
-      <BordersDemoBox
+      <div
+        className="dtd-border-demo-box"
         style={{
           border: `1px ${token.value} black`,
         }}

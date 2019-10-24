@@ -28,11 +28,7 @@ import {
 import { connectToContext, contextPropTypes } from '@knapsack/core';
 import Template from '../../components/template';
 import { DragTypes } from './DragTypes';
-import {
-  PlaygroundIcon,
-  PlaygroundIconWrapper,
-  PlaygroundSliceWrapper,
-} from './page-builder.styles';
+import './page-builder-slice.scss';
 
 const PageBuilderSlice = ({
   moveUp,
@@ -53,37 +49,52 @@ const PageBuilderSlice = ({
   connectDragSource(
     connectDropTarget(
       <div>
-        <PlaygroundSliceWrapper
-          active={isBeingEdited}
-          hasVisibleControls={hasVisibleControls}
-          isChanged={isChanged}
+        <div
+          className={`page-builder-slice ${
+            isChanged ? 'page-builder-slice--changed' : ''
+          }`}
+          style={{
+            border:
+              isBeingEdited && hasVisibleControls
+                ? 'solid 1px var(--c-active)'
+                : 'none',
+          }}
         >
-          <PlaygroundIconWrapper
-            active={isBeingEdited}
-            className="ei-content-block__button-tray"
-            hasVisibleControls={hasVisibleControls}
+          <div
+            className={`page-builder-slice__icon-wrapper ei-content-block__button-tray
+              ${
+                isBeingEdited ? 'page-builder-slice__icon-wrapper--active' : ''
+              }`}
+            style={{
+              display: hasVisibleControls ? 'block' : 'none',
+            }}
           >
-            <PlaygroundIcon
+            <div
+              className={`page-builder-slice__icon ${
+                isFirst ? 'page-builder-slice__icon--disabled' : ''
+              }`}
               onKeyPress={() => !isFirst && moveUp()}
               onClick={() => !isFirst && moveUp()}
               role="button"
               aria-label="move item up"
               tabIndex="0"
-              disabled={isFirst}
             >
               <FaChevronUp fill={isFirst ? 'lightgrey' : 'black'} />
-            </PlaygroundIcon>
-            <PlaygroundIcon
+            </div>
+            <div
+              className={`page-builder-slice__icon ${
+                isLast ? 'page-builder-slice__icon--disabled' : ''
+              }`}
               onKeyPress={() => !isLast && moveDown()}
               onClick={() => !isLast && moveDown()}
               role="button"
               aria-label="move item down"
               tabIndex="0"
-              disabled={isLast}
             >
               <FaChevronDown fill={isLast ? 'lightgrey' : 'black'} />
-            </PlaygroundIcon>
-            <PlaygroundIcon
+            </div>
+            <div
+              className="page-builder-slice__icon"
               onKeyPress={showEditForm}
               onClick={showEditForm}
               role="button"
@@ -91,8 +102,9 @@ const PageBuilderSlice = ({
               tabIndex="0"
             >
               <FaEdit />
-            </PlaygroundIcon>
-            <PlaygroundIcon
+            </div>
+            <div
+              className="page-builder-slice__icon"
               onKeyPress={deleteMe}
               onClick={deleteMe}
               role="button"
@@ -100,11 +112,11 @@ const PageBuilderSlice = ({
               tabIndex="0"
             >
               <FaTrashAlt />
-            </PlaygroundIcon>
-            <PlaygroundIcon>
+            </div>
+            <div className="page-builder-slice__icon">
               <FaArrowsAlt />
-            </PlaygroundIcon>
-          </PlaygroundIconWrapper>
+            </div>
+          </div>
           <div style={{ flexGrow: 1 }}>
             <Template
               templateId={templateId}
@@ -113,7 +125,7 @@ const PageBuilderSlice = ({
               isResizable={false}
             />
           </div>
-        </PlaygroundSliceWrapper>
+        </div>
       </div>,
     ),
   );

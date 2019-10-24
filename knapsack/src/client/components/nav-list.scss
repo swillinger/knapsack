@@ -1,0 +1,59 @@
+.pattern-nav-list {
+  li {
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+
+  a {
+    text-decoration: none;
+    margin-left: 20px;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  a[aria-current='page'] {
+    font-weight: bold;
+    &:before {
+      color: var(--c-active);
+      content: '>';
+      position: absolute;
+      left: 0;
+    }
+  }
+
+  h4 {
+    text-decoration: none;
+    a {
+      margin-left: 0;
+    }
+    a[aria-current='page']:before {
+      left: -20px;
+    }
+  }
+
+  &__item {
+    & > a {
+      line-height: 20px;
+      margin-top: 7px;
+    }
+
+    &--heading h4 {
+      margin-top: 1.5rem;
+    }
+    &--heading:first-child h4 {
+      margin-top: 0.5rem;
+    }
+
+    &--subheading h4 {
+      font-size: 80%;
+      margin-left: 10px;
+      margin-top: 0.75rem;
+    }
+
+    &--heading + &--subheading > h4 {
+      margin-top: 0;
+    }
+  }
+}

@@ -32,8 +32,7 @@ export default function CustomArrayField(props) {
                     element.index,
                     element.index - 1,
                   )}
-                  role="button"
-                  aria-label="move item up"
+                  ariaLabel="move item up"
                   tabIndex="0"
                 />
                 <FormIconButton
@@ -47,8 +46,7 @@ export default function CustomArrayField(props) {
                     element.index,
                     element.index + 1,
                   )}
-                  role="button"
-                  aria-label="move item down"
+                  ariaLabel="move item down"
                   tabIndex="0"
                 />
                 <FormIconButton
@@ -56,8 +54,7 @@ export default function CustomArrayField(props) {
                   backgroundImage={`url(${remove})`}
                   onClick={element.onDropIndexClick(element.index)}
                   onKeyPress={element.onDropIndexClick(element.index)}
-                  role="button"
-                  aria-label="remove item"
+                  ariaLabel="remove item"
                   tabIndex="0"
                 />
               </FormIconTray>
@@ -71,8 +68,7 @@ export default function CustomArrayField(props) {
               }}
               onClick={props.onAddClick}
               onKeyPress={props.onAddClick}
-              role="button"
-              aria-label="add new item"
+              ariaLabel="add new item"
               tabIndex="0"
             />
           </FormIconTray>

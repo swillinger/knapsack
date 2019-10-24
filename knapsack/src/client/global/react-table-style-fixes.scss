@@ -1,0 +1,42 @@
+/* React Table Styling Fixes */
+
+/* stylelint-disable selector-max-class */
+.ReactTable .rt-table {
+  .rt-thead.-header {
+    box-shadow: none;
+    border-bottom: 1px solid var(--c-gray-xlight);
+    font-weight: bold;
+  }
+
+  .rt-th.rt-resizable-header {
+    background: var(--c-gray-xxlight);
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    color: var(--c-blue);
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
+
+    &.-sort-asc {
+      box-shadow: none;
+      border-top: 3px solid var(--c-blue);
+    }
+
+    &.-sort-desc {
+      box-shadow: none;
+      border-bottom: 3px solid var(--c-blue);
+    }
+  }
+  .rt-thead.-filters {
+    background: var(--c-gray-xxlight);
+  }
+  .rt-tbody {
+    .rt-td:first-child {
+      background: var(--c-gray-xxlight);
+      color: var(--c-blue);
+      font-weight: bold;
+    }
+  }
+}

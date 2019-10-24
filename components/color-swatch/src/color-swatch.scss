@@ -1,0 +1,59 @@
+.color-swatch {
+  width: 49%;
+  margin-bottom: 10px;
+  border: solid 1px var(--c-gray);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  h5 {
+    margin: 0 0 0.5rem;
+  }
+
+  &__swatch-color-gradient-background {
+    height: 100px;
+    margin-top: auto;
+    background-image: linear-gradient(
+      to right,
+      hsl(0, 0%, 0%),
+      hsl(0, 0%, 0%) 9%,
+      hsl(0, 0%, 10%) 9%,
+      hsl(0, 0%, 10%) 18%,
+      hsl(0, 0%, 20%) 18%,
+      hsl(0, 0%, 20%) 27%,
+      hsl(0, 0%, 30%) 27%,
+      hsl(0, 0%, 30%) 36%,
+      hsl(0, 0%, 40%) 36%,
+      hsl(0, 0%, 40%) 45%,
+      hsl(0, 0%, 50%) 45%,
+      hsl(0, 0%, 50%) 54%,
+      hsl(0, 0%, 60%) 54%,
+      hsl(0, 0%, 60%) 63%,
+      hsl(0, 0%, 70%) 63%,
+      hsl(0, 0%, 70%) 72%,
+      hsl(0, 0%, 80%) 72%,
+      hsl(0, 0%, 80%) 81%,
+      hsl(0, 0%, 90%) 81%,
+      hsl(0, 0%, 90%) 90%,
+      hsl(0, 0%, 100%) 90%,
+      hsl(0, 0%, 100%)
+    );
+  }
+
+  &__swatch-info {
+    padding: 5px;
+    background-color: auto;
+  }
+
+  &__right-label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  &__swatches-wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+}

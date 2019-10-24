@@ -16,19 +16,34 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DosAndDontsPanelStyled } from './dos-and-donts.styles';
+import './dos-and-donts-panel.scss';
 
 export default function DosAndDontsPanel(props) {
   return (
-    <DosAndDontsPanelStyled do={props.item.do}>
+    <figure
+      className="dos-and-donts-panel"
+      style={{
+        borderBottomColor: props.item.do
+          ? 'var(--c-green-ghost)'
+          : 'var(--c-red-ghost)',
+      }}
+    >
       <div>
         <img alt="" src={props.item.image} />
         <figcaption>
-          <strong>{props.item.do ? 'Do: ' : "Don't: "}</strong>
+          <strong
+            style={{
+              color: props.item.do
+                ? 'var(--c-green-ghost)'
+                : 'var(--c-red-ghost)',
+            }}
+          >
+            {props.item.do ? 'Do: ' : "Don't: "}
+          </strong>
           {props.item.caption}
         </figcaption>
       </div>
-    </DosAndDontsPanelStyled>
+    </figure>
   );
 }
 

@@ -1,0 +1,24 @@
+.release-notes {
+  padding: 1rem;
+
+  h3 {
+    margin-bottom: 0.5rem;
+  }
+
+  h5 {
+    margin-bottom: 1rem;
+  }
+
+  p {
+    margin-bottom: 0;
+    line-height: 2;
+  }
+
+  &__commit-hash {
+    background-color: var(--c-gray-light);
+    padding: 0.35rem 0.75rem;
+    color: var(--c-black) !important;
+    border-radius: 0;
+    width: 92px;
+  }
+}

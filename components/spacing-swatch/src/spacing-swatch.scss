@@ -1,0 +1,25 @@
+.spacing-swatch {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+
+  &:nth-child(2n) {
+    background-color: var(--c-gray-xxlight);
+  }
+
+  span + div {
+    width: 75%;
+  }
+
+  h5 {
+    margin: 0;
+    font-weight: normal;
+  }
+
+  &__spacing-outer {
+    box-sizing: border-box;
+    background-color: var(--c-yellow);
+    border: 1px solid var(--c-black);
+  }
+}

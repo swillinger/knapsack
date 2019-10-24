@@ -22,16 +22,14 @@ import {
   TypeToFilter,
   TypeToFilterInputWrapper,
 } from '@knapsack/atoms';
-import { FaTimes } from 'react-icons/fa';
+import SchemaForm from '@knapsack/schema-form';
+import { Link } from 'react-router-dom';
 import PageBuilderEditForm from './page-builder-edit-form';
 import PlaygroundSidebarPatternListItem from './page-builder-pattern-list-item';
-import {
-  PatternListWrapper,
-  PlaygroundStyledSchemaForm,
-  PlaygroundStyledLink,
-} from './page-builder.styles';
 import { PageBuilderContext } from './page-builder-context';
 import { BASE_PATHS } from '../../../lib/constants';
+import './page-builder-sidebar.scss';
+import './shared/playground-schema-form.scss';
 
 // Export of allowed sidebarContent states
 export const SIDEBAR_DEFAULT = 'default';
@@ -93,23 +91,20 @@ class PageBuilderSidebar extends Component {
                 onChange={event => this.props.handleFilterChange(event)}
               />
               <ClearFilterButton
-                role="button"
                 onClick={this.props.handleFilterReset}
                 onKeyPress={this.props.handleFilterReset}
                 isVisible={!!this.props.filterTerm}
-              >
-                <FaTimes />
-              </ClearFilterButton>
+              />
             </TypeToFilterInputWrapper>
           </TypeToFilter>
-          <PatternListWrapper>
+          <ul className="page-builder-sidebar__pattern-list-wrapper">
             {items.map(pattern => (
               <PlaygroundSidebarPatternListItem
                 key={pattern.id}
                 pattern={pattern}
               />
             ))}
-          </PatternListWrapper>
+          </ul>
 
           <Button
             onClick={this.props.handleCancelAddSlice}
@@ -125,7 +120,8 @@ class PageBuilderSidebar extends Component {
     return (
       <div>
         <h4>Page Builder</h4>
-        <PlaygroundStyledSchemaForm
+        <SchemaForm
+          className="playground-schema-form"
           onChange={({ formData }) => this.props.handleMetaFormChange(formData)}
           formData={this.props.metaFormData}
           schema={{
@@ -171,12 +167,13 @@ class PageBuilderSidebar extends Component {
               Save (disabled)
             </Button>
           )}
-          <PlaygroundStyledLink
+          <Link
+            className="page-builder-sidebar__styled-link"
             to={BASE_PATHS.PAGES}
             style={{ marginLeft: '15px' }}
           >
             Back
-          </PlaygroundStyledLink>
+          </Link>
         </div>
       </div>
     );

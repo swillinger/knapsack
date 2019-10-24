@@ -5,6 +5,7 @@
 describe('Site Navigation', () => {
   it('Navigates between main menu items', () => {
     cy.visit('/');
+    cy.get('.header').contains('Knapsack Demo');
     cy.contains('Knapsack Demo');
     // Take a snapshot for visual diffing
     cy.percySnapshot('homepage', { widths: [400, 1200] });

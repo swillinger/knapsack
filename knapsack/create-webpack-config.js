@@ -157,9 +157,6 @@ function createWebPackConfig(userConfig) {
       extensions: ['.ts', '.tsx', '.mjs', '.jsx', '.js', '.json', '.css'],
       mainFields: ['module', 'main'],
       modules: ['node_modules', resolve(__dirname, 'node_modules')],
-      alias: {
-        'styled-components': require.resolve('styled-components'),
-      },
     },
     // stats: 'none',
     plugins: [

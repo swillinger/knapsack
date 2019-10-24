@@ -17,12 +17,6 @@
 import React from 'react';
 import ColorSwatches from '@knapsack/color-swatch';
 import ColorContrastBlock from '@knapsack/color-contrast-block';
-import {
-  ColorsDemoBox,
-  TextColorDemo,
-  HrDemoWrapper,
-  HrDemo,
-} from './colors-page.styles';
 import makeDesignTokensPage, {
   propTypes,
 } from '../../utils/make-design-tokens-page';
@@ -46,7 +40,8 @@ function ColorsPage(props) {
         <div>
           <h3>Border Colors</h3>
           {borderColors.map(borderColor => (
-            <ColorsDemoBox
+            <div
+              className="colors-page__demo-box"
               key={borderColor.name}
               style={{
                 borderColor: borderColor.value,
@@ -57,7 +52,7 @@ function ColorsPage(props) {
               <h4>{borderColor.name}</h4>
               <h5>Value: {borderColor.value}</h5>
               {borderColor.comment && <p>{borderColor.comment}</p>}
-            </ColorsDemoBox>
+            </div>
           ))}
         </div>
       )}
@@ -88,7 +83,11 @@ function ColorsPage(props) {
         <div>
           <h3>Text Colors</h3>
           {textColors.map(textColor => (
-            <TextColorDemo key={textColor.name} color={textColor.value}>
+            <div
+              className="colors-page__text-color-demo"
+              style={{color: textColor.value}}
+              key={textColor.name}
+            >
               <h1>{textColor.name} H1</h1>
               <h2>{textColor.name} H2</h2>
               <h3>{textColor.name} H3</h3>
@@ -96,7 +95,7 @@ function ColorsPage(props) {
               <h5>{textColor.name} H5</h5>
               <p>Value: {textColor.value}</p>
               {textColor.comment && <p>{textColor.comment}</p>}
-            </TextColorDemo>
+            </div>
           ))}
         </div>
       )}
@@ -105,11 +104,14 @@ function ColorsPage(props) {
         <div>
           <h3>Hr Colors</h3>
           {hrColors.map(hrColor => (
-            <HrDemoWrapper key={hrColor.value}>
+            <div className="colors-page__hr-demo" key={hrColor.value}>
               <p>{hrColor.name}</p>
-              <HrDemo color={hrColor.value} />
+              <hr
+                className="colors-page__hr-demo__demo"
+                style={{color: hrColor.value}}
+              />
               {hrColor.comment && <p>{hrColor.comment}</p>}
-            </HrDemoWrapper>
+            </div>
           ))}
         </div>
       )}

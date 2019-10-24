@@ -18,17 +18,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connectToContext, contextPropTypes } from '@knapsack/core';
+import { PatternStatusIcon } from '@knapsack/atoms';
 import SmartGrid from '@knapsack/smart-grid';
-import {
-  StyledPatternGridListItem,
-  PatternGridListItemDescription,
-  PatternGridListItemTitle,
-  PatternGridListItemType,
-  PatternGridListItemHeader,
-  PatternGridList,
-} from './pattern-list.styles';
-import { PatternStatusIcon } from './atoms';
 import { BASE_PATHS } from '../../lib/constants';
+import './pattern-grid.scss';
 
 // @todo fix issue with pattern icons basepath
 // class PatternGridItem extends React.Component {
@@ -86,12 +79,12 @@ function PatternGridListItem({
 }) {
   const status = patternStatuses.find(p => p.id === statusId);
   return (
-    <StyledPatternGridListItem key={id}>
+    <li className="pattern-grid__list-item" key={id}>
       <Link to={path}>
-        <PatternGridListItemHeader>
-          <PatternGridListItemTitle>{title}</PatternGridListItemTitle>
-        </PatternGridListItemHeader>
-        <PatternGridListItemType>
+        <header className="pattern-grid__list-item__header">
+          <h3>{title}</h3>
+        </header>
+        <h6>
           Type: {type}
           {status && (
             <span>
@@ -100,12 +93,12 @@ function PatternGridListItem({
               <PatternStatusIcon color={status.color} title={status.title} />
             </span>
           )}
-        </PatternGridListItemType>
-        <PatternGridListItemDescription>
+        </h6>
+        <div className="pattern-grid__list-item__description">
           {description}
-        </PatternGridListItemDescription>
+        </div>
       </Link>
-    </StyledPatternGridListItem>
+    </li>
   );
 }
 
@@ -115,7 +108,6 @@ function PatternGrid(props) {
     <>
       {enablePatternIcons ? (
         <SmartGrid
-          className="pattern-grid-wrapper"
           row-items-xsmall={2}
           row-items-large={3}
           row-items-xlarge={5}
@@ -129,7 +121,7 @@ function PatternGrid(props) {
           {/* ))} */}
         </SmartGrid>
       ) : (
-        <PatternGridList>
+        <ul className="pattern-grid__list">
           {props.patterns.map(pattern => (
             <PatternGridListItem
               key={pattern.id}
@@ -137,7 +129,7 @@ function PatternGrid(props) {
               patternStatuses={props.patternStatuses}
             />
           ))}
-        </PatternGridList>
+        </ul>
       )}
     </>
   );

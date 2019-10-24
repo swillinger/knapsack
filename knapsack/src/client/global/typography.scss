@@ -1,0 +1,100 @@
+html {
+  font-size: calc(var(--base-font-size) * 0.77);
+
+  @media screen and (min-width: $bp-small) {
+    font-size: calc(var(--base-font-size) * 0.88);
+  }
+  @media screen and (min-width: $bp-xlarge) {
+    font-size: var(--base-font-size);
+  }
+}
+
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6 {
+  font-family: var(--font-family-medium);
+  color: var(--c-blue);
+  margin: 0 0 1rem;
+  line-height: 1.25;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+h1, .h1 {
+  font-size: 2.65rem;
+}
+
+h2, .h2 {
+  font-size: 1.65rem;
+}
+
+h3, .h3 {
+  font-size: 1.45rem;
+}
+
+h4, .h4 {
+  font-size: 1.25rem;
+}
+
+h5, .h5 {
+  font-size: 1rem;
+}
+
+h6, .h6 {
+  font-size: 0.875rem;
+}
+
+p {
+  color: var(--c-text-black);
+  font-family: var(--font-family-medium);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0 0 1.5rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+
+ul, ol {
+  margin: 0 0 1rem;
+}
+
+li {
+  margin: 0 0 1rem;
+}
+
+a, a:link {
+  color: var(--c-blue);
+  text-decoration: underline;
+  transition: color 0.3s linear;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: var(--c-blue-light);
+    text-decoration: underline;
+  }
+
+  &:visited {
+    color: var(--c-blue);
+    text-decoration: underline;
+  }
+}
+
+blockquote {
+  font-style: italic;
+  border-left: 3px solid var(--c-gray-xlight);
+  margin: 2rem;
+  padding: 2.25rem 4rem;
+}

@@ -20,19 +20,8 @@ import gql from 'graphql-tag';
 import Spinner from '@knapsack/spinner';
 import { KnapsackContext } from '@knapsack/core';
 import { Link } from 'react-router-dom';
-import {
-  FooterWrapper,
-  FooterMenu,
-  FooterMenuItem,
-  FooterInner,
-  FooterBuiltOn,
-  FooterBuiltOnImg,
-  FooterBuiltOnInner,
-  // FooterCreatedByImg,
-  SubFooterWrapper,
-} from './footer.styles';
 import knapsackBranding from '../assets/knapsack-bg-black-trans.svg';
-// import createdBy from '../assets/created-by.svg';
+import './footer.scss';
 
 const query = gql`
   {
@@ -67,45 +56,40 @@ class Footer extends Component {
             // settings: { parentBrand },
           } = data;
           return (
-            <FooterWrapper>
-              <FooterInner>
-                <FooterMenu>
+            <footer className="footer">
+              <div className="footer__inner-wrapper">
+                <ul className="footer__menu">
                   {this.context.permissions.includes('write') && (
-                    <FooterMenuItem>
+                    <li className="footer__menu-item">
                       <Link to="/settings">Site Settings</Link>
-                    </FooterMenuItem>
+                    </li>
                   )}
-                  <FooterMenuItem>
+                  <li className="footer__menu-item">
                     <a href="https://knapsack.basalt.io/">Knapsack Docs</a>
-                  </FooterMenuItem>
-                  <FooterMenuItem>
+                  </li>
+                  <li className="footer__menu-item">
                     <a href="/demo-urls">Demo URLs</a>
-                  </FooterMenuItem>
+                  </li>
                   {changelog && (
-                    <FooterMenuItem>
+                    <li className="footer__menu-item">
                       <Link to="/changelog">Changelog</Link>
-                    </FooterMenuItem>
+                    </li>
                   )}
-                </FooterMenu>
-                <FooterBuiltOn>
+                </ul>
+                <div className="footer__built-on">
                   <a
                     href="https://knapsack.basalt.io"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <FooterBuiltOnImg src={knapsackBranding} alt="Knapsack" />
+                    <img src={knapsackBranding} alt="Knapsack" />
                   </a>
-                  <FooterBuiltOnInner>v{knapsackVersion}</FooterBuiltOnInner>
-                  {/* <a */}
-                  {/*  href="https://basalt.io" */}
-                  {/*  target="_blank" */}
-                  {/*  rel="noopener noreferrer" */}
-                  {/* > */}
-                  {/*  <FooterCreatedByImg src={createdBy} alt="Created by" /> */}
-                  {/* </a> */}
-                </FooterBuiltOn>
-              </FooterInner>
-              <SubFooterWrapper>
+                  <div className="footer__built-on__inner">
+                    v{knapsackVersion}
+                  </div>
+                </div>
+              </div>
+              <div className="footer__sub-footer">
                 <p>
                   Download or use of this software is governed by our license
                   agreement available{' '}
@@ -117,8 +101,8 @@ class Footer extends Component {
                     here
                   </a>
                 </p>
-              </SubFooterWrapper>
-            </FooterWrapper>
+              </div>
+            </footer>
           );
         }}
       </Query>

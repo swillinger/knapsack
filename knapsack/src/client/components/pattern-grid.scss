@@ -1,0 +1,39 @@
+.pattern-grid__list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pattern-grid__list-item {
+  margin-top: var(--size-m);
+  border-left: 3px solid var(--c-gray-xlight);
+  padding: var(--size-s) var(--size-m);
+  width: 50%;
+  display: inline-block;
+  vertical-align: top;
+
+  & > a {
+    text-decoration: none;
+    transition: all var(--anim-base);
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    & > h3 {
+      margin: 0 0.5rem 0 0;
+    }
+  }
+
+  h6 {
+    margin: 0;
+    color: var(--c-gray-xlight);
+  }
+
+  &__description {
+    line-height: 1.25;
+    font-size: calc(var(--base-font-size) * 0.88);
+    color: var(--c-gray-xlight);
+    font-style: italic;
+  }
+}

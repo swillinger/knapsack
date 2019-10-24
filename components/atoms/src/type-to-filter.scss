@@ -1,0 +1,9 @@
+.k-type-to-filter {
+  position: relative;
+  margin-bottom: 1rem;
+
+  & > .eyebrow {
+    margin-top: 0;
+    font-weight: bold;
+  }
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CubeOne, CubeTwo, SpinnerCore } from './spinner.styles';
+import './spinner.scss';
 
 const Spinner = props => {
   if (props.error) {
@@ -10,11 +10,14 @@ const Spinner = props => {
   return (
     <div>
       <br />
-      <SpinnerCore>
-        <CubeOne />
+      <div className="spinner__core">
+        <div className="spinner__cube-one" />
         {/* @todo the added styles below are for a bug introduced in v4 of sytled components */}
-        <CubeTwo style={{ animationDelay: '-0.9s' }} />
-      </SpinnerCore>
+        <div
+          className="spinner__cube-two"
+          style={{ animationDelay: '-0.9s' }}
+        />
+      </div>
       <br />
       {props.text && <h2>{props.text}</h2>}
     </div>

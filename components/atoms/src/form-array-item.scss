@@ -1,0 +1,34 @@
+/* stylelint-disable selector-max-class */
+/* stylelint-disable max-nesting-depth */
+.k-form-array-item {
+  padding: 0.25rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &:nth-child(odd) {
+    background-color: var(--c-gray-xlight);
+  }
+
+  .field {
+    padding-right: 0.25rem;
+    > div.custom-object {
+      display: flex;
+      justify-content: left;
+      flex-wrap: wrap;
+      > div.custom-object-item {
+        padding: 0;
+        flex-grow: 1;
+        + .custom-object-item {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  &:not(:last-child) {
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--c-gray-xlight);
+  }
+}

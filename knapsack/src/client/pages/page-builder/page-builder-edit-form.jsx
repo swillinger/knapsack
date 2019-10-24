@@ -17,7 +17,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@knapsack/atoms';
-import { PlaygroundStyledSchemaForm } from './page-builder.styles';
+import SchemaForm from '@knapsack/schema-form';
+import './shared/playground-schema-form.scss';
 
 const PageBuilderEditForm = ({
   schema,
@@ -31,7 +32,8 @@ const PageBuilderEditForm = ({
   <div>
     <h4>Edit</h4>
     {schema && (
-      <PlaygroundStyledSchemaForm
+      <SchemaForm
+        className="playground-schema-form"
         schema={schema}
         uiSchema={uiSchema}
         formData={data}

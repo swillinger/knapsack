@@ -393,5 +393,11 @@
       }
     ],
     "hasVisibleControls": false
+  },
+  "AtFSAyWd": {
+    "id": "AtFSAyWd",
+    "title": "My New Example",
+    "path": "/pages/AtFSAyWd",
+    "slices": []
   }
 }

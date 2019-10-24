@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import './status-message.scss';
 
 const statusTypes = ['success', 'info', 'warning', 'error'];
 const statusColorSets = {
@@ -26,20 +26,20 @@ const statusColorSets = {
   },
 };
 
-const StatusMessageWrapper = styled.aside`
-  padding: ${({ theme }) =>
-    `${theme.globals.spacing.s} ${theme.globals.spacing.m} ${theme.globals.spacing.xs}`};
-  margin-bottom: ${({ theme }) => theme.globals.spacing.l};
-  border: solid 2px ${({ type }) => statusColorSets[type].border};
-  background-color: ${({ type }) => statusColorSets[type].bg};
-  color: ${({ type }) => statusColorSets[type].text};
-  line-height: 1;
-`;
-
 export function StatusMessage(props) {
   const type = statusTypes.includes(props.type) ? props.type : 'info';
   return (
-    <StatusMessageWrapper type={type}>{props.message}</StatusMessageWrapper>
+    <aside
+      className="k-status-message"
+      type={type}
+      style={{
+        border: `2px solid ${statusColorSets[type].border}`,
+        backgroundColor: statusColorSets[type].bg,
+        color: statusColorSets[type].text,
+      }}
+    >
+      {props.message}
+    </aside>
   );
 }
 

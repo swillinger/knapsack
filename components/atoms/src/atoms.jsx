@@ -1,41 +1,19 @@
-import styled from 'styled-components';
-
-export * from './html-tags';
-export * from './inputs-and-forms';
+export * from './button';
+export * from './block-quote-wrapper';
+export * from './details';
+export * from './text-input-wrapper';
+export * from './radio-input-wrapper';
+export * from './checkbox-input-wrapper';
+export * from './form-icon-button';
+export * from './form-icon-tray';
+export * from './form-array-item';
+export * from './toggle';
 export * from './status-message';
+export * from './select-styled-wrapper';
 export * from './select';
+export * from './type-to-filter-input-wrapper';
 export * from './type-to-filter';
-export * from './demos';
+export * from './clear-filter-button';
+export * from './demo-block';
 export * from './tooltip';
-
-// Checkerboard background, used in demo stages
-export const Checkerboard = styled.div`
-  background-image: linear-gradient(
-      45deg,
-      rgb(230, 230, 230) 25%,
-      transparent 25%
-    ),
-    linear-gradient(-45deg, rgb(230, 230, 230) 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, rgb(230, 230, 230) 75%),
-    linear-gradient(-45deg, transparent 75%, rgb(230, 230, 230) 75%);
-  background-size: 20px 20px;
-  background-position: 0px 0px, 0px 10px, 10px -10px, -10px 0px;
-  padding: ${props => props.bleed && props.bleed};
-  > div {
-    display: flex;
-    justify-content: center;
-    background-color: rgba(77, 77, 77, 0.15);
-    padding: 10px;
-  }
-`;
-
-// TwoUp is a simple two item flexbox horizontal layout
-export const TwoUp = styled.div`
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 2.25rem;
-  && > * {
-    width: 48%;
-  }
-`;
+export * from './pattern-status-icon';

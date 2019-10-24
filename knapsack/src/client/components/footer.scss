@@ -1,0 +1,92 @@
+@import '../global/breakpoints';
+
+.footer {
+  padding: 1.5rem;
+  border-top: 1px solid var(--c-black);
+  background-color: var(--c-bg-dark);
+  color: var(--c-text-white);
+  @media (max-width: $bp-medium) {
+    padding: 1rem;
+  }
+  p,
+  &.footer a { // double selector for override
+    color: var(--c-text-white);
+  }
+  ul,
+  li {
+    margin-bottom: var(--size-xxs);
+  }
+
+  &__inner-wrapper {
+    display: flex;
+    justify-content: space-between;
+    @media (max-width: $bp-medium) {
+      flex-direction: column;
+    }
+  }
+
+  &__menu {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    @media (max-width: $bp-medium) {
+      display: block;
+      text-align: center;
+    }
+  }
+
+  &__menu-item {
+    display: inline-block;
+    & + li {
+      margin-left: 1.5rem;
+    }
+    a:link,
+    a:visited {
+      text-decoration: underline;
+    }
+    a:hover {
+      text-decoration: none;
+    }
+  }
+
+  &__built-on {
+    position: relative;
+    @media (max-width: $bp-medium) {
+      margin: 12px auto 0;
+    }
+
+    img {
+      height: 47px;
+      width: auto;
+      display: block;
+    }
+
+    &__inner {
+      font-size: 12px;
+      line-height: 1.25;
+      text-align: center;
+    }
+  }
+
+  &__sub-footer {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    @media (max-width: 649px) {
+      display: block;
+      text-align: center;
+      max-width: 225px;
+      margin: var(--size-m) auto 0;
+    }
+    p {
+      font-size: 0.65rem;
+      a {
+        text-decoration: underline;
+      }
+    }
+    p,
+    a {
+      color: var(--c-text-white);
+    }
+  }
+}

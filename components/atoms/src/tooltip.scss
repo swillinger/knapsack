@@ -1,0 +1,121 @@
+.k-tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  z-index: 5;
+
+  span {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    padding: 0.5rem;
+    min-width: 150px;
+    text-align: center;
+    transition: all 0.25s cubic-bezier(0, 0, 0.2, 1);
+    border: 1px solid var(--c-gray-xlight);
+    border-radius: 3px;
+    font-weight: 500;
+    box-shadow: 0 2px 1px var(--c-gray-light);
+    z-index: 4;
+    height: fit-content;
+
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-style: solid;
+    }
+  }
+
+  &:hover > span {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &[data-position='top'] {
+    span {
+      bottom: calc(100% + 10px);
+      left: calc(50% + 2px);
+      transform: translateX(-50%);
+      &:after {
+        bottom: -0.5em;
+        left: 50%;
+        transform: translateX(-50%);
+        border-width: 0.5em 0.5em 0 0.5em;
+        border-color: var(--c-white) transparent transparent transparent;
+        filter: drop-shadow(1px 2px 1px var(--c-gray-light));
+      }
+    }
+
+    &:hover > span {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  &[data-position='bottom'] {
+    span {
+      top: calc(100% + 1.5em);
+      left: 50%;
+      transform: translate3d(-50%, -15px, 0);
+      &:after {
+        top: -0.5em;
+        left: 50%;
+        transform: translate3d(-50%, 0, 0);
+        border-width: 0 0.5em 0.5em 0.5em;
+        border-color: transparent transparent var(--c-white) transparent;
+        filter: drop-shadow(1px -1px 1px var(--c-gray-light));
+      }
+    }
+
+    &:hover > span {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  &[data-position='left'] {
+    span {
+      top: calc(50% - 2px);
+      right: calc(100% + 2em);
+      transform: translate3d(15px, -50%, 0);
+      &:after {
+        top: 50%;
+        right: -0.5em;
+        transform: translate3d(0, -50%, 0);
+        border-width: 0.5em 0 0.5em 0.5em;
+        border-color: transparent transparent transparent var(--c-white);
+        filter: drop-shadow(2px 2px 1px var(--c-gray-light));
+      }
+    }
+
+    &:hover > span {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  &[data-position='right'] {
+    span {
+      top: calc(50% - 2px);
+      left: 100%;
+      transform: translate3d(15px, -50%, 0);
+
+      &:after {
+        top: 50%;
+        left: -0.5em;
+        transform: translate3d(0, -50%, 0);
+        border-width: 0.5em 0.5em 0.5em 0;
+        border-color: transparent var(--c-white) transparent transparent;
+        filter: drop-shadow(-2px 2px 1px var(--c-gray-light));
+      }
+    }
+
+    &:hover > span {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}

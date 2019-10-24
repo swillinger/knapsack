@@ -16,12 +16,12 @@
   },
   "peerDependencies": {
     "prop-types": "^15.0.0",
-    "react": "^16.8.0",
-    "styled-components": "^4.0.2"
+    "react": "^16.8.0"
   },
   "author": "Basalt (https://basalt.io/)",
   "dependencies": {
-    "@knapsack/core": "^1.5.2"
+    "react-icons": "3.7.0",
+    "shortid": "2.2.15"
   },
   "files": [
     "./dist"

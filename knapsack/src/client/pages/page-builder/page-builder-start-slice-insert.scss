@@ -1,0 +1,17 @@
+.page-builder-start-slice-insert {
+  text-align: center;
+  cursor: pointer;
+  padding: 1rem 1rem 0.6rem;
+  margin: 1rem 0;
+  transition: all 0.3s ease-in-out;
+  border: dashed 1px rgba(0,0,0,3);
+
+  &--active {
+    border: solid 1px var(--c-yellow);
+
+    &:hover,
+    &:active {
+      border: 1px dashed var(--c-yellow);
+    }
+  }
+}

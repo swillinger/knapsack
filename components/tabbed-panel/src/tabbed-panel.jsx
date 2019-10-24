@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getTypeColor } from '@knapsack/core';
-import {
-  ShadowWrap,
-  DemoStage,
-  DemoTab,
-  DemoTabsWrap,
-  FooterRegion,
-  HeaderRegion,
-} from './tabbed-panel.styles';
+import './tabbed-panel.scss';
 
 class TabbedPanel extends Component {
   constructor(props) {
@@ -31,7 +24,8 @@ class TabbedPanel extends Component {
     const tabs = this.props.items.map(item => {
       const isPropVariation = !!item.children.props.prop;
       return (
-        <DemoTab
+        <div
+          className="tabbed-panel__demo-tab"
           key={item.id}
           role="button"
           tabIndex={0}
@@ -48,7 +42,7 @@ class TabbedPanel extends Component {
           }}
         >
           {isPropVariation ? item.children.props.prop.title : item.title}
-        </DemoTab>
+        </div>
       );
     });
 
@@ -60,30 +54,51 @@ class TabbedPanel extends Component {
         }}
       >
         {item.header && (
-          <HeaderRegion
-            colorTheme={colorTheme}
-            colorThemeAccent={colorThemeAccent}
+          <div
+            className="tabbed-panel__header-region"
+            style={{
+              background: colorThemeAccent,
+              borderBottom: `10px solid ${colorTheme}`,
+            }}
           >
             {item.header}
-          </HeaderRegion>
+          </div>
         )}
         {item.children && (
-          <DemoStage colorTheme={colorTheme} bleed={this.props.bleed}>
+          <div
+            className="tabbed-panel__demo-stage"
+            style={{
+              padding: this.props.bleed,
+            }}
+          >
             {item.children}
             {item.notes && (
-              <FooterRegion colorTheme={colorTheme}>
-                <h5>Notes</h5>
+              <div
+                className="tabbed-panel__footer-region"
+                colorTheme={colorTheme}
+                style={{
+                  borderTop: `1px solid ${colorTheme}`,
+                }}
+              >
+                <h5 style={{ color: colorTheme }}>Notes</h5>
                 {item.notes}
-              </FooterRegion>
+              </div>
             )}
-          </DemoStage>
+          </div>
         )}
       </div>
     ));
     return (
       <div>
-        <DemoTabsWrap>{tabs}</DemoTabsWrap>
-        <ShadowWrap colorTheme={colorTheme}>{content}</ShadowWrap>
+        <div className="tabbed-panel__demo-tabs-wrap">{tabs}</div>
+        <div
+          className="tabbed-panel__shadow-wrap"
+          style={{
+            borderColor: colorTheme,
+          }}
+        >
+          {content}
+        </div>
       </div>
     );
   }

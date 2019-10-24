@@ -16,14 +16,11 @@
  */
 import React from 'react';
 import Spinner from '@knapsack/spinner';
-import {
-  DemoTransitionMove,
-  DemoTransitionOpacity,
-} from './transitions-page.styles';
 import makeDesignTokensPage, {
   propTypes,
 } from '../../utils/make-design-tokens-page';
 import PageWithSidebar from '../../layouts/page-with-sidebar';
+import './transitions-page.scss';
 
 function TransitionsPage(props) {
   const { animation: animations } = props.tokens;
@@ -51,18 +48,18 @@ function TransitionsPage(props) {
         Changes to opacity are an effective way of indicating that an element
         can be interacted with through a click or key press.
       </p>
-      <DemoTransitionOpacity>
+      <div className="transitions-page__transition-opacity-demo">
         <strong>Opacity</strong> (Hover to see effect)
-      </DemoTransitionOpacity>
+      </div>
       <br />
       <h4>Movement</h4>
       <p>
         Movement is an effective way to communicate actions, changes to
         application state, and draw the attention of a user.
       </p>
-      <DemoTransitionMove>
+      <div className="transitions-page__transition-move-demo">
         <strong>Move</strong> (Hover to see effect)
-      </DemoTransitionMove>
+      </div>
       <div>
         <h5>Loading Spinner Example</h5>
         <Spinner />

@@ -1,0 +1,11 @@
+.dtd-font-size {
+  &--listed {
+    border-bottom: 1px solid var(--c-gray-light);
+    padding-bottom: var(--size-m);
+    margin-bottom: var(--size-l);
+  }
+
+  blockquote::first-line {
+    font-weight: 800;
+  }
+}

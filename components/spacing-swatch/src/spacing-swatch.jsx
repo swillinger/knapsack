@@ -1,12 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connectToContext } from '@knapsack/core';
 import CopyToClipboard from '@knapsack/copy-to-clipboard';
-import { SpacingOuter, SpacingWrapper } from './spacing-swatch.styles';
+import './spacing-swatch.scss';
 
-const SpacingSwatch = ({ space, color }) => (
-  <SpacingWrapper>
-    <SpacingOuter space={space.value} color={color} />
+const SpacingSwatch = ({ space }) => (
+  <div className="spacing-swatch">
+    <span
+      className="spacing-swatch__spacing-outer"
+      style={{
+        height: space.value,
+        width: space.value,
+      }}
+    />
     <div>
       {space.code && (
         <h6>
@@ -18,7 +23,7 @@ const SpacingSwatch = ({ space, color }) => (
       )}
     </div>
     <div />
-  </SpacingWrapper>
+  </div>
 );
 
 /* eslint-disable no-useless-constructor, react/prefer-stateless-function */
@@ -28,9 +33,8 @@ class SpacingSwatches extends React.Component {
   }
 
   render() {
-    const { accentColor } = this.props.context.theme.globals.colors;
     const spaceSwatches = this.props.spaces.map(space => (
-      <SpacingSwatch key={space.name} space={space} color={accentColor} />
+      <SpacingSwatch key={space.name} space={space} />
     ));
 
     return (
@@ -54,12 +58,10 @@ SpacingSwatch.propTypes = {
     comment: PropTypes.string.isRequired,
     code: PropTypes.string,
   }).isRequired,
-  color: PropTypes.string.isRequired,
 };
 
 SpacingSwatches.propTypes = {
   spaces: PropTypes.arrayOf(PropTypes.object).isRequired,
-  context: PropTypes.object.isRequired,
 };
 
-export default connectToContext(SpacingSwatches);
+export default SpacingSwatches;

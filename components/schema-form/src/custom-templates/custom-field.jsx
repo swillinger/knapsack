@@ -5,7 +5,8 @@ import {
   TextInputWrapper,
   Tooltip,
 } from '@knapsack/atoms';
-import { CustomFieldWrapper, InfoIcon } from './custom-templates.styles';
+import { FaInfoCircle } from 'react-icons/fa';
+import './custom-field.scss';
 
 /* eslint-disable react/prop-types */
 export default function CustomField(props) {
@@ -44,19 +45,19 @@ export default function CustomField(props) {
 
   /* eslint-disable no-alert, jsx-a11y/label-has-for */
   return (
-    <CustomFieldWrapper className={classNames}>
+    <div className={`custom-field ${classNames}`}>
       <label htmlFor={id} className="field-label">
         {label}
         {label && required ? '*' : null}
         {fieldDescription && (
           <Tooltip tooltipContent={fieldDescription} position="top">
-            <InfoIcon />
+            <FaInfoCircle className="custom-field__info-icon" />
           </Tooltip>
         )}
       </label>
       {inputContent}
       {errors && errors}
       {help}
-    </CustomFieldWrapper>
+    </div>
   );
 }

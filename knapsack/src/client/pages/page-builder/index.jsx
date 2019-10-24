@@ -27,13 +27,14 @@ import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import PageWithSidebar from '../../layouts/page-with-sidebar';
 import PlaygroundSlice from './page-builder-slice';
+import PageBuilderStartSliceInsert from './page-builder-start-slice-insert';
 import PageBuilderSidebar, {
   SIDEBAR_DEFAULT,
   SIDEBAR_FORM,
   SIDEBAR_PATTERNS,
 } from './page-builder-sidebar';
-import { MainContent, StartInsertSlice } from './page-builder.styles';
 import { PageBuilderContext } from './page-builder-context';
+import './index.scss';
 
 const query = gql`
   query PageBuilerPages($id: ID) {
@@ -406,7 +407,7 @@ class Playground extends Component {
     return (
       <PageBuilderContext.Provider value={this.state}>
         <PageWithSidebar {...props} sidebar={SideBarContent}>
-          <MainContent hasVisibleControls={this.state.hasVisibleControls}>
+          <div className="page-builder-index">
             {this.state.hasVisibleControls && (
               <>
                 <h4 className="eyebrow">Prototyping Sandbox</h4>
@@ -420,18 +421,12 @@ class Playground extends Component {
                 )}
               </>
             )}
-            <StartInsertSlice
+            <PageBuilderStartSliceInsert
               onClick={() => this.handleStartInsertSlice(0)}
               onKeyPress={() => this.handleStartInsertSlice(0)}
               hasVisibleControls={this.state.hasVisibleControls}
               isActive={this.state.editFormInsertionIndex === 0}
-            >
-              {this.state.editFormInsertionIndex === 0 ? (
-                <h6>Select a component to add from the sidebar</h6>
-              ) : (
-                <h6>Click to Insert Content Here</h6>
-              )}
-            </StartInsertSlice>
+            />
             {this.state.slices.map((slice, sliceIndex) => {
               const { templateId, patternId } = slice;
               const template = this.getTemplateFromPatternId(
@@ -489,28 +484,21 @@ class Playground extends Component {
                       isChanged={this.state.changeId === slice.id}
                     />
                   )}
-
-                  <StartInsertSlice
+                  <PageBuilderStartSliceInsert
                     key={`${slice.id}--handleAddSlice`}
                     onClick={() => this.handleStartInsertSlice(sliceIndex + 1)}
                     onKeyPress={() =>
                       this.handleStartInsertSlice(sliceIndex + 1)
                     }
-                    hasVisibleControls={this.state.hasVisibleControls}
                     isActive={
                       this.state.editFormInsertionIndex === sliceIndex + 1
                     }
-                  >
-                    {this.state.editFormInsertionIndex === sliceIndex + 1 ? (
-                      <h6>Select a component to add from the sidebar</h6>
-                    ) : (
-                      <h6>Click to Insert Content Here</h6>
-                    )}
-                  </StartInsertSlice>
+                    hasVisibleControls={this.state.hasVisibleControls}
+                  />
                 </React.Fragment>
               );
             })}
-          </MainContent>
+          </div>
         </PageWithSidebar>
       </PageBuilderContext.Provider>
     );

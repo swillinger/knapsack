@@ -1,0 +1,43 @@
+.k-block-quote {
+  border: 1px solid var(--c-gray-xlight);
+  border-left: 3px solid var(--c-gray-xlight);
+  padding: 2.25rem 4rem;
+  position: relative;
+  margin: 2rem;
+
+  /* citiation styling */
+  footer {
+    font-size: 0.8rem;
+    color: var(--c-gray-light);
+    margin: 0.5rem 0 0;
+  }
+
+  /* Befor and After produce the quote glyphs */
+  ::before {
+    content: '\\201C'; /* Unicode for Left Double Quote */
+    width: 80px;
+    /*Font*/
+    font-family: Georgia, serif;
+    font-size: 130px;
+    opacity: 0.2;
+    font-weight: bold;
+    color: var(--c-gray-light);
+    /*Positioning*/
+    position: absolute;
+    left: 0px;
+    top: -30px;
+  }
+
+  ::after {
+    content: '\\201D'; /*Unicode for Right Double Quote*/
+    width: 80px;
+    font-family: Georgia, serif;
+    font-size: 130px;
+    opacity: 0.2;
+    font-weight: bold;
+    color: var(--c-gray-light);
+    position: absolute;
+    right: 10px;
+    bottom: -85px;
+  }
+}

@@ -4,7 +4,7 @@ import qs from 'query-string';
 import SchemaForm from '@knapsack/schema-form';
 import SchemaTable from '@knapsack/schema-table';
 import { Details } from '@knapsack/atoms';
-import { PostOrGet } from './api-demo.styles';
+import './api-demo.scss';
 
 class ApiDemo extends React.Component {
   constructor(props) {
@@ -52,9 +52,17 @@ class ApiDemo extends React.Component {
         <h4>{this.props.title}</h4>
         <p>
           {this.props.requestType && (
-            <PostOrGet requestType={this.props.requestType}>
+            <span
+              className="api-demo__post-or-get"
+              style={{
+                backgroundColor:
+                  this.props.requestType === 'get'
+                    ? 'var(--c-secondary)'
+                    : 'var(--c-primary)',
+              }}
+            >
               {this.props.requestType}
-            </PostOrGet>
+            </span>
           )}
           {'  '}
           <code>{this.buildUrl()}</code>

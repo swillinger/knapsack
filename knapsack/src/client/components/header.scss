@@ -28,7 +28,7 @@
     &[aria-current='page'] {
       font-weight: bold;
       &:before {
-        color: var(--c-yellow);
+        color: var(--c-active);
         content: '>';
         position: absolute;
         left: -15px;
@@ -59,6 +59,40 @@
     }
     a {
       position: relative;
+    }
+  }
+
+  & &__header-link { // extra `&` for stronger selector
+    color: var(--c-text-white);
+    text-decoration: none;
+  }
+
+  & &__nav-link { // extra `&` for stronger selector
+    color: var(--c-text-white);
+    text-decoration: none;
+  }
+
+  &__hamburger {
+    color: var(--c-text-white);
+    float: right;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  &__hamburger-close {
+    color: var(--c-text-white);
+    float: right;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  &__logo {
+    height: 30px;
+    margin-right: 1.25rem;
+    width: auto;
+    @media screen and (min-width: var(--bp-small)) {
+      height: 38px;
+      margin-right: 1.5rem;
     }
   }
 }

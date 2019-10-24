@@ -1,0 +1,14 @@
+.dos-and-donts__wrapper {
+  background-color: var(--c-gray-xxlight);
+  padding: 1rem 0;
+  max-width: 1500px;
+  margin: 1rem auto;
+  @media (min-width: 450px) {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    & > * {
+      width: 50%;
+    }
+  }
+}

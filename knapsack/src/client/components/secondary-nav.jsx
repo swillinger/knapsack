@@ -26,7 +26,6 @@ import {
 import Spinner from '@knapsack/spinner';
 import { flattenArray } from '@knapsack/utils';
 import urlJoin from 'url-join';
-import { FaTimes } from 'react-icons/fa';
 import NavList from './nav-list';
 import { containsString } from '../utils/string-helpers';
 import { BASE_PATHS } from '../../lib/constants';
@@ -225,13 +224,10 @@ class SecondaryNav extends Component {
                     }
                   />
                   <ClearFilterButton
-                    role="button"
                     onClick={this.handleFilterReset}
                     onKeyPress={this.handleFilterReset}
                     isVisible={!!this.state.filterTerm}
-                  >
-                    <FaTimes />
-                  </ClearFilterButton>
+                  />
                 </TypeToFilterInputWrapper>
               </TypeToFilter>
               <NavList items={this.filterNavItems(items)} />

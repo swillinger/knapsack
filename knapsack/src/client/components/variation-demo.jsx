@@ -19,17 +19,9 @@ import PropTypes from 'prop-types';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import SchemaForm from '@knapsack/schema-form';
 import TabbedPanel from '@knapsack/tabbed-panel';
-import { Checkerboard } from '@knapsack/atoms';
 import { getTypeColor } from '@knapsack/core';
 import Template from './template';
-import {
-  VariationsWrapper,
-  FooterRegion,
-  HeaderInner,
-  HeaderRegion,
-  VariationItem,
-  VariationItemExpanded,
-} from './variation-demo.styles';
+import './variation-demo.scss';
 
 export class VariationDemo extends Component {
   constructor(props) {
@@ -67,24 +59,30 @@ export class VariationDemo extends Component {
       content = items.map(item => {
         const itemData = { ...this.props.data, [propKey]: item };
         return (
-          <VariationItemExpanded
+          <div
+            className="variation-demo__variation-expanded"
+            style={{ borderBottomColor: colorTheme }}
             key={JSON.stringify(itemData)}
-            colorTheme={colorTheme}
           >
-            <h4>
+            <h4
+              style={{
+                borderBottomColor: colorTheme,
+                color: colorTheme,
+              }}
+            >
               <code>{propKey}</code>:{' '}
               <code>
                 {typeof item === 'boolean' ? JSON.stringify(item) : item}
               </code>
             </h4>
-            <Checkerboard bleed="20px">
+            <div className="variation-demo__checkerboard">
               <Template
                 templateId={this.props.templateId}
                 patternId={this.props.patternId}
                 data={itemData}
               />
-            </Checkerboard>
-          </VariationItemExpanded>
+            </div>
+          </div>
         );
       });
     } else {
@@ -98,7 +96,10 @@ export class VariationDemo extends Component {
 
       content = (
         <div>
-          <VariationItem colorTheme={colorTheme}>
+          <div
+            className="variation-demo__variation-item"
+            style={{ borderBottomColor: colorTheme }}
+          >
             <SchemaForm
               schema={formSchema}
               onChange={this.handleChange}
@@ -106,33 +107,39 @@ export class VariationDemo extends Component {
               isInline
               uiSchema={formUi}
             />
-          </VariationItem>
-          <Checkerboard bleed="20px">
+          </div>
+          <div className="variation-demo__checkerboard">
             <Template
               templateId={this.props.templateId}
               patternId={this.props.patternId}
               showDataUsed={false}
               data={this.state.data}
             />
-          </Checkerboard>
+          </div>
         </div>
       );
     }
 
     return (
       <div>
-        <HeaderRegion
+        <div
+          className="variation-demo__header-region"
           colorTheme={colorTheme}
           colorThemeAccent={colorThemeAccent}
+          style={{
+            background: colorThemeAccent,
+            borderBottomColor: colorTheme,
+          }}
         >
           {prop.description && (
             <div>
-              <h5>Description</h5>
+              <h5 style={{ color: colorTheme }}>Description</h5>
               <p>{prop.description}</p>
             </div>
           )}
-          <HeaderInner
-            colorTheme={colorTheme}
+          <div
+            className="variation-demo__header-region__inner"
+            style={{ color: colorTheme }}
             role="button"
             onClick={() =>
               this.setState(prevState => ({
@@ -155,22 +162,23 @@ export class VariationDemo extends Component {
                 <FaPlus size={10} /> Show All Variation
               </div>
             )}
-          </HeaderInner>
-        </HeaderRegion>
+          </div>
+        </div>
         <div>{content}</div>
-        <FooterRegion
-          colorTheme={colorTheme}
+        <div
+          className="variation-demo__footer-region"
           style={{
+            borderTopColor: colorTheme,
             display: this.state.isExpanded ? 'none' : 'block',
           }}
         >
           <details>
-            <summary>Data Used</summary>
-            <pre>
+            <summary style={{ color: colorTheme }}>Data Used</summary>
+            <pre style={{ color: colorTheme }}>
               <code>{JSON.stringify(this.props.data, null, '  ')}</code>
             </pre>
           </details>
-        </FooterRegion>
+        </div>
       </div>
     );
   }
@@ -236,7 +244,7 @@ export default function VariationDemos({
   }));
 
   return (
-    <VariationsWrapper>
+    <div className="variation-demo">
       <h4>Variations</h4>
       <p>
         Explore the variations of each property of this component.
@@ -245,7 +253,7 @@ export default function VariationDemos({
         all variations side by side.
       </p>
       <TabbedPanel color="component" bleed="0" items={variations} />
-    </VariationsWrapper>
+    </div>
   );
 }
 

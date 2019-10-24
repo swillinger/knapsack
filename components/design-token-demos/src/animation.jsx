@@ -1,6 +1,6 @@
 import React from 'react';
 import { demoPropTypes } from './utils';
-// import { DemoTransitionMove, DemoTransitionOpacity, } from './styles';
+// import './animation.scss';
 
 export const AnimationDemo = ({ tokens }) => {
   if (!tokens) return null;
@@ -26,18 +26,18 @@ export const AnimationDemo = ({ tokens }) => {
       {/* Changes to opacity are an effective way of indicating that an element */}
       {/* can be interacted with through a click or key press. */}
       {/* </p> */}
-      {/* <DemoTransitionOpacity> */}
+      {/* <div className="dtd-animation__transition-opacity-demo"> */}
       {/* <strong>Opacity</strong> (Hover to see effect) */}
-      {/* </DemoTransitionOpacity> */}
+      {/* </div> */}
       {/* <br /> */}
       {/* <h4>Movement</h4> */}
       {/* <p> */}
       {/* Movement is an effective way to communicate actions, changes to */}
       {/* application state, and draw the attention of a user. */}
       {/* </p> */}
-      {/* <DemoTransitionMove> */}
+      {/* <div className="dtd-animation__transition-move-demo"> */}
       {/* <strong>Move</strong> (Hover to see effect) */}
-      {/* </DemoTransitionMove> */}
+      {/* </div> */}
     </>
   );
 };

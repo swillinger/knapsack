@@ -14,8 +14,8 @@ import cssExtras from 'refractor/lang/css-extras';
 import php from 'refractor/lang/php';
 import twig from 'refractor/lang/twig';
 import bash from 'refractor/lang/bash';
-import { PreStyles, CodeStyles, PrismTokenStyles } from './pretty-code.styles';
 import mapChildren from './map-children';
+import './pretty-code.scss';
 
 const refractor = require('refractor/core.js');
 
@@ -84,11 +84,11 @@ const CodeSnippet = ({ language, code = '' }) => {
     ast.length === 0 ? preppedCode : ast.map(mapChildren(0));
 
   return (
-    <PreStyles>
-      <CodeStyles>
-        <PrismTokenStyles>{formattedCode}</PrismTokenStyles>
-      </CodeStyles>
-    </PreStyles>
+    <pre className="pretty-code">
+      <code className="pretty-code__code">
+        <div className="pretty-code__prism-token">{formattedCode}</div>
+      </code>
+    </pre>
   );
 };
 

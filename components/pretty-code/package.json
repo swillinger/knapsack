@@ -17,8 +17,7 @@
     "react": "^16.8.0"
   },
   "peerDependencies": {
-    "react": "^16.8.0",
-    "styled-components": "^4.0.2"
+    "react": "^16.8.0"
   },
   "files": [
     "./dist"

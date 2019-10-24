@@ -17,17 +17,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import marked from 'marked';
-import styled from 'styled-components';
 import { Button } from '@knapsack/atoms';
-
-const DocumentationWrapper = styled.div`
-  margin-bottom: 2rem;
-`;
-
-const DocumentationHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
+import './md-block.scss';
 
 const MdBlock = ({ title, isEditable, md: initialMd, handleSave }) => {
   const [md, setMd] = useState(initialMd);
@@ -50,8 +41,8 @@ const MdBlock = ({ title, isEditable, md: initialMd, handleSave }) => {
   }
 
   return (
-    <DocumentationWrapper>
-      <DocumentationHeader>
+    <div className="md-block">
+      <div className="md-block__documentation-header">
         {title && <h4>{title}</h4>}
         {isEditable && (
           <Button
@@ -66,7 +57,7 @@ const MdBlock = ({ title, isEditable, md: initialMd, handleSave }) => {
             {editing ? 'Save' : 'Edit'}
           </Button>
         )}
-      </DocumentationHeader>
+      </div>
       <div style={{ marginBottom: '10px', display: 'flex' }}>
         <div
           dangerouslySetInnerHTML={{ __html: html }}
@@ -74,7 +65,7 @@ const MdBlock = ({ title, isEditable, md: initialMd, handleSave }) => {
         />
         {editArea}
       </div>
-    </DocumentationWrapper>
+    </div>
   );
 };
 

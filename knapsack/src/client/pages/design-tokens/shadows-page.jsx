@@ -15,11 +15,11 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import { ShadowDemoBox } from './shadows-page.styles';
 import makeDesignTokensPage, {
   propTypes,
 } from '../../utils/make-design-tokens-page';
 import PageWithSidebar from '../../layouts/page-with-sidebar';
+import './shadows-page.scss';
 
 function ShadowsPage(props) {
   const {
@@ -38,14 +38,15 @@ function ShadowsPage(props) {
           <div>
             <h3>Box Shadows</h3>
             {boxShadows.map(boxShadow => (
-              <ShadowDemoBox
+              <div
+                className="shadow-page__demo-box"
                 key={boxShadow.name}
                 style={{
                   boxShadow: boxShadow.value,
                 }}
               >
                 <h4>{boxShadow.name}</h4>
-              </ShadowDemoBox>
+              </div>
             ))}
           </div>
         )}
@@ -54,14 +55,15 @@ function ShadowsPage(props) {
           <div>
             <h3>Inner Shadows</h3>
             {innerShadows.map(innerShadow => (
-              <ShadowDemoBox
+              <div
+                className="shadow-page__demo-box"
                 key={innerShadow.name}
                 style={{
                   innerShadow: innerShadow.value,
                 }}
               >
                 <h4>{innerShadow.name}</h4>
-              </ShadowDemoBox>
+              </div>
             ))}
           </div>
         )}
@@ -70,7 +72,7 @@ function ShadowsPage(props) {
           <div>
             <h3>Text Shadows</h3>
             {textShadows.map(textShadow => (
-              <ShadowDemoBox key={textShadow.name}>
+              <div className="shadow-page__demo-box" key={textShadow.name}>
                 <h4>{textShadow.name}</h4>
                 <p
                   style={{
@@ -79,7 +81,7 @@ function ShadowsPage(props) {
                 >
                   Lorem Ipsum
                 </p>
-              </ShadowDemoBox>
+              </div>
             ))}
           </div>
         )}

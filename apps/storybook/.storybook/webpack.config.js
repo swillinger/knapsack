@@ -1,20 +1,38 @@
-const util = require('util'); // eslint-disable-line
-const path = require('path');
+const { join } = require('path');
+const {
+  createWebPackConfig,
+} = require('@basalt/knapsack/create-webpack-config');
 
-module.exports = (baseConfig, env, defaultConfig) => {
-  defaultConfig.module.rules = defaultConfig.module.rules.map(rule => {
-    if (rule.loader && rule.loader.includes('babel-loader')) {
-      // Fixes the inability for babel-loader to process the components that are part of this monorepo
-      rule.include.push(path.join(__dirname, '../../../components'));
-      rule.include.push(path.join(__dirname, '../../../packages'));
-      rule.include.push(path.join(__dirname, '../../../knapsack/src'));
-      return rule;
-    }
+const knapsackWebpackConfig = createWebPackConfig({
+  // Not really needed since it's used only for `entry` and `output`, and we throw those away...
+  dist: join(__dirname, './fake-dist'),
+  useHtmlWebpackPlugin: false,
+  // injectCssChanges: false,
+  extraSrcDirs: [
+    join(__dirname, '../../../components'),
+    join(__dirname, '../../../knapsack/src/client'),
+  ],
+  maxAssetSize: 1300 * 1000,
+});
 
-    return rule;
-  });
+/**
+ * Alter Storybook's WebPack Config
+ * @param {object} opt
+ * @param {import("webpack").Configuration} opt.config
+ * @param {string} opt.mode - has a value of 'DEVELOPMENT' or 'PRODUCTION' (used when building the static version of storybook)
+ * @return {Promise<import("webpack").Configuration>}
+ * @link https://storybook.js.org/docs/configurations/custom-webpack-config/
+ */
+async function alterWebpackConfig({ config }) {
+  const { entry, output, plugins } = config;
 
-  defaultConfig.resolve.mainFields = ['module', 'main'];
-  // console.log(util.inspect(defaultConfig, false, null));
-  return defaultConfig;
-};
+  return {
+    ...knapsackWebpackConfig,
+    entry,
+    output,
+    plugins: [...knapsackWebpackConfig.plugins, ...plugins],
+  };
+}
+
+// Export a function. Accept the base config as the only param.
+module.exports = alterWebpackConfig;

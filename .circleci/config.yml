@@ -44,24 +44,22 @@ jobs:
     executor: base
     steps:
       - checkout
-      - run: mkdir ~/artifacts ~/.yarn-cache
+      - run: mkdir -p ~/artifacts ~/.cache/yarn
       - restore_cache:
           keys:
-            - global-{{ epoch }}
-            - v1-deps-{{ checksum "yarn.lock" }}
-      - run: yarn install --frozen-lockfile --cache-folder ~/.yarn-cache --prefer-offline
+            # when lock file changes, use increasingly general patterns to restore cache
+            - yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - yarn-packages-v1-{{ .Branch }}-
+            - yarn-packages-v1-
+      - run: CYPRESS_INSTALL_BINARY=0 yarn install --frozen-lockfile --cache-folder ~/.cache/yarn --prefer-offline
       #- run: ls ~/.cache/Cache
       - save_cache:
-          key: global-{{ epoch }}
+          key: yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
-            - ~/.cache
-      - save_cache:
-          key: v1-deps-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/repo/node_modules
-            - ~/.yarn-cache
+#            - ~/repo/node_modules
+            - ~/.cache/yarn
       - run: yarn build
-      - run: yarn build:types
+#      - run: yarn build:types
       - run: bash ./scripts/ensure-clean-git-repo.sh
       - persist_to_workspace:
           root: '~'
@@ -69,14 +67,21 @@ jobs:
             - repo
             - artifacts
             - .ssh
-            - .cache/Cypress
+#            - .cache/Cypress
 
   test--cypress:
     executor: cypress-with-php
     steps:
       - attach_workspace:
           at: '~'
-      - run: ./node_modules/.bin/cypress verify || ./node_modules/.bin/cypress install # @todo Cache Cypress
+      - restore_cache:
+          keys:
+            - cypress-cache-{{ checksum "node_modules/cypress/package.json" }}
+      - run: ./node_modules/.bin/cypress verify || ./node_modules/.bin/cypress install
+      - save_cache:
+          key: cypress-cache-{{ checksum "node_modules/cypress/package.json" }}
+          paths:
+            - ~/.cache/Cypress
       - run: yarn test:cypress
 
   test--basics:
@@ -84,12 +89,53 @@ jobs:
     steps:
       - attach_workspace:
           at: '~'
+      - run: yarn build:types
       - run: yarn lint:js
       - run: yarn lint:style
       - run: yarn jest
       - run: yarn build:private
       - run: yarn test:examples
-      - run: yarn build:docs
+
+  deploys:
+    executor: cypress-with-php
+    steps:
+      - attach_workspace:
+          at: '~'
+      - run:
+          name: Build Docs Site
+          command: yarn build:docs
+      - run:
+          name: Deploy Docs Site
+          command: |
+            cp docs-site/now.json docs-site/build/knapsack
+            npm i -g now
+            if [ "$CIRCLE_BRANCH" = "master" ]; then
+              now deploy --scope=basalt --target staging --token $ZEIT_TOKEN docs-site/build/knapsack
+            else
+              now deploy --scope=basalt --prod --token $ZEIT_TOKEN docs-site/build/knapsack
+            fi
+            DEPLOY_URL=`./scripts/get-latest-deploy.js 'knapsack-docs'`
+            echo "Adding GitHub check for DEPLOY_URL: $DEPLOY_URL"
+            REPO_SLUG=basaltinc/knapsack GITHUB_TOKEN=$GH_TOKEN npx ci-utils gh-status --state success --url $DEPLOY_URL --description 'Docs Deploy' --context 'deploy/docs'
+      - run:
+          name: Build Storybook
+          command: yarn build:storybook
+      - run:
+          name: Deploy Storybook
+          command: |
+            cd ~/repo/apps/storybook
+            cp now.json dist
+            if [ "$CIRCLE_BRANCH" = "master" ]; then
+              now deploy --scope=basalt --target staging --token $ZEIT_TOKEN dist
+            else
+              now deploy --scope=basalt --prod --token $ZEIT_TOKEN dist
+            fi
+            DEPLOY_URL=`../../scripts/get-latest-deploy.js 'knapsack-storybook'`
+            echo "Adding GitHub check for DEPLOY_URL: $DEPLOY_URL"
+            REPO_SLUG=basaltinc/knapsack GITHUB_TOKEN=$GH_TOKEN npx ci-utils gh-status --state success --url $DEPLOY_URL --description 'Storybook Deploy' --context 'deploy/storybook'
+      - run:
+          name: Run Percy Visual Regression Tests on Storybook
+          command: PERCY_TOKEN=$PERCY_TOKEN_STORYBOOK yarn test:percy-storybook
 
   test--publish:
     executor: base
@@ -98,20 +144,12 @@ jobs:
           at: '~'
       - run: ./scripts/test-publish.sh
 
-  docs:
-    executor: base
-    steps:
-      - attach_workspace:
-          at: '~'
-      - run: yarn build:docs
-      - run: npm install --global now
-      - run: cp docs-site/now.json docs-site/build/knapsack && cd docs-site/build/knapsack && now deploy --scope=basalt --target production --token $ZEIT_TOKEN && now alias --scope basalt --token $ZEIT_TOKEN
-
   release:
     executor: base
     steps:
       - attach_workspace:
           at: '~'
+      - run: yarn build:types
       - run: ./scripts/release.sh
 
 workflows:
@@ -128,19 +166,16 @@ workflows:
       - test--publish:
           requires:
             - setup
-      - docs:
+      - deploys:
           requires:
             - setup
-          context: main tokens
-          filters:
-            branches:
-              only: master
       - release:
           requires:
             - setup
             - test--basics
             - test--cypress
             - test--publish
+            - deploys
           filters:
             branches:
               only: master

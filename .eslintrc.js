@@ -47,6 +47,13 @@ module.exports = {
       extends: ['plugin:@typescript-eslint/recommended'],
       rules: {
         // "@typescript-eslint/explicit-function-return-type": ["error"]
+        // '@typescript-eslint/interface-name-prefix': [
+        //   1,
+        //   {
+        //     prefixWithI: 'always',
+        //     allowUnderscorePrefix: true,
+        //   },
+        // ],
         'valid-jsdoc': [0],
       },
     },
@@ -103,6 +110,10 @@ module.exports = {
     'react/sort-comp': [0],
     'react/static-property-placement': [0, 'static public field'],
     'react/require-extension': [0],
+    'react/jsx-filename-extension': [
+      2,
+      { extensions: ['.js', '.jsx', '.ts', '.tsx', '.mjs'] },
+    ],
     strict: [0],
     // @todo enable
     //    "graphql/template-strings": ["error", {

@@ -6,21 +6,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "build-storybook --config-dir .storybook --output-dir dist",
-    "start": "start-storybook -p 9001 -c .storybook"
-  },
-  "dependencies": {
-    "@knapsack/core": "^1.7.0",
-    "@storybook/addon-actions": "^3.4.10",
-    "@storybook/addon-info": "^3.4.10",
-    "@storybook/react": "^3.4.10",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "build": "NODE_ENV=production build-storybook --config-dir .storybook --output-dir dist",
+    "Xbuild": "build-storybook --config-dir .storybook --output-dir dist",
+    "start": "start-storybook -p 6006"
   },
   "devDependencies": {
-    "@storybook/addon-knobs": "^3.4.10",
-    "@storybook/addon-viewport": "^3.4.10",
-    "babel-core": "^6.26.3"
+    "@storybook/addon-actions": "^5.2.5",
+    "@storybook/addon-docs": "^5.2.5",
+    "@storybook/addon-info": "^5.2.5",
+    "@storybook/addon-knobs": "^5.2.5",
+    "@storybook/addon-links": "^5.2.5",
+    "@storybook/addon-viewport": "^5.2.5",
+    "@storybook/addons": "^5.2.5",
+    "@storybook/react": "^5.2.5",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
   },
   "author": "",
   "publishConfig": {

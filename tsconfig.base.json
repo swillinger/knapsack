@@ -30,7 +30,7 @@
         "packages/*/src",
         "packages/*"
       ]
-    }
+    },
   },
   "typeAcquisition": {
     "enable": true
@@ -41,7 +41,6 @@
     "**/dist",
     "**/node_modules",
     "**/*.test.js",
-    "knapsack/src/client"
   ],
   // "references": [{
   //     "path": "./knapsack"

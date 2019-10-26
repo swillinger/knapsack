@@ -18,6 +18,8 @@ const isProd = process.env.NODE_ENV === 'production';
  * @typedef {object} CreateWebpackConfig
  * @prop {string} dist - The absolute path to where files will be written.
  * @prop {boolean} useHtmlWebpackPlugin
+ * @prop {string[]} [extraSrcDirs] - extra directories where it is ok to pass through Babel
+ * @prop {number} [maxAssetSize=610000] - maximum asset size in bytes; if files are larger it will fail on prod builds
  * @prop {boolean} [injectCssChanges=true] - if `false`, always generate a CSS file
  * @prop {string} [pluginSetupFile] - File that contains all the imported plugin register functions
  * @prop {string} [public] - The absolute path to where files will be available to the dev server.
@@ -32,7 +34,11 @@ function createWebPackConfig(userConfig) {
   /** @type {CreateWebpackConfig} */
   const config = userConfig;
 
-  const { injectCssChanges = true } = config;
+  const {
+    injectCssChanges = true,
+    extraSrcDirs = [],
+    maxAssetSize = 610000,
+  } = config;
   // const config = results.data;
 
   /** @type {webpack.Configuration} */
@@ -58,13 +64,27 @@ function createWebPackConfig(userConfig) {
         },
         {
           test: /\.(js|jsx|mjs|ts|tsx)$/,
-          loader: require.resolve('babel-loader'),
-          include: [resolve(__dirname, './src'), resolve(process.cwd())],
+          include: [
+            resolve(__dirname, './src'),
+            resolve(process.cwd()),
+            ...extraSrcDirs,
+          ],
           exclude: [/(node_modules)/],
-          options: {
-            extends: require.resolve('@knapsack/babel-config/es'),
-            cacheDirectory: true,
-          },
+          use: [
+            {
+              loader: require.resolve('babel-loader'),
+              options: {
+                extends: require.resolve('@knapsack/babel-config/es'),
+                cacheDirectory: true,
+              },
+            },
+            {
+              loader: require.resolve('react-docgen-typescript-loader'),
+              options: {
+                tsconfigPath: resolve(__dirname, './tsconfig.json'),
+              },
+            },
+          ],
         },
         {
           test: [/\.jpeg?$/, /\.jpg?$/, /\.svg?$/, /\.png?$/],
@@ -151,12 +171,15 @@ function createWebPackConfig(userConfig) {
         },
       ],
     },
-    devtool: isProd ? 'source-map' : 'cheap-module-source-map',
+    devtool: isProd ? 'none' : 'eval-source-map',
     resolve: {
       // symlinks: false, // @todo consider, but be careful
       extensions: ['.ts', '.tsx', '.mjs', '.jsx', '.js', '.json', '.css'],
       mainFields: ['module', 'main'],
       modules: ['node_modules', resolve(__dirname, 'node_modules')],
+      alias: {
+        react: require.resolve('react'),
+      },
     },
     // stats: 'none',
     plugins: [
@@ -190,8 +213,8 @@ function createWebPackConfig(userConfig) {
     ],
     performance: {
       hints: isProd ? 'error' : false,
-      maxAssetSize: 610000,
-      maxEntrypointSize: 610000,
+      maxAssetSize,
+      maxEntrypointSize: maxAssetSize,
       // if this function returns false it is not included in performance calculation
       assetFilter: assetFilename => {
         if (assetFilename.includes('graphiql')) {

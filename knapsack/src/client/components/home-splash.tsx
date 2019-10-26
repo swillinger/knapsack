@@ -15,26 +15,7 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import { connectToContext } from '@knapsack/core';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
-import Spinner from '@knapsack/spinner';
-import { StatusMessage } from '@knapsack/atoms';
-import PageWithoutSidebar from '../layouts/page-without-sidebar';
 import './home-splash.scss';
-
-const query = gql`
-  {
-    settings {
-      title
-      subtitle
-      slogan
-    }
-    meta {
-      version
-    }
-  }
-`;
 
 /**
  * @param {string} x
@@ -91,42 +72,34 @@ function bigWords(x) {
   return vw;
 }
 
-const HomeSplash = props => (
-  <Query query={query}>
-    {({ loading, error, data }) => {
-      if (loading) return <Spinner />;
-      if (error) return <StatusMessage message={error.message} type="error " />;
+export interface HomeSplashProps {
+  /**
+   * The big title of the whole Design System
+   */
+  title: string;
+  subtitle?: string;
+  slogan?: string;
+  /**
+   * Version of the design system
+   */
+  version?: string;
+}
 
-      const {
-        settings,
-        meta: { version },
-      } = data;
-      return (
-        <PageWithoutSidebar {...props}>
-          <div className="home-splash">
-            <div className="home-splash__inner">
-              {settings.subtitle && (
-                <h2 className="home-splash__inner__eyebrow">
-                  {settings.subtitle}
-                </h2>
-              )}
-              {settings.title && (
-                <h1 style={{ fontSize: `${bigWords(settings.title)}vw` }}>
-                  {settings.title}
-                </h1>
-              )}
-              {settings.slogan && (
-                <h2 className="home-splash__inner__subtitle">
-                  {settings.slogan}
-                </h2>
-              )}
-              {version && <p>{version}</p>}
-            </div>
-          </div>
-        </PageWithoutSidebar>
-      );
-    }}
-  </Query>
+/**
+ * The big home page that is between site header and footer
+ */
+export const HomeSplash: React.FC<HomeSplashProps> = ({
+  title,
+  subtitle,
+  slogan,
+  version,
+}: HomeSplashProps) => (
+  <div className="home-splash">
+    <div className="home-splash__inner">
+      {subtitle && <h2 className="home-splash__inner__eyebrow">{subtitle}</h2>}
+      {title && <h1 style={{ fontSize: `${bigWords(title)}vw` }}>{title}</h1>}
+      {slogan && <h2 className="home-splash__inner__subtitle">{slogan}</h2>}
+      {version && <p>{version}</p>}
+    </div>
+  </div>
 );
-
-export default connectToContext(HomeSplash);

@@ -61,8 +61,7 @@ export const LoadablePatternView = Loadable({
 /* eslint-enable import/no-cycle */
 
 export const LoadableHome = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "home-splash" */ './components/home-splash'),
+  loader: () => import(/* webpackChunkName: "home" */ './pages/home'),
   loading: Spinner,
 });
 

@@ -4,7 +4,6 @@
     "src"
   ],
   "exclude": [
-    "src/client" // @todo remove and fix errors
   ],
   "compilerOptions": {
      "composite": true,

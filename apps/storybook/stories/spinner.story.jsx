@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Spinner from '@knapsack/spinner';

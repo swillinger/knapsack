@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/utils",
   "license": "GPL-2.0-or-later",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "A Knapsack component that helps build Design Systems",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -19,7 +19,7 @@
     "color": "^3.0.0"
   },
   "devDependencies": {
-    "@knapsack/babel-config": "^1.7.0"
+    "@knapsack/babel-config": "^1.7.1"
   },
   "author": "Basalt (https://basalt.io/)",
   "publishConfig": {

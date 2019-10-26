@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/color-contrast-block",
   "license": "GPL-2.0-or-later",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "A Knapsack component that helps build Design Systems",
   "module": "dist/color-contrast-block.js",
   "main": "dist/color-contrast-block.js",
@@ -11,9 +11,9 @@
     "watch": "yarn build --watch"
   },
   "dependencies": {
-    "@knapsack/atoms": "^1.7.0",
+    "@knapsack/atoms": "^1.7.1",
     "@knapsack/core": "^1.7.0",
-    "@knapsack/utils": "^1.7.0"
+    "@knapsack/utils": "^1.7.1"
   },
   "devDependencies": {
     "prop-types": "^15.0.0",

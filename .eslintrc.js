@@ -102,6 +102,7 @@ module.exports = {
         forbid: ['any', 'array'],
       },
     ],
+    'react/prop-types': [0],
     'react/jsx-key': [2],
     'react-hooks/rules-of-hooks': 'error',
     'react/no-array-index-key': [2],

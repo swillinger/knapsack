@@ -16,8 +16,8 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@knapsack/atoms';
-import SchemaForm from '@knapsack/schema-form';
+import { Button, SchemaForm } from '@knapsack/design-system';
+
 import './shared/playground-schema-form.scss';
 
 const PageBuilderEditForm = ({

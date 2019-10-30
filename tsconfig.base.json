@@ -18,19 +18,18 @@
     "allowJs": false,
     "checkJs": false,
     "composite": false,
-//    "rootDirs": [
-//      "./knapsack",
-//      "./packages/renderer-html"
-//    ],
+    "listEmittedFiles": false,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
     "baseUrl": "./",
     "paths": {
       "@basalt/knapsack": ["./knapsack/src"],
+      "@knapsack/design-system": ["./design-system/src"],
       "@knapsack/*": [
-        "components/*",
         "packages/*/src",
         "packages/*"
       ]
-    },
+    }
   },
   "typeAcquisition": {
     "enable": true
@@ -40,13 +39,6 @@
     "dist",
     "**/dist",
     "**/node_modules",
-    "**/*.test.js",
-  ],
-  // "references": [{
-  //     "path": "./knapsack"
-  //   },
-  //   {
-  //     "path": "./packages/renderer-html"
-  //   },
-  // ]
+    "**/*.test.js"
+  ]
 }

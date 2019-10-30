@@ -17,9 +17,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FaPlus, FaMinus } from 'react-icons/fa';
-import SchemaForm from '@knapsack/schema-form';
-import TabbedPanel from '@knapsack/tabbed-panel';
-import { getTypeColor } from '@knapsack/core';
+import { SchemaForm, TabbedPanel } from '@knapsack/design-system';
+import { getTypeColor } from '../context';
 import Template from './template';
 import './variation-demo.scss';
 

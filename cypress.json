@@ -1,0 +1,13 @@
+{
+  "baseUrl": "http://localhost:3999",
+  "video": true,
+  "fixturesFolder": "cypress/fixtures",
+  "integrationFolder": "cypress/integration",
+  "pluginsFile": "cypress/plugins/index.js",
+  "screenshotsFolder": "cypress/screenshots",
+  "supportFile": "cypress/support/index.js",
+  "videosFolder": "cypress/videos",
+  "viewportHeight": 1000,
+  "viewportWidth": 1200,
+  "projectId": "rxrfsi"
+}

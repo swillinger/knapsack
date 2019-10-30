@@ -26,7 +26,7 @@ describe('Patterns', () => {
 
   it('Allows editing of metadata', () => {
     const metaFilePath =
-      '../examples/bootstrap/assets/patterns/card/knapsack.pattern-meta.json';
+      'examples/bootstrap/assets/patterns/card/knapsack.pattern-meta.json';
     cy.visit('/pattern/card/twig');
     cy.contains('Edit Meta').click();
     cy.get('main input[label="Title"]')
@@ -47,7 +47,9 @@ describe('Patterns', () => {
       })
       .select('draft');
 
-    cy.get('main form').submit();
+    cy.get('main form')
+      .contains('Submit')
+      .click();
 
     cy.readFile(metaFilePath)
       .its('title')

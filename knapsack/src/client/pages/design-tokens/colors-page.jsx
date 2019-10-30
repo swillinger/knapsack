@@ -15,8 +15,7 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import ColorSwatches from '@knapsack/color-swatch';
-import ColorContrastBlock from '@knapsack/color-contrast-block';
+import { ColorSwatches } from '@knapsack/design-system';
 import makeDesignTokensPage, {
   propTypes,
 } from '../../utils/make-design-tokens-page';
@@ -70,10 +69,10 @@ function ColorsPage(props) {
           textColors && (
             <div>
               <h3>Color Contrast</h3>
-              <ColorContrastBlock
-                bgColors={backgroundColors}
-                textColors={textColors}
-              />
+              {/*<ColorContrastBlock*/}
+              {/*  bgColors={backgroundColors}*/}
+              {/*  textColors={textColors}*/}
+              {/*/>*/}
             </div>
           )}
       </div>

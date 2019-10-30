@@ -8,18 +8,17 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "clean": "rm -rf dist tsconfig.tsbuildinfo",
-    "build:js": "babel --config-file @knapsack/babel-config/es --source-maps --ignore 'src/*.test.js' --extensions .js,.ts --out-dir dist/ src/",
-    "build:types": "tsc",
-    "build": "yarn clean && yarn build:js",
-    "prepublishOnly": "npm run build",
-    "watch": "yarn build --watch"
+    "build": "babel --config-file @knapsack/babel-config/es --source-maps --ignore 'src/*.test.js' --extensions .js,.ts --out-dir dist/ src/",
+    "prepublishOnly": "yarn build",
+    "start": "yarn build --watch"
   },
   "dependencies": {
     "@knapsack/core": "^1.7.0",
     "color": "^3.0.0"
   },
   "devDependencies": {
-    "@knapsack/babel-config": "^1.7.1"
+    "@knapsack/babel-config": "^1.7.1",
+    "prop-types": "^15.7.2"
   },
   "author": "Basalt (https://basalt.io/)",
   "publishConfig": {

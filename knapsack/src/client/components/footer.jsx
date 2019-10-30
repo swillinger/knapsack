@@ -17,9 +17,9 @@
 import React, { Component } from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import Spinner from '@knapsack/spinner';
-import { KnapsackContext } from '@knapsack/core';
+import { Spinner } from '@knapsack/design-system';
 import { Link } from 'react-router-dom';
+import { KnapsackContext } from '../context';
 import knapsackBranding from '../assets/knapsack-bg-black-trans.svg';
 import './footer.scss';
 

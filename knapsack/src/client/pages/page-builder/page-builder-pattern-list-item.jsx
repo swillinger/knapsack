@@ -17,9 +17,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { connectToContext, contextPropTypes } from '@knapsack/core';
-import { Select, Button } from '@knapsack/atoms';
+import { Select, Button } from '@knapsack/design-system';
 import { FaExternalLinkAlt } from 'react-icons/fa';
+import { connectToContext, contextPropTypes } from '../../context';
 import { PageBuilderContext } from './page-builder-context';
 import './page-builder-pattern-list-item.scss';
 

@@ -17,9 +17,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { connectToContext, contextPropTypes } from '@knapsack/core';
-import { PatternStatusIcon } from '@knapsack/atoms';
-import SmartGrid from '@knapsack/smart-grid';
+import { PatternStatusIcon, SmartGrid } from '@knapsack/design-system';
+import { connectToContext, contextPropTypes } from '../context';
 import { BASE_PATHS } from '../../lib/constants';
 import './pattern-grid.scss';
 

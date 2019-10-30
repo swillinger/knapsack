@@ -22,11 +22,11 @@ import {
   validateUniqueIdsInArray,
   validateDataAgainstSchema,
 } from '@knapsack/schema-utils';
+import { knapsackDesignTokensSchema } from '@knapsack/core';
 import { KnapsackRendererBase } from '../server/renderer-base';
 import * as log from '../cli/log';
 import { knapsackEvents, EVENTS } from '../server/events';
 import { dirExistsOrExit, readJson } from '../server/server-utils';
-import { knapsackDesignTokensSchema } from '../schemas/design-tokens';
 
 /**
  * Handle backwards compatibility of config

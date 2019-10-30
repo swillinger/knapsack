@@ -1,6 +1,6 @@
+import { KnapsackDesignToken } from '@knapsack/core';
 import { KnapsackAssetSetUserConfig } from './asset-sets';
 import { KnapsackPattern, KnapsackPatternTemplate } from './patterns';
-import { KnapsackDesignToken } from './design-tokens';
 
 export interface KnapsackTemplateRenderResults {
   ok: boolean;

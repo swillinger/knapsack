@@ -17,13 +17,18 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Spinner from '@knapsack/spinner';
-import { Button, Details, Select, StatusMessage } from '@knapsack/atoms';
+import {
+  SchemaForm,
+  Spinner,
+  Button,
+  Details,
+  Select,
+  StatusMessage,
+} from '@knapsack/design-system';
 import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
-import { KnapsackContext } from '@knapsack/core';
-import SchemaForm from '@knapsack/schema-form';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
+import { KnapsackContext } from '../../context';
 import MdBlock from '../../components/md-block';
 import Template from '../../components/template';
 import TemplateCodeBlock from './template-code-block';

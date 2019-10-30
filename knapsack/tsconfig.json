@@ -1,7 +1,8 @@
 {
   "extends": "../tsconfig.base.json",
   "include": [
-    "src"
+    "src",
+    "../custom.d.ts"
   ],
   "exclude": [
   ],
@@ -10,7 +11,7 @@
 //    "declarationDir": "./dist",
     "outDir": "./dist",
 //     "outFile": "./dist/index.d.ts"
-    "rootDir": "./src",
+    "rootDir": "./src"
     // "baseUrl": "./",
     /**
     * Specifies the location where debugger should locate TypeScript files instead of source locations.Use this flag
@@ -18,4 +19,9 @@
     */
     // "sourceRoot": ""
   },
+  "references": [
+    {"path": "../packages/utils"},
+    {"path": "../packages/core"},
+    {"path": "../design-system"}
+  ]
 }

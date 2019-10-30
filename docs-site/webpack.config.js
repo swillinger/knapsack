@@ -1,27 +1,11 @@
 const { join } = require('path');
-const {
-  createWebPackConfig,
-} = require('@basalt/knapsack/create-webpack-config');
-
-const dist = join(__dirname, './static/dist');
+const { createWebPackConfig } = require('@knapsack/build-tools');
 
 const baseConfig = createWebPackConfig({
-  dist,
-  useHtmlWebpackPlugin: false,
+  mainEntries: ['./src'],
+  extraSrcDirs: [__dirname, join(__dirname, '../knapsack/src')],
+  dist: join(__dirname, './static/dist'),
   injectCssChanges: false,
 });
 
-const config = {
-  ...baseConfig,
-  entry: {
-    main: './src',
-  },
-  output: {
-    filename: '[name].bundle.js',
-    path: dist,
-    publicPath: '/dist/',
-    chunkFilename: '[name].chunk.js',
-  },
-};
-
-module.exports = config;
+module.exports = baseConfig;

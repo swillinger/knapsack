@@ -1,0 +1,5 @@
+!dist
+*.story.js
+*.stories.js
+__tests__
+*.test.js

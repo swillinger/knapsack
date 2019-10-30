@@ -15,12 +15,11 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React, { Component } from 'react';
-import SchemaForm from '@knapsack/schema-form';
+import { SchemaForm, Spinner, StatusMessage } from '@knapsack/design-system';
 import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-import Spinner from '@knapsack/spinner';
-import { StatusMessage } from '@knapsack/atoms';
-import { KnapsackContext } from '@knapsack/core';
+
+import { KnapsackContext } from '../context';
 import { knapsackSettingsSchema } from '../../schemas/knapsack.settings';
 import PageWithSidebar from '../layouts/page-with-sidebar';
 import PatternsSettings from '../components/patterns-settings';

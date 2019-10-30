@@ -16,8 +16,8 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BlockQuoteWrapper } from '@knapsack/atoms';
-import { connectToContext, contextPropTypes } from '@knapsack/core';
+import { BlockQuoteWrapper } from '@knapsack/design-system';
+import { connectToContext, contextPropTypes } from '../context';
 import { apiUrlBase } from '../data';
 import './release-notes.scss';
 

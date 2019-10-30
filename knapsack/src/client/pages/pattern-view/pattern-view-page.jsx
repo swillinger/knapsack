@@ -15,19 +15,19 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React, { Component } from 'react';
-import Spinner from '@knapsack/spinner';
 import {
   Button,
   Select,
+  Spinner,
   StatusMessage,
   PatternStatusIcon,
-} from '@knapsack/atoms';
-import { KnapsackContext } from '@knapsack/core';
+} from '@knapsack/design-system';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import queryString from 'query-string';
 import PropTypes from 'prop-types';
+import { KnapsackContext } from '../../context';
 import ErrorCatcher from '../../utils/error-catcher';
 // import DosAndDonts from '../../components/dos-and-donts';
 import { BASE_PATHS } from '../../../lib/constants';

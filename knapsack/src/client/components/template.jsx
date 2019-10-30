@@ -17,8 +17,8 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import iframeResizer from 'iframe-resizer/js/iframeResizer'; // https://www.npmjs.com/package/iframe-resizer
-import { KnapsackContext } from '@knapsack/core';
 import shortid from 'shortid';
+import { KnapsackContext } from '../context';
 import { getTemplateUrl } from '../data';
 import './template.scss';
 

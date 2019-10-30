@@ -15,11 +15,10 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import BreakpointsDemo from '@knapsack/breakpoints-demo';
-import { connectToContext } from '@knapsack/core';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import Spinner from '@knapsack/spinner';
+import { Spinner, BreakpointsDemo } from '@knapsack/design-system';
+import { connectToContext } from '../../context';
 import PageWithSidebar from '../../layouts/page-with-sidebar';
 
 const query = gql`

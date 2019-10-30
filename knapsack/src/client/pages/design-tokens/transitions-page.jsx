@@ -15,7 +15,7 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import Spinner from '@knapsack/spinner';
+import { Spinner } from '@knapsack/design-system';
 import makeDesignTokensPage, {
   propTypes,
 } from '../../utils/make-design-tokens-page';

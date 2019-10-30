@@ -6,11 +6,13 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
-    "build": "babel --config-file @knapsack/babel-config/es --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo",
+    "build": "babel --config-file @knapsack/babel-config --source-maps --ignore 'src/*.test.js' --extensions .js,.ts,.jsx,.tsx --out-dir dist/ src/",
     "prepublishOnly": "yarn build",
-    "watch": "yarn build --watch"
+    "start": "yarn build --watch"
   },
   "dependencies": {
+    "graphql-tag": "^2.10.1",
     "global": "^4.3.2",
     "prop-types": "^15.0.0"
   },
@@ -18,9 +20,6 @@
     "react": "^16.8.0"
   },
   "author": "Basalt (https://basalt.io/)",
-  "files": [
-    "./dist"
-  ],
   "publishConfig": {
     "access": "public"
   }

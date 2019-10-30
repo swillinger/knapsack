@@ -1,5 +1,5 @@
 import React from 'react';
-import CodeBlock, { languageList } from '@knapsack/code-block';
+import { CodeBlock, languageList } from '@knapsack/design-system';
 
 // @todo remove this and fix
 /* eslint-disable react/prop-types */

@@ -15,7 +15,7 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import SpacingSwatches from '@knapsack/spacing-swatch';
+import { SpacingDemo } from '@knapsack/design-system';
 
 import makeDesignTokensPage, {
   propTypes,
@@ -37,7 +37,7 @@ function SizingsPage(props) {
       {spacings && (
         <div>
           <h3>Spacing</h3>
-          <SpacingSwatches spaces={spacings} />
+          <SpacingDemo spaces={spacings} />
         </div>
       )}
 

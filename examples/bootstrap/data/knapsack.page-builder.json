@@ -27,7 +27,7 @@
               "cardTitle": "Card Title 2",
               "cardSubTitle": "Card SubTitle",
               "cardBody": "Some quick example text to build on the card title and make up the bulk of the card's content.",
-              "imgSrc": "https://placeimg.com/640/480/nature",
+              "imgSrc": "/images/demoImg1.jpg",
               "buttons": [
                 {
                   "text": "Go somewhere",
@@ -40,7 +40,7 @@
               "cardTitle": "Card Title 1",
               "cardSubTitle": "Card SubTitle",
               "cardBody": "Some quick example text to build on the card title and make up the bulk of the card's content.",
-              "imgSrc": "https://placeimg.com/640/480/nature",
+              "imgSrc": "/images/demoImg2.jpg",
               "buttons": [
                 {
                   "text": "Go somewhere",

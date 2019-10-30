@@ -20,8 +20,12 @@ import { Link } from 'react-router-dom';
 import shortid from 'shortid';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import { BlockQuoteWrapper, Button, StatusMessage } from '@knapsack/atoms';
-import { connectToContext, contextPropTypes } from '@knapsack/core';
+import {
+  BlockQuoteWrapper,
+  Button,
+  StatusMessage,
+} from '@knapsack/design-system';
+import { connectToContext, contextPropTypes } from '../context';
 import { apiUrlBase } from '../data';
 import { BASE_PATHS } from '../../lib/constants';
 import PageWithSidebar from '../layouts/page-with-sidebar';

@@ -1,9 +1,9 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import SchemaForm from '@knapsack/schema-form';
-import CopyToClipboard from '@knapsack/copy-to-clipboard';
 import {
   DesignTokenTable,
+  CopyToClipboard,
+  SchemaForm,
   // AnimationDemo,
   BorderRadiusDemo,
   BorderDemo,
@@ -14,9 +14,9 @@ import {
   SpacingDemo,
   TextColorDemo,
   TextShadowDemo,
-} from '@knapsack/design-token-demos';
-import ColorSwatches from '@knapsack/color-swatch';
-import BreakpointsDemo from '@knapsack/breakpoints-demo';
+  ColorSwatches,
+  BreakpointsDemo,
+} from '@knapsack/design-system';
 import { gqlQuery } from '../../../data';
 import { containsString } from '../../../utils/string-helpers';
 
@@ -38,7 +38,7 @@ const demos = [
   {
     id: 'color-swatch',
     title: 'Color Swatches',
-    render: props => <ColorSwatches colors={props.tokens} />,
+    render: props => <ColorSwatches tokens={props.tokens} />,
   },
   {
     id: 'spacing',
@@ -48,7 +48,7 @@ const demos = [
   {
     id: 'media-query',
     title: 'Media Queries',
-    render: props => <BreakpointsDemo breakpoints={props.tokens} />,
+    render: props => <BreakpointsDemo tokens={props.tokens} />,
   },
   {
     render: DesignTokenTable,

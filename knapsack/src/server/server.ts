@@ -25,7 +25,7 @@ import { knapsackEvents, EVENTS } from './events';
 import { getRoutes } from './rest-api';
 import { enableTemplatePush } from '../lib/features';
 import { getRole } from './auth';
-import { PERMISSIONS } from '../lib/constants';
+import { PERMISSIONS, apiUrlBase } from '../lib/constants';
 import {
   pageBuilderPagesTypeDef,
   pageBuilderPagesResolvers,
@@ -36,13 +36,9 @@ import { docsTypeDef, docsResolvers } from './docs';
 import { designTokensTypeDef, designTokensResolvers } from './design-tokens';
 import { patternsResolvers, patternsTypeDef } from './patterns';
 import { getBrain } from '../lib/bootstrap';
+import { KnapsackMeta, GraphQlContext } from '../schemas/misc';
 
-/**
- * @param {object} opt
- * @param {KnapsackMeta} opt.meta
- * @returns {Promise<void>}
- */
-export async function serve({ meta }) {
+export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
   const {
     patterns,
     customPages,
@@ -114,7 +110,7 @@ export async function serve({ meta }) {
       const role = getRole(req);
       const canWrite = role.permissions.includes(PERMISSIONS.WRITE);
 
-      return {
+      const context: GraphQlContext = {
         pageBuilderPages,
         settings,
         tokens,
@@ -122,7 +118,10 @@ export async function serve({ meta }) {
         patterns,
         canWrite,
         customPages,
+        config,
       };
+
+      return context;
     },
     playground: true,
     introspection: true,
@@ -171,12 +170,10 @@ export async function serve({ meta }) {
 
   const endpoints = [];
 
-  /**
-   * @param {string} pathname - URL Endpoint path
-   * @param {'GET' | 'POST'} [method='GET'] - HTTP method
-   * @returns {void}
-   */
-  function registerEndpoint(pathname, method = 'GET') {
+  function registerEndpoint(
+    pathname: string,
+    method: 'GET' | 'POST' = 'GET',
+  ): void {
     endpoints.push({
       pathname,
       method,
@@ -187,7 +184,7 @@ export async function serve({ meta }) {
     registerEndpoint,
     webroot: config.dist,
     public: config.public,
-    baseUrl: '/api',
+    baseUrl: apiUrlBase,
     meta,
     patternManifest: patterns,
     templateRenderers: config.templateRenderers,

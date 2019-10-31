@@ -1,3 +1,5 @@
+import { KnapsackBrain } from './main-types';
+
 export interface GenericResponse {
   ok: boolean;
   message?: string;
@@ -15,4 +17,8 @@ export interface RenderResponse {
   ok: boolean;
   html?: string;
   message?: string;
+}
+
+export interface GraphQlContext extends KnapsackBrain {
+  canWrite: boolean;
 }

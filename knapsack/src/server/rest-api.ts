@@ -16,7 +16,6 @@
  */
 import express from 'express';
 import urlJoin from 'url-join';
-import fs from 'fs-extra';
 import md from 'marked';
 import highlight from 'highlight.js';
 import { qsParse } from './server-utils';
@@ -28,6 +27,8 @@ import {
 } from '../lib/constants';
 import { enableUiSettings } from '../lib/features';
 import { getRole } from './auth';
+import { KnapsackBrain, KnapsackConfig } from '../schemas/main-types';
+import { KnapsackMeta } from '../schemas/misc';
 
 const router = express.Router();
 const memDb = new MemDb();
@@ -37,16 +38,25 @@ md.setOptions({
   highlight: code => highlight.highlightAuto(code).value,
 });
 
-export function getRoutes(config) {
-  const {
-    registerEndpoint,
-    patternManifest,
-    pageBuilder,
-    settingsStore,
-    meta: { websocketsPort },
-  } = config;
-
-  router.get(config.baseUrl, (req, res) => {
+export function getRoutes({
+  registerEndpoint,
+  patternManifest,
+  pageBuilder,
+  settingsStore,
+  meta,
+  baseUrl,
+}: {
+  patternManifest: KnapsackBrain['patterns'];
+  webroot: string;
+  public: string;
+  baseUrl: string;
+  meta: KnapsackMeta;
+  pageBuilder: KnapsackBrain['pageBuilderPages'];
+  settingsStore: KnapsackBrain['settings'];
+  registerEndpoint: (pathname: string, method?: 'GET' | 'POST') => void;
+  templateRenderers: KnapsackConfig['templateRenderers'];
+}): typeof router {
+  router.get(baseUrl, (req, res) => {
     res.json({
       ok: true,
       message: 'Welcome to the API!',
@@ -54,7 +64,7 @@ export function getRoutes(config) {
   });
 
   {
-    const url = urlJoin(config.baseUrl, 'data');
+    const url = urlJoin(baseUrl, 'data');
     registerEndpoint(url, 'POST');
     router.post(url, async (req, res) => {
       const { body, headers } = req;
@@ -79,7 +89,7 @@ export function getRoutes(config) {
   }
 
   if (patternManifest) {
-    const url = urlJoin(config.baseUrl, '/render');
+    const url = urlJoin(baseUrl, '/render');
     registerEndpoint(url, 'GET');
     router.get(url, async (req, res) => {
       const { query } = req;
@@ -116,7 +126,7 @@ export function getRoutes(config) {
         data,
         wrapHtml,
         isInIframe,
-        websocketsPort,
+        websocketsPort: meta.websocketsPort,
         assetSetId,
         demoDataIndex: demoDataIndex ? parseInt(demoDataIndex, 10) : null,
       });
@@ -139,28 +149,28 @@ export function getRoutes(config) {
   }
 
   if (patternManifest) {
-    const url1 = urlJoin(config.baseUrl, 'pattern/:id');
+    const url1 = urlJoin(baseUrl, 'pattern/:id');
     registerEndpoint(url1);
     router.get(url1, async (req, res) => {
       const results = await patternManifest.getPattern(req.params.id);
       res.send(results);
     });
 
-    const url2 = urlJoin(config.baseUrl, 'patterns');
+    const url2 = urlJoin(baseUrl, 'patterns');
     registerEndpoint(url2);
     router.get(url2, async (req, res) => {
       const results = await patternManifest.getPatterns();
       res.send(results);
     });
 
-    const url3 = urlJoin(config.baseUrl, 'pattern-meta/:id');
+    const url3 = urlJoin(baseUrl, 'pattern-meta/:id');
     registerEndpoint(url3);
     router.get(url3, async (req, res) => {
       const results = await patternManifest.getPatternMeta(req.params.id);
       res.send(results);
     });
 
-    const url4 = urlJoin(config.baseUrl, 'pattern-meta/:id');
+    const url4 = urlJoin(baseUrl, 'pattern-meta/:id');
     registerEndpoint(url4, 'POST');
     router.post(url4, async (req, res) => {
       const results = await patternManifest.setPatternMeta(
@@ -170,7 +180,7 @@ export function getRoutes(config) {
       res.send(results);
     });
 
-    const url5 = urlJoin(config.baseUrl, 'new-pattern');
+    const url5 = urlJoin(baseUrl, 'new-pattern');
     registerEndpoint(url5, 'POST');
     router.post(url5, async (req, res) => {
       const results = await patternManifest.createPatternFiles(req.body);
@@ -179,7 +189,7 @@ export function getRoutes(config) {
   }
 
   if (pageBuilder) {
-    const url1 = urlJoin(config.baseUrl, `${BASE_PATHS.PAGES}/:id`);
+    const url1 = urlJoin(baseUrl, `${BASE_PATHS.PAGES}/:id`);
     registerEndpoint(url1);
     router.get(url1, async (req, res) => {
       try {
@@ -203,7 +213,7 @@ export function getRoutes(config) {
       }
     });
 
-    const url2 = urlJoin(config.baseUrl, `${BASE_PATHS.PAGES}/:id`);
+    const url2 = urlJoin(baseUrl, `${BASE_PATHS.PAGES}/:id`);
     registerEndpoint(url2, 'POST');
     router.post(url2, async (req, res) => {
       const results = await pageBuilder.setPageBuilderPage(
@@ -213,44 +223,19 @@ export function getRoutes(config) {
       res.send(results);
     });
 
-    const url3 = urlJoin(config.baseUrl, BASE_PATHS.PAGES);
+    const url3 = urlJoin(baseUrl, BASE_PATHS.PAGES);
     registerEndpoint(url3);
     router.get(url3, async (req, res) => {
       const results = await pageBuilder.getPageBuilderPages();
       res.send(results);
     });
   } else {
-    router.get(urlJoin(config.baseUrl, BASE_PATHS.PAGES), async (req, res) => {
+    router.get(urlJoin(baseUrl, BASE_PATHS.PAGES), async (req, res) => {
       res.send([]);
     });
   }
 
-  if (config.sections) {
-    config.sections.forEach(section => {
-      const url = urlJoin(config.baseUrl, `section/${section.id}/:id`);
-      registerEndpoint(url);
-      router.get(url, async (req, res) => {
-        const item = section.items.find(x => x.id === req.params.id);
-        if (!item) {
-          res.send({
-            ok: false,
-            message: `Item ${req.params.id} not found`,
-          });
-        }
-        const contents = await fs.readFile(item.src, 'utf8');
-        const isMarkdown = item.src.endsWith('.md');
-        res.send({
-          ok: true,
-          data: {
-            ...item,
-            contents: isMarkdown ? md(contents) : contents,
-          },
-        });
-      });
-    });
-  }
-
-  const url3 = urlJoin(config.baseUrl, 'settings');
+  const url3 = urlJoin(baseUrl, 'settings');
   registerEndpoint(url3);
   router.get(url3, async (req, res) => {
     const settings = settingsStore.getSettings();
@@ -258,7 +243,7 @@ export function getRoutes(config) {
   });
 
   if (enableUiSettings) {
-    const url4 = urlJoin(config.baseUrl, 'settings');
+    const url4 = urlJoin(baseUrl, 'settings');
     registerEndpoint(url4, 'POST');
     router.post(url4, async (req, res) => {
       const results = settingsStore.setSettings(req.body);
@@ -266,28 +251,28 @@ export function getRoutes(config) {
     });
   }
 
-  const url5 = urlJoin(config.baseUrl, 'meta');
+  const url5 = urlJoin(baseUrl, 'meta');
   registerEndpoint(url5);
   router.get(url5, (req, res) => {
-    res.send(config.meta);
+    res.send(meta);
   });
 
   {
-    const url = urlJoin(config.baseUrl, 'loading');
+    const url = urlJoin(baseUrl, 'loading');
     registerEndpoint(url);
     router.get(url, (req, res) => {
       res.send(`<p>Loading...</p>`);
     });
   }
 
-  const url6 = urlJoin(config.baseUrl, 'permissions');
+  const url6 = urlJoin(baseUrl, 'permissions');
   registerEndpoint(url6);
   router.get(url6, (req, res) => {
     const role = getRole(req);
     res.send(role.permissions);
   });
 
-  // const url7 = urlJoin(config.baseUrl, 'upload');
+  // const url7 = urlJoin(baseUrl, 'upload');
   // registerEndpoint(url7);
   // router.post(url7, (req, res) => {
   //   const role = getRole(req);

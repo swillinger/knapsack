@@ -38,3 +38,6 @@ export const FILE_NAMES = {
   PATTERN_META: 'knapsack.pattern-meta.json',
   CONFIG: 'knapsack.config.js',
 };
+
+export const apiUrlBase = '/api';
+export const graphqlBase = '/graphql';

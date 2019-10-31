@@ -15,30 +15,40 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import qs from 'qs';
-
-export const apiUrlBase = '/api'; // @todo refactor
-export const graphqlBase = '/graphql';
+import { DocumentNode } from 'graphql';
+import { apiUrlBase, graphqlBase } from '../lib/constants';
 
 /**
  * GraphQL Query Object to String
- * @param {DocumentNode} gqlQueryObject -  GraphQL query made from `gql`
+ * @param gqlQueryObject -  GraphQL query made from `gql` - https://github.com/apollographql/graphql-tag/issues/150
  * @return {string}
  */
-export function gqlToString(gqlQueryObject) {
+export function gqlToString(gqlQueryObject: DocumentNode): string {
   return gqlQueryObject.loc.source.body;
 }
 
 /**
  * GraphQL Query
  * Must pass in `query` OR `gqlQuery`
- * @param {object} obj
- * @param {string | DocumentNode} [obj.query] - Plain GraphQL query
- * @param {DocumentNode} [obj.gqlQueryObj] - GraphQL query made from `gql`
- * @param {object} [obj.variables] - GraphQL variables
- * @return {Promise<object>}
- * @async
  */
-export function gqlQuery({ query, gqlQueryObj, variables = {} }) {
+export function gqlQuery({
+  query,
+  gqlQueryObj,
+  variables = {},
+}: {
+  /**
+   * Plain GraphQL query
+   */
+  query?: string | DocumentNode;
+  /**
+   * GraphQL query made from `gql`
+   */
+  gqlQueryObj?: DocumentNode;
+  /**
+   * GraphQL variables
+   */
+  variables?: object;
+}): Promise<object> {
   if (!query && !gqlQueryObj) {
     throw new Error('Must provide either "query" or "gqlQueryObj".');
   }
@@ -72,10 +82,9 @@ export function gqlQuery({ query, gqlQueryObj, variables = {} }) {
 
 /**
  * Save data up on server to be used in template rendering with `dataId` query param later
- * @param {object} data
- * @returns {Promise<string>} dataId that is md5 hash
+ * @returns dataId that is md5 hash
  */
-export function saveData(data) {
+export function saveData(data: object): Promise<string> {
   return window
     .fetch(`${apiUrlBase}/data`, {
       method: 'POST',
@@ -102,14 +111,7 @@ export function saveData(data) {
 }
 
 /**
- * @param {object} opt
- * @param {string} opt.patternId
- * @param {string} [opt.templateId]
- * @param {string} [opt.assetSetId]
- * @param {boolean} [opt.wrapHtml]
- * @param {boolean} [opt.isInIframe]
- * @param {object} [opt.extraParams] - extra query parameters added
- * @returns {string} root relative url for viewing rendered pattern
+ * Get a URL where this Pattern's Template can be viewed
  */
 export async function getTemplateUrl({
   patternId,
@@ -119,9 +121,17 @@ export async function getTemplateUrl({
   isInIframe,
   data,
   extraParams = {},
-}) {
+}: {
+  patternId: string;
+  templateId?: string;
+  assetSetId?: string;
+  wrapHtml?: boolean;
+  isInIframe?: boolean;
+  data?: object;
+  extraParams?: object;
+}): Promise<string> {
   const dataId = await saveData(data);
-  const query = {
+  const query: Record<string, any> = {
     patternId,
     ...extraParams,
   };
@@ -130,5 +140,5 @@ export async function getTemplateUrl({
   if (typeof wrapHtml === 'boolean') query.wrapHtml = wrapHtml;
   if (typeof isInIframe === 'boolean') query.isInIframe = isInIframe;
 
-  return `/api/render?${qs.stringify({ ...query, dataId })}`;
+  return `${apiUrlBase}/render?${qs.stringify({ ...query, dataId })}`;
 }

@@ -1,28 +1,18 @@
 import { isAbsolute, dirname, resolve } from 'path';
 import { fileExistsOrExit } from '../server/server-utils';
 import { processConfig } from './config';
-import { Patterns } from '../server/patterns';
 import * as log from '../cli/log';
+import { Patterns } from '../server/patterns';
 import { PageBuilder } from '../server/page-builder';
 import { Settings } from '../server/settings';
 import { CustomPages } from '../server/custom-pages';
 import { DesignTokens } from '../server/design-tokens';
 import { Docs } from '../server/docs';
+import { KnapsackBrain, KnapsackConfig } from '../schemas/main-types';
 
 let isReady = false;
 
-/**
- * @typedef {object} KnapsackBrain
- * @prop {Patterns} patterns
- * @prop {Settings} settings
- * @prop {PageBuilder} pageBuilderPages
- * @prop {CustomPages} customPages
- * @prop {DesignTokens} tokens
- * @prop {Docs} docs
- * @prop {KnapsackConfig} config
- */
-
-let brain = {
+let brain: KnapsackBrain = {
   patterns: null,
   settings: null,
   pageBuilderPages: null,
@@ -34,11 +24,14 @@ let brain = {
 
 /**
  * Take config and then start up the whole system!
- * @param {KnapsackConfig} config
- * @param {string} [configPathBase=process.cwd()] - path that config file paths are relative from
- * @return {KnapsackBrain}
  */
-export function bootstrap(config, configPathBase = process.cwd()) {
+export function bootstrap(
+  config: KnapsackConfig,
+  /**
+   * path that config file paths are relative from
+   */
+  configPathBase: string = process.cwd(),
+): KnapsackBrain {
   const patterns = new Patterns({
     newPatternDir: config.newPatternDir,
     patternPaths: config.patterns,
@@ -86,10 +79,13 @@ export function bootstrap(config, configPathBase = process.cwd()) {
 
 /**
  * Take config file path and then start up the whole system!
- * @param {string} configPath - path to `knapsack.config.js`
- * @return {KnapsackBrain}
  */
-export function bootstrapFromConfigFile(configPath) {
+export function bootstrapFromConfigFile(
+  /**
+   * path to `knapsack.config.js`
+   */
+  configPath: string,
+): KnapsackBrain {
   const absoluteConfigPath = isAbsolute(configPath)
     ? configPath
     : resolve(configPath);
@@ -102,9 +98,8 @@ export function bootstrapFromConfigFile(configPath) {
 
 /**
  * Get the Brain created from a previous bootstrap
- * @return {KnapsackBrain}
  */
-export function getBrain() {
+export function getBrain(): KnapsackBrain {
   if (!isReady) {
     log.error(
       'Not ready yet! You cannot "getBrain()" before "bootstrap()" or "bootstrapFromConfigFile()" has been run',

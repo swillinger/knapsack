@@ -25,7 +25,9 @@ function PageWithoutSidebar({ children, ...rest }) {
   return (
     <div className="page-without-sidebar">
       <Header {...rest} />
-      <ErrorCatcher>{children}</ErrorCatcher>
+      <ErrorCatcher>
+        <main className="page-without-sidebar__page">{children}</main>
+      </ErrorCatcher>
       <Footer />
     </div>
   );

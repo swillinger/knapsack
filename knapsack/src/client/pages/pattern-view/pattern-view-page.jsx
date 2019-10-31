@@ -128,8 +128,8 @@ class PatternViewPage extends Component {
               const status = patternStatuses.find(p => p.id === statusId);
 
               return (
-                <>
-                  <header className="pattern-view-page">
+                <section className="pattern-view-page">
+                  <header className="pattern-view-page__header">
                     <div>
                       <h4
                         className="eyebrow"
@@ -276,7 +276,7 @@ class PatternViewPage extends Component {
                   {/* items={item.items} */}
                   {/* /> */}
                   {/* ))} */}
-                </>
+                </section>
               );
             }}
           </Query>

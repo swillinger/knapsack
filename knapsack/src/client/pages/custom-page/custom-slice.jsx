@@ -41,7 +41,8 @@ class CustomSlice extends React.Component {
       Slice = KnapsackSlice.render;
     }
     return (
-      <div
+      <aside
+        className="custom-slice"
         style={{
           width: '100%',
           border: isEditing ? 'dotted 1px hsl(0, 0%, 45%)' : 'none',
@@ -109,7 +110,7 @@ class CustomSlice extends React.Component {
             isEditing={isEditing}
           />
         )}
-      </div>
+      </aside>
     );
   }
 }

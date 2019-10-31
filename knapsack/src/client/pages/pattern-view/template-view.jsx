@@ -261,8 +261,6 @@ class TemplateView extends Component {
                   </div>
                   <div>
                     <Button
-                      type="button"
-                      className="button button--size-small"
                       disabled={this.state.demoDataIndex < 1}
                       onClick={() => {
                         this.setState(prevState => ({
@@ -275,8 +273,6 @@ class TemplateView extends Component {
                       <FaCaretLeft />
                     </Button>
                     <Button
-                      type="button"
-                      className="button button--size-small"
                       disabled={demoDataIndex === demoDatas.length - 1}
                       onClick={() => {
                         this.setState(prevState => ({

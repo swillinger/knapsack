@@ -20,7 +20,7 @@ import { SchemaForm, StatusMessage } from '@knapsack/design-system';
 import urlJoin from 'url-join';
 import { connectToContext } from '../context';
 import { patternMetaSchema } from '../../schemas/patterns';
-import { apiUrlBase } from '../data';
+import { apiUrlBase } from '../../lib/constants';
 import PageWithSidebar from '../layouts/page-with-sidebar';
 
 class PatternNew extends Component {

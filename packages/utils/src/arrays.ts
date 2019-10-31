@@ -2,29 +2,24 @@
 
 /**
  * Flatten Array
- * @param {Array[]} arrayOfArrays - Array of Arrays to flatten
- * @returns {Array} - Flattened array
  */
-export function flattenArray(arrayOfArrays) {
+export function flattenArray<T>(arrayOfArrays: T[][]): T[] {
   return [].concat(...arrayOfArrays);
 }
 
 /**
  * Concat Arrays together
- * @param {Array} a - First Array
- * @param {Array} b - Second Array
- * @returns {Array} - The two arrays together.
  */
-export function concatArrays(a, b) {
-  return [].concat(a, b);
+export function concatArrays<TA, TB>(arrayA: TA[], arrayB: TB[]): (TA | TB)[] {
+  return [].concat(arrayA, arrayB);
 }
 
 /**
  * Make an array unique by removing duplicate entries.
- * @param {Array} ar - Array to make unique
- * @returns {Array} - A unique array
+ * @param ar - Array to make unique
+ * @returns A unique array
  */
-export function uniqueArray(ar) {
+export function uniqueArray<T>(ar: T[]): T[] {
   const j = {};
   ar.forEach(v => {
     j[`${v}::${typeof v}`] = v;

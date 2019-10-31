@@ -26,8 +26,7 @@ import {
   StatusMessage,
 } from '@knapsack/design-system';
 import { connectToContext, contextPropTypes } from '../context';
-import { apiUrlBase } from '../data';
-import { BASE_PATHS } from '../../lib/constants';
+import { apiUrlBase, BASE_PATHS } from '../../lib/constants';
 import PageWithSidebar from '../layouts/page-with-sidebar';
 import './page-builder-landing-page.scss';
 

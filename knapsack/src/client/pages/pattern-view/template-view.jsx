@@ -202,7 +202,7 @@ class TemplateView extends Component {
     };
 
     return (
-      <>
+      <article className="template-view">
         <div className="template-view__overview-wrapper">
           <div className="template-view__flex-wrapper">
             {!this.props.isVerbose && this.props.isTitleShown && (
@@ -422,7 +422,7 @@ class TemplateView extends Component {
             />
           </>
         )}
-      </>
+      </article>
     );
   }
 }

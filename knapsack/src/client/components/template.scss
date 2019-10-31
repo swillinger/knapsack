@@ -1,10 +1,19 @@
-.template__iframe-wrapper {
+.ks-template__iframe {
+  width: 1px;
+  // Using min-width to set the width of the iFrame, works around an issue in iOS that can prevent the iFrame from sizing correctly
+  min-width: 100%;
+  overflow: auto;
+  vertical-align: middle;
+  border: none;
+}
+
+.ks-template__iframe-wrapper {
   width: 100%;
   max-width: 100%;
   position: relative;
 }
 
-.template__resizable {
+.ks-template__resizable {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;

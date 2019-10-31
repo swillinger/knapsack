@@ -20,12 +20,9 @@ import PropTypes from 'prop-types';
 import {
   SchemaForm,
   Spinner,
-  Button,
   Details,
-  Select,
   StatusMessage,
 } from '@knapsack/design-system';
-import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import { KnapsackContext } from '../../context';
@@ -38,6 +35,7 @@ import {
 } from '../../loadable-components';
 // import DosAndDonts from '../../components/dos-and-donts';
 import { gqlQuery, getTemplateUrl } from '../../data';
+import { TemplateHeader } from './template-header';
 import './template-view.scss';
 import './shared/demo-grid-controls.scss';
 
@@ -204,91 +202,45 @@ class TemplateView extends Component {
     return (
       <article className="template-view">
         <div className="template-view__overview-wrapper">
-          <div className="template-view__flex-wrapper">
-            {!this.props.isVerbose && this.props.isTitleShown && (
-              <h3>{title}</h3>
-            )}
-            <div className="pattern-view-demo-grid-controls">
-              <Button
-                onClick={() => {
-                  getTemplateUrl({
-                    patternId: this.props.id,
-                    templateId: this.props.templateId,
-                    data: this.state.data,
-                    isInIframe: false,
-                    wrapHtml: true,
-                    assetSetId,
-                  })
-                    .then(externalUrl => {
-                      window.open(externalUrl, '_blank');
-                    })
-                    .catch(console.log.bind(console));
-                }}
-              >
-                Open in new window
-              </Button>
+          <TemplateHeader
+            title={title}
+            assetSets={assetSets}
+            demoDatas={demoDatas}
+            demoDataIndex={demoDataIndex}
+            isTitleShown={!this.props.isVerbose && this.props.isTitleShown}
+            handleOpenNewTabClick={() => {
+              getTemplateUrl({
+                patternId: this.props.id,
+                templateId: this.props.templateId,
+                data: this.state.data,
+                isInIframe: false,
+                wrapHtml: true,
+                assetSetId,
+              })
+                .then(externalUrl => {
+                  window.open(externalUrl, '_blank');
+                })
+                .catch(console.log.bind(console));
+            }}
+            handleAssetSetChange={newAssetSetId => {
+              this.setState({
+                assetSetId: newAssetSetId,
+              });
+            }}
+            handleDemoPrevClick={() => {
+              this.setState(prevState => ({
+                demoDataIndex: prevState.demoDataIndex - 1,
+                data: prevState.demoDatas[prevState.demoDataIndex - 1],
+              }));
+            }}
+            handleDemoNextClick={() => {
+              this.setState(prevState => ({
+                demoDataIndex: prevState.demoDataIndex + 1,
+                data: prevState.demoDatas[prevState.demoDataIndex + 1],
+              }));
+            }}
+          />
 
-              {assetSets && assetSets.length > 1 && (
-                <Select
-                  items={assetSets.map(assetSet => ({
-                    title: assetSet.title,
-                    value: assetSet.id,
-                  }))}
-                  handleChange={newAssetSetId => {
-                    this.setState({
-                      assetSetId: newAssetSetId,
-                    });
-                  }}
-                  value={assetSetId}
-                  label="Asset Sets"
-                />
-              )}
-
-              {demoDatas.length > 1 && (
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}
-                >
-                  <div
-                    style={{
-                      paddingRight: '3px',
-                      marginRight: '5px',
-                    }}
-                  >
-                    Demos:
-                  </div>
-                  <div>
-                    <Button
-                      disabled={this.state.demoDataIndex < 1}
-                      onClick={() => {
-                        this.setState(prevState => ({
-                          demoDataIndex: prevState.demoDataIndex - 1,
-                          data:
-                            prevState.demoDatas[prevState.demoDataIndex - 1],
-                        }));
-                      }}
-                    >
-                      <FaCaretLeft />
-                    </Button>
-                    <Button
-                      disabled={demoDataIndex === demoDatas.length - 1}
-                      onClick={() => {
-                        this.setState(prevState => ({
-                          demoDataIndex: prevState.demoDataIndex + 1,
-                          data:
-                            prevState.demoDatas[prevState.demoDataIndex + 1],
-                        }));
-                      }}
-                    >
-                      <FaCaretRight />
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
           <div
             className="template-view__demo-grid"
             style={{

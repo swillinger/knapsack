@@ -20,6 +20,7 @@ import iframeResizer from 'iframe-resizer/js/iframeResizer'; // https://www.npmj
 import shortid from 'shortid';
 import { KnapsackContext } from '../context';
 import { getTemplateUrl } from '../data';
+import { WS_EVENTS } from '../../schemas/web-sockets';
 import './template.scss';
 
 function Template({
@@ -88,7 +89,7 @@ function Template({
       `${protocol}://localhost:${websocketsPort}`,
     );
     socket.addEventListener('message', messageEvent => {
-      let messageData = { path: '' }; // eslint-disable-line no-unused-vars
+      let messageData = { event: '' }; // eslint-disable-line no-unused-vars
       try {
         messageData = JSON.parse(messageEvent.data);
       } catch (error) {
@@ -97,7 +98,19 @@ function Template({
           { messageEvent, error },
         );
       }
-      setId(makeId());
+
+      switch (messageData.event) {
+        case WS_EVENTS.PATTERN_TEMPLATE_CHANGED:
+          // console.log(WS_EVENTS.PATTERN_TEMPLATE_CHANGED);
+          setId(makeId());
+          break;
+        case WS_EVENTS.PATTERN_ASSET_CHANGED:
+          // console.log(WS_EVENTS.PATTERN_ASSET_CHANGED);
+          setId(makeId());
+          break;
+        default:
+          console.log('ws default');
+      }
     });
 
     return () => {
@@ -117,7 +130,7 @@ function Template({
     })
       .then(setHtmlUrl)
       .catch(console.log.bind(console));
-  }, [patternId, templateId, data, assetSetId]);
+  }, [patternId, templateId, data, assetSetId, id]);
 
   const content = (
     <iframe
@@ -143,7 +156,7 @@ function Template({
         <div className="template__resizable">
           {content}
           {width && (
-            <div className="template__resiable__size-tab">{width}px</div>
+            <div className="template__resizable__size-tab">{width}px</div>
           )}
         </div>
       </div>

@@ -16,27 +16,28 @@
  */
 import express from 'express';
 import { ApolloServer, gql } from 'apollo-server-express';
-import { mergeSchemas, makeExecutableSchema } from 'graphql-tools';
+import { makeExecutableSchema, mergeSchemas } from 'graphql-tools';
 import WebSocket from 'ws';
 import bodyParser from 'body-parser';
-import { join } from 'path';
+import { dirname, join } from 'path';
 import * as log from '../cli/log';
-import { knapsackEvents, EVENTS } from './events';
+import { EVENTS, knapsackEvents } from './events';
 import { getRoutes } from './rest-api';
 import { enableTemplatePush } from '../lib/features';
 import { getRole } from './auth';
-import { PERMISSIONS, apiUrlBase } from '../lib/constants';
+import { apiUrlBase, PERMISSIONS } from '../lib/constants';
 import {
-  pageBuilderPagesTypeDef,
   pageBuilderPagesResolvers,
+  pageBuilderPagesTypeDef,
 } from './page-builder';
-import { settingsTypeDef, settingsResolvers } from './settings';
+import { settingsResolvers, settingsTypeDef } from './settings';
 import { customPagesResolvers, customPagesTypeDef } from './custom-pages';
-import { docsTypeDef, docsResolvers } from './docs';
-import { designTokensTypeDef, designTokensResolvers } from './design-tokens';
+import { docsResolvers, docsTypeDef } from './docs';
+import { designTokensResolvers, designTokensTypeDef } from './design-tokens';
 import { patternsResolvers, patternsTypeDef } from './patterns';
 import { getBrain } from '../lib/bootstrap';
-import { KnapsackMeta, GraphQlContext } from '../schemas/misc';
+import { GraphQlContext, KnapsackMeta } from '../schemas/misc';
+import { WS_EVENTS, WebSocketMessage } from '../schemas/web-sockets';
 
 export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
   const {
@@ -66,7 +67,7 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
 
   const metaResolvers = {
     Query: {
-      meta: () => meta,
+      meta: (): KnapsackMeta => meta,
     },
   };
 
@@ -104,13 +105,13 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
       ],
     }),
     // https://www.apollographql.com/docs/apollo-server/essentials/data.html#context
-    context: ({ req }) => {
+    context: ({ req }): GraphQlContext => {
       // const { host, origin } = req.headers;
       // log.verbose('request received', { host, origin }, 'graphql');
       const role = getRole(req);
       const canWrite = role.permissions.includes(PERMISSIONS.WRITE);
 
-      const context: GraphQlContext = {
+      return {
         pageBuilderPages,
         settings,
         tokens,
@@ -120,8 +121,6 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
         customPages,
         config,
       };
-
-      return context;
     },
     playground: true,
     introspection: true,
@@ -252,21 +251,19 @@ ${patternDemos
   let wss;
 
   /**
-   * @param {object} data - Data to send to Websocket client
-   * @returns {boolean} - if successful
-   * @todo improve `data` definition
+   * @returns if successful
    */
-  function announcePatternChange(data) {
+  function sendWsMessage(msg: WebSocketMessage): boolean {
     if (!wss) {
       console.error(
-        'Attempted to fire "announcePatternChange" but no WebSockets Server setup due to lack of "websocketsPort" in config',
+        'Attempted to fire "sendWsMessage" but no WebSockets Server setup due to lack of "websocketsPort" in config',
       );
       return false;
     }
-    log.verbose('announcePatternChange', data, 'server');
+    log.verbose('sendWsMessage', msg, 'server');
     wss.clients.forEach(client => {
       if (client.readyState === WebSocket.OPEN) {
-        client.send(JSON.stringify(data));
+        client.send(JSON.stringify(msg));
       }
     });
     return true;
@@ -294,15 +291,15 @@ ${patternDemos
   });
 
   if (enableTemplatePush && wss) {
-    knapsackEvents.on(EVENTS.PATTERN_TEMPLATE_CHANGED, ({ path }) => {
+    knapsackEvents.on(EVENTS.PATTERN_TEMPLATE_CHANGED, data => {
       setTimeout(() => {
-        announcePatternChange({ event: 'changed', path });
+        sendWsMessage({ event: WS_EVENTS.PATTERN_TEMPLATE_CHANGED, data });
       }, 100);
     });
 
-    knapsackEvents.on(EVENTS.PATTERN_ASSET_CHANGED, ({ path }) => {
+    knapsackEvents.on(EVENTS.PATTERN_ASSET_CHANGED, data => {
       setTimeout(() => {
-        announcePatternChange({ event: 'changed', path });
+        sendWsMessage({ event: WS_EVENTS.PATTERN_ASSET_CHANGED, data });
       }, 100);
     });
   }

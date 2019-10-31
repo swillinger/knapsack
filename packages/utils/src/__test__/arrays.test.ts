@@ -23,8 +23,8 @@ describe('arrays', () => {
   });
 
   test('flattenArray', () => {
-    const results = flattenArray([[1, 2, 3], ['a', 'b', 'c']]);
-    expect(results).toEqual([1, 2, 3, 'a', 'b', 'c']);
+    const results = flattenArray([[1, 2, 3], [4, 5, 6]]);
+    expect(results).toEqual([1, 2, 3, 4, 5, 6]);
   });
 
   test('concatArrays', () => {

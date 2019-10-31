@@ -123,8 +123,6 @@ export class VariationDemo extends Component {
       <div>
         <div
           className="variation-demo__header-region"
-          colorTheme={colorTheme}
-          colorThemeAccent={colorThemeAccent}
           style={{
             background: colorThemeAccent,
             borderBottomColor: colorTheme,

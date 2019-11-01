@@ -1,4 +1,5 @@
 import React from 'react';
+import PropMatrix from 'react-prop-matrix';
 import { action } from '@storybook/addon-actions';
 import { TemplateHeader } from './template-header';
 
@@ -39,6 +40,33 @@ export const full = () => (
     handleDemoPrevClick={action('handleDemoPrevClick')}
     handleDemoNextClick={action('handleDemoNextClick')}
   />
+);
+
+const options = {
+  isTitleShown: [true, false],
+  title: [
+    'My Template',
+    'Really long title lorem ipsum dolor sit amet, consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+  ],
+  assetSets: [assetSets, []],
+  demoDatas: [[{}, {}, {}], []],
+};
+
+export const allVariations = () => (
+  <PropMatrix options={options}>
+    {props => (
+      <>
+        <TemplateHeader
+          {...props}
+          handleOpenNewTabClick={action('handleOpenNewTabClick')}
+          handleAssetSetChange={action('handleAssetSetChange')}
+          handleDemoPrevClick={action('handleDemoPrevClick')}
+          handleDemoNextClick={action('handleDemoNextClick')}
+        />
+        <hr />
+      </>
+    )}
+  </PropMatrix>
 );
 
 export const justData = () => (

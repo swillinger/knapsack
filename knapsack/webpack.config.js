@@ -25,7 +25,7 @@ module.exports = createWebPackConfig({
       window: {
         //   knapsackSettings: config.settings,
         knapsack: {
-          features,
+          features, // @todo debug why this isn't in `window.knapsack.features`
         },
       },
     }),

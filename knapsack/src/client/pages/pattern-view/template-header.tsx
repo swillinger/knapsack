@@ -42,7 +42,7 @@ export const TemplateHeader: React.FC<Props> = ({
               title: assetSet.title,
               value: assetSet.id,
             }))}
-            handleChange={newAssetSetId => handleAssetSetChange(newAssetSetId)}
+            handleChange={handleAssetSetChange}
             value={assetSetId}
             label="Asset Sets"
           />

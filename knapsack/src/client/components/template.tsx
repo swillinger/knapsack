@@ -15,22 +15,35 @@
  with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import PropTypes from 'prop-types';
 import iframeResizer from 'iframe-resizer/js/iframeResizer'; // https://www.npmjs.com/package/iframe-resizer
 import shortid from 'shortid';
 import { KnapsackContext } from '../context';
 import { getTemplateUrl } from '../data';
-import { WS_EVENTS } from '../../schemas/web-sockets';
+import {
+  WS_EVENTS,
+  PatternChangedData,
+  AssetChangedData,
+  WebSocketMessage,
+} from '../../schemas/web-sockets';
 import './template.scss';
 
-function Template({
+type Props = {
+  patternId: string;
+  templateId: string;
+  assetSetId?: string;
+  data?: object;
+  isResizable?: boolean;
+};
+
+const Template: React.FC<Props> = ({
   templateId,
   patternId,
   data = {},
   assetSetId,
-  isResizable = false,
-}) {
-  const makeId = () => `${patternId}-${templateId}-${shortid.generate()}`;
+  isResizable = true,
+}: Props) => {
+  const makeId = (): string =>
+    `${patternId}-${templateId}-${shortid.generate()}`;
 
   const [id, setId] = useState(makeId());
   const [htmlUrl, setHtmlUrl] = useState('/api/loading');
@@ -53,7 +66,7 @@ function Template({
     );
     const [thisIframe] = iframes;
     if (!thisIframe) {
-      return () => {};
+      return (): void => {};
     }
 
     setWidth(iframeRef.current.offsetWidth);
@@ -71,7 +84,7 @@ function Template({
       }
     }, 1000);
 
-    return () => {
+    return (): void => {
       if (thisIframeResizer && typeof thisIframeResizer.close === 'function') {
         thisIframeResizer.close(); // https://github.com/davidjbradshaw/iframe-resizer/issues/576
       }
@@ -89,7 +102,8 @@ function Template({
       `${protocol}://localhost:${websocketsPort}`,
     );
     socket.addEventListener('message', messageEvent => {
-      let messageData = { event: '' }; // eslint-disable-line no-unused-vars
+      // let messageData = { event: '' }; // eslint-disable-line no-unused-vars
+      let messageData: WebSocketMessage;
       try {
         messageData = JSON.parse(messageEvent.data);
       } catch (error) {
@@ -98,6 +112,7 @@ function Template({
           { messageEvent, error },
         );
       }
+      if (!messageData) return;
 
       switch (messageData.event) {
         case WS_EVENTS.PATTERN_TEMPLATE_CHANGED:
@@ -113,7 +128,7 @@ function Template({
       }
     });
 
-    return () => {
+    return (): void => {
       socket.close(1000, 'unmounting');
     };
   }, []);
@@ -155,18 +170,6 @@ function Template({
     );
   }
   return <aside className="ks-template">{content}</aside>;
-}
-
-Template.defaultProps = {
-  data: {},
-  isResizable: true,
-};
-
-Template.propTypes = {
-  templateId: PropTypes.string.isRequired,
-  patternId: PropTypes.string.isRequired,
-  data: PropTypes.object,
-  isResizable: PropTypes.bool,
 };
 
 export default Template;

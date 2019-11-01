@@ -56,17 +56,31 @@ export const typeColors = {
 
 /**
  * Get Type Color
- * @param {string} type - A color type
- * @param {string} [subtype=base] - A subtype
- * @returns {string} - A CSS var name
+ * @returns A CSS var name
  */
-export function getTypeColor(type, subtype = 'base') {
+export function getTypeColor(type: string, subtype = 'base'): string {
   return typeColors[type][subtype];
+}
+
+export interface KnapsackContextInterface {
+  settings: import('../schemas/knapsack.settings').KnapsackSettings;
+  meta: import('../schemas/misc').KnapsackMeta;
+  // features: @todo
+  permissions: string[]; // @todo improve types, perhaps with `keyof import('../lib/constants').PERMISSIONS`
+  /**
+   * Fires `setState({ settings: newSettings }) in `App`
+   * @param newSettings
+   */
+  setSettings: (
+    newSettings: import('../schemas/knapsack.settings').KnapsackSettings,
+  ) => void;
 }
 
 export const baseContext = {};
 
-export const KnapsackContext = React.createContext(baseContext);
+export const KnapsackContext = React.createContext<
+  Partial<KnapsackContextInterface>
+>(baseContext);
 
 export const {
   Provider: KnapsackContextProvider,
@@ -81,6 +95,5 @@ export function connectToContext(Component) {
   );
 }
 
-export const contextPropTypes = PropTypes.shape({
-  theme: PropTypes.object.isRequired,
-});
+// @todo remove
+export const contextPropTypes = PropTypes.shape({});

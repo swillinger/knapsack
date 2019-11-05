@@ -7,8 +7,8 @@ export interface GenericResponse {
 }
 
 export interface KnapsackMeta {
-  websocketsPort: number;
-  knapsackVersion: string;
+  websocketsPort?: number;
+  knapsackVersion?: string;
   version?: string;
   changelog?: string;
 }
@@ -21,4 +21,21 @@ export interface RenderResponse {
 
 export interface GraphQlContext extends KnapsackBrain {
   canWrite: boolean;
+}
+
+export interface JsonSchemaObject {
+  title?: string;
+  description?: string;
+  type: 'object';
+  required?: string[];
+  properties: {
+    [prop: string]:
+      | {
+          title?: string;
+          description?: string;
+          default?: any;
+          type: 'string' | 'boolean' | 'number' | 'array';
+        }
+      | JsonSchemaObject;
+  };
 }

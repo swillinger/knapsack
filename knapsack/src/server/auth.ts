@@ -15,7 +15,6 @@
  with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 
-import express from 'express';
 import { PERMISSIONS } from '../lib/constants';
 
 const isProd = process.env.NODE_ENV === 'production';
@@ -38,7 +37,11 @@ export const ROLES: Record<'EDITOR' | 'ANONYMOUS', Role> = {
 
 /* eslint-disable no-unused-vars */
 
-export function getRole(req: express.Request): Role {
+/**
+ * (Stubbed/Fake) Get Role from the user found in the `request` object
+ * Not real - currently based on if the server is ran with `NODE_ENV=production`
+ */
+export function getRole(req: import('express').Request): Role {
   let role = ROLES.ANONYMOUS;
   if (!isProd) {
     role = ROLES.EDITOR;

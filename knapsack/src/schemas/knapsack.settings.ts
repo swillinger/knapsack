@@ -20,7 +20,7 @@ export interface KnapsackSettingsStoreConfig {
   dataDir: string;
 }
 export interface KnapsackSettings {
-  title: string;
+  title?: string;
   subtitle?: string;
   slogan?: string;
   parentBrand?: {
@@ -29,7 +29,7 @@ export interface KnapsackSettings {
     logo?: string;
     title?: string;
   };
-  customSections: {
+  customSections?: {
     id: string;
     title: string;
     showInMainMenu: boolean;

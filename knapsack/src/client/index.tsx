@@ -16,13 +16,33 @@
  */
 import React from 'react';
 import ReactDom from 'react-dom';
-import App from './App';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import { rootEnhancer, rootReducer } from './store';
+import { App } from './App';
+import { apiUrlBase } from '../lib/constants';
 
-document.addEventListener('DOMContentLoaded', () => {
-  const { knapsack = {} } = window;
-  const { features = {} } = knapsack;
+function getInitialState() {
+  return window
+    .fetch(`${apiUrlBase}/initial-state`)
+    .then(res => res.json())
+    .then(initialState => {
+      console.log({ initialState });
+      return initialState;
+    })
+    .catch(console.log.bind(console));
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
   const mountEl = document.createElement('div');
   mountEl.setAttribute('id', 'app');
   document.body.appendChild(mountEl);
-  ReactDom.render(<App features={features} />, document.getElementById('app'));
+  const initialState = await getInitialState();
+  const store = createStore(rootReducer, initialState, rootEnhancer);
+  ReactDom.render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    document.getElementById('app'),
+  );
 });

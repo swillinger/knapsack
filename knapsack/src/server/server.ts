@@ -193,6 +193,26 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
 
   app.use(restApiRoutes);
 
+  app.route(`${apiUrlBase}/initial-state`).get(async (req, res) => {
+    const role = getRole(req);
+
+    const initialState: import('../client/store').AppState = {
+      settingsState: {
+        settings: settings.getSettings(),
+      },
+      patternsState: {
+        patterns: patterns.getPatterns(),
+      },
+      userState: {
+        role,
+      },
+      metaState: {
+        meta,
+      },
+    };
+    res.send(initialState);
+  });
+
   // This page is mainly so IE can get a list of links to view the individual templates outside of the system
   app.route('/demo-urls').get((req, res) => {
     const patternDemos = patterns.getPatternsDemoUrls();

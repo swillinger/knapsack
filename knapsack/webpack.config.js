@@ -2,7 +2,6 @@ const { join } = require('path');
 const { createWebPackConfig } = require('@knapsack/build-tools');
 const WebappWebpackPlugin = require('webapp-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const features = require('./dist/lib/features');
 
 module.exports = createWebPackConfig({
   mainEntries: join(__dirname, './src/client/'),
@@ -22,12 +21,6 @@ module.exports = createWebPackConfig({
       mobile: true,
       hash: true,
       filename: 'index.html',
-      window: {
-        //   knapsackSettings: config.settings,
-        knapsack: {
-          features, // @todo debug why this isn't in `window.knapsack.features`
-        },
-      },
     }),
     new WebappWebpackPlugin(join(__dirname, './src/client/assets/favicon.png')),
   ],

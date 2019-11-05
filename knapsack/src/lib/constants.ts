@@ -15,6 +15,8 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 
+const { API_URL_BASE } = process.env;
+
 export const PERMISSIONS = {
   READ: 'read',
   WRITE: 'write',
@@ -39,7 +41,7 @@ export const FILE_NAMES = {
   CONFIG: 'knapsack.config.js',
 };
 
-export const apiUrlBase = '/api';
+export const apiUrlBase = API_URL_BASE || '/api';
 export const graphqlBase = '/graphql';
 
 export const EVENTS = {

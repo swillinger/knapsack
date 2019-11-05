@@ -202,6 +202,8 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
       },
       patternsState: {
         patterns: patterns.getPatterns(),
+        patternStatuses: patterns.getPatternStatuses(),
+        patternTypes: patterns.getPatternTypes(),
       },
       userState: {
         role,

@@ -41,8 +41,6 @@ class PageWithSidebar extends Component {
   render() {
     const { children, sidebar = null } = this.props;
     const { sidebarCollapsed } = this.state;
-    const pathname =
-      (this.props.location && this.props.location.pathname) || this.props.path;
     if (!this.props.isFullScreen) {
       return (
         <div
@@ -52,7 +50,7 @@ class PageWithSidebar extends Component {
               sidebarCollapsed.toString() === 'true' ? '45px 1fr' : '300px 1fr',
           }}
         >
-          <Header pathname={pathname} />
+          <Header pathname={window.location.pathname} />
           <aside className="page-with-sidebar__sidebar">
             <div
               className={`
@@ -63,7 +61,7 @@ class PageWithSidebar extends Component {
                     : ''
                 }`}
             >
-              {sidebar || <SecondaryNav pathname={pathname} />}
+              {sidebar || <SecondaryNav pathname={window.location.pathname} />}
             </div>
             <button
               className="page-with-sidebar__sidebar__collapse-ctrl"
@@ -102,8 +100,6 @@ PageWithSidebar.propTypes = {
     PropTypes.node,
   ]),
   isInitiallyCollapsed: PropTypes.bool,
-  location: PropTypes.object,
-  path: PropTypes.string,
   sidebar: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
@@ -113,8 +109,6 @@ PageWithSidebar.propTypes = {
 
 PageWithSidebar.defaultProps = {
   isInitiallyCollapsed: false,
-  location: null,
-  path: null,
   sidebar: null,
   children: <></>,
   isFullScreen: false,

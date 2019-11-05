@@ -232,7 +232,6 @@ export const App: React.FC = () => {
                     ) {
                       return (
                         <LoadablePatternView
-                          {...rest}
                           patternId={match.params.id}
                           templateId={match.params.templateId}
                           size="m"

@@ -7,7 +7,6 @@ module.exports = {
       path: './home-page.twig',
       id: 'home',
       title: 'Home',
-      hideCodeBlock: true,
     },
   ],
 };

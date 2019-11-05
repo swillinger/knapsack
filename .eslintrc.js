@@ -26,6 +26,7 @@ module.exports = {
   globals: {
     document: true,
     window: true,
+    fetch: true,
   },
   settings: {
     'import/resolver': {
@@ -55,6 +56,7 @@ module.exports = {
         //   },
         // ],
         'valid-jsdoc': [0],
+        'react/state-in-constructor': [0],
       },
     },
   ],
@@ -73,6 +75,7 @@ module.exports = {
     ],
     'jsx-a11y/href-no-hash': 'off',
     'no-console': [0],
+    'no-inner-declarations': [0],
     'no-param-reassign': [
       1,
       {

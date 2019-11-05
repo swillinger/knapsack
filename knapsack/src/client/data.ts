@@ -27,6 +27,21 @@ export function gqlToString(gqlQueryObject: DocumentNode): string {
   return gqlQueryObject.loc.source.body;
 }
 
+export interface GraphQlResponse {
+  data?: object;
+  errors?: {
+    message: string;
+    extensions: {
+      code: string;
+      stacktrace: string[];
+    };
+    locations: {
+      line: number;
+      column: number;
+    }[];
+  }[];
+}
+
 /**
  * GraphQL Query
  * Must pass in `query` OR `gqlQuery`
@@ -48,7 +63,7 @@ export function gqlQuery({
    * GraphQL variables
    */
   variables?: object;
-}): Promise<object> {
+}): Promise<GraphQlResponse> {
   if (!query && !gqlQueryObj) {
     throw new Error('Must provide either "query" or "gqlQueryObj".');
   }

@@ -34,7 +34,6 @@ function getConfig({
     ],
     plugins: [
       require.resolve('@babel/plugin-syntax-dynamic-import'),
-      require.resolve('babel-plugin-transform-react-remove-prop-types'),
       [
         // http://babeljs.io/docs/en/babel-plugin-transform-runtime
         require.resolve('@babel/plugin-transform-runtime'),
@@ -56,5 +55,6 @@ module.exports = (useESModules = false) => ({
   env: {
     test: getConfig({ useESModules: false, targets: { node: true } }),
     cli: getConfig({ useESModules: false, targets: { node: true } }),
+    react: getConfig({ useESModules: true, targets: { node: true } }),
   },
 });

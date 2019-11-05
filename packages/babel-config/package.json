@@ -22,7 +22,6 @@
     "@babel/preset-typescript": "^7.1.0",
     "@babel/register": "^7.0.0",
     "babel-jest": "^24.1.0",
-    "babel-plugin-transform-react-remove-prop-types": "^0.4.21",
     "prettier": "^1.15.3"
   },
   "author": "Basalt (https://basalt.io/)",

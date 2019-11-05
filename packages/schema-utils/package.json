@@ -5,7 +5,8 @@
   "description": "A Knapsack component that helps build Design Systems",
   "main": "dist/schema-utils.js",
   "scripts": {
-    "build": "babel --config-file @knapsack/babel-config --copy-files --source-maps --out-dir dist/ --delete-dir-on-start ./src/",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo",
+    "build": "babel --config-file @knapsack/babel-config --source-maps --ignore 'src/*.test.js' --extensions .js,.ts --out-dir dist/ src/",
     "prepublishOnly": "yarn build",
     "start": "yarn build --watch"
   },

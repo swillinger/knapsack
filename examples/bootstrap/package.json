@@ -10,8 +10,9 @@
     "build:knapsack": "NODE_ENV=production node $NODE_DEBUG_OPTION ./node_modules/.bin/knapsack build",
     "build:tokens": "style-dictionary build --config ./style-dictionary.config.js",
     "clean": "rm -rf ./assets/design-tokens/dist",
+    "dev:knapsack": "nodemon --config ../nodemon.json --exec 'yarn start:knapsack'",
     "serve": "NODE_ENV=production node $NODE_DEBUG_OPTION ./node_modules/.bin/knapsack serve",
-    "start": "run-s clean build:tokens start:knapsack",
+    "start": "run-s clean build:tokens dev:knapsack",
     "start:knapsack": "node $NODE_DEBUG_OPTION ./node_modules/.bin/knapsack start",
     "test": "knapsack test"
   },

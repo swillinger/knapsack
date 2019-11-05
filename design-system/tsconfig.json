@@ -4,15 +4,17 @@
     "src",
     "../custom.d.ts"
   ],
-  "exclude": [
-  ],
+  "exclude": [],
   "compilerOptions": {
     "composite": true,
     "outDir": "./dist",
     "rootDir": "./src"
   },
-  "references": [
-    {"path": "../packages/utils"},
-    {"path": "../packages/core"}
+  "references": [{
+      "path": "../packages/utils"
+    },
+    {
+      "path": "../packages/core"
+    }
   ]
 }

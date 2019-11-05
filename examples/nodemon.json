@@ -1,0 +1,10 @@
+{
+  "ignore": [
+    "*.d.ts",
+    "*.map",
+    "client/**",
+    "store/**"
+  ],
+  "verbose": false,
+  "watch": ["../../knapsack/dist/"]
+}

@@ -4,13 +4,12 @@
     "src",
     "../custom.d.ts"
   ],
-  "exclude": [
-  ],
+  "exclude": [],
   "compilerOptions": {
-     "composite": true,
-//    "declarationDir": "./dist",
+    "composite": true,
+    //    "declarationDir": "./dist",
     "outDir": "./dist",
-//     "outFile": "./dist/index.d.ts"
+    //     "outFile": "./dist/index.d.ts"
     "rootDir": "./src"
     // "baseUrl": "./",
     /**
@@ -19,9 +18,17 @@
     */
     // "sourceRoot": ""
   },
-  "references": [
-    {"path": "../packages/utils"},
-    {"path": "../packages/core"},
-    {"path": "../design-system"}
+  "references": [{
+      "path": "../packages/utils"
+    },
+    {
+      "path": "../packages/schema-utils"
+    },
+    {
+      "path": "../packages/core"
+    },
+    {
+      "path": "../design-system"
+    }
   ]
 }

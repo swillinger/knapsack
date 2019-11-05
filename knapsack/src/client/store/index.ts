@@ -18,12 +18,17 @@ export const rootReducer = combineReducers({
 
 export type AppState = ReturnType<typeof rootReducer>;
 
-export const rootEnhancer = compose(
-  applyMiddleware(thunk),
-  /* eslint-disable no-underscore-dangle */
-  (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
-    (window as any).__REDUX_DEVTOOLS_EXTENSION__(),
-  /* eslint-enable no-underscore-dangle */
-);
+/* eslint-disable no-underscore-dangle */
+const composeEnhancers =
+  typeof window === 'object' &&
+  (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+        // https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md
+        // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+      })
+    : compose;
+/* eslint-enable no-underscore-dangle */
+
+export const rootEnhancer = composeEnhancers(applyMiddleware(thunk));
 
 export const useSelector: TypedUseSelectorHook<AppState> = useReduxSelector;

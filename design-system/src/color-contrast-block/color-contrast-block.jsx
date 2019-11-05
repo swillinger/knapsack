@@ -123,7 +123,6 @@ class ColorContrastBlock extends React.Component {
               >
                 <div
                   className="color-contrast-block__fade"
-                  comparedColor={compared.comparedColor.value}
                   style={{
                     background: `linear-gradient(
                       to right,

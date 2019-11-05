@@ -6,7 +6,7 @@
   "module": "dist/index.js",
   "scripts": {
     "clean": "rm -rf dist tsconfig.tsbuildinfo storybook/dist",
-    "build": "babel --config-file @knapsack/babel-config/es --copy-files --source-maps --extensions .tsx,.ts --out-dir dist/ src/",
+    "build": "babel --env-name react --config-file @knapsack/babel-config/es --copy-files --source-maps --extensions .tsx,.ts --out-dir dist/ src/",
     "build:storybook": "NODE_ENV=production build-storybook --config-dir ./storybook --output-dir ./storybook/dist",
     "start:storybook": "start-storybook --port 6006 --config-dir ./storybook",
     "start": "yarn build --watch"

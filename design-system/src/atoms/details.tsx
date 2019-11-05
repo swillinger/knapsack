@@ -1,24 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import './details.scss';
 
-export function Details(props) {
-  return (
-    <details className={`k-details ${props.className}`} open={props.open}>
-      {props.children}
-    </details>
-  );
-}
-
-Details.defaultProps = {
-  children: null,
-  className: null,
-  open: false,
+type Props = {
+  open?: boolean;
+  className?: string;
+  children: React.ReactNode;
 };
 
-/* eslint-disable react/boolean-prop-naming */
-Details.propTypes = {
-  children: PropTypes.element,
-  className: PropTypes.string,
-  open: PropTypes.bool,
+export const Details: React.FC<Props> = ({
+  children,
+  className,
+  open = false,
+}: Props) => {
+  return (
+    <details className={`k-details ${className}`} open={open}>
+      {children}
+    </details>
+  );
 };

@@ -5,7 +5,7 @@ import {
   basicSchema,
   kitchenSinkSchema,
   nestedSchema,
-} from '../../demo-data';
+} from '../demo-data';
 
 export default {
   title: 'Components|SchemaForm',

@@ -12,7 +12,7 @@ describe('Patterns', () => {
       .clear()
       .type('Robots are awesome');
 
-    cy.wait(2000); // eslint-disable-line
+    cy.wait(3000); // eslint-disable-line
     cy.percySnapshot('Pattern: Card', { widths: [400, 1200] });
     cy.screenshot('Card Pattern after edit');
 

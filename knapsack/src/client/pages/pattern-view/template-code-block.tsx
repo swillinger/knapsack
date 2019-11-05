@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { CodeBlock } from '@knapsack/design-system';
 import gql from 'graphql-tag';
 import { gqlQuery } from '../../data';
 
-export default function TemplateCodeBlock({
+type Props = {
+  patternId: string;
+  templateId: string;
+  data?: object;
+};
+
+const TemplateCodeBlock: React.FC<Props> = ({
   patternId,
   templateId,
   data = {},
-}) {
+}: Props) => {
   const codeBlockTabs = [
     {
       id: 'usage',
@@ -55,13 +60,21 @@ export default function TemplateCodeBlock({
         templateId,
         data,
       },
-    }).then(({ data: gqlData, error }) => {
+    }).then(({ data: gqlData, errors }) => {
+      const { templateCode: newTemplateCode } = gqlData as {
+        templateCode: {
+          language: string;
+          usage: string;
+          html: string;
+          templateSrc: string;
+        };
+      };
       setTemplateCode({
-        ...gqlData.templateCode,
+        ...newTemplateCode,
         data,
       });
-      if (error) {
-        console.error(error);
+      if (errors) {
+        console.error(errors);
       }
     });
   }, [data, patternId, templateId]);
@@ -98,14 +111,6 @@ export default function TemplateCodeBlock({
       <CodeBlock items={items} />
     </div>
   );
-}
-
-TemplateCodeBlock.defaultProps = {
-  data: {},
 };
 
-TemplateCodeBlock.propTypes = {
-  patternId: PropTypes.string.isRequired,
-  templateId: PropTypes.string.isRequired,
-  data: PropTypes.object,
-};
+export default TemplateCodeBlock;

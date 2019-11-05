@@ -15,6 +15,7 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import arrayMove from 'array-move';
 import shortid from 'shortid';
@@ -111,7 +112,7 @@ class Playground extends Component {
     // All state is passed to PageBuilderContext so all children can use it
     /* eslint-disable react/no-unused-state, react/prop-types */
     this.state = {
-      appContext: props.appContext,
+      isUserAbleToSave: props.isUserAbleToSave,
       patterns: [],
       example: null,
       slices: null,
@@ -133,7 +134,7 @@ class Playground extends Component {
   /**
    * @param {string} patternId - ID of Pattern, i.e. `media-block`
    * @param {string} [templateId] - ID of Template
-   * @return {KnapsackPatternTemplate} - Pattern template
+   * @return {import('../../../schemas/patterns').KnapsackPatternTemplate} - Pattern template
    */
   getTemplateFromPatternId(patternId, templateId) {
     const pattern = this.state.patterns.find(p => p.id === patternId);
@@ -155,7 +156,7 @@ class Playground extends Component {
    * @return {Promise<object>|null} - Returns the structued object defined by the mutation.
    */
   async save(setPageBuilderPage) {
-    if (!this.state.appContext.permissions.includes('write')) {
+    if (!this.props.isUserAbleToSave) {
       this.setState({
         statusMessage:
           'Updating and saving data has been disabled through feature flags. This page builder example cannot be saved at this time.',
@@ -415,6 +416,7 @@ class Playground extends Component {
                 {this.state.statusMessage && (
                   <StatusMessage
                     message={this.state.statusMessage}
+                    // @ts-ignore
                     type={this.state.statusType}
                   />
                 )}
@@ -504,11 +506,21 @@ class Playground extends Component {
   }
 }
 
+function mapStateToProps({ patternsState, userState }) {
+  return {
+    patterns: patternsState.patterns,
+    isUserAbleToSave: userState.role.permissions.includes('write'),
+  };
+}
+
 Playground.propTypes = {
+  isUserAbleToSave: PropTypes.bool.isRequired,
   // context: contextPropTypes.isRequired,
   patterns: PropTypes.array.isRequired, // eslint-disable-line
   example: PropTypes.object.isRequired, // eslint-disable-line
   id: PropTypes.string.isRequired, // @todo save/show playgrounds based on `id`
 };
 
-export default DragDropContext(HTML5Backend)(connectToContext(Playground));
+export default DragDropContext(HTML5Backend)(
+  connect(mapStateToProps)(connectToContext(Playground)),
+);

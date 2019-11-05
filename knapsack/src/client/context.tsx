@@ -67,13 +67,6 @@ export interface KnapsackContextInterface {
   meta: import('../schemas/misc').KnapsackMeta;
   // features: @todo
   permissions: string[]; // @todo improve types, perhaps with `keyof import('../lib/constants').PERMISSIONS`
-  /**
-   * Fires `setState({ settings: newSettings }) in `App`
-   * @param newSettings
-   */
-  setSettings: (
-    newSettings: import('../schemas/knapsack.settings').KnapsackSettings,
-  ) => void;
 }
 
 export const baseContext = {};

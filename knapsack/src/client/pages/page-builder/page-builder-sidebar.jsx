@@ -153,7 +153,7 @@ class PageBuilderSidebar extends Component {
           }}
         />
         <div style={{ display: 'flex' }}>
-          {(this.context.appContext.permissions.includes('write') && (
+          {(this.context.isUserAbleToSave && (
             <Button
               type="submit"
               onKeyPress={() => this.props.handleSave()}

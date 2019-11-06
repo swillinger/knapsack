@@ -23,7 +23,7 @@ const ChangelogPage: React.FC = () => {
   const changelog = useSelector(store => store.metaState.meta.changelog);
 
   return (
-    <PageWithSidebar className="doc-group">
+    <PageWithSidebar>
       <div>
         <header
           style={{

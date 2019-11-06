@@ -24,7 +24,7 @@ import { Link } from 'react-router-dom';
 import queryString from 'query-string';
 import { connectToContext } from '../context';
 
-import PatternGrid from '../components/pattern-grid';
+import { PatternGrid } from '../components/pattern-grid';
 import PageWithSidebar from '../layouts/page-with-sidebar';
 import { BASE_PATHS } from '../../lib/constants';
 import { gqlToString, gqlQuery } from '../data';
@@ -191,8 +191,15 @@ class PatternsPage extends Component {
           isInline
         />
         <PatternGrid
-          patterns={visiblePatterns}
+          patterns={visiblePatterns.map(p => ({
+            id: p.id,
+            title: p.meta.title,
+            description: p.meta.description,
+            typeId: p.meta.type,
+            statusId: p.meta.status,
+          }))}
           patternStatuses={this.state.patternStatuses}
+          patternTypes={this.state.patternTypes}
         />
       </PageWithSidebar>
     );

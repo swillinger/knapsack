@@ -7,7 +7,7 @@ const { version } = require('./package.json');
 
 // const format = theoKnapsackFormat(theo);
 
-/** @type {KnapsackUserConfig} */
+/** @type {import('@basalt/knapsack/src/schemas/knapsack-config').KnapsackUserConfig} */
 const config = {
   // patterns: ['./assets/patterns/*', './assets/pages/*'], @todo create full page examples
   patterns: ['./assets/patterns/*'],
@@ -22,6 +22,7 @@ const config = {
   // not setting here since we declare it on each template
   assetSets: [],
   version,
+  changelog: './CHANGELOG.md',
   templateRenderers: [
     new HtmlRenderer(),
     new TwigRenderer({

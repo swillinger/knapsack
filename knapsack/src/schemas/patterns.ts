@@ -59,11 +59,7 @@ interface UiSchema {
  */
 type Title = string;
 type Description = string;
-/**
- * Describes the type of pattern.
- */
-type Type = 'component' | 'layout';
-type Status = 'draft' | 'inProgress' | 'ready';
+
 type Uses = ('inSlice' | 'inGrid' | 'inComponent')[];
 /**
  * Set to false to show default placeholder thumbnail
@@ -112,8 +108,8 @@ export interface PatternWithMeta {
 export interface PatternMeta {
   title: Title;
   description?: Description;
-  type?: Type;
-  status?: Status;
+  type?: KnapsackPatternType['id'];
+  status?: KnapsackPatternStatus['id'];
   uses?: Uses;
   hasIcon?: HasIcon;
   /**
@@ -136,6 +132,11 @@ export interface PatternMeta {
   showAllTemplates?: boolean;
 }
 
+/**
+ * Examples collections of Pattern Types:
+ * - Atoms, Molecules, Organisms
+ * - Components, Layouts
+ */
 export interface KnapsackPatternType {
   id: string;
   title: string;

@@ -15,29 +15,28 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useSelector } from '../store';
+import MdBlock from '../components/md-block';
 import PageWithSidebar from '../layouts/page-with-sidebar';
 
-function BadRoute({ title, subtitle, message }) {
+const ChangelogPage: React.FC = () => {
+  const changelog = useSelector(store => store.metaState.meta.changelog);
+
   return (
-    <PageWithSidebar>
-      <h4 className="eyebrow">{subtitle}</h4>
-      <h2>{title}</h2>
-      <p>{message}</p>
+    <PageWithSidebar className="doc-group">
+      <div>
+        <header
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        />
+        <div>
+          <MdBlock md={changelog} isEditable={false} />
+        </div>
+      </div>
     </PageWithSidebar>
   );
-}
-
-BadRoute.defaultProps = {
-  title: '404 - Error',
-  subtitle: 'Oh no,',
-  message: 'Seems there was an error.',
 };
 
-BadRoute.propTypes = {
-  title: PropTypes.string,
-  subtitle: PropTypes.string,
-  message: PropTypes.string,
-};
-
-export default BadRoute;
+export default ChangelogPage;

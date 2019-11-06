@@ -15,29 +15,19 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import PropTypes from 'prop-types';
 import Header from '../components/header';
 import Footer from '../components/footer';
 import ErrorCatcher from '../utils/error-catcher';
 import './page-without-sidebar.scss';
 
-function PageWithoutSidebar({ children, ...rest }) {
-  return (
-    <div className="page-without-sidebar">
-      <Header {...rest} />
-      <ErrorCatcher>
-        <main className="page-without-sidebar__page">{children}</main>
-      </ErrorCatcher>
-      <Footer />
-    </div>
-  );
-}
-
-PageWithoutSidebar.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
-};
+const PageWithoutSidebar: React.FC = ({ children }) => (
+  <div className="page-without-sidebar">
+    <Header />
+    <ErrorCatcher>
+      <main className="page-without-sidebar__page">{children}</main>
+    </ErrorCatcher>
+    <Footer />
+  </div>
+);
 
 export default PageWithoutSidebar;

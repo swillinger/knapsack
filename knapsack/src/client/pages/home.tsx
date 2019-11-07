@@ -15,11 +15,10 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import { connectToContext } from '@knapsack/core';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import Spinner from '@knapsack/spinner';
-import { StatusMessage } from '@knapsack/atoms';
+import { Spinner, StatusMessage } from '@knapsack/design-system';
+import { connectToContext } from '../context';
 import PageWithoutSidebar from '../layouts/page-without-sidebar';
 import { HomeSplash } from '../components/home-splash';
 
@@ -40,7 +39,7 @@ const HomePage = props => (
   <Query query={query}>
     {({ loading, error, data }) => {
       if (loading) return <Spinner />;
-      if (error) return <StatusMessage message={error.message} type="error " />;
+      if (error) return <StatusMessage message={error.message} type="error" />;
 
       const {
         settings: { title, subtitle, slogan },

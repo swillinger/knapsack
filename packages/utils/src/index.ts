@@ -4,3 +4,4 @@ export * from './color';
 export * from './arrays';
 export * from './misc';
 export * from './strings';
+export * from './type-tools';

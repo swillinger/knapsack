@@ -1,21 +1,14 @@
 import EventEmitter from 'events';
 import util from 'util';
 import * as log from '../cli/log';
+import { EVENTS } from '../lib/constants';
 import { KnapsackPattern } from '../schemas/patterns';
+
+export { EVENTS } from '../lib/constants';
 
 class KnapsackEventEmitter extends EventEmitter {}
 
 export const knapsackEvents = new KnapsackEventEmitter();
-export const EVENTS = {
-  CONFIG_READY: 'CONFIG_READY',
-  PATTERNS_DATA_READY: 'PATTERNS_DATA_READY',
-  PATTERN_TEMPLATE_ADDED: 'PATTERN_TEMPLATE_ADDED',
-  PATTERN_TEMPLATE_CHANGED: 'PATTERN_TEMPLATE_CHANGED',
-  PATTERN_TEMPLATE_REMOVED: 'PATTERN_TEMPLATE_REMOVED',
-  PATTERN_ASSET_CHANGED: 'PATTERN_ASSET_CHANGED',
-  PATTERN_CONFIG_CHANGED: 'PATTERN_CONFIG_CHANGED',
-  SHUTDOWN: 'SHUTDOWN',
-};
 
 export interface KnapsackEventsData {
   PATTERNS_DATA_READY: KnapsackPattern[];
@@ -23,7 +16,7 @@ export interface KnapsackEventsData {
 
 export function emitPatternsDataReady(
   patterns: KnapsackEventsData['PATTERNS_DATA_READY'],
-) {
+): void {
   knapsackEvents.emit(EVENTS.PATTERNS_DATA_READY, patterns);
 }
 

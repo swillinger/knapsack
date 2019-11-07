@@ -20,6 +20,7 @@
  * Is Some Of This Array In That Array?
  * Are any of the items in arrayA in arrayB?
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function hasItemsInItems(arrayA: any[], arrayB: any[]): boolean {
   return arrayA.some(a => arrayB.includes(a));
 }
@@ -29,7 +30,8 @@ export function hasItemsInItems(arrayA: any[], arrayB: any[]): boolean {
  * @param {Array} ar - Array to make unique
  * @returns {Array} - A unique array
  */
-export function uniqueArray(ar) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function uniqueArray(ar: any[]): any[] {
   const j = {};
   ar.forEach(v => {
     j[`${v}::${typeof v}`] = v;
@@ -43,7 +45,8 @@ export function uniqueArray(ar) {
  * @return {Array}
  * @link https://stackoverflow.com/a/15030117
  */
-export function flattenArray(arr) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function flattenArray(arr: any[]): any[] {
   return arr.reduce(
     (flat, toFlatten) =>
       flat.concat(

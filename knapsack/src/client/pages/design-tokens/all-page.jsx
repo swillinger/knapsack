@@ -15,11 +15,10 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import Spinner from '@knapsack/spinner';
+import { Spinner, Button, StatusMessage } from '@knapsack/design-system';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 // import { plugins } from '@knapsack/core';
-import { Button, StatusMessage } from '@knapsack/atoms';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 // import { TokenCategory } from '@knapsack/design-token-demos';

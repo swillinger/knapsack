@@ -15,8 +15,8 @@
  with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import SchemaTable from '@knapsack/schema-table';
-import { knapsackDesignTokenSchema } from '@basalt/knapsack/src/schemas/design-tokens';
+import { SchemaTable } from '@knapsack/design-system/dist/schema-table/schema-table';
+import { knapsackDesignTokenSchema } from '@knapsack/core';
 // import settings from '@basalt/knapsack/src/schemas/knapsack.settings.schema';
 // import patternMeta from '@basalt/knapsack/src/schemas/pattern-meta.schema';
 // import patternWithMeta from '@basalt/knapsack/src/schemas/pattern-w-meta.schema';

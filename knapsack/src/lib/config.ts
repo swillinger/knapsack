@@ -1,4 +1,3 @@
-#! /usr/bin/env node
 /**
  *  Copyright (C) 2018 Basalt
  This file is part of Knapsack.
@@ -22,18 +21,18 @@ import {
   validateUniqueIdsInArray,
   validateDataAgainstSchema,
 } from '@knapsack/schema-utils';
+import { knapsackDesignTokensSchema } from '@knapsack/core';
 import { KnapsackRendererBase } from '../server/renderer-base';
 import * as log from '../cli/log';
 import { knapsackEvents, EVENTS } from '../server/events';
 import { dirExistsOrExit, readJson } from '../server/server-utils';
-import { knapsackDesignTokensSchema } from '../schemas/design-tokens';
+import { KnapsackConfig, KnapsackUserConfig } from '../schemas/knapsack-config';
+import { KnapsackMeta } from '../schemas/misc';
 
 /**
  * Handle backwards compatibility of config
- * @param {KnapsackUserConfig} config
- * @return {KnapsackConfig}
  */
-function convertOldConfig(config) {
+function convertOldConfig(config: KnapsackUserConfig): KnapsackConfig {
   // @deprecated - remove in v1.0.0
   if (config.templates) {
     log.warn(
@@ -64,11 +63,9 @@ function convertOldConfig(config) {
 }
 
 /**
- * @param {KnapsackConfig} config
- * @returns {boolean}
  * @todo validate with schema and assign defaults
  */
-function validateConfig(config) {
+function validateConfig(config: KnapsackConfig): boolean {
   const templateRendererResults = validateUniqueIdsInArray(
     config.templateRenderers,
   );
@@ -133,11 +130,11 @@ function validateConfig(config) {
 
 /**
  * Prepare user config: validate, convert all paths to absolute, assign defaults
- * @param {KnapsackUserConfig} userConfig
- * @param {string} from
- * @returns {KnapsackConfig}
  */
-export function processConfig(userConfig, from) {
+export function processConfig(
+  userConfig: KnapsackUserConfig,
+  from: string,
+): KnapsackConfig {
   const {
     patterns,
     public: publicDir,
@@ -163,11 +160,7 @@ export function processConfig(userConfig, from) {
   return config;
 }
 
-/**
- * @param {KnapsackConfig} config
- * @return {Promise<KnapsackMeta>}
- */
-export async function getMeta(config) {
+export async function getMeta(config: KnapsackConfig): Promise<KnapsackMeta> {
   const { version } = await readJson(join(__dirname, '../../package.json'));
   return {
     websocketsPort: await portfinder.getPortPromise(),

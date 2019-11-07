@@ -15,7 +15,8 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import Loadable from 'react-loadable';
-import Spinner from '@knapsack/spinner';
+// need to keep this entry point small, so not importing entire design system
+import { Spinner } from '@knapsack/design-system/dist/spinner/spinner';
 
 export const LoadableHeader = Loadable({
   loader: () => import(/* webpackChunkName: "header" */ './components/header'),
@@ -101,62 +102,6 @@ export const LoadablePageBuilderLandingPage = Loadable({
   loading: Spinner,
 });
 
-export const LoadableTransitions = Loadable({
-  loader: () =>
-    import(
-      /* webpackChunkName: "transitions-page" */ './pages/design-tokens/transitions-page'
-    ),
-  loading: Spinner,
-});
-
-export const LoadableBreakpoints = Loadable({
-  loader: () =>
-    import(
-      /* webpackChunkName: "breakpoints-page" */ './pages/design-tokens/breakpoints-page'
-    ),
-  loading: Spinner,
-});
-
-export const LoadableColors = Loadable({
-  loader: () =>
-    import(
-      /* webpackChunkName: "colors-page" */ './pages/design-tokens/colors-page'
-    ),
-  loading: Spinner,
-});
-
-export const LoadableShadows = Loadable({
-  loader: () =>
-    import(
-      /* webpackChunkName: "shadows-page" */ './pages/design-tokens/shadows-page'
-    ),
-  loading: Spinner,
-});
-
-export const LoadableBorders = Loadable({
-  loader: () =>
-    import(
-      /* webpackChunkName: "borders-page" */ './pages/design-tokens/borders-page'
-    ),
-  loading: Spinner,
-});
-
-export const LoadableSizings = Loadable({
-  loader: () =>
-    import(
-      /* webpackChunkName: "sizings-page" */ './pages/design-tokens/sizings-page'
-    ),
-  loading: Spinner,
-});
-
-export const LoadableTypography = Loadable({
-  loader: () =>
-    import(
-      /* webpackChunkName: "typography" */ './pages/design-tokens/typography-page'
-    ),
-  loading: Spinner,
-});
-
 export const LoadablePatternsPage = Loadable({
   loader: () =>
     import(
@@ -176,7 +121,9 @@ export const LoadableSecondaryNav = Loadable({
 
 export const LoadableSchemaTable = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "schema-table" */ '@knapsack/schema-table'),
+    import(
+      /* webpackChunkName: "schema-table" */ '@knapsack/design-system/dist/schema-table/schema-table'
+    ).then(mod => mod.SchemaTable),
   loading: Spinner,
 });
 

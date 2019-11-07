@@ -21,8 +21,8 @@ import {
   ClearFilterButton,
   TypeToFilter,
   TypeToFilterInputWrapper,
-} from '@knapsack/atoms';
-import SchemaForm from '@knapsack/schema-form';
+  SchemaForm,
+} from '@knapsack/design-system';
 import { Link } from 'react-router-dom';
 import PageBuilderEditForm from './page-builder-edit-form';
 import PlaygroundSidebarPatternListItem from './page-builder-pattern-list-item';

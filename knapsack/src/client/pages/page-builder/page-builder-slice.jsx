@@ -25,7 +25,7 @@ import {
   FaEdit,
   FaArrowsAlt,
 } from 'react-icons/fa';
-import { connectToContext, contextPropTypes } from '@knapsack/core';
+import { connectToContext, contextPropTypes } from '../../context';
 import Template from '../../components/template';
 import { DragTypes } from './DragTypes';
 import './page-builder-slice.scss';

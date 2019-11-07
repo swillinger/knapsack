@@ -5,12 +5,9 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "yarn clean && yarn build:js",
-    "build:js": "BABEL_ENV=cli babel --config-file @knapsack/babel-config --extensions .js,.ts --out-dir dist/ src/",
-    "build:types": "tsc",
+    "build": "BABEL_ENV=cli babel --config-file @knapsack/babel-config --extensions .js,.ts --out-dir dist/ src/",
     "clean": "rm -rf dist tsconfig.tsbuildinfo",
-    "test": "yarn build:types",
-    "watch": "yarn build:js --watch"
+    "start": "yarn build --watch"
   },
   "dependencies": {
     "camelcase": "^4.1.0"

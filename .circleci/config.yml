@@ -58,6 +58,7 @@ jobs:
           paths:
 #            - ~/repo/node_modules
             - ~/.cache/yarn
+#      - run: yarn clean
       - run: yarn build
 #      - run: yarn build:types
       - run: bash ./scripts/ensure-clean-git-repo.sh
@@ -123,14 +124,13 @@ jobs:
       - run:
           name: Deploy Storybook
           command: |
-            cd ~/repo/apps/storybook
-            cp now.json dist
+            cp ~/repo/design-system/storybook/now.json ~/repo/design-system/storybook/dist
             if [ "$CIRCLE_BRANCH" = "master" ]; then
-              now deploy --scope=basalt --target staging --token $ZEIT_TOKEN dist
+              now deploy --scope=basalt --target staging --token $ZEIT_TOKEN ~/repo/design-system/storybook/dist
             else
-              now deploy --scope=basalt --prod --token $ZEIT_TOKEN dist
+              now deploy --scope=basalt --prod --token $ZEIT_TOKEN ~/repo/design-system/storybook/dist
             fi
-            DEPLOY_URL=`../../scripts/get-latest-deploy.js 'knapsack-storybook'`
+            DEPLOY_URL=`./scripts/get-latest-deploy.js 'knapsack-storybook'`
             echo "Adding GitHub check for DEPLOY_URL: $DEPLOY_URL"
             REPO_SLUG=basaltinc/knapsack GITHUB_TOKEN=$GH_TOKEN npx ci-utils gh-status --state success --url $DEPLOY_URL --description 'Storybook Deploy' --context 'deploy/storybook'
       - run:
@@ -142,6 +142,9 @@ jobs:
     steps:
       - attach_workspace:
           at: '~'
+      - run: yarn clean
+      - run: yarn build
+      - run: yarn build:types
       - run: ./scripts/test-publish.sh
 
   release:
@@ -149,6 +152,8 @@ jobs:
     steps:
       - attach_workspace:
           at: '~'
+      - run: yarn clean
+      - run: yarn build
       - run: yarn build:types
       - run: ./scripts/release.sh
 

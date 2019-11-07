@@ -22,11 +22,11 @@ import {
   TypeToFilter,
   TypeToFilterInputWrapper,
   ClearFilterButton,
-} from '@knapsack/atoms';
-import Spinner from '@knapsack/spinner';
+  Spinner,
+} from '@knapsack/design-system';
 import { flattenArray } from '@knapsack/utils';
 import urlJoin from 'url-join';
-import NavList from './nav-list';
+import { NavList } from './nav-list';
 import { containsString } from '../utils/string-helpers';
 import { BASE_PATHS } from '../../lib/constants';
 import { enableUiCreatePattern } from '../../lib/features';

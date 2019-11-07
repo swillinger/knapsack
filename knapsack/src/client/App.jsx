@@ -22,14 +22,16 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom';
-import Spinner from '@knapsack/spinner';
-import { KnapsackContextProvider, baseContext, plugins } from '@knapsack/core';
+// need to keep this entry point small, so not importing entire design system
+import { Spinner } from '@knapsack/design-system/dist/spinner/spinner';
+import { plugins } from '@knapsack/core';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider, Query } from 'react-apollo';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
+import { KnapsackContextProvider, baseContext } from './context';
 import ErrorCatcher from './utils/error-catcher';
-import { apiUrlBase } from './data';
+import { apiUrlBase, BASE_PATHS } from '../lib/constants';
 import {
   LoadablePatternView,
   LoadableGraphiqlPage,
@@ -45,7 +47,6 @@ import {
   LoadableChangelogPage,
   LoadableBadRoute,
 } from './loadable-components';
-import { BASE_PATHS } from '../lib/constants';
 import './global/variables.css';
 import './style.scss';
 

@@ -5,7 +5,7 @@
 describe('Patterns', () => {
   it('Re-renders when form is edited', () => {
     cy.visit('/pattern/card/twig');
-    cy.get('main > header h2').as('page-title');
+    cy.get('main header h2').as('page-title');
     cy.get('@page-title').should('have.text', 'Card');
     cy.contains('Edit Form');
     cy.get('.rjsf input[label="Body Title"]')
@@ -26,7 +26,7 @@ describe('Patterns', () => {
 
   it('Allows editing of metadata', () => {
     const metaFilePath =
-      '../examples/bootstrap/assets/patterns/card/knapsack.pattern-meta.json';
+      'examples/bootstrap/assets/patterns/card/knapsack.pattern-meta.json';
     cy.visit('/pattern/card/twig');
     cy.contains('Edit Meta').click();
     cy.get('main input[label="Title"]')
@@ -47,7 +47,9 @@ describe('Patterns', () => {
       })
       .select('draft');
 
-    cy.get('main form').submit();
+    cy.get('main form')
+      .contains('Submit')
+      .click();
 
     cy.readFile(metaFilePath)
       .its('title')
@@ -56,8 +58,8 @@ describe('Patterns', () => {
       .its('status')
       .should('equal', 'draft');
 
-    cy.get('main > header h2').should('have.text', 'Super Card');
-    cy.get('main > header').contains('Status: Draft');
+    cy.get('main header h2').should('have.text', 'Super Card');
+    cy.get('main header').contains('Status: Draft');
 
     cy.contains('Edit Meta').click();
 
@@ -75,8 +77,8 @@ describe('Patterns', () => {
       .its('status')
       .should('equal', 'ready');
 
-    cy.get('main > header h2').should('have.text', 'Card');
-    cy.get('main > header').contains('Status: Ready');
+    cy.get('main header h2').should('have.text', 'Card');
+    cy.get('main header').contains('Status: Ready');
 
     cy.exec(`git status --porcelain ${metaFilePath}`).then(({ stdout }) => {
       assert.equal(

@@ -82,7 +82,7 @@ class PageWithSidebar extends Component {
             </button>
           </aside>
           <ErrorCatcher>
-            <main>{children}</main>
+            <main className="page-with-sidebar__page">{children}</main>
           </ErrorCatcher>
           <Footer />
         </div>

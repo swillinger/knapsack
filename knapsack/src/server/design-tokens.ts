@@ -15,10 +15,10 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import GraphQLJSON from 'graphql-type-json';
+import { KnapsackDesignToken } from '@knapsack/core';
 import { hasItemsInItems } from '../lib/utils';
-import { KnapsackDesignToken } from '../schemas/design-tokens';
 
-export { designTokensTypeDef } from '../schemas/design-tokens';
+export { designTokensTypeDef } from '@knapsack/core';
 
 export class DesignTokens {
   tokens: KnapsackDesignToken[];
@@ -30,7 +30,12 @@ export class DesignTokens {
       tokens?: KnapsackDesignToken[];
     };
   }) {
-    this.tokens = tokens;
+    this.tokens = tokens.map(token => {
+      return {
+        originalValue: token.value,
+        ...token,
+      };
+    });
   }
 
   getTokens(category = '', tags?: string[]): KnapsackDesignToken[] {

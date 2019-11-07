@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import CodeBlock from '@knapsack/code-block';
+import { CodeBlock } from '@knapsack/design-system';
 import gql from 'graphql-tag';
 import { gqlQuery } from '../../data';
 

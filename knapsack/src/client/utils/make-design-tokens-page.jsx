@@ -18,8 +18,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import Spinner from '@knapsack/spinner';
-import { StatusMessage } from '@knapsack/atoms';
+import { Spinner, StatusMessage } from '@knapsack/design-system';
 
 export const propTypes = {
   id: PropTypes.string.isRequired,

@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/utils",
   "license": "GPL-2.0-or-later",
-  "version": "1.7.1",
+  "version": "1.8.0",
   "description": "A Knapsack component that helps build Design Systems",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -13,11 +13,11 @@
     "start": "yarn build --watch"
   },
   "dependencies": {
-    "@knapsack/core": "^1.7.0",
+    "@knapsack/core": "^1.8.0",
     "color": "^3.0.0"
   },
   "devDependencies": {
-    "@knapsack/babel-config": "^1.7.1",
+    "@knapsack/babel-config": "^1.8.0",
     "prop-types": "^15.7.2"
   },
   "author": "Basalt (https://basalt.io/)",

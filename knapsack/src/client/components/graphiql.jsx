@@ -15,10 +15,10 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import PropTypes from 'prop-types';
-import GraphiQL from 'graphiql'; // https://www.npmjs.com/package/graphiql
-import 'graphiql/graphiql.css';
-import { gqlQuery } from '../data';
+// import PropTypes from 'prop-types';
+// import GraphiQL from 'graphiql'; // https://www.npmjs.com/package/graphiql
+// import 'graphiql/graphiql.css';
+// import { gqlQuery } from '../data';
 
 /**
  * Simply applies default graphql function
@@ -27,26 +27,27 @@ import { gqlQuery } from '../data';
  * @returns {*}
  * @constructor
  */
-function GraphiQLBlock(props) {
+function GraphiQLBlock() {
   return (
-    <GraphiQL
-      fetcher={({ query, variables }) => gqlQuery({ query, variables })}
-      query={props.initialQuery}
-      variables={props.initialVariables}
-      response={props.initialResponse}
-    />
+    <h1>GraphiQL is temporarily disabled.</h1>
+    // <GraphiQL
+    //   fetcher={({ query, variables }) => gqlQuery({ query, variables })}
+    //   query={props.initialQuery}
+    //   variables={props.initialVariables}
+    //   response={props.initialResponse}
+    // />
   );
 }
-GraphiQLBlock.defaultProps = {
-  initialQuery: null,
-  initialVariables: null,
-  initialResponse: '',
-};
-
-GraphiQLBlock.propTypes = {
-  initialQuery: PropTypes.string,
-  initialVariables: PropTypes.string,
-  initialResponse: PropTypes.string,
-};
+// GraphiQLBlock.defaultProps = {
+//   initialQuery: null,
+//   initialVariables: null,
+//   initialResponse: '',
+// };
+//
+// GraphiQLBlock.propTypes = {
+//   initialQuery: PropTypes.string,
+//   initialVariables: PropTypes.string,
+//   initialResponse: PropTypes.string,
+// };
 
 export default GraphiQLBlock;

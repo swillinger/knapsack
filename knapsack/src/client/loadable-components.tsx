@@ -31,15 +31,13 @@ export const LoadableFooter = Loadable({
 // @todo fix
 /* eslint-disable import/no-cycle */
 // export const LoadableCustomPage: typeof import('./pages/custom-page/custom-page').default = Loadable(
-export const LoadableCustomPage = Loadable(
-  {
-    loader: () =>
-      import(
-        /* webpackChunkName: "custom-slices-page" */ './pages/custom-page/custom-page'
-      ),
-    loading: Spinner,
-  },
-);
+export const LoadableCustomPage = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "custom-slices-page" */ './pages/custom-page/custom-page'
+    ),
+  loading: Spinner,
+});
 /* eslint-enable import/no-cycle */
 
 export const LoadableDocPage = Loadable({

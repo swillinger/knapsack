@@ -2,7 +2,7 @@ import React from 'react';
 import shortid from 'shortid';
 import { Button, SchemaForm } from '@knapsack/design-system';
 import knapsackSlices from './slices';
-import { Slice } from './slices/types';
+// import { Slice } from './slices/types';
 import { KnapsackCustomPageSlice } from '../../../schemas/custom-pages';
 
 type Props = {
@@ -52,8 +52,8 @@ class CustomSlice extends React.Component<Props, State> {
       setSliceData,
     } = this.props;
 
-    const knapsackSlice = knapsackSlices.find(knapsackSlices => {
-      return knapsackSlices.id === slice.blockId;
+    const knapsackSlice = knapsackSlices.find(k => {
+      return k.id === slice.blockId;
     });
 
     return (
@@ -124,6 +124,7 @@ class CustomSlice extends React.Component<Props, State> {
             data: slice.data,
             setSliceData: data => setSliceData(sliceIndex, data),
             isEditing,
+            key: this.state.renderKey,
           })
 
         // <Slice

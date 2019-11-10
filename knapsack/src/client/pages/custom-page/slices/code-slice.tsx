@@ -1,17 +1,23 @@
 import React from 'react';
 import { CodeBlock, languageList } from '@knapsack/design-system';
+import { Slice } from './types';
 
-// @todo remove this and fix
-/* eslint-disable react/prop-types */
+type Data = {
+  items: {
+    name?: string;
+    language?: string;
+    code?: string;
+  }[];
+};
 
-export const codeBlockSlice = {
+export const codeBlockSlice: Slice<Data> = {
   id: 'code-block-slice',
   title: 'Code Block',
   description: 'A tabbed panel of code blocks with syntax highlighting',
   // hasMinimumViableData: data => true,
   render: props => {
-    const { data = {} } = props;
-    const { items = [] } = data;
+    const { data } = props;
+    const { items } = data;
     // // @todo improve, maybe considering `hasMinimumViableData`
     // if (items.length === 0) return <h5>Not enough data</h5>;
     return <CodeBlock items={items} key={JSON.stringify(items)} />;

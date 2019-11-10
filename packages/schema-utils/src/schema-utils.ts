@@ -18,6 +18,8 @@ import Ajv from 'ajv'; // https://github.com/epoberezkin/ajv
 
 export const ajv = new Ajv();
 
+type ajvErrors = import('ajv').ErrorObject[];
+
 const ajvDefaults = new Ajv({
   useDefaults: true,
 });
@@ -26,10 +28,8 @@ const ajvDefaults = new Ajv({
  * Validate Schema itself (metaSchema)
  * Validates against contents of the `$schema` field
  * @link https://github.com/epoberezkin/ajv#validateschemaobject-schema---boolean
- * @param {object} schema - JSON Schema
- * @return {{ok: boolean, message: string}} - True if valid
  */
-export function validateSchema(schema) {
+export function validateSchema(schema: {}): { ok: boolean; message: string } {
   const isSchemaValid = ajv.validateSchema(schema);
   return {
     ok: isSchemaValid,
@@ -43,11 +43,11 @@ export function validateSchema(schema) {
  * Validate Schema and Assign Defaults
  * Any `default` on properties will be added if that property is absent
  * @link https://github.com/epoberezkin/ajv#assigning-defaults
- * @param {object} schema - JSON Schema
- * @param {object} data - Data to validate
- * @return {{ok: boolean, message: string, data: object}} - Results
  */
-export function validateSchemaAndAssignDefaults(schema, data) {
+export function validateSchemaAndAssignDefaults<T>(
+  schema: {},
+  data: T,
+): { ok: boolean; message: string; data: T } {
   const { ok, message } = validateSchema(schema);
   if (!ok) {
     return {
@@ -70,11 +70,15 @@ export function validateSchemaAndAssignDefaults(schema, data) {
 /**
  * Validate Data against Schema
  * @link https://github.com/epoberezkin/ajv
- * @param {object} schema - JSON Schema
- * @param {object} data - Data to validate
- * @return {{ok: boolean, message: string}} - Results
  */
-export function validateDataAgainstSchema(schema, data) {
+export function validateDataAgainstSchema(
+  schema: {},
+  data: object,
+): {
+  ok: boolean;
+  message: string;
+  errors?: ajvErrors;
+} {
   const { ok, message } = validateSchema(schema);
   if (!ok) {
     return {
@@ -87,15 +91,22 @@ export function validateDataAgainstSchema(schema, data) {
   return {
     ok: isValid,
     message: isValid ? '' : ajv.errorsText(),
+    errors: isValid ? [] : ajv.errors,
   };
 }
 
 /**
- * @param {Array<object>} items
- * @param {string} [key='id']
- * @return {{ ok: boolean, duplicates: any[], duplicateIdList: string, message: string }}
+ * Used to ensure that the `id` prop in each object in an array is unique
  */
-export function validateUniqueIdsInArray(items, key = 'id') {
+export function validateUniqueIdsInArray<T>(
+  items: T[],
+  key = 'id',
+): {
+  ok: boolean;
+  duplicates: T[];
+  duplicateIdList: string;
+  message: string;
+} {
   const ids = [];
   const duplicates = [];
   items.forEach(item => {

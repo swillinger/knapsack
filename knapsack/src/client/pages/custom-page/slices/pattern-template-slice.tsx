@@ -1,18 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import gql from 'graphql-tag';
 import { SchemaForm } from '@knapsack/design-system';
-import TemplateView from '../../pattern-view/template-view';
+import TemplateView, {
+  Props as TemplateViewProps,
+} from '../../pattern-view/template-view';
 import { gqlQuery } from '../../../data';
+import { Slice, SliceRenderParams } from './types';
 
-// @todo remove this and fix
-/* eslint-disable react/prop-types, class-methods-use-this */
+type Data = {
+  patternId?: string;
+  templateId?: string;
+  options?: {
+    demoSize?: TemplateViewProps['demoSize'];
+    showReadme?: TemplateViewProps['isReadmeShown'];
+    showSchemaForm?: TemplateViewProps['isSchemaFormShown'];
+  };
+};
 
 function PatternTemplateSlice({
   isEditing,
   setSliceData,
-  data: sliceData = {},
-}) {
-  const [formData, setFormData] = useState(sliceData);
+  data: sliceData,
+}: SliceRenderParams<Data>) {
+  const [formData, setFormData] = useState(
+    sliceData || { patternId: '', templateId: '', options: {} },
+  );
   const [patterns, setPatterns] = useState([]);
 
   useEffect(() => {
@@ -43,13 +55,10 @@ function PatternTemplateSlice({
   }, []);
   if (patterns.length === 0) return <div>Loading...</div>;
 
-  const {
-    patternId,
-    templateId,
-    options: { showReadme, demoSize, showSchemaForm } = {},
-  } = formData;
+  const { patternId, templateId, options } = formData;
+  const { showReadme, demoSize, showSchemaForm } = options;
 
-  const schemaProps = {
+  const schemaProps: any = {
     patternId: {
       type: 'string',
       title: 'Pattern',
@@ -144,9 +153,9 @@ function PatternTemplateSlice({
   );
 }
 
-export const patternTemplateSlice = {
+export const patternTemplateSlice: Slice<Data> = {
   id: 'pattern-template-slice',
   title: 'Pattern Template',
   description: 'Render a Pattern Template',
-  render: PatternTemplateSlice,
+  render: props => <PatternTemplateSlice {...props} />,
 };

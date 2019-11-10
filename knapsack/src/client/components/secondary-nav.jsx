@@ -16,6 +16,7 @@
  */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import {
@@ -58,16 +59,6 @@ const secondaryNavQuery = gql`
       id
       title
       color
-    }
-    settings {
-      customSections {
-        id
-        title
-        pages {
-          id
-          title
-        }
-      }
     }
   }
 `;
@@ -135,8 +126,9 @@ class SecondaryNav extends Component {
             pageBuilderPages = [],
             docs = [],
             patternStatuses = [],
-            settings: { customSections = [] },
           } = data;
+
+          const { customSections = [] } = this.props;
 
           const patternItems = [];
           patternTypes.forEach(patternType => {
@@ -247,4 +239,6 @@ SecondaryNav.defaultProps = {
   pathname: null,
 };
 
-export default SecondaryNav;
+export default connect(s => ({
+  customSections: s.customPagesState.sections,
+}))(SecondaryNav);

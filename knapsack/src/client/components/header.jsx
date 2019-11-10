@@ -15,48 +15,17 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import PropTypes from 'prop-types';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 import { BASE_PATHS } from '../../lib/constants';
 import knapsackLogo from '../assets/knapsack-logo-trans.svg';
 import './header.scss';
 
-const headerQuery = gql`
-  {
-    settings {
-      title
-      parentBrand {
-        homepage
-        title
-        logo
-      }
-      customSections {
-        id
-        title
-        showInMainMenu
-        pages {
-          id
-          title
-        }
-      }
-    }
-    pageBuilderPages {
-      id
-    }
-    patterns {
-      id
-    }
-    docs {
-      id
-      data {
-        title
-      }
-    }
-  }
-`;
+function mapStateToProps({ settingsState: { settings }, customPagesState }) {
+  return { settings, customSections: customPagesState.sections };
+}
 
 class Header extends React.Component {
   constructor(props) {
@@ -97,7 +66,7 @@ class Header extends React.Component {
   }
 
   // @todo refactor
-  static renderLinks({ settings: { parentBrand, customSections = [] }, docs }) {
+  static renderLinks({ parentBrand, customSections = [] }) {
     return (
       <ul>
         <li>
@@ -113,16 +82,6 @@ class Header extends React.Component {
             Page Builder
           </NavLink>
         </li>
-        {docs.length > 0 && (
-          <li>
-            <NavLink
-              className="header__nav-link"
-              to={`${BASE_PATHS.DOCS}/${docs[0].id}`}
-            >
-              Docs
-            </NavLink>
-          </li>
-        )}
         <li>
           <NavLink
             className="header__nav-link"
@@ -131,7 +90,6 @@ class Header extends React.Component {
             API
           </NavLink>
         </li>
-        {/* @todo Reimplement header nav for custom sections once implemented with gql */}
         {customSections &&
           customSections.length > 0 &&
           customSections
@@ -196,27 +154,18 @@ class Header extends React.Component {
 
   render() {
     return (
-      <Query query={headerQuery}>
-        {({ loading, error, data }) => {
-          if (loading) return <p>Loading...</p>;
-          if (error) return <p>Error :(</p>;
-          return (
-            <div className="header">
-              <h3 style={{ margin: 0 }}>
-                <img
-                  className="header__logo"
-                  src={knapsackLogo}
-                  alt="Knapsack"
-                />
-                <Link className="header__header-link" to="/">
-                  {data.settings.title}
-                </Link>
-              </h3>
-              {this.renderNavigation(data)}
-            </div>
-          );
-        }}
-      </Query>
+      <div className="header">
+        <h3 style={{ margin: 0 }}>
+          <img className="header__logo" src={knapsackLogo} alt="Knapsack" />
+          <Link className="header__header-link" to="/">
+            {this.props.settings.title}
+          </Link>
+        </h3>
+        {this.renderNavigation({
+          parentBrand: this.props.settings.parentBrand,
+          customSections: this.props.customSections,
+        })}
+      </div>
     );
   }
 }
@@ -225,4 +174,4 @@ Header.propTypes = {
   pathname: PropTypes.string.isRequired,
 };
 
-export default Header;
+export default connect(mapStateToProps)(Header);

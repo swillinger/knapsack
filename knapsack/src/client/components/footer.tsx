@@ -32,7 +32,7 @@ const Footer: React.FC = () => {
         <ul className="footer__menu">
           {permissions.includes('write') && (
             <li className="footer__menu-item">
-              <Link to="/settings">Site Settings</Link>
+              <Link to="/settings">Settings</Link>
             </li>
           )}
           <li className="footer__menu-item">

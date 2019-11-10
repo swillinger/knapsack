@@ -9,11 +9,11 @@ export {
 } from './pretty-code/pretty-code';
 
 type Props = {
-  items: {
-    name: string;
+  items?: {
+    name?: string;
     language?: string;
     id?: string;
-    code: string;
+    code?: string;
   }[];
 };
 

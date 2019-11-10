@@ -1,9 +1,11 @@
+import produce from 'immer';
 import { Action } from './types';
 import { apiUrlBase } from '../../lib/constants';
 import { KnapsackSettings } from '../../schemas/knapsack.settings';
 
 const REQUEST = 'knapsack/settings/REQUEST';
 const RECEIVE = 'knapsack/settings/RECEIVE';
+const UPDATE = 'knapsack/settings/UPDATE';
 
 export interface SettingsState {
   isFetching?: boolean;
@@ -14,7 +16,9 @@ export interface SettingsState {
 const initialState: SettingsState = {
   isFetching: false,
   didInvalidate: false,
-  settings: {},
+  settings: {
+    title: 'A New Design System',
+  },
 };
 
 interface RequestSettingsAction extends Action {
@@ -26,7 +30,15 @@ interface ReceiveSettingsAction extends Action {
   payload: KnapsackSettings;
 }
 
-export type SettingsActionTypes = ReceiveSettingsAction | RequestSettingsAction;
+interface UpdateSettingsAction extends Action {
+  type: typeof UPDATE;
+  payload: KnapsackSettings;
+}
+
+export type SettingsActionTypes =
+  | ReceiveSettingsAction
+  | RequestSettingsAction
+  | UpdateSettingsAction;
 
 function requestSettings(): SettingsActionTypes {
   return {
@@ -41,7 +53,16 @@ function receiveSettings(settings: KnapsackSettings): SettingsActionTypes {
   };
 }
 
-export function fetchSettings() {
+export function updateSettings(
+  settings: KnapsackSettings,
+): UpdateSettingsAction {
+  return {
+    type: UPDATE,
+    payload: settings,
+  };
+}
+
+function fetchSettings() {
   return dispatch => {
     dispatch(requestSettings());
     return window
@@ -101,6 +122,10 @@ export default function reducer(
         isFetching: false,
         settings: action.payload,
       };
+    case UPDATE:
+      return produce(state, draft => {
+        draft.settings = action.payload;
+      });
     default:
       return {
         ...initialState,

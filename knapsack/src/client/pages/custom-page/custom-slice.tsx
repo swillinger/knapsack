@@ -1,12 +1,29 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import shortid from 'shortid';
 import { Button, SchemaForm } from '@knapsack/design-system';
-
 import knapsackSlices from './slices';
+import { Slice } from './slices/types';
+import { KnapsackCustomPageSlice } from '../../../schemas/custom-pages';
 
-class CustomSlice extends React.Component {
-  constructor(props) {
+type Props = {
+  slice: KnapsackCustomPageSlice;
+  sliceIndex: number;
+  isEditing: boolean;
+  slicesLength: number;
+  moveSliceDown: (index: number) => void;
+  moveSliceUp: (index: number) => void;
+  deleteSlice: (slideId: string) => void;
+  setSliceData: (index: number, data: KnapsackCustomPageSlice['data']) => void;
+};
+
+type State = {
+  hasError: boolean;
+  errorMessage: string;
+  renderKey: string;
+};
+
+class CustomSlice extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       hasError: false,
@@ -35,11 +52,10 @@ class CustomSlice extends React.Component {
       setSliceData,
     } = this.props;
 
-    let Slice = () => <p>no slice...</p>;
-    const KnapsackSlice = knapsackSlices.find(b => b.id === slice.blockId);
-    if (KnapsackSlice) {
-      Slice = KnapsackSlice.render;
-    }
+    const knapsackSlice = knapsackSlices.find(knapsackSlices => {
+      return knapsackSlices.id === slice.blockId;
+    });
+
     return (
       <aside
         className="custom-slice"
@@ -52,8 +68,8 @@ class CustomSlice extends React.Component {
       >
         {isEditing && (
           <div>
-            <h4>{KnapsackSlice.title}</h4>
-            <p>{KnapsackSlice.description}</p>
+            <h4>{knapsackSlice.title}</h4>
+            <p>{knapsackSlice.description}</p>
             <Button
               disabled={sliceIndex === 0}
               onClick={() => moveSliceUp(sliceIndex)}
@@ -74,10 +90,10 @@ class CustomSlice extends React.Component {
             >
               Delete Slice
             </Button>
-            {KnapsackSlice.schema && (
+            {knapsackSlice.schema && (
               <SchemaForm
-                schema={KnapsackSlice.schema}
-                uiSchema={KnapsackSlice.uiSchema || {}}
+                schema={knapsackSlice.schema}
+                uiSchema={knapsackSlice.uiSchema || {}}
                 formData={slice.data}
                 onChange={({ formData }) => {
                   setSliceData(sliceIndex, formData);
@@ -102,40 +118,24 @@ class CustomSlice extends React.Component {
           </>
         )}
 
-        {!this.state.hasError && (
-          <Slice
-            data={slice.data}
-            key={this.state.renderKey}
-            setSliceData={data => setSliceData(sliceIndex, data)}
-            isEditing={isEditing}
-          />
-        )}
+        {!this.state.hasError &&
+          knapsackSlice &&
+          knapsackSlice.render({
+            data: slice.data,
+            setSliceData: data => setSliceData(sliceIndex, data),
+            isEditing,
+          })
+
+        // <Slice
+        //   data={slice.data}
+        //   key={this.state.renderKey}
+        //   setSliceData={data => setSliceData(sliceIndex, data)}
+        //   isEditing={isEditing}
+        // />
+        }
       </aside>
     );
   }
 }
-
-CustomSlice.defaultProps = {};
-
-CustomSlice.propTypes = {
-  slice: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    blockId: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    render: PropTypes.func.isRequired,
-    schema: PropTypes.object,
-    data: PropTypes.object,
-    uiSchema: PropTypes.object,
-    initialData: PropTypes.object,
-  }).isRequired,
-  sliceIndex: PropTypes.number.isRequired,
-  isEditing: PropTypes.bool.isRequired,
-  slicesLength: PropTypes.number.isRequired,
-  moveSliceDown: PropTypes.func.isRequired,
-  moveSliceUp: PropTypes.func.isRequired,
-  deleteSlice: PropTypes.func.isRequired,
-  setSliceData: PropTypes.func.isRequired,
-};
 
 export default CustomSlice;

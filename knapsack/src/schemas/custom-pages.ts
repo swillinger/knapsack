@@ -2,8 +2,12 @@ import gql from 'graphql-tag';
 
 export interface KnapsackCustomPageSlice {
   id: string;
+  /**
+   * Match this to a Slices `id` to use it
+   * @todo Change to `sliceType`
+   */
   blockId: string;
-  data: Record<string, any>;
+  data: any;
 }
 
 export interface KnapsackCustomPage {
@@ -17,32 +21,23 @@ export interface KnapsackCustomSectionPage {
 }
 
 export interface KnapsackCustomSection {
+  /**
+   * Section ID
+   */
   id: string;
+  /**
+   * Section Title
+   */
   title: string;
-  showInMainMenu: boolean;
+  /**
+   * Show in Main Menu
+   * Will always show in Secondary Menu
+   */
+  showInMainMenu?: boolean;
   pages: KnapsackCustomSectionPage[];
 }
 
-export const customPagesTypeDef = gql`
-  scalar JSON
-
-  type Slice {
-    id: ID!
-    blockId: String!
-    data: JSON
-  }
-
-  type CustomPage {
-    path: ID!
-    slices: [Slice]
-  }
-
-  type Query {
-    customPages: [CustomPage]
-    customPage(path: ID): CustomPage
-  }
-
-  type Mutation {
-    setCustomPage(path: ID, customPage: JSON): CustomPage
-  }
-`;
+export interface KnapsackCustomPagesData {
+  sections?: KnapsackCustomSection[];
+  pages?: KnapsackCustomPage[];
+}

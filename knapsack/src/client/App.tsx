@@ -25,6 +25,7 @@ import { plugins } from '@knapsack/core';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import 'semantic-ui-css/semantic.css';
 import { useSelector } from './store';
 import { KnapsackContextProvider } from './context';
 import ErrorCatcher from './utils/error-catcher';
@@ -38,7 +39,6 @@ import {
   LoadableSettingsPage,
   LoadableCustomPage,
   LoadablePatternEdit,
-  LoadablePatternNew,
   LoadableHome,
   LoadableDocPage,
   LoadableChangelogPage,
@@ -61,27 +61,24 @@ export const App: React.FC = () => {
     });
   }, []);
 
-  const { patterns, settings, meta, role } = useSelector(state => {
-    return {
-      settings: state.settingsState.settings,
-      // grabbing just what we need in here so the whole App doesn't re-render any time other data inside `patterns` changes
-      patterns: state.patternsState.patterns.map(
-        ({ id, meta: patternMeta, templates }) => ({
-          id,
-          meta: {
-            showAllTemplates: patternMeta.showAllTemplates,
-          },
-          templates: templates.map(template => ({
-            id: template.id,
-          })),
-        }),
-      ),
-      meta: state.metaState.meta,
-      role: state.userState.role,
-    };
+  const settings = useSelector(s => s.settingsState.settings);
+  const customSections = useSelector(s => s.customPagesState.sections);
+  const meta = useSelector(s => s.metaState.meta);
+  const role = useSelector(s => s.userState.role);
+  const patterns = useSelector(state => {
+    // grabbing just what we need in here so the whole App doesn't re-render any time other data inside `patterns` changes
+    return state.patternsState.patterns.map(
+      ({ id, meta: patternMeta, templates }) => ({
+        id,
+        meta: {
+          showAllTemplates: patternMeta.showAllTemplates,
+        },
+        templates: templates.map(template => ({
+          id: template.id,
+        })),
+      }),
+    );
   });
-
-  const { customSections } = settings;
 
   const knapsackContext = {
     settings,
@@ -148,13 +145,6 @@ export const App: React.FC = () => {
                     />
                   )}
                 />
-                {role.permissions.includes('write') && (
-                  <Route
-                    path="/new-pattern"
-                    exact
-                    render={props => <LoadablePatternNew {...props} />}
-                  />
-                )}
                 <Route
                   path={`${BASE_PATHS.GRAPHIQL_PLAYGROUND}`}
                   exact
@@ -162,9 +152,11 @@ export const App: React.FC = () => {
                 />
                 {role.permissions.includes('write') && (
                   <Route
-                    path="/settings"
+                    path={['/settings', '/settings/:kind']}
                     exact
-                    render={props => <LoadableSettingsPage {...props} />}
+                    render={({ match }) => (
+                      <LoadableSettingsPage initialTab={match.params.kind} />
+                    )}
                   />
                 )}
 

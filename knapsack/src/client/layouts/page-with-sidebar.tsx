@@ -17,9 +17,11 @@
 import React, { useState } from 'react';
 import classnames from 'classnames';
 import { FaChevronLeft } from 'react-icons/fa';
+import { saveToServer, useDispatch } from '../store';
 import ErrorCatcher from '../utils/error-catcher';
 import Header from '../components/header';
 import SecondaryNav from '../components/secondary-nav';
+import { PageHeader } from '../components/page-header';
 import Footer from '../components/footer';
 import './page-with-sidebar.scss';
 
@@ -27,6 +29,8 @@ type Props = {
   isInitiallyCollapsed?: boolean;
   isFullScreen?: boolean;
   sidebar?: React.ReactNode;
+  title?: string;
+  section?: string;
   children: React.ReactNode;
 };
 
@@ -35,10 +39,14 @@ const PageWithSidebar: React.FC<Props> = ({
   sidebar,
   children,
   isFullScreen = false,
+  title,
+  section,
 }: Props) => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(
     isInitiallyCollapsed,
   );
+
+  const dispatch = useDispatch();
 
   if (!isFullScreen) {
     return (
@@ -57,6 +65,11 @@ const PageWithSidebar: React.FC<Props> = ({
               'page-with-sidebar__sidebar__column--collapsed': isSidebarCollapsed,
             })}
           >
+            <div>
+              <button type="button" onClick={() => dispatch(saveToServer())}>
+                Save it all
+              </button>
+            </div>
             {sidebar || <SecondaryNav pathname={window.location.pathname} />}
           </div>
           <button
@@ -73,7 +86,10 @@ const PageWithSidebar: React.FC<Props> = ({
           </button>
         </aside>
         <ErrorCatcher>
-          <main className="page-with-sidebar__page">{children}</main>
+          <main className="page-with-sidebar__page">
+            <PageHeader title={title} section={section} />
+            {children}
+          </main>
         </ErrorCatcher>
         <Footer />
       </div>

@@ -1,10 +1,12 @@
 import React from 'react';
 import MdBlock from '../../../components/md-block';
+import { Slice } from './types';
 
-// @todo remove this and fix
-/* eslint-disable react/prop-types */
+type Data = {
+  md: string;
+};
 
-export const markdownSlice = {
+export const markdownSlice: Slice<Data> = {
   id: 'markdown-slice',
   title: 'Markdown',
   render: props => <MdBlock md={props.data.md} key={props.data.md} />,

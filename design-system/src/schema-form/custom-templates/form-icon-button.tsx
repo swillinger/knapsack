@@ -36,7 +36,7 @@ export const FormIconButton: React.FC<Props> = ({
         <div
           className="k-form-icon-button__icon"
           style={{
-            background: `url(${backgroundImage})`,
+            backgroundImage: `url(${backgroundImage})`,
           }}
         />
       )}

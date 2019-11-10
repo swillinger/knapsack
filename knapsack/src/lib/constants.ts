@@ -54,3 +54,61 @@ export const EVENTS = {
   PATTERN_CONFIG_CHANGED: 'PATTERN_CONFIG_CHANGED',
   SHUTDOWN: 'SHUTDOWN',
 };
+
+/**
+ * HTTP Status Codes
+ * @link https://kapeli.com/cheat_sheets/HTTP_Status_Codes.docset/Contents/Resources/Documents/index
+ */
+export const HTTP_STATUS = {
+  /**
+   * 2xx success
+   */
+  GOOD: {
+    OK: 200,
+    /**
+     * The request has been fulfilled and a new resource has been created.
+     */
+    CREATED: 201,
+    /**
+     * The request has been accepted but has not been processed yet. This code does not guarantee that the request will process successfully.
+     */
+    ACCEPTED: 202,
+    /**
+     * The server accepted the request but is not returning any content. This is often used as a response to a DELETE request
+     */
+    NO_CONTENT: 204,
+    /**
+     * Similar to a 204 No Content response but this response requires the requester to reset the document view.
+     */
+    RESET_CONTENT: 205,
+  },
+
+  /**
+   * 4xx client error, it's you
+   */
+  BAD: {
+    /**
+     * The request could not be fulfilled due to the incorrect syntax of the request.
+     */
+    BAD_REQUEST: 400,
+    /**
+     * The requester is not authorized to access the resource. This is similar to 403 but is used in cases where authentication is expected but has failed or has not been provided.
+     */
+    UNAUTHORIZED: 401,
+    /**
+     * The resource is no longer available at the requested URI and no redirection will be given.
+     */
+    GONE: 410,
+  },
+
+  /**
+   * 5xx server error, it's us
+   */
+  FAIL: {
+    /**
+     * Generic
+     */
+    INTERNAL_ERROR: 500,
+    INSUFFICIENT_STORAGE: 507,
+  },
+};

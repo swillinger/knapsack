@@ -49,14 +49,17 @@ const updateReadme = gql`
   }
 `;
 
-type Props = {
+export type Props = {
   /**
    * Pattern ID
    */
   id: string;
   templateId: string;
   isVerbose?: boolean;
-  demoSize?: string;
+  /**
+   * @todo remove `string` - it's just to make Typescript happy
+   */
+  demoSize?: 's' | 'm' | 'l' | 'full' | string;
   isReadmeShown?: boolean;
   isTitleShown?: boolean;
   isSchemaFormShown?: boolean;

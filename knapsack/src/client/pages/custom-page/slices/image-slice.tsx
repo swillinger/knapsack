@@ -1,9 +1,14 @@
 import React from 'react';
+import { Slice } from './types';
 
-// @todo remove this and fix
-/* eslint-disable react/prop-types */
+type Data = {
+  images: {
+    caption?: string;
+    src: string;
+  }[];
+};
 
-export const imageSlice = {
+export const imageSlice: Slice<Data> = {
   id: 'image-slice',
   title: 'Image Grid',
   description: '1 to 3 images with captions laid out in a grid',

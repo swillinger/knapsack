@@ -14,163 +14,39 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-import gql from 'graphql-tag';
 
 export interface KnapsackSettingsStoreConfig {
   dataDir: string;
 }
+
+/**
+ * Knapsack Settings
+ */
 export interface KnapsackSettings {
-  title?: string;
+  /**
+   * The title of the site
+   */
+  title: string;
+  /**
+   * Site subtitle
+   */
   subtitle?: string;
   slogan?: string;
+  /**
+   * Settings related to the parent brand that owns/uses the design system
+   */
   parentBrand?: {
-    homepage?: string;
-    /** image url */
-    logo?: string;
+    /**
+     * Title/name of the parent brand
+     */
     title?: string;
+    /**
+     * URI of homepage of parent brand
+     */
+    homepage?: string;
+    /**
+     * URI of image file for brand logo
+     */
+    logo?: string;
   };
-  customSections?: {
-    id: string;
-    title: string;
-    showInMainMenu: boolean;
-    pages: {
-      id: string;
-      title: string;
-    }[];
-  }[];
 }
-
-export const settingsTypeDef = gql`
-  scalar JSON
-
-  type CustomSectionMenuItem {
-    id: ID
-    title: String
-  }
-
-  type CustomSection {
-    id: ID
-    title: String
-    showInMainMenu: Boolean
-    pages: [CustomSectionMenuItem]
-  }
-
-  type SettingsParentBrand {
-    "URL to image"
-    logo: String
-    title: String
-    homepage: String
-  }
-
-  type Settings {
-    title: String!
-    subtitle: String
-    slogan: String
-    parentBrand: SettingsParentBrand
-    customSections: [CustomSection]
-  }
-
-  type Query {
-    settings: Settings
-    settingsAll: JSON
-  }
-
-  type Mutation {
-    setSettings(settings: JSON): Settings
-    setSettingsAll(settings: JSON): JSON
-  }
-`;
-
-export const knapsackSettingsSchema = {
-  $schema: 'http://json-schema.org/draft-07/schema',
-  type: 'object',
-  title: 'Knapsack Settings',
-  additionalProperties: false,
-  required: ['title'],
-  properties: {
-    title: {
-      title: 'Title',
-      type: 'string',
-      description: 'The title of the site',
-    },
-    subtitle: {
-      title: 'Subtitle',
-      type: 'string',
-      description: 'Site subtitle',
-    },
-    slogan: {
-      title: 'Slogan',
-      type: 'string',
-      description: 'Slogan for this design system',
-    },
-    parentBrand: {
-      title: 'Parent Brand',
-      type: 'object',
-      description:
-        'Settings related to the parent brand that owns/uses the design system',
-      additionalProperties: false,
-      required: [],
-      properties: {
-        logo: {
-          title: 'Logo',
-          type: 'string',
-          description: 'URI of image file for brand logo',
-        },
-        title: {
-          title: 'Title',
-          type: 'string',
-          description: 'Title/name of the parent brand',
-        },
-        homepage: {
-          title: 'Homepage',
-          type: 'string',
-          description: 'URI of homepage of parent brand',
-        },
-      },
-    },
-    customSections: {
-      type: 'array',
-      title: 'Custom Sections',
-      items: {
-        type: 'object',
-        required: ['id', 'title', 'pages'],
-        properties: {
-          id: {
-            type: 'string',
-            title: 'Section ID',
-          },
-          title: {
-            type: 'string',
-            title: 'Section Title',
-          },
-          showInMainMenu: {
-            type: 'boolean',
-            title: 'Show in Main Menu',
-            description: 'Will always show in Secondary Menu',
-            default: true,
-          },
-          pages: {
-            type: 'array',
-            title: 'Custom Pages',
-            description:
-              'Each item will become a page with a menu item and a unique URL',
-            items: {
-              type: 'object',
-              required: ['id', 'title'],
-              properties: {
-                id: {
-                  type: 'string',
-                  title: 'Page ID',
-                },
-                title: {
-                  type: 'string',
-                  title: 'Page Title',
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-  },
-};

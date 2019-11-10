@@ -38,7 +38,7 @@ md.setOptions({
   highlight: code => highlight.highlightAuto(code).value,
 });
 
-export function getRoutes({
+export function getApiRoutes({
   registerEndpoint,
   patternManifest,
   pageBuilder,
@@ -179,13 +179,6 @@ export function getRoutes({
       );
       res.send(results);
     });
-
-    const url5 = urlJoin(baseUrl, 'new-pattern');
-    registerEndpoint(url5, 'POST');
-    router.post(url5, async (req, res) => {
-      const results = await patternManifest.createPatternFiles(req.body);
-      res.send(results);
-    });
   }
 
   if (pageBuilder) {
@@ -238,18 +231,9 @@ export function getRoutes({
   const url3 = urlJoin(baseUrl, 'settings');
   registerEndpoint(url3);
   router.get(url3, async (req, res) => {
-    const settings = settingsStore.getSettings();
+    const settings = settingsStore.getData();
     res.send(settings);
   });
-
-  if (enableUiSettings) {
-    const url4 = urlJoin(baseUrl, 'settings');
-    registerEndpoint(url4, 'POST');
-    router.post(url4, async (req, res) => {
-      const results = settingsStore.setSettings(req.body);
-      res.send(results);
-    });
-  }
 
   const url5 = urlJoin(baseUrl, 'meta');
   registerEndpoint(url5);

@@ -30,13 +30,16 @@ export const LoadableFooter = Loadable({
 
 // @todo fix
 /* eslint-disable import/no-cycle */
-export const LoadableCustomPage = Loadable({
-  loader: () =>
-    import(
-      /* webpackChunkName: "custom-slices-page" */ './pages/custom-page/custom-page'
-    ),
-  loading: Spinner,
-});
+// export const LoadableCustomPage: typeof import('./pages/custom-page/custom-page').default = Loadable(
+export const LoadableCustomPage = Loadable(
+  {
+    loader: () =>
+      import(
+        /* webpackChunkName: "custom-slices-page" */ './pages/custom-page/custom-page'
+      ),
+    loading: Spinner,
+  },
+);
 /* eslint-enable import/no-cycle */
 
 export const LoadableDocPage = Loadable({
@@ -62,7 +65,7 @@ export const LoadablePatternView = Loadable({
 /* eslint-enable import/no-cycle */
 
 export const LoadableHome = Loadable({
-  loader: () => import(/* webpackChunkName: "home" */ './pages/home'),
+  loader: () => import(/* webpackChunkName: "home-page" */ './pages/home-page'),
   loading: Spinner,
 });
 
@@ -70,14 +73,6 @@ export const LoadablePatternEdit = Loadable({
   loader: () =>
     import(
       /* webpackChunkName: "pattern-edit-page" */ './pages/pattern-edit-page'
-    ),
-  loading: Spinner,
-});
-
-export const LoadablePatternNew = Loadable({
-  loader: () =>
-    import(
-      /* webpackChunkName: "pattern-new-page" */ './pages/pattern-new-page'
     ),
   loading: Spinner,
 });

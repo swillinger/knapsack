@@ -28,7 +28,7 @@ export function gqlToString(gqlQueryObject: DocumentNode): string {
 }
 
 export interface GraphQlResponse {
-  data?: object;
+  data?: any;
   errors?: {
     message: string;
     extensions: {

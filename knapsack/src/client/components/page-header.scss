@@ -1,0 +1,11 @@
+.k-page-header {
+  margin-bottom: var(--size-m);
+  &__section {
+    color: var(--c-gray-light);
+    font-size: 1rem;
+    font-family: var(--font-family-medium);
+    margin-bottom: 0;
+  }
+  &__title {
+  }
+}

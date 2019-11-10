@@ -51,12 +51,10 @@ const expandableContent = ({ row }) => (
 expandableContent.propTypes = {
   row: PropTypes.object.isRequired,
 };
-const expanderToggle = ({ isExpanded }) => (
+
+const expanderToggle = ({ isExpanded = false }) => (
   <div>{isExpanded ? <span>&#x2299;</span> : <span>&#x2295;</span>}</div>
 );
-expanderToggle.propTypes = {
-  isExpanded: PropTypes.bool.isRequired,
-};
 
 export const DesignTokenTable: React.FC<Props> = ({ tokens }: Props) => {
   if (!tokens) return null;

@@ -150,11 +150,13 @@ class PatternSettings extends Component {
         }}
         uiSchema={{
           patternTypes: {
+            'ui:detailsOpen': true,
             items: {
               classNames: 'rjsf-custom-object-grid-2',
             },
           },
           patternStatuses: {
+            'ui:detailsOpen': true,
             items: {
               classNames: 'rjsf-custom-object-grid-3',
               color: {

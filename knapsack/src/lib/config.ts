@@ -168,6 +168,6 @@ export async function getMeta(config: KnapsackConfig): Promise<KnapsackMeta> {
     changelog: config.changelog
       ? await readFile(config.changelog, 'utf8')
       : null,
-    version,
+    version: config.version,
   };
 }

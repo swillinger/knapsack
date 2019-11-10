@@ -12,3 +12,4 @@ dist
 /docs-site/build
 /docs-site/i18n
 tsconfig.tsbuildinfo
+/knapsack/src/schemas/json

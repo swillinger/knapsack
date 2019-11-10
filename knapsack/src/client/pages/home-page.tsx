@@ -15,33 +15,30 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import Header from '../components/header';
-import Footer from '../components/footer';
-import { PageHeader } from '../components/page-header';
-import ErrorCatcher from '../utils/error-catcher';
-import './page-without-sidebar.scss';
+import { useSelector } from '../store';
+import PageWithoutSidebar from '../layouts/page-without-sidebar';
+import { HomeSplash } from '../components/home-splash';
 
-type Props = {
-  title?: string;
-  section?: string;
-  children: React.ReactNode;
+const HomePage: React.FC = () => {
+  const { title, subtitle, slogan } = useSelector(s => {
+    return {
+      title: s.settingsState.settings.title,
+      subtitle: s.settingsState.settings.subtitle,
+      slogan: s.settingsState.settings.slogan,
+    };
+  });
+  const version = useSelector(s => s.metaState.meta.version);
+
+  return (
+    <PageWithoutSidebar>
+      <HomeSplash
+        title={title}
+        subtitle={subtitle}
+        slogan={slogan}
+        version={version}
+      />
+    </PageWithoutSidebar>
+  );
 };
 
-const PageWithoutSidebar: React.FC<Props> = ({
-  children,
-  title,
-  section,
-}: Props) => (
-  <div className="page-without-sidebar">
-    <Header />
-    <ErrorCatcher>
-      <main className="page-without-sidebar__page">
-        <PageHeader title={title} section={section} />
-        {children}
-      </main>
-    </ErrorCatcher>
-    <Footer />
-  </div>
-);
-
-export default PageWithoutSidebar;
+export default HomePage;

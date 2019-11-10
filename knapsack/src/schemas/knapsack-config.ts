@@ -70,6 +70,9 @@ export interface KnapsackTemplateRenderer extends KnapsackTemplateRendererBase {
 
 export interface KnapsackConfig {
   patterns: string[];
+  /**
+   * @deprecated
+   */
   newPatternDir: string;
   /** Output of knapsack build directory */
   dist: string;

@@ -1,19 +1,38 @@
-import { combineReducers, compose, applyMiddleware } from 'redux';
+import {
+  createStore as createReduxStore,
+  combineReducers,
+  compose,
+  applyMiddleware,
+} from 'redux';
 import {
   useSelector as useReduxSelector,
   TypedUseSelectorHook,
+  shallowEqual,
 } from 'react-redux';
 import thunk from 'redux-thunk';
+import { localStorageMiddleware } from './utils';
 import settingsState from './settings';
 import patternsState from './patterns';
 import userState from './user';
 import metaState from './meta';
+import ui from './ui';
+import customPagesState from './custom-pages';
 
-export const rootReducer = combineReducers({
+// export out all action creator functions
+export * from './settings';
+export * from './ui';
+export * from './meta';
+export * from './custom-pages';
+
+export { useDispatch, shallowEqual } from 'react-redux';
+
+const rootReducer = combineReducers({
   patternsState,
   settingsState,
   userState,
   metaState,
+  customPagesState,
+  ui,
 });
 
 export type AppState = ReturnType<typeof rootReducer>;
@@ -29,6 +48,25 @@ const composeEnhancers =
     : compose;
 /* eslint-enable no-underscore-dangle */
 
-export const rootEnhancer = composeEnhancers(applyMiddleware(thunk));
+const rootEnhancer = composeEnhancers(
+  applyMiddleware(thunk, localStorageMiddleware),
+);
 
-export const useSelector: TypedUseSelectorHook<AppState> = useReduxSelector;
+/**
+ * Custom Redux `useSelector` hook
+ * Benefits: has appropriate types, and
+ * a better default `equalityFn` - the default use `===`, we are using a shallowEqual (which is what `connect()` uses)
+ * this is important b/c `{a: 1} !== {a: 1}` so many unnecessary re-renders occur
+ * Original implementation was `export const useSelector: TypedUseSelectorHook<AppState> = useReduxSelector;`
+ */
+export const useSelector: TypedUseSelectorHook<AppState> = (
+  selectorFn,
+  equalityFn = (a, b) => shallowEqual(a, b),
+) => {
+  return useReduxSelector(selectorFn, equalityFn);
+};
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export function createStore(initialState) {
+  return createReduxStore(rootReducer, initialState, rootEnhancer);
+}

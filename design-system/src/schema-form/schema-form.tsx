@@ -9,34 +9,34 @@ import CustomField from './custom-templates/custom-field';
 import CheckboxWidget from './custom-templates/checkbox-widget';
 import CheckboxesWidget from './custom-templates/checkboxes-widget';
 
-type SchemaFormData = {
-  // [k: string]: any;
+type SchemaFormData<T> = {
   uiSchema: object;
   edit: boolean;
   idSchema: object;
-  formData: object;
+  formData: T;
+  // formData: Record<string, any>;
   errorsSchema: object;
   errors: any[];
 };
 
-type Props = {
+type Props<T> = {
   schema: object;
   uiSchema?: object;
-  onChange?: (data: SchemaFormData) => void;
-  onError?: (data: SchemaFormData) => void;
-  onSubmit?: (data: SchemaFormData) => void;
+  onChange?: (data: SchemaFormData<T>) => void;
+  onError?: (data: SchemaFormData<T>) => void;
+  onSubmit?: (data: SchemaFormData<T>) => void;
   isDebug?: boolean;
   idPrefix?: string;
   isInline?: boolean;
-  formData?: object;
+  formData?: T;
   hasSubmit?: boolean;
   className?: string;
 };
 
 /* eslint-disable no-console */
-export const SchemaForm: React.FC<Props> = ({
+export const SchemaForm = ({
   schema,
-  onChange = () => {},
+  onChange,
   onError = () => {},
   onSubmit = () => {},
   className = '',
@@ -47,22 +47,22 @@ export const SchemaForm: React.FC<Props> = ({
   isInline = false,
   uiSchema = {},
   ...rest
-}: Props) => {
-  const handleChange = (data: SchemaFormData) => {
+}: Props<typeof formData>) => {
+  const handleChange = (data: SchemaFormData<typeof formData>) => {
     if (isDebug) {
       console.debug('Form Data changed ', data);
     }
     onChange(data);
   };
 
-  const handleSubmit = (data: SchemaFormData) => {
+  const handleSubmit = (data: SchemaFormData<typeof formData>) => {
     if (isDebug) {
       console.debug('Form Data submitted ', data);
     }
     onSubmit(data);
   };
 
-  const handleError = (data: SchemaFormData) => {
+  const handleError = (data: SchemaFormData<typeof formData>) => {
     if (isDebug) {
       console.debug('Form Data error ', data);
     }

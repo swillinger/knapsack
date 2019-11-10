@@ -22,16 +22,15 @@ import bodyParser from 'body-parser';
 import { dirname, join } from 'path';
 import * as log from '../cli/log';
 import { EVENTS, knapsackEvents } from './events';
-import { getRoutes } from './rest-api';
+import { getApiRoutes } from './rest-api';
+import { setupRoutes } from './routes';
 import { enableTemplatePush } from '../lib/features';
 import { getRole } from './auth';
-import { apiUrlBase, PERMISSIONS } from '../lib/constants';
+import { apiUrlBase, PERMISSIONS, HTTP_STATUS } from '../lib/constants';
 import {
   pageBuilderPagesResolvers,
   pageBuilderPagesTypeDef,
 } from './page-builder';
-import { settingsResolvers, settingsTypeDef } from './settings';
-import { customPagesResolvers, customPagesTypeDef } from './custom-pages';
 import { docsResolvers, docsTypeDef } from './docs';
 import { designTokensResolvers, designTokensTypeDef } from './design-tokens';
 import { patternsResolvers, patternsTypeDef } from './patterns';
@@ -79,10 +78,6 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
           resolvers: pageBuilderPagesResolvers,
         }),
         makeExecutableSchema({
-          typeDefs: settingsTypeDef,
-          resolvers: settingsResolvers,
-        }),
-        makeExecutableSchema({
           typeDefs: designTokensTypeDef,
           resolvers: designTokensResolvers,
         }),
@@ -97,10 +92,6 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
         makeExecutableSchema({
           typeDefs: docsTypeDef,
           resolvers: docsResolvers,
-        }),
-        makeExecutableSchema({
-          typeDefs: customPagesTypeDef,
-          resolvers: customPagesResolvers,
         }),
       ],
     }),
@@ -132,40 +123,8 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
       limit: '5000kb',
     }),
   );
+
   gqlServer.applyMiddleware({ app });
-
-  app.use('*', (req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header(
-      'Access-Control-Allow-Headers',
-      'Origin, X-Requested-With, Content-Type, Accept',
-    );
-    next();
-  });
-
-  app.use(
-    express.static(knapsackDistDir, {
-      maxAge: '1d',
-    }),
-  );
-
-  if (config.dist) {
-    app.use(
-      express.static(config.dist, {
-        maxAge: '1d',
-      }),
-    );
-  }
-
-  if (config.public) {
-    app.use(express.static(config.public));
-  }
-
-  // if (config.staticDirs) {
-  //   config.staticDirs.forEach(staticDir =>
-  //     app.use(staticDir.prefix, express.static(staticDir.path)),
-  //   );
-  // }
 
   const endpoints = [];
 
@@ -179,7 +138,7 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
     });
   }
 
-  const restApiRoutes = getRoutes({
+  const restApiRoutes = getApiRoutes({
     registerEndpoint,
     webroot: config.dist,
     public: config.public,
@@ -193,81 +152,75 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
 
   app.use(restApiRoutes);
 
-  app.route(`${apiUrlBase}/initial-state`).get(async (req, res) => {
-    const role = getRole(req);
+  type AppState = import('../client/store').AppState;
+  type PartialAppState = Partial<AppState>;
 
-    const initialState: import('../client/store').AppState = {
+  async function getDataStore(): Promise<PartialAppState> {
+    const initialState = {
       settingsState: {
-        settings: settings.getSettings(),
+        settings: settings.getData(),
       },
       patternsState: {
         patterns: patterns.getPatterns(),
         patternStatuses: patterns.getPatternStatuses(),
         patternTypes: patterns.getPatternTypes(),
       },
-      userState: {
-        role,
-      },
-      metaState: {
-        meta,
-      },
+      customPagesState: customPages.getData(),
     };
-    res.send(initialState);
-  });
 
-  // This page is mainly so IE can get a list of links to view the individual templates outside of the system
-  app.route('/demo-urls').get((req, res) => {
-    const patternDemos = patterns.getPatternsDemoUrls();
+    return initialState;
+  }
 
-    /* eslint-disable prettier/prettier */
-    // disabling prettier so it's possible to keep indenting semi-similar to how it'd be done with templates, please try and keep it tidy and consistent!
-    res.send(`
-<ul>
-${patternDemos
-        .map(
-          patternDemo => `
-  <li>
-    Pattern: ${patternDemo.title}
-    <ul>
-      ${patternDemo.templates
-              .map(
-                template => `
-        <li>
-          Template: ${template.title}
-          <br>
-            ${template.demoUrls
-                    .map(
-                      (demoUrl, i) => `
-              <a href="${demoUrl}" target="_blank">Demo Data ${i +
-                        1}</a>
-            `,
-                    )
-                    .join(' - ')}
-        </li>
-      `,
-              )
-              .join('\n')}
-    </ul>
-  </li>
-`,
-        )
-        .join('\n')}
-</ul>
-    `);
-    /* eslint-enable prettier/prettier */
-  });
+  async function handleNewDataStore(data: AppState) {
+    await Promise.all([
+      settings.write(data.settingsState.settings),
+      customPages.write(data.customPagesState),
+    ]);
 
-  // Since this is a Single Page App, we will send all html requests to the `index.html` file in the dist
-  app.use('*', (req, res, next) => {
-    const { accept = '' } = req.headers;
-    const accepted = accept.split(',');
-    // this is for serving up a Netlify CMS folder if present
-    if (!req.baseUrl.startsWith('/admin') && accepted.includes('text/html')) {
-      res.sendFile(join(knapsackDistDir, 'index.html'));
-    } else {
-      next();
-    }
+    return {
+      ok: true,
+      message: 'We got it!',
+    };
+  }
+
+  app
+    .route(`${apiUrlBase}/data-store`)
+    .get(async (req, res) => {
+      const role = getRole(req);
+      const dataStore = await getDataStore();
+
+      res.send({
+        ...dataStore,
+        userState: {
+          role,
+        },
+        metaState: {
+          meta,
+        },
+      });
+    })
+    .post(async (req, res) => {
+      const { permissions } = getRole(req);
+
+      if (!permissions.includes(PERMISSIONS.WRITE)) {
+        res.status(HTTP_STATUS.BAD.UNAUTHORIZED).send();
+      } else {
+        const results = await handleNewDataStore(req.body);
+        if (results.ok) {
+          res.status(HTTP_STATUS.GOOD.CREATED).send(results);
+        } else {
+          res.status(HTTP_STATUS.BAD.BAD_REQUEST).send(results);
+        }
+      }
+    });
+
+  const regularRoutes = setupRoutes({
+    patterns,
+    knapsackDistDir,
+    distDir: config.dist,
+    publicDir: config.public,
   });
+  app.use(regularRoutes);
 
   /** @type {WebSocket.Server} */
   let wss;

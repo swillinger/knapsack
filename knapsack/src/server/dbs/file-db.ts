@@ -19,6 +19,9 @@ import FileSync from 'lowdb/adapters/FileSync';
 import { join } from 'path';
 import chokidar from 'chokidar';
 import os from 'os';
+import fs from 'fs-extra';
+import yaml from 'js-yaml';
+import { validateDataAgainstSchema } from '@knapsack/schema-utils';
 import { knapsackEvents, EVENTS } from '../events';
 
 /**
@@ -110,5 +113,144 @@ export class FileDb {
   update(key: string, func: any): any {
     // @todo improve types
     return this.db.update(key, func).write();
+  }
+}
+
+export class FileDb2<DbType> {
+  /**
+   * Full path to file used for storage
+   */
+  dbPath: string;
+
+  private type: 'json' | 'yaml';
+
+  data: DbType;
+
+  validationSchema: object;
+
+  constructor({
+    dbDir,
+    name,
+    type = 'json',
+    defaults,
+    validationSchema,
+  }: {
+    dbDir: string;
+    type?: 'json' | 'yaml';
+    name: string;
+    /**
+     * Shallow merge
+     */
+    defaults: DbType;
+    /**
+     * JSON Schema to validate read & writes with at run time
+     */
+    validationSchema?: object;
+  }) {
+    this.type = type;
+    this.validationSchema = validationSchema;
+
+    // @todo kebab-case `name`
+    this.dbPath = join(dbDir, `${name}.${type}`);
+
+    if (!fs.existsSync(this.dbPath)) {
+      this.write(defaults, { sync: true }).then(() => {});
+    }
+
+    this.data = this.read();
+
+    // Start watching the file in case user manually changes it so we can re-read it into memory
+    const watcher = chokidar.watch(this.dbPath, {
+      ignoreInitial: true,
+    });
+
+    watcher.on('all', () => {
+      // @todo if file is changed, trigger client ui to get new changes - we can't have diverged data
+      this.data = this.read();
+    });
+
+    knapsackEvents.on(EVENTS.SHUTDOWN, () => {
+      watcher.close();
+    });
+  }
+
+  /**
+   * Ensure the data is good during run-time by using provided JSON Schemas to validate
+   * Requires `validationSchema` to be passed in during initial creation
+   * @throws Error if it's not valid
+   */
+  validateData(data): void {
+    if (!this.validationSchema) return;
+
+    const { ok, message, errors } = validateDataAgainstSchema(
+      this.validationSchema,
+      data,
+    );
+    if (ok) return;
+    const msg = [
+      `Data validation error for ${this.dbPath}`,
+      'The data:',
+      JSON.stringify(data, null, ' '),
+      '',
+      'The error:',
+      message,
+      JSON.stringify(errors, null, '  '),
+    ].join('\n');
+    throw new Error(msg);
+  }
+
+  serialize(data: DbType): string {
+    this.validateData(data);
+    switch (this.type) {
+      case 'json':
+        return JSON.stringify(data, null, 2) + os.EOL;
+      case 'yaml':
+        return yaml.safeDump(data);
+      default:
+        throw new Error('Un-supported type used');
+    }
+  }
+
+  read(): DbType {
+    const dbString: string = fs.readFileSync(this.dbPath, 'utf8');
+    let data;
+    switch (this.type) {
+      case 'json':
+        data = JSON.parse(dbString);
+        this.validateData(data);
+        return data;
+      case 'yaml':
+        data = yaml.safeLoad(dbString);
+        this.validateData(data);
+        return data;
+      default:
+        throw new Error('Un-supported type used');
+    }
+  }
+
+  savePrep(data: DbType): { contents: string; path: string } {
+    this.validateData(data);
+    const dataString = this.serialize(data);
+    return {
+      contents: dataString,
+      path: this.dbPath,
+    };
+  }
+
+  async write(data: DbType, { sync = false } = {}): Promise<string> {
+    this.validateData(data);
+    const { contents, path } = this.savePrep(data);
+    if (sync) {
+      fs.writeFileSync(path, contents, 'utf8');
+    } else {
+      await fs.writeFile(path, contents, 'utf8');
+    }
+    return path;
+  }
+
+  getData(): DbType {
+    const { data } = this;
+    this.validateData(data);
+    return data;
   }
 }

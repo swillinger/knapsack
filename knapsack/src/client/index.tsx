@@ -16,18 +16,18 @@
  */
 import React from 'react';
 import ReactDom from 'react-dom';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import { rootEnhancer, rootReducer } from './store';
+import { AppState, createStore } from './store';
 import { App } from './App';
+import { getStateFromLocalStorage } from './store/utils';
 import { apiUrlBase } from '../lib/constants';
 
-function getInitialState() {
+function getInitialState(): Promise<AppState> {
   return window
-    .fetch(`${apiUrlBase}/initial-state`)
+    .fetch(`${apiUrlBase}/data-store`)
     .then(res => res.json())
     .then(initialState => {
-      console.log({ initialState });
+      // console.log({ initialState });
       return initialState;
     })
     .catch(console.log.bind(console));
@@ -37,8 +37,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   const mountEl = document.createElement('div');
   mountEl.setAttribute('id', 'app');
   document.body.appendChild(mountEl);
-  const initialState = await getInitialState();
-  const store = createStore(rootReducer, initialState, rootEnhancer);
+
+  // const cachedState = getStateFromLocalStorage();
+  const cachedState = false;
+  const initialState =
+    cachedState === false ? await getInitialState() : cachedState;
+
+  const store = createStore(initialState);
+
   ReactDom.render(
     <Provider store={store}>
       <App />

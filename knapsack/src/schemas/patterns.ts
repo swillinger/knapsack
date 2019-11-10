@@ -65,30 +65,11 @@ type Uses = ('inSlice' | 'inGrid' | 'inComponent')[];
  * Set to false to show default placeholder thumbnail
  */
 type HasIcon = boolean;
-/**
- * Title for component do's and don'ts example
- */
-type ExampleName = string;
-/**
- * More details about the contrasting examples for this component.
- */
-type ExampleDescription = string;
-/**
- * Screenshot example of scenario
- */
-type Image = string;
-/**
- * Description of what they should or should not be doing. Will automatically be preceded by 'do' or 'don't'.
- */
-type Caption = string;
-/**
- * Boolean to denote if this example is a 'Do' or a 'Don't'.
- */
-type DoOrDonT = boolean;
+
 /**
  * Size at which to demo this component
  */
-type DemoSize = 's' | 'm' | 'l' | 'full';
+export type DemoSize = 's' | 'm' | 'l' | 'full';
 
 export interface PatternWithMeta {
   id: Id;
@@ -110,7 +91,13 @@ export interface PatternMeta {
   description?: Description;
   type?: KnapsackPatternType['id'];
   status?: KnapsackPatternStatus['id'];
+  /**
+   * @deprecated
+   */
   uses?: Uses;
+  /**
+   * @deprecated
+   */
   hasIcon?: HasIcon;
   /**
    * Visual representations of what to do, and not to do, with components.
@@ -157,11 +144,15 @@ export type KnapsackPattern = {
   id: string;
   /**
    * Relative path to a JSON file that stores meta data for pattern. Schema for that file is in "pattern-meta.schema.json".
+   * @deprecated
    */
   metaFilePath: string;
   templates: KnapsackPatternTemplate[];
   meta?: PatternMeta;
   readme?: string;
+  /**
+   * @deprecated
+   */
   dir: string;
 };
 
@@ -423,30 +414,6 @@ export const patternWithMetaSchema = {
   properties: {
     ...patternSchema.properties,
     meta: patternMetaSchema,
-  },
-};
-
-/**
- * @deprecated
- */
-const patternNewSchema = {
-  $schema: 'http://json-schema.org/draft-07/schema',
-  title: 'Pattern New Schema',
-  type: 'object',
-  description: 'Info for creating a new Pattern',
-  additionalProperties: false,
-  required: ['id', 'title'],
-  properties: {
-    id: {
-      title: 'Id',
-      type: 'string',
-      description: 'Unique identifier',
-    },
-    title: {
-      title: 'Title',
-      type: 'string',
-      description: 'Title or Name of the pattern.',
-    },
   },
 };
 

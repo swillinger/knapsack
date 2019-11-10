@@ -14,86 +14,28 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-import GraphQLJSON from 'graphql-type-json';
-import { FileDb } from './dbs/file-db';
+import { FileDb2 } from './dbs/file-db';
 import {
   KnapsackSettings,
   KnapsackSettingsStoreConfig,
 } from '../schemas/knapsack.settings';
-import { GenericResponse } from '../schemas/misc';
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+import knapsackSettingsSchema from '../schemas/json/KnapsackSettings.json';
 
-export { settingsTypeDef } from '../schemas/knapsack.settings';
-
-export class Settings {
-  db: FileDb;
-
+export class Settings extends FileDb2<KnapsackSettings> {
   constructor({ dataDir }: KnapsackSettingsStoreConfig) {
     const defaults: KnapsackSettings = {
       title: 'My Title',
       parentBrand: {},
-      customSections: [],
     };
 
-    this.db = new FileDb({
+    super({
       dbDir: dataDir,
       name: 'knapsack.settings',
       defaults,
+      type: 'json',
+      validationSchema: knapsackSettingsSchema,
     });
   }
-
-  getSetting(id: string): any {
-    return this.db.get(id);
-  }
-
-  getSettings(): KnapsackSettings {
-    return this.db.getAll();
-  }
-
-  setSettings(data: any): void {
-    this.db.setAll(data);
-  }
-
-  setSetting(id: string, data: KnapsackSettings): GenericResponse {
-    // @todo validate
-    try {
-      this.db.set(id, data);
-      return {
-        ok: true,
-        message: `Settings ${id} saved successfully!`,
-      };
-    } catch (e) {
-      return {
-        ok: false,
-        message: `Settings ${id} NOT saved successfully. ${e.toString()}`,
-      };
-    }
-  }
 }
-
-export const settingsResolvers = {
-  Query: {
-    settings: (parent, args, { settings }) => settings.getSettings(),
-    settingsAll: (parent, args, { settings }) => settings.getSettings(),
-  },
-  Mutation: {
-    setSettings: (
-      parent,
-      { settings: newSettings },
-      { settings, canWrite },
-    ) => {
-      if (!canWrite) return false;
-      settings.setSettings(newSettings);
-      return settings.getSettings();
-    },
-    setSettingsAll: (
-      parent,
-      { settings: newSettings },
-      { settings, canWrite },
-    ) => {
-      if (!canWrite) return false;
-      settings.setSettings(newSettings);
-      return settings.getSettings();
-    },
-  },
-  JSON: GraphQLJSON,
-};

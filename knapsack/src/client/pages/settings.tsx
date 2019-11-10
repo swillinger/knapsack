@@ -60,6 +60,11 @@ const SettingsPage: React.FC<Props> = ({ initialTab = '' }: Props) => {
 
   return (
     <PageWithSidebar title="Settings" section="Configuration">
+      {/* @todo This CSS brings in over 1MB, nearly all SVG fonts. Make smaller. Usage of `import 'semantic-ui-css/semantic.css';` causes the WebPack bundle size to skyrocket, so using the `<link>` here for now. */}
+      <link
+        rel="stylesheet"
+        href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
+      />
       <Tab
         defaultActiveIndex={defaultActiveIndex}
         as="section"

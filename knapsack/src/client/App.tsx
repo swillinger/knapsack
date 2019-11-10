@@ -25,7 +25,6 @@ import { plugins } from '@knapsack/core';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import 'semantic-ui-css/semantic.css';
 import { useSelector } from './store';
 import { KnapsackContextProvider } from './context';
 import ErrorCatcher from './utils/error-catcher';

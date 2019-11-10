@@ -15,7 +15,8 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import { Tab } from 'semantic-ui-react';
+// import { Tab } from 'semantic-ui-react';
+import { Tab } from 'semantic-ui-react/dist/es/modules/Tab';
 import { useHistory } from 'react-router-dom';
 import { SiteSettings } from './settings/site-settings';
 import { CustomPagesSettings } from './settings/custom-pages-settings';

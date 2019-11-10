@@ -22,6 +22,7 @@ import { SiteSettings } from './settings/site-settings';
 import { CustomPagesSettings } from './settings/custom-pages-settings';
 import PageWithSidebar from '../layouts/page-with-sidebar';
 import PatternsSettings from '../components/patterns-settings';
+import './tab.scss';
 
 type Props = {
   /**
@@ -60,11 +61,6 @@ const SettingsPage: React.FC<Props> = ({ initialTab = '' }: Props) => {
 
   return (
     <PageWithSidebar title="Settings" section="Configuration">
-      {/* @todo This CSS brings in over 1MB, nearly all SVG fonts. Make smaller. Usage of `import 'semantic-ui-css/semantic.css';` causes the WebPack bundle size to skyrocket, so using the `<link>` here for now. */}
-      <link
-        rel="stylesheet"
-        href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
-      />
       <Tab
         defaultActiveIndex={defaultActiveIndex}
         as="section"
@@ -75,7 +71,7 @@ const SettingsPage: React.FC<Props> = ({ initialTab = '' }: Props) => {
             .toLowerCase()
             .replace(/ /g, '-');
           // @todo prevent whole App from re-rendering when tab is changed; Just doing this so URL stays up to date
-          history.push(newPath);
+          history.push(`/settings/${newPath}`);
         }}
       />
       <hr />

@@ -1,0 +1,57 @@
+// @todo totally remove this; used for the `Tab` in `settings.tsx`
+
+// stylelint-disable
+.menu {
+  display: flex;
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15);
+  border-radius: 0.28571429rem;
+  .item {
+    position: relative;
+    vertical-align: middle;
+    line-height: 1;
+    text-decoration: none;
+    flex: 0 0 auto;
+    user-select: none;
+    background: 0 0;
+    padding: 0.92857143em 1.14285714em;
+    text-transform: none;
+    color: rgba(0, 0, 0, 0.87);
+    font-weight: 400;
+    transition: background 0.1s ease, box-shadow 0.1s ease, color 0.1s ease;
+    &:hover {
+      cursor: pointer;
+    }
+    &:after {
+      visibility: hidden;
+      position: absolute;
+      content: '';
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%) rotate(45deg);
+      background: 0 0;
+      margin: .5px 0 0;
+      width: .57142857em;
+      height: .57142857em;
+      border: none;
+      border-bottom: 1px solid #d4d4d5;
+      border-right: 1px solid #d4d4d5;
+      z-index: 2;
+      -webkit-transition: background .1s ease;
+      transition: background .1s ease;
+    }
+    &:first-child {
+      border-radius: 0.28571429rem 0 0 0.28571429rem;
+    }
+    &.active {
+      background: rgba(0, 0, 0, 0.05);
+      color: rgba(0, 0, 0, 0.95);
+      font-weight: 400;
+      box-shadow: none;
+      &:after {
+        background-color: #f2f2f2;
+        visibility: visible;
+      }
+    }
+  }
+}

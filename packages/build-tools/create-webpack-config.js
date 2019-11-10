@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const { relative } = require('path');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 // const Stylish = require('webpack-stylish');
-// const Visualizer = require('webpack-visualizer-plugin');
+const Visualizer = require('webpack-visualizer-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const cssnano = require('cssnano');
 const DashboardPlugin = require('webpack-dashboard/plugin');
@@ -23,6 +23,7 @@ const isProd = process.env.NODE_ENV === 'production';
  * @param {boolean} opt.[injectCssChanges=true] - if `false`, always generate a CSS file
  * @param {webpack.Plugin[]} [opt.extraPlugins=[]] - Extra WebPack plugins to include
  * @param {string} opt.tsConfigFile Path to `tsconfig.json` for TypeScript config
+ * @param {boolean} opt.outputStats - if a `stats.html` file should get outputted so you can see why your WebPack bundle is too big
  * @return {object} - WebPack config
  */
 function createWebPackConfig({
@@ -34,6 +35,7 @@ function createWebPackConfig({
   maxAssetSize = 610000,
   extraPlugins = [],
   tsConfigFile = '',
+  outputStats = false,
 }) {
   // The public URL of the output directory when referenced in a browser. The value of the option is prefixed to every URL created by the runtime or loaders. Because of this the value of this option ends with `/` in most cases.
   // Simple rule: The URL of your output.path from the view of the HTML page.
@@ -187,7 +189,6 @@ function createWebPackConfig({
           DEV_MODE: JSON.stringify(process.env.DEV_MODE),
         },
       }),
-      // new Visualizer(), // view at output-dir/stats.html
       new DashboardPlugin(),
       new MiniCssExtractPlugin({
         // Options similar to the same options in webpackOptions.output
@@ -255,6 +256,9 @@ function createWebPackConfig({
     webpackConfig.mode = 'development';
     webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
   }
+
+  // view at output-dir/stats.html
+  if (outputStats) webpackConfig.plugins.push(new Visualizer());
 
   return {
     ...webpackConfig,

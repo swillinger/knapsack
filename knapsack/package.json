@@ -17,7 +17,7 @@
     "build:schemas": "node ./convert-types-to-json-schemas.js",
     "watch:client": "webpack-cli --config ./webpack.config.js --watch --hide-modules --display minimal",
     "watch:server": "yarn build:server --watch",
-    "watch:schemas": "nodemon --watch ./src/schemas/ --ext .ts,.js --watch convert-types-to-json-schemas.js --exec 'yarn build:schemas' ",
+    "watch:schemas": "nodemon --watch ./src/schemas/ --ext .ts,.js --ignore ./src/schemas/json --watch convert-types-to-json-schemas.js --exec 'yarn build:schemas' ",
     "start": "run-p watch:*"
   },
   "dependencies": {

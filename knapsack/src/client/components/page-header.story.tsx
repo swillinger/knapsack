@@ -2,7 +2,7 @@ import React from 'react';
 import { PageHeader } from './page-header';
 
 export default {
-  title: 'Components|PageHeader',
+  title: 'App|PageHeader',
   component: PageHeader,
   decorators: [],
   parameters: {},

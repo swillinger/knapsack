@@ -36,7 +36,7 @@ type Props<T> = {
 /* eslint-disable no-console */
 export const SchemaForm = ({
   schema,
-  onChange,
+  onChange = () => {},
   onError = () => {},
   onSubmit = () => {},
   className = '',

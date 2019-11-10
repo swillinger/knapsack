@@ -2,7 +2,7 @@ import * as React from 'react';
 import { HomeSplash } from './home-splash';
 
 export default {
-  title: 'Components|HomeSplash',
+  title: 'App|HomeSplash',
   component: HomeSplash,
   decorators: [],
   parameters: {},

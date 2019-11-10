@@ -2,7 +2,7 @@ import * as React from 'react';
 import { PatternGrid } from './pattern-grid';
 
 export default {
-  title: 'Components|PatternGrid',
+  title: 'App|PatternGrid',
   component: PatternGrid,
   decorators: [],
   parameters: {},

@@ -3,7 +3,7 @@ import { action } from '@storybook/addon-actions';
 import { CustomSliceCollection } from './custom-slice-collection';
 
 export default {
-  title: 'App|CustomSliceCollection',
+  title: 'App|CustomSlices/Collection',
   component: CustomSliceCollection,
   decorators: [],
   parameters: {},

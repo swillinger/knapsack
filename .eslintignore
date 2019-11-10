@@ -3,9 +3,9 @@ dist
 examples
 /packages/create-knapsack/generators/twig/templates/
 packages/*/node_modules
-components/*/node_modules
 knapsack/node_modules
 # @todo remove and fix lint issues
 /docs-site/pages
 /docs-site/core
 /docs-site/build
+/knapsack/src/schemas/json

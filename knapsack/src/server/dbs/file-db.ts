@@ -14,6 +14,7 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
+/* eslint-disable max-classes-per-file */
 import low from 'lowdb';
 import FileSync from 'lowdb/adapters/FileSync';
 import { join } from 'path';

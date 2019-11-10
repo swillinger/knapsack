@@ -13,11 +13,10 @@ const typeNamesToExportToJsonSchema = [
   'KnapsackSettings',
   'KnapsackCustomPageSettingsForm',
 ];
+const fileNamePrefix = 'schema';
 
 ensureDirSync(distDir);
-let oldFilesToDeleteAfter = readdirSync(distDir).filter(f =>
-  f.endsWith('json'),
-);
+let oldFilesToDeleteAfter = readdirSync(distDir).filter(f => f.endsWith('ts'));
 
 /** @type {import('TJS').PartialArgs} */
 const settings = {
@@ -93,8 +92,9 @@ ${relative(process.cwd(), __filename)}
 
   await Promise.all(
     schemas.map(async ({ type, schema }) => {
-      const file = JSON.stringify(schema, null, '  ');
-      const fileName = `${type}.json`;
+      const schemaString = JSON.stringify(schema, null, '  ');
+      const file = `export default ${schemaString};`;
+      const fileName = `${fileNamePrefix}${type}.ts`;
       const filePath = resolve(distDir, fileName);
       await writeFile(filePath, file);
       console.log(

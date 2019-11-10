@@ -22,10 +22,7 @@ import {
   useDispatch,
   setStatus,
 } from '../../store';
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import knapsackSettingsSchema from '../../../schemas/json/KnapsackSettings.json';
-import { KnapsackSettings } from '../../../schemas/knapsack.settings';
+import schema from '../../../schemas/json/schemaKnapsackSettings';
 
 export const SiteSettings: React.FC = () => {
   const settings = useSelector(store => store.settingsState.settings);
@@ -33,7 +30,7 @@ export const SiteSettings: React.FC = () => {
 
   return (
     <SchemaForm
-      schema={knapsackSettingsSchema}
+      schema={schema}
       formData={settings}
       onSubmit={({ formData }) => {
         dispatch(updateSettings(formData));

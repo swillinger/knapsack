@@ -22,9 +22,7 @@ import {
   setStatus,
   updateCustomSections,
 } from '../../store';
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import KnapsackCustomPageSettingsForm from '../../../schemas/json/KnapsackCustomPageSettingsForm.json';
+import schema from '../../../schemas/json/schemaKnapsackCustomPageSettingsForm';
 
 export const CustomPagesSettings: React.FC = () => {
   const sections = useSelector(store => store.customPagesState.sections);
@@ -32,7 +30,7 @@ export const CustomPagesSettings: React.FC = () => {
 
   return (
     <SchemaForm
-      schema={KnapsackCustomPageSettingsForm}
+      schema={schema}
       formData={{ sections }}
       onSubmit={({ formData }) => {
         dispatch(updateCustomSections(formData.sections as typeof sections));

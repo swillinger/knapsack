@@ -21,7 +21,7 @@ import {
 } from '../schemas/knapsack.settings';
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
-import knapsackSettingsSchema from '../schemas/json/KnapsackSettings.json';
+import knapsackSettingsSchema from '../schemas/json/schemaKnapsackSettings';
 
 export class Settings extends FileDb2<KnapsackSettings> {
   constructor({ dataDir }: KnapsackSettingsStoreConfig) {

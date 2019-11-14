@@ -1,14 +1,30 @@
 .k-btn {
-  height: 33px;
   border: none;
-  background-color: var(--c-gray-xxlight);
-  color: var(--c-text-black);
-  font-size: 0.75rem;
   cursor: pointer;
+  padding: 0.6em 0.8em;
+  line-height: 1;
 
-  &.k-btn--primary {
-    background-color: var(--c-primary);
-    color: var(--c-text-white);
+  &--kind {
+    &-primary {
+      background-color: var(--c-primary);
+      color: var(--c-text-white);
+    }
+    &-secondary {
+      background-color: var(--c-gray-xlight);
+      color: var(--c-text-black);
+    }
+  }
+
+  &--size {
+    &-s {
+      font-size: 0.65rem;
+    }
+    &-m {
+      font-size: 0.8rem;
+    }
+    &-l {
+      font-size: 1rem;
+    }
   }
 
   &[disabled],

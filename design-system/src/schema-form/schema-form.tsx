@@ -91,7 +91,7 @@ export const SchemaForm = ({
       >
         {!hasSubmit && <span />}
         {hasSubmit && (
-          <Button primary type="submit">
+          <Button kind="primary" type="submit">
             Submit
           </Button>
         )}

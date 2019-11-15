@@ -8,4 +8,4 @@ knapsack/node_modules
 /docs-site/pages
 /docs-site/core
 /docs-site/build
-/knapsack/src/schemas/json
+/knapsack/src/json-schemas

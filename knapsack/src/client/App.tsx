@@ -138,7 +138,6 @@ export const App: React.FC = () => {
                   />
                 )}
 
-
                 <Route
                   path={`${BASE_PATHS.PATTERN}/:id`}
                   exact

@@ -23,7 +23,10 @@ describe('arrays', () => {
   });
 
   test('flattenArray', () => {
-    const results = flattenArray([[1, 2, 3], [4, 5, 6]]);
+    const results = flattenArray([
+      [1, 2, 3],
+      [4, 5, 6],
+    ]);
     expect(results).toEqual([1, 2, 3, 4, 5, 6]);
   });
 

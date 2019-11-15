@@ -19,7 +19,8 @@ import React, { useState } from 'react';
 import { SchemaForm, Details } from '@knapsack/design-system';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-import { useSelector } from '../../store';
+import shortid from 'shortid';
+import { useSelector, updatePattern, useDispatch } from '../../store';
 import MdBlock from '../../components/md-block';
 import Template from '../../components/template';
 import TemplateCodeBlock from './template-code-block';
@@ -32,22 +33,33 @@ import { getTemplateUrl } from '../../data';
 import { TemplateHeader } from './template-header';
 import './template-view.scss';
 import './shared/demo-grid-controls.scss';
+import { isDataDemo, isTemplateDemo } from '../../../schemas/patterns';
 
-const updateReadme = gql`
-  mutation UpdateReadme($id: ID!, $templateId: ID!, $readme: String!) {
-    setPatternTemplateReadme(
-      id: $id
-      templateId: $templateId
-      readme: $readme
-    ) {
-      id
-      templates {
-        id
-        doc
-      }
-    }
+const calculateDemoStageWidth = (size: string) => {
+  switch (size) {
+    case 's':
+      return '33%';
+    case 'm':
+      return '50%';
+    case 'l':
+      return '67%';
+    default:
+      return '100%';
   }
-`;
+};
+
+const calculateSchemaFormWidth = (size: string) => {
+  switch (size) {
+    case 's':
+      return '67%';
+    case 'm':
+      return '50%';
+    case 'l':
+      return '33%';
+    default:
+      return '100%';
+  }
+};
 
 export type Props = {
   /**
@@ -77,25 +89,42 @@ const TemplateView: React.FC<Props> = ({
   templateId,
 }: Props) => {
   const permissions = useSelector(store => store.userState.role.permissions);
-  const pattern = useSelector(store => {
-    const thePattern = store.patternsState.patterns.find(p => p.id === id);
-    if (!thePattern) {
-      throw new Error(`The pattern id ${id} cannont be found in Redux Store`);
-    }
-    return thePattern;
-  });
+  const pattern = useSelector(
+    ({ patternsState }) => patternsState.patterns[id],
+  );
+  const allStatuses = useSelector(s => s.patternsState.templateStatuses);
+  const { allAssetSets, globalAssetSetIds } = useSelector(
+    ({ assetSetsState }) => ({
+      allAssetSets: assetSetsState.allAssetSets,
+      globalAssetSetIds: assetSetsState.globalAssetSetIds,
+    }),
+  );
+  const dispatch = useDispatch();
 
   const { templates } = pattern;
 
+  const template = templates.find(t => t.id === templateId);
   const {
-    schema,
-    uiSchema,
-    isInline,
-    doc: readme,
+    spec = {},
+    // doc: readme,
     title,
-    demoDatas = [],
-    assetSets = [],
-  } = templates.find(t => t.id === templateId);
+    assetSetIds = globalAssetSetIds,
+    demosById,
+    statusId,
+    // demoDatas = [],
+    // assetSets = [],
+  } = template;
+
+  const { props: schema } = spec;
+  const status = allStatuses.find(p => p.id === statusId);
+
+  const readme = '';
+  const assetSets = assetSetIds.map(assetSetId => ({
+    id: assetSetId,
+    ...allAssetSets[assetSetId],
+  }));
+
+  const demos = template.demos.map(d => demosById[d]);
 
   const hasSchema = !!(
     schema &&
@@ -103,44 +132,20 @@ const TemplateView: React.FC<Props> = ({
     Object.keys(schema.properties).length > 0
   );
 
-  const [state, setState] = useState({
-    demoDataIndex: 0,
-    data: demoDatas[0],
-  });
+  const [demoIndex, setDemoIndex] = useState(0);
+  const [demo, setDemo] = useState(demos[demoIndex]);
+  // const demo = demos[demoIndex];
+
+  // const [dataState, setDataState] = useState({
+  //   demoDataIndex: 0,
+  //   data: demoDatas[0],
+  // });
 
   const [assetSetId, setAssetSetId] = useState(
     assetSets[0] ? assetSets[0].id : '',
   );
 
-  const { demoDataIndex, data } = state;
-
   const showSchemaForm = isSchemaFormShown && hasSchema;
-
-  const calculateDemoStageWidth = (size: string) => {
-    switch (size) {
-      case 's':
-        return '33%';
-      case 'm':
-        return '50%';
-      case 'l':
-        return '67%';
-      default:
-        return '100%';
-    }
-  };
-
-  const calculateSchemaFormWidth = (size: string) => {
-    switch (size) {
-      case 's':
-        return '67%';
-      case 'm':
-        return '50%';
-      case 'l':
-        return '33%';
-      default:
-        return '100%';
-    }
-  };
 
   return (
     <article className="template-view">
@@ -148,14 +153,15 @@ const TemplateView: React.FC<Props> = ({
         <TemplateHeader
           title={title}
           assetSets={assetSets}
-          demoDatas={demoDatas}
-          demoDataIndex={demoDataIndex}
+          demoDatasLength={demos.length}
+          demoDataIndex={demoIndex}
+          status={status}
           isTitleShown={!isVerbose && isTitleShown}
           handleOpenNewTabClick={() => {
             getTemplateUrl({
               patternId: id,
               templateId,
-              data,
+              demo,
               isInIframe: false,
               wrapHtml: true,
               assetSetId,
@@ -169,16 +175,26 @@ const TemplateView: React.FC<Props> = ({
             setAssetSetId(newAssetSetId);
           }}
           handleDemoPrevClick={() => {
-            setState(prevState => ({
-              demoDataIndex: prevState.demoDataIndex - 1,
-              data: demoDatas[prevState.demoDataIndex - 1],
-            }));
+            setDemoIndex(prev => {
+              const newIndex = prev - 1;
+              setDemo(demos[newIndex]);
+              return newIndex;
+            });
+            // setDataState(prevState => ({
+            //   demoDataIndex: prevState.demoDataIndex - 1,
+            //   data: demoDatas[prevState.demoDataIndex - 1],
+            // }));
           }}
           handleDemoNextClick={() => {
-            setState(prevState => ({
-              demoDataIndex: prevState.demoDataIndex + 1,
-              data: demoDatas[prevState.demoDataIndex + 1],
-            }));
+            setDemoIndex(prev => {
+              const newIndex = prev + 1;
+              setDemo(demos[newIndex]);
+              return newIndex;
+            });
+            // setDataState(prevState => ({
+            //   demoDataIndex: prevState.demoDataIndex + 1,
+            //   data: demoDatas[prevState.demoDataIndex + 1],
+            // }));
           }}
         />
 
@@ -203,11 +219,11 @@ const TemplateView: React.FC<Props> = ({
               patternId={id}
               templateId={templateId}
               assetSetId={assetSetId}
-              data={data}
+              demo={demo}
               isResizable
             />
           </div>
-          {showSchemaForm && (
+          {showSchemaForm && isDataDemo(demo) && (
             <div
               className="template-view__schema-form"
               style={{
@@ -218,15 +234,50 @@ const TemplateView: React.FC<Props> = ({
                 <h4>Edit Form</h4>
                 <SchemaForm
                   schema={schema}
-                  formData={data}
+                  formData={demo.data.props}
+                  hasSubmit
                   onChange={({ formData }) => {
-                    setState(prevState => ({
-                      ...prevState,
-                      data: formData,
-                    }));
+                    // @todo ensure it saves
+                    setDemo(prevDemo => {
+                      if (isDataDemo(prevDemo)) {
+                        return {
+                          ...prevDemo,
+                          data: {
+                            ...prevDemo.data,
+                            props: formData,
+                          },
+                        };
+                      }
+                    });
+                    // setDataState(prevState => ({
+                    //   ...prevState,
+                    //   data: formData,
+                    // }));
                   }}
-                  uiSchema={uiSchema}
-                  isInline={isInline}
+                  onSubmit={({ formData }) => {
+                    dispatch(
+                      updatePattern({
+                        ...pattern,
+                        templates: templates.map(t => {
+                          if (t.id !== templateId) return t;
+                          const newId = shortid.generate();
+                          return {
+                            ...t,
+                            demosById: {
+                              ...t.demosById,
+                              [newId]: {
+                                type: 'data',
+                                data: {
+                                  props: formData,
+                                },
+                              },
+                            },
+                            demos: [...t.demos, newId],
+                          };
+                        }),
+                      }),
+                    );
+                  }}
                 />
               </div>
             </div>
@@ -234,53 +285,27 @@ const TemplateView: React.FC<Props> = ({
         </div>
       </div>
 
-      {isCodeBlockShown && (
-        <div style={{ marginBottom: '1rem' }}>
-          <TemplateCodeBlock
-            patternId={id}
-            templateId={templateId}
-            data={data}
-          />
-        </div>
-      )}
+      {/* {isCodeBlockShown && false && ( */}
+      {/*  <div style={{ marginBottom: '1rem' }}> */}
+      {/*    <TemplateCodeBlock */}
+      {/*      patternId={id} */}
+      {/*      templateId={templateId} */}
+      {/*      data={dataState.data} */}
+      {/*    /> */}
+      {/*  </div> */}
+      {/* )} */}
 
       {isReadmeShown && readme && (
-        <Mutation
-          mutation={updateReadme}
-          // refetchQueries={() => [
-          //   {
-          //     query: patternQuery,
-          //     variables: {
-          //       id,
-          //     },
-          //   },
-          // ]}
-        >
-          {setPatternTemplateReadme => {
-            // {(setPatternTemplateReadme, { error: mutationError }) => {
-            // if (mutationError)
-            //   return (
-            //     <StatusMessage message={mutationError.message} type="error" />
-            //   );
-            return (
-              <MdBlock
-                md={readme}
-                key={`${id}-${templateId}`}
-                isEditable={permissions.includes('write')}
-                title="Documentation"
-                handleSave={newReadme => {
-                  setPatternTemplateReadme({
-                    variables: {
-                      id,
-                      templateId,
-                      readme: newReadme,
-                    },
-                  });
-                }}
-              />
-            );
+        <MdBlock
+          md={readme}
+          key={`${id}-${templateId}`}
+          isEditable={permissions.includes('write')}
+          title="Documentation (not wired up to save right now)"
+          handleSave={newReadme => {
+            // @todo save it
+            console.log('handleSave on readme called', newReadme);
           }}
-        </Mutation>
+        />
       )}
 
       {isVerbose && hasSchema && (
@@ -297,13 +322,13 @@ const TemplateView: React.FC<Props> = ({
             </Details>
           </div>
 
-          <LoadableVariationDemo
-            schema={schema}
-            templateId={templateId}
-            patternId={id}
-            data={demoDatas[demoDataIndex]}
-            key={`${id}-${templateId}-${demoDataIndex}`}
-          />
+          {/* <LoadableVariationDemo */}
+          {/*  schema={schema} */}
+          {/*  templateId={templateId} */}
+          {/*  patternId={id} */}
+          {/*  data={demoDatas[demoDataIndex]} */}
+          {/*  key={`${id}-${templateId}-${demoDataIndex}`} */}
+          {/* /> */}
         </>
       )}
     </article>

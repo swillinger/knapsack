@@ -48,7 +48,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### All package names have changed
 
-The **main** package `@basalt/bedrock` is now `@basalt/knapsack` - this is now the only package under `@basalt`, every other one is under `@knapsack`.
+The **main** package `@basalt/bedrock` is now `@knapsack/app` - this is now the only package under `@basalt`, every other one is under `@knapsack`.
 
 - `@basalt/bedrock-renderer-html` => `@knapsack/renderer-html`
 - `@basalt/bedrock-color-swatch` => `@knapsack/color-swatch`
@@ -73,7 +73,7 @@ The **main** package `@basalt/bedrock` is now `@basalt/knapsack` - this is now t
 @knapsack/spacing-swatch
 @knapsack/spinner
 @knapsack/tabbed-panel
-@basalt/knapsack
+@knapsack/app
 @knapsack/babel-config
 @knapsack/core
 create-knapsack

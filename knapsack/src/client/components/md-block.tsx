@@ -52,17 +52,18 @@ const MdBlock: React.FC<Props> = (props: Props) => {
       <div className="md-block__documentation-header">
         {title && <h4>{title}</h4>}
         {isEditable && (
-          <Button
-            onClick={() => {
-              if (editing && handleSave) {
-                handleSave(md);
-              }
-              setEditing(prevEditing => !prevEditing);
-            }}
-            style={{ marginLeft: 'auto' }}
-          >
-            <>{editing ? 'Save' : 'Edit'}</>
-          </Button>
+          <div style={{ marginLeft: 'auto' }}>
+            <Button
+              onClick={() => {
+                if (editing && handleSave) {
+                  handleSave(md);
+                }
+                setEditing(prevEditing => !prevEditing);
+              }}
+            >
+              <>{editing ? 'Save' : 'Edit'}</>
+            </Button>
+          </div>
         )}
       </div>
       <div style={{ marginBottom: '10px', display: 'flex' }}>

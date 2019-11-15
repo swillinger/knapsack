@@ -26,7 +26,6 @@ module.exports = {
       assetSets: [material],
     },
     {
-      alias: '@components/button.html',
       path: './button.html',
       id: 'button-html',
       title: 'Button Bootstrap - Html',

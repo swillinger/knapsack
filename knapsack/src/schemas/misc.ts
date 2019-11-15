@@ -24,6 +24,7 @@ export interface GraphQlContext extends KnapsackBrain {
 }
 
 export interface JsonSchemaObject {
+  $schema?: string;
   title?: string;
   description?: string;
   type: 'object';
@@ -34,7 +35,21 @@ export interface JsonSchemaObject {
           title?: string;
           description?: string;
           default?: any;
-          type: 'string' | 'boolean' | 'number' | 'array';
+          type: 'string' | 'boolean' | 'number';
+        }
+      | {
+          title?: string;
+          description?: string;
+          default?: any;
+          type: 'string';
+          enum: string[];
+          enumNames: string[];
+        }
+      | {
+          title?: string;
+          description?: string;
+          type: 'array';
+          items?: JsonSchemaObject;
         }
       | JsonSchemaObject;
   };

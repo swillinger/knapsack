@@ -67,14 +67,6 @@ export const LoadableHome = Loadable({
   loading: Spinner,
 });
 
-export const LoadablePatternEdit = Loadable({
-  loader: () =>
-    import(
-      /* webpackChunkName: "pattern-edit-page" */ './pages/pattern-edit-page'
-    ),
-  loading: Spinner,
-});
-
 export const LoadableGraphiqlPage = Loadable({
   loader: () =>
     import(/* webpackChunkName: "graphiql-page" */ './pages/graphiql-page'),
@@ -98,17 +90,8 @@ export const LoadablePageBuilderLandingPage = Loadable({
 export const LoadablePatternsPage = Loadable({
   loader: () =>
     import(
-      /* webpackChunkName: "patterns-page" */ './pages/patterns-filterable-grid-page'
-    ),
-  loading: Spinner,
-});
-
-export const LoadableSecondaryNav = Loadable({
-  loader: () =>
-    import(
-      /* webpackChunkName: "secondary-nav" */
-      './components/secondary-nav'
-    ),
+      /* webpackChunkName: "pattern-list-page" */ './pages/pattern-list-page'
+    ).then(({ PatternListPage }) => PatternListPage),
   loading: Spinner,
 });
 

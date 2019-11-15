@@ -117,15 +117,15 @@ export class FileDb {
   }
 }
 
-export class FileDb2<DbType> {
+export class FileDb2<ConfigType> {
   /**
    * Full path to file used for storage
    */
   dbPath: string;
 
-  private type: 'json' | 'yaml';
+  private type: 'json' | 'yml';
 
-  data: DbType;
+  config: ConfigType;
 
   validationSchema: object;
 
@@ -137,12 +137,12 @@ export class FileDb2<DbType> {
     validationSchema,
   }: {
     dbDir: string;
-    type?: 'json' | 'yaml';
+    type?: 'json' | 'yml';
     name: string;
     /**
      * Shallow merge
      */
-    defaults: DbType;
+    defaults: ConfigType;
     /**
      * JSON Schema to validate read & writes with at run time
      */
@@ -158,7 +158,7 @@ export class FileDb2<DbType> {
       this.write(defaults, { sync: true }).then(() => {});
     }
 
-    this.data = this.read();
+    this.config = this.read();
 
     // Start watching the file in case user manually changes it so we can re-read it into memory
     const watcher = chokidar.watch(this.dbPath, {
@@ -167,7 +167,7 @@ export class FileDb2<DbType> {
 
     watcher.on('all', () => {
       // @todo if file is changed, trigger client ui to get new changes - we can't have diverged data
-      this.data = this.read();
+      this.config = this.read();
     });
 
     knapsackEvents.on(EVENTS.SHUTDOWN, () => {
@@ -180,18 +180,18 @@ export class FileDb2<DbType> {
    * Requires `validationSchema` to be passed in during initial creation
    * @throws Error if it's not valid
    */
-  validateData(data): void {
+  validateConfig(config: ConfigType): void {
     if (!this.validationSchema) return;
 
     const { ok, message, errors } = validateDataAgainstSchema(
       this.validationSchema,
-      data,
+      config,
     );
     if (ok) return;
     const msg = [
       `Data validation error for ${this.dbPath}`,
       'The data:',
-      JSON.stringify(data, null, ' '),
+      JSON.stringify(config, null, ' '),
       '',
       'The error:',
       message,
@@ -200,47 +200,47 @@ export class FileDb2<DbType> {
     throw new Error(msg);
   }
 
-  serialize(data: DbType): string {
-    this.validateData(data);
+  serialize(config: ConfigType): string {
+    this.validateConfig(config);
     switch (this.type) {
       case 'json':
-        return JSON.stringify(data, null, 2) + os.EOL;
-      case 'yaml':
-        return yaml.safeDump(data);
+        return JSON.stringify(config, null, 2) + os.EOL;
+      case 'yml':
+        return yaml.safeDump(config);
       default:
         throw new Error('Un-supported type used');
     }
   }
 
-  read(): DbType {
+  read(): ConfigType {
     const dbString: string = fs.readFileSync(this.dbPath, 'utf8');
-    let data;
+    let config;
     switch (this.type) {
       case 'json':
-        data = JSON.parse(dbString);
-        this.validateData(data);
-        return data;
-      case 'yaml':
-        data = yaml.safeLoad(dbString);
-        this.validateData(data);
-        return data;
+        config = JSON.parse(dbString);
+        this.validateConfig(config);
+        return config;
+      case 'yml':
+        config = yaml.safeLoad(dbString);
+        this.validateConfig(config);
+        return config;
       default:
         throw new Error('Un-supported type used');
     }
   }
 
-  savePrep(data: DbType): { contents: string; path: string } {
-    this.validateData(data);
-    const dataString = this.serialize(data);
+  savePrep(config: ConfigType): { contents: string; path: string } {
+    this.validateConfig(config);
+    const configString = this.serialize(config);
     return {
-      contents: dataString,
+      contents: configString,
       path: this.dbPath,
     };
   }
 
-  async write(data: DbType, { sync = false } = {}): Promise<string> {
-    this.validateData(data);
-    const { contents, path } = this.savePrep(data);
+  async write(config: ConfigType, { sync = false } = {}): Promise<string> {
+    this.validateConfig(config);
+    const { contents, path } = this.savePrep(config);
     if (sync) {
       fs.writeFileSync(path, contents, 'utf8');
     } else {
@@ -249,9 +249,9 @@ export class FileDb2<DbType> {
     return path;
   }
 
-  getData(): DbType {
-    const { data } = this;
-    this.validateData(data);
-    return data;
+  getConfig(): ConfigType {
+    const { config } = this;
+    this.validateConfig(config);
+    return config;
   }
 }

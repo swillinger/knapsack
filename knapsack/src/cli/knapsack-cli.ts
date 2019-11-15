@@ -21,6 +21,7 @@ import { writeFileSync, ensureDirSync, readJSONSync } from 'fs-extra';
 import * as log from './log';
 import { knapsackEvents, EVENTS } from '../server/events';
 import { serve } from '../server/server';
+import { readYamlSync, writeYaml } from '../server/server-utils';
 import { build, testPatternRenders } from './commands';
 import { getMeta } from '../lib/config';
 import { bootstrapFromConfigFile } from '../lib/bootstrap';
@@ -51,7 +52,7 @@ if (isDevMode) log.info('Knapsack Dev Mode on');
 
 const configPath = join(process.cwd(), 'knapsack.config.js');
 
-const { patterns, config } = bootstrapFromConfigFile(configPath);
+const { patterns, config, assetSets } = bootstrapFromConfigFile(configPath);
 
 const allTemplatePaths = patterns.getAllTemplatePaths();
 
@@ -64,34 +65,35 @@ program.command('serve').action(async () => {
 program.command('build').action(async () => {
   await build(config, allTemplatePaths);
 
-  // writing meta
-  const patternDemos = patterns.getPatternsDemoUrls();
-  const patternsMeta = patternDemos.map(patternDemo => {
-    const { templates } = patternDemo;
-    return {
-      title: patternDemo.title,
-      id: patternDemo.id,
-      templates: templates.map(template => ({
-        title: template.title,
-        id: template.id,
-        demoUrls: template.demoUrls,
-      })),
-    };
-  });
-
-  const metaPath = join(config.dist, 'meta.json');
-
-  ensureDirSync(config.dist);
-  writeFileSync(
-    metaPath,
-    JSON.stringify(
-      {
-        patterns: patternsMeta,
-      },
-      null,
-      '  ',
-    ),
-  );
+  // @todo restore writing meta.json with useful demo url info
+  // // writing meta
+  // const patternDemos = patterns.getPatternsDemoUrls();
+  // const patternsMeta = patternDemos.map(patternDemo => {
+  //   const { templates } = patternDemo;
+  //   return {
+  //     title: patternDemo.title,
+  //     id: patternDemo.id,
+  //     templates: templates.map(template => ({
+  //       title: template.title,
+  //       id: template.id,
+  //       demoUrls: template.demoUrls,
+  //     })),
+  //   };
+  // });
+  //
+  // const metaPath = join(config.dist, 'meta.json');
+  //
+  // ensureDirSync(config.dist);
+  // writeFileSync(
+  //   metaPath,
+  //   JSON.stringify(
+  //     {
+  //       patterns: patternsMeta,
+  //     },
+  //     null,
+  //     '  ',
+  //   ),
+  // );
 
   knapsackEvents.emit(EVENTS.SHUTDOWN);
 });
@@ -102,15 +104,16 @@ program.command('start').action(async () => {
   const templateRendererWatches = config.templateRenderers.filter(t => t.watch);
 
   return Promise.all([
-    patterns.watch(),
-    ...templateRendererWatches.map(t =>
-      t.watch({
-        config,
-        templatePaths: allTemplatePaths.filter(templatePath =>
-          t.test(templatePath),
-        ),
-      }),
-    ),
+    // patterns.watch(), // @todo restore
+    assetSets.watch(),
+    // ...templateRendererWatches.map(t =>
+    //   t.watch({
+    //     config,
+    //     templatePaths: allTemplatePaths.filter(templatePath =>
+    //       t.test(templatePath),
+    //     ),
+    //   }),
+    // ),
     serve({ meta }),
   ])
     .then(() => log.info('Started!', null, 'start'))
@@ -122,8 +125,11 @@ program.command('start').action(async () => {
 
 program.command('test').action(async () => {
   await build(config, allTemplatePaths);
-  const allPatterns: KnapsackPattern[] = await patterns.getPatterns();
-  await testPatternRenders(allPatterns, patterns);
+  await testPatternRenders(patterns.allPatterns, patterns);
+  knapsackEvents.emit(EVENTS.SHUTDOWN);
+});
+
+program.command('upgrade-config').action(async () => {
   knapsackEvents.emit(EVENTS.SHUTDOWN);
 });
 

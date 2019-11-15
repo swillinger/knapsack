@@ -1,22 +1,25 @@
 #!/usr/bin/env node
 const TJS = require('typescript-json-schema'); // https://github.com/YousefED/typescript-json-schema
 const { resolve, relative, join } = require('path');
-const { ensureDirSync, writeFile, readdirSync, remove } = require('fs-extra');
+const { writeFile, readdirSync, remove } = require('fs-extra');
 
 console.log('Start: converting TypeScript types to JSON Schemas');
 
 // To generate JSON schemas in the `distDir` folder, place any types in the `typesFile`, then add them to the `typeNamesToExportToJsonSchema` below.
 
-const distDir = join(__dirname, `./src/schemas/json/`);
+const distDir = join(__dirname, `./src/json-schemas/`);
 const typesFile = join(__dirname, './src/schemas/types-to-json-schemas.d.ts');
 const typeNamesToExportToJsonSchema = [
   'KnapsackSettings',
   'KnapsackCustomPageSettingsForm',
+  'KnapsackAssetSetsConfig',
+  'KnapsackPattern',
+  'KnapsackNavsConfig',
 ];
 const fileNamePrefix = 'schema';
+const deleteUnusedFilesAfter = false;
 
-ensureDirSync(distDir);
-let oldFilesToDeleteAfter = readdirSync(distDir).filter(f => f.endsWith('ts'));
+const oldFilesToDeleteAfter = new Set(readdirSync(distDir));
 
 /** @type {import('TJS').PartialArgs} */
 const settings = {
@@ -93,24 +96,32 @@ ${relative(process.cwd(), __filename)}
   await Promise.all(
     schemas.map(async ({ type, schema }) => {
       const schemaString = JSON.stringify(schema, null, '  ');
-      const file = `export default ${schemaString};`;
-      const fileName = `${fileNamePrefix}${type}.ts`;
-      const filePath = resolve(distDir, fileName);
-      await writeFile(filePath, file);
+      const jsFile = `export default ${schemaString};`;
+      const fileNameBase = `${fileNamePrefix}${type}`;
+      const filePath = resolve(distDir, fileNameBase);
+      const tsPath = `${filePath}.ts`;
+      await writeFile(tsPath, jsFile);
+      const jsonPath = `${filePath}.json`;
+      await writeFile(jsonPath, schemaString);
       console.log(
         `Used typescript type "${type}" to generate JSON Schema at: "${relative(
           __dirname,
-          filePath,
+          tsPath,
         )}"`,
       );
       // remove the file we just made from the cleanup list
-      oldFilesToDeleteAfter = oldFilesToDeleteAfter.filter(f => f !== fileName);
+      oldFilesToDeleteAfter.delete(tsPath);
+      oldFilesToDeleteAfter.delete(jsonPath);
     }),
   );
 
-  await Promise.all(
-    oldFilesToDeleteAfter.map(f => resolve(distDir, f)).map(f => remove(f)),
-  );
+  if (deleteUnusedFilesAfter) {
+    await Promise.all(
+      [...oldFilesToDeleteAfter]
+        .map(f => resolve(distDir, f))
+        .map(f => remove(f)),
+    );
+  }
 }
 
 go();

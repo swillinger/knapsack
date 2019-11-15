@@ -17,7 +17,7 @@
 import React from 'react';
 import Header from '../components/header';
 import Footer from '../components/footer';
-import { PageHeader } from '../components/page-header';
+import { PageHeaderContainer } from '../components/page-header';
 import ErrorCatcher from '../utils/error-catcher';
 import './page-without-sidebar.scss';
 
@@ -36,7 +36,7 @@ const PageWithoutSidebar: React.FC<Props> = ({
     <Header />
     <ErrorCatcher>
       <main className="page-without-sidebar__page">
-        <PageHeader title={title} section={section} />
+        <PageHeaderContainer title={title} section={section} />
         {children}
       </main>
     </ErrorCatcher>

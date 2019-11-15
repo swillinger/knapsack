@@ -23,6 +23,8 @@ export class KnapsackRendererWebpackBase extends KnapsackRendererBase
 
   publicPath: string;
 
+  language: string;
+
   restartWebpackWatch: () => void;
 
   webpackCompiler: import('webpack').Compiler;
@@ -40,17 +42,20 @@ export class KnapsackRendererWebpackBase extends KnapsackRendererBase
   constructor({
     id,
     extension,
+    language,
     webpackConfig,
     webpack,
   }: {
     id: string;
     extension: string;
+    language: string;
     webpackConfig: import('webpack').Configuration;
     webpack: typeof import('webpack');
   }) {
     super({
       id,
       extension,
+      language,
     });
     this.webpack = webpack;
     this.webpackConfig = webpackConfig;
@@ -103,13 +108,20 @@ export class KnapsackRendererWebpackBase extends KnapsackRendererBase
     log.silly('', entry, this.logPrefix);
   }
 
-  createWebpackEntryFromPatterns(patterns) {
+  createWebpackEntryFromPatterns(
+    patterns: import('@knapsack/app/src/server/patterns').Patterns,
+  ) {
     const entry = {};
-    patterns.forEach(pattern => {
+    patterns.getPatterns().forEach(pattern => {
       pattern.templates
-        .filter(t => this.test(t.absolutePath))
+        .filter(t => t.templateLanguageId === this.id)
         .forEach(template => {
-          entry[`${pattern.id}-${template.id}`] = template.absolutePath;
+          entry[
+            `${pattern.id}-${template.id}`
+          ] = patterns.getTemplateAbsolutePath({
+            patternId: pattern.id,
+            templateId: template.id,
+          });
         });
     });
     return entry;
@@ -117,19 +129,19 @@ export class KnapsackRendererWebpackBase extends KnapsackRendererBase
 
   init({
     config,
-    allPatterns,
+    patterns,
   }: {
     config: KnapsackConfig;
-    allPatterns: KnapsackPattern[];
+    patterns: import('@knapsack/app/src/server/patterns').Patterns;
   }): void {
     this.distDirAbsolute = path.resolve(config.dist, this.outputDirName);
     this.publicPath = `/${path.relative(config.dist, this.distDirAbsolute)}/`;
-    this.webpackEntry = this.createWebpackEntryFromPatterns(allPatterns);
+    this.webpackEntry = this.createWebpackEntryFromPatterns(patterns);
     this.createWebpackCompiler(this.webpackEntry);
 
     knapsackEvents.on(
       EVENTS.PATTERNS_DATA_READY,
-      (patterns: KnapsackEventsData['PATTERNS_DATA_READY']) => {
+      (allPatterns: KnapsackEventsData['PATTERNS_DATA_READY']) => {
         const entry = this.createWebpackEntryFromPatterns(patterns);
         if (
           Object.keys(this.webpackEntry)

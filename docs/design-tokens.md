@@ -38,7 +38,7 @@ Here is an example of how to convert Theo design tokens with the Knapsack Theo F
 
 ```javascript
 // Import required dependencies
-const { theoKnapsackFormat } = require('@basalt/knapsack');
+const { theoKnapsackFormat } = require('@knapsack/app');
 const theo = require('theo');
 
 // Register the Knapsack formatter with your instance of theo
@@ -80,7 +80,7 @@ Here is an example of how to convert Style Dictionary design tokens with the Kna
 
 `style-dictionary.config.js`
 ```javascript
-const { styleDictionaryKnapsackFormat } = require('@basalt/knapsack');
+const { styleDictionaryKnapsackFormat } = require('@knapsack/app');
 const StyleDictionary = require('style-dictionary');
 
 StyleDictionary.registerFormat(styleDictionaryKnapsackFormat);

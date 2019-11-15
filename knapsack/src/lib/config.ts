@@ -26,39 +26,14 @@ import { KnapsackRendererBase } from '../server/renderer-base';
 import * as log from '../cli/log';
 import { knapsackEvents, EVENTS } from '../server/events';
 import { dirExistsOrExit, readJson } from '../server/server-utils';
-import { KnapsackConfig, KnapsackUserConfig } from '../schemas/knapsack-config';
+import { KnapsackConfig } from '../schemas/knapsack-config';
 import { KnapsackMeta } from '../schemas/misc';
 
 /**
  * Handle backwards compatibility of config
  */
-function convertOldConfig(config: KnapsackUserConfig): KnapsackConfig {
-  // @deprecated - remove in v1.0.0
-  if (config.templates) {
-    log.warn(
-      'knapsack.config.js prop "templates" is deprecated and has been renamed to "templateRenderers", please rename with no change to config needed. The bots have moved your config to correct spot for now, but this will stop working at 1.0.0',
-    );
-    config.templateRenderers = config.templates;
-    delete config.templates;
-  }
-
-  if (config.css || config.js) {
-    const assetSet = {
-      id: 'default',
-      title: 'Default',
-      assets: [],
-    };
-    if (config.css) {
-      config.css.forEach(src => assetSet.assets.push({ src }));
-      delete config.css;
-    }
-    if (config.js) {
-      config.js.forEach(src => assetSet.assets.push({ src }));
-      delete config.js;
-    }
-    config.assetSets = [assetSet];
-  }
-
+function convertOldConfig(config: KnapsackConfig): KnapsackConfig {
+  // handle backward compatibility here, may need to make new Interface
   return config;
 }
 
@@ -88,7 +63,6 @@ function validateConfig(config: KnapsackConfig): boolean {
 
   // @todo check if `config.patterns` exists; but can't now as it can contain globs
   dirExistsOrExit(config.public);
-  if (config.docsDir) dirExistsOrExit(config.docsDir);
 
   {
     const { message, ok } = validateDataAgainstSchema(
@@ -132,23 +106,14 @@ function validateConfig(config: KnapsackConfig): boolean {
  * Prepare user config: validate, convert all paths to absolute, assign defaults
  */
 export function processConfig(
-  userConfig: KnapsackUserConfig,
+  userConfig: KnapsackConfig,
   from: string,
 ): KnapsackConfig {
-  const {
-    patterns,
-    public: publicDir,
-    dist,
-    docsDir,
-    ...rest
-  } = convertOldConfig(userConfig);
+  const { public: publicDir, dist, ...rest } = convertOldConfig(userConfig);
 
   const config = {
-    patterns: patterns.map(p => resolve(from, p)),
     public: resolve(from, publicDir),
     dist: resolve(from, dist),
-    docsDir: docsDir ? resolve(from, docsDir) : null,
-    assetSets: userConfig.assetSets || [],
     ...rest,
   };
 

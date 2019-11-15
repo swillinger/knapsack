@@ -1,5 +1,3 @@
-import gql from 'graphql-tag';
-
 export interface KnapsackCustomPageSlice {
   id: string;
   /**

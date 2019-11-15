@@ -5,9 +5,10 @@ import * as log from '../cli/log';
 import { Patterns } from '../server/patterns';
 import { PageBuilder } from '../server/page-builder';
 import { Settings } from '../server/settings';
+import { Navs } from '../server/navs';
 import { CustomPages } from '../server/custom-pages';
 import { DesignTokens } from '../server/design-tokens';
-import { Docs } from '../server/docs';
+import { AssetSets } from '../server/asset-sets';
 import { KnapsackBrain, KnapsackConfig } from '../schemas/main-types';
 
 let isReady = false;
@@ -18,7 +19,8 @@ let brain: KnapsackBrain = {
   pageBuilderPages: null,
   customPages: null,
   tokens: null,
-  docs: null,
+  assetSets: null,
+  navs: null,
   config: null,
 };
 
@@ -32,24 +34,22 @@ export function bootstrap(
    */
   configPathBase: string = process.cwd(),
 ): KnapsackBrain {
+  const assetSets = new AssetSets({
+    dataDir: config.data,
+    publicDir: config.public,
+  });
+
   const patterns = new Patterns({
-    newPatternDir: config.newPatternDir,
-    patternPaths: config.patterns,
+    assetSets,
     dataDir: config.data,
     templateRenderers: config.templateRenderers,
-    assetSets: config.assetSets,
-    publicDir: config.public,
-    configPathBase,
   });
 
   config.templateRenderers.forEach(templateRenderer => {
     if (templateRenderer.init) {
       templateRenderer.init({
         config,
-        allPatterns: patterns.getPatterns(),
-        templatePaths: patterns
-          .getAllTemplatePaths()
-          .filter(t => templateRenderer.test(t)),
+        patterns,
       });
       log.info('Init done', null, `templateRenderer:${templateRenderer.id}`);
     }
@@ -59,8 +59,8 @@ export function bootstrap(
   const settings = new Settings({ dataDir: config.data });
   const pageBuilderPages = new PageBuilder({ dataDir: config.data });
   const customPages = new CustomPages({ dataDir: config.data });
+  const navs = new Navs({ dataDir: config.data });
   const tokens = new DesignTokens(config.designTokens);
-  const docs = new Docs({ docsDir: config.docsDir });
 
   brain = {
     patterns,
@@ -68,7 +68,8 @@ export function bootstrap(
     pageBuilderPages,
     customPages,
     tokens,
-    docs,
+    navs,
+    assetSets,
     config,
   };
 

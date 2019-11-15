@@ -1,15 +1,17 @@
 import React from 'react';
-import { Button, Select } from '@knapsack/design-system';
+import { Button, PatternStatusIcon, Select } from '@knapsack/design-system';
 import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
 import './template-header.scss';
+import { KnapsackTemplateStatus } from '../../../schemas/patterns';
 
 type Props = {
   title: string;
   assetSets?: { title: string; id: string }[];
   assetSetId?: string;
-  demoDatas?: object[];
   demoDataIndex?: number;
+  demoDatasLength?: number;
   isTitleShown?: boolean;
+  status?: KnapsackTemplateStatus;
   handleOpenNewTabClick: () => void;
   handleAssetSetChange: (newAssetSetId: string) => void;
   handleDemoNextClick: () => void;
@@ -21,7 +23,8 @@ export const TemplateHeader: React.FC<Props> = ({
   assetSets = [],
   assetSetId,
   demoDataIndex,
-  demoDatas = [],
+  demoDatasLength,
+  status,
   handleAssetSetChange,
   handleDemoNextClick,
   handleDemoPrevClick,
@@ -31,6 +34,12 @@ export const TemplateHeader: React.FC<Props> = ({
   return (
     <header className="ks-template-header template-view__flex-wrapper">
       {isTitleShown && <h3 className="ks-template-header__title">{title}</h3>}
+      {status && (
+        <h5 className="eyebrow" style={{ marginBottom: '0' }}>
+          Status: {status.title}
+          <PatternStatusIcon color={status.color} title={status.title} />
+        </h5>
+      )}
       <div className="ks-template-header__controls">
         <Button onClick={() => handleOpenNewTabClick()}>
           Open in new window
@@ -48,7 +57,7 @@ export const TemplateHeader: React.FC<Props> = ({
           />
         )}
 
-        {demoDatas.length > 1 && (
+        {demoDatasLength > 1 && (
           <div
             style={{
               display: 'flex',
@@ -71,7 +80,7 @@ export const TemplateHeader: React.FC<Props> = ({
                 <FaCaretLeft />
               </Button>
               <Button
-                disabled={demoDataIndex === demoDatas.length - 1}
+                disabled={demoDataIndex === demoDatasLength - 1}
                 onClick={() => handleDemoNextClick()}
               >
                 <FaCaretRight />

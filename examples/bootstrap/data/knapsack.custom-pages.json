@@ -45,27 +45,47 @@
   ],
   "pages": [
     {
-      "path": "/design-tokens/colors",
       "slices": [
         {
-          "id": "KYHJXi3eV",
+          "id": "Vwkz0p8y",
+          "blockId": "pattern-template-slice",
+          "data": {
+            "patternId": "button",
+            "templateId": "button-material-twig",
+            "options": {
+              "showReadme": true,
+              "showSchemaForm": true,
+              "demoSize": "l"
+            }
+          }
+        },
+        {
+          "id": "mq5Qcifm",
           "blockId": "design-token-slice",
           "data": {
             "tokens": {
               "category": "color",
-              "tags": [
-                "grayscale",
-                "core",
-                "message",
-                "color"
-              ]
+              "tags": []
             },
             "demo": {
               "id": "color-swatch"
             }
           }
+        },
+        {
+          "id": "B9oDankc",
+          "blockId": "markdown-slice",
+          "data": {
+            "md": "Some **markdown** here"
+          }
+        },
+        {
+          "id": "BPpVt9k2",
+          "blockId": "image-slice",
+          "data": {}
         }
-      ]
+      ],
+      "path": "/design-tokens/colors"
     },
     {
       "path": "/design-tokens/breakpoint",

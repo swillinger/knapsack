@@ -68,7 +68,10 @@ export function updateCustomSections(
 
 type Actions = UpdatePageAction | UpdateSectionsAction | UpdatePageTitleAction;
 
-export default function(state = initialState, action: Actions) {
+export default function(
+  state = initialState,
+  action: Actions,
+): KnapsackCustomPagesData {
   switch (action.type) {
     case UPDATE_PAGE:
       return produce(state, draft => {

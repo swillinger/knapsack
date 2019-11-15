@@ -10,7 +10,7 @@ This is the main config file.
 ```js
 const HtmlRenderer = require('@knapsack/renderer-html');
 const TwigRenderer = require('@knapsack/renderer-twig');
-const { theoKnapsackFormat } = require('@basalt/knapsack');
+const { theoKnapsackFormat } = require('@knapsack/app');
 const theo = require('theo');
 const { version } = require('./package.json');
 

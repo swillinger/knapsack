@@ -5,7 +5,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.7.1](https://github.com/basaltinc/knapsack/compare/v1.7.0...v1.7.1) (2019-10-26)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -24,7 +24,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.6.2](https://github.com/basaltinc/knapsack/compare/v1.6.1...v1.6.2) (2019-10-23)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -43,7 +43,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.5.4](https://github.com/basaltinc/knapsack/compare/v1.5.3...v1.5.4) (2019-10-16)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -85,7 +85,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [1.5.0](https://github.com/basaltinc/knapsack/compare/v1.4.3...v1.5.0) (2019-10-09)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -93,7 +93,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.4.3](https://github.com/basaltinc/knapsack/compare/v1.4.2...v1.4.3) (2019-10-09)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -101,7 +101,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.4.2](https://github.com/basaltinc/knapsack/compare/v1.4.1...v1.4.2) (2019-10-09)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -121,7 +121,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [1.3.0](https://github.com/basaltinc/knapsack/compare/v1.2.1...v1.3.0) (2019-06-21)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -230,7 +230,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.1.11](https://github.com/basaltinc/knapsack/compare/v1.1.10...v1.1.11) (2019-04-24)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -238,7 +238,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.1.10](https://github.com/basaltinc/knapsack/compare/v1.1.9...v1.1.10) (2019-04-24)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -280,7 +280,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.1.6](https://github.com/basaltinc/knapsack/compare/v1.1.5...v1.1.6) (2019-04-20)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -288,7 +288,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.1.5](https://github.com/basaltinc/knapsack/compare/v1.1.4...v1.1.5) (2019-04-19)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -296,7 +296,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.1.4](https://github.com/basaltinc/knapsack/compare/v1.1.3...v1.1.4) (2019-04-19)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -304,7 +304,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.1.3](https://github.com/basaltinc/knapsack/compare/v1.1.2...v1.1.3) (2019-04-19)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -312,7 +312,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.1.2](https://github.com/basaltinc/knapsack/compare/v1.1.1...v1.1.2) (2019-04-19)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -343,7 +343,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.0.5](https://github.com/basaltinc/knapsack/compare/v1.0.4...v1.0.5) (2019-04-17)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -405,7 +405,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### All package names have changed
 
-The **main** package `@basalt/bedrock` is now `@basalt/knapsack` - this is now the only package under `@basalt`, every other one is under `@knapsack`.
+The **main** package `@basalt/bedrock` is now `@knapsack/app` - this is now the only package under `@basalt`, every other one is under `@knapsack`.
 
 - `@basalt/bedrock-renderer-html` => `@knapsack/renderer-html`
 - `@basalt/bedrock-color-swatch` => `@knapsack/color-swatch`
@@ -430,7 +430,7 @@ The **main** package `@basalt/bedrock` is now `@basalt/knapsack` - this is now t
 @knapsack/spacing-swatch
 @knapsack/spinner
 @knapsack/tabbed-panel
-@basalt/knapsack
+@knapsack/app
 @knapsack/babel-config
 @knapsack/core
 create-knapsack
@@ -465,7 +465,7 @@ I look forward to using Knapsack to solve the Knapsack problem!
 
 # [0.45.0](https://github.com/basaltinc/knapsack/compare/v0.40.6...v0.45.0) (2019-04-08)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -473,7 +473,7 @@ I look forward to using Knapsack to solve the Knapsack problem!
 
 # [0.44.0](https://github.com/basaltinc/knapsack/compare/v0.40.6...v0.44.0) (2019-04-08)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -481,7 +481,7 @@ I look forward to using Knapsack to solve the Knapsack problem!
 
 # [0.43.0](https://github.com/basaltinc/knapsack/compare/v0.40.6...v0.43.0) (2019-04-08)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -489,7 +489,7 @@ I look forward to using Knapsack to solve the Knapsack problem!
 
 # [0.42.0](https://github.com/basaltinc/knapsack/compare/v0.40.6...v0.42.0) (2019-04-08)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -497,7 +497,7 @@ I look forward to using Knapsack to solve the Knapsack problem!
 
 # [0.41.0](https://github.com/basaltinc/knapsack/compare/v0.40.6...v0.41.0) (2019-04-08)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -553,7 +553,7 @@ I look forward to using Knapsack to solve the Knapsack problem!
 
 ## [0.39.2](https://github.com/basaltinc/knapsack/compare/v0.39.1...v0.39.2) (2019-03-27)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -561,7 +561,7 @@ I look forward to using Knapsack to solve the Knapsack problem!
 
 # [0.39.0](https://github.com/basaltinc/knapsack/compare/v0.38.3...v0.39.0) (2019-03-07)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -569,7 +569,7 @@ I look forward to using Knapsack to solve the Knapsack problem!
 
 ## [0.38.3](https://github.com/basaltinc/knapsack/compare/v0.38.2...v0.38.3) (2019-03-07)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -694,7 +694,7 @@ I look forward to using Knapsack to solve the Knapsack problem!
 
 # [0.34.0](https://github.com/basaltinc/knapsack/compare/v0.33.3...v0.34.0) (2019-02-17)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -702,7 +702,7 @@ I look forward to using Knapsack to solve the Knapsack problem!
 
 ## [0.33.3](https://github.com/basaltinc/knapsack/compare/v0.33.2...v0.33.3) (2019-02-16)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -710,7 +710,7 @@ I look forward to using Knapsack to solve the Knapsack problem!
 
 ## [0.33.2](https://github.com/basaltinc/knapsack/compare/v0.33.1...v0.33.2) (2019-02-16)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -718,7 +718,7 @@ I look forward to using Knapsack to solve the Knapsack problem!
 
 # [0.33.0](https://github.com/basaltinc/knapsack/compare/v0.32.5...v0.33.0) (2019-02-15)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -849,7 +849,7 @@ I look forward to using Knapsack to solve the Knapsack problem!
 
 ## [0.29.3](https://github.com/basaltinc/knapsack/compare/v0.29.2...v0.29.3) (2019-01-28)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -1135,7 +1135,7 @@ I look forward to using Knapsack to solve the Knapsack problem!
 
 ## [0.20.5](https://github.com/basaltinc/knapsack/compare/v0.20.4...v0.20.5) (2018-12-18)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -1248,7 +1248,7 @@ I look forward to using Knapsack to solve the Knapsack problem!
 
 ## [0.17.6](https://github.com/basaltinc/knapsack/compare/v0.17.5...v0.17.6) (2018-12-11)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -1267,7 +1267,7 @@ I look forward to using Knapsack to solve the Knapsack problem!
 
 ## [0.17.4](https://github.com/basaltinc/knapsack/compare/v0.17.3...v0.17.4) (2018-12-10)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -1343,7 +1343,7 @@ I look forward to using Knapsack to solve the Knapsack problem!
 
 ## [0.16.4](https://github.com/basaltinc/knapsack/compare/v0.16.3...v0.16.4) (2018-12-06)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -1366,7 +1366,7 @@ I look forward to using Knapsack to solve the Knapsack problem!
 
 ## [0.16.2](https://github.com/basaltinc/knapsack/compare/v0.16.1...v0.16.2) (2018-12-06)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -1374,7 +1374,7 @@ I look forward to using Knapsack to solve the Knapsack problem!
 
 ## [0.16.1](https://github.com/basaltinc/knapsack/compare/v0.16.1-alpha.6...v0.16.1) (2018-12-06)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -1474,7 +1474,7 @@ I look forward to using Knapsack to solve the Knapsack problem!
 
 ## [0.12.3](https://github.com/basaltinc/knapsack/compare/v0.12.2...v0.12.3) (2018-11-29)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -1537,7 +1537,7 @@ I look forward to using Knapsack to solve the Knapsack problem!
 
 ## [0.10.2](https://github.com/basaltinc/knapsack/compare/v0.10.1...v0.10.2) (2018-11-28)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -1635,7 +1635,7 @@ I look forward to using Knapsack to solve the Knapsack problem!
 
 ## [0.7.4](https://github.com/basaltinc/knapsack/compare/v0.7.3...v0.7.4) (2018-11-26)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app
 
 
 
@@ -1643,4 +1643,4 @@ I look forward to using Knapsack to solve the Knapsack problem!
 
 ## [0.7.3](https://github.com/basaltinc/knapsack/compare/v0.7.2...v0.7.3) (2018-11-26)
 
-**Note:** Version bump only for package @basalt/knapsack
+**Note:** Version bump only for package @knapsack/app

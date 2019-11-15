@@ -26,6 +26,7 @@ import PageWithSidebar from '../../layouts/page-with-sidebar';
 import TemplateView from './template-view';
 import './pattern-view-page.scss';
 import './shared/demo-grid-controls.scss';
+import { CustomSliceCollection } from '../custom-page/custom-slice-collection';
 
 type Props = {
   patternId: string;
@@ -35,31 +36,25 @@ type Props = {
 const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
   const history = useHistory();
   const permissions = useSelector(store => store.userState.role.permissions);
-  const { pattern, patternStatuses } = useSelector(store => {
-    const thePattern = store.patternsState.patterns.find(
-      p => p.id === patternId,
-    );
+  const pattern = useSelector(store => {
+    const thePattern = store.patternsState.patterns[patternId];
     if (!thePattern) {
       throw new Error(
         `The pattern id ${patternId} cannont be found in Redux Store`,
       );
     }
-    return {
-      pattern: thePattern,
-      patternStatuses: store.patternsState.patternStatuses,
-    };
+    return thePattern;
   });
 
   const showAllTemplates = templateId === 'all';
 
-  const { templates, meta } = pattern;
   const {
     title,
     description,
+    templates,
     type,
     demoSize: defaultDemoSize,
-    status: statusId,
-  } = meta;
+  } = pattern;
 
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [demoSize, setDemoSize] = useState<string>(defaultDemoSize);
@@ -70,22 +65,22 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
       showAllTemplates &&
       !!templates.find(
         t =>
-          t.schema &&
-          t.schema.properties &&
-          Object.keys(t.schema.properties).length > 0,
+          t.spec &&
+          t.spec.props &&
+          t.spec.props.properties &&
+          Object.keys(t.spec.props.properties).length > 0,
       )
     );
   } else {
     const currentlySelectedTemplate = templates.find(t => t.id === templateId);
 
     hasSchema = !!(
-      currentlySelectedTemplate.schema &&
-      currentlySelectedTemplate.schema.properties &&
-      Object.keys(currentlySelectedTemplate.schema.properties).length > 0
+      currentlySelectedTemplate.spec &&
+      currentlySelectedTemplate.spec.props &&
+      currentlySelectedTemplate.spec.props.properties &&
+      Object.keys(currentlySelectedTemplate.spec.props.properties).length > 0
     );
   }
-
-  const status = patternStatuses.find(p => p.id === statusId);
 
   return (
     <ErrorCatcher>
@@ -97,15 +92,6 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
                 {type}
               </h4>
               <h2 style={{ marginBottom: '0' }}>{title}</h2>
-              {status && (
-                <h5 className="eyebrow" style={{ marginBottom: '0' }}>
-                  Status: {status.title}
-                  <PatternStatusIcon
-                    color={status.color}
-                    title={status.title}
-                  />
-                </h5>
-              )}
               <p style={{ marginTop: '1rem' }}>{description}</p>
             </div>
             <div>
@@ -139,19 +125,13 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
               <div className="pattern-view-demo-grid-controls">
                 <Button
                   type="button"
-                  className="button button--size-small"
+                  size="s"
                   onClick={() =>
                     setIsFullScreen(prevIsFullScreen => !prevIsFullScreen)
                   }
                 >
                   {isFullScreen ? 'Show Controls' : 'Fullscreen'}
                 </Button>
-
-                {permissions.includes('write') && (
-                  <Link to={`${BASE_PATHS.PATTERN}/${patternId}/edit`}>
-                    <Button>Edit Meta</Button>
-                  </Link>
-                )}
               </div>
               <div className="pattern-view-demo-grid-controls">
                 {templates.length > 1 && (
@@ -205,6 +185,12 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
                 <br />
               </div>
             ))}
+
+          <CustomSliceCollection
+            userCanSave
+            handleSave={() => {}}
+            initialSlices={[]}
+          />
 
           {/* {dosAndDonts.map(item => ( */}
           {/* <DosAndDonts */}

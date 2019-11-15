@@ -1,4 +1,4 @@
-import { log } from '@basalt/knapsack';
+import { log } from '@knapsack/app';
 import fs from 'fs-extra';
 import path from 'path';
 

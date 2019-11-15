@@ -15,8 +15,7 @@
  with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Button, SchemaForm, Spinner } from '@knapsack/design-system';
+import { Button, SchemaForm } from '@knapsack/design-system';
 import arrayMove from 'array-move';
 import shortid from 'shortid';
 import knapsackSlices from './slices';
@@ -148,14 +147,13 @@ export class CustomSliceCollection extends React.Component<Props, State> {
           }}
         >
           {userCanSave && (
-            <div>
+            <div style={{ marginRight: '.5rem' }}>
               <Button
                 onClick={() =>
                   this.setState(prevState => ({
                     isEditing: !prevState.isEditing,
                   }))
                 }
-                style={{ marginRight: '.5rem' }}
               >
                 Toggle Edit Mode
               </Button>

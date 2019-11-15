@@ -16,13 +16,18 @@ import patternsState from './patterns';
 import userState from './user';
 import metaState from './meta';
 import ui from './ui';
+import assetSetsState from './asset-sets';
 import customPagesState from './custom-pages';
+import navsState from './navs';
 
 // export out all action creator functions
 export * from './settings';
 export * from './ui';
 export * from './meta';
 export * from './custom-pages';
+export * from './patterns';
+export * from './navs';
+// export * from './asset-sets';
 
 export { useDispatch, shallowEqual } from 'react-redux';
 
@@ -32,6 +37,8 @@ const rootReducer = combineReducers({
   userState,
   metaState,
   customPagesState,
+  assetSetsState,
+  navsState,
   ui,
 });
 

@@ -17,6 +17,10 @@
 import qs from 'qs';
 import { DocumentNode } from 'graphql';
 import { apiUrlBase, graphqlBase } from '../lib/constants';
+import {
+  KnapsackTemplateData,
+  KnapsackTemplateDemo,
+} from '../schemas/patterns';
 
 /**
  * GraphQL Query Object to String
@@ -134,7 +138,8 @@ export async function getTemplateUrl({
   assetSetId,
   wrapHtml,
   isInIframe,
-  data,
+  // data,
+  demo,
   extraParams = {},
 }: {
   patternId: string;
@@ -142,10 +147,11 @@ export async function getTemplateUrl({
   assetSetId?: string;
   wrapHtml?: boolean;
   isInIframe?: boolean;
-  data?: object;
+  // data?: KnapsackTemplateData;
+  demo: KnapsackTemplateDemo;
   extraParams?: object;
 }): Promise<string> {
-  const dataId = await saveData(data);
+  const dataId = await saveData(demo);
   const query: Record<string, any> = {
     patternId,
     ...extraParams,

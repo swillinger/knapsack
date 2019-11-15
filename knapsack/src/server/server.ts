@@ -19,7 +19,7 @@ import { ApolloServer, gql } from 'apollo-server-express';
 import { makeExecutableSchema, mergeSchemas } from 'graphql-tools';
 import WebSocket from 'ws';
 import bodyParser from 'body-parser';
-import { dirname, join } from 'path';
+import { join } from 'path';
 import * as log from '../cli/log';
 import { EVENTS, knapsackEvents } from './events';
 import { getApiRoutes } from './rest-api';
@@ -31,9 +31,7 @@ import {
   pageBuilderPagesResolvers,
   pageBuilderPagesTypeDef,
 } from './page-builder';
-import { docsResolvers, docsTypeDef } from './docs';
 import { designTokensResolvers, designTokensTypeDef } from './design-tokens';
-import { patternsResolvers, patternsTypeDef } from './patterns';
 import { getBrain } from '../lib/bootstrap';
 import { GraphQlContext, KnapsackMeta } from '../schemas/misc';
 import { WS_EVENTS, WebSocketMessage } from '../schemas/web-sockets';
@@ -45,8 +43,9 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
     pageBuilderPages,
     settings,
     tokens,
-    docs,
+    navs,
     config,
+    assetSets,
   } = getBrain();
   const port = process.env.KNAPSACK_PORT || 3999;
   const knapsackDistDir = join(__dirname, '../../dist/client');
@@ -81,17 +80,13 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
           typeDefs: designTokensTypeDef,
           resolvers: designTokensResolvers,
         }),
-        makeExecutableSchema({
-          typeDefs: patternsTypeDef,
-          resolvers: patternsResolvers,
-        }),
+        // makeExecutableSchema({
+        //   typeDefs: patternsTypeDef,
+        //   resolvers: patternsResolvers,
+        // }),
         makeExecutableSchema({
           typeDefs: metaTypeDef,
           resolvers: metaResolvers,
-        }),
-        makeExecutableSchema({
-          typeDefs: docsTypeDef,
-          resolvers: docsResolvers,
         }),
       ],
     }),
@@ -106,7 +101,8 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
         pageBuilderPages,
         settings,
         tokens,
-        docs,
+        assetSets,
+        navs,
         patterns,
         canWrite,
         customPages,
@@ -156,31 +152,38 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
   type PartialAppState = Partial<AppState>;
 
   async function getDataStore(): Promise<PartialAppState> {
-    const initialState = {
+    return {
       settingsState: {
-        settings: settings.getData(),
+        settings: settings.getConfig(),
       },
       patternsState: {
-        patterns: patterns.getPatterns(),
-        patternStatuses: patterns.getPatternStatuses(),
-        patternTypes: patterns.getPatternTypes(),
+        patterns: patterns.byId,
+        templateStatuses: patterns.getTemplateStatuses(),
       },
-      customPagesState: customPages.getData(),
+      customPagesState: customPages.getConfig(),
+      assetSetsState: assetSets.getData(),
+      navsState: navs.getConfig(),
     };
-
-    return initialState;
   }
 
   async function handleNewDataStore(data: AppState) {
-    await Promise.all([
-      settings.write(data.settingsState.settings),
-      customPages.write(data.customPagesState),
-    ]);
-
-    return {
-      ok: true,
-      message: 'We got it!',
-    };
+    try {
+      await Promise.all([
+        settings.write(data.settingsState.settings),
+        customPages.write(data.customPagesState),
+        navs.write(data.navsState),
+      ]);
+      return {
+        ok: true,
+        message: 'We got it!',
+      };
+    } catch (e) {
+      console.error('handleNewDataStore', e);
+      return {
+        ok: false,
+        message: `Could not handleNewDataStore. ${e.message}`,
+      };
+    }
   }
 
   app

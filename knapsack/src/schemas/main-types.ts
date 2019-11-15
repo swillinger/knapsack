@@ -8,6 +8,7 @@ export interface KnapsackBrain {
   pageBuilderPages: import('../server/page-builder').PageBuilder;
   customPages: import('../server/custom-pages').CustomPages;
   tokens: import('../server/design-tokens').DesignTokens;
-  docs: import('../server/docs').Docs;
+  assetSets: import('../server/asset-sets').AssetSets;
+  navs: import('../server/navs').Navs;
   config: KnapsackConfig;
 }

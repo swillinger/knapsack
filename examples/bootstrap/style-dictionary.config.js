@@ -1,4 +1,4 @@
-const { styleDictionaryKnapsackFormat } = require('@basalt/knapsack');
+const { styleDictionaryKnapsackFormat } = require('@knapsack/app');
 const StyleDictionary = require('style-dictionary');
 const template = require('lodash.template');
 const { readFileSync } = require('fs');

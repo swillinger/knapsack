@@ -1,6 +1,7 @@
 import express from 'express';
 import { join } from 'path';
 import { apiUrlBase } from '../lib/constants';
+import { createDemoUrl } from './server-utils';
 
 const router = express.Router();
 
@@ -65,7 +66,26 @@ export function setupRoutes({
 
   // This page is mainly so IE can get a list of links to view the individual templates outside of the system
   router.route('/demo-urls').get((req, res) => {
-    const patternDemos = patterns.getPatternsDemoUrls();
+    const patternDemos = patterns.getPatterns().map(pattern => {
+      return {
+        id: pattern.id,
+        title: pattern.title,
+        templates: pattern.templates.map(template => {
+          return {
+            id: template.id,
+            title: template.title,
+            demoUrls: [
+              createDemoUrl({
+                patternId: pattern.id,
+                templateId: template.id,
+                wrapHtml: true,
+                isInIframe: false,
+              }),
+            ],
+          };
+        }),
+      };
+    });
 
     /* eslint-disable prettier/prettier */
     // disabling prettier so it's possible to keep indenting semi-similar to how it'd be done with templates, please try and keep it tidy and consistent!

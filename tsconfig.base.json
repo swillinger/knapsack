@@ -23,7 +23,7 @@
     "noImplicitAny": false,
     "baseUrl": "./",
     "paths": {
-      "@basalt/knapsack": ["./knapsack/src"],
+      "@knapsack/app": ["./knapsack/src"],
       "@knapsack/design-system": ["./design-system/src"],
       "@knapsack/*": [
         "packages/*/src",

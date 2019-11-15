@@ -1,5 +1,5 @@
-import { KnapsackRendererBase } from '@basalt/knapsack';
-import { KnapsackTemplateRenderer } from '@basalt/knapsack/src/schemas/knapsack-config';
+import { KnapsackRendererBase } from '@knapsack/app';
+import { KnapsackTemplateRenderer } from '@knapsack/app/src/schemas/knapsack-config';
 import fs from 'fs-extra';
 
 /* eslint-disable class-methods-use-this */
@@ -10,6 +10,7 @@ class KnapsackHtmlRenderer extends KnapsackRendererBase
     super({
       id: 'html',
       extension: '.html',
+      language: 'html',
     });
   }
 

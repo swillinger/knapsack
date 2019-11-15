@@ -1,13 +1,13 @@
-import { KnapsackRendererWebpackBase } from '@basalt/knapsack';
+import { KnapsackRendererWebpackBase } from '@knapsack/app';
 import {
   KnapsackTemplateRenderer,
   KnapsackConfig,
   KnapsackTemplateRenderResults,
-} from '@basalt/knapsack/src/schemas/knapsack-config';
+} from '@knapsack/app/src/schemas/knapsack-config';
 import {
   KnapsackPattern,
   KnapsackPatternTemplate,
-} from '@basalt/knapsack/src/schemas/patterns';
+} from '@knapsack/app/src/schemas/patterns';
 import camelCase from 'camelcase';
 import { copyReactAssets } from './utils';
 
@@ -34,6 +34,7 @@ export class KnapsackReactRenderer extends KnapsackRendererWebpackBase
     super({
       id: 'react',
       extension: '.jsx',
+      language: 'jsx',
       webpackConfig,
       webpack,
     });

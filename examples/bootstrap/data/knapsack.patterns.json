@@ -1,23 +1,5 @@
 {
-  "patternTypes": [
-    {
-      "id": "atoms",
-      "title": "Atoms"
-    },
-    {
-      "id": "molecules",
-      "title": "Molecules"
-    },
-    {
-      "id": "organisms",
-      "title": "Organisms"
-    },
-    {
-      "id": "layouts",
-      "title": "Layouts"
-    }
-  ],
-  "patternStatuses": [
+  "templateStatuses": [
     {
       "id": "draft",
       "title": "Draft",

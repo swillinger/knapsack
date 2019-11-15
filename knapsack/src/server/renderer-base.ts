@@ -23,21 +23,17 @@ export class KnapsackRendererBase implements KnapsackTemplateRendererBase {
   constructor({
     id,
     extension,
-    language = '',
+    language,
   }: {
     id: string;
     extension: string;
-    language?: string;
+    language: string;
   }) {
     this.id = id;
     this.extension = extension;
     this.language = language;
     this.outputDirName = `knapsack-renderer-${this.id}`;
     this.logPrefix = `templateRenderer:${this.id}`;
-  }
-
-  test(theTemplatePath) {
-    return theTemplatePath.endsWith(this.extension);
   }
 
   getHead({

@@ -22,7 +22,7 @@ import {
   setStatus,
   updateCustomSections,
 } from '../../store';
-import schema from '../../../schemas/json/schemaKnapsackCustomPageSettingsForm';
+import schema from '../../../json-schemas/schemaKnapsackCustomPageSettingsForm';
 
 export const CustomPagesSettings: React.FC = () => {
   const sections = useSelector(store => store.customPagesState.sections);

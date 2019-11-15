@@ -71,9 +71,9 @@ export function validateSchemaAndAssignDefaults<T>(
  * Validate Data against Schema
  * @link https://github.com/epoberezkin/ajv
  */
-export function validateDataAgainstSchema(
+export function validateDataAgainstSchema<T>(
   schema: {},
-  data: object,
+  data: T,
 ): {
   ok: boolean;
   message: string;

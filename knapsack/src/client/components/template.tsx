@@ -26,19 +26,24 @@ import {
   WebSocketMessage,
 } from '../../schemas/web-sockets';
 import './template.scss';
+import {
+  KnapsackTemplateData,
+  KnapsackTemplateDemo,
+} from '../../schemas/patterns';
 
 type Props = {
   patternId: string;
   templateId: string;
   assetSetId?: string;
-  data?: object;
+  // data?: KnapsackTemplateData;
+  demo: KnapsackTemplateDemo;
   isResizable?: boolean;
 };
 
 const Template: React.FC<Props> = ({
   templateId,
   patternId,
-  data = {},
+  demo,
   assetSetId,
   isResizable = true,
 }: Props) => {
@@ -137,7 +142,7 @@ const Template: React.FC<Props> = ({
     getTemplateUrl({
       patternId,
       templateId,
-      data,
+      demo,
       assetSetId,
       isInIframe: true,
       wrapHtml: true,
@@ -145,7 +150,7 @@ const Template: React.FC<Props> = ({
     })
       .then(setHtmlUrl)
       .catch(console.log.bind(console));
-  }, [patternId, templateId, data, assetSetId, id]);
+  }, [patternId, templateId, demo, assetSetId, id]);
 
   const content = (
     <iframe

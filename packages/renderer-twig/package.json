@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "BABEL_ENV=cli babel --config-file @knapsack/babel-config --extensions .js,.ts --out-dir dist/ src/",
+    "build": "BABEL_ENV=cli babel --config-file @knapsack/babel-config --extensions .js,.ts --copy-files --out-dir dist/ src/",
     "clean": "rm -rf dist tsconfig.tsbuildinfo",
     "start": "yarn build --watch"
   },
@@ -13,7 +13,7 @@
     "@basalt/twig-renderer": "^0.12.2"
   },
   "peerDependencies": {
-    "@basalt/knapsack": "^1.0.0"
+    "@knapsack/app": "^1.0.0"
   },
   "author": "Basalt (https://basalt.io/)",
   "publishConfig": {

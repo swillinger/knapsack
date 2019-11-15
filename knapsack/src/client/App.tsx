@@ -25,6 +25,7 @@ import { plugins } from '@knapsack/core';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import 'react-sortable-tree/style.css';
 import { useSelector } from './store';
 import { KnapsackContextProvider } from './context';
 import ErrorCatcher from './utils/error-catcher';
@@ -37,7 +38,6 @@ import {
   LoadablePageBuilder,
   LoadableSettingsPage,
   LoadableCustomPage,
-  LoadablePatternEdit,
   LoadableHome,
   LoadableDocPage,
   LoadableChangelogPage,
@@ -66,17 +66,7 @@ export const App: React.FC = () => {
   const role = useSelector(s => s.userState.role);
   const patterns = useSelector(state => {
     // grabbing just what we need in here so the whole App doesn't re-render any time other data inside `patterns` changes
-    return state.patternsState.patterns.map(
-      ({ id, meta: patternMeta, templates }) => ({
-        id,
-        meta: {
-          showAllTemplates: patternMeta.showAllTemplates,
-        },
-        templates: templates.map(template => ({
-          id: template.id,
-        })),
-      }),
-    );
+    return state.patternsState.patterns;
   });
 
   const knapsackContext = {
@@ -117,24 +107,13 @@ export const App: React.FC = () => {
                     <LoadablePageBuilderLandingPage {...props} />
                   )}
                 />
+
                 <Route
                   path={BASE_PATHS.PATTERNS}
                   exact
-                  render={() => <Redirect to={`${BASE_PATHS.PATTERNS}/all`} />}
+                  component={LoadablePatternView}
                 />
-                <Route
-                  path={`${BASE_PATHS.PATTERNS}/all`}
-                  exact
-                  render={props => (
-                    <LoadablePatternsPage type="all" {...props} />
-                  )}
-                />
-                <Route
-                  path={`${BASE_PATHS.PATTERNS}/:type`}
-                  render={({ match, ...props }) => (
-                    <LoadablePatternsPage type={match.params.type} {...props} />
-                  )}
-                />
+
                 <Route
                   path={`${BASE_PATHS.DOCS}/:id`}
                   render={({ match }) => (
@@ -159,26 +138,12 @@ export const App: React.FC = () => {
                   />
                 )}
 
-                {role.permissions.includes('write') && (
-                  <Route
-                    path={`${BASE_PATHS.PATTERN}/:id/edit`}
-                    render={({ match, ...rest }) => (
-                      <LoadablePatternEdit
-                        {...rest}
-                        id={match.params.id}
-                        key={match.params.id}
-                      />
-                    )}
-                  />
-                )}
 
                 <Route
                   path={`${BASE_PATHS.PATTERN}/:id`}
                   exact
                   render={({ match }) => {
-                    const pattern = patterns.find(
-                      p => match.params.id === p.id,
-                    );
+                    const pattern = patterns[match.params.id];
                     if (!pattern) {
                       return (
                         <LoadableBadRoute
@@ -201,7 +166,7 @@ export const App: React.FC = () => {
                     }
 
                     if (pattern && firstTemplate) {
-                      const templateId = pattern.meta.showAllTemplates
+                      const templateId = pattern.showAllTemplates
                         ? 'all'
                         : firstTemplate.id;
                       return (
@@ -216,11 +181,7 @@ export const App: React.FC = () => {
                 <Route
                   path={`${BASE_PATHS.PATTERN}/:id/:templateId`}
                   render={({ match, ...rest }) => {
-                    if (
-                      patterns
-                        .map(pattern => pattern.id)
-                        .find(item => match.params.id === item)
-                    ) {
+                    if (patterns[match.params.id]) {
                       return (
                         <LoadablePatternView
                           patternId={match.params.id}

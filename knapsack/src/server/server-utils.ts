@@ -17,6 +17,7 @@
 import fs from 'fs-extra';
 import os from 'os';
 import qs from 'qs';
+import yaml from 'js-yaml';
 import * as log from '../cli/log';
 
 /**
@@ -36,6 +37,26 @@ export function readJson(fileName: string): Promise<{ [k: string]: any }> {
 
 export function readJsonSync(fileName: string): object {
   return JSON.parse(fs.readFileSync(fileName, 'utf8'));
+}
+
+export function writeYaml(fileName: string, object: object): Promise<void> {
+  return fs.writeFile(fileName, yaml.safeDump(object, { noRefs: true }));
+}
+
+export function readYaml(fileName: string): Promise<{ [k: string]: any }> {
+  return fs
+    .readFile(fileName, 'utf8')
+    .then(file => yaml.safeLoad(file, { filename: fileName }));
+}
+
+export function readYamlSync(fileName: string): object {
+  return yaml.safeLoad(fs.readFileSync(fileName, 'utf8'), {
+    filename: fileName,
+  });
+}
+
+export function isRemoteUrl(url: string): boolean {
+  return url.startsWith('http') || url.startsWith('//');
 }
 
 /**
@@ -132,7 +153,7 @@ export function createDemoUrl({
 }: {
   patternId: string;
   templateId: string;
-  assetSetId: string;
+  assetSetId?: string;
   isInIframe?: boolean;
   wrapHtml?: boolean;
   data?: object;

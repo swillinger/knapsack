@@ -1,0 +1,12 @@
+<% if (before) { -%>
+<%- before %>
+<% } %>
+{% include "<%= templateName %>" with {
+<%_ props.forEach(prop => { -%>
+  <%= prop.key %>: <%- prop.value -%>,
+<%_ }); -%>
+} only %}
+<% if (after) { -%>
+
+<%- after -%>
+<% } -%>

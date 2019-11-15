@@ -1,0 +1,185 @@
+{
+  "id": "button",
+  "title": "Button",
+  "description": "Use Bootstrap’s custom button styles for actions in forms, dialogs, and more with support for multiple sizes, states, and more.",
+  "demoSize": "m",
+  "showAllTemplates": false,
+  "templates": [
+    {
+      "title": "Bootstrap - Twig",
+      "id": "bootstrap-twig",
+      "templateLanguageId": "twig",
+      "alias": "@components/button.twig",
+      "path": "../assets/patterns/button/button.twig",
+      "statusId": "ready",
+      "assetSetIds": ["bootstrap"],
+      "spec": {
+        "props": {
+          "$schema": "http://json-schema.org/draft-07/schema",
+          "type": "object",
+          "title": "Button",
+          "description": "A Button for clicking!",
+          "required": ["text", "url"],
+          "properties": {
+            "text": {
+              "type": "string",
+              "title": "Text"
+            },
+            "url": {
+              "type": "string",
+              "title": "Url"
+            },
+            "style": {
+              "type": "string",
+              "title": "Style",
+              "default": "primary",
+              "enum": [
+                "primary",
+                "secondary",
+                "success",
+                "danger",
+                "warning",
+                "info",
+                "light",
+                "dark",
+                "link"
+              ],
+              "enumNames": [
+                "Primary",
+                "Secondary",
+                "Success",
+                "Danger",
+                "Warning",
+                "Info",
+                "Light",
+                "Dark",
+                "Link"
+              ]
+            },
+            "size": {
+              "type": "string",
+              "title": "Size",
+              "default": "md",
+              "enum": ["sm", "md", "lg"],
+              "enumNames": ["Small", "Default", "Large"]
+            },
+            "disabled": {
+              "type": "boolean",
+              "title": "Disabled",
+              "default": false
+            },
+            "outlined": {
+              "type": "boolean",
+              "title": "Outlined",
+              "default": false
+            }
+          }
+        }
+      },
+      "demosById": {
+        "primary": {
+          "id": "primary",
+          "type": "data",
+          "title": "Primary style",
+          "data": {
+            "props": {
+              "text": "The Button xII",
+              "url": "#",
+              "style": "primary"
+            }
+          }
+        },
+        "template-test": {
+          "id": "template-test",
+          "title": "template test",
+          "type": "template",
+          "templateInfo": {
+            "alias": "@components/button-template-demo.twig"
+          }
+        },
+        "secondary": {
+          "id": "secondary",
+          "type": "data",
+          "title": "Secondary style",
+          "data": {
+            "props": {
+              "text": "Button",
+              "url": "#",
+              "style": "secondary"
+            }
+          }
+        }
+      },
+      "demos": ["primary", "secondary", "template-test"]
+    },
+    {
+      "title": "Material - Twig",
+      "id": "material-twig",
+      "templateLanguageId": "twig",
+      "alias": "@components/button-material.twig",
+      "path": "../assets/patterns/button/button-material.twig",
+      "statusId": "draft",
+      "assetSetIds": ["material"],
+      "spec": {
+        "props": {
+          "$schema": "http://json-schema.org/draft-07/schema",
+          "type": "object",
+          "title": "Button",
+          "description": "A Button for clicking!",
+          "required": ["text", "url", "variant"],
+          "properties": {
+            "text": {
+              "type": "string",
+              "title": "Text"
+            },
+            "url": {
+              "type": "string",
+              "title": "Url"
+            },
+            "variant": {
+              "type": "string",
+              "title": "Variant",
+              "default": "raised",
+              "enum": ["outlined", "text", "raised", "unelevated"],
+              "enumNames": ["Outlined", "Text", "Raised", "Unelevated"]
+            },
+            "dense": {
+              "type": "boolean",
+              "title": "Dense",
+              "default": false
+            },
+            "disabled": {
+              "type": "boolean",
+              "title": "Disabled",
+              "default": false
+            }
+          }
+        }
+      },
+      "demosById": {
+        "a": {
+          "id": "a",
+          "type": "data",
+          "title": "Raised Version",
+          "data": {
+            "props": {
+              "text": "Button",
+              "url": "#",
+              "variant": "raised"
+            }
+          }
+        }
+      },
+      "demos": ["a"]
+    },
+    {
+      "title": "Bootstrap - HTML",
+      "id": "bootstrap-html",
+      "templateLanguageId": "html",
+      "path": "../assets/patterns/button/button.html",
+      "statusId": "inProgress",
+      "assetSetIds": ["bootstrap"],
+      "demos": []
+    }
+  ]
+}

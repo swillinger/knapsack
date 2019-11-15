@@ -25,13 +25,13 @@ import {
   BASE_PATHS,
   // PERMISSIONS
 } from '../lib/constants';
-import { enableUiSettings } from '../lib/features';
 import { getRole } from './auth';
 import { KnapsackBrain, KnapsackConfig } from '../schemas/main-types';
 import { KnapsackMeta } from '../schemas/misc';
+import { KnapsackTemplateDemo } from '../schemas/patterns';
 
 const router = express.Router();
-const memDb = new MemDb();
+const memDb = new MemDb<KnapsackTemplateDemo>();
 
 // https://marked.js.org/#/USING_ADVANCED.md
 md.setOptions({
@@ -96,39 +96,37 @@ export function getApiRoutes({
       const {
         patternId,
         templateId,
-        data: dataString,
+        // data: dataString,
         isInIframe: isInIframeString = 'false',
         wrapHtml: wrapHtmlString = 'true',
         assetSetId,
-        demoDataIndex,
+        // demoDataId,
         dataId,
       } = query;
 
-      const dataApproaches = [dataString, demoDataIndex, dataId].filter(Boolean)
-        .length;
-      if (dataApproaches > 1) {
-        const msg = `Error: trying to render using multiple data sources, choose one.`;
-        log.error(msg, { query });
-        res.send(`<p>${msg}</p>`);
-        return;
-      }
+      // const dataApproaches = [dataString, demoDataId, dataId].filter(Boolean)
+      //   .length;
+      // if (dataApproaches > 1) {
+      //   const msg = `Error: trying to render using multiple data sources, choose one.`;
+      //   log.error(msg, { query });
+      //   res.send(`<p>${msg}</p>`);
+      //   return;
+      // }
 
-      let data = dataString ? qsParse(dataString) : dataString;
-      if (dataId) {
-        data = memDb.getData(dataId);
-      }
+      // let data: KnapsackTemplateData = dataString ? qsParse(dataString) : dataString;
+      const demo = memDb.getData(dataId);
       const isInIframe = isInIframeString === 'true';
       const wrapHtml = wrapHtmlString === 'true';
 
       const results = await patternManifest.render({
         patternId,
         templateId,
-        data,
+        demo,
         wrapHtml,
         isInIframe,
         websocketsPort: meta.websocketsPort,
         assetSetId,
-        demoDataIndex: demoDataIndex ? parseInt(demoDataIndex, 10) : null,
+        // demoDataId,
       });
 
       if (results.ok) {
@@ -137,7 +135,7 @@ export function getApiRoutes({
         log.error(`Error rendering template`, {
           patternId,
           templateId,
-          data,
+          demo,
           wrapHtml,
           isInIframe,
           assetSetId,
@@ -160,23 +158,6 @@ export function getApiRoutes({
     registerEndpoint(url2);
     router.get(url2, async (req, res) => {
       const results = await patternManifest.getPatterns();
-      res.send(results);
-    });
-
-    const url3 = urlJoin(baseUrl, 'pattern-meta/:id');
-    registerEndpoint(url3);
-    router.get(url3, async (req, res) => {
-      const results = await patternManifest.getPatternMeta(req.params.id);
-      res.send(results);
-    });
-
-    const url4 = urlJoin(baseUrl, 'pattern-meta/:id');
-    registerEndpoint(url4, 'POST');
-    router.post(url4, async (req, res) => {
-      const results = await patternManifest.setPatternMeta(
-        req.params.id,
-        req.body,
-      );
       res.send(results);
     });
   }
@@ -231,7 +212,7 @@ export function getApiRoutes({
   const url3 = urlJoin(baseUrl, 'settings');
   registerEndpoint(url3);
   router.get(url3, async (req, res) => {
-    const settings = settingsStore.getData();
+    const settings = settingsStore.getConfig();
     res.send(settings);
   });
 

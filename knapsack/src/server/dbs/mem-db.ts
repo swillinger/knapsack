@@ -3,8 +3,16 @@ import md5 from 'md5';
 /**
  * Creates an in-memory database for temporary storage
  */
-export class MemDb {
-  db: Record<any, any>;
+export class MemDb<T> {
+  db: Map<
+    any,
+    {
+      accessed: number;
+      dateCreated: number;
+      dateLastAccessed: number;
+      data: T;
+    }
+  >;
 
   constructor() {
     this.db = new Map();
@@ -14,7 +22,7 @@ export class MemDb {
    * @param data - data to store, must be serializable
    * @returns md5 hash used to retrieve data later
    */
-  addData(data: object): string {
+  addData(data: T): string {
     const hash = md5(JSON.stringify(data));
     if (this.db.has(hash)) return hash;
     const time = new Date().getTime();
@@ -31,7 +39,7 @@ export class MemDb {
    * @param hash - md5 hash of data to retrieve
    * @returns if data is found, then it's returned, if not then `null`
    */
-  getData(hash: string): null | object {
+  getData(hash: string): null | T {
     const item = this.db.get(hash);
     if (!item) return null;
     this.db.set(hash, {

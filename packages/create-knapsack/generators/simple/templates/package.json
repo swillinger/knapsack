@@ -13,7 +13,7 @@
     "test": "knapsack test"
   },
   "dependencies": {
-    "@basalt/knapsack": "^<%= knapsackVersion %>",
+    "@knapsack/app": "^<%= knapsackVersion %>",
     "@knapsack/renderer-html": "^<%= knapsackVersion %>",
     "@knapsack/renderer-twig": "^<%= knapsackVersion %>",
     "@basalt/demo-data": "^0.5.1",

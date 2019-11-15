@@ -22,7 +22,7 @@ import {
   useDispatch,
   setStatus,
 } from '../../store';
-import schema from '../../../schemas/json/schemaKnapsackSettings';
+import schema from '../../../json-schemas/schemaKnapsackSettings';
 
 export const SiteSettings: React.FC = () => {
   const settings = useSelector(store => store.settingsState.settings);

@@ -38,6 +38,7 @@ type DemoType = 'data' | 'template';
 interface DemoBase {
   id: string;
   title?: string;
+  description?: string;
   type: DemoType;
 }
 
@@ -139,16 +140,18 @@ export interface KnapsackPattern {
   id: string;
   title: string;
   description?: string;
+  templates: KnapsackPatternTemplate[];
   demoSize?: DemoSize;
   /**
-   * @todo remove once patternTypes is implemented
+   * Ideal widths to demo, useful for highlighting significant responsive layout changes
    */
-  type?: string;
+  demoWidths?: {
+    width: number;
+  }[];
   /**
    * Show all templates in a list on one page
    */
   showAllTemplates?: boolean;
-  templates: KnapsackPatternTemplate[];
   // designs?: PatternDesignSlice['id'][];
 }
 

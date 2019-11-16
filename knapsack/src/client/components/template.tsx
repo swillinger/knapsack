@@ -31,7 +31,7 @@ import {
   KnapsackTemplateDemo,
 } from '../../schemas/patterns';
 
-type Props = {
+export type Props = {
   patternId: string;
   templateId: string;
   assetSetId?: string;

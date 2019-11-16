@@ -12,6 +12,10 @@ import { fileExistsOrExit, isRemoteUrl } from './server-utils';
 import * as log from '../cli/log';
 import { EVENTS, knapsackEvents } from './events';
 
+/**
+ * Collections of CSS & JS assets
+ * @todo use Express to serve it from wherever it is on file system and not just inside the `config.public` dir
+ */
 export class AssetSets extends FileDb2<KnapsackAssetSetsConfig> {
   data: KnapsackAssetSetsData;
 

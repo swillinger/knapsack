@@ -111,7 +111,7 @@ export const App: React.FC = () => {
                 <Route
                   path={BASE_PATHS.PATTERNS}
                   exact
-                  component={LoadablePatternView}
+                  component={LoadablePatternsPage}
                 />
 
                 <Route

@@ -3,6 +3,7 @@
   "title": "Card",
   "description": "Use Bootstrap’s custom card styles as a flexible and extensible content container. It includes options for headers and footers, a wide variety of content, contextual background colors, and powerful display options.",
   "demoSize": "m",
+  "demoWidths": [{ "width": 320 }],
   "showAllTemplates": false,
   "templates": [
     {
@@ -127,16 +128,11 @@
           "type": "data",
           "data": {
             "slots": {
-              "x": [
+              "footerSlot": [
                 {
                   "patternId": "button",
                   "templateId": "bootstrap-twig",
                   "demoId": "primary"
-                },
-                {
-                  "patternId": "button",
-                  "templateId": "bootstrap-twig",
-                  "demoId": "template-test"
                 }
               ]
             },
@@ -144,12 +140,7 @@
               "cardTitle": "Card Title",
               "cardBody": "Some quick example text to build on the card title and make up the bulk of the card's content.",
               "imgSrc": "/images/demoImg2.jpg",
-              "imgAlt": "Nature Picture",
-              "button": {
-                "text": "Go somewhere",
-                "url": "#",
-                "style": "primary"
-              }
+              "imgAlt": "Nature Picture"
             }
           }
         },

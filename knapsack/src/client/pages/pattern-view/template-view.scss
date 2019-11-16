@@ -67,3 +67,28 @@
     }
   }
 }
+
+.template-view__demo-list {
+  border: solid 1px var(--c-gray-dark);
+  padding: var(--size-m);
+  margin-bottom: var(--size-l);
+}
+
+.template-view__demo-items {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.template-view__demo-item {
+  margin-right: var(--size-m);
+  margin-bottom: var(--size-m);
+  border: solid 1px var(--c-gray-light);
+  &--active {
+    border-color: var(--c-active);
+  }
+
+  figcaption {
+    border-bottom: solid 1px;
+  }
+}

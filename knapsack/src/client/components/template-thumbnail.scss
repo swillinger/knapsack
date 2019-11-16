@@ -1,0 +1,15 @@
+.k-template-thumbnail {
+  position: relative;
+  &__overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  &__template {
+  }
+}

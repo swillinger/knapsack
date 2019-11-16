@@ -122,6 +122,8 @@ ${relative(process.cwd(), __filename)}
         .map(f => remove(f)),
     );
   }
+
+  console.log('Done: converting TypeScript types to JSON Schemas');
 }
 
 go();

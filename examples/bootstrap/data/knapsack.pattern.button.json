@@ -3,6 +3,7 @@
   "title": "Button",
   "description": "Use Bootstrap’s custom button styles for actions in forms, dialogs, and more with support for multiple sizes, states, and more.",
   "demoSize": "m",
+  "demoWidths": [{"width": 150}],
   "showAllTemplates": false,
   "templates": [
     {
@@ -81,9 +82,10 @@
           "id": "primary",
           "type": "data",
           "title": "Primary style",
+          "description": "Here is how what to use for the main call to action, try to limit these per page.",
           "data": {
             "props": {
-              "text": "The Button xII",
+              "text": "The Button",
               "url": "#",
               "style": "primary"
             }
@@ -91,7 +93,7 @@
         },
         "template-test": {
           "id": "template-test",
-          "title": "template test",
+          "title": "Template demo that uses another template, not props + source template",
           "type": "template",
           "templateInfo": {
             "alias": "@components/button-template-demo.twig"

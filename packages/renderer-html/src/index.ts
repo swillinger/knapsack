@@ -1,5 +1,9 @@
 import { KnapsackRendererBase } from '@knapsack/app';
-import { KnapsackTemplateRenderer } from '@knapsack/app/src/schemas/knapsack-config';
+import {
+  KnapsackRenderParams,
+  KnapsackTemplateRenderer,
+  KnapsackTemplateRenderResults,
+} from '@knapsack/app/src/schemas/knapsack-config';
 import fs from 'fs-extra';
 
 /* eslint-disable class-methods-use-this */
@@ -14,11 +18,19 @@ class KnapsackHtmlRenderer extends KnapsackRendererBase
     });
   }
 
-  async render({ template }) {
+  async render(
+    opt: KnapsackRenderParams,
+  ): Promise<KnapsackTemplateRenderResults> {
+    const { patternManifest, template, pattern } = opt;
+
     try {
+      const templateAbsolutePath = patternManifest.getTemplateAbsolutePath({
+        patternId: pattern.id,
+        templateId: template.id,
+      });
       return {
         ok: true,
-        html: await fs.readFile(template.absolutePath, 'utf8'),
+        html: await fs.readFile(templateAbsolutePath, 'utf8'),
       };
     } catch (error) {
       return {

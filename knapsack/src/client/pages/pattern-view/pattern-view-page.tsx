@@ -48,13 +48,7 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
 
   const showAllTemplates = templateId === 'all';
 
-  const {
-    title,
-    description,
-    templates,
-    type,
-    demoSize: defaultDemoSize,
-  } = pattern;
+  const { title, description, templates, demoSize: defaultDemoSize } = pattern;
 
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [demoSize, setDemoSize] = useState<string>(defaultDemoSize);
@@ -89,7 +83,7 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
           <header className="pattern-view-page__header">
             <div>
               <h4 className="eyebrow" style={{ textTransform: 'capitalize' }}>
-                {type}
+                @todo should show breadcrumb from navigation
               </h4>
               <h2 style={{ marginBottom: '0' }}>{title}</h2>
               <p style={{ marginTop: '1rem' }}>{description}</p>

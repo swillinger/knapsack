@@ -34,6 +34,7 @@ import { TemplateHeader } from './template-header';
 import './template-view.scss';
 import './shared/demo-grid-controls.scss';
 import { isDataDemo, isTemplateDemo } from '../../../schemas/patterns';
+import { TemplateThumbnail } from '../../components/template-thumbnail';
 
 const calculateDemoStageWidth = (size: string) => {
   switch (size) {
@@ -134,6 +135,10 @@ const TemplateView: React.FC<Props> = ({
 
   const [demoIndex, setDemoIndex] = useState(0);
   const [demo, setDemo] = useState(demos[demoIndex]);
+  const demoWidth =
+    pattern.demoWidths && pattern.demoWidths.length > 0
+      ? pattern.demoWidths[0].width
+      : 400;
   // const demo = demos[demoIndex];
 
   // const [dataState, setDataState] = useState({
@@ -285,6 +290,35 @@ const TemplateView: React.FC<Props> = ({
         </div>
       </div>
 
+      {demos && demos.length > 1 && (
+        <nav className="template-view__demo-list">
+          <h4>Demos</h4>
+          <div className="template-view__demo-items">
+            {demos.map((aDemo, i) => (
+              <figure
+                className={`template-view__demo-item ${
+                  demoIndex === i ? 'template-view__demo-item--active' : ''
+                }`}
+                key={aDemo.id}
+                style={{ width: '200px' }}
+              >
+                <figcaption title={aDemo.description}>{aDemo.title}</figcaption>
+                <TemplateThumbnail
+                  patternId={id}
+                  templateId={templateId}
+                  assetSetId={assetSetId}
+                  demo={aDemo}
+                  renderedWidth={demoWidth > 200 ? demoWidth : 200}
+                  actualWidth={200}
+                  handleSelection={() => {
+                    setDemo(aDemo);
+                  }}
+                />
+              </figure>
+            ))}
+          </div>
+        </nav>
+      )}
       {/* {isCodeBlockShown && false && ( */}
       {/*  <div style={{ marginBottom: '1rem' }}> */}
       {/*    <TemplateCodeBlock */}

@@ -46,6 +46,8 @@ export class AssetSets extends FileDb2<KnapsackAssetSetsConfig> {
       allAssetSets: {},
     };
 
+    if (!allAssetSets) return data;
+
     Object.keys(allAssetSets).forEach(assetSetId => {
       const assetSet = allAssetSets[assetSetId];
       data.allAssetSets[assetSetId] = {

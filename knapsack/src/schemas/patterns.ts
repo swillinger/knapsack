@@ -37,7 +37,7 @@ type DemoType = 'data' | 'template';
 
 interface DemoBase {
   id: string;
-  title?: string;
+  title: string;
   description?: string;
   type: DemoType;
 }

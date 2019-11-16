@@ -10,7 +10,8 @@ describe('Patterns', () => {
     cy.contains('Edit Form');
     cy.get('.rjsf input[label="Body Title"]')
       .clear()
-      .type('Robots are awesome');
+      .type('Robots are awesome')
+      .type(' ');
 
     cy.wait(3000); // eslint-disable-line
     cy.percySnapshot('Pattern: Card', { widths: [400, 1200] });
@@ -20,7 +21,7 @@ describe('Patterns', () => {
     cy.get('iframe:first').then($iframe => {
       const iframe = $iframe.contents();
       const title = iframe.find('.card-title');
-      expect(title.text()).to.equal('Robots are awesome');
+      expect(title.text().trim()).to.equal('Robots are awesome');
     });
   });
 });

@@ -66,6 +66,7 @@
       "demosById": {
         "a": {
           "id": "a",
+          "title": "Main",
           "type": "data",
           "data": {
             "slots": {
@@ -87,6 +88,7 @@
         },
         "b": {
           "type": "data",
+          "title": "Stacked",
           "id": "b",
           "data": {
             "props": {

@@ -6,6 +6,7 @@ import TemplateView, {
 } from '../../pattern-view/template-view';
 import { gqlQuery } from '../../../data';
 import { Slice, SliceRenderParams } from './types';
+import { useSelector } from '../../../store';
 
 type Data = {
   patternId?: string;
@@ -25,34 +26,8 @@ function PatternTemplateSlice({
   const [formData, setFormData] = useState(
     sliceData || { patternId: '', templateId: '', options: {} },
   );
-  const [patterns, setPatterns] = useState([]);
+  const patterns = useSelector(s => Object.values(s.patternsState.patterns));
 
-  useEffect(() => {
-    gqlQuery({
-      gqlQueryObj: gql`
-        {
-          patterns {
-            id
-            meta {
-              title
-            }
-            templates {
-              id
-              title
-              schema
-              demoDatas
-              uiSchema
-              demoSize
-            }
-          }
-        }
-      `,
-    })
-      .then(({ data }) => {
-        setPatterns(data.patterns);
-      })
-      .catch(console.log.bind(console));
-  }, []);
   if (patterns.length === 0) return <div>Loading...</div>;
 
   const { patternId, templateId, options } = formData;
@@ -63,7 +38,7 @@ function PatternTemplateSlice({
       type: 'string',
       title: 'Pattern',
       enum: patterns.map(p => p.id),
-      enumNames: patterns.map(p => p.meta.title),
+      enumNames: patterns.map(p => p.title),
     },
   };
 

@@ -2,8 +2,8 @@
 /// <reference types="Cypress" />
 /* eslint-enable */
 
-describe.only('API', () => {
-  it('Accesses Pattern data via GraphQL', () => {
+describe('API', () => {
+  it.skip('Accesses Pattern data via GraphQL', () => {
     cy.request('POST', '/graphql', {
       query: `
         {
@@ -48,7 +48,7 @@ describe.only('API', () => {
     });
   });
 
-  it('Accesses Design Token data via GraphQL', () => {
+  it.skip('Accesses Design Token data via GraphQL', () => {
     cy.request('POST', '/graphql', {
       query: `
         {

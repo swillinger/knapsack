@@ -180,6 +180,8 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
               </div>
             ))}
 
+          <hr />
+
           <CustomSliceCollection
             userCanSave
             handleSave={() => {}}

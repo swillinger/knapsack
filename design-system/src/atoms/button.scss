@@ -4,6 +4,11 @@
   padding: 0.6em 0.8em;
   line-height: 1;
 
+  // if a button follow a button, put some space between
+  & + & {
+    margin-left: var(--size-s);
+  }
+
   &--kind {
     &-primary {
       background-color: var(--c-primary);

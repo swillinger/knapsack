@@ -16,13 +16,12 @@
  */
 import React from 'react';
 // import { Tab } from 'semantic-ui-react';
-import { Tab } from 'semantic-ui-react';
 import { useHistory } from 'react-router-dom';
+import { Tabs } from '../components/tabs';
 import { SiteSettings } from './settings/site-settings';
 import { CustomPagesSettings } from './settings/custom-pages-settings';
 import PageWithSidebar from '../layouts/page-with-sidebar';
 import PatternsSettings from '../components/patterns-settings';
-import './tab.scss';
 
 type Props = {
   /**
@@ -61,7 +60,7 @@ const SettingsPage: React.FC<Props> = ({ initialTab = '' }: Props) => {
 
   return (
     <PageWithSidebar title="Settings" section="Configuration">
-      <Tab
+      <Tabs
         defaultActiveIndex={defaultActiveIndex}
         as="section"
         menu={{ pointing: true }}

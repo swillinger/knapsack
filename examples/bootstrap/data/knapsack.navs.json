@@ -5,6 +5,12 @@
       "name": "Patterns",
       "path": "/patterns",
       "parentId": "root"
+    },
+    {
+      "id": "settings",
+      "name": "Settings",
+      "path": "/settings",
+      "parentId": "root"
     }
   ],
   "secondary": [
@@ -31,6 +37,23 @@
       "name": "Card",
       "path": "/pattern/card",
       "parentId": "components-asdf"
+    },
+    {
+      "id": "docs",
+      "name": "Docs",
+      "parentId": "root"
+    },
+    {
+      "id": "/docs/intro",
+      "path": "/docs/intro",
+      "name": "Intro",
+      "parentId": "docs"
+    },
+    {
+      "id": "/docs/accessibility",
+      "path": "/docs/accessibility",
+      "parentId": "docs",
+      "name": "Accessibility"
     }
   ]
 }

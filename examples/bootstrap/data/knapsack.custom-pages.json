@@ -28,7 +28,7 @@
       ]
     },
     {
-      "id": "documentation",
+      "id": "docs",
       "title": "Docs",
       "showInMainMenu": true,
       "pages": [
@@ -177,11 +177,7 @@
       ]
     },
     {
-      "path": "/documentation/introduction",
-      "slices": []
-    },
-    {
-      "path": "/documentation/intro",
+      "path": "/docs/intro",
       "slices": [
         {
           "id": "cyfuu27gD",
@@ -193,7 +189,7 @@
       ]
     },
     {
-      "path": "/documentation/accessibility",
+      "path": "/docs/accessibility",
       "slices": [
         {
           "id": "tpPsDUfg1",

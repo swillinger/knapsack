@@ -1,10 +1,14 @@
-.header {
+.k-site-header {
   background-color: var(--c-bg-dark);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 1.5rem 2rem;
   font-family: var(--font-family-medium);
+
+  // @todo do a MUCH better small screen menu
+  @media screen and (min-width: 700px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   h3 {
     z-index: 9999;

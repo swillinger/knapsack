@@ -18,16 +18,6 @@ import Loadable from 'react-loadable';
 // need to keep this entry point small, so not importing entire design system
 import { Spinner } from '@knapsack/design-system/dist/spinner/spinner';
 
-export const LoadableHeader = Loadable({
-  loader: () => import(/* webpackChunkName: "header" */ './components/header'),
-  loading: Spinner,
-});
-
-export const LoadableFooter = Loadable({
-  loader: () => import(/* webpackChunkName: "footer" */ './components/footer'),
-  loading: Spinner,
-});
-
 // @todo fix
 /* eslint-disable import/no-cycle */
 // export const LoadableCustomPage: typeof import('./pages/custom-page/custom-page').default = Loadable(

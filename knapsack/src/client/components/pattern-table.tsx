@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactTable from 'react-table';
+import { NavLink } from 'react-router-dom';
+import { BASE_PATHS } from '../../lib/constants';
 
 type Props = {
   allPatterns: KnapsackPattern[];
@@ -7,25 +9,40 @@ type Props = {
 
 export const PatternTable: React.FC<Props> = ({ allPatterns }: Props) => {
   const data = [];
-  allPatterns.forEach(({ title: patternTitle, description, templates }) => {
-    data.push({
-      patternTitle,
-      description,
-      data: templates.map(
-        ({ title: templateTitle, templateLanguageId, statusId }) => {
-          return {
-            templateTitle,
+  allPatterns.forEach(
+    ({ title: patternTitle, id: patternId, description, templates }) => {
+      data.push({
+        patternTitle,
+        patternId,
+        description,
+        data: templates.map(
+          ({
+            id: templateId,
+            title: templateTitle,
             templateLanguageId,
             statusId,
-          };
-        },
-      ),
-    });
-  });
+          }) => {
+            return {
+              templateId,
+              templateTitle,
+              templateLanguageId,
+              statusId,
+            };
+          },
+        ),
+      });
+    },
+  );
   const columns = [
     {
       Header: 'Pattern Title',
-      accessor: 'patternTitle',
+      id: 'PatternTitle',
+      accessor: ({ patternId, patternTitle }) => ({ patternId, patternTitle }),
+      Cell: cell => (
+        <NavLink to={`${BASE_PATHS.PATTERN}/${cell.value.patternId}`}>
+          {cell.value.patternTitle}
+        </NavLink>
+      ),
     },
     {
       Header: 'Description',
@@ -40,13 +57,28 @@ export const PatternTable: React.FC<Props> = ({ allPatterns }: Props) => {
         columns={columns}
         showPagination={false}
         defaultPageSize={data.length}
-        SubComponent={row => {
+        SubComponent={({ original: { data: subData, patternId } }) => {
           return (
             <ReactTable
-              defaultPageSize={row.original.data.length}
-              data={row.original.data}
+              defaultPageSize={subData.length}
+              data={subData}
+              showPagination={false}
               columns={[
-                { Header: 'Template Title', accessor: 'templateTitle' },
+                {
+                  Header: 'Template Title',
+                  id: 'TemplateTitle',
+                  accessor: ({ templateId, templateTitle }) => ({
+                    templateId,
+                    templateTitle,
+                  }),
+                  Cell: cell => (
+                    <NavLink
+                      to={`${BASE_PATHS.PATTERN}/${patternId}/${cell.value.templateId}`}
+                    >
+                      {cell.value.templateTitle}
+                    </NavLink>
+                  ),
+                },
                 { Header: 'Template Language', accessor: 'templateLanguageId' },
                 { Header: 'Status', accessor: 'statusId' },
               ]}

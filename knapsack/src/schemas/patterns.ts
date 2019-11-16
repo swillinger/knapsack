@@ -112,6 +112,7 @@ export interface KnapsackPatternTemplate {
       [name: string]: {
         title: string;
         description: string;
+        allowedPatternIds?: string[];
       };
     };
     /**

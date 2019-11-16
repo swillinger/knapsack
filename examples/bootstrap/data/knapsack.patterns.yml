@@ -1,6 +1,0 @@
-patternTypes:
-  -
-    id: atoms
-    title: Atoms
-    items:
-      - button

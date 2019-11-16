@@ -16,9 +16,10 @@
       "assetSetIds": ["bootstrap"],
       "spec": {
         "slots": {
-          "x": {
-            "title": "Slot X",
-            "description": "An example slot to experiment with"
+          "footerSlot": {
+            "title": "The footer slot",
+            "description": "Bottom of the card",
+            "allowedPatternIds": ["button"]
           }
         },
         "props": {
@@ -58,66 +59,6 @@
             "imgAlt": {
               "type": "string",
               "title": "Image Alt Text"
-            },
-            "button": {
-              "type": "object",
-              "title": "Button",
-              "properties": {
-                "text": {
-                  "type": "string",
-                  "title": "Text"
-                },
-                "url": {
-                  "type": "string",
-                  "title": "Url"
-                },
-                "style": {
-                  "type": "string",
-                  "title": "Style",
-                  "default": "primary",
-                  "enum": [
-                    "primary",
-                    "secondary",
-                    "success",
-                    "danger",
-                    "warning",
-                    "info",
-                    "light",
-                    "dark",
-                    "link"
-                  ],
-                  "enumNames": [
-                    "Primary",
-                    "Secondary",
-                    "Success",
-                    "Danger",
-                    "Warning",
-                    "Info",
-                    "Light",
-                    "Dark",
-                    "Link"
-                  ]
-                }
-              }
-            },
-            "links": {
-              "type": "array",
-              "title": "Links",
-              "items": {
-                "type": "object",
-                "title": "Link",
-                "required": ["linkText", "linkUrl"],
-                "properties": {
-                  "linkText": {
-                    "type": "string",
-                    "title": "Link Text"
-                  },
-                  "linkUrl": {
-                    "type": "string",
-                    "title": "Link URL"
-                  }
-                }
-              }
             }
           }
         }
@@ -174,17 +115,7 @@
                     "itemText": "Vestibulum at eros"
                   }
                 ]
-              },
-              "links": [
-                {
-                  "linkText": "Link 1",
-                  "linkUrl": "#"
-                },
-                {
-                  "linkText": "Link 2",
-                  "linkUrl": "#"
-                }
-              ]
+              }
             }
           }
         }

@@ -16,10 +16,11 @@
  */
 
 import React, { useState } from 'react';
-import { SchemaForm, Details } from '@knapsack/design-system';
+import { SchemaForm, Details, Select } from '@knapsack/design-system';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import shortid from 'shortid';
+import ReactTable from 'react-table';
 import { useSelector, updatePattern, useDispatch } from '../../store';
 import MdBlock from '../../components/md-block';
 import Template from '../../components/template';
@@ -35,6 +36,7 @@ import './template-view.scss';
 import './shared/demo-grid-controls.scss';
 import { isDataDemo, isTemplateDemo } from '../../../schemas/patterns';
 import { TemplateThumbnail } from '../../components/template-thumbnail';
+import { Tabs } from '../../components/tabs';
 
 const calculateDemoStageWidth = (size: string) => {
   switch (size) {
@@ -90,6 +92,10 @@ const TemplateView: React.FC<Props> = ({
   templateId,
 }: Props) => {
   const permissions = useSelector(store => store.userState.role.permissions);
+  const patterns = useSelector(({ patternsState }) => patternsState.patterns);
+  const allPatterns = useSelector(({ patternsState }) =>
+    Object.values(patternsState.patterns),
+  );
   const pattern = useSelector(
     ({ patternsState }) => patternsState.patterns[id],
   );
@@ -236,53 +242,150 @@ const TemplateView: React.FC<Props> = ({
               }}
             >
               <div className="template-view__schema-form__inner">
-                <h4>Edit Form</h4>
-                <SchemaForm
-                  schema={schema}
-                  formData={demo.data.props}
-                  hasSubmit
-                  onChange={({ formData }) => {
-                    // @todo ensure it saves
-                    setDemo(prevDemo => {
-                      if (isDataDemo(prevDemo)) {
-                        return {
-                          ...prevDemo,
-                          data: {
-                            ...prevDemo.data,
-                            props: formData,
+                <Tabs
+                  panes={[
+                    {
+                      menuItem: 'Props',
+                      render: () => {
+                        return (
+                          <>
+                            <h4>Edit Form</h4>
+                            <SchemaForm
+                              schema={schema}
+                              formData={demo.data.props}
+                              hasSubmit
+                              onChange={({ formData }) => {
+                                // @todo ensure it saves
+                                setDemo(prevDemo => {
+                                  if (isDataDemo(prevDemo)) {
+                                    return {
+                                      ...prevDemo,
+                                      data: {
+                                        ...prevDemo.data,
+                                        props: formData,
+                                      },
+                                    };
+                                  }
+                                });
+                              }}
+                              onSubmit={({ formData }) => {
+                                dispatch(
+                                  updatePattern({
+                                    ...pattern,
+                                    templates: templates.map(t => {
+                                      if (t.id !== templateId) return t;
+                                      const newId = shortid.generate();
+                                      return {
+                                        ...t,
+                                        demosById: {
+                                          ...t.demosById,
+                                          [newId]: {
+                                            type: 'data',
+                                            data: {
+                                              props: formData,
+                                            },
+                                          },
+                                        },
+                                        demos: [...t.demos, newId],
+                                      };
+                                    }),
+                                  }),
+                                );
+                              }}
+                            />
+                          </>
+                        );
+                      },
+                    },
+                    spec.slots
+                      ? {
+                          menuItem: 'Slots',
+                          render: () => {
+                            if (!isDataDemo(demo)) return;
+                            const { slots } = spec;
+
+                            const allPatternIds = allPatterns.map(p => p.id);
+
+                            return (
+                              <>
+                                <h4>Slots</h4>
+                                {Object.keys(slots).map(slotName => {
+                                  const slotDef = slots[slotName];
+
+                                  const items = [{ title: 'None', value: '' }];
+                                  slotDef.allowedPatternIds.forEach(
+                                    allowedPatternId => {
+                                      patterns[
+                                        allowedPatternId
+                                      ].templates.forEach(t => {
+                                        if (
+                                          t.templateLanguageId ===
+                                          template.templateLanguageId
+                                        ) {
+                                          t.demos.forEach(demoId => {
+                                            const {
+                                              title: demoTitle,
+                                            } = t.demosById[demoId];
+                                            items.push({
+                                              title: `${patterns[allowedPatternId].title} - ${demoTitle}`,
+                                              value: JSON.stringify({
+                                                patternId: allowedPatternId,
+                                                templateId: t.id,
+                                                demoId,
+                                              }),
+                                            });
+                                          });
+                                        }
+                                      });
+                                    },
+                                  );
+                                  if (!isDataDemo(demo)) return;
+
+                                  return (
+                                    <div key={slotName}>
+                                      <h5>{slotName}</h5>
+                                      <Select
+                                        items={items}
+                                        value={JSON.stringify(
+                                          demo.data.slots[slotName]
+                                            ? demo.data.slots[slotName][0]
+                                            : '',
+                                        )}
+                                        handleChange={newSlotInfo => {
+                                          const newSlotData:
+                                            | {
+                                                patternId: string;
+                                                templateId: string;
+                                                demoId: string;
+                                              }[]
+                                            | [] = newSlotInfo
+                                            ? [JSON.parse(newSlotInfo)]
+                                            : [];
+                                          setDemo(prevDemo => {
+                                            if (isDataDemo(prevDemo)) {
+                                              return {
+                                                ...prevDemo,
+                                                data: {
+                                                  ...prevDemo.data,
+                                                  slots: {
+                                                    ...prevDemo.data.slots,
+                                                    [slotName]: newSlotData,
+                                                  },
+                                                },
+                                              };
+                                            }
+                                          });
+                                        }}
+                                      />
+                                    </div>
+                                  );
+                                })}
+                              </>
+                            );
                           },
-                        };
-                      }
-                    });
-                    // setDataState(prevState => ({
-                    //   ...prevState,
-                    //   data: formData,
-                    // }));
-                  }}
-                  onSubmit={({ formData }) => {
-                    dispatch(
-                      updatePattern({
-                        ...pattern,
-                        templates: templates.map(t => {
-                          if (t.id !== templateId) return t;
-                          const newId = shortid.generate();
-                          return {
-                            ...t,
-                            demosById: {
-                              ...t.demosById,
-                              [newId]: {
-                                type: 'data',
-                                data: {
-                                  props: formData,
-                                },
-                              },
-                            },
-                            demos: [...t.demos, newId],
-                          };
-                        }),
-                      }),
-                    );
-                  }}
+                        }
+                      : null,
+                  ].filter(Boolean)}
                 />
               </div>
             </div>
@@ -364,6 +467,29 @@ const TemplateView: React.FC<Props> = ({
           {/*  key={`${id}-${templateId}-${demoDataIndex}`} */}
           {/* /> */}
         </>
+      )}
+
+      {isVerbose && spec.slots && (
+        <div>
+          <h4>Slots</h4>
+          <ReactTable
+            data={Object.keys(spec.slots).map(slotName => {
+              const { title: slotTitle, description } = spec.slots[slotName];
+              return {
+                slotName,
+                slotTitle,
+                description,
+              };
+            })}
+            columns={[
+              { Header: 'Slot Name', accessor: 'slotName' },
+              { Header: 'Title', accessor: 'slotTitle' },
+              { Header: 'Description', accessor: 'description' },
+            ]}
+            defaultPageSize={Object.keys(spec.slots).length}
+            showPagination={false}
+          />
+        </div>
       )}
     </article>
   );

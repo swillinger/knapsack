@@ -19,7 +19,7 @@ import classnames from 'classnames';
 import { FaChevronLeft } from 'react-icons/fa';
 import { Sidebar } from '../components/sidebar/sidebar';
 import ErrorCatcher from '../utils/error-catcher';
-import Header from '../components/header';
+import { SiteHeaderConnected } from '../components/site-header';
 import { PageHeaderContainer } from '../components/page-header';
 import Footer from '../components/footer';
 import './page-with-sidebar.scss';
@@ -53,7 +53,7 @@ const PageWithSidebar: React.FC<Props> = ({
           gridTemplateColumns: isSidebarCollapsed ? '45px 1fr' : '300px 1fr',
         }}
       >
-        <Header pathname={window.location.pathname} />
+        <SiteHeaderConnected />
         <aside className="page-with-sidebar__sidebar">
           <div
             // className={` page-with-sidebar__sidebar__column ${isSidebarCollapsed ? 'page-with-sidebar__sidebar__column--collapsed' : ''}`}

@@ -15,7 +15,7 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import Header from '../components/header';
+import { SiteHeaderConnected } from '../components/site-header';
 import Footer from '../components/footer';
 import { PageHeaderContainer } from '../components/page-header';
 import ErrorCatcher from '../utils/error-catcher';
@@ -33,7 +33,7 @@ const PageWithoutSidebar: React.FC<Props> = ({
   section,
 }: Props) => (
   <div className="page-without-sidebar">
-    <Header />
+    <SiteHeaderConnected />
     <ErrorCatcher>
       <main className="page-without-sidebar__page">
         <PageHeaderContainer title={title} section={section} />

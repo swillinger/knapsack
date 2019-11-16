@@ -115,15 +115,6 @@ export const App: React.FC = () => {
                 />
 
                 <Route
-                  path={`${BASE_PATHS.DOCS}/:id`}
-                  render={({ match }) => (
-                    <LoadableDocPage
-                      id={match.params.id}
-                      key={match.params.id}
-                    />
-                  )}
-                />
-                <Route
                   path={`${BASE_PATHS.GRAPHIQL_PLAYGROUND}`}
                   exact
                   render={props => <LoadableGraphiqlPage {...props} />}
@@ -179,6 +170,7 @@ export const App: React.FC = () => {
 
                 <Route
                   path={`${BASE_PATHS.PATTERN}/:id/:templateId`}
+                  exact
                   render={({ match, ...rest }) => {
                     if (patterns[match.params.id]) {
                       return (

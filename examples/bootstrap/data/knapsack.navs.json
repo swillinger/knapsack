@@ -39,21 +39,58 @@
       "parentId": "components-asdf"
     },
     {
+      "id": "design-tokens",
+      "name": "Design Tokens",
+      "path": "",
+      "parentId": "root"
+    },
+    {
+      "id": "/design-tokens/colors",
+      "name": "Colors",
+      "path": "/design-tokens/colors",
+      "parentId": "design-tokens"
+    },
+    {
+      "id": "/design-tokens/spacing",
+      "name": "Spacing",
+      "path": "/design-tokens/spacing",
+      "parentId": "design-tokens"
+    },
+    {
+      "id": "/design-tokens/breakpoint",
+      "name": "Breakpoints",
+      "path": "/design-tokens/breakpoint",
+      "parentId": "design-tokens"
+    },
+    {
+      "id": "/design-tokens/animation",
+      "name": "Animation",
+      "path": "/design-tokens/animation",
+      "parentId": "design-tokens"
+    },
+    {
+      "id": "/design-tokens/shadows",
+      "name": "Shadows",
+      "path": "/design-tokens/shadows",
+      "parentId": "design-tokens"
+    },
+    {
       "id": "docs",
       "name": "Docs",
+      "path": "",
       "parentId": "root"
     },
     {
       "id": "/docs/intro",
-      "path": "/docs/intro",
       "name": "Intro",
+      "path": "/docs/intro",
       "parentId": "docs"
     },
     {
       "id": "/docs/accessibility",
+      "name": "Accessibility",
       "path": "/docs/accessibility",
-      "parentId": "docs",
-      "name": "Accessibility"
+      "parentId": "docs"
     }
   ]
 }

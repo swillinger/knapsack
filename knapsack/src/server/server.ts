@@ -144,6 +144,7 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
     templateRenderers: config.templateRenderers,
     pageBuilder: pageBuilderPages,
     settingsStore: settings,
+    tokens,
   });
 
   app.use(restApiRoutes);

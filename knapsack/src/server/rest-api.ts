@@ -45,12 +45,14 @@ export function getApiRoutes({
   settingsStore,
   meta,
   baseUrl,
+  tokens,
 }: {
   patternManifest: KnapsackBrain['patterns'];
   webroot: string;
   public: string;
   baseUrl: string;
   meta: KnapsackMeta;
+  tokens: KnapsackBrain['tokens'];
   pageBuilder: KnapsackBrain['pageBuilderPages'];
   settingsStore: KnapsackBrain['settings'];
   registerEndpoint: (pathname: string, method?: 'GET' | 'POST') => void;
@@ -214,6 +216,12 @@ export function getApiRoutes({
   router.get(url3, async (req, res) => {
     const settings = settingsStore.getConfig();
     res.send(settings);
+  });
+
+  const url4 = urlJoin(baseUrl, 'design-tokens');
+  registerEndpoint(url4);
+  router.get(url4, (req, res) => {
+    res.send(tokens.getTokens());
   });
 
   const url5 = urlJoin(baseUrl, 'meta');

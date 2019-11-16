@@ -18,7 +18,7 @@ import {
   BreakpointsDemo,
 } from '@knapsack/design-system';
 import { KnapsackDesignToken } from '@knapsack/core';
-import { gqlQuery } from '../../../data';
+import { getDesignTokens } from '../../../data';
 import { containsString } from '../../../utils/string-helpers';
 import { Slice, SliceRenderParams } from './types';
 
@@ -184,22 +184,8 @@ class DesignTokenSlice extends React.Component<Props, State> {
   // }
 
   componentDidMount() {
-    gqlQuery({
-      gqlQueryObj: gql`
-        {
-          tokens {
-            category
-            name
-            tags
-            value
-            comment
-            originalValue
-            code
-          }
-        }
-      `,
-    })
-      .then(({ data: { tokens } }) => {
+    getDesignTokens()
+      .then(tokens => {
         this.setState({
           allTokens: tokens,
           ready: true,

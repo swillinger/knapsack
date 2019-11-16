@@ -99,6 +99,12 @@ export function gqlQuery({
     .catch(console.log.bind(console));
 }
 
+type KnapsackDesignToken = import('@knapsack/core').KnapsackDesignToken;
+
+export function getDesignTokens(): Promise<KnapsackDesignToken[]> {
+  return window.fetch(`${apiUrlBase}/design-tokens`).then(res => res.json());
+}
+
 /**
  * Save data up on server to be used in template rendering with `dataId` query param later
  * @returns dataId that is md5 hash

@@ -303,8 +303,21 @@ const TemplateView: React.FC<Props> = ({
                           render: () => {
                             if (!isDataDemo(demo)) return;
                             const { slots } = spec;
-
-                            const allPatternIds = allPatterns.map(p => p.id);
+                            if (!demo.data.slots) {
+                              // @todo refactor
+                              setDemo(prevDemo => {
+                                if (isDataDemo(prevDemo)) {
+                                  return {
+                                    ...prevDemo,
+                                    data: {
+                                      ...prevDemo.data,
+                                      slots: {},
+                                    },
+                                  };
+                                }
+                              });
+                              return;
+                            }
 
                             return (
                               <>

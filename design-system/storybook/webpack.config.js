@@ -11,7 +11,7 @@ const knapsackWebpackConfig = createWebPackConfig({
     join(__dirname, '../src'),
     join(__dirname, '../../knapsack/src'),
   ],
-  maxAssetSize: 3000 * 1000, // wow, this is getting BIG!
+  maxAssetSize: 3200 * 1000, // wow, this is getting BIG!
   tsConfigFile: join(__dirname, '../tsconfig.json'),
 });
 

@@ -30,6 +30,7 @@ export const BASE_PATHS = {
   PATTERN: '/pattern',
   PATTERNS: '/patterns',
   PAGES: '/pages',
+  PAGE_BUILDER: '/page-builder',
   CUSTOM_PAGES: '/custom-pages',
   GRAPHIQL_PLAYGROUND: '/graphql-playground',
   DOCS: '/docs-dir',

@@ -94,13 +94,13 @@ export const App: React.FC = () => {
                   }
                 />
                 <Route
-                  path={`${BASE_PATHS.PAGES}/:id`}
+                  path={`${BASE_PATHS.PAGE_BUILDER}/:id`}
                   render={({ match }) => (
                     <LoadablePageBuilder id={match.params.id} />
                   )}
                 />
                 <Route
-                  path={BASE_PATHS.PAGES}
+                  path={BASE_PATHS.PAGE_BUILDER}
                   exact
                   render={props => (
                     <LoadablePageBuilderLandingPage {...props} />

@@ -165,7 +165,7 @@ export function getApiRoutes({
   }
 
   if (pageBuilder) {
-    const url1 = urlJoin(baseUrl, `${BASE_PATHS.PAGES}/:id`);
+    const url1 = urlJoin(baseUrl, `${BASE_PATHS.PAGE_BUILDER}/:id`);
     registerEndpoint(url1);
     router.get(url1, async (req, res) => {
       try {
@@ -189,7 +189,7 @@ export function getApiRoutes({
       }
     });
 
-    const url2 = urlJoin(baseUrl, `${BASE_PATHS.PAGES}/:id`);
+    const url2 = urlJoin(baseUrl, `${BASE_PATHS.PAGE_BUILDER}/:id`);
     registerEndpoint(url2, 'POST');
     router.post(url2, async (req, res) => {
       const results = await pageBuilder.setPageBuilderPage(
@@ -199,14 +199,14 @@ export function getApiRoutes({
       res.send(results);
     });
 
-    const url3 = urlJoin(baseUrl, BASE_PATHS.PAGES);
+    const url3 = urlJoin(baseUrl, BASE_PATHS.PAGE_BUILDER);
     registerEndpoint(url3);
     router.get(url3, async (req, res) => {
       const results = await pageBuilder.getPageBuilderPages();
       res.send(results);
     });
   } else {
-    router.get(urlJoin(baseUrl, BASE_PATHS.PAGES), async (req, res) => {
+    router.get(urlJoin(baseUrl, BASE_PATHS.PAGE_BUILDER), async (req, res) => {
       res.send([]);
     });
   }

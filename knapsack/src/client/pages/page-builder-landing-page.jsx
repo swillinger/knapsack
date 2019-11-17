@@ -62,7 +62,7 @@ class PageBuilderLandingPage extends Component {
     } else {
       const id = shortid.generate();
       window
-        .fetch(`${apiUrlBase}${BASE_PATHS.PAGES}/${id}`, {
+        .fetch(`${apiUrlBase}${BASE_PATHS.PAGE_BUILDER}/${id}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ class PageBuilderLandingPage extends Component {
           body: JSON.stringify({
             id,
             title: 'My New Example',
-            path: `${BASE_PATHS.PAGES}/${id}`,
+            path: `${BASE_PATHS.PAGE_BUILDER}/${id}`,
             slices: [],
           }),
         })
@@ -78,7 +78,7 @@ class PageBuilderLandingPage extends Component {
           res.json();
         })
         .then(() => {
-          window.location = `${BASE_PATHS.PAGES}/${id}`;
+          window.location = `${BASE_PATHS.PAGE_BUILDER}/${id}`;
         });
     }
   }
@@ -126,7 +126,9 @@ class PageBuilderLandingPage extends Component {
                   <ul>
                     {pageBuilderPages.map(({ id, title }) => (
                       <li key={id}>
-                        <Link to={`${BASE_PATHS.PAGES}/${id}`}>{title}</Link>
+                        <Link to={`${BASE_PATHS.PAGE_BUILDER}/${id}`}>
+                          {title}
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -158,7 +160,7 @@ class PageBuilderLandingPage extends Component {
 }
 
 PageBuilderLandingPage.defaultProps = {
-  location: BASE_PATHS.PAGES,
+  location: BASE_PATHS.PAGE_BUILDER,
 };
 
 PageBuilderLandingPage.propTypes = {

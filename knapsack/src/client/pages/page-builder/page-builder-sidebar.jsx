@@ -169,7 +169,7 @@ class PageBuilderSidebar extends Component {
           )}
           <Link
             className="page-builder-sidebar__styled-link"
-            to={BASE_PATHS.PAGES}
+            to={BASE_PATHS.PAGE_BUILDER}
             style={{ marginLeft: '15px' }}
           >
             Back

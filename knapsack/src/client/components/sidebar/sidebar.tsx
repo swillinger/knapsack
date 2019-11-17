@@ -1,5 +1,7 @@
 import React from 'react';
 import { Button } from '@knapsack/design-system';
+import md5 from 'md5';
+import { shallowEqual } from 'react-redux';
 import { SecondaryNav } from './secondary-nav';
 import {
   saveToServer,
@@ -7,18 +9,33 @@ import {
   useSelector,
   updateSecondaryNav,
 } from '../../store';
-import { PERMISSIONS } from '../../../lib/constants';
+import { getTitleFromPath } from '../../../lib/routes';
 
 export const Sidebar: React.FC = () => {
   const dispatch = useDispatch();
-  const hasWritePermission = useSelector(s =>
-    s.userState.role.permissions.includes(PERMISSIONS.WRITE),
+  const canEdit = useSelector(s => s.userState.canEdit);
+  const secondaryNavItems = useSelector(
+    s => {
+      return s.navsState.secondary.map(navItem => {
+        if (!navItem.path) return navItem;
+        const name = getTitleFromPath(navItem.path, s);
+        return {
+          name: name || navItem.path,
+          ...navItem,
+        };
+      });
+    },
+    (a, b) => {
+      return shallowEqual(
+        a.map(({ name }) => name),
+        b.map(({ name }) => name),
+      );
+    },
   );
-  const secondaryNavItems = useSelector(s => s.navsState.secondary);
 
   return (
     <aside className="k-sidebar">
-      {hasWritePermission && (
+      {canEdit && (
         <div>
           <Button
             kind="primary"
@@ -32,7 +49,9 @@ export const Sidebar: React.FC = () => {
       )}
       <SecondaryNav
         secondaryNavItems={secondaryNavItems}
-        hasWritePermission={hasWritePermission}
+        // if the secondary nav list changes, this key changes, trigger a full re-mount to refresh state and names
+        key={md5(JSON.stringify(secondaryNavItems))}
+        canEdit={canEdit}
         handleNewNavItems={newNavItems => {
           dispatch(updateSecondaryNav(newNavItems));
         }}

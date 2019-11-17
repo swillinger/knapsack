@@ -2,6 +2,7 @@ import { Action } from './types';
 
 export interface UserState {
   role: import('../../server/auth').Role;
+  canEdit: boolean;
 }
 
 const initialState: UserState = {
@@ -9,6 +10,7 @@ const initialState: UserState = {
     id: 'anonymous',
     permissions: ['read'],
   },
+  canEdit: false,
 };
 
 export default function reducer(

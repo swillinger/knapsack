@@ -16,7 +16,6 @@
   "secondary": [
     {
       "id": "patterns-asdf",
-      "name": "Patterns",
       "path": "/patterns",
       "parentId": "root"
     },
@@ -28,14 +27,12 @@
     },
     {
       "id": "/pattern/button",
-      "name": "Button",
       "path": "/pattern/button",
       "parentId": "components-asdf"
     },
     {
       "id": "/pattern/card",
-      "name": "Card",
-      "path": "/pattern/card",
+      "path": "/pattern/card/",
       "parentId": "components-asdf"
     },
     {
@@ -46,8 +43,8 @@
     },
     {
       "id": "/design-tokens/colors",
-      "name": "Colors",
       "path": "/design-tokens/colors",
+      "name": "Colors",
       "parentId": "design-tokens"
     },
     {

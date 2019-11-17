@@ -192,16 +192,18 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
     .get(async (req, res) => {
       const role = getRole(req);
       const dataStore = await getDataStore();
-
-      res.send({
+      const fullDataStore: PartialAppState = {
         ...dataStore,
         userState: {
           role,
+          canEdit: role.permissions.includes(PERMISSIONS.WRITE),
         },
         metaState: {
           meta,
         },
-      });
+      };
+
+      res.send(fullDataStore);
     })
     .post(async (req, res) => {
       const { permissions } = getRole(req);

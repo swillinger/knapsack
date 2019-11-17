@@ -1,0 +1,16 @@
+.k-inline-edit-text {
+  &__controls {
+    display: none;
+  }
+}
+
+.k-inline-edit-text--controls-visible {
+  border: dotted 1px var(--c-gray-light);
+  .k-inline-edit-text__controls {
+    display: inline-block;
+  }
+}
+
+.k-inline-edit-text--editing {
+  border: dotted 1px var(--c-active);
+}

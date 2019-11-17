@@ -39,7 +39,6 @@ import {
   LoadableSettingsPage,
   LoadableCustomPage,
   LoadableHome,
-  LoadableDocPage,
   LoadableChangelogPage,
   LoadableBadRoute,
 } from './loadable-components';

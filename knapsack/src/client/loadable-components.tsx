@@ -30,11 +30,6 @@ export const LoadableCustomPage = Loadable({
 });
 /* eslint-enable import/no-cycle */
 
-export const LoadableDocPage = Loadable({
-  loader: () => import(/* webpackChunkName: "doc-page" */ './pages/doc'),
-  loading: Spinner,
-});
-
 export const LoadableChangelogPage = Loadable({
   loader: () =>
     import(/* webpackChunkName: "changlog-page" */ './pages/changelog'),

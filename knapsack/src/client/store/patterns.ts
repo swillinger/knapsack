@@ -8,16 +8,20 @@ import {
 type PatternsState = {
   isFetching?: boolean;
   didInvalidate?: boolean;
-  // patternStatuses?: import('../../schemas/patterns').KnapsackPatternStatus[];
-  // patternTypes?: import('../../schemas/patterns').KnapsackPatternType[];
-  // patterns: import('../../schemas/patterns').KnapsackPattern[];
   patterns: {
     [id: string]: KnapsackPattern;
   };
   // nav: [];
 } & KnapsackPatternsConfig;
 
+const initialState: PatternsState = {
+  isFetching: false,
+  didInvalidate: false,
+  patterns: {},
+};
+
 const UPDATE_PATTERN = 'knapsack/patterns/UPDATE_PATTERN';
+const UPDATE_PATTERN_INFO = 'knapsack/patterns/UPDATE_PATTERN_INFO';
 
 interface UpdatePatternAction extends Action {
   type: typeof UPDATE_PATTERN;
@@ -31,15 +35,29 @@ export function updatePattern(pattern: KnapsackPattern): UpdatePatternAction {
   };
 }
 
-const initialState: PatternsState = {
-  isFetching: false,
-  didInvalidate: false,
-  patterns: {},
-  // patternTypes: [],
-  // patternStatuses: [],
-};
+interface UpdatePatternInfoAction extends Action {
+  type: typeof UPDATE_PATTERN_INFO;
+  payload: Partial<KnapsackPattern>;
+}
 
-type Actions = UpdatePatternAction;
+/**
+ * Update basic Pattern Info
+ * Basically everything besides `templates`
+ */
+export function updatePatternInfo(
+  patternId: string,
+  pattern: Partial<KnapsackPattern>,
+): UpdatePatternInfoAction {
+  return {
+    type: UPDATE_PATTERN_INFO,
+    payload: {
+      id: patternId,
+      ...pattern,
+    },
+  };
+}
+
+type Actions = UpdatePatternAction | UpdatePatternInfoAction;
 
 export default function reducer(
   state = initialState,
@@ -50,6 +68,19 @@ export default function reducer(
       return produce(state, draft => {
         draft.patterns[action.payload.id] = action.payload;
       });
+
+    case UPDATE_PATTERN_INFO:
+      return produce(state, draft => {
+        const pattern = state.patterns[action.payload.id];
+        draft.patterns[action.payload.id] = {
+          ...pattern,
+          ...action.payload,
+          // can't change the below
+          templates: pattern.templates,
+          id: pattern.id,
+        };
+      });
+
     default:
       return {
         ...initialState,

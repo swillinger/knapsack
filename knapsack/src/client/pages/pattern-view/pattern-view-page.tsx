@@ -18,7 +18,7 @@ import React, { useState } from 'react';
 import { Button, Select, PatternStatusIcon } from '@knapsack/design-system';
 import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useSelector } from '../../store';
+import { updatePatternInfo, useSelector, useDispatch } from '../../store';
 import ErrorCatcher from '../../utils/error-catcher';
 // import DosAndDonts from '../../components/dos-and-donts';
 import { BASE_PATHS } from '../../../lib/constants';
@@ -27,6 +27,7 @@ import TemplateView from './template-view';
 import './pattern-view-page.scss';
 import './shared/demo-grid-controls.scss';
 import { CustomSliceCollection } from '../custom-page/custom-slice-collection';
+import { InlineEditText } from '../../components/inline-edit';
 
 type Props = {
   patternId: string;
@@ -35,7 +36,7 @@ type Props = {
 
 const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
   const history = useHistory();
-  const permissions = useSelector(store => store.userState.role.permissions);
+  const canEdit = useSelector(store => store.userState.canEdit);
   const pattern = useSelector(store => {
     const thePattern = store.patternsState.patterns[patternId];
     if (!thePattern) {
@@ -45,6 +46,7 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
     }
     return thePattern;
   });
+  const dispatch = useDispatch();
 
   const showAllTemplates = templateId === 'all';
 
@@ -85,8 +87,31 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
               <h4 className="eyebrow" style={{ textTransform: 'capitalize' }}>
                 @todo should show breadcrumb from navigation
               </h4>
-              <h2 style={{ marginBottom: '0' }}>{title}</h2>
-              <p style={{ marginTop: '1rem' }}>{description}</p>
+              <h2 style={{ marginBottom: '0' }}>
+                <InlineEditText
+                  text={title}
+                  handleSave={text => {
+                    dispatch(
+                      updatePatternInfo(patternId, {
+                        title: text,
+                      }),
+                    );
+                  }}
+                />
+              </h2>
+
+              <p style={{ marginTop: '1rem' }}>
+                <InlineEditText
+                  text={description}
+                  handleSave={text => {
+                    dispatch(
+                      updatePatternInfo(patternId, {
+                        description: text,
+                      }),
+                    );
+                  }}
+                />
+              </p>
             </div>
             <div>
               <div className="pattern-view-demo-grid-controls">

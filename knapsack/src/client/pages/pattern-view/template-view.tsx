@@ -99,6 +99,12 @@ const TemplateView: React.FC<Props> = ({
   const pattern = useSelector(
     ({ patternsState }) => patternsState.patterns[id],
   );
+  if (!pattern) {
+    const availablePatternIds = allPatterns.map(p => p.id).join(', ');
+    const msg = `The pattern "${id}" was not found, these are the available ids: "${availablePatternIds}".`;
+    console.error(msg);
+    throw new Error(msg);
+  }
   const allStatuses = useSelector(s => s.patternsState.templateStatuses);
   const { allAssetSets, globalAssetSetIds } = useSelector(
     ({ assetSetsState }) => ({
@@ -111,6 +117,13 @@ const TemplateView: React.FC<Props> = ({
   const { templates } = pattern;
 
   const template = templates.find(t => t.id === templateId);
+  if (!template) {
+    const availableTemplateIds = templates.map(t => t.id).join(', ');
+    const msg = `In the pattern "${id}", the template "${templateId}" was not found, these are the available ids: "${availableTemplateIds}".`;
+    console.error(msg);
+    throw new Error(msg);
+  }
+
   const {
     spec = {},
     // doc: readme,

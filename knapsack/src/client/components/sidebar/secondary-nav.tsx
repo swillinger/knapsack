@@ -32,7 +32,7 @@ export const NavItem: React.FC<KnapsackNavItemProps> = ({
 };
 
 type Props = {
-  hasWritePermission?: boolean;
+  canEdit?: boolean;
   secondaryNavItems: KnapsackNavItem[];
   handleNewNavItems?: (newNavItems: KnapsackNavItem[]) => void;
 };
@@ -41,7 +41,7 @@ const rootKey = 'root';
 
 export const SecondaryNav: React.FC<Props> = ({
   secondaryNavItems = [],
-  hasWritePermission,
+  canEdit,
   handleNewNavItems = () => {},
 }: Props) => {
   const initialFlatData = {
@@ -87,7 +87,7 @@ export const SecondaryNav: React.FC<Props> = ({
         <SortableTree
           treeData={treeData}
           theme={FileExplorerTheme}
-          canDrag={hasWritePermission}
+          canDrag={canEdit}
           onChange={newTreeData => setTreeData(newTreeData)}
           generateNodeProps={(data: ExtendedNodeData) => {
             // console.log('generateNodeProps', data);

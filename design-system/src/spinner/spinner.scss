@@ -45,3 +45,40 @@
     transform: rotate(-360deg);
   }
 }
+
+@keyframes ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.k-circle-spinner {
+  display: inline-block;
+  position: relative;
+  line-height: 1;
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    path {
+      fill-opacity: 0;
+    }
+    &-animation {
+      animation: ring .6s linear infinite;
+      display: flex;
+    }
+    &-track {
+      stroke: var(--c-gray-light)
+    }
+    &-head {
+      transform-origin: center;
+      transition: stroke-dashoffset .2s cubic-bezier(.4,1,.75,.9);
+      stroke: var(--c-primary);
+      stroke-linecap: round;
+    }
+  }
+}

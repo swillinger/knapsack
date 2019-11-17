@@ -47,11 +47,11 @@
     {
       "slices": [
         {
-          "id": "Vwkz0p8y",
+          "id": "mJb73MRs",
           "blockId": "pattern-template-slice",
           "data": {
             "patternId": "button",
-            "templateId": "button-material-twig",
+            "templateId": "material-twig",
             "options": {
               "showReadme": true,
               "showSchemaForm": true,

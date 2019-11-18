@@ -1,8 +1,10 @@
 import produce from 'immer';
+import shortid from 'shortid';
 import { Action } from './types';
 import {
   KnapsackPattern,
   KnapsackPatternsConfig,
+  KnapsackTemplateDemo,
 } from '../../schemas/patterns';
 
 type PatternsState = {
@@ -20,8 +22,91 @@ const initialState: PatternsState = {
   patterns: {},
 };
 
+const UPDATE_TEMPLATE_DEMO = 'knapsack/patterns/UPDATE_TEMPLATE_DEMO';
+const REMOVE_TEMPLATE_DEMO = 'knapsack/patterns/REMOVE_TEMPLATE_DEMO';
+const ADD_TEMPLATE_DATA_DEMO = 'knapsack/patterns/ADD_TEMPLATE_DATA_DEMO';
 const UPDATE_PATTERN = 'knapsack/patterns/UPDATE_PATTERN';
 const UPDATE_PATTERN_INFO = 'knapsack/patterns/UPDATE_PATTERN_INFO';
+
+interface UpdateTemplateDemoAction extends Action {
+  type: typeof UPDATE_TEMPLATE_DEMO;
+  payload: {
+    patternId: string;
+    templateId: string;
+    demo: KnapsackTemplateDemo;
+  };
+}
+
+export function updateTemplateDemo({
+  patternId,
+  templateId,
+  demo,
+}: {
+  patternId: string;
+  templateId: string;
+  demo: KnapsackTemplateDemo;
+}): UpdateTemplateDemoAction {
+  return {
+    type: UPDATE_TEMPLATE_DEMO,
+    payload: {
+      patternId,
+      templateId,
+      demo,
+    },
+  };
+}
+
+interface AddTemplateDataDemoAction extends Action {
+  type: typeof ADD_TEMPLATE_DATA_DEMO;
+  payload: {
+    patternId: string;
+    templateId: string;
+  };
+}
+
+export function addTemplateDataDemo({
+  patternId,
+  templateId,
+}: {
+  patternId: string;
+  templateId: string;
+}): AddTemplateDataDemoAction {
+  return {
+    type: ADD_TEMPLATE_DATA_DEMO,
+    payload: {
+      patternId,
+      templateId,
+    },
+  };
+}
+
+interface RemoveTemplateDemoAction extends Action {
+  type: typeof REMOVE_TEMPLATE_DEMO;
+  payload: {
+    patternId: string;
+    templateId: string;
+    demoId: string;
+  };
+}
+
+export function removeTemplateDemo({
+  patternId,
+  templateId,
+  demoId,
+}: {
+  patternId: string;
+  templateId: string;
+  demoId: string;
+}): RemoveTemplateDemoAction {
+  return {
+    type: REMOVE_TEMPLATE_DEMO,
+    payload: {
+      patternId,
+      templateId,
+      demoId,
+    },
+  };
+}
 
 interface UpdatePatternAction extends Action {
   type: typeof UPDATE_PATTERN;
@@ -57,7 +142,12 @@ export function updatePatternInfo(
   };
 }
 
-type Actions = UpdatePatternAction | UpdatePatternInfoAction;
+type Actions =
+  | UpdatePatternAction
+  | UpdatePatternInfoAction
+  | UpdateTemplateDemoAction
+  | AddTemplateDataDemoAction
+  | RemoveTemplateDemoAction;
 
 export default function reducer(
   state = initialState,
@@ -81,6 +171,42 @@ export default function reducer(
         };
       });
 
+    case UPDATE_TEMPLATE_DEMO:
+      return produce(state, draft => {
+        const { templateId, patternId, demo } = action.payload;
+        const pattern = draft.patterns[patternId];
+        const template = pattern.templates.find(t => t.id === templateId);
+        template.demosById[demo.id] = demo;
+      });
+
+    case ADD_TEMPLATE_DATA_DEMO:
+      return produce(state, draft => {
+        const { templateId, patternId } = action.payload;
+        const pattern = draft.patterns[patternId];
+        const template = pattern.templates.find(t => t.id === templateId);
+        const id = shortid.generate();
+        template.demosById[id] = {
+          id,
+          title: 'My New Demo',
+          description: 'A description',
+          type: 'data',
+          data: {
+            props: {},
+            slots: {},
+          },
+        };
+        template.demos.push(id);
+      });
+
+    case REMOVE_TEMPLATE_DEMO:
+      return produce(state, draft => {
+        const { templateId, patternId, demoId } = action.payload;
+        const pattern = draft.patterns[patternId];
+        const template = pattern.templates.find(t => t.id === templateId);
+        delete template.demosById[demoId];
+        template.demos = template.demos.filter(d => d !== demoId);
+        // @todo search all other pattern demos to find any slots that used this demo.
+      });
     default:
       return {
         ...initialState,

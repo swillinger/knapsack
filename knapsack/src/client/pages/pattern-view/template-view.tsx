@@ -16,12 +16,20 @@
  */
 
 import React, { useState } from 'react';
-import { SchemaForm, Details, Select } from '@knapsack/design-system';
+import { SchemaForm, Details, Select, Button } from '@knapsack/design-system';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import shortid from 'shortid';
 import ReactTable from 'react-table';
-import { useSelector, updatePattern, useDispatch } from '../../store';
+import {
+  useSelector,
+  updatePattern,
+  useDispatch,
+  updateTemplateDemo,
+  updatePatternInfo,
+  addTemplateDataDemo,
+  removeTemplateDemo,
+} from '../../store';
 import MdBlock from '../../components/md-block';
 import Template from '../../components/template';
 import TemplateCodeBlock from './template-code-block';
@@ -37,6 +45,7 @@ import './shared/demo-grid-controls.scss';
 import { isDataDemo, isTemplateDemo } from '../../../schemas/patterns';
 import { TemplateThumbnail } from '../../components/template-thumbnail';
 import { Tabs } from '../../components/tabs';
+import { InlineEditText } from '../../components/inline-edit';
 
 const calculateDemoStageWidth = (size: string) => {
   switch (size) {
@@ -91,7 +100,9 @@ const TemplateView: React.FC<Props> = ({
   id,
   templateId,
 }: Props) => {
+  const patternId = id;
   const permissions = useSelector(store => store.userState.role.permissions);
+  const canEdit = useSelector(store => store.userState.canEdit);
   const patterns = useSelector(({ patternsState }) => patternsState.patterns);
   const allPatterns = useSelector(({ patternsState }) =>
     Object.values(patternsState.patterns),
@@ -255,6 +266,42 @@ const TemplateView: React.FC<Props> = ({
               }}
             >
               <div className="template-view__schema-form__inner">
+                <header className="template-view__schema-form__header">
+                  <h4>
+                    <InlineEditText
+                      text={demo.title}
+                      handleSave={text => {
+                        dispatch(
+                          updateTemplateDemo({
+                            patternId,
+                            templateId,
+                            demo: {
+                              ...demo,
+                              title: text,
+                            },
+                          }),
+                        );
+                      }}
+                    />
+                  </h4>
+                  <p>
+                    <InlineEditText
+                      text={demo.description}
+                      handleSave={text => {
+                        dispatch(
+                          updateTemplateDemo({
+                            patternId,
+                            templateId,
+                            demo: {
+                              ...demo,
+                              description: text,
+                            },
+                          }),
+                        );
+                      }}
+                    />
+                  </p>
+                </header>
                 <Tabs
                   panes={[
                     {
@@ -266,7 +313,6 @@ const TemplateView: React.FC<Props> = ({
                             <SchemaForm
                               schema={schema}
                               formData={demo.data.props}
-                              hasSubmit
                               onChange={({ formData }) => {
                                 // @todo ensure it saves
                                 setDemo(prevDemo => {
@@ -280,30 +326,6 @@ const TemplateView: React.FC<Props> = ({
                                     };
                                   }
                                 });
-                              }}
-                              onSubmit={({ formData }) => {
-                                dispatch(
-                                  updatePattern({
-                                    ...pattern,
-                                    templates: templates.map(t => {
-                                      if (t.id !== templateId) return t;
-                                      const newId = shortid.generate();
-                                      return {
-                                        ...t,
-                                        demosById: {
-                                          ...t.demosById,
-                                          [newId]: {
-                                            type: 'data',
-                                            data: {
-                                              props: formData,
-                                            },
-                                          },
-                                        },
-                                        demos: [...t.demos, newId],
-                                      };
-                                    }),
-                                  }),
-                                );
                               }}
                             />
                           </>
@@ -413,6 +435,51 @@ const TemplateView: React.FC<Props> = ({
                       : null,
                   ].filter(Boolean)}
                 />
+                {canEdit && (
+                  <>
+                    <hr />
+                    <Button
+                      kind="primary"
+                      onClick={() => {
+                        dispatch(
+                          updateTemplateDemo({
+                            patternId,
+                            templateId,
+                            demo,
+                          }),
+                        );
+                      }}
+                    >
+                      Save Demo
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        dispatch(
+                          addTemplateDataDemo({
+                            patternId,
+                            templateId,
+                          }),
+                        );
+                        // @todo go to it after
+                      }}
+                    >
+                      Add new demo
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        dispatch(
+                          removeTemplateDemo({
+                            patternId,
+                            templateId,
+                            demoId: demo.id,
+                          }),
+                        );
+                      }}
+                    >
+                      Remove demo
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
           )}

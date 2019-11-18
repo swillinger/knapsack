@@ -33,17 +33,17 @@ const CustomArrayField: React.FC<Props> = ({
 }: Props) => {
   const numberofItems = items.length;
   return (
-    <div id={`field-array--${idSchema.$id}`} className={className}>
+    <div id={`ks-field-array--${idSchema.$id}`} className={className}>
       <details open={uiSchema['ui:detailsOpen'] === true}>
         <summary>{title}</summary>
         {items &&
           items.map(element => (
             <FormArrayItem key={element.index}>
-              <p className="n-of-x">
+              <p className="ks-n-of-x">
                 {element.index + 1} / {numberofItems}
               </p>
               {element.children}
-              <FormIconTray className="field-array__item-button-tray">
+              <FormIconTray className="ks-field-array__item-button-tray">
                 <FormIconButton
                   active={element.hasMoveUp}
                   backgroundImage={upArrow}

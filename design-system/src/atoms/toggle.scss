@@ -1,4 +1,4 @@
-.k-toggle {
+.ks-toggle {
   p {
     display: none;
   }
@@ -10,11 +10,11 @@
     display: none;
   }
 
-  .checkbox-label {
+  .ks-checkbox-label {
     margin-left: 0.25rem;
   }
 
-  .checkbox-toggler {
+  .ks-checkbox-toggler {
     align-items: center;
     cursor: pointer;
     text-indent: -9999px;
@@ -26,7 +26,7 @@
     position: relative;
   }
 
-  .checkbox-toggler:after {
+  .ks-checkbox-toggler:after {
     content: '';
     position: absolute;
     top: 5px;
@@ -38,11 +38,11 @@
     transition: 0.3s;
   }
 
-  input:checked + .checkbox-toggler {
+  input:checked + .ks-checkbox-toggler {
     background: var(--c-active);
   }
 
-  input:checked + .checkbox-toggler:after {
+  input:checked + .ks-checkbox-toggler:after {
     left: calc(100% - 5px);
     transform: translateX(-100%);
   }

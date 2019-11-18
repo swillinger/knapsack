@@ -48,24 +48,24 @@ const PageWithSidebar: React.FC<Props> = ({
   if (!isFullScreen) {
     return (
       <div
-        className="page-with-sidebar"
+        className="ks-page-with-sidebar"
         style={{
           gridTemplateColumns: isSidebarCollapsed ? '45px 1fr' : '300px 1fr',
         }}
       >
         <SiteHeaderConnected />
-        <aside className="page-with-sidebar__sidebar">
+        <aside className="ks-page-with-sidebar__sidebar">
           <div
             // className={` page-with-sidebar__sidebar__column ${isSidebarCollapsed ? 'page-with-sidebar__sidebar__column--collapsed' : ''}`}
             className={classnames({
-              'page-with-sidebar__sidebar__column': true,
-              'page-with-sidebar__sidebar__column--collapsed': isSidebarCollapsed,
+              'ks-page-with-sidebar__sidebar__column': true,
+              'ks-page-with-sidebar__sidebar__column--collapsed': isSidebarCollapsed,
             })}
           >
             {sidebar || <Sidebar />}
           </div>
           <button
-            className="page-with-sidebar__sidebar__collapse-ctrl"
+            className="ks-page-with-sidebar__sidebar__collapse-ctrl"
             type="button"
             onClick={() => setIsSidebarCollapsed(current => !current)}
           >
@@ -78,7 +78,7 @@ const PageWithSidebar: React.FC<Props> = ({
           </button>
         </aside>
         <ErrorCatcher>
-          <main className="page-with-sidebar__page">
+          <main className="ks-page-with-sidebar__page">
             <PageHeaderContainer title={title} section={section} />
             {children}
           </main>

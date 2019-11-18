@@ -1,4 +1,4 @@
-.breakpoints-demo__breakpoint-list {
+.ks-breakpoints-demo__breakpoint-list {
   width: 100%;
   position: relative;
   overflow-y: hidden;
@@ -7,7 +7,7 @@
   }
 }
 
-.breakpoints-demo__breakpoint-item {
+.ks-breakpoints-demo__breakpoint-item {
   position: absolute;
   border-left: solid 3px var(--c-gray-dark);
   opacity: 0.7;
@@ -32,12 +32,12 @@
   }
 }
 
-.breakpoints-demo__device-width-list {
+.ks-breakpoints-demo__device-width-list {
   max-width: 20px;
   padding-top: 20px;
 }
 
-.breakpoints-demo__device-item {
+.ks-breakpoints-demo__device-item {
   border-bottom: solid 3px var(--c-gray-xlight);
   text-align: right;
   margin-bottom: var(--size-m);

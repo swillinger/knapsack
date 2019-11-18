@@ -27,27 +27,27 @@ const Footer: React.FC = () => {
   );
 
   return (
-    <footer className="footer">
-      <div className="footer__inner-wrapper">
-        <ul className="footer__menu">
+    <footer className="ks-footer">
+      <div className="ks-footer__inner-wrapper">
+        <ul className="ks-footer__menu">
           {permissions.includes('write') && (
-            <li className="footer__menu-item">
+            <li className="ks-footer__menu-item">
               <Link to="/settings">Settings</Link>
             </li>
           )}
-          <li className="footer__menu-item">
+          <li className="ks-footer__menu-item">
             <a href="https://knapsack.basalt.io/">Knapsack Docs</a>
           </li>
-          <li className="footer__menu-item">
+          <li className="ks-footer__menu-item">
             <a href="/demo-urls">Demo URLs</a>
           </li>
           {changelog && (
-            <li className="footer__menu-item">
+            <li className="ks-footer__menu-item">
               <Link to="/changelog">Changelog</Link>
             </li>
           )}
         </ul>
-        <div className="footer__built-on">
+        <div className="ks-footer__built-on">
           <a
             href="https://knapsack.basalt.io"
             target="_blank"
@@ -55,10 +55,10 @@ const Footer: React.FC = () => {
           >
             <img src={knapsackBranding} alt="Knapsack" />
           </a>
-          <div className="footer__built-on__inner">v{knapsackVersion}</div>
+          <div className="ks-footer__built-on__inner">v{knapsackVersion}</div>
         </div>
       </div>
-      <div className="footer__sub-footer">
+      <div className="ks-footer__sub-footer">
         <p>
           Download or use of this software is governed by our license agreement
           available{' '}

@@ -29,7 +29,7 @@ export default function CustomField(props) {
   } else if (inputSchema.type === 'string' && !!inputSchema.enum) {
     inputContent = (
       // eslint-disable-next-line jsx-a11y/label-has-associated-control
-      <label className="k-select-styled-wrapper" tabIndex={0}>
+      <label className="ks-select-styled-wrapper" tabIndex={0}>
         <span>{children}</span>
       </label>
     );
@@ -41,13 +41,13 @@ export default function CustomField(props) {
 
   /* eslint-disable no-alert, jsx-a11y/label-has-for */
   return (
-    <div className={`custom-field ${classNames}`}>
-      <label htmlFor={id} className="field-label">
+    <div className={`ks-custom-field ${classNames}`}>
+      <label htmlFor={id} className="ks-field-label">
         {label}
         {label && required ? '*' : null}
         {fieldDescription && (
           <Tooltip tooltipContent={fieldDescription} position="top">
-            <FaInfoCircle className="custom-field__info-icon" />
+            <FaInfoCircle className="ks-custom-field__info-icon" />
           </Tooltip>
         )}
       </label>

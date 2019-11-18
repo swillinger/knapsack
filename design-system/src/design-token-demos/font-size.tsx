@@ -10,8 +10,8 @@ export const FontSizeDemo: React.FC<Props> = ({ tokens }: Props) => {
   if (!tokens) return null;
   const demos = tokens.map((token, index) => (
     <div
-      className={`dtd-font-size
-        ${tokens.length !== index + 1 ? 'dtd-font-size--listed' : ''}`}
+      className={`ks-dtd-font-size
+        ${tokens.length !== index + 1 ? 'ks-dtd-font-size--listed' : ''}`}
       key={token.name}
       style={{
         fontSize: token.value,

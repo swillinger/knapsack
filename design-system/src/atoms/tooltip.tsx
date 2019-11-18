@@ -20,7 +20,7 @@ export const Tooltip: React.FC<Props> = ({
 }: Props) => {
   return (
     <div
-      className="k-tooltip"
+      className="ks-tooltip"
       // bg_color={props.bgColor}
       // text_color={props.textColor}
       data-position={position}

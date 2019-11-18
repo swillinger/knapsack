@@ -43,8 +43,8 @@ export const Select: React.FC<Props> = ({
   const [currentValue, setValue] = useState(value);
 
   return (
-    <label className="k-select-styled-wrapper" htmlFor={id} tabIndex={0}>
-      {label && <div className="label-text">{label}</div>}
+    <label className="ks-select-styled-wrapper" htmlFor={id} tabIndex={0}>
+      {label && <div className="ks-label-text">{label}</div>}
       <span>
         <select
           onChange={event => {

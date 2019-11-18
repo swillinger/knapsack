@@ -18,9 +18,9 @@ export const SpacingDemo: React.FC<Props> = ({ tokens }: Props) => {
       }}
     >
       {tokens.map(token => (
-        <div className="spacing-swatch" key={token.name}>
+        <div className="ks-spacing-swatch" key={token.name}>
           <span
-            className="spacing-swatch__spacing-outer"
+            className="ks-spacing-swatch__spacing-outer"
             style={{
               height: token.value,
               width: token.value,

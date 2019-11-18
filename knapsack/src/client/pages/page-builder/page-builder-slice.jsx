@@ -94,7 +94,7 @@ const PageBuilderSlice = ({
               <FaChevronDown fill={isLast ? 'lightgrey' : 'black'} />
             </div>
             <div
-              className="page-builder-slice__icon"
+              className="ks-page-builder-slice__icon"
               onKeyPress={showEditForm}
               onClick={showEditForm}
               role="button"
@@ -104,7 +104,7 @@ const PageBuilderSlice = ({
               <FaEdit />
             </div>
             <div
-              className="page-builder-slice__icon"
+              className="ks-page-builder-slice__icon"
               onKeyPress={deleteMe}
               onClick={deleteMe}
               role="button"
@@ -113,7 +113,7 @@ const PageBuilderSlice = ({
             >
               <FaTrashAlt />
             </div>
-            <div className="page-builder-slice__icon">
+            <div className="ks-page-builder-slice__icon">
               <FaArrowsAlt />
             </div>
           </div>

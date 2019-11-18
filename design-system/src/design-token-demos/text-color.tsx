@@ -10,7 +10,7 @@ export const TextColorDemo: React.FC<Props> = ({ tokens }: Props) => {
   if (!tokens) return null;
   const demos = tokens.map(token => (
     <div
-      className="dtd-text-color"
+      className="ks-dtd-text-color"
       key={token.name}
       style={{ color: token.value }}
     >

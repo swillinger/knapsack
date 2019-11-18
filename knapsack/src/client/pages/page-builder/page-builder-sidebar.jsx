@@ -81,11 +81,11 @@ class PageBuilderSidebar extends Component {
         <div>
           <h4>Patterns</h4>
           <TypeToFilter>
-            <h6 className="eyebrow">Filter List</h6>
+            <h6 className="ks-eyebrow">Filter List</h6>
             <TypeToFilterInputWrapper>
               <input
                 type="text"
-                className="type-to-filter"
+                className="ks-type-to-filter"
                 placeholder="Type to filter..."
                 value={this.props.filterTerm}
                 onChange={event => this.props.handleFilterChange(event)}
@@ -97,7 +97,7 @@ class PageBuilderSidebar extends Component {
               />
             </TypeToFilterInputWrapper>
           </TypeToFilter>
-          <ul className="page-builder-sidebar__pattern-list-wrapper">
+          <ul className="ks-page-builder-sidebar__pattern-list-wrapper">
             {items.map(pattern => (
               <PlaygroundSidebarPatternListItem
                 key={pattern.id}
@@ -110,7 +110,7 @@ class PageBuilderSidebar extends Component {
             onClick={this.props.handleCancelAddSlice}
             onKeyPress={this.props.handleCancelAddSlice}
             type="button"
-            className="button button--color-white button--size-small"
+            className="ks-button ks-button--color-white ks-button--size-small"
           >
             Cancel
           </Button>

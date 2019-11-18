@@ -48,8 +48,8 @@ const MdBlock: React.FC<Props> = (props: Props) => {
   }
 
   return (
-    <div className="md-block">
-      <div className="md-block__documentation-header">
+    <div className="ks-md-block">
+      <div className="ks-md-block__documentation-header">
         {title && <h4>{title}</h4>}
         {isEditable && (
           <div style={{ marginLeft: 'auto' }}>

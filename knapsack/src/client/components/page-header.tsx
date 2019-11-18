@@ -19,18 +19,18 @@ export const PageHeader: React.FC<Props> = ({
   status,
 }: Props) => {
   const classes = classNames({
-    'k-page-header': true,
-    'k-page-header--has-status': status,
-    'k-page-header--has-title': title,
-    'k-page-header--has-section': section,
-    'k-page-header--is-empty': !section && !title && !status,
+    'ks-page-header': true,
+    'ks-page-header--has-status': status,
+    'ks-page-header--has-title': title,
+    'ks-page-header--has-section': section,
+    'ks-page-header--is-empty': !section && !title && !status,
   });
   return (
     <header className={classes}>
-      {section && <h4 className="k-page-header__section">{section}</h4>}
-      {title && <h2 className="k-page-header__title">{title}</h2>}
+      {section && <h4 className="ks-page-header__section">{section}</h4>}
+      {title && <h2 className="ks-page-header__title">{title}</h2>}
       {status && (
-        <div className="k-page-header__status">
+        <div className="ks-page-header__status">
           <StatusMessage type={status.type} message={status.message} />
         </div>
       )}

@@ -152,13 +152,13 @@ class PatternSettings extends Component {
           patternTypes: {
             'ui:detailsOpen': true,
             items: {
-              classNames: 'rjsf-custom-object-grid-2',
+              classNames: 'ks-rjsf-custom-object-grid-2',
             },
           },
           patternStatuses: {
             'ui:detailsOpen': true,
             items: {
-              classNames: 'rjsf-custom-object-grid-3',
+              classNames: 'ks-rjsf-custom-object-grid-3',
               color: {
                 'ui:widget': 'color',
               },

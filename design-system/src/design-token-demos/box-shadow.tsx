@@ -11,7 +11,7 @@ export const BoxShadowDemo: React.FC<Props> = ({ tokens }: Props) => {
   if (!tokens) return null;
   const demos = tokens.map(token => (
     <div
-      className="dtd-box-shadow"
+      className="ks-dtd-box-shadow"
       key={token.name}
       style={{
         boxShadow: token.value,

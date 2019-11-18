@@ -47,7 +47,7 @@ export const CustomPagesSettings: React.FC = () => {
         sections: {
           'ui:detailsOpen': true,
           items: {
-            classNames: 'rjsf-custom-object-grid-3',
+            classNames: 'ks-rjsf-custom-object-grid-3',
             'ui:help':
               'Page will get url in form of "/SECTION_ID/PAGE_ID". It is your responsibility to ensure it is unique and does not conflict with any other page.',
             id: {
@@ -56,7 +56,7 @@ export const CustomPagesSettings: React.FC = () => {
             pages: {
               'ui:detailsOpen': true,
               items: {
-                classNames: 'rjsf-custom-object-grid-2',
+                classNames: 'ks-rjsf-custom-object-grid-2',
                 id: {
                   'ui:help': 'Must be lowercase with hyphens and no spaces',
                 },

@@ -97,32 +97,32 @@ class ColorContrastBlock extends React.Component {
       <Details key={result.bgColor.name}>
         <summary>{result.bgColor.name}</summary>
         <div
-          className="color-contrast-block__contrast-inner"
+          className="ks-color-contrast-block__contrast-inner"
           key={result.bgColor.name}
         >
           <h3>{result.bgColor.name}</h3>
-          <p className="col col--1">Variable</p>
-          <p className="col col--2">Ratio</p>
-          <p className="col col--3">AA</p>
-          <p className="col col--4">AAA</p>
-          <p className="col col--5">AA Large</p>
-          <p className="col col--6">AAA Large</p>
+          <p className="ks-col ks-col--1">Variable</p>
+          <p className="ks-col ks-col--2">Ratio</p>
+          <p className="ks-col ks-col--3">AA</p>
+          <p className="ks-col ks-col--4">AAA</p>
+          <p className="ks-col ks-col--5">AA Large</p>
+          <p className="ks-col ks-col--6">AAA Large</p>
           <div
-            className="color-contrast-block__color-block"
+            className="ks-color-contrast-block__color-block"
             style={{
               backgroundColor: result.bgColor.value
                 ? result.bgColor.value
                 : 'auto',
             }}
           />
-          <div className="color-contrast-block__row-wrapper">
+          <div className="ks-color-contrast-block__row-wrapper">
             {result.comparisonResults.map(compared => (
               <div
-                className="color-contrast-block__color-compare"
+                className="ks-color-contrast-block__color-compare"
                 key={compared.comparedColor.name}
               >
                 <div
-                  className="color-contrast-block__fade"
+                  className="ks-color-contrast-block__fade"
                   style={{
                     background: `linear-gradient(
                       to right,
@@ -137,50 +137,50 @@ class ColorContrastBlock extends React.Component {
                 />
                 <p>{compared.comparedColor.name}</p>
                 <p
-                  className={`color-contrast-block__new-ratio
+                  className={`ks-color-contrast-block__new-ratio
                     ${
                       compared.contrast.ratio > 4.5
-                        ? 'color-contrast-block__new-ratio--pass'
+                        ? 'ks-color-contrast-block__new-ratio--pass'
                         : ''
                     }`}
                 >
                   {compared.contrast.ratio}
                 </p>
                 <p
-                  className={`color-contrast-block__results
+                  className={`ks-color-contrast-block__results
                     ${
                       compared.contrast.AAA === 'pass'
-                        ? 'color-contrast-block__results--pass'
+                        ? 'ks-color-contrast-block__results--pass'
                         : ''
                     }`}
                 >
                   {compared.contrast.AAA}
                 </p>
                 <p
-                  className={`color-contrast-block__results
+                  className={`ks-color-contrast-block__results
                     ${
                       compared.contrast.AA === 'pass'
-                        ? 'color-contrast-block__results--pass'
+                        ? 'ks-color-contrast-block__results--pass'
                         : ''
                     }`}
                 >
                   {compared.contrast.AA}
                 </p>
                 <p
-                  className={`color-contrast-block__results
+                  className={`ks-color-contrast-block__results
                     ${
                       compared.contrast.AAALarge === 'pass'
-                        ? 'color-contrast-block__results--pass'
+                        ? 'ks-color-contrast-block__results--pass'
                         : ''
                     }`}
                 >
                   {compared.contrast.AAALarge}
                 </p>
                 <p
-                  className={`color-contrast-block__results
+                  className={`ks-color-contrast-block__results
                     ${
                       compared.contrast.AALarge === 'pass'
-                        ? 'color-contrast-block__results--pass'
+                        ? 'ks-color-contrast-block__results--pass'
                         : ''
                     }`}
                 >
@@ -195,11 +195,11 @@ class ColorContrastBlock extends React.Component {
     /* eslint-disable jsx-a11y/label-has-for */
     return (
       <div>
-        <div className="color-contrast-block__contrast-wrapper">
+        <div className="ks-color-contrast-block__contrast-wrapper">
           {colorBlocks}
         </div>
         <br />
-        <div className="color-contrast-block__accessability-dropdowns">
+        <div className="ks-color-contrast-block__accessability-dropdowns">
           Background Color:
           {this.props.bgColors.length > 0 && (
             <Select
@@ -234,13 +234,13 @@ class ColorContrastBlock extends React.Component {
           )}
         </div>
         <div
-          className="color-contrast-block__playground"
+          className="ks-color-contrast-block__playground"
           style={{
             backgroundColor: this.state.bgColor ? this.state.bgColor : 'none',
           }}
         >
           <h3
-            className="color-contrast-block__large-text"
+            className="ks-color-contrast-block__large-text"
             style={{
               color: this.state.textColor,
             }}
@@ -248,7 +248,7 @@ class ColorContrastBlock extends React.Component {
             Large Text looks like this
           </h3>
           <h5
-            className="color-contrast-block__small-text"
+            className="ks-color-contrast-block__small-text"
             style={{
               color: this.state.textColor,
             }}
@@ -256,14 +256,14 @@ class ColorContrastBlock extends React.Component {
             small text looks like this
           </h5>
         </div>
-        <div className="color-contrast-block__accessibility-info">
+        <div className="ks-color-contrast-block__accessibility-info">
           <p>
             WCAG AAA:{' '}
             <span
-              className={`color-contrast-block__accessibility-results
+              className={`ks-color-contrast-block__accessibility-results
                 ${
                   this.state.contrast.aaa === 'pass'
-                    ? 'color-contrast-block__accessibility-results--pass'
+                    ? 'ks-color-contrast-block__accessibility-results--pass'
                     : ''
                 }`}
             >
@@ -273,10 +273,10 @@ class ColorContrastBlock extends React.Component {
           <p>
             WCAG AA:{' '}
             <span
-              className={`color-contrast-block__accessibility-results
+              className={`ks-color-contrast-block__accessibility-results
                 ${
                   this.state.contrast.aa === 'pass'
-                    ? 'color-contrast-block__accessibility-results--pass'
+                    ? 'ks-color-contrast-block__accessibility-results--pass'
                     : ''
                 }`}
             >
@@ -286,10 +286,10 @@ class ColorContrastBlock extends React.Component {
           <p>
             WCAG AAA (Large Text):{' '}
             <span
-              className={`color-contrast-block__accessibility-results
+              className={`ks-color-contrast-block__accessibility-results
                 ${
                   this.state.contrast.aaaLarge === 'pass'
-                    ? 'color-contrast-block__accessibility-results--pass'
+                    ? 'ks-color-contrast-block__accessibility-results--pass'
                     : ''
                 }`}
             >
@@ -299,10 +299,10 @@ class ColorContrastBlock extends React.Component {
           <p>
             WCAG AA (Large Text):{' '}
             <span
-              className={`color-contrast-block__accessibility-results
+              className={`ks-color-contrast-block__accessibility-results
                 ${
                   this.state.contrast.aaLarge === 'pass'
-                    ? 'color-contrast-block__accessibility-results--pass'
+                    ? 'ks-color-contrast-block__accessibility-results--pass'
                     : ''
                 }`}
             >
@@ -312,9 +312,9 @@ class ColorContrastBlock extends React.Component {
           <p>
             WCAG Ratio:{' '}
             <span
-              className={`color-contrast-block__ratio
+              className={`ks-color-contrast-block__ratio
                 ${this.state.contrast.ratio >
-                  '4.5'} ? 'color-contrast-block__ratio--success' : ''`}
+                  '4.5'} ? 'ks-color-contrast-block__ratio--success' : ''`}
             >
               {this.state.contrast.ratio}
             </span>

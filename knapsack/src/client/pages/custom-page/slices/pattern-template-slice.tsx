@@ -88,7 +88,7 @@ function PatternTemplateSlice({
             properties: schemaProps,
           }}
           uiSchema={{
-            classNames: 'rjsf-custom-object-grid-3',
+            classNames: 'ks-rjsf-custom-object-grid-3',
           }}
           onChange={({ formData: newFormData }) => {
             if (newFormData.patternId === formData.patternId) {

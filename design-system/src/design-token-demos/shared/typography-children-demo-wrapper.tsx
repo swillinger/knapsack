@@ -16,7 +16,7 @@ export const TypographyChildrenDemoWrapper: React.FC<Props> = ({
 }: Props) => {
   return (
     <div
-      className="dtd-typography-children-demo-wrapper"
+      className="ks-dtd-typography-children-demo-wrapper"
       style={{
         fontFamily,
         fontWeight: parseInt(fontWeight, 10),

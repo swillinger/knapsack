@@ -5,9 +5,9 @@
 describe('Site Navigation', () => {
   it('Navigates between main menu items', () => {
     cy.visit('/');
-    cy.get('.k-site-header').contains('Knapsack Demo');
+    cy.get('.ks-site-header').contains('Knapsack Demo');
     cy.contains('Knapsack Demo');
-    cy.get('.home-splash__inner__version').then($version => {
+    cy.get('.ks-home-splash__inner__version').then($version => {
       // keeping consistent so it doesn't keep failing Percy Visual Regression Testing
       $version[0].textContent = '1.2.3';
     });
@@ -16,7 +16,7 @@ describe('Site Navigation', () => {
     cy.screenshot('homepage');
     cy.contains('Patterns').click();
     cy.url().should('include', '/patterns');
-    cy.get('.k-page-header__title').should('have.text', 'Patterns');
+    cy.get('.ks-page-header__title').should('have.text', 'Patterns');
 
     cy.percySnapshot('Patterns landing', { widths: [1200] });
     cy.screenshot('Patterns landing');

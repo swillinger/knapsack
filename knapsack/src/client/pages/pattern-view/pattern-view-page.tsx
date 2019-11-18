@@ -81,10 +81,13 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
   return (
     <ErrorCatcher>
       <PageWithSidebar isFullScreen={isFullScreen}>
-        <section className="pattern-view-page">
-          <header className="pattern-view-page__header">
+        <section className="ks-pattern-view-page">
+          <header className="ks-pattern-view-page__header">
             <div>
-              <h4 className="eyebrow" style={{ textTransform: 'capitalize' }}>
+              <h4
+                className="ks-eyebrow"
+                style={{ textTransform: 'capitalize' }}
+              >
                 @todo should show breadcrumb from navigation
               </h4>
               <h2 style={{ marginBottom: '0' }}>
@@ -114,7 +117,7 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
               </p>
             </div>
             <div>
-              <div className="pattern-view-demo-grid-controls">
+              <div className="ks-pattern-view-demo-grid-controls">
                 {hasSchema && (
                   <Select
                     items={[
@@ -141,7 +144,7 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
                   />
                 )}
               </div>
-              <div className="pattern-view-demo-grid-controls">
+              <div className="ks-pattern-view-demo-grid-controls">
                 <Button
                   type="button"
                   size="s"
@@ -152,7 +155,7 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
                   {isFullScreen ? 'Show Controls' : 'Fullscreen'}
                 </Button>
               </div>
-              <div className="pattern-view-demo-grid-controls">
+              <div className="ks-pattern-view-demo-grid-controls">
                 {templates.length > 1 && (
                   <Select
                     label="Template"

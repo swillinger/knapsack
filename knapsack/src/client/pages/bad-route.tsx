@@ -30,7 +30,7 @@ const BadRoute: React.FC<Props> = ({
 }: Props) => {
   return (
     <PageWithSidebar>
-      <h4 className="eyebrow">{subtitle}</h4>
+      <h4 className="ks-eyebrow">{subtitle}</h4>
       <h2>{title}</h2>
       <p>{message}</p>
     </PageWithSidebar>

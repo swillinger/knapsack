@@ -23,7 +23,7 @@ const DosAndDonts = props => (
   <div>
     {props.title && <h4>{props.title}</h4>}
     {props.description && <p>{props.description}</p>}
-    <div className="dos-and-donts__wrapper">
+    <div className="ks-dos-and-donts__wrapper">
       {props.items &&
         props.items.map(item => (
           <DosAndDontsPanel key={item.image} item={item} />

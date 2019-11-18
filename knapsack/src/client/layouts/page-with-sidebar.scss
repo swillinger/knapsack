@@ -1,4 +1,4 @@
-.page-with-sidebar {
+.ks-page-with-sidebar {
   display: grid;
   grid-template-rows: 86px 1fr 112px;
   height: 100vh;
@@ -30,7 +30,7 @@
   }
 }
 
-.page-with-sidebar__sidebar {
+.ks-page-with-sidebar__sidebar {
   position: relative;
   display: flex;
   flex-direction: row;

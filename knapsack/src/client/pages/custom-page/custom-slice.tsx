@@ -58,7 +58,7 @@ class CustomSlice extends React.Component<Props, State> {
 
     return (
       <aside
-        className="custom-slice"
+        className="ks-custom-slice"
         style={{
           width: '100%',
           border: isEditing ? 'dotted 1px hsl(0, 0%, 45%)' : 'none',

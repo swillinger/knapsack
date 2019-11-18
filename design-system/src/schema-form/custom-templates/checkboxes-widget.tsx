@@ -20,7 +20,7 @@ function CheckboxesWidget(props) {
   const { enumOptions, enumDisabled, inline } = options;
   return (
     <div
-      className="checkboxes"
+      className="ks-checkboxes"
       id={id}
       style={
         inline
@@ -49,8 +49,8 @@ function CheckboxesWidget(props) {
               <label
                 className={
                   inline
-                    ? `checkbox-inline ${disabledCls}`
-                    : `checkbox ${disabledCls}`
+                    ? `ks-checkbox-inline ${disabledCls}`
+                    : `ks-checkbox ${disabledCls}`
                 }
                 style={{
                   display: 'flex',
@@ -73,8 +73,8 @@ function CheckboxesWidget(props) {
                     }
                   }}
                 />
-                <span className="checkbox-toggler" />
-                <span className="checkbox-label">{option.label}</span>
+                <span className="ks-checkbox-toggler" />
+                <span className="ks-checkbox-label">{option.label}</span>
               </label>
             </Toggle>
           </div>

@@ -50,9 +50,9 @@ export const PatternTable: React.FC<Props> = ({ allPatterns }: Props) => {
     },
   ];
   return (
-    <div className="k-pattern-table">
+    <div className="ks-pattern-table">
       <ReactTable
-        className="k-pattern-table__table"
+        className="ks-pattern-table__table"
         data={data}
         columns={columns}
         showPagination={false}

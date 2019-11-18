@@ -1,16 +1,16 @@
 /* stylelint-disable selector-max-class */
-.custom-field {
+.ks-custom-field {
   padding: 0;
   margin: var(--size-m) 0;
 
-  .rjsf--inline & {
+  .ks-rjsf--inline & {
 
-    > div.custom-object {
+    > div.ks-custom-object {
       display: flex;
       justify-content: left;
       flex-wrap: wrap;
       align-items: flex-end;
-      > div.custom-object-item {
+      > div.ks-custom-object-item {
         padding: 0;
         margin-right: var(--size-m);
       }
@@ -23,12 +23,12 @@
 
   .patterns-filters & {
     &.field-object {
-      > div.custom-object {
+      > div.ks-custom-object {
         display: flex;
         justify-content: left;
         flex-wrap: wrap;
         /* stylelint-disable-next-line max-nesting-depth */
-        > div.custom-object-item {
+        > div.ks-custom-object-item {
           padding: 0;
           flex-grow: 0.2;
         }
@@ -43,13 +43,13 @@
     font-weight: bold;
   }
 
-  &.field-array {
+  &.ks-field-array {
     position: relative;
     .field-array.form-group {
       margin-left: 3rem;
     }
 
-    .n-of-x {
+    .ks-n-of-x {
       position: absolute;
       font-size: 0.75rem;
       right: 0.5rem;

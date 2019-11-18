@@ -43,7 +43,7 @@ export const SmartGrid: React.FC<Props> = (props: Props) => {
       if (propBreakpoints[bp]) {
         return `
           @media (min-width: ${breakpoints[bp]}) {
-            .smart-grid__item.smart-grid__item--${uniqueId} {
+            .ks-smart-grid__item.ks-smart-grid__item--${uniqueId} {
               width: calc(
                 ${100 / propBreakpoints[bp]}% +
                 ${gutter / propBreakpoints[bp]}px - ${gutter}px
@@ -67,12 +67,12 @@ export const SmartGrid: React.FC<Props> = (props: Props) => {
     return (
       <>
         {generateGridMediaQueries(uniqueId)}
-        <div className={`smart-grid__item smart-grid__item--${uniqueId}`}>
+        <div className={`ks-smart-grid__item ks-smart-grid__item--${uniqueId}`}>
           {child}
         </div>
       </>
     );
   });
 
-  return <div className="smart-grid">{childrenGridItems}</div>;
+  return <div className="ks-smart-grid">{childrenGridItems}</div>;
 };

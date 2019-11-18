@@ -6,5 +6,5 @@ type Props = {
 };
 
 export const FormArrayItem: React.FC<Props> = (props: Props) => {
-  return <div className="k-form-array-item">{props.children}</div>;
+  return <div className="ks-form-array-item">{props.children}</div>;
 };

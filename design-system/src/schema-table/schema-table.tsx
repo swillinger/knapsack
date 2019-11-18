@@ -192,6 +192,7 @@ export const SchemaTable = ({ schema }) => {
 
   return (
     <ReactTable
+      // classname prefix ks- not added due to third party library
       className="schema-table -striped -highlight"
       data={data}
       columns={columns}

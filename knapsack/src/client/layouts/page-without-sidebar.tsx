@@ -32,10 +32,10 @@ const PageWithoutSidebar: React.FC<Props> = ({
   title,
   section,
 }: Props) => (
-  <div className="page-without-sidebar">
+  <div className="ks-page-without-sidebar">
     <SiteHeaderConnected />
     <ErrorCatcher>
-      <main className="page-without-sidebar__page">
+      <main className="ks-page-without-sidebar__page">
         <PageHeaderContainer title={title} section={section} />
         {children}
       </main>

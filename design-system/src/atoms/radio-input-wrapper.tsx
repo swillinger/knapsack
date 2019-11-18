@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './radio-input-wrapper.scss';
 
 export function RadioInputWrapper(props) {
-  return <div className="k-radio-input-wrapper">{props.children}</div>;
+  return <div className="ks-radio-input-wrapper">{props.children}</div>;
 }
 
 RadioInputWrapper.defaultProps = {

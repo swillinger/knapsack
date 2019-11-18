@@ -42,13 +42,13 @@ export type Props = PropTypesToTsType<typeof propTypes>;
 
 export const NavList: React.FC<Props> = ({ items }: Props) => {
   return (
-    <nav className="pattern-nav-list">
+    <nav className="ks-pattern-nav-list">
       <ul>
         {items.map(
           ({ title, isHeading, isSubHeading, id, path, status = null }) =>
             isHeading || isSubHeading ? (
               <li
-                className={`pattern-nav-list__item pattern-nav-list__item--${
+                className={`ks-pattern-nav-list__item ks-pattern-nav-list__item--${
                   isHeading ? 'heading' : 'subheading'
                 }`}
                 key={id + path}
@@ -56,7 +56,7 @@ export const NavList: React.FC<Props> = ({ items }: Props) => {
                 <h4>{path ? <NavLink to={path}>{title}</NavLink> : title}</h4>
               </li>
             ) : (
-              <li className="pattern-nav-list__item" key={id + path}>
+              <li className="ks-pattern-nav-list__item" key={id + path}>
                 <NavLink to={path} exact>
                   {title}
                   {status && (

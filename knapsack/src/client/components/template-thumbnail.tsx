@@ -16,13 +16,13 @@ export const TemplateThumbnail: React.FC<Props> = ({
 }: Props) => {
   return (
     <div
-      className="k-template-thumbnail"
+      className="ks-template-thumbnail"
       style={{
         width: `${actualWidth}px`,
       }}
     >
       <div
-        className="k-template-thumbnail__template"
+        className="ks-template-thumbnail__template"
         style={{
           transform: `scale(${actualWidth / renderedWidth})`,
         }}
@@ -31,7 +31,7 @@ export const TemplateThumbnail: React.FC<Props> = ({
       </div>
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div
-        className="k-template-thumbnail__overlay"
+        className="ks-template-thumbnail__overlay"
         onKeyPress={() => handleSelection()}
         onClick={() => handleSelection()}
       />

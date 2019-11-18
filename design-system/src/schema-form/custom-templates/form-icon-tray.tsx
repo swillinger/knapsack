@@ -13,7 +13,7 @@ export const FormIconTray: React.FC<Props> = ({
   style = {},
 }: Props) => {
   return (
-    <div className={`k-form-icon-tray ${className}`} style={style}>
+    <div className={`ks-form-icon-tray ${className}`} style={style}>
       {children}
     </div>
   );

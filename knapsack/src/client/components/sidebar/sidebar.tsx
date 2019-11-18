@@ -34,7 +34,7 @@ export const Sidebar: React.FC = () => {
   );
 
   return (
-    <aside className="k-sidebar">
+    <aside className="ks-sidebar">
       {canEdit && (
         <div>
           <Button

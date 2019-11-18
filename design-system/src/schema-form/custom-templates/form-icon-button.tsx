@@ -24,8 +24,8 @@ export const FormIconButton: React.FC<Props> = ({
 }: Props) => {
   return (
     <div
-      className={`k-form-icon-button
-        ${active ? 'k-form-icon-button--active' : ''}`}
+      className={`ks-form-icon-button
+        ${active ? 'ks-form-icon-button--active' : ''}`}
       onKeyPress={onKeyPress}
       onClick={onClick}
       aria-label={ariaLabel}
@@ -34,7 +34,7 @@ export const FormIconButton: React.FC<Props> = ({
     >
       {backgroundImage && (
         <div
-          className="k-form-icon-button__icon"
+          className="ks-form-icon-button__icon"
           style={{
             backgroundImage: `url(${backgroundImage})`,
           }}

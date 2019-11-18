@@ -9,7 +9,7 @@ type Props = {
 export const TextShadowDemo: React.FC<Props> = ({ tokens }: Props) => {
   if (!tokens) return null;
   const demos = tokens.map(token => (
-    <div className="k-design-token-text-shadow-demo" key={token.name}>
+    <div className="ks-design-token-text-shadow-demo" key={token.name}>
       <h4>{token.name}</h4>
       <p
         style={{

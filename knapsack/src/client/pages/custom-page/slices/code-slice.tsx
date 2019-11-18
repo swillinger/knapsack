@@ -53,7 +53,7 @@ export const codeBlockSlice: Slice<Data> = {
     items: {
       'ui:detailsOpen': true,
       items: {
-        classNames: 'rjsf-custom-object-grid-2',
+        classNames: 'ks-rjsf-custom-object-grid-2',
         code: {
           'ui:widget': 'textarea',
           'ui:options': {

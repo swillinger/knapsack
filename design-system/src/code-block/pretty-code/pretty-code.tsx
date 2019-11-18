@@ -85,9 +85,9 @@ export const CodeSnippet = ({ language, code = '' }) => {
     ast.length === 0 ? preppedCode : ast.map(mapWithDepth(0));
 
   return (
-    <pre className="pretty-code">
-      <code className="pretty-code__code">
-        <div className="pretty-code__prism-token">{formattedCode}</div>
+    <pre className="ks-pretty-code">
+      <code className="ks-pretty-code__code">
+        <div className="ks-pretty-code__prism-token">{formattedCode}</div>
       </code>
     </pre>
   );

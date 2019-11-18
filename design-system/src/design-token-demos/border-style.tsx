@@ -16,7 +16,7 @@ export const BorderStyleDemo: React.FC<Props> = ({ tokens }: Props) => {
       </h4>
       {token.comment && <small>{token.comment}</small>}
       <div
-        className="dtd-border-demo-box"
+        className="ks-dtd-border-demo-box"
         style={{
           border: `1px ${token.value} black`,
         }}

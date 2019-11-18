@@ -49,17 +49,17 @@ Props) => {
   const items = patterns.map(({ id, title, description }) => {
     const path = `${BASE_PATHS.PATTERN}/${id}`;
     return (
-      <li className="pattern-grid__list-item" key={id}>
+      <li className="ks-pattern-grid__list-item" key={id}>
         <Link to={path}>
-          <header className="pattern-grid__list-item__header">
+          <header className="ks-pattern-grid__list-item__header">
             <h3>{title}</h3>
           </header>
-          <div className="pattern-grid__list-item__description">
+          <div className="ks-pattern-grid__list-item__description">
             {description}
           </div>
         </Link>
       </li>
     );
   });
-  return <ul className="pattern-grid__list">{items}</ul>;
+  return <ul className="ks-pattern-grid__list">{items}</ul>;
 };

@@ -13,16 +13,16 @@ type Props = {
 
 const BreakpointList: React.FC<GeneralProps> = ({ items }: GeneralProps) => {
   return (
-    <ul className="breakpoints">
+    <ul className="ks-breakpoints">
       {items.map(item => (
         <li
-          className="breakpoints-demo__breakpoint-item"
+          className="ks-breakpoints-demo__breakpoint-item"
           key={item.name}
           style={{
             left: item.value,
           }}
         >
-          <span className="label">
+          <span className="ks-label">
             {item.name}:<br />
             {item.value}
           </span>
@@ -38,16 +38,16 @@ const DeviceWidthList: React.FC<{ items: DeviceWidth[] }> = ({
   items: DeviceWidth[];
 }) => {
   return (
-    <ul className="breakpoints-demo__device-width-list">
+    <ul className="ks-breakpoints-demo__device-width-list">
       {items.map(item => (
         <li
-          className="breakpoints-demo__device-item"
+          className="ks-breakpoints-demo__device-item"
           key={item.name}
           style={{
             width: item.width,
           }}
         >
-          <span className="label">
+          <span className="ks-label">
             {item.name}: {item.width}
           </span>
         </li>
@@ -57,7 +57,7 @@ const DeviceWidthList: React.FC<{ items: DeviceWidth[] }> = ({
 };
 
 export const BreakpointsDemo: React.FC<Props> = ({ tokens }: Props) => (
-  <div className="breakpoints-demo__breakpoint-list">
+  <div className="ks-breakpoints-demo__breakpoint-list">
     <BreakpointList items={tokens} />
     <DeviceWidthList items={commonWidths} />
   </div>

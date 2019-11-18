@@ -21,7 +21,7 @@ import './dos-and-donts-panel.scss';
 export default function DosAndDontsPanel(props) {
   return (
     <figure
-      className="dos-and-donts-panel"
+      className="ks-dos-and-donts-panel"
       style={{
         borderBottomColor: props.item.do
           ? 'var(--c-green-ghost)'

@@ -46,8 +46,8 @@ export const ColorSwatch: React.FC<ColorSwatchProps> = ({
 }: ColorSwatchProps) => {
   const colorValue = convertColor(color.value, format);
   return (
-    <div className="color-swatch">
-      <div className="color-swatch__swatch-info">
+    <div className="ks-color-swatch">
+      <div className="ks-color-swatch__swatch-info">
         <h5>{color.name}</h5>
         {color.code && (
           <h6>
@@ -62,7 +62,7 @@ export const ColorSwatch: React.FC<ColorSwatchProps> = ({
           </p>
         )}
       </div>
-      <div className="color-swatch__swatch-color-gradient-background">
+      <div className="ks-color-swatch__swatch-color-gradient-background">
         <div
           style={{
             backgroundColor: color.value ? color.value : 'auto',
@@ -95,7 +95,7 @@ export const ColorSwatches: React.FC<ColorSwatchesProps> = ({
   /* eslint-disable jsx-a11y/label-has-for */
   return (
     <div>
-      <div className="color-swatch__right-label">
+      <div className="ks-color-swatch__right-label">
         Color Format:
         <Select
           value={format}
@@ -124,7 +124,7 @@ export const ColorSwatches: React.FC<ColorSwatchesProps> = ({
           </a>
         </div>
       </div>
-      <div className="color-swatch__swatches-wrapper">{colorSwatches}</div>
+      <div className="ks-color-swatch__swatches-wrapper">{colorSwatches}</div>
     </div>
   );
 };

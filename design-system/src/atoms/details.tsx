@@ -13,7 +13,7 @@ export const Details: React.FC<Props> = ({
   open = false,
 }: Props) => {
   return (
-    <details className={`k-details ${className}`} open={open}>
+    <details className={`ks-details ${className}`} open={open}>
       {children}
     </details>
   );

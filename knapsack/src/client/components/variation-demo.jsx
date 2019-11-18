@@ -59,7 +59,7 @@ export class VariationDemo extends Component {
         const itemData = { ...this.props.data, [propKey]: item };
         return (
           <div
-            className="variation-demo__variation-expanded"
+            className="ks-variation-demo__variation-expanded"
             style={{ borderBottomColor: colorTheme }}
             key={JSON.stringify(itemData)}
           >
@@ -74,7 +74,7 @@ export class VariationDemo extends Component {
                 {typeof item === 'boolean' ? JSON.stringify(item) : item}
               </code>
             </h4>
-            <div className="variation-demo__checkerboard">
+            <div className="ks-variation-demo__checkerboard">
               <Template
                 templateId={this.props.templateId}
                 patternId={this.props.patternId}
@@ -96,7 +96,7 @@ export class VariationDemo extends Component {
       content = (
         <div>
           <div
-            className="variation-demo__variation-item"
+            className="ks-variation-demo__variation-item"
             style={{ borderBottomColor: colorTheme }}
           >
             <SchemaForm
@@ -107,7 +107,7 @@ export class VariationDemo extends Component {
               uiSchema={formUi}
             />
           </div>
-          <div className="variation-demo__checkerboard">
+          <div className="ks-variation-demo__checkerboard">
             <Template
               templateId={this.props.templateId}
               patternId={this.props.patternId}
@@ -122,7 +122,7 @@ export class VariationDemo extends Component {
     return (
       <div>
         <div
-          className="variation-demo__header-region"
+          className="ks-variation-demo__header-region"
           style={{
             background: colorThemeAccent,
             borderBottomColor: colorTheme,
@@ -135,7 +135,7 @@ export class VariationDemo extends Component {
             </div>
           )}
           <div
-            className="variation-demo__header-region__inner"
+            className="ks-variation-demo__header-region__inner"
             style={{ color: colorTheme }}
             role="button"
             onClick={() =>
@@ -163,7 +163,7 @@ export class VariationDemo extends Component {
         </div>
         <div>{content}</div>
         <div
-          className="variation-demo__footer-region"
+          className="ks-variation-demo__footer-region"
           style={{
             borderTopColor: colorTheme,
             display: this.state.isExpanded ? 'none' : 'block',
@@ -241,7 +241,7 @@ export default function VariationDemos({
   }));
 
   return (
-    <div className="variation-demo">
+    <div className="ks-variation-demo">
       <h4>Variations</h4>
       <p>
         Explore the variations of each property of this component.

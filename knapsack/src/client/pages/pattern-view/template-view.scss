@@ -1,13 +1,13 @@
 @import '../../global/breakpoints';
 
-.template-view__overview-wrapper {
+.ks-template-view__overview-wrapper {
   width: 100%;
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
 }
 
-.template-view__demo-grid {
+.ks-template-view__demo-grid {
   position: relative;
   flex-grow: 1;
 
@@ -16,7 +16,7 @@
   }
 }
 
-.template-view__demo-stage {
+.ks-template-view__demo-stage {
   background-image: linear-gradient(45deg, hsl(0, 0%, 90%) 25%, transparent 25%),
     linear-gradient(-45deg, hsl(0, 0%, 90%) 25%, transparent 25%),
     linear-gradient(45deg, transparent 75%, hsl(0, 0%, 90%) 75%),
@@ -35,7 +35,7 @@
   }
 }
 
-.template-view__schema-form {
+.ks-template-view__schema-form {
   display: flex;
   justify-content: center;
   overflow: initial;
@@ -68,19 +68,19 @@
   }
 }
 
-.template-view__demo-list {
+.ks-template-view__demo-list {
   border: solid 1px var(--c-gray-dark);
   padding: var(--size-m);
   margin-bottom: var(--size-l);
 }
 
-.template-view__demo-items {
+.ks-template-view__demo-items {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
 }
 
-.template-view__demo-item {
+.ks-template-view__demo-item {
   margin-right: var(--size-m);
   margin-bottom: var(--size-m);
   border: solid 1px var(--c-gray-light);

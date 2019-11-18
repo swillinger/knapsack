@@ -183,8 +183,8 @@ const TemplateView: React.FC<Props> = ({
   const showSchemaForm = isSchemaFormShown && hasSchema;
 
   return (
-    <article className="template-view">
-      <div className="template-view__overview-wrapper">
+    <article className="ks-template-view">
+      <div className="ks-template-view__overview-wrapper">
         <TemplateHeader
           title={title}
           assetSets={assetSets}
@@ -234,7 +234,7 @@ const TemplateView: React.FC<Props> = ({
         />
 
         <div
-          className="template-view__demo-grid"
+          className="ks-template-view__demo-grid"
           style={{
             display:
               (showSchemaForm ? demoSize : 'full') === 'full'
@@ -243,7 +243,7 @@ const TemplateView: React.FC<Props> = ({
           }}
         >
           <div
-            className="template-view__demo-stage"
+            className="ks-template-view__demo-stage"
             style={{
               width: calculateDemoStageWidth(
                 showSchemaForm ? demoSize : 'full',
@@ -260,12 +260,12 @@ const TemplateView: React.FC<Props> = ({
           </div>
           {showSchemaForm && isDataDemo(demo) && (
             <div
-              className="template-view__schema-form"
+              className="ks-template-view__schema-form"
               style={{
                 width: calculateSchemaFormWidth(demoSize),
               }}
             >
-              <div className="template-view__schema-form__inner">
+              <div className="ks-template-view__schema-form__inner">
                 <header className="template-view__schema-form__header">
                   <h4>
                     <InlineEditText
@@ -487,13 +487,13 @@ const TemplateView: React.FC<Props> = ({
       </div>
 
       {demos && demos.length > 1 && (
-        <nav className="template-view__demo-list">
+        <nav className="ks-template-view__demo-list">
           <h4>Demos</h4>
-          <div className="template-view__demo-items">
+          <div className="ks-template-view__demo-items">
             {demos.map((aDemo, i) => (
               <figure
-                className={`template-view__demo-item ${
-                  demoIndex === i ? 'template-view__demo-item--active' : ''
+                className={`ks-template-view__demo-item ${
+                  demoIndex === i ? 'ks-template-view__demo-item--active' : ''
                 }`}
                 key={aDemo.id}
                 style={{ width: '200px' }}

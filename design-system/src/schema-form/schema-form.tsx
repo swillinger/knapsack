@@ -42,7 +42,7 @@ export const SchemaForm = ({
   className = '',
   formData = {},
   hasSubmit = false,
-  idPrefix = `schema-form--${uuid()}`,
+  idPrefix = `ks-schema-form--${uuid()}`,
   isDebug = false,
   isInline = false,
   uiSchema = {},
@@ -82,7 +82,7 @@ export const SchemaForm = ({
         ObjectFieldTemplate={ObjectFieldTemplate}
         ArrayFieldTemplate={CustomArrayField}
         FieldTemplate={CustomField}
-        className={isInline ? 'rjsf rjsf--inline' : 'rjsf'}
+        className={isInline ? 'ks-rjsf ks-rjsf--inline' : 'ks-rjsf'}
         widgets={{
           // can add any of our own OR replace any of these core ones: https://github.com/mozilla-services/react-jsonschema-form/tree/master/src/components/widgets
           CheckboxWidget,

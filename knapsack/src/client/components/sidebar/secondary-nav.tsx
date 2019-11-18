@@ -25,8 +25,8 @@ export const NavItem: React.FC<KnapsackNavItemProps> = ({
 }: KnapsackNavItemProps) => {
   const theTitle = path ? <NavLink to={path}>{title}</NavLink> : title;
   const classes = cn({
-    'k-nav-item': true,
-    'k-nav-item--link': path,
+    'ks-nav-item': true,
+    'ks-nav-item--link': path,
   });
   return <span className={classes}>{theTitle}</span>;
 };
@@ -55,8 +55,8 @@ export const SecondaryNav: React.FC<Props> = ({
   const [treeData, setTreeData] = useState(expandedTreeData);
 
   return (
-    <aside className="k-secondary-nav">
-      <header className="k-secondary-nav__header">
+    <aside className="ks-secondary-nav">
+      <header className="ks-secondary-nav__header">
         <Button
           size="s"
           onClick={() => {
@@ -83,7 +83,7 @@ export const SecondaryNav: React.FC<Props> = ({
         </Button>
       </header>
       <hr />
-      <nav className="k-secondary-nav__tree" style={{ height: 900 }}>
+      <nav className="ks-secondary-nav__tree" style={{ height: 900 }}>
         <SortableTree
           treeData={treeData}
           theme={FileExplorerTheme}

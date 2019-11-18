@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './toggle.scss';
 
 export function Toggle(props) {
-  return <div className="k-toggle">{props.children}</div>;
+  return <div className="ks-toggle">{props.children}</div>;
 }
 
 Toggle.defaultProps = {

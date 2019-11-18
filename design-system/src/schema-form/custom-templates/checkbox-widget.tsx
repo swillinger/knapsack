@@ -16,7 +16,7 @@ function CheckboxWidget(props) {
     onChange,
   } = props;
   return (
-    <div className={`checkbox ${disabled || readonly ? 'disabled' : ''}`}>
+    <div className={`ks-checkbox ${disabled || readonly ? 'disabled' : ''}`}>
       <Toggle>
         <label htmlFor={id} style={{ display: 'flex', alignItems: 'center' }}>
           <input
@@ -29,7 +29,7 @@ function CheckboxWidget(props) {
             onBlur={onBlur && (event => onBlur(id, event.target.checked))}
             onFocus={onFocus && (event => onFocus(id, event.target.checked))}
           />
-          <span className="checkbox-toggler" />
+          <span className="ks-checkbox-toggler" />
           {/* <span className="checkbox-label">{label}</span> */}
         </label>
       </Toggle>

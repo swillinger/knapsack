@@ -407,10 +407,10 @@ class Playground extends Component {
     return (
       <PageBuilderContext.Provider value={this.state}>
         <PageWithSidebar {...props} sidebar={SideBarContent}>
-          <div className="page-builder-index">
+          <div className="ks-page-builder-index">
             {this.state.hasVisibleControls && (
               <>
-                <h4 className="eyebrow">Prototyping Sandbox</h4>
+                <h4 className="ks-eyebrow">Prototyping Sandbox</h4>
                 <h2>{this.state.example.title}</h2>
 
                 {this.state.statusMessage && (

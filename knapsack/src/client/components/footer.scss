@@ -1,6 +1,6 @@
 @import '../global/breakpoints';
 
-.footer {
+.ks-footer {
   padding: 1.5rem;
   border-top: 1px solid var(--c-black);
   background-color: var(--c-bg-dark);
@@ -9,7 +9,7 @@
     padding: 1rem;
   }
   p,
-  &.footer a { // double selector for override
+  &.ks-footer a { // double selector for override
     color: var(--c-text-white);
   }
   ul,

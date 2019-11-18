@@ -94,12 +94,14 @@ export const HomeSplash: React.FC<HomeSplashProps> = ({
   slogan,
   version,
 }: HomeSplashProps) => (
-  <div className="home-splash">
-    <div className="home-splash__inner">
-      {subtitle && <h2 className="home-splash__inner__eyebrow">{subtitle}</h2>}
+  <div className="ks-home-splash">
+    <div className="ks-home-splash__inner">
+      {subtitle && (
+        <h2 className="ks-home-splash__inner__eyebrow">{subtitle}</h2>
+      )}
       {title && <h1 style={{ fontSize: `${bigWords(title)}vw` }}>{title}</h1>}
-      {slogan && <h2 className="home-splash__inner__subtitle">{slogan}</h2>}
-      {version && <p className="home-splash__inner__version">{version}</p>}
+      {slogan && <h2 className="ks-home-splash__inner__subtitle">{slogan}</h2>}
+      {version && <p className="ks-home-splash__inner__version">{version}</p>}
     </div>
   </div>
 );

@@ -32,10 +32,10 @@ export const TemplateHeader: React.FC<Props> = ({
   isTitleShown = false,
 }: Props) => {
   return (
-    <header className="ks-template-header template-view__flex-wrapper">
+    <header className="ks-template-header ks-template-view__flex-wrapper">
       {isTitleShown && <h3 className="ks-template-header__title">{title}</h3>}
       {status && (
-        <h5 className="eyebrow" style={{ marginBottom: '0' }}>
+        <h5 className="ks-eyebrow" style={{ marginBottom: '0' }}>
           Status: {status.title}
           <PatternStatusIcon color={status.color} title={status.title} />
         </h5>

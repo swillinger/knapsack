@@ -17,7 +17,7 @@ export const ClearFilterButton: React.FC<Props> = ({
 }: Props) => {
   return (
     <div
-      className="k-clear-filter-button"
+      className="ks-clear-filter-button"
       style={{
         display: isVisible ? 'flex' : 'none',
       }}

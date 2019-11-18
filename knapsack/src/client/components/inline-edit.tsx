@@ -48,21 +48,21 @@ export const InlineEditTextBase: React.FC<TextProps> = ({
   };
 
   const classes = cn({
-    'k-inline-edit-text': true,
-    'k-inline-edit-text--controls-visible': showControls,
-    'k-inline-edit-text--editing': isEditing,
+    'ks-inline-edit-text': true,
+    'ks-inline-edit-text--controls-visible': showControls,
+    'ks-inline-edit-text--editing': isEditing,
   });
   return (
     <span className={classes}>
       <span
-        className="k-inline-edit-text__text"
+        className="ks-inline-edit-text__text"
         ref={textEl}
         contentEditable={isEditing}
         suppressContentEditableWarning={isEditing}
       >
         {text}
       </span>
-      <span className="k-inline-edit-text__controls">
+      <span className="ks-inline-edit-text__controls">
         <Button
           size="s"
           onClick={handleControlTrigger}

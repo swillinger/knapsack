@@ -5,7 +5,7 @@ import './pattern-status-icon.scss';
 export function PatternStatusIcon(props) {
   return (
     <span
-      className="k-pattern-status-icon"
+      className="ks-pattern-status-icon"
       title={props.title}
       style={{
         backgroundColor: props.color ? props.color : '#ccc',

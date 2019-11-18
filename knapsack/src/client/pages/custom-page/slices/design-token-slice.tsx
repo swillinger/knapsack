@@ -302,7 +302,7 @@ class DesignTokenSlice extends React.Component<Props, State> {
               },
             }}
             uiSchema={{
-              classNames: 'rjsf-custom-object-grid-2',
+              classNames: 'ks-rjsf-custom-object-grid-2',
               tokens: {
                 tags: {
                   'ui:widget': 'checkboxes',

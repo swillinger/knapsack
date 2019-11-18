@@ -38,7 +38,7 @@ export const StatusMessage: React.FC<Props> = ({
   const theType = statusTypes.includes(type) ? type : 'info';
   return (
     <aside
-      className="k-status-message"
+      className="ks-status-message"
       style={{
         border: `2px solid ${statusColorSets[theType].border}`,
         backgroundColor: statusColorSets[theType].bg,

@@ -43,7 +43,7 @@ export class TabbedPanel extends Component<Props, State> {
       const isPropVariation = !!item.children.props.prop;
       return (
         <div
-          className="tabbed-panel__demo-tab"
+          className="ks-tabbed-panel__demo-tab"
           key={item.id}
           role="button"
           tabIndex={0}
@@ -73,7 +73,7 @@ export class TabbedPanel extends Component<Props, State> {
       >
         {item.header && (
           <div
-            className="tabbed-panel__header-region"
+            className="ks-tabbed-panel__header-region"
             style={{
               background: colorThemeAccent,
               borderBottom: `10px solid ${colorTheme}`,
@@ -84,7 +84,7 @@ export class TabbedPanel extends Component<Props, State> {
         )}
         {item.children && (
           <div
-            className="tabbed-panel__demo-stage"
+            className="ks-tabbed-panel__demo-stage"
             style={{
               padding: bleed,
             }}
@@ -92,7 +92,7 @@ export class TabbedPanel extends Component<Props, State> {
             {item.children}
             {item.notes && (
               <div
-                className="tabbed-panel__footer-region"
+                className="ks-tabbed-panel__footer-region"
                 style={{
                   borderTop: `1px solid ${colorTheme}`,
                 }}
@@ -107,9 +107,9 @@ export class TabbedPanel extends Component<Props, State> {
     ));
     return (
       <div>
-        <div className="tabbed-panel__demo-tabs-wrap">{tabs}</div>
+        <div className="ks-tabbed-panel__demo-tabs-wrap">{tabs}</div>
         <div
-          className="tabbed-panel__shadow-wrap"
+          className="ks-tabbed-panel__shadow-wrap"
           style={{
             borderColor: colorTheme,
           }}

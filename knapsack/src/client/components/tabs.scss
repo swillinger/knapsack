@@ -1,6 +1,7 @@
 // @todo totally remove this; used for the `Tab` in `settings.tsx`
 
 // stylelint-disable
+// classnames not changes to have ks- prefix due to being pulled in from third party library
 .menu {
   display: flex;
   border: 1px solid rgba(34, 36, 38, 0.15);

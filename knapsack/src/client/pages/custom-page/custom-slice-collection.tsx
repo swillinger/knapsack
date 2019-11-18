@@ -139,7 +139,7 @@ export class CustomSliceCollection extends React.Component<Props, State> {
 
     const { slices = [], isEditing, saveButtonText } = this.state;
     return (
-      <section className="k-custom-slice-collection">
+      <section className="ks-ks-custom-slice-collection">
         <header
           style={{
             display: 'flex',

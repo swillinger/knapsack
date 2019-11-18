@@ -23,13 +23,13 @@ import './release-notes.scss';
 
 const releaseNote = items =>
   items.map(item => (
-    <div className="release-notes" key={item.title}>
+    <div className="ks-release-notes" key={item.title}>
       <h3>{item.title}</h3>
       <h5>{item.niceDate}</h5>
       {item.commits.map(commit => (
         <p key={commit.shorthash}>
           <a
-            className="release-notes__commit-hash"
+            className="ks-release-notes__commit-hash"
             href={commit.href}
             target="_blank"
             rel="noopener noreferrer"
@@ -82,8 +82,8 @@ class ReleaseNotesPage extends React.Component {
     const { enableBlockquotes } = this.props.context.features;
     return (
       <div>
-        <div className="body">
-          <h4 className="eyebrow">About</h4>
+        <div className="ks-body">
+          <h4 className="ks-eyebrow">About</h4>
           <h2>Release Notes</h2>
           {enableBlockquotes && (
             <BlockQuoteWrapper>

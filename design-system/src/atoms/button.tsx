@@ -31,9 +31,9 @@ export const Button: React.FC<Props> = ({
   children,
 }: Props) => {
   const classes = cn({
-    'k-btn': true,
-    [`k-btn--kind-${kind}`]: true,
-    [`k-btn--size-${size}`]: true,
+    'ks-btn': true,
+    [`ks-btn--kind-${kind}`]: true,
+    [`ks-btn--size-${size}`]: true,
   });
   return (
     // eslint-disable-next-line react/button-has-type

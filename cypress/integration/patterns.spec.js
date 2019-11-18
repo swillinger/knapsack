@@ -8,7 +8,7 @@ describe('Patterns', () => {
     cy.get('main header h2').as('page-title');
     cy.get('@page-title').should('have.text', 'Card');
     cy.contains('Edit Form');
-    cy.get('.rjsf input[label="Body Title"]')
+    cy.get('.ks-rjsf input[label="Body Title"]')
       .clear()
       .type('Robots are awesome')
       .type(' ');

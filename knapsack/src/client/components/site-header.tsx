@@ -19,14 +19,14 @@ export const SiteHeader: React.FC<Props> = ({
   primaryNavItems,
 }: Props) => {
   return (
-    <div className="k-site-header">
+    <div className="ks-site-header">
       <h3 style={{ margin: 0 }}>
         <img
-          className="k-site-header__logo"
+          className="ks-site-header__logo"
           src={knapsackLogo}
           alt="Knapsack"
         />
-        <Link className="k-site-header__header-link" to="/">
+        <Link className="ks-site-header__header-link" to="/">
           {settings.title}
         </Link>
       </h3>
@@ -35,7 +35,7 @@ export const SiteHeader: React.FC<Props> = ({
         {primaryNavItems.map(navItem => (
           <li key={navItem.id}>
             {navItem.path ? (
-              <NavLink className="k-site-header__nav-link" to={navItem.path}>
+              <NavLink className="ks-site-header__nav-link" to={navItem.path}>
                 {navItem.name}
               </NavLink>
             ) : (

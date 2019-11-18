@@ -8,12 +8,15 @@ import {
   useDispatch,
   useSelector,
   updateSecondaryNav,
+  disableEditMode,
+  enableEditMode,
 } from '../../store';
 import { getTitleFromPath } from '../../../lib/routes';
 
 export const Sidebar: React.FC = () => {
   const dispatch = useDispatch();
   const canEdit = useSelector(s => s.userState.canEdit);
+  const isEditMode = useSelector(s => s.ui.isEditMode);
   const secondaryNavItems = useSelector(
     s => {
       return s.navsState.secondary.map(navItem => {
@@ -43,6 +46,14 @@ export const Sidebar: React.FC = () => {
             onClick={() => dispatch(saveToServer())}
           >
             Save it all
+          </Button>
+          <Button
+            size="m"
+            onClick={() =>
+              dispatch(isEditMode ? disableEditMode() : enableEditMode())
+            }
+          >
+            Turn edit mode {isEditMode ? 'off' : 'on'}
           </Button>
           <hr />
         </div>

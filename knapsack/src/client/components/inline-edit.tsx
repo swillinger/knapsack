@@ -14,7 +14,7 @@ type TextProps = {
 
 export const InlineEditTextBase: React.FC<TextProps> = ({
   text,
-  showControls = true,
+  showControls = false,
   handleSave,
   canEdit,
 }: TextProps) => {
@@ -79,5 +79,12 @@ export const InlineEditText: React.FC<Omit<TextProps, 'canEdit'>> = (
   props: Omit<TextProps, 'canEdit'>,
 ) => {
   const canEdit = useSelector(s => s.userState.canEdit);
-  return <InlineEditTextBase {...props} canEdit={canEdit} />;
+  const isEditMode = useSelector(s => s.ui.isEditMode);
+  return (
+    <InlineEditTextBase
+      {...props}
+      canEdit={canEdit}
+      showControls={isEditMode}
+    />
+  );
 };

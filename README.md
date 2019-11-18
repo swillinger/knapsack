@@ -88,3 +88,18 @@ export const MyComponent: React.FC<Props> = ({
 ## Commiting
 
 We use Conventional Commits to automatically release versions. Please use `yarn commit` to ensure your commit message is of the correct format.
+
+# Setting up JSON Knapsack config file auto-complete 
+
+Our TypeScript types compile out to JSON Schemas (that are git-ignored, so make sure to build first) that are located here: `./knapsack/src/json-schemas/`. When editing Knapsack config files (often in a `./data` directory) your code editor can be set up to use these to enable rich auto-complete. Here's the config file to JSON schema map:
+
+- `knapsack.settings.json` = `./knapsack/src/json-schemas/schemaKnapsackSettings.json`
+- `knapsack.pattern.*.json` = `./knapsack/src/json-schemas/schemaKnapsackPattern.json`
+- `knapsack.navs.json` = `./knapsack/src/json-schemas/schemaKnapsackNavsConfig.json`
+
+You can set these custom JSON Schemas up in your specific code editor:
+
+- [PhpStorm setup](https://www.jetbrains.com/help/phpstorm/2019.3/json.html#ws_json_schema_add_custom)
+- [VS Code setup](https://code.visualstudio.com/docs/languages/json#_mapping-to-a-schema-in-the-workspace)
+
+For more info on how the Typescript types to JSON Schema compile happens and to add more, see `./knapsack/convert-types-to-json-schemas.js`.

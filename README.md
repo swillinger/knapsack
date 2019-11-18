@@ -1,34 +1,90 @@
 # Knapsack (formerly Bedrock)
 
-## Demos
+If you want to use Knapsack, head to <https://knapsack.basalt.io>, if you are working on Knapsack please keep reading.
 
-- Demo: <https://demo-bootstrap.knapsack.basalt.io>
-- Basalt's Design System, Crux, built on Knapsack: <https://design.basalt.io>
+# Commands
 
-## Requirements
+## Set up
 
-- node.js 8+
+- `yarn install` - Install all dependencies
+- `yarn start` - Build everything needed to get started; then watch and rebuild
 
-## Starting
+## See the "examples"
 
-- Look at our [`./examples` folder](https://github.com/basaltinc/knapsack/tree/master/examples) to see how this can be implemented
-- [See docs here](https://knapsack.basalt.io) 
+You can work in any of the folders found in `./examples` by running `yarn start` from within those directories (in a new terminal tab).
 
-Spin up a starter setup with these commands:
+## Storybook
 
-```bash
-npm create knapsack my-design-system
-cd my-design-system
-npm install
-npm start
+```
+cd design-system
+yarn start:storybook
 ```
 
-Open these browser windows:
+# TypeScript
 
-- http://localhost:3999
+## TypeScript & React
 
-## Commands
+- [Cheatsheets for experienced React developers getting started with TypeScript](https://github.com/typescript-cheatsheets/react-typescript-cheatsheet)
 
-- `npm start` - Compile, start all watches and local server
-- `npm run build` - Compile with compression turned on
-- `npm run serve` - Start server
+### Common Patterns & Types
+
+#### Basic Component
+
+```tsx
+import React from 'react';
+import classnames from 'classnames'; // https://www.npmjs.com/package/classnames
+import './my-component.scss';
+
+type Props = {
+  /**
+   * The main title of it
+   */
+  title: string;
+  /**
+   * Extra info that goes directly under title
+   */
+  subtitle?: string;
+  /**
+   * Is this the main focus or not?
+   */
+  type: 'primary' | 'secondary';
+  /**
+   * Give it a dark color scheme?
+   */
+  isDark?: boolean;
+  /**
+   * Children components that go under the header
+   */
+  children: React.ReactNode;
+};
+
+export const MyComponent: React.FC<Props> = ({
+  title,
+  subtitle,
+  type = 'primary',
+  isDark = false,
+  children,
+}: Props) => {
+  const classes = classnames({
+    'k-my-component': true,
+    'k-my-component--is-dark': isDark,
+    [`k-my-component--${type}`]: true, // will be either `k-my-component--primary` or `k-my-component--secondary`
+  });
+
+  return (
+    <div className={classes}>
+      <header>
+        <h2>{title}</h2>
+        {subtitle && <h3>{subtitle}</h3>}
+      </header>
+      <div>{children}</div>
+    </div>
+  );
+};
+```
+
+# Using Git & GitHub
+
+## Commiting
+
+We use Conventional Commits to automatically release versions. Please use `yarn commit` to ensure your commit message is of the correct format.

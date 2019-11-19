@@ -10,6 +10,7 @@
   --c-text-subdued: #888888;
   --c-text-inverse: var(--c-bg);
   --c-text-link: #008FC1;
+  --c-text-link-hover: #1AA6D7;
 
   /* State */
   --c-success: #00BC62;
@@ -25,7 +26,10 @@
   --c-button-primary: #006FB6;
   --c-button-cancel: #666666;
 
-  /* Sizing */
+  /* Font Families */
+  --font-family: 'Roboto', "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  --font-base-size: 16px;
+
   --space-xxxs: 2px;
   --space-xxs: 4px;
   --space-xs: 8px;
@@ -36,15 +40,10 @@
   --space-xxl: 64px;
   --space-xxxl: 120px;
 
-  /* Font Families */
-  --font-family-light: 'AvenirLight', serif, Helvetica, sans-serif;
-  --font-family-medium: 'AvenirMedium', serif, Helvetica, sans-serif;
-  --font-base-size: var(--space-m);
-
   /* Border Radius */
-  --radius-s: 2px;
-  --radius-m: 4px;
-  --radius-l: 8px;
+  --radius-s: var(--space-xxxs);
+  --radius-m: var(--space-xxs);
+  --radius-l: var(--space-xs);
 
   /* Shadows */
   --c-shadow: rgba(0, 0, 0, 0.24);

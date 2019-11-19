@@ -1,15 +1,15 @@
 .ks-page-with-sidebar {
   display: grid;
-  grid-template-rows: 86px 1fr 112px;
+  grid-template-rows: calc(var(--space-xl) * 2) 1fr;
   height: 100vh;
   grid-template-areas:
     'header header'
-    'sidebar main'
-    'footer footer';
+    'sidebar main';
+  grid-template-columns: calc(var(--space-xxxl) * 3) 1fr;
   transition: all ease 0.3s;
 
-  @media (max-width: 649px) {
-    grid-template-rows: 86px 1fr 178px;
+  &--sidebar-collapsed {
+    grid-template-columns: 45px 1fr;
   }
 
   > :first-child {
@@ -18,15 +18,15 @@
 
   > :nth-child(2) {
     grid-area: sidebar;
+    height: 100%;
+    overflow: auto;
   }
 
   > :nth-child(3) {
     grid-area: main;
-    padding: 2rem;
-  }
-
-  > :nth-child(4) {
-    grid-area: footer;
+    height: 100%;
+    overflow: auto;
+    padding: var(--space-xl);
   }
 }
 

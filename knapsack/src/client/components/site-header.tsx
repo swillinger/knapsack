@@ -19,12 +19,12 @@ export const SiteHeader: React.FC<Props> = ({
   primaryNavItems,
 }: Props) => {
   return (
-    <div className="ks-site-header">
-      <h3 style={{ margin: 0 }}>
+    <header className="ks-site-header">
+      <h3>
         <img
           className="ks-site-header__logo"
           src={knapsackLogo}
-          alt="Knapsack"
+          alt="Knapsack Logo Mark"
         />
         <Link className="ks-site-header__header-link" to="/">
           {settings.title}
@@ -67,7 +67,7 @@ export const SiteHeader: React.FC<Props> = ({
           </li>
         )}
       </ul>
-    </div>
+    </header>
   );
 };
 

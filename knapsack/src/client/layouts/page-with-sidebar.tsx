@@ -48,10 +48,10 @@ const PageWithSidebar: React.FC<Props> = ({
   if (!isFullScreen) {
     return (
       <div
-        className="ks-page-with-sidebar"
-        style={{
-          gridTemplateColumns: isSidebarCollapsed ? '45px 1fr' : '300px 1fr',
-        }}
+        className={classnames({
+          'ks-page-with-sidebar': true,
+          'ks-page-with-sidebar--sidebar-collapsed': isSidebarCollapsed,
+        })}
       >
         <SiteHeaderConnected />
         <aside className="ks-page-with-sidebar__sidebar">
@@ -83,7 +83,6 @@ const PageWithSidebar: React.FC<Props> = ({
             {children}
           </main>
         </ErrorCatcher>
-        <Footer />
       </div>
     );
   }

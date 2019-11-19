@@ -1,46 +1,57 @@
 .ks-site-header {
-  background-color: var(--c-bg-dark);
-  padding: 1.5rem 2rem;
-  font-family: var(--font-family-medium);
+  background-color: var(--c-bg-brand);
+  min-height: calc(var(--space-xl) * 2);
+  padding: var(--space-m) 0;
 
   // @todo do a MUCH better small screen menu
   @media screen and (min-width: 700px) {
+    padding: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
   h3 {
-    z-index: 9999;
+    font-weight: normal;
+    margin: 0 0 0 var(--space-m);
+    display: flex;
+    align-items: center;
   }
+  &__logo {
+    height: calc(var(--space-xl) + var(--space-xs));
+    margin-right: var(--space-m);
+    width: auto;
+  }
+  & &__header-link { // extra `&` for stronger selector
+    color: var(--c-text-inverse);
+    text-decoration: none;
+  }
+
   ul {
     list-style: none;
     display: flex;
-    margin: 0;
+    margin: 0 var(--space-xl);
+    padding: 0;
   }
   li {
     position: relative;
     margin: 0;
     &:not(:last-child) {
-      padding-right: 35px;
+      padding-right: var(--space-xl);
     }
   }
   a {
-    &:hover {
-      text-decoration: underline;
-    }
+    display: inline-block;
+    padding: var(--space-xxs) 0;
+    border-bottom: var(--space-xxxs) solid transparent;
+    border-top: var(--space-xxxs) solid transparent;
     &[aria-current='page'] {
-      font-weight: bold;
-      &:before {
-        color: var(--c-active);
-        content: '>';
-        position: absolute;
-        left: -15px;
-        font-weight: bold;
-      }
+      border-bottom-color: var(--c-text-inverse);
     }
   }
 
+
+  // @TODO: Refactor
   &__mobile-nav {
     display: block;
     ul {
@@ -66,11 +77,6 @@
     }
   }
 
-  & &__header-link { // extra `&` for stronger selector
-    color: var(--c-text-white);
-    text-decoration: none;
-  }
-
   & &__nav-link { // extra `&` for stronger selector
     color: var(--c-text-white);
     text-decoration: none;
@@ -88,15 +94,5 @@
     float: right;
     font-size: 1.5rem;
     cursor: pointer;
-  }
-
-  &__logo {
-    height: 30px;
-    margin-right: 1.25rem;
-    width: auto;
-    @media screen and (min-width: var(--bp-small)) {
-      height: 38px;
-      margin-right: 1.5rem;
-    }
   }
 }

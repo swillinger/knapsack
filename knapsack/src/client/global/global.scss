@@ -1,9 +1,10 @@
 @charset "UTF-8";
 
-* {
+*, *:before, *:after {
   box-sizing: border-box;
 }
 
+@import '../../../../node_modules/normalize';
 @import './breakpoints';
 @import './fonts';
 @import './base';

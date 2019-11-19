@@ -214,7 +214,7 @@ export function getApiRoutes({
   const url3 = urlJoin(baseUrl, 'settings');
   registerEndpoint(url3);
   router.get(url3, async (req, res) => {
-    const settings = settingsStore.getConfig();
+    const settings = settingsStore.getData();
     res.send(settings);
   });
 

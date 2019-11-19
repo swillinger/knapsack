@@ -83,6 +83,7 @@ export const SecondaryNav: React.FC<Props> = ({
         </Button>
       </header>
       <hr />
+      {/* @todo make it so a hard-coded height is not necessary */}
       <nav className="ks-secondary-nav__tree" style={{ height: 900 }}>
         <SortableTree
           treeData={treeData}

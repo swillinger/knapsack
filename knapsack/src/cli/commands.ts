@@ -1,5 +1,6 @@
-import { flattenArray } from '../lib/utils';
+import { flattenArray, flattenNestedArray } from '../lib/utils';
 import * as log from './log';
+import { Patterns } from '../schemas/main-types';
 
 export async function build(config, allTemplatePaths) {
   log.info('Building...');
@@ -16,67 +17,64 @@ export async function build(config, allTemplatePaths) {
   log.info('Knapsack built', null, 'build');
 }
 
-export function testPatternRenders(allPatterns, patterns) {
-  return Promise.all(
+export async function testPatternRenders(
+  allPatterns: KnapsackPattern[],
+  patterns: Patterns,
+): Promise<void> {
+  const results = [];
+  await Promise.all(
     allPatterns.map(async pattern =>
       Promise.all(
         pattern.templates.map(async template => {
-          const datas = template.demoDatas ? template.demoDatas : [{}];
-
           return Promise.all(
-            datas.map(async data => {
-              const results = await patterns.render({
+            template.demos.map(async demo => {
+              const result = await patterns.render({
                 patternId: pattern.id,
                 templateId: template.id,
-                data,
+                demo: template.demosById[demo],
               });
-              return {
-                ok: results.ok,
+              results.push({
+                ok: result.ok,
                 patternId: pattern.id,
                 templateId: template.id,
-              };
+              });
             }),
           );
         }),
       ),
     ),
-  )
-    .then(patternResults => {
-      let exitCode = 0;
-      const results = flattenArray(patternResults);
+  ).catch(err => {
+    log.error('Test error', err, 'test');
+    process.exit(1);
+  });
 
-      results.forEach(result => {
-        const { ok, patternId, templateId } = result;
-        if (!ok) {
-          exitCode = 1;
-          log.error(
-            `fail - Pattern: ${patternId} - Template: ${templateId}`,
-            null,
-            'test',
-          );
-        }
-        log.info(
-          `ok - Pattern: ${patternId} - Template: ${templateId}`,
-          null,
-          'test',
-        );
-      });
+  let exitCode = 0;
 
-      const ok = exitCode === 0;
-      const fails = (patternResults as any[]).filter(p => p.ok).length; // @todo remove `as`
-      const msg = `${results.length} tests ran, ${fails} failed`;
+  results.forEach(result => {
+    const { ok, patternId, templateId } = result;
+    if (!ok) {
+      exitCode = 1;
+      log.error(
+        `fail - Pattern: ${patternId} - Template: ${templateId}`,
+        null,
+        'test',
+      );
+    }
+    log.info(
+      `ok - Pattern: ${patternId} - Template: ${templateId}`,
+      null,
+      'test',
+    );
+  });
 
-      if (!ok) {
-        log.error(msg, null, 'test');
-        process.exit(1);
-      }
+  const ok = exitCode === 0;
+  const fails = results.filter(p => p.ok).length;
+  const msg = `${results.length} tests ran, ${fails} failed`;
 
-      log.info(msg, null, 'test');
+  if (!ok) {
+    log.error(msg, null, 'test');
+    process.exit(1);
+  }
 
-      return patternResults;
-    })
-    .catch(err => {
-      log.error('Test error', err, 'test');
-      process.exit(1);
-    });
+  log.info(msg, null, 'test');
 }

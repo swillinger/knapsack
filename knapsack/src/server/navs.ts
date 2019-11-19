@@ -14,6 +14,7 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
+import { join } from 'path';
 import { FileDb2 } from './dbs/file-db';
 import { KnapsackNavsConfig } from '../schemas/nav';
 import schema from '../json-schemas/schemaKnapsackNavsConfig';
@@ -26,8 +27,7 @@ export class Navs extends FileDb2<KnapsackNavsConfig> {
     };
 
     super({
-      dbDir: dataDir,
-      name: 'knapsack.navs',
+      filePath: join(dataDir, 'knapsack.navs.json'),
       defaults,
       type: 'json',
       validationSchema: schema,

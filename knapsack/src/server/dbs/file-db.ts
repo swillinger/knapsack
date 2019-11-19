@@ -24,6 +24,7 @@ import fs from 'fs-extra';
 import yaml from 'js-yaml';
 import { validateDataAgainstSchema } from '@knapsack/schema-utils';
 import { knapsackEvents, EVENTS } from '../events';
+import { KnapsackDb, KnapsackFile } from '../../schemas/misc';
 
 /**
  * Creates a LoDash powered JSON file database, via `lowdb` that is created using the `_.chain` method.
@@ -117,62 +118,75 @@ export class FileDb {
   }
 }
 
-export class FileDb2<ConfigType> {
+export class FileDb2<ConfigType> implements KnapsackDb<ConfigType> {
   /**
    * Full path to file used for storage
    */
-  dbPath: string;
+  filePath: string;
 
   private type: 'json' | 'yml';
 
-  config: ConfigType;
+  // config: ConfigType;
 
   validationSchema: object;
 
   constructor({
-    dbDir,
-    name,
+    filePath,
+    // dbDir,
+    // name,
     type = 'json',
     defaults,
     validationSchema,
+    watch = true,
+    writeFileIfAbsent = true,
   }: {
-    dbDir: string;
+    filePath: string;
+    // dbDir: string;
     type?: 'json' | 'yml';
-    name: string;
+    // name: string;
     /**
      * Shallow merge
      */
-    defaults: ConfigType;
+    defaults?: ConfigType;
     /**
      * JSON Schema to validate read & writes with at run time
      */
     validationSchema?: object;
+    watch?: boolean;
+    writeFileIfAbsent?: boolean;
   }) {
     this.type = type;
     this.validationSchema = validationSchema;
 
-    // @todo kebab-case `name`
-    this.dbPath = join(dbDir, `${name}.${type}`);
+    this.filePath = filePath;
 
-    if (!fs.existsSync(this.dbPath)) {
-      this.write(defaults, { sync: true }).then(() => {});
+    if (writeFileIfAbsent && !fs.existsSync(this.filePath)) {
+      const x = this.serialize(defaults);
+      console.log('x', x);
+      fs.writeFileSync(this.filePath, x);
+      // this.write(defaults, { sync: true }).then(() => {});
     }
 
-    this.config = this.read();
+    // if (writeFileIfAbsent) {
+    //
+    // }
+    // this.config = this.read();
 
-    // Start watching the file in case user manually changes it so we can re-read it into memory
-    const watcher = chokidar.watch(this.dbPath, {
-      ignoreInitial: true,
-    });
-
-    watcher.on('all', () => {
-      // @todo if file is changed, trigger client ui to get new changes - we can't have diverged data
-      this.config = this.read();
-    });
-
-    knapsackEvents.on(EVENTS.SHUTDOWN, () => {
-      watcher.close();
-    });
+    if (watch) {
+      // Start watching the file in case user manually changes it so we can re-read it into memory
+      // const watcher = chokidar.watch(this.filePath, {
+      //   ignoreInitial: true,
+      // });
+      //
+      // watcher.on('all', () => {
+      //   // @todo if file is changed, trigger client ui to get new changes - we can't have diverged data
+      //   this.config = this.read();
+      // });
+      //
+      // knapsackEvents.on(EVENTS.SHUTDOWN, () => {
+      //   watcher.close();
+      // });
+    }
   }
 
   /**
@@ -189,7 +203,7 @@ export class FileDb2<ConfigType> {
     );
     if (ok) return;
     const msg = [
-      `Data validation error for ${this.dbPath}`,
+      `Data validation error for ${this.filePath}`,
       'The data:',
       JSON.stringify(config, null, ' '),
       '',
@@ -200,28 +214,37 @@ export class FileDb2<ConfigType> {
     throw new Error(msg);
   }
 
-  serialize(config: ConfigType): string {
+  serialize(config: ConfigType): Pick<KnapsackFile, 'contents' | 'encoding'> {
     this.validateConfig(config);
     switch (this.type) {
-      case 'json':
-        return JSON.stringify(config, null, 2) + os.EOL;
-      case 'yml':
-        return yaml.safeDump(config);
+      case 'json': {
+        const contents = JSON.stringify(config, null, 2) + os.EOL;
+        return {
+          contents,
+          encoding: 'utf8',
+        };
+      }
+      case 'yml': {
+        const contents = yaml.safeDump(config);
+        return {
+          contents,
+          encoding: 'utf8',
+        };
+      }
       default:
         throw new Error('Un-supported type used');
     }
   }
 
-  read(): ConfigType {
-    const dbString: string = fs.readFileSync(this.dbPath, 'utf8');
+  parse(fileString: string): ConfigType {
     let config;
     switch (this.type) {
       case 'json':
-        config = JSON.parse(dbString);
+        config = JSON.parse(fileString);
         this.validateConfig(config);
         return config;
       case 'yml':
-        config = yaml.safeLoad(dbString);
+        config = yaml.safeLoad(fileString);
         this.validateConfig(config);
         return config;
       default:
@@ -229,28 +252,46 @@ export class FileDb2<ConfigType> {
     }
   }
 
-  savePrep(config: ConfigType): { contents: string; path: string } {
-    this.validateConfig(config);
-    const configString = this.serialize(config);
-    return {
-      contents: configString,
-      path: this.dbPath,
-    };
+  async read(): Promise<ConfigType> {
+    const dbString: string = await fs.readFile(this.filePath, 'utf8');
+    return this.parse(dbString);
   }
 
-  async write(config: ConfigType, { sync = false } = {}): Promise<string> {
-    this.validateConfig(config);
-    const { contents, path } = this.savePrep(config);
-    if (sync) {
-      fs.writeFileSync(path, contents, 'utf8');
-    } else {
-      await fs.writeFile(path, contents, 'utf8');
-    }
-    return path;
+  readSync(): ConfigType {
+    const dbString: string = fs.readFileSync(this.filePath, 'utf8');
+    return this.parse(dbString);
   }
 
-  getConfig(): ConfigType {
-    const { config } = this;
+  async savePrep(config: ConfigType): Promise<KnapsackFile[]> {
+    this.validateConfig(config);
+    const { contents, encoding } = this.serialize(config);
+    return [
+      {
+        contents,
+        encoding,
+        path: this.filePath,
+      },
+    ];
+  }
+
+  // async write(config: ConfigType, { sync = false } = {}): Promise<string> {
+  //   const { contents, path, encoding } = this.savePrep(config);
+  //   if (sync) {
+  //     fs.writeFileSync(path, contents, { encoding });
+  //   } else {
+  //     await fs.writeFile(path, contents, { encoding });
+  //   }
+  //   return path;
+  // }
+
+  async getData(): Promise<ConfigType> {
+    const config = await this.read();
+    this.validateConfig(config);
+    return config;
+  }
+
+  getDataSync(): ConfigType {
+    const config = this.readSync();
     this.validateConfig(config);
     return config;
   }

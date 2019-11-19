@@ -14,6 +14,7 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
+import { join } from 'path';
 import { FileDb2 } from './dbs/file-db';
 import {
   KnapsackSettings,
@@ -31,8 +32,7 @@ export class Settings extends FileDb2<KnapsackSettings> {
     };
 
     super({
-      dbDir: dataDir,
-      name: 'knapsack.settings',
+      filePath: join(dataDir, 'knapsack.settings.json'),
       defaults,
       type: 'json',
       validationSchema: knapsackSettingsSchema,

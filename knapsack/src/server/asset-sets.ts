@@ -1,5 +1,5 @@
 import { getFileSizes } from 'get-file-sizes';
-import { parse, relative, resolve } from 'path';
+import { parse, relative, resolve, join } from 'path';
 import chokidar from 'chokidar';
 import { FileDb2 } from './dbs/file-db';
 import {
@@ -25,8 +25,7 @@ export class AssetSets extends FileDb2<KnapsackAssetSetsConfig> {
 
   constructor({ dataDir, publicDir }: { dataDir: string; publicDir: string }) {
     super({
-      dbDir: dataDir,
-      name: 'knapsack.asset-sets',
+      filePath: join(dataDir, 'knapsack.asset-sets.yml'),
       type: 'yml',
       validationSchema: schema,
       defaults: {},
@@ -36,7 +35,8 @@ export class AssetSets extends FileDb2<KnapsackAssetSetsConfig> {
 
     this.publicDir = publicDir;
 
-    this.getData();
+    const userConfig = super.getDataSync();
+    this.data = this.convertConfigToData(userConfig);
   }
 
   convertConfigToData(config: KnapsackAssetSetsConfig): KnapsackAssetSetsData {
@@ -129,8 +129,8 @@ export class AssetSets extends FileDb2<KnapsackAssetSetsConfig> {
     return data;
   }
 
-  getData(): KnapsackAssetSetsData {
-    const userConfig = this.getConfig();
+  async getData(): Promise<KnapsackAssetSetsData> {
+    const userConfig = await super.getData();
     // this.config = this.config;
 
     this.data = this.convertConfigToData(userConfig);

@@ -1,38 +1,25 @@
 import produce from 'immer';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import slugify from 'slugify';
+import { generate as generateId } from 'shortid';
 import { Action } from './types';
+import { addSecondaryNavItem, Actions as NavActions } from './navs';
 import {
   KnapsackCustomPage,
   KnapsackCustomPagesData,
-  KnapsackCustomSection,
 } from '../../schemas/custom-pages';
+import { BASE_PATHS } from '../../lib/constants';
 
-const UPDATE_PAGE_TITLE = 'knapsack/custom-pages/UPDATE_PAGE_TITLE';
 const UPDATE_PAGE = 'knapsack/custom-pages/UPDATE_PAGE';
-const UPDATE_SECTIONS = 'knapsack/custom-pages/UPDATE_SECTIONS';
+const ADD_PAGE = 'knapsack/custom-pages/ADD_PAGE';
 
 const initialState: KnapsackCustomPagesData = {
-  pages: [],
-  sections: [],
+  pages: {},
 };
 
 interface UpdatePageAction extends Action {
   type: typeof UPDATE_PAGE;
   payload: KnapsackCustomPage;
-}
-
-interface UpdatePageTitleAction extends Action {
-  type: typeof UPDATE_PAGE_TITLE;
-  payload: {
-    // @todo how do I say this isn't just a string, but an id?
-    sectionId: string;
-    pageId: string;
-    title: string;
-  };
-}
-
-interface UpdateSectionsAction extends Action {
-  type: typeof UPDATE_SECTIONS;
-  payload: KnapsackCustomSection[];
 }
 
 export function updateCustomPage(page: KnapsackCustomPage): UpdatePageAction {
@@ -42,71 +29,57 @@ export function updateCustomPage(page: KnapsackCustomPage): UpdatePageAction {
   };
 }
 
-export function updateCustomPageTitle({
-  sectionId,
-  pageId,
-  title,
-}): UpdatePageTitleAction {
-  return {
-    type: UPDATE_PAGE_TITLE,
-    payload: {
-      sectionId,
-      pageId,
-      title,
-    },
-  };
+interface AddPage extends Action {
+  type: typeof ADD_PAGE;
+  payload: Pick<KnapsackCustomPage, 'id' | 'title'>;
 }
 
-export function updateCustomSections(
-  sections: KnapsackCustomSection[],
-): UpdateSectionsAction {
-  return {
-    type: UPDATE_SECTIONS,
-    payload: sections,
+type Actions = UpdatePageAction | AddPage;
+
+type AppState = import('./index').AppState;
+
+export function addPage(
+  page: Pick<KnapsackCustomPage, 'title'>,
+): ThunkAction<void, AppState, {}, Actions | NavActions> {
+  return (dispatch, getState) => {
+    const { pages } = getState().customPagesState;
+    const potentialId = slugify(page.title.toLowerCase());
+    const id = pages[potentialId]
+      ? `${potentialId}-${generateId()}`
+      : potentialId;
+    dispatch({
+      type: ADD_PAGE,
+      payload: {
+        id,
+        title: page.title,
+      },
+    });
+    dispatch(
+      addSecondaryNavItem({
+        name: page.title,
+        id,
+        path: `${BASE_PATHS.PAGES}/${id}`,
+        parentId: 'root',
+      }),
+    );
   };
 }
-
-type Actions = UpdatePageAction | UpdateSectionsAction | UpdatePageTitleAction;
 
 export default function(
   state = initialState,
   action: Actions,
 ): KnapsackCustomPagesData {
   switch (action.type) {
+    case ADD_PAGE:
+      return produce(state, draft => {
+        draft.pages[action.payload.id] = action.payload;
+      });
     case UPDATE_PAGE:
       return produce(state, draft => {
-        draft.pages = draft.pages.map(page => {
-          if (page.path !== action.payload.path) return page;
-          return action.payload;
-        });
-      });
-    case UPDATE_SECTIONS:
-      return produce(state, draft => {
-        draft.sections = action.payload;
-      });
-    case UPDATE_PAGE_TITLE:
-      return produce(state, draft => {
-        let ok = false;
-        draft.sections.forEach(section => {
-          if (section.id === action.payload.sectionId) {
-            section.pages.forEach(page => {
-              if (page.id === action.payload.pageId) {
-                page.title = action.payload.title;
-                ok = true;
-              }
-            });
-          }
-        });
-        if (!ok) {
-          console.error(
-            `Running Redux reducer on ${UPDATE_PAGE_TITLE} and could not find data needed to update`,
-            action,
-          );
-          // @todo is this the right thing to di?
-          throw new Error(
-            `Custom page "${action.payload.pageId}" in section ${action.payload.sectionId} not found.`,
-          );
-        }
+        draft.pages[action.payload.id] = {
+          ...state.pages[action.payload.id],
+          ...action.payload,
+        };
       });
     default:
       return state;

@@ -1,0 +1,21 @@
+id: breakpoints
+title: Breakpoints
+slices:
+  - id: vNuGeFaFE
+    blockId: design-token-slice
+    data:
+      tokens:
+        category: breakpoint
+        tags:
+          - media-query
+      demo:
+        id: table-list
+  - id: j9KM9YRsc
+    blockId: design-token-slice
+    data:
+      tokens:
+        category: breakpoint
+        tags:
+          - width
+      demo:
+        id: media-query

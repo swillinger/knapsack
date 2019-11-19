@@ -9,6 +9,7 @@ import {
   useDispatch,
   useSelector,
   updateSecondaryNav,
+  addPage,
   disableEditMode,
   enableEditMode,
 } from '../../store';
@@ -24,8 +25,8 @@ export const Sidebar: React.FC = () => {
         if (!navItem.path) return navItem;
         const name = getTitleFromPath(navItem.path, s);
         return {
-          name: name || navItem.path,
           ...navItem,
+          name: name || navItem.name,
         };
       });
     },
@@ -59,6 +60,7 @@ export const Sidebar: React.FC = () => {
           <hr />
         </div>
       )}
+
       <SecondaryNav
         secondaryNavItems={secondaryNavItems}
         // if the secondary nav list changes, this key changes, trigger a full re-mount to refresh state and names
@@ -68,7 +70,25 @@ export const Sidebar: React.FC = () => {
           dispatch(updateSecondaryNav(newNavItems));
         }}
       />
-      <AddEntity icon="Add Icon" />
+      {canEdit && (
+        <footer className="ks-sidebar__footer">
+          <AddEntity
+            icon="Add Icon"
+            handleAdd={({ title, entityType }) => {
+              // eslint-disable-next-line default-case
+              switch (entityType) {
+                case 'page': {
+                  dispatch(
+                    addPage({
+                      title,
+                    }),
+                  );
+                }
+              }
+            }}
+          />
+        </footer>
+      )}
     </aside>
   );
 };

@@ -1,0 +1,11 @@
+id: shadows
+title: Shadows
+slices:
+  - id: Mj3q9Nb00
+    blockId: design-token-slice
+    data:
+      tokens:
+        category: shadow
+        tags: []
+      demo:
+        id: box-shadow

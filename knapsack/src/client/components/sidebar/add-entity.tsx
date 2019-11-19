@@ -12,6 +12,7 @@ type Props = {
    * Give it a dark color scheme?
    */
   isDark?: boolean;
+  handleAdd: (values: MyFormValues) => void;
 };
 
 interface MyFormValues {
@@ -21,7 +22,11 @@ interface MyFormValues {
 
 // @TODO add event listener to close popup if clicks elsewhere on the screen
 
-export const AddEntity: React.FC<Props> = ({ icon, isDark = false }: Props) => {
+export const AddEntity: React.FC<Props> = ({
+  icon,
+  handleAdd,
+  isDark = false,
+}: Props) => {
   const initialValues: MyFormValues = {
     title: '',
   };
@@ -40,20 +45,20 @@ export const AddEntity: React.FC<Props> = ({ icon, isDark = false }: Props) => {
         <Formik
           initialValues={initialValues}
           onSubmit={(values, actions) => {
-            console.log({ values, actions });
+            handleAdd(values);
             actions.setSubmitting(false);
           }}
           /* eslint-disable */
           render={() => (
             <Form>
-              <Field as="radio" name="type">
-                <input type="radio" id="pattern" name="type" value="pattern" />
+              <Field as="radio" name="entityType">
+                <input type="radio" id="pattern" name="entityType" value="pattern" />
                 <label htmlFor="pattern">Pattern</label>
                 <br />
-                <input type="radio" id="page" name="type" value="page" />
+                <input type="radio" id="page" name="entityType" value="page" />
                 <label htmlFor="page">Page</label>
                 <br />
-                <input type="radio" id="group" name="type" value="group" />
+                <input type="radio" id="group" name="entityType" value="group" />
                 <label htmlFor="group">Group</label>
                 <br />
               </Field>

@@ -62,15 +62,17 @@ export const InlineEditTextBase: React.FC<TextProps> = ({
       >
         {text}
       </span>
-      <span className="ks-inline-edit-text__controls">
-        <Button
-          size="s"
-          onClick={handleControlTrigger}
-          onKeyPress={handleControlTrigger}
-        >
-          {isEditing ? 'Save' : 'Edit'}
-        </Button>
-      </span>
+      {showControls && (
+        <span className="ks-inline-edit-text__controls">
+          <Button
+            size="s"
+            onClick={handleControlTrigger}
+            onKeyPress={handleControlTrigger}
+          >
+            {isEditing ? 'Save' : 'Edit'}
+          </Button>
+        </span>
+      )}
     </span>
   );
 };

@@ -37,10 +37,12 @@
   }
 
   & > label {
+    // @todo add font family, check color & line height
     display: block;
-    color: var(--c-gray-dark);
-    font-size: 12px;
-    font-weight: bold;
+    color: var(--c-black);
+    font-size: var(--font-base-size);
+    font-weight: normal;
+    line-height: var(--space-l);
   }
 
   &.ks-field-array {

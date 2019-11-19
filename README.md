@@ -66,9 +66,9 @@ export const MyComponent: React.FC<Props> = ({
   children,
 }: Props) => {
   const classes = classnames({
-    'k-my-component': true,
-    'k-my-component--is-dark': isDark,
-    [`k-my-component--${type}`]: true, // will be either `k-my-component--primary` or `k-my-component--secondary`
+    'ks-my-component': true,
+    'ks-my-component--is-dark': isDark,
+    [`ks-my-component--${type}`]: true, // will be either `ks-my-component--primary` or `ks-my-component--secondary`
   });
 
   return (

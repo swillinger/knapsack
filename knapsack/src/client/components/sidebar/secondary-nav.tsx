@@ -13,6 +13,7 @@ import FileExplorerTheme from 'react-sortable-tree-theme-file-explorer';
 import cn from 'classnames';
 import { NavLink } from 'react-router-dom';
 import { KnapsackNavItem } from '../../../schemas/nav';
+import { AddEntity } from './add-entity';
 
 type KnapsackNavItemProps = {
   title: React.ReactNode;
@@ -55,7 +56,7 @@ export const SecondaryNav: React.FC<Props> = ({
   const [treeData, setTreeData] = useState(expandedTreeData);
 
   return (
-    <aside className="ks-secondary-nav">
+    <div className="ks-secondary-nav">
       <header className="ks-secondary-nav__header">
         <Button
           size="s"
@@ -118,6 +119,6 @@ export const SecondaryNav: React.FC<Props> = ({
           // })}
         />
       </nav>
-    </aside>
+    </div>
   );
 };

@@ -1,0 +1,9 @@
+globalAssetSetIds:
+  - main
+allAssetSets:
+  main:
+    id: main
+    title: Main
+    assets:
+      - src: ../public/assets/simple.css
+

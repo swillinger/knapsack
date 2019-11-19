@@ -10,7 +10,8 @@
     "start": "yarn build --watch"
   },
   "dependencies": {
-    "@basalt/twig-renderer": "^0.12.2"
+    "@basalt/twig-renderer": "^0.12.2",
+    "ejs": "^2.7.4"
   },
   "peerDependencies": {
     "@knapsack/app": "^1.0.0"

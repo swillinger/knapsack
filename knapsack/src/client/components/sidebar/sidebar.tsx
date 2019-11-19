@@ -3,6 +3,7 @@ import { Button } from '@knapsack/design-system';
 import md5 from 'md5';
 import { shallowEqual } from 'react-redux';
 import { SecondaryNav } from './secondary-nav';
+import { AddEntity } from './add-entity';
 import {
   saveToServer,
   useDispatch,
@@ -67,6 +68,7 @@ export const Sidebar: React.FC = () => {
           dispatch(updateSecondaryNav(newNavItems));
         }}
       />
+      <AddEntity icon="Add Icon" />
     </aside>
   );
 };

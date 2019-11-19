@@ -266,7 +266,7 @@ const TemplateView: React.FC<Props> = ({
               }}
             >
               <div className="ks-template-view__schema-form__inner">
-                <header className="template-view__schema-form__header">
+                <header className="ks-template-view__schema-form__header">
                   <h4>
                     <InlineEditText
                       text={demo.title}

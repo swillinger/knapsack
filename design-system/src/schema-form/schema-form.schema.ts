@@ -5,7 +5,7 @@ const examples = [
     title: 'Component Schema Form',
     type: 'object',
     description:
-      "This form is generated from a component's schema. This means that updates to the components (such as new fields) will become immediately aviable within the form. How neat is that?",
+      "This form is generated from a component's schema. This means that updates to the components (such as new fields) will become immediately available within the form. How neat is that?",
     required: ['text'],
     additionalProperties: false,
     properties: {

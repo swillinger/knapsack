@@ -84,7 +84,7 @@ export const SchemaForm = ({
         FieldTemplate={CustomField}
         className={isInline ? 'ks-rjsf ks-rjsf--inline' : 'ks-rjsf'}
         widgets={{
-          // can add any of our own OR replace any of these core ones: https://github.com/mozilla-services/react-jsonschema-form/tree/master/src/components/widgets
+          // can add any of our own OR replace any of these core ones: https://react-jsonschema-form.readthedocs.io/en/latest/advanced-customization/#customizing-the-default-fields-and-widgets
           CheckboxWidget,
           CheckboxesWidget,
         }}

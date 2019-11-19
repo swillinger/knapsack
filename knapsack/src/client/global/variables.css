@@ -41,6 +41,14 @@
   --font-family-medium: 'AvenirMedium', serif, Helvetica, sans-serif;
   --font-base-size: var(--space-m);
 
+  /* Border Radius */
+  --radius-s: 2px;
+  --radius-m: 4px;
+  --radius-l: 8px;
+
+  /* Shadows */
+  --c-shadow: rgba(0, 0, 0, 0.24);
+  --shadow: 0px 2px 8px var(--c-shadow);
 
   /* ---------- */
   /* Depricated */
@@ -71,7 +79,7 @@
   --c-primary: var(--c-blue);
   --c-secondary: var(--c-green);
   --c-border: var(--c-gray);
-  --c-active: var(--c-yellow);
+  /*--c-active: var(--c-yellow);*/
   --base-font-size: 18px;
   --size-xxs: 2px;
   --size-xs: 4px;

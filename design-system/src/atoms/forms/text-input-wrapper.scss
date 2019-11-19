@@ -5,8 +5,7 @@
     padding: 3px 8px;
     border: 1px solid var(--c-frame);
     background-color: var(--c-bg);
-    // @todo border radius token
-    border-radius: 4px;
+    border-radius: var(--radius-m);
     font-size: 0.75rem;
     width: 100%;
   }

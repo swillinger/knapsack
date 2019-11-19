@@ -21,8 +21,9 @@ import { Sidebar } from '../components/sidebar/sidebar';
 import ErrorCatcher from '../utils/error-catcher';
 import { SiteHeaderConnected } from '../components/site-header';
 import { PageHeaderContainer } from '../components/page-header';
-import Footer from '../components/footer';
 import './page-with-sidebar.scss';
+import { AddEntity } from '../components/sidebar/add-entity';
+import { addPage, useDispatch, useSelector } from '../store';
 
 type Props = {
   isInitiallyCollapsed?: boolean;
@@ -44,6 +45,8 @@ const PageWithSidebar: React.FC<Props> = ({
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(
     isInitiallyCollapsed,
   );
+  const canEdit = useSelector(s => s.userState.canEdit);
+  const dispatch = useDispatch();
 
   if (!isFullScreen) {
     return (
@@ -54,16 +57,13 @@ const PageWithSidebar: React.FC<Props> = ({
         })}
       >
         <SiteHeaderConnected />
-        <aside className="ks-page-with-sidebar__sidebar">
-          <div
-            // className={` page-with-sidebar__sidebar__column ${isSidebarCollapsed ? 'page-with-sidebar__sidebar__column--collapsed' : ''}`}
-            className={classnames({
-              'ks-page-with-sidebar__sidebar__column': true,
-              'ks-page-with-sidebar__sidebar__column--collapsed': isSidebarCollapsed,
-            })}
-          >
-            {sidebar || <Sidebar />}
-          </div>
+        <div
+          className={classnames({
+            'ks-page-with-sidebar__sidebar': true,
+            'ks-page-with-sidebar__sidebar--collapsed': isSidebarCollapsed,
+          })}
+        >
+          {sidebar || <Sidebar />}
           <button
             className="ks-page-with-sidebar__sidebar__collapse-ctrl"
             type="button"
@@ -71,12 +71,32 @@ const PageWithSidebar: React.FC<Props> = ({
           >
             <FaChevronLeft
               style={{
-                marginTop: '50vh',
+                height: '16px',
+                color: '#222222',
                 transform: isSidebarCollapsed ? 'rotate(180deg)' : '',
               }}
             />
           </button>
-        </aside>
+          <div className="ks-page-with-sidebar__sidebar-footer">
+            {canEdit && (
+              <AddEntity
+                icon="Add Icon"
+                handleAdd={({ title: pageTitle, entityType }) => {
+                  // eslint-disable-next-line default-case
+                  switch (entityType) {
+                    case 'page': {
+                      dispatch(
+                        addPage({
+                          title: pageTitle,
+                        }),
+                      );
+                    }
+                  }
+                }}
+              />
+            )}
+          </div>
+        </div>
         <ErrorCatcher>
           <main className="ks-page-with-sidebar__page">
             <PageHeaderContainer title={title} section={section} />

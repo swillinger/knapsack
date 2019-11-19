@@ -3,7 +3,6 @@ import { Button } from '@knapsack/design-system';
 import md5 from 'md5';
 import { shallowEqual } from 'react-redux';
 import { SecondaryNav } from './secondary-nav';
-import { AddEntity } from './add-entity';
 import {
   saveToServer,
   useDispatch,
@@ -39,7 +38,7 @@ export const Sidebar: React.FC = () => {
   );
 
   return (
-    <aside className="ks-sidebar">
+    <div className="ks-sidebar">
       {canEdit && (
         <div>
           <Button
@@ -70,25 +69,6 @@ export const Sidebar: React.FC = () => {
           dispatch(updateSecondaryNav(newNavItems));
         }}
       />
-      {canEdit && (
-        <footer className="ks-sidebar__footer">
-          <AddEntity
-            icon="Add Icon"
-            handleAdd={({ title, entityType }) => {
-              // eslint-disable-next-line default-case
-              switch (entityType) {
-                case 'page': {
-                  dispatch(
-                    addPage({
-                      title,
-                    }),
-                  );
-                }
-              }
-            }}
-          />
-        </footer>
-      )}
-    </aside>
+    </div>
   );
 };

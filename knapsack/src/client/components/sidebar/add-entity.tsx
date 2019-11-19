@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import cn from 'classnames'; // https://www.npmjs.com/package/classnames
 import './add-entity.scss';
 import { Formik, Form, Field } from 'formik';
+import { Button, TextInputWrapper } from '@knapsack/design-system';
+import { FaPlus } from 'react-icons/fa';
 
 type Props = {
   /**
@@ -41,7 +43,7 @@ export const AddEntity: React.FC<Props> = ({
 
   return (
     <div className={classes}>
-      <div className="ks-add-entity-popup">
+      <div className="ks-add-entity__popup">
         <Formik
           initialValues={initialValues}
           onSubmit={(values, actions) => {
@@ -51,32 +53,52 @@ export const AddEntity: React.FC<Props> = ({
           /* eslint-disable */
           render={() => (
             <Form>
-              <Field as="radio" name="entityType">
+              <Field className="ks-radio-group" as="radio" name="entityType">
                 <input type="radio" id="pattern" name="entityType" value="pattern" />
                 <label htmlFor="pattern">Pattern</label>
-                <br />
+                <span className="ks-radio-group__subtitle">
+                  A new UI pattern (e.g. button, hero, tabs). This content type
+                  will create the groundwork for defining and developing a new
+                  component for your design system.
+                </span>
                 <input type="radio" id="page" name="entityType" value="page" />
                 <label htmlFor="page">Page</label>
-                <br />
+                <span className="ks-radio-group__subtitle">
+                  A new blank page where text content and documentation slices
+                  can be combined to document anything (e.g. “Getting Started”).
+                </span>
                 <input type="radio" id="group" name="entityType" value="group" />
                 <label htmlFor="group">Group</label>
-                <br />
+                <span className="ks-radio-group__subtitle">
+                  A new empty group, used for organizing patterns and pages in
+                  the left navigation.
+                </span>
               </Field>
               <Field
                 name="title"
                 render={({ field, form, meta }) => (
-                  <div>
-                    <input type="text" {...field} placeholder="Title" />
-                    {meta.touched && meta.error && meta.error}
-                  </div>
+                  <TextInputWrapper>
+                    <>
+                      <label className="ks-field-label" htmlFor="title">
+                        Title
+                      </label>
+                      <input id="title" type="text" {...field} />
+                      {meta.touched && meta.error && meta.error}
+                    </>
+                  </TextInputWrapper>
                 )}
               />
-              <button type="submit">Submit</button>
+              <Button kind="primary" type="submit">
+                Submit
+              </Button>
             </Form>
           )}
         />
       </div>
-      <h2 onClick={() => setIsShowing(!isShowing)}>{icon}</h2>
+      {/*@todo replace with more permanent icon solution*/}
+      <span className="ks-add-entity__icon">
+        <FaPlus onClick={() => setIsShowing(!isShowing)} />
+      </span>
     </div>
   );
   /* eslint-enable */

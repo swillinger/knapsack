@@ -19,7 +19,6 @@
   > :nth-child(2) {
     grid-area: sidebar;
     height: 100%;
-    overflow: auto;
   }
 
   > :nth-child(3) {
@@ -33,8 +32,11 @@
 .ks-page-with-sidebar__sidebar {
   position: relative;
   display: flex;
-  flex-direction: row;
-
+  height: 100%;
+  flex-direction: column;
+  transition: left ease 0.6s;
+  border-right: 1px solid var(--c-frame);
+  padding: 2rem;
   h4:not(:first-child) {
     white-space: nowrap;
     margin: 1.25rem 0 0;
@@ -50,44 +52,50 @@
     margin-left: 0;
   }
 
-  &__column {
-    position: relative;
-    width: calc(100% - 19px);
-    height: 100%;
-    overflow: scroll;
-    display: flex;
-    flex-direction: column;
-    background: var(--c-gray-xxlight);
-    transition: left ease 0.6s;
-
-    padding: 2rem;
-    & > * {
-      opacity: 1;
-    }
-
-    &--collapsed {
-      padding: 0;
-    }
-    &--collapsed > * {
-      opacity: 0;
-    }
+  & > * {
+    opacity: 1;
   }
 
-  &__collapse-ctrl {
-    background-color: var(--c-white);
-    box-sizing: border-box;
-    display: flex;
-    font-size: var(--base-font-size);
-    line-height: 1.5;
-    height: 100%;
-    border: none;
-    border-left: 1px solid var(--c-gray-xlight);
+  &--collapsed {
     padding: 0;
+  }
+  &--collapsed > * {
+    opacity: 0;
+  }
+  //@todo center the SVG in here
+  &__collapse-ctrl {
+    box-sizing: border-box;
+    position: absolute;
+    right: -26px;
+    top: 16px;
+    background-color: var(--c-shade);
+    height: 40px;
+    opacity: 1;
+    width: 26px;
+    border: 1px solid var(--c-frame);
+    border-radius: 0 var(--radius-m) var(--radius-m) 0;
     transition: all 0.3s;
+    &:focus {
+      outline: 0;
+    }
     &:hover {
       border-left: solid 1px var(--c-active);
       color: var(--c-active);
       cursor: pointer;
     }
+  }
+
+  &-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+    padding: var(--space-m);
+    height: 72px;
+    background-color: var(--c-bg);
+    width: 100%;
+    box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.08);
   }
 }

@@ -3,11 +3,25 @@
   &:hover {
     cursor: pointer;
   }
-  .ks-add-entity-popup {
+  &__popup {
     display: none;
   }
+  &__icon {
+    background-color: var(--c-shade);
+    height: 40px;
+    width: 40px;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    border-radius: 40px;
+    border: 1px solid var(--c-frame);
+    svg {
+      height: 16px;
+      margin: auto;
+    }
+  }
   &--active {
-    .ks-add-entity-popup {
+    .ks-add-entity__popup {
       display: block;
       position: absolute;
       bottom: 120%;
@@ -16,6 +30,33 @@
       box-shadow: var(--shadow);
       background-color: var(--c-bg);
       padding: var(--space-m);
+      z-index: 99;
     }
   }
+  .ks-radio-group {
+    label {
+      margin-left: var(--space-xs);
+      position: relative;
+      display: inline;
+    }
+    &__subtitle {
+      font-size: var(--font-size-s);
+      color: var(--c-text-subdued);
+      display: block;
+      margin: 0 0 var(--space-xs) var(--space-l);
+    }
+  }
+  label {
+    display: block;
+    color: var(--c-black);
+    font-size: var(--font-base-size);
+    font-weight: normal;
+    line-height: var(--space-l);
+  }
+  .ks-text-input-wrapper {
+    width: 78%;
+    display: inline-block;
+    margin-right: var(--space-xs);
+  }
 }
+

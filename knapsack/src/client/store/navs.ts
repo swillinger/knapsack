@@ -1,4 +1,6 @@
 import produce from 'immer';
+import slugify from 'slugify';
+import { generate as generateId } from 'shortid';
 import { Action } from './types';
 import { KnapsackNavsConfig, KnapsackNavItem } from '../../schemas/nav';
 
@@ -19,7 +21,7 @@ interface UpdateSecondaryNav extends Action {
 
 interface AddSecondaryNavItem extends Action {
   type: typeof ADD_SECONDARY_NAV_ITEM;
-  payload: KnapsackNavItem;
+  payload: Partial<KnapsackNavItem>;
 }
 
 export function updateSecondaryNav(
@@ -32,7 +34,7 @@ export function updateSecondaryNav(
 }
 
 export function addSecondaryNavItem(
-  navItem: KnapsackNavItem,
+  navItem: Partial<KnapsackNavItem>,
 ): AddSecondaryNavItem {
   return {
     type: ADD_SECONDARY_NAV_ITEM,
@@ -100,7 +102,22 @@ export default function(
 
     case ADD_SECONDARY_NAV_ITEM:
       return produce(state, draft => {
-        draft.secondary.push(action.payload);
+        const ids = draft.secondary.map(n => n.id);
+
+        const newItem = action.payload;
+        let { id } = newItem;
+        if (!id && action.payload.name) {
+          const potentialId = slugify(action.payload.name.toLowerCase());
+          id = ids.includes(potentialId)
+            ? `${potentialId}-${generateId()}`
+            : potentialId;
+        }
+        draft.secondary.push({
+          path: '',
+          parentId: 'root',
+          ...newItem,
+          id,
+        });
       });
     default:
       return state;

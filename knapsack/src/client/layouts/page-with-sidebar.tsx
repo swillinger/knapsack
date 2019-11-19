@@ -23,7 +23,12 @@ import { SiteHeaderConnected } from '../components/site-header';
 import { PageHeaderContainer } from '../components/page-header';
 import './page-with-sidebar.scss';
 import { AddEntity } from '../components/sidebar/add-entity';
-import { addPage, useDispatch, useSelector } from '../store';
+import {
+  addPage,
+  addSecondaryNavItem,
+  useDispatch,
+  useSelector,
+} from '../store';
 
 type Props = {
   isInitiallyCollapsed?: boolean;
@@ -81,13 +86,21 @@ const PageWithSidebar: React.FC<Props> = ({
             {canEdit && (
               <AddEntity
                 icon="Add Icon"
-                handleAdd={({ title: pageTitle, entityType }) => {
+                handleAdd={({ title: theTitle, entityType }) => {
                   // eslint-disable-next-line default-case
                   switch (entityType) {
                     case 'page': {
                       dispatch(
                         addPage({
-                          title: pageTitle,
+                          title: theTitle,
+                        }),
+                      );
+                      break;
+                    }
+                    case 'group': {
+                      dispatch(
+                        addSecondaryNavItem({
+                          name: theTitle,
                         }),
                       );
                     }

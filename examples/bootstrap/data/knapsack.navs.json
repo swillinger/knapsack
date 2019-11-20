@@ -91,6 +91,12 @@
       "name": "Accessibility",
       "path": "/pages/accessibility",
       "parentId": "docs"
+    },
+    {
+      "path": "/pages/ima-new-page",
+      "parentId": "root",
+      "name": "Ima new page",
+      "id": "ima-new-page"
     }
   ]
 }

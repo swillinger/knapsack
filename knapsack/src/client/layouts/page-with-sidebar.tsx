@@ -21,9 +21,14 @@ import { Sidebar } from '../components/sidebar/sidebar';
 import ErrorCatcher from '../utils/error-catcher';
 import { SiteHeaderConnected } from '../components/site-header';
 import { PageHeaderContainer } from '../components/page-header';
-import Footer from '../components/footer';
 import './page-with-sidebar.scss';
 import { AddEntity } from '../components/sidebar/add-entity';
+import {
+  addPage,
+  addSecondaryNavItem,
+  useDispatch,
+  useSelector,
+} from '../store';
 
 type Props = {
   isInitiallyCollapsed?: boolean;
@@ -45,6 +50,8 @@ const PageWithSidebar: React.FC<Props> = ({
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(
     isInitiallyCollapsed,
   );
+  const canEdit = useSelector(s => s.userState.canEdit);
+  const dispatch = useDispatch();
 
   if (!isFullScreen) {
     return (
@@ -76,7 +83,31 @@ const PageWithSidebar: React.FC<Props> = ({
             />
           </button>
           <div className="ks-page-with-sidebar__sidebar-footer">
-            <AddEntity icon="Add Icon" />
+            {canEdit && (
+              <AddEntity
+                icon="Add Icon"
+                handleAdd={({ title: theTitle, entityType }) => {
+                  // eslint-disable-next-line default-case
+                  switch (entityType) {
+                    case 'page': {
+                      dispatch(
+                        addPage({
+                          title: theTitle,
+                        }),
+                      );
+                      break;
+                    }
+                    case 'group': {
+                      dispatch(
+                        addSecondaryNavItem({
+                          name: theTitle,
+                        }),
+                      );
+                    }
+                  }
+                }}
+              />
+            )}
           </div>
         </div>
         <ErrorCatcher>

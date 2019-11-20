@@ -14,6 +14,7 @@ type Props = {
    * Give it a dark color scheme?
    */
   isDark?: boolean;
+  handleAdd: (values: MyFormValues) => void;
 };
 
 interface MyFormValues {
@@ -23,7 +24,11 @@ interface MyFormValues {
 
 // @TODO add event listener to close popup if clicks elsewhere on the screen
 
-export const AddEntity: React.FC<Props> = ({ icon, isDark = false }: Props) => {
+export const AddEntity: React.FC<Props> = ({
+  icon,
+  handleAdd,
+  isDark = false,
+}: Props) => {
   const initialValues: MyFormValues = {
     title: '',
   };
@@ -42,29 +47,41 @@ export const AddEntity: React.FC<Props> = ({ icon, isDark = false }: Props) => {
         <Formik
           initialValues={initialValues}
           onSubmit={(values, actions) => {
-            console.log({ values, actions });
+            handleAdd(values);
             actions.setSubmitting(false);
           }}
           /* eslint-disable */
           render={() => (
             <Form>
-              <Field className="ks-radio-group" as="radio" name="type">
-                <input type="radio" id="pattern" name="type" value="pattern" />
+              <Field className="ks-radio-group" as="radio" name="entityType">
+                <input type="radio" id="pattern" name="entityType" value="pattern" />
                 <label htmlFor="pattern">Pattern</label>
-                <span className="ks-radio-group__subtitle">A new UI pattern (e.g. button, hero, tabs). This content type will create the groundwork for defining and developing a new component for your design system.</span>
-                <input type="radio" id="page" name="type" value="page" />
+                <span className="ks-radio-group__subtitle">
+                  A new UI pattern (e.g. button, hero, tabs). This content type
+                  will create the groundwork for defining and developing a new
+                  component for your design system.
+                </span>
+                <input type="radio" id="page" name="entityType" value="page" />
                 <label htmlFor="page">Page</label>
-                <span className="ks-radio-group__subtitle">A new blank page where text content and documentation slices can be combined to document anything (e.g. “Getting Started”).</span>
-                <input type="radio" id="group" name="type" value="group" />
+                <span className="ks-radio-group__subtitle">
+                  A new blank page where text content and documentation slices
+                  can be combined to document anything (e.g. “Getting Started”).
+                </span>
+                <input type="radio" id="group" name="entityType" value="group" />
                 <label htmlFor="group">Group</label>
-                <span className="ks-radio-group__subtitle">A new empty group, used for organizing patterns and pages in the left navigation.</span>
+                <span className="ks-radio-group__subtitle">
+                  A new empty group, used for organizing patterns and pages in
+                  the left navigation.
+                </span>
               </Field>
               <Field
                 name="title"
                 render={({ field, form, meta }) => (
                   <TextInputWrapper>
                     <>
-                      <label className="ks-field-label" htmlFor="title">Title</label>
+                      <label className="ks-field-label" htmlFor="title">
+                        Title
+                      </label>
                       <input id="title" type="text" {...field} />
                       {meta.touched && meta.error && meta.error}
                     </>

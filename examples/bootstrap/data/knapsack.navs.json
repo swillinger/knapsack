@@ -16,6 +16,7 @@
   "secondary": [
     {
       "id": "patterns-asdf",
+      "name": "Patterns",
       "path": "/patterns",
       "parentId": "root"
     },
@@ -27,11 +28,13 @@
     },
     {
       "id": "/pattern/button",
+      "name": "Button",
       "path": "/pattern/button",
       "parentId": "components-asdf"
     },
     {
       "id": "/pattern/card",
+      "name": "Card",
       "path": "/pattern/card/",
       "parentId": "components-asdf"
     },
@@ -42,33 +45,33 @@
       "parentId": "root"
     },
     {
-      "id": "/design-tokens/colors",
-      "path": "/design-tokens/colors",
+      "id": "/pages/colors",
       "name": "Colors",
+      "path": "/pages/colors",
       "parentId": "design-tokens"
     },
     {
-      "id": "/design-tokens/spacing",
-      "name": "Spacing",
-      "path": "/design-tokens/spacing",
-      "parentId": "design-tokens"
-    },
-    {
-      "id": "/design-tokens/breakpoint",
+      "id": "/pages/breakpoints",
       "name": "Breakpoints",
-      "path": "/design-tokens/breakpoint",
+      "path": "/pages/breakpoints",
       "parentId": "design-tokens"
     },
     {
-      "id": "/design-tokens/animation",
+      "id": "/pages/spacing",
+      "name": "Spacing",
+      "path": "/pages/spacing",
+      "parentId": "design-tokens"
+    },
+    {
+      "id": "/pages/animation",
       "name": "Animation",
-      "path": "/design-tokens/animation",
+      "path": "/pages/animation",
       "parentId": "design-tokens"
     },
     {
-      "id": "/design-tokens/shadows",
+      "id": "/pages/shadows",
       "name": "Shadows",
-      "path": "/design-tokens/shadows",
+      "path": "/pages/shadows",
       "parentId": "design-tokens"
     },
     {
@@ -78,15 +81,15 @@
       "parentId": "root"
     },
     {
-      "id": "/docs/intro",
+      "id": "/pages/intro",
       "name": "Intro",
-      "path": "/docs/intro",
+      "path": "/pages/intro",
       "parentId": "docs"
     },
     {
-      "id": "/docs/accessibility",
+      "id": "/pages/accessibility",
       "name": "Accessibility",
-      "path": "/docs/accessibility",
+      "path": "/pages/accessibility",
       "parentId": "docs"
     }
   ]

@@ -1,8 +1,11 @@
 import produce from 'immer';
+import slugify from 'slugify';
+import { generate as generateId } from 'shortid';
 import { Action } from './types';
 import { KnapsackNavsConfig, KnapsackNavItem } from '../../schemas/nav';
 
 const UPDATE_SECONDARY_NAV = 'knapsack/navs/UPDATE_SECONDARY_NAV';
+const ADD_SECONDARY_NAV_ITEM = 'knapsack/navs/ADD_SECONDARY_NAV_ITEM';
 // const UPDATE_PAGE = 'knapsack/custom-pages/UPDATE_PAGE';
 // const UPDATE_SECTIONS = 'knapsack/custom-pages/UPDATE_SECTIONS';
 
@@ -16,12 +19,26 @@ interface UpdateSecondaryNav extends Action {
   payload: KnapsackNavItem[];
 }
 
+interface AddSecondaryNavItem extends Action {
+  type: typeof ADD_SECONDARY_NAV_ITEM;
+  payload: Partial<KnapsackNavItem>;
+}
+
 export function updateSecondaryNav(
   navItems: KnapsackNavItem[],
 ): UpdateSecondaryNav {
   return {
     type: UPDATE_SECONDARY_NAV,
     payload: navItems,
+  };
+}
+
+export function addSecondaryNavItem(
+  navItem: Partial<KnapsackNavItem>,
+): AddSecondaryNavItem {
+  return {
+    type: ADD_SECONDARY_NAV_ITEM,
+    payload: navItem,
   };
 }
 
@@ -71,7 +88,7 @@ export function updateSecondaryNav(
 //   };
 // }
 
-type Actions = UpdateSecondaryNav;
+export type Actions = UpdateSecondaryNav | AddSecondaryNavItem;
 
 export default function(
   state = initialState,
@@ -81,6 +98,26 @@ export default function(
     case UPDATE_SECONDARY_NAV:
       return produce(state, draft => {
         draft.secondary = action.payload;
+      });
+
+    case ADD_SECONDARY_NAV_ITEM:
+      return produce(state, draft => {
+        const ids = draft.secondary.map(n => n.id);
+
+        const newItem = action.payload;
+        let { id } = newItem;
+        if (!id && action.payload.name) {
+          const potentialId = slugify(action.payload.name.toLowerCase());
+          id = ids.includes(potentialId)
+            ? `${potentialId}-${generateId()}`
+            : potentialId;
+        }
+        draft.secondary.push({
+          path: '',
+          parentId: 'root',
+          ...newItem,
+          id,
+        });
       });
     default:
       return state;

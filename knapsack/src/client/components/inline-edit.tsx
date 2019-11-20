@@ -77,8 +77,10 @@ export const InlineEditTextBase: React.FC<TextProps> = ({
   );
 };
 
-export const InlineEditText: React.FC<Omit<TextProps, 'canEdit'>> = (
-  props: Omit<TextProps, 'canEdit'>,
+type ConnectedProps = Omit<TextProps, 'canEdit'>;
+
+export const InlineEditText: React.FC<ConnectedProps> = (
+  props: ConnectedProps,
 ) => {
   const canEdit = useSelector(s => s.userState.canEdit);
   const isEditMode = useSelector(s => s.ui.isEditMode);

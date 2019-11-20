@@ -45,13 +45,16 @@ export function uniqueArray(ar: any[]): any[] {
  * @return {Array}
  * @link https://stackoverflow.com/a/15030117
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function flattenArray(arr: any[]): any[] {
+export function flattenNestedArray<T>(arr: T[]): T[] {
   return arr.reduce(
     (flat, toFlatten) =>
       flat.concat(
-        Array.isArray(toFlatten) ? flattenArray(toFlatten) : toFlatten,
+        Array.isArray(toFlatten) ? flattenNestedArray(toFlatten) : toFlatten,
       ),
     [],
   );
+}
+
+export function flattenArray<T>(arrayOfArrays: T[][]): T[] {
+  return [].concat(...arrayOfArrays);
 }

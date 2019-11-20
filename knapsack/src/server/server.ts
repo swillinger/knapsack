@@ -20,6 +20,7 @@ import { makeExecutableSchema, mergeSchemas } from 'graphql-tools';
 import WebSocket from 'ws';
 import bodyParser from 'body-parser';
 import { join } from 'path';
+import { writeFile } from 'fs-extra';
 import * as log from '../cli/log';
 import { EVENTS, knapsackEvents } from './events';
 import { getApiRoutes } from './rest-api';
@@ -33,8 +34,9 @@ import {
 } from './page-builder';
 import { designTokensResolvers, designTokensTypeDef } from './design-tokens';
 import { getBrain } from '../lib/bootstrap';
-import { GraphQlContext, KnapsackMeta } from '../schemas/misc';
+import { GraphQlContext, KnapsackMeta, KnapsackFile } from '../schemas/misc';
 import { WS_EVENTS, WebSocketMessage } from '../schemas/web-sockets';
+import { flattenArray } from '../lib/utils';
 
 export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
   const {
@@ -155,25 +157,32 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
   async function getDataStore(): Promise<PartialAppState> {
     return {
       settingsState: {
-        settings: settings.getConfig(),
+        settings: await settings.getData(),
       },
       patternsState: {
         patterns: patterns.byId,
-        templateStatuses: patterns.getTemplateStatuses(),
+        templateStatuses: await patterns.getTemplateStatuses(),
       },
-      customPagesState: customPages.getConfig(),
-      assetSetsState: assetSets.getData(),
-      navsState: navs.getConfig(),
+      customPagesState: await customPages.getData(),
+      assetSetsState: await assetSets.getData(),
+      navsState: await navs.getData(),
     };
   }
 
   async function handleNewDataStore(data: AppState) {
     try {
-      await Promise.all([
-        settings.write(data.settingsState.settings),
-        customPages.write(data.customPagesState),
-        navs.write(data.navsState),
-      ]);
+      const configFiles: KnapsackFile[] = await Promise.all([
+        settings.savePrep(data.settingsState.settings),
+        customPages.savePrep(data.customPagesState),
+        navs.savePrep(data.navsState),
+      ]).then(results => flattenArray(results));
+
+      await Promise.all(
+        configFiles.map(({ contents, path, encoding }) =>
+          writeFile(path, contents, { encoding }),
+        ),
+      );
+
       return {
         ok: true,
         message: 'We got it!',

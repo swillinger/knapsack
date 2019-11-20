@@ -19,7 +19,6 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Tabs } from '../components/tabs';
 import { SiteSettings } from './settings/site-settings';
-import { CustomPagesSettings } from './settings/custom-pages-settings';
 import PageWithSidebar from '../layouts/page-with-sidebar';
 import PatternsSettings from '../components/patterns-settings';
 
@@ -41,10 +40,6 @@ const SettingsPage: React.FC<Props> = ({ initialTab = '' }: Props) => {
     {
       render: () => <PatternsSettings />,
       menuItem: 'Patterns',
-    },
-    {
-      render: () => <CustomPagesSettings />,
-      menuItem: 'Custom Pages',
     },
   ];
 

@@ -9,33 +9,13 @@ export interface KnapsackCustomPageSlice {
 }
 
 export interface KnapsackCustomPage {
-  path: string;
-  slices: KnapsackCustomPageSlice[];
-}
-
-export interface KnapsackCustomSectionPage {
   id: string;
   title: string;
-}
-
-export interface KnapsackCustomSection {
-  /**
-   * Section ID
-   */
-  id: string;
-  /**
-   * Section Title
-   */
-  title: string;
-  /**
-   * Show in Main Menu
-   * Will always show in Secondary Menu
-   */
-  showInMainMenu?: boolean;
-  pages: KnapsackCustomSectionPage[];
+  slices?: KnapsackCustomPageSlice[];
 }
 
 export interface KnapsackCustomPagesData {
-  sections?: KnapsackCustomSection[];
-  pages?: KnapsackCustomPage[];
+  pages?: {
+    [id: string]: KnapsackCustomPage;
+  };
 }

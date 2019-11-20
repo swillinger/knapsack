@@ -60,7 +60,7 @@ export const App: React.FC = () => {
   }, []);
 
   const settings = useSelector(s => s.settingsState.settings);
-  const customSections = useSelector(s => s.customPagesState.sections);
+  const pages = useSelector(s => s.customPagesState.pages);
   const meta = useSelector(s => s.metaState.meta);
   const role = useSelector(s => s.userState.role);
   const patterns = useSelector(state => {
@@ -191,27 +191,36 @@ export const App: React.FC = () => {
                   }}
                 />
                 <Route path="/changelog" component={LoadableChangelogPage} />
-                {customSections &&
-                  customSections.map(section =>
-                    section.pages.map(page => {
-                      const path = `/${section.id}/${page.id}`;
+                <Route
+                  path={`${BASE_PATHS.PAGES}/:pageId`}
+                  render={({
+                    match: {
+                      params: { pageId },
+                    },
+                  }) => {
+                    const page = pages[pageId];
+                    if (!page) {
                       return (
-                        <Route
-                          key={path}
-                          path={path}
-                          render={() => (
-                            <LoadableCustomPage
-                              path={path}
-                              sectionTitle={section.title}
-                              sectionId={section.id}
-                              title={page.title}
-                              pageId={page.id}
-                            />
-                          )}
+                        <LoadableBadRoute
+                          title={`Page with id "${pageId}" was not found in the system`}
+                          subtitle="Uh oh"
+                          message={`Is it one of these? ${Object.keys(
+                            pages,
+                          ).join(', ')}`}
                         />
                       );
-                    }),
-                  )}
+                    }
+                    return (
+                      <LoadableCustomPage
+                        path={`${BASE_PATHS.PAGES}/${pageId}`}
+                        key={`${BASE_PATHS.PAGES}/${pageId}`}
+                        sectionTitle="Pages"
+                        title={page.title}
+                        pageId={pageId}
+                      />
+                    );
+                  }}
+                />
                 <Route path="*" render={() => <LoadableBadRoute />} />
                 <Redirect to="/" />
               </Switch>

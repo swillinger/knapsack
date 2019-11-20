@@ -22,31 +22,23 @@ import { KnapsackCustomPageSlice } from '../../../schemas/custom-pages';
 import { CustomSliceCollection } from './custom-slice-collection';
 
 type Props = {
-  path: string;
-  title: string;
-  sectionTitle: string;
-  sectionId: string;
   pageId: string;
-  userCanSave: boolean;
-  initialSlices?: KnapsackCustomPageSlice[];
 };
 
-const CustomPage: React.FC<Props> = ({ path, title, sectionTitle }: Props) => {
-  const userCanSave = useSelector(state =>
-    state.userState.role.permissions.includes('write'),
+const CustomPage: React.FC<Props> = ({ pageId }: Props) => {
+  const userCanSave = useSelector(state => state.userState.canEdit);
+  const page = useSelector(
+    ({ customPagesState }) => customPagesState.pages[pageId],
   );
-  const initialSlices = useSelector(state => {
-    const { pages } = state.customPagesState;
-    if (!pages) return [];
-    const page = pages.find(p => p.path === path);
-    if (!page) return [];
-    // @todo what happens if it's not found?
-    return page.slices;
-  });
+  if (!page) {
+    throw new Error(`The page id "${pageId}" was not found`);
+  }
+
+  const initialSlices = page.slices || [];
   const dispatch = useDispatch();
 
   return (
-    <PageWithSidebar section={sectionTitle} title={title}>
+    <PageWithSidebar title={page.title}>
       <CustomSliceCollection
         userCanSave={userCanSave}
         initialSlices={initialSlices}
@@ -54,7 +46,8 @@ const CustomPage: React.FC<Props> = ({ path, title, sectionTitle }: Props) => {
           dispatch(
             updateCustomPage({
               slices,
-              path,
+              id: pageId,
+              title: page.title,
             }),
           );
         }}

@@ -81,8 +81,7 @@ export class Patterns {
     assetSets: import('./asset-sets').AssetSets;
   }) {
     this.configDb = new FileDb2<KnapsackPatternsConfig>({
-      dbDir: dataDir,
-      name: 'knapsack.patterns',
+      filePath: join(dataDir, 'knapsack.patterns.json'),
       defaults: {
         templateStatuses: [
           {
@@ -177,13 +176,15 @@ Resolved absolute path: ${absPath}
       throw new Error(
         `Could not find template ${templateId} in pattern ${patternId}`,
       );
-    const path = join(this.dataDir, template.path);
+    const relPath = join(this.dataDir, template.path);
+    const path = join(process.cwd(), relPath);
     if (!fileExists(path)) throw new Error(`File does not exist: ${path}`);
     return path;
   }
 
-  getTemplateStatuses(): KnapsackTemplateStatus[] {
-    return this.configDb.getConfig().templateStatuses;
+  async getTemplateStatuses(): Promise<KnapsackTemplateStatus[]> {
+    const config = await this.configDb.getData();
+    return config.templateStatuses;
   }
 
   // watch(): void {

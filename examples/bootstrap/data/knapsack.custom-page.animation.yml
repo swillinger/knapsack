@@ -1,0 +1,11 @@
+id: animation
+title: Animation
+slices:
+  - id: HZCP4R-mx
+    blockId: design-token-slice
+    data:
+      tokens:
+        category: animate
+        tags: []
+      demo:
+        id: table-list

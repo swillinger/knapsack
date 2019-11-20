@@ -1,21 +1,17 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { BASE_PATHS } from '../../lib/constants';
 import knapsackLogo from '../assets/knapsack-logo-trans.svg';
 import './site-header.scss';
 import { useSelector } from '../store';
-import { KnapsackCustomSection } from '../../schemas/custom-pages';
 import { KnapsackNavItem } from '../../schemas/nav';
 
 type Props = {
   settings: KnapsackSettings;
-  customSections: KnapsackCustomSection[];
   primaryNavItems: KnapsackNavItem[];
 };
 
 export const SiteHeader: React.FC<Props> = ({
   settings,
-  customSections,
   primaryNavItems,
 }: Props) => {
   return (
@@ -73,13 +69,6 @@ export const SiteHeader: React.FC<Props> = ({
 
 export const SiteHeaderConnected: React.FC = () => {
   const settings = useSelector(s => s.settingsState.settings);
-  const customSections = useSelector(s => s.customPagesState.sections);
   const primaryNavItems = useSelector(s => s.navsState.primary);
-  return (
-    <SiteHeader
-      settings={settings}
-      customSections={customSections}
-      primaryNavItems={primaryNavItems}
-    />
-  );
+  return <SiteHeader settings={settings} primaryNavItems={primaryNavItems} />;
 };

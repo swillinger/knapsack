@@ -1,5 +1,16 @@
 import { KnapsackBrain } from './main-types';
 
+export interface KnapsackFile {
+  contents: string;
+  path: string;
+  encoding: string;
+}
+
+export interface KnapsackDb<T> {
+  savePrep(data: T): Promise<KnapsackFile[]>;
+  getData(): Promise<T>;
+}
+
 export interface GenericResponse {
   ok: boolean;
   message?: string;

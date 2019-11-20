@@ -1,0 +1,20 @@
+.ks-icon {
+  stroke: currentColor;
+
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  vertical-align: middle;
+
+  &--size-s {
+    width: 16px;
+    height: 16px;
+    stroke-width: 1;
+  }
+
+  &--size-m {
+    width: 24px;
+    height: 24px;
+  }
+}

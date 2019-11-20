@@ -27,15 +27,15 @@
       "parentId": "patterns-asdf"
     },
     {
-      "id": "/pattern/button",
-      "name": "Button",
-      "path": "/pattern/button",
-      "parentId": "components-asdf"
-    },
-    {
       "id": "/pattern/card",
       "name": "Card",
       "path": "/pattern/card/",
+      "parentId": "components-asdf"
+    },
+    {
+      "id": "/pattern/button",
+      "name": "Button",
+      "path": "/pattern/button",
       "parentId": "components-asdf"
     },
     {
@@ -91,6 +91,12 @@
       "name": "Accessibility",
       "path": "/pages/accessibility",
       "parentId": "docs"
+    },
+    {
+      "path": "/pages/ima-new-page",
+      "parentId": "root",
+      "name": "Ima new page",
+      "id": "ima-new-page"
     }
   ]
 }

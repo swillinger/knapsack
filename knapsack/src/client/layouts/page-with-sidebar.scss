@@ -36,7 +36,7 @@
   flex-direction: column;
   transition: left ease 0.6s;
   border-right: 1px solid var(--c-frame);
-  padding: 2rem;
+  padding: var(--space-m) 0;
   h4:not(:first-child) {
     white-space: nowrap;
     margin: 1.25rem 0 0;
@@ -86,9 +86,8 @@
   }
 
   &-footer {
-    position: absolute;
+    position: sticky;
     bottom: 0;
-    left: 0;
     display: flex;
     align-items: center;
     vertical-align: middle;

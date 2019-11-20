@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import cn from 'classnames'; // https://www.npmjs.com/package/classnames
 import './add-entity.scss';
 import { Formik, Form, Field } from 'formik';
@@ -19,10 +19,25 @@ type Props = {
 
 interface MyFormValues {
   title: string;
-  entityType?: 'pattern' | 'page' | 'group';
+  entityType?: string;
 }
 
-// @TODO add event listener to close popup if clicks elsewhere on the screen
+function useOutsideAlert(ref, setIsShowing, isShowing) {
+  function handleClickOutside(event) {
+    if (ref.current && !ref.current.contains(event.target)) {
+      setIsShowing(!isShowing);
+    }
+  }
+
+  useEffect(() => {
+    // Bind the event listener
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  });
+}
 
 export const AddEntity: React.FC<Props> = ({
   icon,
@@ -31,9 +46,12 @@ export const AddEntity: React.FC<Props> = ({
 }: Props) => {
   const initialValues: MyFormValues = {
     title: '',
+    entityType: null,
   };
 
   const [isShowing, setIsShowing] = useState(false);
+  const wrapperRef = useRef(null);
+  useOutsideAlert(wrapperRef, setIsShowing, isShowing);
 
   const classes = cn({
     'ks-add-entity': true,
@@ -42,64 +60,88 @@ export const AddEntity: React.FC<Props> = ({
   });
 
   return (
-    <div className={classes}>
+    <div className={classes} ref={isShowing ? wrapperRef : null}>
       <div className="ks-add-entity__popup">
         <Formik
           initialValues={initialValues}
           onSubmit={(values, actions) => {
             handleAdd(values);
             actions.setSubmitting(false);
+            setIsShowing(!isShowing);
+            actions.resetForm({});
           }}
-          /* eslint-disable */
-          render={() => (
+        >
+          {() => (
             <Form>
               <Field className="ks-radio-group" as="radio" name="entityType">
-                <input type="radio" id="pattern" name="entityType" value="pattern" />
-                <label htmlFor="pattern">Pattern</label>
+                <label htmlFor="pattern">
+                  <input
+                    type="radio"
+                    id="pattern"
+                    name="entityType"
+                    value="pattern"
+                    disabled
+                  />
+                  Pattern (coming soon)
+                </label>
                 <span className="ks-radio-group__subtitle">
                   A new UI pattern (e.g. button, hero, tabs). This content type
                   will create the groundwork for defining and developing a new
                   component for your design system.
                 </span>
-                <input type="radio" id="page" name="entityType" value="page" />
-                <label htmlFor="page">Page</label>
+                <label htmlFor="page">
+                  <input
+                    type="radio"
+                    id="page"
+                    name="entityType"
+                    value="page"
+                  />
+                  Page
+                </label>
                 <span className="ks-radio-group__subtitle">
                   A new blank page where text content and documentation slices
                   can be combined to document anything (e.g. “Getting Started”).
                 </span>
-                <input type="radio" id="group" name="entityType" value="group" />
-                <label htmlFor="group">Group</label>
+                <label htmlFor="group">
+                  <input
+                    type="radio"
+                    id="group"
+                    name="entityType"
+                    value="group"
+                  />
+                  Group
+                </label>
                 <span className="ks-radio-group__subtitle">
                   A new empty group, used for organizing patterns and pages in
                   the left navigation.
                 </span>
               </Field>
-              <Field
-                name="title"
-                render={({ field, form, meta }) => (
+              <Field name="title">
+                {({ field, form, meta }) => (
                   <TextInputWrapper>
                     <>
                       <label className="ks-field-label" htmlFor="title">
                         Title
+                        <input id="title" type="text" {...field} />
                       </label>
-                      <input id="title" type="text" {...field} />
-                      {meta.touched && meta.error && meta.error}
+                      {meta.touched && meta.error && (
+                        <div className="ks-error">{meta.error}</div>
+                      )}
                     </>
                   </TextInputWrapper>
                 )}
-              />
-              <Button kind="primary" type="submit">
+              </Field>
+              <Button kind="primary" type="submit" size="l">
                 Submit
               </Button>
             </Form>
           )}
-        />
+        </Formik>
       </div>
-      {/*@todo replace with more permanent icon solution*/}
+      {/* @todo replace with more permanent icon solution */}
       <span className="ks-add-entity__icon">
         <FaPlus onClick={() => setIsShowing(!isShowing)} />
       </span>
     </div>
   );
-  /* eslint-enable */
 };

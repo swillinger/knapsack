@@ -34,8 +34,10 @@
     }
   }
   .ks-radio-group {
+    input {
+      margin-right: var(--space-xs);
+    }
     label {
-      margin-left: var(--space-xs);
       position: relative;
       display: inline;
     }
@@ -54,9 +56,18 @@
     line-height: var(--space-l);
   }
   .ks-text-input-wrapper {
-    width: 78%;
+    width: 74%;
     display: inline-block;
     margin-right: var(--space-xs);
+    input {
+      box-sizing: border-box;
+      height: 40px;
+      border: 1px solid var(--c-frame);
+      background-color: var(--c-bg);
+      border-radius: var(--radius-m);
+      font-size: 0.75rem;
+      width: 100%;
+    }
   }
 }
 

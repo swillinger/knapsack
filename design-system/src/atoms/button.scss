@@ -4,6 +4,8 @@
   padding: 0.6em 0.8em;
   line-height: 1;
   border-radius: var(--radius-m);
+  color: var(--c-text-black);
+  background-color: var(--c-button-standard);
   // if a button follow a button, put some space between
   & + & {
     margin-left: var(--size-s);
@@ -11,12 +13,11 @@
 
   &--kind {
     &-primary {
-      background-color: var(--c-primary);
+      background-color: var(--c-button-primary);
       color: var(--c-text-white);
     }
     &-secondary {
       background-color: var(--c-gray-xlight);
-      color: var(--c-text-black);
     }
   }
 

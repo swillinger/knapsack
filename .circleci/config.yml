@@ -111,9 +111,9 @@ jobs:
             cp docs-site/now.json docs-site/build/knapsack
             npm i -g now
             if [ "$CIRCLE_BRANCH" = "master" ]; then
-              now deploy --scope=basalt --target staging --token $ZEIT_TOKEN docs-site/build/knapsack
-            else
               now deploy --scope=basalt --prod --token $ZEIT_TOKEN docs-site/build/knapsack
+            else
+              now deploy --scope=basalt --target staging --token $ZEIT_TOKEN docs-site/build/knapsack
             fi
             DEPLOY_URL=`./scripts/get-latest-deploy.js 'knapsack-docs'`
             echo "Adding GitHub check for DEPLOY_URL: $DEPLOY_URL"
@@ -126,9 +126,9 @@ jobs:
           command: |
             cp ~/repo/design-system/storybook/now.json ~/repo/design-system/storybook/dist
             if [ "$CIRCLE_BRANCH" = "master" ]; then
-              now deploy --scope=basalt --target staging --token $ZEIT_TOKEN ~/repo/design-system/storybook/dist
-            else
               now deploy --scope=basalt --prod --token $ZEIT_TOKEN ~/repo/design-system/storybook/dist
+            else
+              now deploy --scope=basalt --target staging --token $ZEIT_TOKEN ~/repo/design-system/storybook/dist
             fi
             DEPLOY_URL=`./scripts/get-latest-deploy.js 'knapsack-storybook'`
             echo "Adding GitHub check for DEPLOY_URL: $DEPLOY_URL"

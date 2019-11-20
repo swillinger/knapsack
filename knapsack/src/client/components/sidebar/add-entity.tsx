@@ -59,8 +59,9 @@ export const AddEntity: React.FC<Props> = ({
                     id="pattern"
                     name="entityType"
                     value="pattern"
+                    disabled
                   />
-                  Pattern
+                  Pattern (coming soon)
                 </label>
                 <span className="ks-radio-group__subtitle">
                   A new UI pattern (e.g. button, hero, tabs). This content type

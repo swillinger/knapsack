@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import cn from 'classnames'; // https://www.npmjs.com/package/classnames
 import './add-entity.scss';
 import { Formik, Form, Field } from 'formik';
@@ -22,7 +22,22 @@ interface MyFormValues {
   entityType?: string;
 }
 
-// @TODO add event listener to close popup if clicks elsewhere on the screen
+function useOutsideAlert(ref, setIsShowing, isShowing) {
+  function handleClickOutside(event) {
+    if (ref.current && !ref.current.contains(event.target)) {
+      setIsShowing(!isShowing);
+    }
+  }
+
+  useEffect(() => {
+    // Bind the event listener
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  });
+}
 
 export const AddEntity: React.FC<Props> = ({
   icon,
@@ -31,10 +46,12 @@ export const AddEntity: React.FC<Props> = ({
 }: Props) => {
   const initialValues: MyFormValues = {
     title: '',
-    entityType: '',
+    entityType: null,
   };
 
   const [isShowing, setIsShowing] = useState(false);
+  const wrapperRef = useRef(null);
+  useOutsideAlert(wrapperRef, setIsShowing, isShowing);
 
   const classes = cn({
     'ks-add-entity': true,
@@ -43,7 +60,7 @@ export const AddEntity: React.FC<Props> = ({
   });
 
   return (
-    <div className={classes}>
+    <div className={classes} ref={isShowing ? wrapperRef : null}>
       <div className="ks-add-entity__popup">
         <Formik
           initialValues={initialValues}
@@ -51,7 +68,7 @@ export const AddEntity: React.FC<Props> = ({
             handleAdd(values);
             actions.setSubmitting(false);
             setIsShowing(!isShowing);
-            actions.resetForm();
+            actions.resetForm({});
           }}
         >
           {() => (

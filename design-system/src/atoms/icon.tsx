@@ -15,7 +15,7 @@ export const symbols = [
   'sort-alphabetically',
 ];
 
-type Props = {
+export type Props = {
   size?: 's' | 'm';
   symbol?:
     | 'add'

@@ -131,7 +131,7 @@ export const AddEntity: React.FC<Props> = ({
                   </TextInputWrapper>
                 )}
               </Field>
-              <Button kind="primary" type="submit" size="l">
+              <Button kind="primary" type="submit">
                 Submit
               </Button>
             </Form>

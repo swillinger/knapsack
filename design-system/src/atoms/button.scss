@@ -1,36 +1,18 @@
 .ks-btn {
   border: none;
   cursor: pointer;
-  padding: 0.6em 0.8em;
-  line-height: 1;
+  padding: 0 var(--space-m);
+  height: var(--space-xl);
+  line-height: var(--space-xl);
   border-radius: var(--radius-m);
-  color: var(--c-text-black);
-  background-color: var(--c-button-standard);
+
   // if a button follow a button, put some space between
-  & + & {
+  &:not(.ks-btn--flush) + & {
     margin-left: var(--size-s);
   }
 
-  &--kind {
-    &-primary {
-      background-color: var(--c-button-primary);
-      color: var(--c-text-white);
-    }
-    &-secondary {
-      background-color: var(--c-gray-xlight);
-    }
-  }
-
-  &--size {
-    &-s {
-      font-size: 0.65rem;
-    }
-    &-m {
-      font-size: 0.8rem;
-    }
-    &-l {
-      font-size: 1rem;
-    }
+  &:focus {
+    outline: 2px solid var(--c-focus);
   }
 
   &[disabled],
@@ -38,4 +20,149 @@
     cursor: not-allowed;
     opacity: 0.7;
   }
+}
+
+.ks-btn--kind {
+  &-standard,
+  &-icon-standard {
+    background-color: var(--c-button-standard);
+    border: 1px solid var(--c-frame);
+    line-height: calc(var(--space-xl) - 2px);
+
+    &:hover,
+    &:focus {
+      background-color: var(--c-button-standard-hover);
+    }
+
+    &:active {
+      background-color: var(--c-button-standard-active);
+    }
+
+    &.ks-btn--emphasis-danger {
+      color: var(--c-danger);
+    }
+  }
+
+  &-icon-standard {
+    border-radius: 50%;
+    padding: 0;
+    width: var(--space-xl);
+
+    svg {
+      height: calc(var(--space-xl) - 2px);
+      vertical-align: top;
+    }
+
+    &.ks-btn--floating {
+      box-shadow: var(--floating-btn-shadow);
+    }
+  }
+
+  &-primary {
+    background-color: var(--c-button-primary);
+    color: var(--c-text-inverse);
+
+    &:hover,
+    &:focus {
+      background-color: var(--c-button-primary-hover);
+    }
+
+    &:active {
+      background-color: var(--c-button-primary-active);
+    }
+  }
+  &-primary.ks-btn--emphasis-danger {
+    background-color: var(--c-button-primary-danger);
+
+    &:hover,
+    &:focus {
+      background-color: var(--c-button-primary-danger-hover);
+    }
+
+    &:active {
+      background-color: var(--c-button-primary-danger-active);
+    }
+  }
+
+  &-cancel {
+    background-color: transparent;
+    color: var(--c-button-cancel);
+
+    &.ks-btn--flush {
+      height: auto;
+      line-height: 1;
+      padding: 0;
+    }
+
+    &:hover,
+    &:focus {
+      color: var(--c-button-cancel-hover);
+    }
+
+    &:active {
+      color: var(--c-button-cancel-active);
+    }
+  }
+
+  &-icon {
+    background-color: transparent;
+    color: var(--c-button-primary);
+    padding: 0;
+    width: var(--space-xl);
+
+    &:not(.ks-btn--flush) svg {
+      height: var(--space-xl);
+      vertical-align: top;
+    }
+
+    &.ks-btn--flush {
+      height: auto;
+      width: auto;
+      line-height: 1;
+    }
+
+    &:hover,
+    &:focus {
+      color: var(--c-button-primary-hover);
+    }
+
+    &:active {
+      color: var(--c-button-primary-active);
+    }
+  }
+  &-icon.ks-btn--emphasis-danger {
+    color: var(--c-button-primary-danger);
+
+    &:hover,
+    &:focus {
+      color: var(--c-button-primary-danger-hover);
+    }
+
+    &:active {
+      color: var(--c-button-primary-danger-active);
+    }
+  }
+}
+
+.ks-btn--size {
+  &-s {
+    font-size: var(--space-s);
+    padding: 0 var(--space-xs);
+    height: var(--space-l);
+    line-height: var(--space-l);
+
+    &.ks-btn--kind-standard {
+      line-height: calc(var(--space-l) - 2px);
+    }
+
+    &.ks-btn--kind-icon-standard {
+      padding: 0;
+      width: var(--space-l);
+
+      svg {
+        height: calc(var(--space-l) - 2px);
+      }
+    }
+  }
+  // &-m {} default
 }

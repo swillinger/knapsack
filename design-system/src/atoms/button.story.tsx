@@ -1,7 +1,7 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 import PropMatrix from 'react-prop-matrix';
-import { Button, sizes, kinds } from './button';
+import { Button, sizes, kinds, emphasiss } from './button';
 
 export default {
   title: 'Components|Atoms/Button',
@@ -13,14 +13,24 @@ export default {
 const options = {
   size: sizes,
   kind: kinds,
-  text: ['A Button', 'A Button With A Lot of Text'],
+  emphasis: emphasiss,
 };
 export const allVariations = () => (
   <PropMatrix options={options}>
-    {({ text, ...props }) => (
+    {({ text, kind, emphasis, ...props }) => (
       <>
-        <Button onClick={action('button-click')} {...props}>
-          {text}
+        <Button
+          onClick={action('button-click')}
+          kind={kind}
+          icon={kind === 'icon' || kind === 'icon-standard' ? 'add' : null}
+          emphasis={emphasis}
+          {...props}
+        >
+          {emphasis === 'danger' && (
+            <span style={{ textTransform: 'capitalize' }}>{emphasis} </span>
+          )}
+          <span style={{ textTransform: 'capitalize' }}>{kind} </span>
+          Button
         </Button>
         <hr />
       </>

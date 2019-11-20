@@ -23,8 +23,17 @@
 
   /* Button */
   --c-button-standard: var(--c-shade);
+  --c-button-standard-hover: #EEEEEE;
+  --c-button-standard-active: #E3E3E3;
   --c-button-primary: #006FB6;
+  --c-button-primary-hover: #1486D0;
+  --c-button-primary-active: #0061A0;
+  --c-button-primary-danger: var(--c-danger);
+  --c-button-primary-danger-hover: #DC2D20;
+  --c-button-primary-danger-active: #A50F05;
   --c-button-cancel: #666666;
+  --c-button-cancel-hover: var(--c-danger);
+  --c-button-cancel-active: var(--c-button-primary-danger-active);
 
   /* Font Families */
   --font-family: 'Roboto', "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -50,6 +59,7 @@
   /* Shadows */
   --c-shadow: rgba(0, 0, 0, 0.24);
   --shadow: 0px var(--space-xxxs) var(--space-xs) var(--c-shadow);
+  --floating-btn-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.16);
 
   /* ---------- */
   /* Depricated */

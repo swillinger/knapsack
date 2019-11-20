@@ -19,7 +19,7 @@ type Props = {
 
 interface MyFormValues {
   title: string;
-  entityType?: 'pattern' | 'page' | 'group';
+  entityType?: string;
 }
 
 // @TODO add event listener to close popup if clicks elsewhere on the screen
@@ -31,6 +31,7 @@ export const AddEntity: React.FC<Props> = ({
 }: Props) => {
   const initialValues: MyFormValues = {
     title: '',
+    entityType: '',
   };
 
   const [isShowing, setIsShowing] = useState(false);
@@ -49,8 +50,11 @@ export const AddEntity: React.FC<Props> = ({
           onSubmit={(values, actions) => {
             handleAdd(values);
             actions.setSubmitting(false);
+            setIsShowing(!isShowing);
+            actions.resetForm();
           }}
-          render={() => (
+        >
+          {() => (
             <Form>
               <Field className="ks-radio-group" as="radio" name="entityType">
                 <label htmlFor="pattern">
@@ -69,7 +73,12 @@ export const AddEntity: React.FC<Props> = ({
                   component for your design system.
                 </span>
                 <label htmlFor="page">
-                  <input type="radio" id="page" name="entityType" value="page" />
+                  <input
+                    type="radio"
+                    id="page"
+                    name="entityType"
+                    value="page"
+                  />
                   Page
                 </label>
                 <span className="ks-radio-group__subtitle">
@@ -77,7 +86,12 @@ export const AddEntity: React.FC<Props> = ({
                   can be combined to document anything (e.g. “Getting Started”).
                 </span>
                 <label htmlFor="group">
-                  <input type="radio" id="group" name="entityType" value="group" />
+                  <input
+                    type="radio"
+                    id="group"
+                    name="entityType"
+                    value="group"
+                  />
                   Group
                 </label>
                 <span className="ks-radio-group__subtitle">
@@ -85,26 +99,27 @@ export const AddEntity: React.FC<Props> = ({
                   the left navigation.
                 </span>
               </Field>
-              <Field
-                name="title"
-                render={({ field, form, meta }) => (
+              <Field name="title">
+                {({ field, form, meta }) => (
                   <TextInputWrapper>
                     <>
                       <label className="ks-field-label" htmlFor="title">
                         Title
                         <input id="title" type="text" {...field} />
                       </label>
-                      {meta.touched && meta.error && meta.error}
+                      {meta.touched && meta.error && (
+                        <div className="ks-error">{meta.error}</div>
+                      )}
                     </>
                   </TextInputWrapper>
                 )}
-              />
+              </Field>
               <Button kind="primary" type="submit" size="l">
                 Submit
               </Button>
             </Form>
           )}
-        />
+        </Formik>
       </div>
       {/* @todo replace with more permanent icon solution */}
       <span className="ks-add-entity__icon">

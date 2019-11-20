@@ -13,6 +13,7 @@ import {
   enableEditMode,
 } from '../../store';
 import { getTitleFromPath } from '../../../lib/routes';
+import './sidebar.scss';
 
 export const Sidebar: React.FC = () => {
   const dispatch = useDispatch();

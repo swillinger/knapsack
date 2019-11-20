@@ -50,25 +50,35 @@ export const AddEntity: React.FC<Props> = ({
             handleAdd(values);
             actions.setSubmitting(false);
           }}
-          /* eslint-disable */
           render={() => (
             <Form>
               <Field className="ks-radio-group" as="radio" name="entityType">
-                <input type="radio" id="pattern" name="entityType" value="pattern" />
-                <label htmlFor="pattern">Pattern</label>
+                <label htmlFor="pattern">
+                  <input
+                    type="radio"
+                    id="pattern"
+                    name="entityType"
+                    value="pattern"
+                  />
+                  Pattern
+                </label>
                 <span className="ks-radio-group__subtitle">
                   A new UI pattern (e.g. button, hero, tabs). This content type
                   will create the groundwork for defining and developing a new
                   component for your design system.
                 </span>
-                <input type="radio" id="page" name="entityType" value="page" />
-                <label htmlFor="page">Page</label>
+                <label htmlFor="page">
+                  <input type="radio" id="page" name="entityType" value="page" />
+                  Page
+                </label>
                 <span className="ks-radio-group__subtitle">
                   A new blank page where text content and documentation slices
                   can be combined to document anything (e.g. “Getting Started”).
                 </span>
-                <input type="radio" id="group" name="entityType" value="group" />
-                <label htmlFor="group">Group</label>
+                <label htmlFor="group">
+                  <input type="radio" id="group" name="entityType" value="group" />
+                  Group
+                </label>
                 <span className="ks-radio-group__subtitle">
                   A new empty group, used for organizing patterns and pages in
                   the left navigation.
@@ -81,25 +91,24 @@ export const AddEntity: React.FC<Props> = ({
                     <>
                       <label className="ks-field-label" htmlFor="title">
                         Title
+                        <input id="title" type="text" {...field} />
                       </label>
-                      <input id="title" type="text" {...field} />
                       {meta.touched && meta.error && meta.error}
                     </>
                   </TextInputWrapper>
                 )}
               />
-              <Button kind="primary" type="submit">
+              <Button kind="primary" type="submit" size="l">
                 Submit
               </Button>
             </Form>
           )}
         />
       </div>
-      {/*@todo replace with more permanent icon solution*/}
+      {/* @todo replace with more permanent icon solution */}
       <span className="ks-add-entity__icon">
         <FaPlus onClick={() => setIsShowing(!isShowing)} />
       </span>
     </div>
   );
-  /* eslint-enable */
 };

@@ -97,6 +97,12 @@
       "parentId": "root",
       "name": "Ima new page",
       "id": "ima-new-page"
+    },
+    {
+      "path": "/pages/asdf",
+      "parentId": "root",
+      "name": "asdf",
+      "id": "asdf"
     }
   ]
 }

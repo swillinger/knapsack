@@ -5,8 +5,8 @@ slices:
     blockId: markdown-slice
     data:
       md: >-
-        A brief overviews of Bootstrap’s features and limitations for the
-        creation of accessible content.
+        A brief overviews of Knapsack features and limitations for the creation
+        of accessible content.
 
 
         ### Overview and Limitations

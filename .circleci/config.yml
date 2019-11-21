@@ -103,6 +103,11 @@ jobs:
       - attach_workspace:
           at: '~'
       - run:
+          name: Deploy Bootstrap Example
+          command: |
+            npm i -g now
+            now deploy --env EXAMPLE=bootstrap --local-config=./examples/bootstrap/now.json --team=basalt
+      - run:
           name: Build Docs Site
           command: yarn build:docs
       - run:

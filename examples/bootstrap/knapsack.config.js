@@ -1,3 +1,4 @@
+const { join } = require('path');
 const HtmlRenderer = require('@knapsack/renderer-html');
 const TwigRenderer = require('@knapsack/renderer-twig');
 const designTokens = require('./assets/design-tokens/dist/knapsack-design-tokens');

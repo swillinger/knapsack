@@ -31,7 +31,10 @@ export const ROLES: Record<'EDITOR' | 'ANONYMOUS', Role> = {
   },
   ANONYMOUS: {
     id: 'anonymous',
-    permissions: [PERMISSIONS.READ],
+    permissions: [
+      PERMISSIONS.READ,
+      PERMISSIONS.WRITE, // @todo remove after user testing done; doing this to test out user accounts
+    ],
   },
 };
 

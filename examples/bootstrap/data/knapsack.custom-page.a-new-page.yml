@@ -1,0 +1,16 @@
+id: a-new-page
+title: a new page
+slices:
+  - id: 1MAoPQTM
+    blockId: markdown-slice
+    data:
+      md: Some **markdown** here - hello!!
+  - id: 3JjVaJVW
+    blockId: pattern-template-slice
+    data:
+      patternId: button
+      options:
+        showReadme: true
+        showSchemaForm: true
+        demoSize: l
+      templateId: bootstrap-twig

@@ -93,10 +93,22 @@
       "parentId": "docs"
     },
     {
-      "path": "/pages/ima-new-page",
-      "parentId": "root",
+      "id": "ima-new-page",
       "name": "Ima new page",
-      "id": "ima-new-page"
+      "path": "/pages/ima-new-page",
+      "parentId": "root"
+    },
+    {
+      "id": "a-new-group",
+      "name": "A new group",
+      "path": "",
+      "parentId": "root"
+    },
+    {
+      "id": "a-new-page",
+      "name": "a new page",
+      "path": "/pages/a-new-page",
+      "parentId": "a-new-group"
     }
   ]
 }

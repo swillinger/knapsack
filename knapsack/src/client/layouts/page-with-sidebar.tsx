@@ -16,19 +16,13 @@
  */
 import React, { useState } from 'react';
 import classnames from 'classnames';
-import { FaChevronLeft } from 'react-icons/fa';
+import { Button } from '@knapsack/design-system';
 import { Sidebar } from '../components/sidebar/sidebar';
 import ErrorCatcher from '../utils/error-catcher';
 import { SiteHeaderConnected } from '../components/site-header';
 import { PageHeaderContainer } from '../components/page-header';
 import './page-with-sidebar.scss';
-import { AddEntity } from '../components/sidebar/add-entity';
-import {
-  addPage,
-  addSecondaryNavItem,
-  useDispatch,
-  useSelector,
-} from '../store';
+import { useDispatch, useSelector } from '../store';
 
 type Props = {
   isInitiallyCollapsed?: boolean;
@@ -69,46 +63,17 @@ const PageWithSidebar: React.FC<Props> = ({
           })}
         >
           {sidebar || <Sidebar />}
-          <button
-            className="ks-page-with-sidebar__sidebar__collapse-ctrl"
-            type="button"
+          <Button
+            className={classnames({
+              'ks-page-with-sidebar__sidebar__collapse-ctrl': true,
+              'ks-page-with-sidebar__sidebar__collapse-ctrl--collapsed': isSidebarCollapsed,
+            })}
+            kind="icon-standard"
+            icon="collapser"
             onClick={() => setIsSidebarCollapsed(current => !current)}
           >
-            <FaChevronLeft
-              style={{
-                height: '16px',
-                color: '#222222',
-                transform: isSidebarCollapsed ? 'rotate(180deg)' : '',
-              }}
-            />
-          </button>
-          <div className="ks-page-with-sidebar__sidebar-footer">
-            {canEdit && (
-              <AddEntity
-                icon="Add Icon"
-                handleAdd={({ title: theTitle, entityType }) => {
-                  // eslint-disable-next-line default-case
-                  switch (entityType) {
-                    case 'page': {
-                      dispatch(
-                        addPage({
-                          title: theTitle,
-                        }),
-                      );
-                      break;
-                    }
-                    case 'group': {
-                      dispatch(
-                        addSecondaryNavItem({
-                          name: theTitle,
-                        }),
-                      );
-                    }
-                  }
-                }}
-              />
-            )}
-          </div>
+            {isSidebarCollapsed ? 'Expand' : 'Collapse'}
+          </Button>
         </div>
         <ErrorCatcher>
           <main className="ks-page-with-sidebar__page">

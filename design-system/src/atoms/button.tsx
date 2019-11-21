@@ -14,6 +14,7 @@ type Props = {
   disabled?: boolean;
   onClick?: Btn['onClick'];
   onKeyPress?: Btn['onKeyPress'];
+  className?: string;
   // onClick?(event: React.MouseEvent<HTMLButtonElement>): void;
   // type?: 'button' | 'submit' | 'reset';
   type?: Btn['type'];
@@ -31,6 +32,7 @@ export const Button: React.FC<Props> = ({
   disabled = false,
   onClick,
   onKeyPress,
+  className,
   type = 'button',
   kind = 'standard',
   floating = false,
@@ -47,6 +49,7 @@ export const Button: React.FC<Props> = ({
     [`ks-btn--emphasis-${emphasis}`]: true,
     'ks-btn--floating': floating,
     'ks-btn--flush': flush,
+    [`${className}`]: true,
   });
 
   const isIconBtn = kind === 'icon' || kind === 'icon-standard';

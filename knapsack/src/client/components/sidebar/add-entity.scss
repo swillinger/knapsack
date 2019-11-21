@@ -1,25 +1,14 @@
 .ks-add-entity {
   position: relative;
+
   &:hover {
     cursor: pointer;
   }
+
   &__popup {
     display: none;
   }
-  &__icon {
-    background-color: var(--c-shade);
-    height: 40px;
-    width: 40px;
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
-    border-radius: 40px;
-    border: 1px solid var(--c-frame);
-    svg {
-      height: 16px;
-      margin: auto;
-    }
-  }
+
   &--active {
     .ks-add-entity__popup {
       display: block;
@@ -33,6 +22,7 @@
       z-index: 99;
     }
   }
+
   .ks-radio-group {
     input {
       margin-right: var(--space-xs);
@@ -48,6 +38,7 @@
       margin: 0 0 var(--space-xs) var(--space-l);
     }
   }
+
   label {
     display: block;
     color: var(--c-black);
@@ -55,6 +46,7 @@
     font-weight: normal;
     line-height: var(--space-l);
   }
+
   .ks-text-input-wrapper {
     width: 74%;
     display: inline-block;

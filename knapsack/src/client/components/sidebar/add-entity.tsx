@@ -3,13 +3,8 @@ import cn from 'classnames'; // https://www.npmjs.com/package/classnames
 import './add-entity.scss';
 import { Formik, Form, Field } from 'formik';
 import { Button, TextInputWrapper } from '@knapsack/design-system';
-import { FaPlus } from 'react-icons/fa';
 
 type Props = {
-  /**
-   * Icon to display
-   */
-  icon: string;
   /**
    * Give it a dark color scheme?
    */
@@ -40,7 +35,6 @@ function useOutsideAlert(ref, setIsShowing, isShowing) {
 }
 
 export const AddEntity: React.FC<Props> = ({
-  icon,
   handleAdd,
   isDark = false,
 }: Props) => {
@@ -138,10 +132,13 @@ export const AddEntity: React.FC<Props> = ({
           )}
         </Formik>
       </div>
-      {/* @todo replace with more permanent icon solution */}
-      <span className="ks-add-entity__icon">
-        <FaPlus onClick={() => setIsShowing(!isShowing)} />
-      </span>
+      <Button
+        kind="icon-standard"
+        icon="add"
+        onClick={() => setIsShowing(!isShowing)}
+      >
+        Add Navigation Element
+      </Button>
     </div>
   );
 };

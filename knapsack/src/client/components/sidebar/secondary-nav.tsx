@@ -57,7 +57,7 @@ export const SecondaryNav: React.FC<Props> = ({
 
   return (
     <div className="ks-secondary-nav">
-      <header className="ks-secondary-nav__header">
+      {/* <header className="ks-secondary-nav__header">
         <Button
           size="s"
           onClick={() => {
@@ -83,7 +83,7 @@ export const SecondaryNav: React.FC<Props> = ({
           Save menu changes
         </Button>
       </header>
-      <hr />
+      <hr /> */}
       {/* @todo make it so a hard-coded height is not necessary */}
       <nav className="ks-secondary-nav__tree" style={{ height: 900 }}>
         <SortableTree

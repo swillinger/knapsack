@@ -1,0 +1,21 @@
+id: a-new-page
+title: A new page
+slices:
+  - id: 8a7MZgfx
+    blockId: pattern-template-slice
+    data:
+      patternId: card
+      templateId: twig
+      options:
+        showReadme: false
+        showSchemaForm: true
+        demoSize: l
+  - id: wnO4n6vN
+    blockId: design-token-slice
+    data:
+      tokens:
+        category: color
+        tags:
+          - core
+      demo:
+        id: color-swatch

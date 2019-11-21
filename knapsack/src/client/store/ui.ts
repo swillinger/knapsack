@@ -13,6 +13,15 @@ type Status = {
   dismissAfter?: number;
 };
 
+export interface UiState {
+  status?: {
+    type: StatusTypes;
+    message: string;
+    dismissAfter?: number;
+  };
+  isEditMode?: boolean;
+}
+
 interface SetStatusAction extends Action {
   type: typeof SET_STATUS;
   payload: Status;
@@ -66,15 +75,6 @@ export function setStatus(status: Status) {
       payload: status,
     });
   };
-}
-
-export interface UiState {
-  status?: {
-    type: StatusTypes;
-    message: string;
-    dismissAfter?: number;
-  };
-  isEditMode?: boolean;
 }
 
 const initialState: UiState = {};

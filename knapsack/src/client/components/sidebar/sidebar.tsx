@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@knapsack/design-system';
 import md5 from 'md5';
 import { shallowEqual } from 'react-redux';
@@ -8,7 +9,6 @@ import {
   useDispatch,
   useSelector,
   updateSecondaryNav,
-  addPage,
   disableEditMode,
   enableEditMode,
 } from '../../store';
@@ -18,6 +18,7 @@ import './sidebar.scss';
 export const Sidebar: React.FC = () => {
   const dispatch = useDispatch();
   const canEdit = useSelector(s => s.userState.canEdit);
+  const isLocalDev = useSelector(s => s.userState.isLocalDev);
   const isEditMode = useSelector(s => s.ui.isEditMode);
   const secondaryNavItems = useSelector(
     s => {
@@ -42,13 +43,32 @@ export const Sidebar: React.FC = () => {
     <div className="ks-sidebar">
       {canEdit && (
         <div>
-          <Button
-            kind="primary"
-            size="m"
-            onClick={() => dispatch(saveToServer())}
-          >
-            Save it all
-          </Button>
+          {isLocalDev && (
+            <>
+              <Button
+                kind="primary"
+                size="m"
+                onClick={() =>
+                  dispatch(
+                    saveToServer({
+                      storageLocation: 'local',
+                    }),
+                  )
+                }
+              >
+                Local dev: Save All
+              </Button>
+              <br />
+              <br />
+            </>
+          )}
+          <Link to="/propose-change">
+            <Button kind="primary" size="m">
+              PR: Propose Change
+            </Button>
+          </Link>
+          <br />
+          <br />
           <Button
             size="m"
             onClick={() =>

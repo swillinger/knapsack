@@ -19,7 +19,8 @@ import { ApolloServer, gql } from 'apollo-server-express';
 import { makeExecutableSchema, mergeSchemas } from 'graphql-tools';
 import WebSocket from 'ws';
 import bodyParser from 'body-parser';
-import { join } from 'path';
+import fetch from 'node-fetch';
+import { join, relative } from 'path';
 import { writeFile } from 'fs-extra';
 import * as log from '../cli/log';
 import { EVENTS, knapsackEvents } from './events';
@@ -34,7 +35,13 @@ import {
 } from './page-builder';
 import { designTokensResolvers, designTokensTypeDef } from './design-tokens';
 import { getBrain } from '../lib/bootstrap';
-import { GraphQlContext, KnapsackMeta, KnapsackFile } from '../schemas/misc';
+import {
+  GraphQlContext,
+  KnapsackMeta,
+  KnapsackFile,
+  GenericResponse,
+  KnapsackDataStoreSaveBody,
+} from '../schemas/misc';
 import { WS_EVENTS, WebSocketMessage } from '../schemas/web-sockets';
 import { flattenArray } from '../lib/utils';
 
@@ -169,24 +176,158 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
     };
   }
 
-  async function handleNewDataStore(data: AppState) {
+  async function saveFilesLocally(
+    files: KnapsackFile[],
+  ): Promise<GenericResponse> {
+    await Promise.all(
+      files.map(({ contents, path, encoding }) =>
+        writeFile(path, contents, { encoding }),
+      ),
+    );
+
+    return {
+      ok: true,
+      message: 'All config files saved locally.',
+    };
+  }
+
+  async function saveFilesToCloud({
+    files,
+    title = 'New changes',
+    message,
+  }: {
+    files: KnapsackFile[];
+    title?: string;
+    message?: string;
+  }): Promise<GenericResponse> {
+    if (!config.cloud) {
+      return {
+        ok: false,
+        message: 'No "cloud" in your "knapsack.config.js"',
+      };
+    }
+    const { apiKey, apiBase, repoRoot, repoName, repoOwner } = config.cloud;
+
+    interface Body {
+      owner: string;
+      repo: string;
+      baseBranch: string;
+      title: string;
+      message?: string;
+      payload?: {
+        files: {
+          path: string;
+          contents: string;
+        }[];
+      };
+    }
+
+    const body: Body = {
+      owner: repoOwner,
+      repo: repoName,
+      baseBranch: 'feature/users',
+      title,
+      message,
+      // commitMessage: message ? [title, '', message].join('\n') : title,
+      payload: {
+        files: files.map(file => {
+          return {
+            ...file,
+            path: relative(repoRoot, join(process.cwd(), file.path)),
+          };
+        }),
+      },
+    };
+    console.log('Sending save request to Knapsack Cloud...');
+    console.log(
+      'files paths',
+      body.payload.files.map(file => file.path).join('\n'),
+    );
+    const urlBase = apiBase.endsWith('/') ? apiBase : `${apiBase}/`;
+    const results = await fetch(`${urlBase}api/save`, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    })
+      .then(async res => {
+        const { ok, status, statusText } = res;
+        console.log({ ok, status, statusText });
+        if (!ok) {
+          const result: GenericResponse = {
+            ok,
+            message: `${status} - ${statusText}`,
+          };
+          return result;
+        }
+        const data = await res.json();
+        return {
+          ok: true,
+          message: `PR created at ${data.prUrl}`,
+          data,
+        };
+      })
+      .catch(e => {
+        console.error('error saveFilesToCloud');
+        console.error(e);
+        const result: GenericResponse = {
+          ok: false,
+          message: `thrown error in saveFilesToCloud: ${e.message}`,
+        };
+
+        return result;
+      });
+
+    return results;
+  }
+
+  async function handleNewDataStore({
+    state,
+    title,
+    message,
+    storageLocation,
+  }: KnapsackDataStoreSaveBody): Promise<GenericResponse> {
     try {
       const configFiles: KnapsackFile[] = await Promise.all([
-        settings.savePrep(data.settingsState.settings),
-        customPages.savePrep(data.customPagesState),
-        navs.savePrep(data.navsState),
+        settings.savePrep(state.settingsState.settings),
+        customPages.savePrep(state.customPagesState),
+        navs.savePrep(state.navsState),
       ]).then(results => flattenArray(results));
 
-      await Promise.all(
-        configFiles.map(({ contents, path, encoding }) =>
-          writeFile(path, contents, { encoding }),
-        ),
-      );
+      console.log('cloud', config.cloud);
+      let results;
+      switch (storageLocation) {
+        case 'local': {
+          results = await saveFilesLocally(configFiles);
+          break;
+        }
+        case 'cloud': {
+          if (config.cloud) {
+            results = await saveFilesToCloud({
+              files: configFiles,
+              title,
+              message,
+            });
+            break;
+          } else {
+            throw new Error(`No cloud config`);
+          }
+        }
+        default:
+          throw new Error(
+            `Must declare save location, passed in ${storageLocation}`,
+          );
+      }
+      // if (config.cloud) {
+      //   results = await saveFilesToCloud(configFiles);
+      // } else {
+      //   results = await saveFilesLocally(configFiles);
+      // }
+      console.log('cloud results', results);
 
-      return {
-        ok: true,
-        message: 'We got it!',
-      };
+      return results;
     } catch (e) {
       console.error('handleNewDataStore', e);
       return {
@@ -196,38 +337,59 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
     }
   }
 
-  app
-    .route(`${apiUrlBase}/data-store`)
-    .get(async (req, res) => {
-      const role = getRole(req);
-      const dataStore = await getDataStore();
-      const fullDataStore: PartialAppState = {
-        ...dataStore,
-        userState: {
-          role,
-          canEdit: role.permissions.includes(PERMISSIONS.WRITE),
-        },
-        metaState: {
-          meta,
-        },
-      };
+  app.get(`${apiUrlBase}/data-store`, async (req, res) => {
+    const role = getRole(req);
+    const dataStore = await getDataStore();
+    const fullDataStore: PartialAppState = {
+      ...dataStore,
+      userState: {
+        role,
+        canEdit: role.permissions.includes(PERMISSIONS.WRITE),
+        isLocalDev: process.env.NODE_ENV !== 'production',
+      },
+      metaState: {
+        meta,
+      },
+    };
 
-      res.send(fullDataStore);
-    })
-    .post(async (req, res) => {
-      const { permissions } = getRole(req);
+    res.send(fullDataStore);
+  });
 
-      if (!permissions.includes(PERMISSIONS.WRITE)) {
-        res.status(HTTP_STATUS.BAD.UNAUTHORIZED).send();
+  app.post(`${apiUrlBase}/data-store`, async (req, res) => {
+    const {
+      state,
+      title,
+      message,
+      storageLocation,
+    } = req.body as KnapsackDataStoreSaveBody;
+
+    if (!(storageLocation === 'local' || storageLocation === 'cloud')) {
+      return res.status(HTTP_STATUS.BAD.BAD_REQUEST).send({
+        ok: false,
+        message: `loc param must be local or cloud, was: ${storageLocation}`,
+      });
+    }
+
+    const { permissions } = getRole(req);
+
+    if (!permissions.includes(PERMISSIONS.WRITE)) {
+      res.status(HTTP_STATUS.BAD.UNAUTHORIZED).send();
+    } else {
+      const results = await handleNewDataStore({
+        storageLocation,
+        title,
+        message,
+        state,
+      });
+      console.log('handleNewDataStore results', results);
+
+      if (results.ok) {
+        res.status(HTTP_STATUS.GOOD.CREATED).send(results);
       } else {
-        const results = await handleNewDataStore(req.body);
-        if (results.ok) {
-          res.status(HTTP_STATUS.GOOD.CREATED).send(results);
-        } else {
-          res.status(HTTP_STATUS.BAD.BAD_REQUEST).send(results);
-        }
+        res.status(HTTP_STATUS.BAD.BAD_REQUEST).send(results);
       }
-    });
+    }
+  });
 
   const regularRoutes = setupRoutes({
     patterns,

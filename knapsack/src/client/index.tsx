@@ -17,21 +17,10 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
-import { AppState, createStore } from './store';
+import { createStore } from './store';
 import { App } from './App';
 import { getStateFromLocalStorage } from './store/utils';
-import { apiUrlBase } from '../lib/constants';
-
-function getInitialState(): Promise<AppState> {
-  return window
-    .fetch(`${apiUrlBase}/data-store`)
-    .then(res => res.json())
-    .then(initialState => {
-      console.log({ initialState });
-      return initialState;
-    })
-    .catch(console.log.bind(console));
-}
+import { getInitialState } from './data';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const mountEl = document.createElement('div');

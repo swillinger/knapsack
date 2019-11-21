@@ -41,6 +41,7 @@ import {
   LoadableHome,
   LoadableChangelogPage,
   LoadableBadRoute,
+  LoadableProposeChange,
 } from './loadable-components';
 import './global/variables.css';
 import './style.scss';
@@ -191,6 +192,10 @@ export const App: React.FC = () => {
                   }}
                 />
                 <Route path="/changelog" component={LoadableChangelogPage} />
+                <Route
+                  path="/propose-change"
+                  component={LoadableProposeChange}
+                />
                 <Route
                   path={`${BASE_PATHS.PAGES}/:pageId`}
                   render={({

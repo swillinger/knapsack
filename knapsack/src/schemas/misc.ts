@@ -11,6 +11,13 @@ export interface KnapsackDb<T> {
   getData(): Promise<T>;
 }
 
+export interface KnapsackDataStoreSaveBody {
+  state: import('../client/store').AppState;
+  title?: string;
+  message?: string;
+  storageLocation: 'local' | 'cloud';
+}
+
 export interface GenericResponse {
   ok: boolean;
   message?: string;

@@ -21,6 +21,7 @@ import {
   KnapsackTemplateData,
   KnapsackTemplateDemo,
 } from '../schemas/patterns';
+import { AppState } from './store';
 
 /**
  * GraphQL Query Object to String
@@ -131,6 +132,17 @@ export function saveData(data: object): Promise<string> {
         );
       }
       return results.data.hash;
+    })
+    .catch(console.log.bind(console));
+}
+
+export function getInitialState(): Promise<AppState> {
+  return window
+    .fetch(`${apiUrlBase}/data-store`)
+    .then(res => res.json())
+    .then(initialState => {
+      // console.log({ initialState });
+      return initialState;
     })
     .catch(console.log.bind(console));
 }

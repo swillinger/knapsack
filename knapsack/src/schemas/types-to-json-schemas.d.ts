@@ -4,5 +4,6 @@ type KnapsackSettings = import('./knapsack.settings').KnapsackSettings;
 type KnapsackAssetSetsConfig = import('./asset-sets').KnapsackAssetSetsConfig;
 type KnapsackPattern = import('./patterns').KnapsackPattern;
 type KnapsackNavsConfig = import('./nav').KnapsackNavsConfig;
+type KnapsackConfig = import('./knapsack-config').KnapsackConfig;
 
 type KnapsackCustomPageSettingsForm = Pick<KnapsackCustomPagesData, 'sections'>;

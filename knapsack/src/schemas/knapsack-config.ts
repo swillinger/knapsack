@@ -106,4 +106,13 @@ export interface KnapsackConfig {
   };
   changelog?: string;
   version?: string;
+  cloud?: KnapsackCloud;
+}
+
+export interface KnapsackCloud {
+  apiBase: string;
+  apiKey: string;
+  repoName: string;
+  repoOwner: string;
+  repoRoot: string;
 }

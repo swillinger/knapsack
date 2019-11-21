@@ -1,6 +1,7 @@
 import { Action } from './types';
 import { setStatus } from './ui';
 import { apiUrlBase } from '../../lib/constants';
+import { KnapsackDataStoreSaveBody } from '../../schemas/misc';
 
 const SAVE_TO_SERVER_REQUEST = 'knapsack/meta/SAVE_TO_SERVER_REQUEST';
 const SAVE_TO_SERVER_SUCCESS = 'knapsack/meta/SAVE_TO_SERVER_SUCCESS';
@@ -14,7 +15,11 @@ interface SaveToServerRequestAction extends Action {
   type: typeof SAVE_TO_SERVER_REQUEST;
 }
 
-export function saveToServer() {
+export function saveToServer({
+  storageLocation,
+  title,
+  message,
+}: Omit<KnapsackDataStoreSaveBody, 'state'>) {
   return (dispatch, getState) => {
     dispatch({ type: SAVE_TO_SERVER_REQUEST });
     dispatch(
@@ -24,14 +29,20 @@ export function saveToServer() {
       }),
     );
     const state = getState();
+    const body: KnapsackDataStoreSaveBody = {
+      storageLocation,
+      state,
+      title,
+      message,
+    };
     window
-      .fetch(`${apiUrlBase}/data-store`, {
+      .fetch(`${apiUrlBase}/data-store/`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(state),
+        body: JSON.stringify(body),
       })
       .then(async res => {
         if (!res.ok) {

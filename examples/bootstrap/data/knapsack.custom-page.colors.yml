@@ -6,6 +6,7 @@ slices:
     data:
       tokens:
         category: color
-        tags: []
+        tags:
+          - core
       demo:
         id: color-swatch

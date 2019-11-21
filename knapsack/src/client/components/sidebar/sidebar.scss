@@ -26,11 +26,11 @@
     will-change: transform, opacity, z-index;
 
     &--hidden {
-      animation: hideEditBtn 550ms ease 50ms;
+      animation: hideEditBtn 550ms ease 100ms;
       z-index: -1;
       opacity: 0;
-      transition: opacity 0ms linear 600ms,
-                z-index 0ms step-end 600ms;
+      transition: opacity 0ms linear 650ms,
+                z-index 0ms step-end 650ms;
     }
   }
 

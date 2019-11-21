@@ -35,11 +35,6 @@
   --c-button-cancel-hover: var(--c-danger);
   --c-button-cancel-active: var(--c-button-primary-danger-active);
 
-  /* Font Families */
-  --font-family: 'Roboto', "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  --font-base-size: var(--space-m);
-  --font-size-s: var(--space-s);
-
   /* Spacing */
   --space-xxxs: 2px;
   --space-xxs: 4px;
@@ -50,6 +45,12 @@
   --space-xl: 40px;
   --space-xxl: 64px;
   --space-xxxl: 120px;
+
+  /* Font Families */
+  --font-family: 'Roboto', "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  --font-base-size: var(--space-m);
+  --font-size-s: var(--space-s);
+  --line-height-s: var(--space-m);
 
   /* Border Radius */
   --radius-s: var(--space-xxxs);

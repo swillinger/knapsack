@@ -1,10 +1,6 @@
 .ks-add-entity {
   position: relative;
 
-  &:hover {
-    cursor: pointer;
-  }
-
   &__popup {
     display: none;
   }
@@ -33,6 +29,7 @@
     }
     &__subtitle {
       font-size: var(--font-size-s);
+      line-height: var(--line-height-s);
       color: var(--c-text-subdued);
       display: block;
       margin: 0 0 var(--space-xs) var(--space-l);
@@ -41,24 +38,19 @@
 
   label {
     display: block;
-    color: var(--c-black);
     font-size: var(--font-base-size);
     font-weight: normal;
     line-height: var(--space-l);
+    cursor: pointer;
   }
 
-  .ks-text-input-wrapper {
-    width: 74%;
-    display: inline-block;
-    margin-right: var(--space-xs);
-    input {
-      box-sizing: border-box;
-      height: 40px;
-      border: 1px solid var(--c-frame);
-      background-color: var(--c-bg);
-      border-radius: var(--radius-m);
-      font-size: 0.75rem;
-      width: 100%;
+  &__footer {
+    display: flex;
+    align-items: flex-end;
+
+    &__title-field {
+      flex: 1;
+      margin-right: var(--space-xs);
     }
   }
 }

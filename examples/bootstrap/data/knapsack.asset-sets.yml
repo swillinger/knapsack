@@ -5,6 +5,9 @@ allAssetSets:
   bootstrap:
     id: bootstrap
     title: Bootstrap
+    inlineCss: |
+      *:hover {outline: 1px solid blue}
+      body {z-index: 42}
     assets:
       - src: ../public/css/bootstrap.css
       - src: ../public/css/knapsack-overrides.css

@@ -68,7 +68,8 @@ export const AddEntity: React.FC<Props> = ({
           {() => (
             <Form>
               <Field className="ks-radio-group" as="radio" name="entityType">
-                <label htmlFor="pattern">
+                {/* @TODO: Remove opacity style once this is no longer disabled */}
+                <label htmlFor="pattern" style={{ opacity: 0.5 }}>
                   <input
                     type="radio"
                     id="pattern"
@@ -110,24 +111,26 @@ export const AddEntity: React.FC<Props> = ({
                   the left navigation.
                 </span>
               </Field>
-              <Field name="title">
-                {({ field, form, meta }) => (
-                  <TextInputWrapper>
-                    <>
-                      <label className="ks-field-label" htmlFor="title">
-                        Title
-                        <input id="title" type="text" {...field} />
-                      </label>
-                      {meta.touched && meta.error && (
-                        <div className="ks-error">{meta.error}</div>
-                      )}
-                    </>
-                  </TextInputWrapper>
-                )}
-              </Field>
-              <Button kind="primary" type="submit">
-                Submit
-              </Button>
+              <div className="ks-add-entity__footer">
+                <Field name="title">
+                  {({ field, form, meta }) => (
+                    <TextInputWrapper className="ks-add-entity__footer__title-field">
+                      <>
+                        <label className="ks-field-label" htmlFor="title">
+                          Title
+                          <input id="title" type="text" {...field} />
+                        </label>
+                        {meta.touched && meta.error && (
+                          <div className="ks-error">{meta.error}</div>
+                        )}
+                      </>
+                    </TextInputWrapper>
+                  )}
+                </Field>
+                <Button kind="primary" type="submit">
+                  Submit
+                </Button>
+              </div>
             </Form>
           )}
         </Formik>

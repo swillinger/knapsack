@@ -106,7 +106,7 @@ jobs:
           name: Deploy Bootstrap Example
           command: |
             npm i -g now
-            now deploy --env EXAMPLE=bootstrap --local-config=./examples/bootstrap/now.json --team=basalt --token $ZEIT_TOKEN
+            now deploy --env EXAMPLE=bootstrap --local-config=./examples/bootstrap/now.json --team=basalt --token $ZEIT_TOKEN --debug
       - run:
           name: Build Docs Site
           command: yarn build:docs

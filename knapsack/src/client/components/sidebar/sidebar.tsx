@@ -7,13 +7,10 @@ import { shallowEqual } from 'react-redux';
 import { SecondaryNav } from './secondary-nav';
 import { AddEntity } from './add-entity';
 import {
-  saveToServer,
   useDispatch,
   useSelector,
   updateSecondaryNav,
   addPage,
-  disableEditMode,
-  enableEditMode,
   addSecondaryNavItem,
 } from '../../store';
 import { getTitleFromPath } from '../../../lib/routes';
@@ -22,7 +19,6 @@ import './sidebar.scss';
 export const Sidebar: React.FC = () => {
   const dispatch = useDispatch();
   const canEdit = useSelector(s => s.userState.canEdit);
-  const isEditMode = useSelector(s => s.ui.isEditMode);
   const secondaryNavItems = useSelector(
     s => {
       return s.navsState.secondary.map(navItem => {
@@ -50,27 +46,6 @@ export const Sidebar: React.FC = () => {
         <input type="text" />
       </div>
       <div className="ks-sidebar__content">
-        {/* {canEdit && (
-          <div>
-            <Button
-              kind="primary"
-              size="m"
-              onClick={() => dispatch(saveToServer())}
-            >
-              Save it all
-            </Button>
-            <Button
-              size="m"
-              onClick={() =>
-                dispatch(isEditMode ? disableEditMode() : enableEditMode())
-              }
-            >
-              Turn edit mode {isEditMode ? 'off' : 'on'}
-            </Button>
-            <hr />
-          </div>
-        )} */}
-
         <SecondaryNav
           secondaryNavItems={secondaryNavItems}
           // if the secondary nav list changes, this key changes, trigger a full re-mount to refresh state and names
@@ -130,7 +105,35 @@ export const Sidebar: React.FC = () => {
             <Button kind="cancel" onClick={() => setIsSidebarEditMode(false)}>
               Cancel
             </Button>
-            <Button kind="primary">Save</Button>
+            <Button
+              kind="primary"
+              // @TODO: Wire up this save button!
+              // This onclick method was blindly coppied over from secondary-nav.tsx,
+              // something Evan wrote.
+              // onClick={() => {
+              //   const newFlatData = getFlatDataFromTree({
+              //     treeData,
+              //     ignoreCollapsed: false,
+              //     getNodeKey: (item: TreeIndex & TreeNode & KnapsackNavItem) =>
+              //       item.id,
+              //   }).map(flatDataItem => {
+              //     // console.log({ flatDataItem });
+              //     const { node, parentNode } = flatDataItem;
+              //     return {
+              //       id: node.id,
+              //       name: node.name,
+              //       path: node.path || '',
+              //       parentId: parentNode ? parentNode.id : rootKey,
+              //     };
+              //   });
+
+              //   handleNewNavItems(newFlatData);
+              //
+              //   setIsSidebarEditMode(false);
+              // }}
+            >
+              Save
+            </Button>
           </div>
         </div>
       </div>

@@ -114,20 +114,23 @@ export const AddEntity: React.FC<Props> = ({
               <div className="ks-add-entity__footer">
                 <Field name="title">
                   {({ field, form, meta }) => (
-                    <TextInputWrapper className="ks-add-entity__footer__title-field">
-                      <>
-                        <label className="ks-field-label" htmlFor="title">
-                          Title
-                          <input id="title" type="text" {...field} />
-                        </label>
-                        {meta.touched && meta.error && (
-                          <div className="ks-error">{meta.error}</div>
-                        )}
-                      </>
-                    </TextInputWrapper>
+                    <>
+                      <label className="ks-field-label" htmlFor="title">
+                        Title
+                        <input id="title" type="text" {...field} />
+                      </label>
+                      {meta.touched && meta.error && (
+                        <div className="ks-error">{meta.error}</div>
+                      )}
+                    </>
                   )}
                 </Field>
-                <Button kind="primary" type="submit">
+                <Button
+                  kind="primary"
+                  type="submit"
+                  // @TODO: Wire up this button.
+                  // onClick={() => {}}
+                >
                   Submit
                 </Button>
               </div>

@@ -14,6 +14,7 @@ import cn from 'classnames';
 import { NavLink } from 'react-router-dom';
 import { KnapsackNavItem } from '../../../schemas/nav';
 import { AddEntity } from './add-entity';
+import './secondary-nav.scss';
 
 type KnapsackNavItemProps = {
   title: React.ReactNode;
@@ -56,70 +57,18 @@ export const SecondaryNav: React.FC<Props> = ({
   const [treeData, setTreeData] = useState(expandedTreeData);
 
   return (
-    <div className="ks-secondary-nav">
-      {/* <header className="ks-secondary-nav__header">
-        <Button
-          size="s"
-          onClick={() => {
-            const newFlatData = getFlatDataFromTree({
-              treeData,
-              ignoreCollapsed: false,
-              getNodeKey: (item: TreeIndex & TreeNode & KnapsackNavItem) =>
-                item.id,
-            }).map(flatDataItem => {
-              // console.log({ flatDataItem });
-              const { node, parentNode } = flatDataItem;
-              return {
-                id: node.id,
-                name: node.name,
-                path: node.path || '',
-                parentId: parentNode ? parentNode.id : rootKey,
-              };
-            });
-
-            handleNewNavItems(newFlatData);
-          }}
-        >
-          Save menu changes
-        </Button>
-      </header>
-      <hr /> */}
-      {/* @todo make it so a hard-coded height is not necessary */}
-      <nav className="ks-secondary-nav__tree" style={{ height: 900 }}>
-        <SortableTree
-          treeData={treeData}
-          theme={FileExplorerTheme}
-          canDrag={canEdit}
-          onChange={newTreeData => setTreeData(newTreeData)}
-          generateNodeProps={(data: ExtendedNodeData) => {
-            // console.log('generateNodeProps', data);
-            return {
-              title: <NavItem title={data.node.name} path={data.node.path} />,
-            };
-          }}
-
-          // generateNodeProps={({ node, path }) => ({
-          //   title: (
-          //     <input
-          //       style={{ fontSize: '1.1rem' }}
-          //       value={node.title}
-          //       onChange={event => {
-          //         const name = event.target.value;
-          //
-          //         setTreeData(currentTreeData =>
-          //           changeNodeAtPath({
-          //             treeData: currentTreeData,
-          //             path,
-          //             getNodeKey: ({ treeIndex }) => treeIndex,
-          //             newNode: { ...node, name },
-          //           }),
-          //         );
-          //       }}
-          //     />
-          //   ),
-          // })}
-        />
-      </nav>
-    </div>
+    <nav className="ks-secondary-nav">
+      <SortableTree
+        treeData={treeData}
+        theme={FileExplorerTheme}
+        canDrag={canEdit}
+        onChange={newTreeData => setTreeData(newTreeData)}
+        generateNodeProps={(data: ExtendedNodeData) => {
+          return {
+            title: <NavItem title={data.node.name} path={data.node.path} />,
+          };
+        }}
+      />
+    </nav>
   );
 };

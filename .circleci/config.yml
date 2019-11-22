@@ -130,11 +130,11 @@ jobs:
       - run:
           name: Deploy Storybook
           command: |
-            cp ~/repo/design-system/storybook/now.json ~/repo/design-system/storybook/dist
+            cp ./design-system/storybook/now.json ./design-system/storybook/dist
             if [ "$CIRCLE_BRANCH" = "master" ]; then
-              now deploy --scope=basalt --prod --token $ZEIT_TOKEN ~/repo/design-system/storybook/dist --local-config=~/repo/design-system/storybook/dist/now.json
+              now deploy --scope=basalt --prod --token $ZEIT_TOKEN ./design-system/storybook/dist --local-config=./design-system/storybook/dist/now.json
             else
-              now deploy --scope=basalt --target staging --token $ZEIT_TOKEN ~/repo/design-system/storybook/dist --local-config=~/repo/design-system/storybook/dist/now.json
+              now deploy --scope=basalt --target staging --token $ZEIT_TOKEN ./design-system/storybook/dist --local-config=./design-system/storybook/dinow.json
             fi
             DEPLOY_URL=`./scripts/get-latest-deploy.js 'knapsack-storybook'`
             echo "Adding GitHub check for DEPLOY_URL: $DEPLOY_URL"

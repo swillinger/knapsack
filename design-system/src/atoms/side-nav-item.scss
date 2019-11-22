@@ -1,0 +1,123 @@
+.ks-side-nav-item {
+  background-color: var(--c-bg);
+  border-left: var(--space-xs) solid transparent;
+  border-right: var(--space-xxxs) solid transparent;
+  height: var(--space-xl);
+  display: flex;
+  align-items: center;
+
+  &--clickable {
+    &:hover,
+    &:focus {
+      background-color: var(--c-active-highlight);
+    }
+  }
+
+  &--active {
+    background-color: var(--c-active-highlight);
+    border-left-color: var(--c-active);
+  }
+
+  &__title-container {
+    flex: 1;
+    padding-left: var(--space-xs);
+
+    a,
+    p {
+      color: var(--c-text-default);
+      line-height: var(--space-xl);
+      display: inline-block;
+      vertical-align: middle;
+      width: 100%;
+    }
+
+    a:hover,
+    a:focus {
+      text-decoration: none;
+    }
+
+    p {
+      font-weight: bold;
+    }
+  }
+
+  &__status-indicator {
+    border-radius: 50%;
+    width: var(--space-xs);
+    height: var(--space-xs);
+    margin-left: var(--space-xs);
+  }
+
+  &__collapse-btn {
+    color: var(--c-text-default);
+    transform: rotate(0deg);
+    transition: transform 200ms ease;
+
+    &--collapsed {
+      transform: rotate(90deg);
+    }
+  }
+
+  &__drag-handle {
+    color: var(--c-text-subdued);
+    cursor: move;
+    padding-bottom: var(--space-xxxs);
+    display: none;
+  }
+
+
+  &--editing {
+    border: var(--space-xxxs) solid transparent;
+
+    .ks-side-nav-item__drag-handle {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .ks-side-nav-item__title-container {
+      padding-left: 0;
+      p {
+        line-height: calc(var(--space-xl) - (var(--space-xxxs) * 2));
+        width: auto;
+      }
+    }
+
+    .ks-side-nav-item__status-indicator {
+      margin-left: 0;
+      margin-right: var(--space-xs);
+    }
+
+    .ks-side-nav-item__edit-title-btn {
+      opacity: 0;
+      margin-left: var(--space-xxs);
+    }
+
+    &:hover,
+    &:focus {
+      background-color: var(--c-button-standard);
+
+      .ks-side-nav-item__drag-handle {
+        color: var(--c-text-default);
+      }
+
+      .ks-side-nav-item__edit-title-btn {
+        opacity: 1;
+      }
+    }
+
+    &.ks-side-nav-item--dragging {
+      background-color: var(--c-button-standard);
+      border-color: var(--c-active);
+      opacity: 0.8;
+      box-shadow: var(--shadow);
+
+      .ks-side-nav-item__drag-handle {
+        color: var(--c-text-default);
+      }
+
+      .ks-side-nav-item__edit-title-btn {
+        display: none;
+      }
+    }
+  }
+}

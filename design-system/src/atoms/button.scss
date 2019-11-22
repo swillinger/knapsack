@@ -151,6 +151,10 @@
     height: var(--space-l);
     line-height: var(--space-l);
 
+    &.ks-btn--flush {
+      padding: 0;
+    }
+
     &.ks-btn--kind-standard {
       line-height: calc(var(--space-l) - 2px);
     }
@@ -162,6 +166,10 @@
       svg {
         height: calc(var(--space-l) - 2px);
       }
+    }
+
+    &.ks-btn--kind-icon:not(.ks-btn--flush) svg {
+      height: var(--space-l);
     }
   }
   // &-m {} default

@@ -38,7 +38,7 @@
     a:link,
     a:visited {
       color: var(--c-primary);
-      font-size: calc(var(--base-font-size) * 0.61);
+      font-size: calc(var(--font-base-size) * 0.61);
       text-decoration: none;
       transition: all var(--anim-base);
     }

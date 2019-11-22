@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@knapsack/design-system';
+import { KsButton } from '@knapsack/design-system';
 import md5 from 'md5';
 import { shallowEqual } from 'react-redux';
 import { SecondaryNav } from './secondary-nav';
@@ -42,21 +42,21 @@ export const Sidebar: React.FC = () => {
     <div className="ks-sidebar">
       {canEdit && (
         <div>
-          <Button
+          <KsButton
             kind="primary"
             size="m"
             onClick={() => dispatch(saveToServer())}
           >
             Save it all
-          </Button>
-          <Button
+          </KsButton>
+          <KsButton
             size="m"
             onClick={() =>
               dispatch(isEditMode ? disableEditMode() : enableEditMode())
             }
           >
             Turn edit mode {isEditMode ? 'off' : 'on'}
-          </Button>
+          </KsButton>
           <hr />
         </div>
       )}

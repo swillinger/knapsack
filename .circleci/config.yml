@@ -103,6 +103,12 @@ jobs:
       - attach_workspace:
           at: '~'
       - run:
+          name: Deploy Bootstrap Example
+          command: |
+            npm i -g now
+            now deploy --env EXAMPLE=bootstrap --local-config=./examples/bootstrap/now.json --team=basalt --token $ZEIT_TOKEN
+          no_output_timeout: 20m
+      - run:
           name: Build Docs Site
           command: yarn build:docs
       - run:
@@ -111,9 +117,9 @@ jobs:
             cp docs-site/now.json docs-site/build/knapsack
             npm i -g now
             if [ "$CIRCLE_BRANCH" = "master" ]; then
-              now deploy --scope=basalt --prod --token $ZEIT_TOKEN docs-site/build/knapsack
+              now deploy --scope=basalt --prod --token $ZEIT_TOKEN docs-site/build/knapsack --local-config=./docs-site/build/knapsack/now.json
             else
-              now deploy --scope=basalt --target staging --token $ZEIT_TOKEN docs-site/build/knapsack
+              now deploy --scope=basalt --target staging --token $ZEIT_TOKEN docs-site/build/knapsack --local-config=./docs-site/build/knapsack/now.json
             fi
             DEPLOY_URL=`./scripts/get-latest-deploy.js 'knapsack-docs'`
             echo "Adding GitHub check for DEPLOY_URL: $DEPLOY_URL"
@@ -126,9 +132,9 @@ jobs:
           command: |
             cp ~/repo/design-system/storybook/now.json ~/repo/design-system/storybook/dist
             if [ "$CIRCLE_BRANCH" = "master" ]; then
-              now deploy --scope=basalt --prod --token $ZEIT_TOKEN ~/repo/design-system/storybook/dist
+              now deploy --scope=basalt --prod --token $ZEIT_TOKEN ~/repo/design-system/storybook/dist --local-config=~/repo/design-system/storybook/now.json
             else
-              now deploy --scope=basalt --target staging --token $ZEIT_TOKEN ~/repo/design-system/storybook/dist
+              now deploy --scope=basalt --target staging --token $ZEIT_TOKEN ~/repo/design-system/storybook/dist --local-config=~/repo/design-system/storybook/now.json
             fi
             DEPLOY_URL=`./scripts/get-latest-deploy.js 'knapsack-storybook'`
             echo "Adding GitHub check for DEPLOY_URL: $DEPLOY_URL"

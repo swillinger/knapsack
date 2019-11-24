@@ -17,6 +17,7 @@
     "@knapsack/renderer-html": "^<%= knapsackVersion %>",
     "@knapsack/renderer-twig": "^<%= knapsackVersion %>",
     "@basalt/demo-data": "^0.5.1",
+    "ejs": "^2.7.4",
     "theo": "^8.1.1"
   },
   "devDependencies": {

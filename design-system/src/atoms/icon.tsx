@@ -2,7 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 import './icon.scss';
 
-export const sizes = ['s', 'm'];
+export const iconSizes = ['s', 'm'];
 export const symbols = [
   'add',
   'collapser',

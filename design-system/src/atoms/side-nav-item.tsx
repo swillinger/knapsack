@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import cn from 'classnames';
 import './side-nav-item.scss';
-import { Icon, Props as IconProps } from './icon';
+import { Icon } from './icon';
 import { Button } from './button';
 
 type Props = {

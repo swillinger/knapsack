@@ -3,6 +3,8 @@ export * from './block-quote-wrapper';
 export * from './details';
 export * from './forms/text-input-wrapper';
 export * from './forms/radio-input-wrapper';
+export * from './icon';
+export * from './side-nav-item';
 export * from './checkbox-input-wrapper';
 export * from './toggle';
 export * from './status-message';

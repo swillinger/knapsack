@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './select-styled-wrapper.scss';
 import shortid from 'shortid';
+import { Icon } from '../icon';
+
 //
 // Select.defaultProps = {
 //   initialItem: 0,
@@ -60,6 +62,7 @@ export const Select: React.FC<Props> = ({
             </option>
           ))}
         </select>
+        <Icon size="s" symbol="dropdown-carrot" />
       </span>
     </label>
   );

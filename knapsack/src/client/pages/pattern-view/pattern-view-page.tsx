@@ -15,7 +15,7 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React, { useState } from 'react';
-import { Button, Select, PatternStatusIcon } from '@knapsack/design-system';
+import { KsButton, Select, PatternStatusIcon } from '@knapsack/design-system';
 import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { updatePatternInfo, useSelector, useDispatch } from '../../store';
@@ -145,7 +145,7 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
                 )}
               </div>
               <div className="ks-pattern-view-demo-grid-controls">
-                <Button
+                <KsButton
                   type="button"
                   size="s"
                   onClick={() =>
@@ -153,7 +153,7 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
                   }
                 >
                   {isFullScreen ? 'Show Controls' : 'Fullscreen'}
-                </Button>
+                </KsButton>
               </div>
               <div className="ks-pattern-view-demo-grid-controls">
                 {templates.length > 1 && (

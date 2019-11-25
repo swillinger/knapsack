@@ -1,7 +1,7 @@
 import React from 'react';
 import Form from 'react-jsonschema-form';
 import uuid from 'uuid/v4';
-import { Button } from '../atoms';
+import { KsButton } from '../atoms';
 import './schema-form.css';
 import ObjectFieldTemplate from './custom-templates/custom-object';
 import CustomArrayField from './custom-templates/array-field';
@@ -91,9 +91,9 @@ export const SchemaForm = ({
       >
         {!hasSubmit && <span />}
         {hasSubmit && (
-          <Button kind="primary" type="submit">
+          <KsButton kind="primary" type="submit">
             Submit
-          </Button>
+          </KsButton>
         )}
       </Form>
     </div>

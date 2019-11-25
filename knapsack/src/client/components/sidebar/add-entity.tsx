@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import cn from 'classnames'; // https://www.npmjs.com/package/classnames
 import './add-entity.scss';
 import { Formik, Form, Field } from 'formik';
-import { Button, TextInputWrapper } from '@knapsack/design-system';
+import { KsButton, TextInputWrapper } from '@knapsack/design-system';
 import { FaPlus } from 'react-icons/fa';
 
 type Props = {
@@ -131,9 +131,9 @@ export const AddEntity: React.FC<Props> = ({
                   </TextInputWrapper>
                 )}
               </Field>
-              <Button kind="primary" type="submit">
+              <KsButton kind="primary" type="submit">
                 Submit
-              </Button>
+              </KsButton>
             </Form>
           )}
         </Formik>

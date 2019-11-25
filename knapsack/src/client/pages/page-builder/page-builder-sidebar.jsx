@@ -17,7 +17,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button,
+  KsButton,
   ClearFilterButton,
   TypeToFilter,
   TypeToFilterInputWrapper,
@@ -106,14 +106,14 @@ class PageBuilderSidebar extends Component {
             ))}
           </ul>
 
-          <Button
+          <KsButton
             onClick={this.props.handleCancelAddSlice}
             onKeyPress={this.props.handleCancelAddSlice}
             type="button"
             className="ks-button ks-button--color-white ks-button--size-small"
           >
             Cancel
-          </Button>
+          </KsButton>
         </div>
       );
     }
@@ -154,18 +154,18 @@ class PageBuilderSidebar extends Component {
         />
         <div style={{ display: 'flex' }}>
           {(this.context.isUserAbleToSave && (
-            <Button
+            <KsButton
               type="submit"
               onKeyPress={() => this.props.handleSave()}
               onClick={() => this.props.handleSave()}
               primary
             >
               Save
-            </Button>
+            </KsButton>
           )) || (
-            <Button type="submit" primary disabled>
+            <KsButton type="submit" primary disabled>
               Save (disabled)
-            </Button>
+            </KsButton>
           )}
           <Link
             className="page-builder-sidebar__styled-link"

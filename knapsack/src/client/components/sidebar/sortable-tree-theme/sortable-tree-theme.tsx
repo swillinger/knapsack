@@ -16,7 +16,6 @@ import treeNodeRenderer from './tree-node-renderer';
 export default {
   nodeContentRenderer,
   treeNodeRenderer,
-  scaffoldBlockPxWidth: 25,
-  rowHeight: 25,
-  slideRegionSize: 50,
+  rowHeight: 40,
+  scaffoldBlockPxWidth: 8,
 };

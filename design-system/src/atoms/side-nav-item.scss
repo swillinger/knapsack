@@ -33,10 +33,11 @@
 
     a:hover,
     a:focus {
+      color: var(--c-text-default);
       text-decoration: none;
     }
 
-    p {
+    &--has-children {
       font-weight: bold;
     }
   }

@@ -54,6 +54,7 @@ export const Sidebar: React.FC = () => {
           handleNewNavItems={newNavItems => {
             dispatch(updateSecondaryNav(newNavItems));
           }}
+          isSidebarEditMode={isSidebarEditMode}
         />
       </div>
 

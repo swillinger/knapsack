@@ -1,82 +1,67 @@
-import React, { Component, Children, cloneElement } from 'react';
-import PropTypes from 'prop-types';
-import styles from './tree-node-renderer.scss';
+import React, { Children, cloneElement } from 'react';
+import './tree-node-renderer.scss';
 
-class FileThemeTreeNodeRenderer extends Component {
-  render() {
-    const {
-      children,
-      listIndex,
-      swapFrom,
-      swapLength,
-      swapDepth,
-      scaffoldBlockPxWidth,
-      lowerSiblingCounts,
-      connectDropTarget,
-      isOver,
-      draggedNode,
-      canDrop,
-      treeIndex,
-      treeId, // Delete from otherProps
-      getPrevRow, // Delete from otherProps
-      node, // Delete from otherProps
-      path, // Delete from otherProps
-      rowDirection,
-      ...otherProps
-    } = this.props;
+type Props = {
+  treeIndex: number;
+  treeId: string;
+  swapFrom?: number;
+  swapDepth?: number;
+  swapLength?: number;
+  scaffoldBlockPxWidth: number;
+  lowerSiblingCounts: number[];
 
-    return connectDropTarget(
-      <div {...otherProps} className={styles.node}>
-        {Children.map(children, child =>
-          cloneElement(child, {
-            isOver,
-            canDrop,
-            draggedNode,
-            lowerSiblingCounts,
-            listIndex,
-            swapFrom,
-            swapLength,
-            swapDepth,
-          }),
-        )}
-      </div>,
-    );
-  }
-}
-
-FileThemeTreeNodeRenderer.defaultProps = {
-  swapFrom: null,
-  swapDepth: null,
-  swapLength: null,
-  canDrop: false,
-  draggedNode: null,
-};
-
-FileThemeTreeNodeRenderer.propTypes = {
-  treeIndex: PropTypes.number.isRequired,
-  treeId: PropTypes.string.isRequired,
-  swapFrom: PropTypes.number,
-  swapDepth: PropTypes.number,
-  swapLength: PropTypes.number,
-  scaffoldBlockPxWidth: PropTypes.number.isRequired,
-  lowerSiblingCounts: PropTypes.arrayOf(PropTypes.number).isRequired,
-
-  listIndex: PropTypes.number.isRequired,
-  children: PropTypes.node.isRequired,
+  listIndex: number;
+  children: React.ReactElement;
 
   // Drop target
-  connectDropTarget: PropTypes.func.isRequired,
-  isOver: PropTypes.bool.isRequired,
-  canDrop: PropTypes.bool,
-  draggedNode: PropTypes.shape({}),
+  connectDropTarget: Function;
+  isOver: boolean;
+  canDrop?: boolean;
+  draggedNode?: {};
 
   // used in dndManager
-  getPrevRow: PropTypes.func.isRequired,
-  node: PropTypes.shape({}).isRequired,
-  path: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  ).isRequired,
-  rowDirection: PropTypes.string.isRequired,
+  getPrevRow: Function;
+  node: {};
+  path: string[] | number[];
+  rowDirection: string;
+};
+
+export const FileThemeTreeNodeRenderer: React.FC<Props> = ({
+  children,
+  listIndex,
+  swapFrom = null,
+  swapLength = null,
+  swapDepth = null,
+  scaffoldBlockPxWidth,
+  lowerSiblingCounts,
+  connectDropTarget,
+  isOver,
+  draggedNode = null,
+  canDrop = false,
+  treeIndex,
+  treeId,
+  getPrevRow,
+  node,
+  path,
+  rowDirection,
+  ...otherProps
+}: Props) => {
+  return connectDropTarget(
+    <div {...otherProps} className="node">
+      {Children.map(children, child =>
+        cloneElement(child, {
+          isOver,
+          canDrop,
+          draggedNode,
+          lowerSiblingCounts,
+          listIndex,
+          swapFrom,
+          swapLength,
+          swapDepth,
+        }),
+      )}
+    </div>,
+  );
 };
 
 export default FileThemeTreeNodeRenderer;

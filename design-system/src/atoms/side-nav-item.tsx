@@ -5,8 +5,9 @@ import './side-nav-item.scss';
 import { Icon } from './icon';
 import { Button } from './button';
 
+type Btn = React.PropsWithoutRef<JSX.IntrinsicElements['button']>;
+
 type Props = {
-  children?: React.ReactNode;
   isEditMode?: boolean;
   isDragging?: boolean;
   title: string;
@@ -14,12 +15,12 @@ type Props = {
   active?: boolean;
   hasChildren?: boolean;
   isCollapsed?: boolean;
+  onClickToggleCollapse?: Btn['onClick'];
   // @TODO: Replace statusColor with status component.
   statusColor?: string;
 };
 
 export const SideNavItem: React.FC<Props> = ({
-  children,
   isEditMode = false,
   isDragging,
   title,
@@ -27,6 +28,7 @@ export const SideNavItem: React.FC<Props> = ({
   active,
   hasChildren,
   isCollapsed,
+  onClickToggleCollapse,
   statusColor,
 }: Props) => {
   const classes = cn({
@@ -52,7 +54,12 @@ export const SideNavItem: React.FC<Props> = ({
         />
       )}
 
-      <div className="ks-side-nav-item__title-container">
+      <div
+        className={cn(
+          'ks-side-nav-item__title-container',
+          hasChildren ? 'ks-side-nav-item__title-container--has-children' : '',
+        )}
+      >
         {path && !isEditMode ? (
           <NavLink to={path}>{title}</NavLink>
         ) : (
@@ -71,8 +78,6 @@ export const SideNavItem: React.FC<Props> = ({
         )}
       </div>
 
-      {children}
-
       {hasChildren && (
         <Button
           className={cn({
@@ -81,6 +86,7 @@ export const SideNavItem: React.FC<Props> = ({
           })}
           kind="icon"
           icon="collapser"
+          onClick={onClickToggleCollapse}
         >
           {isCollapsed ? 'Expand' : 'Collapse'}
         </Button>

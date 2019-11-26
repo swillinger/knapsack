@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { SideNavItem } from '@knapsack/design-system';
 import SortableTree, {
   getTreeFromFlatData,
   getFlatDataFromTree,
@@ -36,6 +35,7 @@ import './secondary-nav.scss';
 
 type Props = {
   canEdit?: boolean;
+  isSidebarEditMode?: boolean;
   secondaryNavItems: KnapsackNavItem[];
   handleNewNavItems?: (newNavItems: KnapsackNavItem[]) => void;
 };
@@ -45,6 +45,7 @@ const rootKey = 'root';
 export const SecondaryNav: React.FC<Props> = ({
   secondaryNavItems = [],
   canEdit,
+  isSidebarEditMode,
   handleNewNavItems = () => {},
 }: Props) => {
   const initialFlatData = {
@@ -62,7 +63,7 @@ export const SecondaryNav: React.FC<Props> = ({
       <SortableTree
         treeData={treeData}
         theme={SortableTreeTheme}
-        canDrag={canEdit}
+        canDrag={canEdit && isSidebarEditMode}
         onChange={newTreeData => setTreeData(newTreeData)}
         generateNodeProps={(data: ExtendedNodeData) => {
           const title = data.node.name;
@@ -70,15 +71,7 @@ export const SecondaryNav: React.FC<Props> = ({
           return {
             title,
             path,
-          };
-          return {
-            title: (
-              <SideNavItem
-                title={data.node.name}
-                path={data.node.path}
-                hasChildren
-              />
-            ),
+            isSidebarEditMode,
           };
         }}
       />

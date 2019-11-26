@@ -139,13 +139,13 @@ export const AddEntity: React.FC<Props> = ({
           )}
         </Formik>
       </div>
-      <Button
+      <KsButton
         kind="icon-standard"
         icon="add"
         onClick={() => setIsShowing(!isShowing)}
       >
         Add Navigation Element
-      </Button>
+      </KsButton>
     </div>
   );
 };

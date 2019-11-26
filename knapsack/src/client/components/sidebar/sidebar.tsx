@@ -71,7 +71,7 @@ export const Sidebar: React.FC = () => {
           Edit Left Navigation
         </KsButton>
       </div>
-      
+
       <div
         className={cn(
           'ks-sidebar__edit-panel',
@@ -104,12 +104,12 @@ export const Sidebar: React.FC = () => {
             />
           )}
           <div>
-            <Button kind="cancel" onClick={() => setIsSidebarEditMode(false)}>
+            <KsButton kind="cancel" onClick={() => setIsSidebarEditMode(false)}>
               Cancel
-            </Button>
-            <Button
+            </KsButton>
+            <KsButton
               kind="primary"
-              // @TODO: Wire up this save button!
+              // @TODO: Wire up this save KsButton!
               // This onclick method was blindly coppied over from secondary-nav.tsx,
               // something Evan wrote.
               // onClick={() => {
@@ -135,7 +135,7 @@ export const Sidebar: React.FC = () => {
               // }}
             >
               Save
-            </Button>
+            </KsButton>
           </div>
         </div>
       </div>

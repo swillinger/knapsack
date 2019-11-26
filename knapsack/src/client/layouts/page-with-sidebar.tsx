@@ -16,7 +16,7 @@
  */
 import React, { useState } from 'react';
 import classnames from 'classnames';
-import { Button } from '@knapsack/design-system';
+import { KsButton } from '@knapsack/design-system';
 import { Sidebar } from '../components/sidebar/sidebar';
 import ErrorCatcher from '../utils/error-catcher';
 import { SiteHeaderConnected } from '../components/site-header';
@@ -70,7 +70,7 @@ const PageWithSidebar: React.FC<Props> = ({
           })}
         >
           {sidebar || <Sidebar />}
-          <Button
+          <KsButton
             className={classnames({
               'ks-page-with-sidebar__sidebar__collapse-ctrl': true,
               'ks-page-with-sidebar__sidebar__collapse-ctrl--collapsed': isSidebarCollapsed,
@@ -80,29 +80,29 @@ const PageWithSidebar: React.FC<Props> = ({
             onClick={() => setIsSidebarCollapsed(current => !current)}
           >
             {isSidebarCollapsed ? 'Expand' : 'Collapse'}
-          </Button>
+          </KsButton>
         </div>
         <ErrorCatcher>
           <main className="ks-page-with-sidebar__page">
             <PageHeaderContainer title={title} section={section} />
-            {/* @TODO: Remove these buttons once the edit flow is established. */}
+            {/* @TODO: Remove these KsButtons once the edit flow is established. */}
             {canEdit && (
               <div>
-                <Button
+                <KsButton
                   kind="primary"
                   size="m"
                   onClick={() => dispatch(saveToServer())}
                 >
                   Save it all
-                </Button>
-                <Button
+                </KsButton>
+                <KsButton
                   size="m"
                   onClick={() =>
                     dispatch(isEditMode ? disableEditMode() : enableEditMode())
                   }
                 >
                   Turn edit mode {isEditMode ? 'off' : 'on'}
-                </Button>
+                </KsButton>
                 <hr />
               </div>
             )}

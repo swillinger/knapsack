@@ -70,17 +70,20 @@ const PageWithSidebar: React.FC<Props> = ({
           })}
         >
           {sidebar || <Sidebar />}
-          <KsButton
+          <div
             className={classnames({
               'ks-page-with-sidebar__sidebar__collapse-ctrl': true,
               'ks-page-with-sidebar__sidebar__collapse-ctrl--collapsed': isSidebarCollapsed,
             })}
-            kind="icon-standard"
-            icon="collapser"
-            onClick={() => setIsSidebarCollapsed(current => !current)}
           >
-            {isSidebarCollapsed ? 'Expand' : 'Collapse'}
-          </KsButton>
+            <KsButton
+              kind="icon-standard"
+              icon="collapser"
+              onClick={() => setIsSidebarCollapsed(current => !current)}
+            >
+              {isSidebarCollapsed ? 'Expand' : 'Collapse'}
+            </KsButton>
+          </div>
         </div>
         <ErrorCatcher>
           <main className="ks-page-with-sidebar__page">

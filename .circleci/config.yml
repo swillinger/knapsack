@@ -171,9 +171,7 @@ workflows:
       - deploys:
           requires:
             - setup
-      - deploy-knapsack:
-          requires:
-            - setup
+      - deploy-knapsack
       - release:
           requires:
             - setup

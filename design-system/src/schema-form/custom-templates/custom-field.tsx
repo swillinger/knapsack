@@ -30,8 +30,8 @@ export default function CustomField(props) {
   } else if (inputSchema.type === 'string' && !!inputSchema.enum) {
     inputContent = (
       // eslint-disable-next-line jsx-a11y/label-has-associated-control
-      <label className="ks-select-styled-wrapper" tabIndex={0}>
-        <span>
+      <label className="ks-select__label" tabIndex={0}>
+        <span className="ks-select__wrapper ks-select__wrapper--variant">
           {children}
           <Icon size="s" symbol="dropdown-carrot" />
         </span>

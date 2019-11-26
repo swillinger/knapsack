@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './select-styled-wrapper.scss';
+import './select.scss';
 import shortid from 'shortid';
 import { Icon } from '../icon';
 
@@ -45,9 +45,9 @@ export const Select: React.FC<Props> = ({
   const [currentValue, setValue] = useState(value);
 
   return (
-    <label className="ks-select-styled-wrapper" htmlFor={id} tabIndex={0}>
-      {label && <div className="ks-label-text">{label}</div>}
-      <span>
+    <label className="ks-select__label" htmlFor={id} tabIndex={0}>
+      {label && <div className="ks-select__label-text">{label}</div>}
+      <span className="ks-select__wrapper">
         <select
           onChange={event => {
             setValue(event.target.value);
@@ -55,6 +55,7 @@ export const Select: React.FC<Props> = ({
           }}
           value={currentValue}
           id={id}
+          className="ks-select"
         >
           {items.map(item => (
             <option tabIndex={0} value={item.value} key={item.value}>

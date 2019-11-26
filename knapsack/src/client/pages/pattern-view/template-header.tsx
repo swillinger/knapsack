@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, PatternStatusIcon, Select } from '@knapsack/design-system';
+import { KsButton, PatternStatusIcon, Select } from '@knapsack/design-system';
 import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
 import './template-header.scss';
 import { KnapsackTemplateStatus } from '../../../schemas/patterns';
@@ -41,9 +41,9 @@ export const TemplateHeader: React.FC<Props> = ({
         </h5>
       )}
       <div className="ks-template-header__controls">
-        <Button onClick={() => handleOpenNewTabClick()}>
+        <KsButton onClick={() => handleOpenNewTabClick()}>
           Open in new window
-        </Button>
+        </KsButton>
 
         {assetSets && assetSets.length > 1 && (
           <Select
@@ -73,18 +73,18 @@ export const TemplateHeader: React.FC<Props> = ({
               Demos:
             </div>
             <div>
-              <Button
+              <KsButton
                 disabled={demoDataIndex < 1}
                 onClick={() => handleDemoPrevClick()}
               >
                 <FaCaretLeft />
-              </Button>
-              <Button
+              </KsButton>
+              <KsButton
                 disabled={demoDataIndex === demoDatasLength - 1}
                 onClick={() => handleDemoNextClick()}
               >
                 <FaCaretRight />
-              </Button>
+              </KsButton>
             </div>
           </div>
         )}

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-
 import cn from 'classnames';
-import { Button } from '@knapsack/design-system';
+import { KsButton } from '@knapsack/design-system';
 import md5 from 'md5';
 import { shallowEqual } from 'react-redux';
 import { SecondaryNav } from './secondary-nav';
@@ -57,19 +56,22 @@ export const Sidebar: React.FC = () => {
         />
       </div>
 
-      <Button
+      <div
         className={cn(
           'ks-sidebar__enable-edit-btn',
           isSidebarEditMode ? 'ks-sidebar__enable-edit-btn--hidden' : '',
         )}
-        kind="icon-standard"
-        icon="edit"
-        floating
-        onClick={() => setIsSidebarEditMode(true)}
       >
-        Edit Left Navigation
-      </Button>
-
+        <KsButton
+          kind="icon-standard"
+          icon="edit"
+          floating
+          onClick={() => setIsSidebarEditMode(true)}
+        >
+          Edit Left Navigation
+        </KsButton>
+      </div>
+      
       <div
         className={cn(
           'ks-sidebar__edit-panel',

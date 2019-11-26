@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '@knapsack/design-system';
+import { KsButton } from '@knapsack/design-system';
 import SortableTree, {
   getTreeFromFlatData,
   getFlatDataFromTree,

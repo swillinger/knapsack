@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Button } from '@knapsack/design-system';
+import { KsButton } from '@knapsack/design-system';
 import cn from 'classnames';
 import './inline-edit.scss';
 import { useSelector } from '../store';
@@ -64,13 +64,13 @@ export const InlineEditTextBase: React.FC<TextProps> = ({
       </span>
       {showControls && (
         <span className="ks-inline-edit-text__controls">
-          <Button
+          <KsButton
             size="s"
             onClick={handleControlTrigger}
             onKeyPress={handleControlTrigger}
           >
             {isEditing ? 'Save' : 'Edit'}
-          </Button>
+          </KsButton>
         </span>
       )}
     </span>

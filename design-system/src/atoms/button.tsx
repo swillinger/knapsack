@@ -27,7 +27,7 @@ type Props = {
   tabIndex?: number;
 };
 
-export const Button: React.FC<Props> = ({
+export const KsButton: React.FC<Props> = ({
   children,
   disabled = false,
   onClick,

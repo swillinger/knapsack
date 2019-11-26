@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '@knapsack/design-system';
+import { KsButton } from '@knapsack/design-system';
 import md5 from 'md5';
 import { shallowEqual } from 'react-redux';
 import { SecondaryNav } from './secondary-nav';
@@ -45,7 +45,7 @@ export const Sidebar: React.FC = () => {
         <div>
           {isLocalDev && (
             <>
-              <Button
+              <KsButton
                 kind="primary"
                 size="m"
                 onClick={() =>
@@ -57,26 +57,34 @@ export const Sidebar: React.FC = () => {
                 }
               >
                 Local dev: Save All
-              </Button>
+              </KsButton>
               <br />
               <br />
             </>
           )}
+
           <Link to="/propose-change">
-            <Button kind="primary" size="m">
+            <KsButton kind="primary" size="m">
               PR: Propose Change
-            </Button>
+            </KsButton>
           </Link>
           <br />
           <br />
-          <Button
+          <KsButton
+            kind="primary"
+            size="m"
+            onClick={() => dispatch(saveToServer({ storageLocation: 'local' }))}
+          >
+            Save it all
+          </KsButton>
+          <KsButton
             size="m"
             onClick={() =>
               dispatch(isEditMode ? disableEditMode() : enableEditMode())
             }
           >
             Turn edit mode {isEditMode ? 'off' : 'on'}
-          </Button>
+          </KsButton>
           <hr />
         </div>
       )}

@@ -16,7 +16,7 @@
  */
 import React, { useState } from 'react';
 import marked from 'marked';
-import { Button } from '@knapsack/design-system';
+import { KsButton } from '@knapsack/design-system';
 import './md-block.scss';
 
 type Props = {
@@ -53,7 +53,7 @@ const MdBlock: React.FC<Props> = (props: Props) => {
         {title && <h4>{title}</h4>}
         {isEditable && (
           <div style={{ marginLeft: 'auto' }}>
-            <Button
+            <KsButton
               onClick={() => {
                 if (editing && handleSave) {
                   handleSave(md);
@@ -62,7 +62,7 @@ const MdBlock: React.FC<Props> = (props: Props) => {
               }}
             >
               <>{editing ? 'Save' : 'Edit'}</>
-            </Button>
+            </KsButton>
           </div>
         )}
       </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '@knapsack/design-system';
+import { KsButton } from '@knapsack/design-system';
 import SortableTree, {
   getTreeFromFlatData,
   getFlatDataFromTree,
@@ -58,7 +58,7 @@ export const SecondaryNav: React.FC<Props> = ({
   return (
     <div className="ks-secondary-nav">
       <header className="ks-secondary-nav__header">
-        <Button
+        <KsButton
           size="s"
           onClick={() => {
             const newFlatData = getFlatDataFromTree({
@@ -81,7 +81,7 @@ export const SecondaryNav: React.FC<Props> = ({
           }}
         >
           Save menu changes
-        </Button>
+        </KsButton>
       </header>
       <hr />
       {/* @todo make it so a hard-coded height is not necessary */}

@@ -5,7 +5,7 @@ import { withInfo } from '@storybook/addon-info';
 import { action } from '@storybook/addon-actions';
 import {
   BlockQuoteWrapper,
-  Button,
+  KsButton,
   Details,
   Select,
   StatusMessage,
@@ -39,7 +39,7 @@ storiesOf('Atoms', module)
     )),
   )
   .add('Details', () => <Details>{paragraph()}</Details>)
-  .add('Button', () => <Button>Test Button</Button>)
+  .add('Button', () => <KsButton>Test Button</KsButton>)
   .add(
     'StatusMessage',
     withInfo({

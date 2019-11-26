@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { KnapsackDesignToken } from '@knapsack/core';
 import { convertColor, hasOpacity, parseColor } from '@knapsack/utils';
-import { Select, Button } from '../atoms';
+import { Select, KsButton } from '../atoms';
 import { CopyToClipboard } from '../copy-to-clipboard/copy-to-clipboard';
 import './color-swatch.scss';
 
@@ -120,7 +120,7 @@ export const ColorSwatches: React.FC<ColorSwatchesProps> = ({
             format:{' '}
           </span>
           <a href={blobURL} download="my-sketch.sketchpalette">
-            <Button>Download Sketch Palette</Button>
+            <KsButton>Download Sketch Palette</KsButton>
           </a>
         </div>
       </div>

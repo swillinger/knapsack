@@ -16,7 +16,7 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, SchemaForm } from '@knapsack/design-system';
+import { KsButton, SchemaForm } from '@knapsack/design-system';
 
 import './shared/playground-schema-form.scss';
 
@@ -47,7 +47,7 @@ const PageBuilderEditForm = ({
         debug
       />
     )}
-    <Button
+    <KsButton
       onClick={handleHideEditForm}
       onKeyPress={handleHideEditForm}
       type="submit"
@@ -56,8 +56,8 @@ const PageBuilderEditForm = ({
       primary
     >
       Done
-    </Button>
-    <Button
+    </KsButton>
+    <KsButton
       style={{ marginLeft: '1rem' }}
       onClick={handleClearData}
       onKeyPress={handleClearData}
@@ -66,7 +66,7 @@ const PageBuilderEditForm = ({
       className="button button--color-iron button--size-small"
     >
       Clear
-    </Button>
+    </KsButton>
   </div>
 );
 

@@ -1,36 +1,32 @@
-.ks-select__label {
+.ks-select {
   display: inline-block;
   overflow: hidden;
   padding-right: 3px;
 
-  &-text {
+  &__label-text {
     display: inline-block;
     margin-right: 5px;
+
     &:after {
       content: ':';
     }
   }
-}
-.ks-select__wrapper {
-  display: inline-block;
-  position: relative;
-  max-width: 100%;
-  margin: 0;
 
-  // variant display required for select element created by custom fields to span entire container
-  &--variant {
-    display: inherit;
+  &__wrapper {
+    display: inline-block;
+    position: relative;
+    max-width: 100%;
+    margin: 0;
+
+    // variant display required for select element created by custom fields to span entire container
+    &--variant {
+      display: inherit;
+    }
   }
 
-  .ks-icon {
-    cursor: pointer;
-    position: absolute;
-    right: var(--space-xs);
-    top: calc(50% - 8px);
-  }
-
+  &__select,
   // styling for general select required when select is created as custom field and receives no class
-  .ks-select, select {
+  select {
     cursor: pointer;
     position: relative;
     width: 100%;
@@ -45,5 +41,12 @@
     -moz-appearance: none;
     outline: none;
     z-index: 1;
+  }
+
+  &__icon {
+    cursor: pointer;
+    position: absolute;
+    right: var(--space-xs);
+    top: calc(50% - 8px);
   }
 }

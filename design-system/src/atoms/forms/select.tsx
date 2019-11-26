@@ -45,7 +45,7 @@ export const Select: React.FC<Props> = ({
   const [currentValue, setValue] = useState(value);
 
   return (
-    <label className="ks-select__label" htmlFor={id} tabIndex={0}>
+    <label className="ks-select" htmlFor={id} tabIndex={0}>
       {label && <div className="ks-select__label-text">{label}</div>}
       <span className="ks-select__wrapper">
         <select
@@ -55,7 +55,7 @@ export const Select: React.FC<Props> = ({
           }}
           value={currentValue}
           id={id}
-          className="ks-select"
+          className="ks-select__select"
         >
           {items.map(item => (
             <option tabIndex={0} value={item.value} key={item.value}>
@@ -63,7 +63,9 @@ export const Select: React.FC<Props> = ({
             </option>
           ))}
         </select>
-        <Icon size="s" symbol="dropdown-carrot" />
+        <span className="ks-select__icon">
+          <Icon size="s" symbol="dropdown-carrot" />
+        </span>
       </span>
     </label>
   );

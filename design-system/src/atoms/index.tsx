@@ -2,6 +2,7 @@ export * from './button';
 export * from './block-quote-wrapper';
 export * from './details';
 export * from './forms/text-input-wrapper';
+export * from './forms/text-input';
 export * from './forms/radio-input-wrapper';
 export * from './icon';
 export * from './side-nav-item';

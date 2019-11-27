@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import cn from 'classnames';
-import { KsButton } from '@knapsack/design-system';
+import { KsButton, KsTextField } from '@knapsack/design-system';
 import md5 from 'md5';
 import { shallowEqual } from 'react-redux';
 import { SecondaryNav } from './secondary-nav';
@@ -42,7 +42,14 @@ export const Sidebar: React.FC = () => {
   return (
     <div className="ks-sidebar">
       <div className="ks-sidebar__search-container">
-        <input type="text" />
+        {/* @TODO: Wire up left nav searching 
+                  This will likely work with the sortable tree's searchQuery option:
+                  https://github.com/frontend-collective/react-sortable-tree#props 
+        */}
+        <KsTextField
+          endIcon="search"
+          flush
+        />
       </div>
       <div className="ks-sidebar__content">
         <SecondaryNav

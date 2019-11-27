@@ -11,8 +11,6 @@
 
   &__content {
     flex: 1;
-    padding-bottom: calc(var(--space-m) * 2 + var(--space-xl));
-    overflow: auto;
   }
 
   &__enable-edit-btn {

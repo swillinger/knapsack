@@ -111,6 +111,8 @@
     .ks-side-nav-item__edit-title-btn {
       opacity: 0;
       margin-left: var(--space-xxs);
+      display: inline-block;
+      vertical-align: middle;
     }
 
     &:hover,

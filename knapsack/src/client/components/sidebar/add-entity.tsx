@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import cn from 'classnames'; // https://www.npmjs.com/package/classnames
 import './add-entity.scss';
 import { Formik, Form, Field } from 'formik';
-import { KsButton, TextInputWrapper } from '@knapsack/design-system';
+import { KsButton, KsTextField } from '@knapsack/design-system';
 import { FaPlus } from 'react-icons/fa';
 
 type Props = {
@@ -115,15 +115,14 @@ export const AddEntity: React.FC<Props> = ({
               <div className="ks-add-entity__footer">
                 <Field name="title">
                   {({ field, form, meta }) => (
-                    <>
-                      <label className="ks-field-label" htmlFor="title">
-                        Title
-                        <input id="title" type="text" {...field} />
-                      </label>
-                      {meta.touched && meta.error && (
-                        <div className="ks-error">{meta.error}</div>
-                      )}
-                    </>
+                    <div className="ks-add-entity__footer__title-field">
+                      <KsTextField
+                        label="Title"
+                        inputProps={field}
+                        error={meta.error}
+                        flush
+                      />
+                    </div>
                   )}
                 </Field>
                 <KsButton
@@ -132,7 +131,7 @@ export const AddEntity: React.FC<Props> = ({
                   // @TODO: Wire up this button.
                   // onClick={() => {}}
                 >
-                  Submit
+                  Add
                 </KsButton>
               </div>
             </Form>

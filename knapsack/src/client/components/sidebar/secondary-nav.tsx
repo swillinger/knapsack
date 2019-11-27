@@ -1,38 +1,13 @@
 import React, { useState } from 'react';
 import {
   getTreeFromFlatData,
-  getFlatDataFromTree,
   toggleExpandedForAll,
-  changeNodeAtPath,
-  TreeIndex,
-  TreeNode,
   ExtendedNodeData,
   SortableTreeWithoutDndContext as SortableTree,
 } from 'react-sortable-tree';
-// import FileExplorerTheme from 'react-sortable-tree-theme-minimal';
-import cn from 'classnames';
-import { NavLink } from 'react-router-dom';
 import SortableTreeTheme from './sortable-tree-theme/sortable-tree-theme';
 import { KnapsackNavItem } from '../../../schemas/nav';
-import { AddEntity } from './add-entity';
 import './secondary-nav.scss';
-
-// type KnapsackNavItemProps = {
-//   title: React.ReactNode;
-//   path?: string;
-// };
-
-// export const NavItem: React.FC<KnapsackNavItemProps> = ({
-//   title,
-//   path,
-// }: KnapsackNavItemProps) => {
-//   const theTitle = path ? <NavLink to={path}>{title}</NavLink> : title;
-//   const classes = cn({
-//     'ks-nav-item': true,
-//     'ks-nav-item--link': path,
-//   });
-//   return <span className={classes}>{theTitle}</span>;
-// };
 
 type Props = {
   canEdit?: boolean;
@@ -66,6 +41,7 @@ export const SecondaryNav: React.FC<Props> = ({
         theme={SortableTreeTheme}
         canDrag={canEdit && isSidebarEditMode}
         onChange={newTreeData => setTreeData(newTreeData)}
+        searchQuery='bu'
         generateNodeProps={(data: ExtendedNodeData) => {
           const title = data.node.name;
           const { path } = data.node;

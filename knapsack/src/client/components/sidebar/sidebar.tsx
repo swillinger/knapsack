@@ -141,7 +141,13 @@ export const Sidebar: React.FC = () => {
             />
           )}
           <div>
-            <KsButton kind="cancel" onClick={() => setIsSidebarEditMode(false)}>
+            <KsButton
+              kind="cancel"
+              onClick={() => {
+                setTreeItems(expandedTreeItems);
+                setIsSidebarEditMode(false);
+              }}
+            >
               Cancel
             </KsButton>
             <KsButton

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import cn from 'classnames';
-import { KsButton, KsTextField } from '@knapsack/design-system';
+import { KsButton, Icon } from '@knapsack/design-system';
 import md5 from 'md5';
 import { shallowEqual } from 'react-redux';
 import { SecondaryNav } from './secondary-nav';
@@ -40,17 +40,15 @@ export const Sidebar: React.FC = () => {
   const [isSidebarEditMode, setIsSidebarEditMode] = useState(false);
   const [searchString, setSearchString] = useState('');
 
-  const isFilterFeatureEnabled = false;
-
   return (
     <div className="ks-sidebar">
-      {isFilterFeatureEnabled && (
-        <div className="ks-sidebar__search-container">
+      <div className="ks-sidebar__search-container">
+        <div className="ks-text-field ks-text-field--flush">
           {/* @TODO: Wire up left nav searching 
                     This will likely work with the sortable tree's searchQuery option:
                     https://github.com/frontend-collective/react-sortable-tree#props 
           */}
-          <div className="ks-text-field">
+          <div className="ks-text-field__input-icon-wrapper">
             <input
               type="text"
               className="ks-text-field__input"
@@ -58,9 +56,13 @@ export const Sidebar: React.FC = () => {
               onChange={event => setSearchString(event.target.value)}
               value={searchString}
             />
+            <span className="ks-text-field__end-icon">
+              <Icon symbol="search" />
+            </span>
           </div>
         </div>
-      )}
+      </div>
+
       <div className="ks-sidebar__content">
         <SecondaryNav
           secondaryNavItems={secondaryNavItems}

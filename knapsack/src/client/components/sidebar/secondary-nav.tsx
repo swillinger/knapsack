@@ -32,14 +32,18 @@ export const SecondaryNav: React.FC<Props> = ({
     getKey: item => item.id,
     getParentKey: item => item.parentId,
   };
+
   const initialTreeData = getTreeFromFlatData(initialFlatData);
   const expandedTreeData = toggleExpandedForAll({ treeData: initialTreeData });
   const [treeData, setTreeData] = useState(expandedTreeData);
 
-  const customSearchMethod = ({ node, searchQuery }) =>
-    searchQuery &&
-    node.title &&
-    node.title.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1;
+  const customSearchMethod = ({ node, searchQuery }) => {
+    return (
+      searchQuery &&
+      node.name &&
+      node.name.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1
+    );
+  };
   const searchFocusIndex = 0;
 
   return (
@@ -52,13 +56,6 @@ export const SecondaryNav: React.FC<Props> = ({
         searchMethod={customSearchMethod}
         searchQuery={searchString}
         searchFocusOffset={searchFocusIndex}
-        // searchFinishCallback={matches =>
-        //   this.setState({
-        //     searchFoundCount: matches.length,
-        //     searchFocusIndex:
-        //       matches.length > 0 ? searchFocusIndex % matches.length : 0,
-        //   })
-        // }
         generateNodeProps={(data: ExtendedNodeData) => {
           const title = data.node.name;
           const { path } = data.node;

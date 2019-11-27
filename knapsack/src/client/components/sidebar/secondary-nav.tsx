@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { KsButton } from '@knapsack/design-system';
-import SortableTree, {
+import {
   getTreeFromFlatData,
   getFlatDataFromTree,
   toggleExpandedForAll,
@@ -8,6 +8,7 @@ import SortableTree, {
   TreeIndex,
   TreeNode,
   ExtendedNodeData,
+  SortableTreeWithoutDndContext as SortableTree,
 } from 'react-sortable-tree';
 import FileExplorerTheme from 'react-sortable-tree-theme-file-explorer';
 import cn from 'classnames';

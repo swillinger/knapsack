@@ -20,7 +20,8 @@ import PropTypes from 'prop-types';
 import arrayMove from 'array-move';
 import shortid from 'shortid';
 import { Spinner, StatusMessage } from '@knapsack/design-system';
-import { DragDropContext } from 'react-dnd';
+// @todo determine if this is still functioning; upgraded `react-dnd` from v5 => v9 and just updated this import without checking to see if it works since it's been disabled as part of Knapsack v1 => v2
+import { DndContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -521,6 +522,6 @@ Playground.propTypes = {
   id: PropTypes.string.isRequired, // @todo save/show playgrounds based on `id`
 };
 
-export default DragDropContext(HTML5Backend)(
+export default DndContext(HTML5Backend)(
   connect(mapStateToProps)(connectToContext(Playground)),
 );

@@ -1,16 +1,22 @@
-.ks-inline-edit-text {
+.ks-inline-edit {
   &__controls {
     display: none;
   }
 }
 
-.ks-inline-edit-text--controls-visible {
-  border: dotted 1px var(--c-gray-light);
-  .ks-inline-edit-text__controls {
+.ks-inline-edit--visible {
+  .ks-inline-edit__controls {
     display: inline-block;
+    padding-left: var(--space-xs);
   }
 }
 
-.ks-inline-edit-text--editing {
-  border: dotted 1px var(--c-active);
+.ks-inline-edit--editing {
+  border-bottom: solid 1px var(--c-active);
+  .ks-inline-edit__controls {
+    display: inline-block;
+    margin-left: var(--space-xxs);
+    padding-left: var(--space-xxs);
+    border-left: solid 1px var(--c-text-default);
+  }
 }

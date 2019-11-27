@@ -145,7 +145,11 @@ export const FileThemeNodeContentRenderer: React.FC<Props> = ({
             })
           }
           path={ksNavItem.path}
-          active={path ? window.location.href.includes(ksNavItem.path) : false}
+          active={
+            ksNavItem.path
+              ? window.location.href.includes(ksNavItem.path)
+              : false
+          }
           isDragging={isDragging}
           // @TODO: Wire up statuses
           // statusColor={}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import cn from 'classnames';
 import shortid from 'shortid';
 import './text-input.scss';
@@ -29,7 +29,10 @@ export const KsTextField: React.FC<Props> = ({
   flush,
   endIcon,
 }: Props) => {
-  const id = `id-${shortid.generate()}`;
+  // ensure we only generate the id once at first render
+  const [id, setId] = useState('');
+  useEffect(() => setId(`id-${shortid.generate()}`), []);
+
   const classes = cn({
     'ks-text-field': true,
     'ks-text-field--inline': isLabelInline,

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import cn from 'classnames';
-import { KsButton } from '@knapsack/design-system';
+import { KsButton, KsTextField } from '@knapsack/design-system';
 import md5 from 'md5';
 import { shallowEqual } from 'react-redux';
 import { SecondaryNav } from './secondary-nav';
@@ -38,21 +38,40 @@ export const Sidebar: React.FC = () => {
   );
   // @TODO: Consider using store methods instead of state?
   const [isSidebarEditMode, setIsSidebarEditMode] = useState(false);
+  const [searchString, setSearchString] = useState('');
+
+  const isFilterFeatureEnabled = false;
 
   return (
     <div className="ks-sidebar">
-      <div className="ks-sidebar__search-container">
-        <input type="text" />
-      </div>
+      {isFilterFeatureEnabled && (
+        <div className="ks-sidebar__search-container">
+          {/* @TODO: Wire up left nav searching 
+                    This will likely work with the sortable tree's searchQuery option:
+                    https://github.com/frontend-collective/react-sortable-tree#props 
+          */}
+          <div className="ks-text-field">
+            <input
+              type="text"
+              className="ks-text-field__input"
+              placeholder="Filter"
+              onChange={event => setSearchString(event.target.value)}
+              value={searchString}
+            />
+          </div>
+        </div>
+      )}
       <div className="ks-sidebar__content">
         <SecondaryNav
           secondaryNavItems={secondaryNavItems}
+          searchString={searchString}
           // if the secondary nav list changes, this key changes, trigger a full re-mount to refresh state and names
           key={md5(JSON.stringify(secondaryNavItems))}
           canEdit={canEdit}
           handleNewNavItems={newNavItems => {
             dispatch(updateSecondaryNav(newNavItems));
           }}
+          isSidebarEditMode={isSidebarEditMode}
         />
       </div>
 

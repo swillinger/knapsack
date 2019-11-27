@@ -2,11 +2,12 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import cn from 'classnames';
 import './side-nav-item.scss';
-import { Icon, Props as IconProps } from './icon';
+import { Icon } from './icon';
 import { KsButton } from './button';
 
+type Btn = React.PropsWithoutRef<JSX.IntrinsicElements['button']>;
+
 type Props = {
-  children?: React.ReactNode;
   isEditMode?: boolean;
   isDragging?: boolean;
   title: string;
@@ -14,12 +15,14 @@ type Props = {
   active?: boolean;
   hasChildren?: boolean;
   isCollapsed?: boolean;
+  onClickToggleCollapse?: Btn['onClick'];
   // @TODO: Replace statusColor with status component.
   statusColor?: string;
+  isSearchMatch?: boolean;
+  isSearchFocus?: boolean;
 };
 
 export const SideNavItem: React.FC<Props> = ({
-  children,
   isEditMode = false,
   isDragging,
   title,
@@ -27,7 +30,10 @@ export const SideNavItem: React.FC<Props> = ({
   active,
   hasChildren,
   isCollapsed,
+  onClickToggleCollapse,
   statusColor,
+  isSearchMatch,
+  isSearchFocus,
 }: Props) => {
   const classes = cn({
     'ks-side-nav-item': true,
@@ -35,6 +41,8 @@ export const SideNavItem: React.FC<Props> = ({
     'ks-side-nav-item--active': active,
     'ks-side-nav-item--editing': isEditMode,
     'ks-side-nav-item--dragging': isDragging,
+    'ks-side-nav-item--is-search-match': isSearchMatch,
+    'ks-side-nav-item--is-search-focus': isSearchFocus,
   });
 
   return (
@@ -52,7 +60,20 @@ export const SideNavItem: React.FC<Props> = ({
         />
       )}
 
-      <div className="ks-side-nav-item__title-container">
+      {hasChildren && !path ? (
+        <div className="ks-side-nav-item__folder-icon">
+          <Icon symbol="folder" size="s" />
+        </div>
+      ) : (
+        ''
+      )}
+
+      <div
+        className={cn(
+          'ks-side-nav-item__title-container',
+          hasChildren ? 'ks-side-nav-item__title-container--has-children' : '',
+        )}
+      >
         {path && !isEditMode ? (
           <NavLink to={path}>{title}</NavLink>
         ) : (
@@ -67,8 +88,6 @@ export const SideNavItem: React.FC<Props> = ({
         )}
       </div>
 
-      {children}
-
       {hasChildren && (
         <div
           className={cn({
@@ -76,7 +95,11 @@ export const SideNavItem: React.FC<Props> = ({
             'ks-side-nav-item__collapse-btn--collapsed': isCollapsed,
           })}
         >
-          <KsButton kind="icon" icon="collapser">
+          <KsButton
+            kind="icon"
+            icon="collapser"
+            onClick={onClickToggleCollapse}
+          >
             {isCollapsed ? 'Expand' : 'Collapse'}
           </KsButton>
         </div>

@@ -1,8 +1,17 @@
 import React from 'react';
+import { NodeRendererProps, TreeItem } from 'react-sortable-tree';
 import { SideNavItem } from '@knapsack/design-system';
 import './node-content-renderer.scss';
 
-function isDescendant(older, younger) {
+export type ExtraProps = {
+  isSidebarEditMode: boolean;
+  ksNavItem: {
+    path?: string;
+    name: string;
+  };
+};
+
+function isDescendant(older: TreeItem, younger: TreeItem): boolean {
   return (
     !!older.children &&
     typeof older.children !== 'function' &&
@@ -12,45 +21,7 @@ function isDescendant(older, younger) {
   );
 }
 
-type Props = {
-  buttons?: any;
-  canDrag?: boolean;
-  className?: string;
-  icons?: any;
-  isSearchFocus?: boolean;
-  isSearchMatch?: boolean;
-  listIndex: number;
-  lowerSiblingCounts: number[];
-  node: {
-    title?: any;
-    children?: any;
-    expanded?: boolean;
-  };
-  path: any;
-  scaffoldBlockPxWidth: number;
-  style?: React.CSSProperties;
-  swapDepth?: number;
-  swapFrom?: number;
-  swapLength?: number;
-  title?: any;
-  toggleChildrenVisibility?: any;
-  treeIndex: number;
-  treeId: string;
-  rowDirection?: 'ltr' | 'rtl';
-
-  // Drag and drop API functions
-  // Drag source
-  connectDragPreview: any;
-  connectDragSource: any;
-  didDrop: boolean;
-  draggedNode?: {};
-  isDragging: boolean;
-  parentNode?: {}; // Needed for dndManager
-  // Drop target
-  canDrop?: boolean;
-  isOver: boolean;
-  isSidebarEditMode?: boolean;
-};
+type Props = NodeRendererProps & ExtraProps;
 
 export const FileThemeNodeContentRenderer: React.FC<Props> = ({
   scaffoldBlockPxWidth,
@@ -82,10 +53,9 @@ export const FileThemeNodeContentRenderer: React.FC<Props> = ({
   parentNode = null, // Needed for dndManager
   rowDirection,
   isSidebarEditMode,
+  ksNavItem,
   ...otherProps
 }: Props) => {
-  const nodeTitle = title || node.title;
-
   const isDraggedDescendant = draggedNode && isDescendant(draggedNode, node);
   const isLandingPadActive = !didDrop && isDragging;
 
@@ -158,15 +128,7 @@ export const FileThemeNodeContentRenderer: React.FC<Props> = ({
       {scaffold}
       <div className="node-content__inner">
         <SideNavItem
-          title={
-            typeof nodeTitle === 'function'
-              ? nodeTitle({
-                  node,
-                  path,
-                  treeIndex,
-                })
-              : nodeTitle
-          }
+          title={ksNavItem.name}
           isEditMode={isSidebarEditMode}
           hasChildren={
             toggleChildrenVisibility &&
@@ -182,8 +144,8 @@ export const FileThemeNodeContentRenderer: React.FC<Props> = ({
               treeIndex,
             })
           }
-          path={path}
-          active={path ? window.location.href.includes(path) : false}
+          path={ksNavItem.path}
+          active={path ? window.location.href.includes(ksNavItem.path) : false}
           isDragging={isDragging}
           // @TODO: Wire up statuses
           // statusColor={}

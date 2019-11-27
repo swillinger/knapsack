@@ -1,57 +1,46 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  getTreeFromFlatData,
-  toggleExpandedForAll,
   ExtendedNodeData,
   SortableTreeWithoutDndContext as SortableTree,
+  TreeItem,
 } from 'react-sortable-tree';
 import SortableTreeTheme from './sortable-tree-theme/sortable-tree-theme';
-import { KnapsackNavItem } from '../../../schemas/nav';
+import { ExtraProps } from './sortable-tree-theme/node-content-renderer';
 import './secondary-nav.scss';
 
 type Props = {
   canEdit?: boolean;
   isSidebarEditMode?: boolean;
   searchString?: string;
-  secondaryNavItems: KnapsackNavItem[];
-  handleNewNavItems?: (newNavItems: KnapsackNavItem[]) => void;
+  handleNewTreeItems?: (newNavItems: TreeItem[]) => void;
+  treeItems: TreeItem[];
 };
 
-const rootKey = 'root';
-
 export const SecondaryNav: React.FC<Props> = ({
-  secondaryNavItems = [],
   canEdit,
   isSidebarEditMode,
   searchString,
-  handleNewNavItems = () => {},
+  handleNewTreeItems = () => {},
+  treeItems,
 }: Props) => {
-  const initialFlatData = {
-    rootKey,
-    flatData: secondaryNavItems,
-    getKey: item => item.id,
-    getParentKey: item => item.parentId,
-  };
-  const initialTreeData = getTreeFromFlatData(initialFlatData);
-  const expandedTreeData = toggleExpandedForAll({ treeData: initialTreeData });
-  const [treeData, setTreeData] = useState(expandedTreeData);
-
   const customSearchMethod = ({ node, searchQuery }) =>
     searchQuery &&
     node.title &&
     node.title.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1;
   const searchFocusIndex = 0;
 
+  if (!treeItems) return null;
+
   return (
     <nav className="ks-secondary-nav">
       <SortableTree
-        treeData={treeData}
+        treeData={treeItems}
         theme={SortableTreeTheme}
         canDrag={canEdit && isSidebarEditMode}
-        onChange={newTreeData => setTreeData(newTreeData)}
-        searchMethod={customSearchMethod}
-        searchQuery={searchString}
-        searchFocusOffset={searchFocusIndex}
+        onChange={newTreeData => handleNewTreeItems(newTreeData)}
+        // searchMethod={customSearchMethod}
+        // searchQuery={searchString}
+        // searchFocusOffset={searchFocusIndex}
         // searchFinishCallback={matches =>
         //   this.setState({
         //     searchFoundCount: matches.length,
@@ -60,13 +49,14 @@ export const SecondaryNav: React.FC<Props> = ({
         //   })
         // }
         generateNodeProps={(data: ExtendedNodeData) => {
-          const title = data.node.name;
-          const { path } = data.node;
-          return {
-            title,
-            path,
+          const extraProps: ExtraProps = {
+            ksNavItem: {
+              path: data.node.path,
+              name: data.node.name,
+            },
             isSidebarEditMode,
           };
+          return extraProps;
         }}
       />
     </nav>

@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import cn from 'classnames';
-import { KsButton, KsTextField } from '@knapsack/design-system';
-import md5 from 'md5';
+import { KsButton } from '@knapsack/design-system';
 import { shallowEqual } from 'react-redux';
+import {
+  getTreeFromFlatData,
+  getFlatDataFromTree,
+  toggleExpandedForAll,
+  TreeIndex,
+  TreeNode,
+} from 'react-sortable-tree';
 import { SecondaryNav } from './secondary-nav';
 import { AddEntity } from './add-entity';
 import {
@@ -14,6 +20,9 @@ import {
 } from '../../store';
 import { getTitleFromPath } from '../../../lib/routes';
 import './sidebar.scss';
+import { KnapsackNavItem } from '../../../schemas/nav';
+
+const rootKey = 'root';
 
 export const Sidebar: React.FC = () => {
   const dispatch = useDispatch();
@@ -39,6 +48,15 @@ export const Sidebar: React.FC = () => {
   // @TODO: Consider using store methods instead of state?
   const [isSidebarEditMode, setIsSidebarEditMode] = useState(false);
   const [searchString, setSearchString] = useState('');
+  const initialFlatData = {
+    rootKey,
+    flatData: secondaryNavItems,
+    getKey: item => item.id,
+    getParentKey: item => item.parentId,
+  };
+  const initialTreeData = getTreeFromFlatData(initialFlatData);
+  const expandedTreeItems = toggleExpandedForAll({ treeData: initialTreeData });
+  const [treeItems, setTreeItems] = useState(expandedTreeItems);
 
   const isFilterFeatureEnabled = false;
 
@@ -46,9 +64,9 @@ export const Sidebar: React.FC = () => {
     <div className="ks-sidebar">
       {isFilterFeatureEnabled && (
         <div className="ks-sidebar__search-container">
-          {/* @TODO: Wire up left nav searching 
+          {/* @TODO: Wire up left nav searching
                     This will likely work with the sortable tree's searchQuery option:
-                    https://github.com/frontend-collective/react-sortable-tree#props 
+                    https://github.com/frontend-collective/react-sortable-tree#props
           */}
           <div className="ks-text-field">
             <input
@@ -63,14 +81,12 @@ export const Sidebar: React.FC = () => {
       )}
       <div className="ks-sidebar__content">
         <SecondaryNav
-          secondaryNavItems={secondaryNavItems}
+          treeItems={treeItems}
           searchString={searchString}
           // if the secondary nav list changes, this key changes, trigger a full re-mount to refresh state and names
-          key={md5(JSON.stringify(secondaryNavItems))}
+          // key={md5(JSON.stringify(secondaryNavItems))}
           canEdit={canEdit}
-          handleNewNavItems={newNavItems => {
-            dispatch(updateSecondaryNav(newNavItems));
-          }}
+          handleNewTreeItems={setTreeItems}
           isSidebarEditMode={isSidebarEditMode}
         />
       </div>

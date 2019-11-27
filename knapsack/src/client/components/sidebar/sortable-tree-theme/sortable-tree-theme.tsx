@@ -1,3 +1,5 @@
+import { ThemeProps } from 'react-sortable-tree';
+
 // Can override the following:
 //
 // style: PropTypes.shape({}),
@@ -13,9 +15,11 @@
 import nodeContentRenderer from './node-content-renderer';
 import treeNodeRenderer from './tree-node-renderer';
 
-export default {
+const theme: ThemeProps = {
   nodeContentRenderer,
   treeNodeRenderer,
   rowHeight: 40,
   scaffoldBlockPxWidth: 8,
 };
+
+export default theme;

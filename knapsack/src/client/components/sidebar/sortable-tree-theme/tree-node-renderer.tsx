@@ -1,32 +1,8 @@
 import React, { Children, cloneElement } from 'react';
+import { TreeRendererProps } from 'react-sortable-tree';
 import './tree-node-renderer.scss';
 
-type Props = {
-  treeIndex: number;
-  treeId: string;
-  swapFrom?: number;
-  swapDepth?: number;
-  swapLength?: number;
-  scaffoldBlockPxWidth: number;
-  lowerSiblingCounts: number[];
-
-  listIndex: number;
-  children: JSX.Element[];
-
-  // Drop target
-  connectDropTarget: any;
-  isOver: boolean;
-  canDrop?: boolean;
-  draggedNode?: {};
-
-  // used in dndManager
-  getPrevRow: any;
-  node: {};
-  path: string[] | number[];
-  rowDirection: 'ltr' | 'rtl';
-};
-
-export const FileThemeTreeNodeRenderer: React.FC<Props> = ({
+export const FileThemeTreeNodeRenderer: React.FC<TreeRendererProps> = ({
   children,
   listIndex,
   swapFrom = null,
@@ -45,7 +21,7 @@ export const FileThemeTreeNodeRenderer: React.FC<Props> = ({
   path,
   rowDirection,
   ...otherProps
-}: Props) => {
+}: TreeRendererProps) => {
   return connectDropTarget(
     <div {...otherProps} className="node">
       {Children.map(children, child =>

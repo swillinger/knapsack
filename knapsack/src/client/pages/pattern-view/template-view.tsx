@@ -16,7 +16,7 @@
  */
 
 import React, { useState } from 'react';
-import { SchemaForm, Details, Select, Button } from '@knapsack/design-system';
+import { SchemaForm, Details, Select, KsButton } from '@knapsack/design-system';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import shortid from 'shortid';
@@ -438,7 +438,7 @@ const TemplateView: React.FC<Props> = ({
                 {canEdit && (
                   <>
                     <hr />
-                    <Button
+                    <KsButton
                       kind="primary"
                       onClick={() => {
                         dispatch(
@@ -451,8 +451,8 @@ const TemplateView: React.FC<Props> = ({
                       }}
                     >
                       Save Demo
-                    </Button>
-                    <Button
+                    </KsButton>
+                    <KsButton
                       onClick={() => {
                         dispatch(
                           addTemplateDataDemo({
@@ -464,8 +464,8 @@ const TemplateView: React.FC<Props> = ({
                       }}
                     >
                       Add new demo
-                    </Button>
-                    <Button
+                    </KsButton>
+                    <KsButton
                       onClick={() => {
                         dispatch(
                           removeTemplateDemo({
@@ -477,7 +477,7 @@ const TemplateView: React.FC<Props> = ({
                       }}
                     >
                       Remove demo
-                    </Button>
+                    </KsButton>
                   </>
                 )}
               </div>

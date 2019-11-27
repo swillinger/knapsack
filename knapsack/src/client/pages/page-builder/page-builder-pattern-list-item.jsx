@@ -17,7 +17,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Select, Button } from '@knapsack/design-system';
+import { Select, KsButton } from '@knapsack/design-system';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import { connectToContext, contextPropTypes } from '../../context';
 import { PageBuilderContext } from './page-builder-context';
@@ -160,7 +160,7 @@ class PlaygroundSidebarPatternListItem extends Component {
           }))}
         />
         <br />
-        <Button
+        <KsButton
           onKeyPress={() =>
             this.context.handleAddSlice(
               this.props.pattern.id,
@@ -175,7 +175,7 @@ class PlaygroundSidebarPatternListItem extends Component {
           }
         >
           Add
-        </Button>
+        </KsButton>
         <br />
         <Link
           target="_blank"

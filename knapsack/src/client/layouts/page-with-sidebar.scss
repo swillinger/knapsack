@@ -61,9 +61,12 @@
     position: absolute;
     left: 100%;
     top: var(--space-m);
-    width: calc(var(--space-l) + 2px);
-    border-radius: 0 var(--space-xxs) var(--space-xxs) 0;
     opacity: 1;
+
+    button {
+      width: calc(var(--space-l) + 2px);
+      border-radius: 0 var(--space-xxs) var(--space-xxs) 0;
+    }
 
     svg {
       transform: rotate(90deg);

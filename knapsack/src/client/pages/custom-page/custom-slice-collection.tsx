@@ -15,7 +15,7 @@
  with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import { Button, SchemaForm } from '@knapsack/design-system';
+import { KsButton, SchemaForm } from '@knapsack/design-system';
 import arrayMove from 'array-move';
 import shortid from 'shortid';
 import knapsackSlices from './slices';
@@ -148,7 +148,7 @@ export class CustomSliceCollection extends React.Component<Props, State> {
         >
           {userCanSave && (
             <div style={{ marginRight: '.5rem' }}>
-              <Button
+              <KsButton
                 onClick={() =>
                   this.setState(prevState => ({
                     isEditing: !prevState.isEditing,
@@ -156,8 +156,8 @@ export class CustomSliceCollection extends React.Component<Props, State> {
                 }
               >
                 Toggle Edit Mode
-              </Button>
-              <Button
+              </KsButton>
+              <KsButton
                 onClick={() => {
                   this.setState({ saveButtonText: 'Saving...' });
                   setTimeout(() => {
@@ -167,7 +167,7 @@ export class CustomSliceCollection extends React.Component<Props, State> {
                 }}
               >
                 {saveButtonText}
-              </Button>
+              </KsButton>
             </div>
           )}
         </header>

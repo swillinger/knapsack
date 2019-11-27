@@ -134,8 +134,7 @@ jobs:
   deploy-knapsack:
     executor: cypress-with-php
     steps:
-      - attach_workspace:
-          at: '~'
+      - checkout
       - run:
           name: Deploy Knapsack Bootstrap Example
           command: |
@@ -171,9 +170,7 @@ workflows:
       - deploys:
           requires:
             - setup
-      - deploy-knapsack:
-          requires:
-            - setup
+      - deploy-knapsack
       - release:
           requires:
             - setup

@@ -26,7 +26,7 @@ import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import HTML5Backend from 'react-dnd-html5-backend';
-import { DndProvider } from 'react-dnd';
+import { DndProvider, DndContext } from 'react-dnd';
 import 'react-sortable-tree/style.css';
 import { useSelector } from './store';
 import { KnapsackContextProvider } from './context';

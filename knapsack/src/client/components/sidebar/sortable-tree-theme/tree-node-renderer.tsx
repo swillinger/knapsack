@@ -11,19 +11,19 @@ type Props = {
   lowerSiblingCounts: number[];
 
   listIndex: number;
-  children: React.ReactElement;
+  children: JSX.Element[];
 
   // Drop target
-  connectDropTarget: Function;
+  connectDropTarget: any;
   isOver: boolean;
   canDrop?: boolean;
   draggedNode?: {};
 
   // used in dndManager
-  getPrevRow: Function;
+  getPrevRow: any;
   node: {};
   path: string[] | number[];
-  rowDirection: string;
+  rowDirection: 'ltr' | 'rtl';
 };
 
 export const FileThemeTreeNodeRenderer: React.FC<Props> = ({

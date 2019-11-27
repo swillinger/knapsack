@@ -13,35 +13,35 @@ function isDescendant(older, younger) {
 }
 
 type Props = {
-  buttons?: React.ReactNode[];
+  buttons?: any;
   canDrag?: boolean;
   className?: string;
-  icons?: React.ReactNode[];
+  icons?: any;
   isSearchFocus?: boolean;
   isSearchMatch?: boolean;
   listIndex: number;
   lowerSiblingCounts: number[];
   node: {
-    title?: string;
+    title?: any;
     children?: any;
     expanded?: boolean;
   };
-  path: string;
+  path: any;
   scaffoldBlockPxWidth: number;
-  style?: {};
+  style?: React.CSSProperties;
   swapDepth?: number;
   swapFrom?: number;
   swapLength?: number;
-  title?: Function | React.ReactNode;
-  toggleChildrenVisibility?: Function;
+  title?: any;
+  toggleChildrenVisibility?: any;
   treeIndex: number;
   treeId: string;
-  rowDirection: string;
+  rowDirection?: 'ltr' | 'rtl';
 
   // Drag and drop API functions
   // Drag source
-  connectDragPreview: Function;
-  connectDragSource: Function;
+  connectDragPreview: any;
+  connectDragSource: any;
   didDrop: boolean;
   draggedNode?: {};
   isDragging: boolean;

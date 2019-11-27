@@ -12,6 +12,7 @@ import './secondary-nav.scss';
 type Props = {
   canEdit?: boolean;
   isSidebarEditMode?: boolean;
+  searchString?: string;
   secondaryNavItems: KnapsackNavItem[];
   handleNewNavItems?: (newNavItems: KnapsackNavItem[]) => void;
 };
@@ -22,6 +23,7 @@ export const SecondaryNav: React.FC<Props> = ({
   secondaryNavItems = [],
   canEdit,
   isSidebarEditMode,
+  searchString,
   handleNewNavItems = () => {},
 }: Props) => {
   const initialFlatData = {
@@ -34,6 +36,12 @@ export const SecondaryNav: React.FC<Props> = ({
   const expandedTreeData = toggleExpandedForAll({ treeData: initialTreeData });
   const [treeData, setTreeData] = useState(expandedTreeData);
 
+  const customSearchMethod = ({ node, searchQuery }) =>
+    searchQuery &&
+    node.title &&
+    node.title.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1;
+  const searchFocusIndex = 0;
+
   return (
     <nav className="ks-secondary-nav">
       <SortableTree
@@ -41,7 +49,16 @@ export const SecondaryNav: React.FC<Props> = ({
         theme={SortableTreeTheme}
         canDrag={canEdit && isSidebarEditMode}
         onChange={newTreeData => setTreeData(newTreeData)}
-        // searchQuery=""
+        searchMethod={customSearchMethod}
+        searchQuery={searchString}
+        searchFocusOffset={searchFocusIndex}
+        // searchFinishCallback={matches =>
+        //   this.setState({
+        //     searchFoundCount: matches.length,
+        //     searchFocusIndex:
+        //       matches.length > 0 ? searchFocusIndex % matches.length : 0,
+        //   })
+        // }
         generateNodeProps={(data: ExtendedNodeData) => {
           const title = data.node.name;
           const { path } = data.node;

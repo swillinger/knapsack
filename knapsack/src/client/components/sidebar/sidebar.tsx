@@ -144,30 +144,27 @@ export const Sidebar: React.FC = () => {
             </KsButton>
             <KsButton
               kind="primary"
-              // @TODO: Wire up this save KsButton!
-              // This onclick method was blindly coppied over from secondary-nav.tsx,
-              // something Evan wrote.
-              // onClick={() => {
-              //   const newFlatData = getFlatDataFromTree({
-              //     treeData,
-              //     ignoreCollapsed: false,
-              //     getNodeKey: (item: TreeIndex & TreeNode & KnapsackNavItem) =>
-              //       item.id,
-              //   }).map(flatDataItem => {
-              //     // console.log({ flatDataItem });
-              //     const { node, parentNode } = flatDataItem;
-              //     return {
-              //       id: node.id,
-              //       name: node.name,
-              //       path: node.path || '',
-              //       parentId: parentNode ? parentNode.id : rootKey,
-              //     };
-              //   });
+              onClick={() => {
+                const newFlatData = getFlatDataFromTree({
+                  treeData: treeItems,
+                  ignoreCollapsed: false,
+                  getNodeKey: (item: TreeIndex & TreeNode & KnapsackNavItem) =>
+                    item.id,
+                }).map(flatDataItem => {
+                  // console.log({ flatDataItem });
+                  const { node, parentNode } = flatDataItem;
+                  return {
+                    id: node.id,
+                    name: node.name,
+                    path: node.path || '',
+                    parentId: parentNode ? parentNode.id : rootKey,
+                  };
+                });
 
-              //   handleNewNavItems(newFlatData);
-              //
-              //   setIsSidebarEditMode(false);
-              // }}
+                dispatch(updateSecondaryNav(newFlatData));
+
+                setIsSidebarEditMode(false);
+              }}
             >
               Save
             </KsButton>

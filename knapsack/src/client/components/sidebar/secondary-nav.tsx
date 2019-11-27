@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import SortableTree, {
+import {
   getTreeFromFlatData,
   getFlatDataFromTree,
   toggleExpandedForAll,
@@ -7,6 +7,7 @@ import SortableTree, {
   TreeIndex,
   TreeNode,
   ExtendedNodeData,
+  SortableTreeWithoutDndContext as SortableTree,
 } from 'react-sortable-tree';
 // import FileExplorerTheme from 'react-sortable-tree-theme-minimal';
 import cn from 'classnames';

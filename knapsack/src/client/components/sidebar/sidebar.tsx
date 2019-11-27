@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-
 import cn from 'classnames';
-import { Button } from '@knapsack/design-system';
+import { KsButton } from '@knapsack/design-system';
 import md5 from 'md5';
 import { shallowEqual } from 'react-redux';
 import { SecondaryNav } from './secondary-nav';
@@ -58,18 +57,21 @@ export const Sidebar: React.FC = () => {
         />
       </div>
 
-      <Button
+      <div
         className={cn(
           'ks-sidebar__enable-edit-btn',
           isSidebarEditMode ? 'ks-sidebar__enable-edit-btn--hidden' : '',
         )}
-        kind="icon-standard"
-        icon="edit"
-        floating
-        onClick={() => setIsSidebarEditMode(true)}
       >
-        Edit Left Navigation
-      </Button>
+        <KsButton
+          kind="icon-standard"
+          icon="edit"
+          floating
+          onClick={() => setIsSidebarEditMode(true)}
+        >
+          Edit Left Navigation
+        </KsButton>
+      </div>
 
       <div
         className={cn(
@@ -103,12 +105,12 @@ export const Sidebar: React.FC = () => {
             />
           )}
           <div>
-            <Button kind="cancel" onClick={() => setIsSidebarEditMode(false)}>
+            <KsButton kind="cancel" onClick={() => setIsSidebarEditMode(false)}>
               Cancel
-            </Button>
-            <Button
+            </KsButton>
+            <KsButton
               kind="primary"
-              // @TODO: Wire up this save button!
+              // @TODO: Wire up this save KsButton!
               // This onclick method was blindly coppied over from secondary-nav.tsx,
               // something Evan wrote.
               // onClick={() => {
@@ -134,7 +136,7 @@ export const Sidebar: React.FC = () => {
               // }}
             >
               Save
-            </Button>
+            </KsButton>
           </div>
         </div>
       </div>

@@ -7,7 +7,10 @@ export const symbols = [
   'add',
   'collapser',
   'delete',
+  'close',
+  'save',
   'drag-handle',
+  'dropdown-carrot',
   'edit',
   'edit-text',
   'search',
@@ -22,7 +25,10 @@ export type Props = {
     | 'add'
     | 'collapser'
     | 'delete'
+    | 'close'
+    | 'save'
     | 'drag-handle'
+    | 'dropdown-carrot'
     | 'edit'
     | 'edit-text'
     | 'search'
@@ -67,9 +73,31 @@ export const Icon: React.FC<Props> = ({
         returnSymbol = (
           <g>
             <title>Delete</title>
-            <circle cx="12" cy="12" r="10" />
-            <line x1="15" y1="9" x2="9" y2="15" />
-            <line x1="9" y1="9" x2="15" y2="15" />
+            <polyline points="3 6 5 6 21 6" />
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+            <line x1="10" y1="11" x2="10" y2="17" />
+            <line x1="14" y1="11" x2="14" y2="17" />
+          </g>
+        );
+        break;
+
+      case 'close':
+        returnSymbol = (
+          <g>
+            <title>Close or Cancel</title>
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </g>
+        );
+        break;
+
+      case 'save':
+        returnSymbol = (
+          <g>
+            <title>Save</title>
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+            <polyline points="17 21 17 13 7 13 7 21" />
+            <polyline points="7 3 7 8 15 8" />
           </g>
         );
         break;
@@ -84,6 +112,15 @@ export const Icon: React.FC<Props> = ({
             <path d="M16 13C16.5523 13 17 12.5523 17 12C17 11.4477 16.5523 11 16 11C15.4477 11 15 11.4477 15 12C15 12.5523 15.4477 13 16 13Z" />
             <path d="M16 6C16.5523 6 17 5.55228 17 5C17 4.44772 16.5523 4 16 4C15.4477 4 15 4.44772 15 5C15 5.55228 15.4477 6 16 6Z" />
             <path d="M16 20C16.5523 20 17 19.5523 17 19C17 18.4477 16.5523 18 16 18C15.4477 18 15 18.4477 15 19C15 19.5523 15.4477 20 16 20Z" />
+          </g>
+        );
+        break;
+
+      case 'dropdown-carrot':
+        returnSymbol = (
+          <g>
+            <title>Dropdown Carrot</title>
+            <path d="M12 15L5 9H19L12 15Z" fill="#222222" />
           </g>
         );
         break;

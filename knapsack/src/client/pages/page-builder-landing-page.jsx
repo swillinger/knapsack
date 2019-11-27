@@ -22,7 +22,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import {
   BlockQuoteWrapper,
-  Button,
+  KsButton,
   StatusMessage,
 } from '@knapsack/design-system';
 import { connectToContext, contextPropTypes } from '../context';
@@ -137,18 +137,18 @@ class PageBuilderLandingPage extends Component {
               <div>
                 <h3>Create a New Page</h3>
                 {(this.props.context.permissions.includes('write') && (
-                  <Button
+                  <KsButton
                     primary
                     onClick={this.makeNewExample}
                     onKeyPress={this.makeNewExample}
                     type="submit"
                   >
                     Get Started
-                  </Button>
+                  </KsButton>
                 )) || (
-                  <Button primary type="submit" disabled>
+                  <KsButton primary type="submit" disabled>
                     Get Started (disabled)
-                  </Button>
+                  </KsButton>
                 )}
               </div>
             </PageWithSidebar>

@@ -1,11 +1,11 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 import PropMatrix from 'react-prop-matrix';
-import { Button, sizes, kinds, emphasiss } from './button';
+import { KsButton, sizes, kinds, emphasiss } from './button';
 
 export default {
-  title: 'Components|Atoms/Button',
-  component: Button,
+  title: 'Components|Atoms/KsButton',
+  component: KsButton,
   decorators: [],
   parameters: {},
 };
@@ -19,7 +19,7 @@ export const allVariations = () => (
   <PropMatrix options={options}>
     {({ text, kind, emphasis, ...props }) => (
       <>
-        <Button
+        <KsButton
           onClick={action('button-click')}
           kind={kind}
           icon={kind === 'icon' || kind === 'icon-standard' ? 'add' : null}
@@ -31,7 +31,7 @@ export const allVariations = () => (
           )}
           <span style={{ textTransform: 'capitalize' }}>{kind} </span>
           Button
-        </Button>
+        </KsButton>
         <hr />
       </>
     )}

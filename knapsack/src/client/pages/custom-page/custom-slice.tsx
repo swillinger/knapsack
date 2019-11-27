@@ -1,6 +1,6 @@
 import React from 'react';
 import shortid from 'shortid';
-import { Button, SchemaForm } from '@knapsack/design-system';
+import { KsButton, SchemaForm } from '@knapsack/design-system';
 import knapsackSlices from './slices';
 // import { Slice } from './slices/types';
 import { KnapsackCustomPageSlice } from '../../../schemas/custom-pages';
@@ -70,19 +70,21 @@ class CustomSlice extends React.Component<Props, State> {
           <div>
             <h4>{knapsackSlice.title}</h4>
             <p>{knapsackSlice.description}</p>
-            <Button
+            <KsButton
               disabled={sliceIndex === 0}
               onClick={() => moveSliceUp(sliceIndex)}
             >
               Move Up
-            </Button>
-            <Button
+            </KsButton>
+            <KsButton
               disabled={sliceIndex + 1 === slicesLength}
               onClick={() => moveSliceDown(sliceIndex)}
             >
               Move Down
-            </Button>
-            <Button onClick={() => deleteSlice(slice.id)}>Delete Slice</Button>
+            </KsButton>
+            <KsButton onClick={() => deleteSlice(slice.id)}>
+              Delete Slice
+            </KsButton>
             {knapsackSlice.schema && (
               <SchemaForm
                 schema={knapsackSlice.schema}

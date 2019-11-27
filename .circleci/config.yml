@@ -60,6 +60,9 @@ jobs:
             - ~/.cache/yarn
 #      - run: yarn clean
       - run: yarn build
+      - run: yarn build:types
+      - run: yarn lint:js
+      - run: yarn lint:style
 #      - run: yarn build:types
       - run: bash ./scripts/ensure-clean-git-repo.sh
       - persist_to_workspace:
@@ -70,11 +73,14 @@ jobs:
             - .ssh
 #            - .cache/Cypress
 
-  test--cypress:
+  tests:
     executor: cypress-with-php
     steps:
       - attach_workspace:
           at: '~'
+      - run: yarn jest
+      - run: yarn build:private
+      - run: yarn test:examples
       - restore_cache:
           keys:
             - cypress-cache-{{ checksum "node_modules/cypress/package.json" }}
@@ -84,18 +90,6 @@ jobs:
           paths:
             - ~/.cache/Cypress
       - run: yarn test:cypress
-
-  test--basics:
-    executor: base
-    steps:
-      - attach_workspace:
-          at: '~'
-      - run: yarn build:types
-      - run: yarn lint:js
-      - run: yarn lint:style
-      - run: yarn jest
-      - run: yarn build:private
-      - run: yarn test:examples
 
   deploys:
     executor: cypress-with-php
@@ -111,9 +105,9 @@ jobs:
             cp docs-site/now.json docs-site/build/knapsack
             npm i -g now
             if [ "$CIRCLE_BRANCH" = "master" ]; then
-              now deploy --scope=basalt --prod --token $ZEIT_TOKEN docs-site/build/knapsack
+              now deploy --scope=basalt --prod --token $ZEIT_TOKEN docs-site/build/knapsack --local-config=./docs-site/build/knapsack/now.json
             else
-              now deploy --scope=basalt --target staging --token $ZEIT_TOKEN docs-site/build/knapsack
+              now deploy --scope=basalt --target staging --token $ZEIT_TOKEN docs-site/build/knapsack --local-config=./docs-site/build/knapsack/now.json
             fi
             DEPLOY_URL=`./scripts/get-latest-deploy.js 'knapsack-docs'`
             echo "Adding GitHub check for DEPLOY_URL: $DEPLOY_URL"
@@ -124,11 +118,11 @@ jobs:
       - run:
           name: Deploy Storybook
           command: |
-            cp ~/repo/design-system/storybook/now.json ~/repo/design-system/storybook/dist
+            cp ./design-system/storybook/now.json ./design-system/storybook/dist
             if [ "$CIRCLE_BRANCH" = "master" ]; then
-              now deploy --scope=basalt --prod --token $ZEIT_TOKEN ~/repo/design-system/storybook/dist
+              now deploy --scope=basalt --prod --token $ZEIT_TOKEN ./design-system/storybook/dist --local-config=./design-system/storybook/dist/now.json
             else
-              now deploy --scope=basalt --target staging --token $ZEIT_TOKEN ~/repo/design-system/storybook/dist
+              now deploy --scope=basalt --target staging --token $ZEIT_TOKEN ./design-system/storybook/dist --local-config=./design-system/storybook/dist/now.json
             fi
             DEPLOY_URL=`./scripts/get-latest-deploy.js 'knapsack-storybook'`
             echo "Adding GitHub check for DEPLOY_URL: $DEPLOY_URL"
@@ -137,14 +131,22 @@ jobs:
           name: Run Percy Visual Regression Tests on Storybook
           command: PERCY_TOKEN=$PERCY_TOKEN_STORYBOOK yarn test:percy-storybook
 
+  deploy-knapsack:
+    executor: cypress-with-php
+    steps:
+      - checkout
+      - run:
+          name: Deploy Knapsack Bootstrap Example
+          command: |
+            npm i -g now
+            now deploy --env EXAMPLE=bootstrap --local-config=./examples/bootstrap/now.json --team=basalt --token $ZEIT_TOKEN
+          no_output_timeout: 20m
+
   test--publish:
     executor: base
     steps:
       - attach_workspace:
           at: '~'
-      - run: yarn clean
-      - run: yarn build
-      - run: yarn build:types
       - run: ./scripts/test-publish.sh
 
   release:
@@ -152,9 +154,6 @@ jobs:
     steps:
       - attach_workspace:
           at: '~'
-      - run: yarn clean
-      - run: yarn build
-      - run: yarn build:types
       - run: ./scripts/release.sh
 
 workflows:
@@ -162,10 +161,7 @@ workflows:
   main:
     jobs:
       - setup
-      - test--basics:
-          requires:
-            - setup
-      - test--cypress:
+      - tests:
           requires:
             - setup
       - test--publish:
@@ -174,13 +170,14 @@ workflows:
       - deploys:
           requires:
             - setup
+      - deploy-knapsack
       - release:
           requires:
             - setup
-            - test--basics
-            - test--cypress
+            - tests
             - test--publish
             - deploys
+            - deploy-knapsack
           filters:
             branches:
               only: master

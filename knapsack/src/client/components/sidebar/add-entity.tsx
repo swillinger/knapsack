@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import cn from 'classnames'; // https://www.npmjs.com/package/classnames
 import './add-entity.scss';
 import { Formik, Form, Field } from 'formik';
-import { Button, TextInputWrapper } from '@knapsack/design-system';
+import { KsButton, TextInputWrapper } from '@knapsack/design-system';
+import { FaPlus } from 'react-icons/fa';
 
 type Props = {
   /**
@@ -125,26 +126,26 @@ export const AddEntity: React.FC<Props> = ({
                     </>
                   )}
                 </Field>
-                <Button
+                <KsButton
                   kind="primary"
                   type="submit"
                   // @TODO: Wire up this button.
                   // onClick={() => {}}
                 >
                   Submit
-                </Button>
+                </KsButton>
               </div>
             </Form>
           )}
         </Formik>
       </div>
-      <Button
+      <KsButton
         kind="icon-standard"
         icon="add"
         onClick={() => setIsShowing(!isShowing)}
       >
         Add Navigation Element
-      </Button>
+      </KsButton>
     </div>
   );
 };

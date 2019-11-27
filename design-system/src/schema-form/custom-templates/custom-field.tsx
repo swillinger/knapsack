@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaInfoCircle } from 'react-icons/fa';
 import { RadioInputWrapper, TextInputWrapper, Tooltip } from '../../atoms';
+import { Icon } from '../../atoms/icon';
 import './custom-field.scss';
 
 /* eslint-disable react/prop-types */
@@ -29,8 +30,11 @@ export default function CustomField(props) {
   } else if (inputSchema.type === 'string' && !!inputSchema.enum) {
     inputContent = (
       // eslint-disable-next-line jsx-a11y/label-has-associated-control
-      <label className="ks-select-styled-wrapper" tabIndex={0}>
-        <span>{children}</span>
+      <label className="ks-select__label" tabIndex={0}>
+        <span className="ks-select__wrapper ks-select__wrapper--variant">
+          {children}
+          <Icon size="s" symbol="dropdown-carrot" />
+        </span>
       </label>
     );
   } else if (textWrapperInputs.includes(inputSchema.type)) {

@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import cn from 'classnames';
 import './side-nav-item.scss';
 import { Icon } from './icon';
-import { Button } from './button';
+import { KsButton } from './button';
 
 type Btn = React.PropsWithoutRef<JSX.IntrinsicElements['button']>;
 
@@ -74,30 +74,29 @@ export const SideNavItem: React.FC<Props> = ({
           <p>{title}</p>
         )}
         {isEditMode && (
-          <Button
-            className="ks-side-nav-item__edit-title-btn"
-            kind="icon"
-            size="s"
-            icon="edit-text"
-            flush
-          >
-            Edit Title
-          </Button>
+          <div className="ks-side-nav-item__edit-title-btn">
+            <KsButton kind="icon" size="s" icon="edit-text" flush>
+              Edit Title
+            </KsButton>
+          </div>
         )}
       </div>
 
       {hasChildren && (
-        <Button
+        <div
           className={cn({
             'ks-side-nav-item__collapse-btn': true,
             'ks-side-nav-item__collapse-btn--collapsed': isCollapsed,
           })}
-          kind="icon"
-          icon="collapser"
-          onClick={onClickToggleCollapse}
         >
-          {isCollapsed ? 'Expand' : 'Collapse'}
-        </Button>
+          <KsButton
+            kind="icon"
+            icon="collapser"
+            onClick={onClickToggleCollapse}
+          >
+            {isCollapsed ? 'Expand' : 'Collapse'}
+          </KsButton>
+        </div>
       )}
     </div>
   );

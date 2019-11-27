@@ -54,6 +54,14 @@ export const SideNavItem: React.FC<Props> = ({
         />
       )}
 
+      {hasChildren && !path ? (
+        <div className="ks-side-nav-item__folder-icon">
+          <Icon symbol="folder" size="s" />
+        </div>
+      ) : (
+        ''
+      )}
+
       <div
         className={cn(
           'ks-side-nav-item__title-container',

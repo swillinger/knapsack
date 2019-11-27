@@ -18,6 +18,15 @@
     border-left-color: var(--c-active);
   }
 
+  &__folder-icon {
+    padding-left: var(--space-xs);
+    margin-bottom: var(--space-xxxs);
+
+    & + .ks-side-nav-item__title-container {
+      padding-left: var(--space-xxs);
+    }
+  }
+
   &__title-container {
     flex: 1;
     padding-left: var(--space-xs);
@@ -73,6 +82,14 @@
     .ks-side-nav-item__drag-handle {
       display: inline-block;
       vertical-align: middle;
+    }
+
+    .ks-side-nav-item__folder-icon {
+      padding-left: 0;
+
+      & + .ks-side-nav-item__title-container {
+        padding-left: var(--space-xxxs);
+      }
     }
 
     .ks-side-nav-item__title-container {

@@ -185,7 +185,10 @@ export const FileThemeNodeContentRenderer: React.FC<Props> = ({
           path={path}
           active={path ? window.location.href.includes(path) : false}
           isDragging={isDragging}
+          // @TODO: Wire up statuses
           // statusColor={}
+          isSearchFocus={isSearchFocus}
+          isSearchMatch={isSearchMatch}
         />
       </div>
 

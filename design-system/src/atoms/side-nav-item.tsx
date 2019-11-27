@@ -18,6 +18,8 @@ type Props = {
   onClickToggleCollapse?: Btn['onClick'];
   // @TODO: Replace statusColor with status component.
   statusColor?: string;
+  isSearchMatch?: boolean;
+  isSearchFocus?: boolean;
 };
 
 export const SideNavItem: React.FC<Props> = ({
@@ -30,6 +32,8 @@ export const SideNavItem: React.FC<Props> = ({
   isCollapsed,
   onClickToggleCollapse,
   statusColor,
+  isSearchMatch,
+  isSearchFocus,
 }: Props) => {
   const classes = cn({
     'ks-side-nav-item': true,
@@ -37,6 +41,8 @@ export const SideNavItem: React.FC<Props> = ({
     'ks-side-nav-item--active': active,
     'ks-side-nav-item--editing': isEditMode,
     'ks-side-nav-item--dragging': isDragging,
+    'ks-side-nav-item--is-search-match': isSearchMatch,
+    'ks-side-nav-item--is-search-focus': isSearchFocus,
   });
 
   return (

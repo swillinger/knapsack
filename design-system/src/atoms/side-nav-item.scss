@@ -18,6 +18,14 @@
     border-left-color: var(--c-active);
   }
 
+  &--is-search-focus {
+    box-shadow: inset 0 0 0 1px var(--c-focus);
+  }
+
+  &--is-search-match {
+    box-shadow: inset 0 0 0 var(--space-xxs) var(--c-focus);
+  }
+
   &__folder-icon {
     padding-left: var(--space-xs);
     margin-bottom: var(--space-xxxs);

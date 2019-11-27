@@ -41,7 +41,7 @@ export const SecondaryNav: React.FC<Props> = ({
         theme={SortableTreeTheme}
         canDrag={canEdit && isSidebarEditMode}
         onChange={newTreeData => setTreeData(newTreeData)}
-        searchQuery='bu'
+        // searchQuery=""
         generateNodeProps={(data: ExtendedNodeData) => {
           const title = data.node.name;
           const { path } = data.node;

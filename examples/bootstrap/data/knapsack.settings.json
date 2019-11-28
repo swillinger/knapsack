@@ -1,10 +1,6 @@
 {
-  "title": "Knapsack Demo",
+  "title": "Knapsack Demos",
   "subtitle": "Build it in Knapsack",
   "slogan": "",
-  "parentBrand": {
-    "logo": "/images/knapsack_logo.png",
-    "title": "",
-    "homepage": ""
-  }
+  "parentBrand": {}
 }

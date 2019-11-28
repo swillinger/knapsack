@@ -27,15 +27,15 @@
       "parentId": "patterns-asdf"
     },
     {
-      "id": "/pattern/card",
-      "name": "Card",
-      "path": "/pattern/card/",
-      "parentId": "components-asdf"
-    },
-    {
       "id": "/pattern/button",
       "name": "Button",
       "path": "/pattern/button",
+      "parentId": "components-asdf"
+    },
+    {
+      "id": "/pattern/card",
+      "name": "Card",
+      "path": "/pattern/card/",
       "parentId": "components-asdf"
     },
     {
@@ -93,10 +93,16 @@
       "parentId": "docs"
     },
     {
-      "path": "/pages/ima-new-page",
-      "parentId": "root",
+      "id": "ima-new-page",
       "name": "Ima new page",
-      "id": "ima-new-page"
+      "path": "/pages/ima-new-page",
+      "parentId": "root"
+    },
+    {
+      "id": "asdf",
+      "name": "asdf",
+      "path": "/pages/asdf",
+      "parentId": "root"
     }
   ]
 }

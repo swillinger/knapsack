@@ -15,6 +15,7 @@
     "@knapsack/core": "^1.7.0",
     "@knapsack/utils": "^1.7.1",
     "classnames": "^2.2.6",
+    "marked": "^0.7.0",
     "prismjs": "^1.15.0",
     "query-string": "^6.1.0",
     "react-copy-to-clipboard": "^5.0.1",

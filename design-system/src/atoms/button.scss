@@ -5,6 +5,7 @@
   height: var(--space-xl);
   line-height: var(--space-xl);
   border-radius: var(--radius-m);
+  vertical-align: middle;
 
   // if a button follow a button, put some space between
   &:not(.ks-btn--flush) + & {
@@ -12,7 +13,7 @@
   }
 
   &:focus {
-    outline: 2px solid var(--c-focus);
+    box-shadow: 0 0 0 2px var(--c-focus);
   }
 
   &[disabled],
@@ -55,6 +56,10 @@
 
     &.ks-btn--floating {
       box-shadow: var(--floating-btn-shadow);
+
+      &:focus {
+        box-shadow: 0 0 0 2px var(--c-focus);
+      }
     }
   }
 
@@ -107,6 +112,7 @@
   &-icon {
     background-color: transparent;
     color: var(--c-button-primary);
+    border-radius: 50%;
     padding: 0;
     width: var(--space-xl);
 

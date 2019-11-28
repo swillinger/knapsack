@@ -19,7 +19,7 @@ const theme: ThemeProps = {
   nodeContentRenderer,
   treeNodeRenderer,
   rowHeight: 40,
-  scaffoldBlockPxWidth: 8,
+  scaffoldBlockPxWidth: 12,
 };
 
 export default theme;

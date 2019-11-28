@@ -104,27 +104,6 @@ export const FileThemeNodeContentRenderer: React.FC<Props> = ({
 
   const nodeContent = (
     <div {...otherProps} className="node-content">
-      {/* {toggleChildrenVisibility && node.children && node.children.length > 0 && (
-        <button
-          type="button"
-          aria-label={node.expanded ? 'Collapse' : 'Expand'}
-          className={
-            node.expanded ? 'collapseButton' : 'expandButton'
-          }
-          style={{
-            left: (lowerSiblingCounts.length - 0.7) * scaffoldBlockPxWidth,
-          }}
-
-          onClick={() =>
-            toggleChildrenVisibility({
-              node,
-              path,
-              treeIndex,
-            })
-          }
-
-        />
-      )} */}
       {scaffold}
       <div className="node-content__inner">
         <SideNavItem
@@ -137,7 +116,6 @@ export const FileThemeNodeContentRenderer: React.FC<Props> = ({
           }
           isCollapsed={!node.expanded}
           onClickToggleCollapse={() =>
-            // @TODO: Get this working...
             toggleChildrenVisibility({
               node,
               path,
@@ -157,76 +135,6 @@ export const FileThemeNodeContentRenderer: React.FC<Props> = ({
           isSearchMatch={isSearchMatch}
         />
       </div>
-
-      {/* <div
-        className={
-          "rowWrapper" +
-          (!canDrag ? ' rowWrapperDragDisabled' : '')
-        }
-      > */}
-      {/* Set the row preview to be used during drag and drop */}
-      {/* {connectDragPreview(
-          <div style={{ display: 'flex' }}>
-            {scaffold}
-            <div
-              className={
-                'row' +
-                (isLandingPadActive ? ' rowLandingPad' : '') +
-                (isLandingPadActive && !canDrop
-                  ? ' rowCancelPad'
-                  : '') +
-                (isSearchMatch ? ' rowSearchMatch' : '') +
-                (isSearchFocus ? ' rowSearchFocus' : '') +
-                (className ? ` ${className}` : '')
-              }
-              style={{
-                opacity: isDraggedDescendant ? 0.5 : 1,
-                ...style,
-              }}
-            >
-              <div
-                className={
-                  'rowContents' +
-                  (!canDrag ? ' rowContentsDragDisabled' : '')
-                }
-              >
-                <div className="rowToolbar">
-                  {icons.map((icon, index) => (
-                    <div
-                      key={index} // eslint-disable-line react/no-array-index-key
-                      className="toolbarButton"
-                    >
-                      {icon}
-                    </div>
-                  ))}
-                </div>
-                <div className="rowLabel">
-                  <span className="rowTitle">
-                    {typeof nodeTitle === 'function'
-                      ? nodeTitle({
-                          node,
-                          path,
-                          treeIndex,
-                        })
-                      : nodeTitle}
-                  </span>
-                </div>
-
-                <div className="rowToolbar">
-                  {buttons.map((btn, index) => (
-                    <div
-                      key={index} // eslint-disable-line react/no-array-index-key
-                      className="toolbarButton"
-                    >
-                      {btn}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>,
-        )} */}
-      {/* </div> */}
     </div>
   );
 

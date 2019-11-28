@@ -6,7 +6,7 @@ import { useSelector } from '../store';
 
 type TextProps = {
   text: string;
-  headingLevel?: number;
+  isHeading?: boolean;
   showControls?: boolean;
   handleSave: (text: string) => void;
   canEdit: boolean;
@@ -14,7 +14,7 @@ type TextProps = {
 
 export const InlineEditTextBase: React.FC<TextProps> = ({
   text,
-  headingLevel,
+  isHeading,
   showControls = false,
   handleSave,
   canEdit,
@@ -76,7 +76,7 @@ export const InlineEditTextBase: React.FC<TextProps> = ({
         <span className="ks-inline-edit__controls">
           {btnState === 'save' && (
             <KsButton
-              size={headingLevel ? 'm' : 's'}
+              size={isHeading ? 'm' : 's'}
               icon="close"
               kind="icon"
               flush
@@ -88,7 +88,7 @@ export const InlineEditTextBase: React.FC<TextProps> = ({
             </KsButton>
           )}
           <KsButton
-            size={headingLevel ? 'm' : 's'}
+            size={isHeading ? 'm' : 's'}
             icon={btnState}
             kind="icon"
             flush

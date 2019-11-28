@@ -52,7 +52,6 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
 
   const { title, description, templates, demoSize: defaultDemoSize } = pattern;
 
-  const [isFullScreen, setIsFullScreen] = useState(false);
   const [demoSize, setDemoSize] = useState<string>(defaultDemoSize);
 
   let hasSchema = false;
@@ -80,7 +79,7 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
 
   return (
     <ErrorCatcher>
-      <PageWithSidebar isFullScreen={isFullScreen}>
+      <PageWithSidebar>
         <section className="ks-pattern-view-page">
           <header className="ks-pattern-view-page__header">
             <div>
@@ -93,6 +92,7 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
               <h2 style={{ marginBottom: '0' }}>
                 <InlineEditText
                   text={title}
+                  isHeading
                   handleSave={text => {
                     dispatch(
                       updatePatternInfo(patternId, {
@@ -143,17 +143,6 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
                     label="Stage Size"
                   />
                 )}
-              </div>
-              <div className="ks-pattern-view-demo-grid-controls">
-                <KsButton
-                  type="button"
-                  size="s"
-                  onClick={() =>
-                    setIsFullScreen(prevIsFullScreen => !prevIsFullScreen)
-                  }
-                >
-                  {isFullScreen ? 'Show Controls' : 'Fullscreen'}
-                </KsButton>
               </div>
               <div className="ks-pattern-view-demo-grid-controls">
                 {templates.length > 1 && (

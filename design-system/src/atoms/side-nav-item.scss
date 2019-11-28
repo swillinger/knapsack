@@ -1,12 +1,14 @@
 .ks-side-nav-item {
   background-color: var(--c-bg);
-  border-left: var(--space-xs) solid transparent;
+  border-left: 0 solid transparent;
   border-right: var(--space-xxxs) solid transparent;
   height: var(--space-xl);
   display: flex;
   align-items: center;
 
   &--clickable {
+    border-left-width: var(--space-xs);
+
     &:hover,
     &:focus {
       background-color: var(--c-active-highlight);
@@ -67,6 +69,7 @@
   }
 
   &__collapse-btn {
+    margin-right: var(--space-xs);
     transform: rotate(0deg);
     transition: transform 200ms ease;
 

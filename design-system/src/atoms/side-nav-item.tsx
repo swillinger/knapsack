@@ -60,7 +60,7 @@ export const SideNavItem: React.FC<Props> = ({
         />
       )}
 
-      {hasChildren && !path ? (
+      {!path ? (
         <div className="ks-side-nav-item__folder-icon">
           <Icon symbol="folder" size="s" />
         </div>
@@ -99,6 +99,7 @@ export const SideNavItem: React.FC<Props> = ({
             kind="icon"
             icon="collapser"
             onClick={onClickToggleCollapse}
+            flush
           >
             {isCollapsed ? 'Expand' : 'Collapse'}
           </KsButton>

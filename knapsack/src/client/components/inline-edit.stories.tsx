@@ -23,6 +23,7 @@ export const simple = () => {
           showControls={showControls}
           text={text}
           handleSave={action('save')}
+          isHeading
         />
       </h2>
 
@@ -33,6 +34,7 @@ export const simple = () => {
           showControls={showControls}
           text={textLong}
           handleSave={action('save')}
+          isHeading
         />
       </h2>
 

@@ -21,6 +21,14 @@
     height: 100%;
     overflow: auto;
     padding: var(--space-xl);
+
+    // Emulate bottom padding
+    &:after {
+      content: ' ';
+      display: block;
+      width: 100%;
+      height: var(--space-xl);
+    }
   }
 }
 

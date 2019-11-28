@@ -28,6 +28,7 @@ import './pattern-view-page.scss';
 import './shared/demo-grid-controls.scss';
 import { CustomSliceCollection } from '../custom-page/custom-slice-collection';
 import { InlineEditText } from '../../components/inline-edit';
+import { getBreadcrumb } from '../../utils';
 
 type Props = {
   patternId: string;
@@ -45,6 +46,16 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
       );
     }
     return thePattern;
+  });
+  const breadcrumb: string[] = useSelector(s => {
+    const patternNavItem = s.navsState.secondary.find(
+      item => item.path === `${BASE_PATHS.PATTERN}/${patternId}`,
+    );
+    if (!patternNavItem) return [];
+    return getBreadcrumb({
+      navItem: patternNavItem,
+      navItems: s.navsState.secondary,
+    });
   });
   const dispatch = useDispatch();
 
@@ -83,7 +94,7 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
                 className="ks-eyebrow"
                 style={{ textTransform: 'capitalize' }}
               >
-                @todo should show breadcrumb from navigation
+                {breadcrumb.join(' > ')}
               </h4>
               <h2 style={{ marginBottom: '0' }}>
                 <InlineEditText

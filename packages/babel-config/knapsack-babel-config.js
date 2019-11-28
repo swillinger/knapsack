@@ -46,6 +46,7 @@ function getConfig({
       ],
       require.resolve('@babel/plugin-proposal-object-rest-spread'),
       require.resolve('@babel/plugin-proposal-class-properties'),
+      require.resolve('@babel/plugin-proposal-optional-chaining'),
     ].filter(Boolean),
   };
 }

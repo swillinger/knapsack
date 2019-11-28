@@ -60,9 +60,7 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
       showAllTemplates &&
       !!templates.find(
         t =>
-          t.spec &&
-          t.spec.props &&
-          t.spec.props.properties &&
+          t.spec?.props?.properties &&
           Object.keys(t.spec.props.properties).length > 0,
       )
     );
@@ -70,9 +68,7 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
     const currentlySelectedTemplate = templates.find(t => t.id === templateId);
 
     hasSchema = !!(
-      currentlySelectedTemplate.spec &&
-      currentlySelectedTemplate.spec.props &&
-      currentlySelectedTemplate.spec.props.properties &&
+      currentlySelectedTemplate?.spec?.props?.properties &&
       Object.keys(currentlySelectedTemplate.spec.props.properties).length > 0
     );
   }

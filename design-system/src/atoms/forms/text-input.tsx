@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import cn from 'classnames';
 import shortid from 'shortid';
 import './text-input.scss';
@@ -29,7 +29,9 @@ export const KsTextField: React.FC<Props> = ({
   flush,
   endIcon,
 }: Props) => {
-  const id = `id-${shortid.generate()}`;
+  // ensure we only generate the id once at first render
+  const id = `id-${useMemo(shortid.generate, [])}`;
+
   const classes = cn({
     'ks-text-field': true,
     'ks-text-field--inline': isLabelInline,
@@ -37,20 +39,6 @@ export const KsTextField: React.FC<Props> = ({
     'ks-text-field--has-label': label,
     'ks-text-field--flush': flush,
   });
-
-  const InlinelWrapper = ({ children }) =>
-    isLabelInline ? (
-      <div className="ks-text-field__inline-wrapper">{children}</div>
-    ) : (
-      children
-    );
-
-  const InputEndIconWrapper = ({ children }) =>
-    endIcon ? (
-      <div className="ks-text-field__input-icon-wrapper">{children}</div>
-    ) : (
-      children
-    );
 
   return (
     <div className={classes}>
@@ -64,32 +52,31 @@ export const KsTextField: React.FC<Props> = ({
         </label>
       )}
 
-      <InlinelWrapper>
-        <>
-          <InputEndIconWrapper>
-            <>
-              <input
-                className="ks-text-field__input"
-                id={id}
-                type={type}
-                placeholder={placeholder}
-                {...inputProps}
-              />
+      <div
+        className={cn({
+          'ks-text-field__inline-wrapper': isLabelInline,
+          'ks-text-field__input-icon-wrapper': endIcon,
+        })}
+      >
+        <input
+          className="ks-text-field__input"
+          id={id}
+          type={type}
+          placeholder={placeholder}
+          {...inputProps}
+        />
 
-              {endIcon && (
-                <span className="ks-text-field__end-icon">
-                  <Icon symbol={endIcon} />
-                </span>
-              )}
-            </>
-          </InputEndIconWrapper>
+        {endIcon && (
+          <span className="ks-text-field__end-icon">
+            <Icon symbol={endIcon} />
+          </span>
+        )}
 
-          {description && (
-            <p className="ks-text-field__description">{description}</p>
-          )}
-          {error && <div className="ks-text-field__error">{error}</div>}
-        </>
-      </InlinelWrapper>
+        {description && (
+          <p className="ks-text-field__description">{description}</p>
+        )}
+        {error && <div className="ks-text-field__error">{error}</div>}
+      </div>
     </div>
   );
 };

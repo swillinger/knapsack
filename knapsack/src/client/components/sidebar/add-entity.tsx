@@ -2,14 +2,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import cn from 'classnames'; // https://www.npmjs.com/package/classnames
 import './add-entity.scss';
 import { Formik, Form, Field } from 'formik';
-import { KsButton, TextInputWrapper } from '@knapsack/design-system';
+import { KsButton, KsTextField } from '@knapsack/design-system';
 import { FaPlus } from 'react-icons/fa';
 
 type Props = {
-  /**
-   * Icon to display
-   */
-  icon: string;
   /**
    * Give it a dark color scheme?
    */
@@ -40,7 +36,6 @@ function useOutsideAlert(ref, setIsShowing, isShowing) {
 }
 
 export const AddEntity: React.FC<Props> = ({
-  icon,
   handleAdd,
   isDark = false,
 }: Props) => {
@@ -59,12 +54,15 @@ export const AddEntity: React.FC<Props> = ({
     'ks-add-entity--active': isShowing,
   });
 
+  /* eslint-disable jsx-a11y/label-has-associated-control */
+
   return (
     <div className={classes} ref={isShowing ? wrapperRef : null}>
       <div className="ks-add-entity__popup">
         <Formik
           initialValues={initialValues}
           onSubmit={(values, actions) => {
+            console.log({ values });
             handleAdd(values);
             actions.setSubmitting(false);
             setIsShowing(!isShowing);
@@ -73,14 +71,14 @@ export const AddEntity: React.FC<Props> = ({
         >
           {() => (
             <Form>
-              <Field className="ks-radio-group" as="radio" name="entityType">
-                <label htmlFor="pattern">
-                  <input
-                    type="radio"
-                    id="pattern"
+              <div className="ks-radio-group">
+                {/* @TODO: Remove opacity style once this is no longer disabled */}
+                <label htmlFor="pattern" style={{ opacity: 0.5 }}>
+                  <Field
                     name="entityType"
+                    type="radio"
                     value="pattern"
-                    disabled
+                    id="pattern"
                   />
                   Pattern (coming soon)
                 </label>
@@ -90,11 +88,11 @@ export const AddEntity: React.FC<Props> = ({
                   component for your design system.
                 </span>
                 <label htmlFor="page">
-                  <input
-                    type="radio"
-                    id="page"
+                  <Field
                     name="entityType"
+                    type="radio"
                     value="page"
+                    id="page"
                   />
                   Page
                 </label>
@@ -103,11 +101,11 @@ export const AddEntity: React.FC<Props> = ({
                   can be combined to document anything (e.g. “Getting Started”).
                 </span>
                 <label htmlFor="group">
-                  <input
-                    type="radio"
-                    id="group"
+                  <Field
                     name="entityType"
+                    type="radio"
                     value="group"
+                    id="group"
                   />
                   Group
                 </label>
@@ -115,33 +113,40 @@ export const AddEntity: React.FC<Props> = ({
                   A new empty group, used for organizing patterns and pages in
                   the left navigation.
                 </span>
-              </Field>
-              <Field name="title">
-                {({ field, form, meta }) => (
-                  <TextInputWrapper>
-                    <>
-                      <label className="ks-field-label" htmlFor="title">
-                        Title
-                        <input id="title" type="text" {...field} />
-                      </label>
-                      {meta.touched && meta.error && (
-                        <div className="ks-error">{meta.error}</div>
-                      )}
-                    </>
-                  </TextInputWrapper>
-                )}
-              </Field>
-              <KsButton kind="primary" type="submit">
-                Submit
-              </KsButton>
+              </div>
+              <div className="ks-add-entity__footer">
+                <Field name="title">
+                  {({ field, form, meta }) => (
+                    <div className="ks-add-entity__footer__title-field">
+                      <KsTextField
+                        label="Title"
+                        inputProps={field}
+                        error={meta.error}
+                        flush
+                      />
+                    </div>
+                  )}
+                </Field>
+                <KsButton
+                  kind="primary"
+                  type="submit"
+                  // @TODO: Wire up this button.
+                  // onClick={() => {}}
+                >
+                  Add
+                </KsButton>
+              </div>
             </Form>
           )}
         </Formik>
       </div>
-      {/* @todo replace with more permanent icon solution */}
-      <span className="ks-add-entity__icon">
-        <FaPlus onClick={() => setIsShowing(!isShowing)} />
-      </span>
+      <KsButton
+        kind="icon-standard"
+        icon="add"
+        onClick={() => setIsShowing(!isShowing)}
+      >
+        Add Navigation Element
+      </KsButton>
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 import './icon.scss';
 
-export const sizes = ['s', 'm'];
+export const iconSizes = ['s', 'm'];
 export const symbols = [
   'add',
   'collapser',
@@ -16,6 +16,7 @@ export const symbols = [
   'search',
   'settings',
   'sort-alphabetically',
+  'folder',
 ];
 
 export type Props = {
@@ -32,7 +33,8 @@ export type Props = {
     | 'edit-text'
     | 'search'
     | 'settings'
-    | 'sort-alphabetically';
+    | 'sort-alphabetically'
+    | 'folder';
 };
 
 export const Icon: React.FC<Props> = ({
@@ -171,6 +173,12 @@ export const Icon: React.FC<Props> = ({
             <path d="M3 14H10L3 21H10" />
             <path d="M18 5V18M18 18L15 15.5M18 18L21 15.5" />
           </g>
+        );
+        break;
+
+      case 'folder':
+        returnSymbol = (
+          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
         );
         break;
 

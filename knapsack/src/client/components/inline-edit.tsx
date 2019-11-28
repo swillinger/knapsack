@@ -6,7 +6,7 @@ import { useSelector } from '../store';
 
 type TextProps = {
   text: string;
-  headingLevel?: number;
+  isHeading?: boolean;
   showControls?: boolean;
   handleSave: (text: string) => void;
   canEdit: boolean;
@@ -14,6 +14,7 @@ type TextProps = {
 
 export const InlineEditTextBase: React.FC<TextProps> = ({
   text,
+  isHeading,
   showControls = false,
   handleSave,
   canEdit,
@@ -25,9 +26,8 @@ export const InlineEditTextBase: React.FC<TextProps> = ({
     return <span>{text}</span>;
   }
 
-  const handleControlTrigger = () => {
+  const handleTargetFocus = () => {
     if (isEditing) {
-      handleSave(textEl.current.textContent);
       setIsEditing(false);
       // de-select text
       setTimeout(() => {
@@ -47,15 +47,25 @@ export const InlineEditTextBase: React.FC<TextProps> = ({
     }
   };
 
+  const handleControlTrigger = () => {
+    if (isEditing) {
+      handleSave(textEl.current.textContent);
+    }
+    handleTargetFocus();
+  };
+
   const classes = cn({
-    'ks-inline-edit-text': true,
-    'ks-inline-edit-text--controls-visible': showControls,
-    'ks-inline-edit-text--editing': isEditing,
+    'ks-inline-edit': true,
+    'ks-inline-edit--visible': showControls,
+    'ks-inline-edit--editing': isEditing,
   });
+
+  const btnState = isEditing ? 'save' : 'edit-text';
+
   return (
     <span className={classes}>
       <span
-        className="ks-inline-edit-text__text"
+        className="ks-inline-edit__text"
         ref={textEl}
         contentEditable={isEditing}
         suppressContentEditableWarning={isEditing}
@@ -63,13 +73,29 @@ export const InlineEditTextBase: React.FC<TextProps> = ({
         {text}
       </span>
       {showControls && (
-        <span className="ks-inline-edit-text__controls">
+        <span className="ks-inline-edit__controls">
+          {btnState === 'save' && (
+            <KsButton
+              size={isHeading ? 'm' : 's'}
+              icon="close"
+              kind="icon"
+              flush
+              emphasis="danger"
+              onClick={handleTargetFocus}
+              onKeyPress={handleTargetFocus}
+            >
+              close
+            </KsButton>
+          )}
           <KsButton
-            size="s"
+            size={isHeading ? 'm' : 's'}
+            icon={btnState}
+            kind="icon"
+            flush
             onClick={handleControlTrigger}
             onKeyPress={handleControlTrigger}
           >
-            {isEditing ? 'Save' : 'Edit'}
+            {btnState}
           </KsButton>
         </span>
       )}

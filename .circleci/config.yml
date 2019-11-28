@@ -109,9 +109,10 @@ jobs:
             else
               now deploy --scope=basalt --target staging --token $ZEIT_TOKEN docs-site/build/knapsack --local-config=./docs-site/build/knapsack/now.json
             fi
-            DEPLOY_URL=`./scripts/get-latest-deploy.js 'knapsack-docs'`
-            echo "Adding GitHub check for DEPLOY_URL: $DEPLOY_URL"
-            REPO_SLUG=basaltinc/knapsack GITHUB_TOKEN=$GH_TOKEN npx ci-utils gh-status --state success --url $DEPLOY_URL --description 'Docs Deploy' --context 'deploy/docs'
+            # @todo restore
+            # DEPLOY_URL=`./scripts/get-latest-deploy.js 'knapsack-docs'`
+            # echo "Adding GitHub check for DEPLOY_URL: $DEPLOY_URL"
+            # REPO_SLUG=basaltinc/knapsack GITHUB_TOKEN=$GH_TOKEN npx ci-utils gh-status --state success --url $DEPLOY_URL --description 'Docs Deploy' --context 'deploy/docs'
       - run:
           name: Build Storybook
           command: yarn build:storybook

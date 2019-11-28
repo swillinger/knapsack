@@ -1,6 +1,6 @@
 import React from 'react';
 import PropMatrix from 'react-prop-matrix';
-import { Icon, sizes, symbols } from './icon';
+import { Icon, iconSizes, symbols } from './icon';
 
 export default {
   title: 'Components|Atoms/Icon',
@@ -10,7 +10,7 @@ export default {
 };
 
 const options = {
-  size: sizes,
+  size: iconSizes,
   symbol: symbols,
 };
 

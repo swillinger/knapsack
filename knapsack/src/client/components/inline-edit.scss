@@ -1,16 +1,34 @@
-.ks-inline-edit-text {
+.ks-inline-edit {
   &__controls {
+    line-height: 1rem;
+    vertical-align: middle;
+    padding-left: var(--space-xs);
+
     display: none;
   }
 }
 
-.ks-inline-edit-text--controls-visible {
-  border: dotted 1px var(--c-gray-light);
-  .ks-inline-edit-text__controls {
+.ks-inline-edit--visible {
+  .ks-inline-edit__text {
+    vertical-align: middle;
+  }
+
+  .ks-inline-edit__controls {
     display: inline-block;
   }
 }
 
-.ks-inline-edit-text--editing {
-  border: dotted 1px var(--c-active);
+.ks-inline-edit--editing {
+  .ks-inline-edit__text {
+    border-bottom: solid var(--space-xxxs) var(--c-active);
+    outline: none;
+  }
+
+  .ks-inline-edit__controls {
+    display: inline-block;
+
+    button + button {
+      margin-left: var(--space-xxs);
+    }
+  }
 }

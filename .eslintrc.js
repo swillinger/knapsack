@@ -47,7 +47,7 @@ module.exports = {
       files: ['*.ts', '*.tsx'],
       extends: ['plugin:@typescript-eslint/recommended'],
       rules: {
-        // "@typescript-eslint/explicit-function-return-type": ["error"]
+        '@typescript-eslint/explicit-function-return-type': [0],
         // '@typescript-eslint/interface-name-prefix': [
         //   1,
         //   {

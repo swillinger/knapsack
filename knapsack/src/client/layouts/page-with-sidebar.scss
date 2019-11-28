@@ -1,24 +1,19 @@
 .ks-page-with-sidebar {
   display: grid;
   grid-template-rows: calc(var(--space-xl) * 2) 1fr;
-  height: 100vh;
+  grid-template-columns: var(--sidebar-width) 1fr;
   grid-template-areas:
     'header header'
     'sidebar main';
-  grid-template-columns: calc(var(--space-xxxl) * 3) 1fr;
+  height: 100vh;
   transition: all ease 0.3s;
 
   &--sidebar-collapsed {
-    grid-template-columns: 45px 1fr;
+    grid-template-columns: var(--space-l) 1fr;
   }
 
   > :first-child {
     grid-area: header;
-  }
-
-  > :nth-child(2) {
-    grid-area: sidebar;
-    height: 100%;
   }
 
   > :nth-child(3) {
@@ -26,17 +21,27 @@
     height: 100%;
     overflow: auto;
     padding: var(--space-xl);
+
+    // Emulate bottom padding
+    &:after {
+      content: ' ';
+      display: block;
+      width: 100%;
+      height: var(--space-xl);
+    }
   }
 }
 
 .ks-page-with-sidebar__sidebar {
-  position: relative;
+  grid-area: sidebar;
+
   display: flex;
-  height: 100%;
+  height: calc(100vh - (var(--space-xl) * 2));
   flex-direction: column;
   transition: left ease 0.6s;
   border-right: 1px solid var(--c-frame);
-  padding: var(--space-m) 0;
+  position: relative;
+
   h4:not(:first-child) {
     white-space: nowrap;
     margin: 1.25rem 0 0;
@@ -56,45 +61,30 @@
     opacity: 1;
   }
 
-  &--collapsed {
-    padding: 0;
-  }
   &--collapsed > * {
     opacity: 0;
   }
-  //@todo center the SVG in here
-  &__collapse-ctrl {
-    box-sizing: border-box;
-    position: absolute;
-    right: -26px;
-    top: 16px;
-    background-color: var(--c-shade);
-    height: 40px;
-    opacity: 1;
-    width: 26px;
-    border: 1px solid var(--c-frame);
-    border-radius: 0 var(--radius-m) var(--radius-m) 0;
-    transition: all 0.3s;
-    &:focus {
-      outline: 0;
-    }
-    &:hover {
-      border-left: solid 1px var(--c-active);
-      color: var(--c-active);
-      cursor: pointer;
-    }
-  }
 
-  &-footer {
-    position: sticky;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    vertical-align: middle;
-    padding: var(--space-m);
-    height: 72px;
-    background-color: var(--c-bg);
-    width: 100%;
-    box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.08);
+  &__collapse-ctrl {
+    position: absolute;
+    left: 100%;
+    top: var(--space-m);
+    opacity: 1;
+
+    button {
+      width: calc(var(--space-l) + 2px);
+      border-radius: 0 var(--space-xxs) var(--space-xxs) 0;
+    }
+
+    svg {
+      transform: rotate(90deg);
+      transition: transform 0.3s ease;
+    }
+
+    &--collapsed {
+      svg {
+        transform: rotate(-90deg);
+      }
+    }
   }
 }

@@ -35,11 +35,6 @@
   --c-button-cancel-hover: var(--c-danger);
   --c-button-cancel-active: var(--c-button-primary-danger-active);
 
-  /* Font Families */
-  --font-family: 'Roboto', "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  --font-base-size: var(--space-m);
-  --font-size-s: var(--space-s);
-
   /* Spacing */
   --space-xxxs: 2px;
   --space-xxs: 4px;
@@ -51,6 +46,12 @@
   --space-xxl: 64px;
   --space-xxxl: 120px;
 
+  /* Font Families */
+  --font-family: 'Roboto', "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  --font-base-size: var(--space-m);
+  --font-size-s: var(--space-s);
+  --line-height-s: var(--space-m);
+
   /* Border Radius */
   --radius-s: var(--space-xxxs);
   --radius-m: var(--space-xxs);
@@ -60,6 +61,9 @@
   --c-shadow: rgba(0, 0, 0, 0.24);
   --shadow: 0px var(--space-xxxs) var(--space-xs) var(--c-shadow);
   --floating-btn-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.16);
+
+  /* Layout */
+  --sidebar-width: 360px;
 
   /* ---------- */
   /* Depricated */
@@ -91,7 +95,6 @@
   --c-secondary: var(--c-green);
   --c-border: var(--c-gray);
   /*--c-active: var(--c-yellow);*/
-  --base-font-size: 18px;
   --size-xxs: 2px;
   --size-xs: 4px;
   --size-s: 8px;

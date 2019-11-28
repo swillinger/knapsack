@@ -8,13 +8,13 @@
   vertical-align: middle;
 
   &--size-s {
-    width: 16px;
-    height: 16px;
+    width: var(--space-m);
+    height: var(--space-m);
     stroke-width: 1;
   }
 
   &--size-m {
-    width: 24px;
-    height: 24px;
+    width: var(--space-l);
+    height: var(--space-l);
   }
 }

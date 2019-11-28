@@ -16,23 +16,22 @@
  */
 import React, { useState } from 'react';
 import classnames from 'classnames';
-import { FaChevronLeft } from 'react-icons/fa';
+import { KsButton } from '@knapsack/design-system';
 import { Sidebar } from '../components/sidebar/sidebar';
 import ErrorCatcher from '../utils/error-catcher';
 import { SiteHeaderConnected } from '../components/site-header';
 import { PageHeaderContainer } from '../components/page-header';
 import './page-with-sidebar.scss';
-import { AddEntity } from '../components/sidebar/add-entity';
 import {
-  addPage,
-  addSecondaryNavItem,
   useDispatch,
   useSelector,
+  saveToServer,
+  disableEditMode,
+  enableEditMode,
 } from '../store';
 
 type Props = {
   isInitiallyCollapsed?: boolean;
-  isFullScreen?: boolean;
   sidebar?: React.ReactNode;
   title?: string;
   section?: string;
@@ -43,7 +42,6 @@ const PageWithSidebar: React.FC<Props> = ({
   isInitiallyCollapsed = false,
   sidebar,
   children,
-  isFullScreen = false,
   title,
   section,
 }: Props) => {
@@ -51,78 +49,67 @@ const PageWithSidebar: React.FC<Props> = ({
     isInitiallyCollapsed,
   );
   const canEdit = useSelector(s => s.userState.canEdit);
+  const isEditMode = useSelector(s => s.ui.isEditMode);
   const dispatch = useDispatch();
 
-  if (!isFullScreen) {
-    return (
+  return (
+    <div
+      className={classnames({
+        'ks-page-with-sidebar': true,
+        'ks-page-with-sidebar--sidebar-collapsed': isSidebarCollapsed,
+      })}
+    >
+      <SiteHeaderConnected />
       <div
         className={classnames({
-          'ks-page-with-sidebar': true,
-          'ks-page-with-sidebar--sidebar-collapsed': isSidebarCollapsed,
+          'ks-page-with-sidebar__sidebar': true,
+          'ks-page-with-sidebar__sidebar--collapsed': isSidebarCollapsed,
         })}
       >
-        <SiteHeaderConnected />
+        {sidebar || <Sidebar />}
         <div
           className={classnames({
-            'ks-page-with-sidebar__sidebar': true,
-            'ks-page-with-sidebar__sidebar--collapsed': isSidebarCollapsed,
+            'ks-page-with-sidebar__sidebar__collapse-ctrl': true,
+            'ks-page-with-sidebar__sidebar__collapse-ctrl--collapsed': isSidebarCollapsed,
           })}
         >
-          {sidebar || <Sidebar />}
-          <button
-            className="ks-page-with-sidebar__sidebar__collapse-ctrl"
-            type="button"
+          <KsButton
+            kind="icon-standard"
+            icon="collapser"
             onClick={() => setIsSidebarCollapsed(current => !current)}
           >
-            <FaChevronLeft
-              style={{
-                height: '16px',
-                color: '#222222',
-                transform: isSidebarCollapsed ? 'rotate(180deg)' : '',
-              }}
-            />
-          </button>
-          <div className="ks-page-with-sidebar__sidebar-footer">
-            {canEdit && (
-              <AddEntity
-                icon="Add Icon"
-                handleAdd={({ title: theTitle, entityType }) => {
-                  // eslint-disable-next-line default-case
-                  switch (entityType) {
-                    case 'page': {
-                      dispatch(
-                        addPage({
-                          title: theTitle,
-                        }),
-                      );
-                      break;
-                    }
-                    case 'group': {
-                      dispatch(
-                        addSecondaryNavItem({
-                          name: theTitle,
-                        }),
-                      );
-                    }
-                  }
-                }}
-              />
-            )}
-          </div>
+            {isSidebarCollapsed ? 'Expand' : 'Collapse'}
+          </KsButton>
         </div>
-        <ErrorCatcher>
-          <main className="ks-page-with-sidebar__page">
-            <PageHeaderContainer title={title} section={section} />
-            {children}
-          </main>
-        </ErrorCatcher>
       </div>
-    );
-  }
-  return (
-    <ErrorCatcher>
-      <main>{children}</main>
-    </ErrorCatcher>
+      <ErrorCatcher>
+        <main className="ks-page-with-sidebar__page">
+          <PageHeaderContainer title={title} section={section} />
+          {/* @TODO: Remove these KsButtons once the edit flow is established. */}
+          {canEdit && (
+            <div>
+              <KsButton
+                kind="primary"
+                size="m"
+                onClick={() => dispatch(saveToServer())}
+              >
+                Save it all
+              </KsButton>
+              <KsButton
+                size="m"
+                onClick={() =>
+                  dispatch(isEditMode ? disableEditMode() : enableEditMode())
+                }
+              >
+                Turn edit mode {isEditMode ? 'off' : 'on'}
+              </KsButton>
+              <hr />
+            </div>
+          )}
+          {children}
+        </main>
+      </ErrorCatcher>
+    </div>
   );
 };
 

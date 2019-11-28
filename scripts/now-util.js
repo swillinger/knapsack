@@ -87,7 +87,7 @@ function getLatestDeploy({ projectId } = {}) {
 
         const [deployment] = theseDeploys;
 
-        if (deployment.url) {
+        if (deployment && deployment.url) {
           resolve(`https://${deployment.url}`);
         } else {
           reject(new Error('No deployments found'));

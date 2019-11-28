@@ -487,13 +487,13 @@ const TemplateView: React.FC<Props> = ({
       </div>
 
       {demos && demos.length > 1 && (
-        <nav className="ks-template-view__demo-list">
+        <nav className="ks-template-view__demos-container">
           <h4>Demos</h4>
-          <div className="ks-template-view__demo-items">
+          <div className="ks-template-view__demos">
             {demos.map((aDemo, i) => (
               <figure
-                className={`ks-template-view__demo-item ${
-                  demoIndex === i ? 'ks-template-view__demo-item--active' : ''
+                className={`ks-template-view__demos__item ${
+                  demoIndex === i ? 'ks-template-view__demos__item--active' : ''
                 }`}
                 key={aDemo.id}
                 style={{ width: '200px' }}

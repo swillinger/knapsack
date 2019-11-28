@@ -54,12 +54,15 @@ export const AddEntity: React.FC<Props> = ({
     'ks-add-entity--active': isShowing,
   });
 
+  /* eslint-disable jsx-a11y/label-has-associated-control */
+
   return (
     <div className={classes} ref={isShowing ? wrapperRef : null}>
       <div className="ks-add-entity__popup">
         <Formik
           initialValues={initialValues}
           onSubmit={(values, actions) => {
+            console.log({ values });
             handleAdd(values);
             actions.setSubmitting(false);
             setIsShowing(!isShowing);
@@ -68,15 +71,14 @@ export const AddEntity: React.FC<Props> = ({
         >
           {() => (
             <Form>
-              <Field className="ks-radio-group" as="radio" name="entityType">
+              <div className="ks-radio-group">
                 {/* @TODO: Remove opacity style once this is no longer disabled */}
                 <label htmlFor="pattern" style={{ opacity: 0.5 }}>
-                  <input
-                    type="radio"
-                    id="pattern"
+                  <Field
                     name="entityType"
+                    type="radio"
                     value="pattern"
-                    disabled
+                    id="pattern"
                   />
                   Pattern (coming soon)
                 </label>
@@ -86,11 +88,11 @@ export const AddEntity: React.FC<Props> = ({
                   component for your design system.
                 </span>
                 <label htmlFor="page">
-                  <input
-                    type="radio"
-                    id="page"
+                  <Field
                     name="entityType"
+                    type="radio"
                     value="page"
+                    id="page"
                   />
                   Page
                 </label>
@@ -99,11 +101,11 @@ export const AddEntity: React.FC<Props> = ({
                   can be combined to document anything (e.g. “Getting Started”).
                 </span>
                 <label htmlFor="group">
-                  <input
-                    type="radio"
-                    id="group"
+                  <Field
                     name="entityType"
+                    type="radio"
                     value="group"
+                    id="group"
                   />
                   Group
                 </label>
@@ -111,7 +113,7 @@ export const AddEntity: React.FC<Props> = ({
                   A new empty group, used for organizing patterns and pages in
                   the left navigation.
                 </span>
-              </Field>
+              </div>
               <div className="ks-add-entity__footer">
                 <Field name="title">
                   {({ field, form, meta }) => (

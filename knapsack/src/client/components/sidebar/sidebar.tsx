@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import cn from 'classnames';
 import { KsButton, Icon } from '@knapsack/design-system';
 import { shallowEqual } from 'react-redux';
@@ -9,6 +9,7 @@ import {
   TreeIndex,
   TreeNode,
 } from 'react-sortable-tree';
+import deepEqual from 'deep-equal';
 import { SecondaryNav } from './secondary-nav';
 import { AddEntity } from './add-entity';
 import {
@@ -27,36 +28,34 @@ const rootKey = 'root';
 export const Sidebar: React.FC = () => {
   const dispatch = useDispatch();
   const canEdit = useSelector(s => s.userState.canEdit);
-  const secondaryNavItems = useSelector(
-    s => {
-      return s.navsState.secondary.map(navItem => {
-        if (!navItem.path) return navItem;
-        const name = getTitleFromPath(navItem.path, s);
-        return {
-          ...navItem,
-          name: name || navItem.name,
-        };
-      });
-    },
-    (a, b) => {
-      return shallowEqual(
-        a.map(({ name }) => name),
-        b.map(({ name }) => name),
-      );
-    },
-  );
-  // @TODO: Consider using store methods instead of state?
+  const secondaryNavItems = useSelector(s => {
+    return s.navsState.secondary.map(navItem => {
+      if (!navItem.path) return navItem;
+      const name = getTitleFromPath(navItem.path, s);
+      return {
+        ...navItem,
+        name: name || navItem.name,
+      };
+    });
+  }, deepEqual);
+
   const [isSidebarEditMode, setIsSidebarEditMode] = useState(false);
   const [searchString, setSearchString] = useState('');
-  const initialFlatData = {
-    rootKey,
-    flatData: secondaryNavItems,
-    getKey: item => item.id,
-    getParentKey: item => item.parentId,
-  };
-  const initialTreeData = getTreeFromFlatData(initialFlatData);
-  const expandedTreeItems = toggleExpandedForAll({ treeData: initialTreeData });
-  const [treeItems, setTreeItems] = useState(expandedTreeItems);
+  const [treeItems, setTreeItems] = useState([]);
+  const initialTreeItems = useMemo(() => {
+    const initialFlatData = {
+      rootKey,
+      flatData: secondaryNavItems,
+      getKey: item => item.id,
+      getParentKey: item => item.parentId,
+    };
+    const initialTreeData = getTreeFromFlatData(initialFlatData);
+    const expandedTreeItems = toggleExpandedForAll({
+      treeData: initialTreeData,
+    });
+    setTreeItems(expandedTreeItems);
+    return expandedTreeItems;
+  }, [JSON.stringify(secondaryNavItems)]);
 
   return (
     <div className="ks-sidebar">
@@ -86,7 +85,7 @@ export const Sidebar: React.FC = () => {
           treeItems={treeItems}
           searchString={searchString}
           // if the secondary nav list changes, this key changes, trigger a full re-mount to refresh state and names
-          // key={md5(JSON.stringify(secondaryNavItems))}
+          // key={md5(JSON.stringify(treeItems))}
           canEdit={canEdit}
           handleNewTreeItems={setTreeItems}
           isSidebarEditMode={isSidebarEditMode}
@@ -144,7 +143,7 @@ export const Sidebar: React.FC = () => {
             <KsButton
               kind="cancel"
               onClick={() => {
-                setTreeItems(expandedTreeItems);
+                setTreeItems(initialTreeItems);
                 setIsSidebarEditMode(false);
               }}
             >

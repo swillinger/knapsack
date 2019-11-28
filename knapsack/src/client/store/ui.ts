@@ -4,8 +4,6 @@ type StatusTypes = 'success' | 'info' | 'warning' | 'error';
 
 const SET_STATUS = 'knapsack/ui/SET_STATUS';
 const REMOVE_STATUS = 'knapsack/ui/REMOVE_STATUS';
-const ENABLE_EDIT_MODE = 'knapsack/ui/ENABLE_EDIT_MODE';
-const DISABLE_EDIT_MODE = 'knapsack/ui/DISABLE_EDIT_MODE';
 
 type Status = {
   type: StatusTypes;
@@ -19,7 +17,6 @@ export interface UiState {
     message: string;
     dismissAfter?: number;
   };
-  isEditMode?: boolean;
 }
 
 interface SetStatusAction extends Action {
@@ -31,31 +28,7 @@ interface RemoveStatusAction extends Action {
   type: typeof REMOVE_STATUS;
 }
 
-interface EnableEditModeAction extends Action {
-  type: typeof ENABLE_EDIT_MODE;
-}
-
-export function enableEditMode(): EnableEditModeAction {
-  return {
-    type: ENABLE_EDIT_MODE,
-  };
-}
-
-interface DisableEditModeAction extends Action {
-  type: typeof DISABLE_EDIT_MODE;
-}
-
-export function disableEditMode(): DisableEditModeAction {
-  return {
-    type: DISABLE_EDIT_MODE,
-  };
-}
-
-type UiActionTypes =
-  | SetStatusAction
-  | RemoveStatusAction
-  | EnableEditModeAction
-  | DisableEditModeAction;
+type UiActionTypes = SetStatusAction | RemoveStatusAction;
 
 export function removeStatus(): RemoveStatusAction {
   return {
@@ -93,16 +66,6 @@ export default function reducer(
       return {
         ...state,
         status: null,
-      };
-    case ENABLE_EDIT_MODE:
-      return {
-        ...state,
-        isEditMode: true,
-      };
-    case DISABLE_EDIT_MODE:
-      return {
-        ...state,
-        isEditMode: false,
       };
     default:
       return {

@@ -75,6 +75,7 @@ module.exports = {
     ],
     'jsx-a11y/href-no-hash': 'off',
     'no-console': [0],
+    'default-case': [0],
     'no-inner-declarations': [0],
     'no-param-reassign': [
       1,

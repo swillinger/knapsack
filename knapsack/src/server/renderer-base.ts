@@ -1,6 +1,7 @@
 import chokidar from 'chokidar';
 import { knapsackEvents, EVENTS } from './events';
 import * as log from '../cli/log';
+import { formatCode } from './server-utils';
 import {
   GetHeadParams,
   GetFootParams,
@@ -34,6 +35,17 @@ export class KnapsackRendererBase implements KnapsackTemplateRendererBase {
     this.language = language;
     this.outputDirName = `knapsack-renderer-${this.id}`;
     this.logPrefix = `templateRenderer:${this.id}`;
+  }
+
+  static formatCode = formatCode;
+
+  /**
+   * Each sub-class should implement this themselves, probably using `KnapsackRendererBase.formatCode()`
+   * This base implementation just returns the original code so it can be reliably ran
+   * @see {KnapsackRendererBase.formatCode}
+   */
+  formatCode(code) {
+    return code?.trim();
   }
 
   getHead({

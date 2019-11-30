@@ -3,7 +3,7 @@
 <% } %>
 {% include "<%= templateName %>" with {
 <%_ props.forEach(prop => { -%>
-  <%= prop.key %>: <%- prop.value -%>,
+   <%= prop.key %>: <%- prop.value -%>,
 <%_ }); -%>
 } only %}
 <% if (after) { -%>

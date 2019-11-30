@@ -23,6 +23,7 @@ import {
 } from '@knapsack/schema-utils';
 import chokidar from 'chokidar';
 import { version as iframeResizerVersion } from 'iframe-resizer/package.json';
+import { KnapsackRendererBase } from '@knapsack/app';
 import {
   createDemoUrl,
   writeJson,
@@ -47,7 +48,8 @@ import {
 import { GenericResponse } from '../schemas/misc';
 import {
   KnapsackTemplateRenderer,
-  KnapsackTemplateRenderResults,
+  KnapsackTemplateRendererResults,
+  KsRenderResults,
 } from '../schemas/knapsack-config';
 import {
   KnapsackAssetSet,
@@ -217,7 +219,6 @@ Resolved absolute path: ${absPath}
   async render({
     patternId,
     templateId = '',
-    wrapHtml = true,
     // demoDataId,
     demo,
     isInIframe = false,
@@ -226,10 +227,6 @@ Resolved absolute path: ${absPath}
   }: {
     patternId: string;
     templateId: string;
-    /**
-     * Should it wrap HTML results with `<head>` and include assets?
-     */
-    wrapHtml?: boolean;
     /**
      * Demo data to pass to template
      */
@@ -244,13 +241,14 @@ Resolved absolute path: ${absPath}
     isInIframe?: boolean;
     websocketsPort?: number;
     assetSetId?: string;
-  }): Promise<KnapsackTemplateRenderResults> {
+  }): Promise<KsRenderResults> {
     const pattern = this.getPattern(patternId);
     if (!pattern) {
       const message = `Pattern not found: '${patternId}'`;
       return {
         ok: false,
         html: `<p>${message}</p>`,
+        wrappedHtml: `<p>${message}</p>`,
         message,
       };
     }
@@ -277,25 +275,29 @@ Resolved absolute path: ${absPath}
       patternManifest: this,
     });
 
-    if (!renderedTemplate.ok) return renderedTemplate;
+    if (!renderedTemplate.ok) {
+      return {
+        ...renderedTemplate,
+        wrappedHtml: renderedTemplate.html, // many times error messages are in the html for users
+      };
+    }
 
-    if (wrapHtml) {
-      const assetSet = assetSetId
-        ? this.assetSets.getAssetSet(assetSetId)
-        : this.assetSets.getGlobalAssetSets()[0];
+    const assetSet = assetSetId
+      ? this.assetSets.getAssetSet(assetSetId)
+      : this.assetSets.getGlobalAssetSets()[0];
 
-      const {
-        assets,
-        inlineJs = '',
-        inlineCss = '',
-        inlineFoot = '',
-        inlineHead = '',
-      } = assetSet;
+    const {
+      assets,
+      inlineJs = '',
+      inlineCss = '',
+      inlineFoot = '',
+      inlineHead = '',
+    } = assetSet;
 
-      const inlineJSs = [inlineJs];
+    const inlineJSs = [inlineJs];
 
-      if (isInIframe) {
-        inlineJSs.push(`
+    if (isInIframe) {
+      inlineJSs.push(`
 /**
   * Prevents the natural click behavior of any links within the iframe.
   * Otherwise the iframe reloads with the current page or follows the url provided.
@@ -305,10 +307,10 @@ links.forEach(function(link) {
   link.addEventListener('click', function(e){e.preventDefault();});
 });
         `);
-      }
+    }
 
-      if (!isInIframe && websocketsPort) {
-        inlineJSs.push(`
+    if (!isInIframe && websocketsPort) {
+      inlineJSs.push(`
 if ('WebSocket' in window && location.hostname === 'localhost') {
   var socket = new window.WebSocket('ws://localhost:8000');
   socket.addEventListener('message', function() {
@@ -316,32 +318,38 @@ if ('WebSocket' in window && location.hostname === 'localhost') {
   });
 }
           `);
-      }
-      const wrappedHtml = renderer.wrapHtml({
-        html: renderedTemplate.html,
-        headJsUrls: [
-          isInIframe
-            ? `https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/${iframeResizerVersion}/iframeResizer.contentWindow.min.js`
-            : '',
-        ].filter(x => x),
-        cssUrls: assets
-          .filter(asset => asset.type === 'css')
-          // .map(asset => asset.publicPath),
-          .map(asset => this.assetSets.getAssetPublicPath(asset.src)),
-        jsUrls: assets
-          .filter(asset => asset.type === 'js')
-          // .map(asset => asset.publicPath),
-          .map(asset => this.assetSets.getAssetPublicPath(asset.src)),
-        inlineJs: inlineJSs.join('\n'),
-        inlineCss,
-        inlineHead,
-        inlineFoot,
-      });
-      return {
-        ...renderedTemplate,
-        html: wrappedHtml,
-      };
     }
-    return renderedTemplate;
+    const wrappedHtml = renderer.wrapHtml({
+      html: renderedTemplate.html,
+      headJsUrls: [
+        isInIframe
+          ? `https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/${iframeResizerVersion}/iframeResizer.contentWindow.min.js`
+          : '',
+      ].filter(x => x),
+      cssUrls: assets
+        .filter(asset => asset.type === 'css')
+        // .map(asset => asset.publicPath),
+        .map(asset => this.assetSets.getAssetPublicPath(asset.src)),
+      jsUrls: assets
+        .filter(asset => asset.type === 'js')
+        // .map(asset => asset.publicPath),
+        .map(asset => this.assetSets.getAssetPublicPath(asset.src)),
+      inlineJs: inlineJSs.join('\n'),
+      inlineCss,
+      inlineHead,
+      inlineFoot,
+    });
+    return {
+      ...renderedTemplate,
+      usage: renderer.formatCode(renderedTemplate.usage),
+      html: KnapsackRendererBase.formatCode({
+        code: renderedTemplate.html,
+        language: 'html',
+      }),
+      wrappedHtml: KnapsackRendererBase.formatCode({
+        code: wrappedHtml,
+        language: 'html',
+      }),
+    };
   }
 }

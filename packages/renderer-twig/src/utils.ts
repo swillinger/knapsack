@@ -34,5 +34,5 @@ export async function getTwigUsage(data: {
     before,
     after,
   });
-  return result;
+  return result.trim();
 }

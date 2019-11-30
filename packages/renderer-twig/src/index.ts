@@ -2,7 +2,7 @@ import { KnapsackRendererBase } from '@knapsack/app';
 import {
   KnapsackRenderParams,
   KnapsackTemplateRenderer,
-  KnapsackTemplateRenderResults,
+  KnapsackTemplateRendererResults,
 } from '@knapsack/app/src/schemas/knapsack-config';
 import TwigRenderer from '@basalt/twig-renderer';
 import { getTwigUsage } from './utils';
@@ -27,10 +27,10 @@ class KnapsackTwigRenderer extends KnapsackRendererBase
 
   async render(
     opt: KnapsackRenderParams,
-  ): Promise<KnapsackTemplateRenderResults> {
+  ): Promise<KnapsackTemplateRendererResults> {
     const usage = await this.getUsage(opt);
     const results = await this.twigRenderer.renderString(usage);
-    return results;
+    return { ...results, usage, templateLanguage: this.language };
     // return this.twigRenderer.render(template.alias, data);
   }
 
@@ -89,32 +89,34 @@ class KnapsackTwigRenderer extends KnapsackRendererBase
                     demo: thisTemplate.demosById[slottedTemplate.demoId],
                   });
 
-                  return usage;
+                  // indenting 2 spaces since it will be in a `{% set slotName %}` block
+                  return usage
+                    .split('\n')
+                    .map(line => `  ${line}`)
+                    .join('\n');
                 }),
               );
             }),
           );
 
           const extraProps = [];
-          const slotIncludes = Object.keys(slotProps)
-            .map(slotName => {
-              extraProps.push({
-                key: slotName,
-                value: slotName,
-              });
-              const slotCodes = slotProps[slotName];
-              return `
+          const slotIncludes = Object.keys(slotProps).map(slotName => {
+            extraProps.push({
+              key: slotName,
+              value: slotName,
+            });
+            const slotCodes = slotProps[slotName];
+            return `
 {% set ${slotName} %}
 ${slotCodes.join('\n\n')}
 {% endset %}
-      `;
-            })
-            .join('\n\n');
+      `.trim();
+          });
 
           const usage = await getTwigUsage({
             templateName: template.alias,
             props,
-            before: slotIncludes,
+            before: slotIncludes.join('\n\n'),
             extraProps,
           });
 

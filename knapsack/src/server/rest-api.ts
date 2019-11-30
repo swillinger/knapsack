@@ -29,6 +29,7 @@ import { getRole } from './auth';
 import { KnapsackBrain, KnapsackConfig } from '../schemas/main-types';
 import { KnapsackMeta } from '../schemas/misc';
 import { KnapsackTemplateDemo } from '../schemas/patterns';
+import { KsRenderResults } from '../schemas/knapsack-config';
 
 const router = express.Router();
 const memDb = new MemDb<KnapsackTemplateDemo>();
@@ -91,8 +92,51 @@ export function getApiRoutes({
   }
 
   if (patternManifest) {
+    async function render({
+      patternId,
+      templateId,
+      assetSetId,
+      isInIframe,
+      dataId,
+    }: {
+      patternId: string;
+      templateId: string;
+      assetSetId?: string;
+      /**
+       * Data id from `saveData()`
+       */
+      dataId?: string;
+      /**
+       * Will this be in an iFrame?
+       */
+      isInIframe?: boolean;
+    }): Promise<KsRenderResults> {
+      const demo = dataId ? memDb.getData(dataId) : null;
+      return patternManifest.render({
+        patternId,
+        templateId,
+        demo,
+        isInIframe,
+        websocketsPort: meta.websocketsPort,
+        assetSetId,
+        // demoDataId,
+      });
+    }
+
     const url = urlJoin(baseUrl, '/render');
     registerEndpoint(url, 'GET');
+    registerEndpoint(url, 'POST');
+    router.post(url, async (req, res) => {
+      const { body } = req;
+      if (!('patternId' in body && 'templateId' in body)) {
+        res.send({
+          ok: false,
+        });
+      } else {
+        const results = await render(body);
+        res.send(results);
+      }
+    });
     router.get(url, async (req, res) => {
       const { query } = req;
       const {
@@ -116,28 +160,24 @@ export function getApiRoutes({
       // }
 
       // let data: KnapsackTemplateData = dataString ? qsParse(dataString) : dataString;
-      const demo = memDb.getData(dataId);
       const isInIframe = isInIframeString === 'true';
       const wrapHtml = wrapHtmlString === 'true';
 
-      const results = await patternManifest.render({
+      const results = await render({
         patternId,
         templateId,
-        demo,
-        wrapHtml,
-        isInIframe,
-        websocketsPort: meta.websocketsPort,
         assetSetId,
-        // demoDataId,
+        dataId,
+        isInIframe,
       });
 
       if (results.ok) {
-        res.send(results.html);
+        res.send(wrapHtml ? results.wrappedHtml : results.html);
       } else {
         log.error(`Error rendering template`, {
           patternId,
           templateId,
-          demo,
+          dataId,
           wrapHtml,
           isInIframe,
           assetSetId,

@@ -2,7 +2,7 @@ import { KnapsackRendererBase } from '@knapsack/app';
 import {
   KnapsackRenderParams,
   KnapsackTemplateRenderer,
-  KnapsackTemplateRenderResults,
+  KnapsackTemplateRendererResults,
 } from '@knapsack/app/src/schemas/knapsack-config';
 import fs from 'fs-extra';
 
@@ -20,7 +20,7 @@ class KnapsackHtmlRenderer extends KnapsackRendererBase
 
   async render(
     opt: KnapsackRenderParams,
-  ): Promise<KnapsackTemplateRenderResults> {
+  ): Promise<KnapsackTemplateRendererResults> {
     const { patternManifest, template, pattern } = opt;
 
     try {

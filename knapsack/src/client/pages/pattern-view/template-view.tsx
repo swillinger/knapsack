@@ -38,7 +38,7 @@ import {
   LoadableVariationDemo,
 } from '../../loadable-components';
 // import DosAndDonts from '../../components/dos-and-donts';
-import { getTemplateUrl } from '../../data';
+import { getTemplateInfo } from '../../data';
 import { TemplateHeader } from './template-header';
 import './template-view.scss';
 import './shared/demo-grid-controls.scss';
@@ -46,6 +46,7 @@ import { isDataDemo, isTemplateDemo } from '../../../schemas/patterns';
 import { TemplateThumbnail } from '../../components/template-thumbnail';
 import { Tabs } from '../../components/tabs';
 import { InlineEditText } from '../../components/inline-edit';
+import { KsRenderResults } from '../../../schemas/knapsack-config';
 
 const calculateDemoStageWidth = (size: string) => {
   switch (size) {
@@ -179,6 +180,9 @@ const TemplateView: React.FC<Props> = ({
   const [assetSetId, setAssetSetId] = useState(
     assetSets[0] ? assetSets[0].id : '',
   );
+  const [templateInfo, setTemplateInfo] = useState<
+    KsRenderResults & { url: string }
+  >();
 
   const showSchemaForm = isSchemaFormShown && hasSchema;
 
@@ -193,18 +197,9 @@ const TemplateView: React.FC<Props> = ({
           status={status}
           isTitleShown={!isVerbose && isTitleShown}
           handleOpenNewTabClick={() => {
-            getTemplateUrl({
-              patternId: id,
-              templateId,
-              demo,
-              isInIframe: false,
-              wrapHtml: true,
-              assetSetId,
-            })
-              .then(externalUrl => {
-                window.open(externalUrl, '_blank');
-              })
-              .catch(console.log.bind(console));
+            if (templateInfo?.url) {
+              window.open(templateInfo.url, '_blank');
+            }
           }}
           handleAssetSetChange={newAssetSetId => {
             setAssetSetId(newAssetSetId);
@@ -256,6 +251,7 @@ const TemplateView: React.FC<Props> = ({
               assetSetId={assetSetId}
               demo={demo}
               isResizable
+              handleTemplateInfo={setTemplateInfo}
             />
           </div>
           {showSchemaForm && isDataDemo(demo) && (
@@ -515,15 +511,11 @@ const TemplateView: React.FC<Props> = ({
           </div>
         </nav>
       )}
-      {/* {isCodeBlockShown && false && ( */}
-      {/*  <div style={{ marginBottom: '1rem' }}> */}
-      {/*    <TemplateCodeBlock */}
-      {/*      patternId={id} */}
-      {/*      templateId={templateId} */}
-      {/*      data={dataState.data} */}
-      {/*    /> */}
-      {/*  </div> */}
-      {/* )} */}
+      {isCodeBlockShown && (
+        <div style={{ marginBottom: '1rem' }}>
+          <TemplateCodeBlock templateInfo={templateInfo} />
+        </div>
+      )}
 
       {isReadmeShown && readme && (
         <MdBlock

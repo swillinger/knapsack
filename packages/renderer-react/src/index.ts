@@ -2,7 +2,7 @@ import { KnapsackRendererWebpackBase } from '@knapsack/app';
 import {
   KnapsackTemplateRenderer,
   KnapsackConfig,
-  KnapsackTemplateRenderResults,
+  KnapsackTemplateRendererResults,
 } from '@knapsack/app/src/schemas/knapsack-config';
 import {
   KnapsackPattern,
@@ -62,7 +62,7 @@ export class KnapsackReactRenderer extends KnapsackRendererWebpackBase
     template: KnapsackPatternTemplate;
     pattern: KnapsackPattern;
     data?: object;
-  }): Promise<KnapsackTemplateRenderResults> {
+  }): Promise<KnapsackTemplateRendererResults> {
     if (!this.webpackManifest) await this.setManifest();
     const id = `${pattern.id}-${template.id}`;
     const html = `

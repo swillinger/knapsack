@@ -18,7 +18,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import iframeResizer from 'iframe-resizer/js/iframeResizer'; // https://www.npmjs.com/package/iframe-resizer
 import shortid from 'shortid';
 import { KnapsackContext } from '../context';
-import { getTemplateUrl } from '../data';
+import { getTemplateInfo } from '../data';
 import {
   WS_EVENTS,
   PatternChangedData,
@@ -30,6 +30,7 @@ import {
   KnapsackTemplateData,
   KnapsackTemplateDemo,
 } from '../../schemas/patterns';
+import { KsRenderResults } from '../../schemas/knapsack-config';
 
 export type Props = {
   patternId: string;
@@ -38,6 +39,7 @@ export type Props = {
   // data?: KnapsackTemplateData;
   demo: KnapsackTemplateDemo;
   isResizable?: boolean;
+  handleTemplateInfo?: (info: KsRenderResults & { url: string }) => void;
 };
 
 const Template: React.FC<Props> = ({
@@ -46,6 +48,7 @@ const Template: React.FC<Props> = ({
   demo,
   assetSetId,
   isResizable = true,
+  handleTemplateInfo = () => {},
 }: Props) => {
   const makeId = (): string =>
     `${patternId}-${templateId}-${shortid.generate()}`;
@@ -139,7 +142,7 @@ const Template: React.FC<Props> = ({
   }, []);
 
   useEffect(() => {
-    getTemplateUrl({
+    getTemplateInfo({
       patternId,
       templateId,
       demo,
@@ -148,7 +151,10 @@ const Template: React.FC<Props> = ({
       wrapHtml: true,
       extraParams: { cacheBuster: id },
     })
-      .then(setHtmlUrl)
+      .then(info => {
+        handleTemplateInfo(info);
+        setHtmlUrl(info.url);
+      })
       .catch(console.log.bind(console));
   }, [patternId, templateId, demo, assetSetId, id]);
 

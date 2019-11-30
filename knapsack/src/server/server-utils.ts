@@ -18,7 +18,7 @@ import fs from 'fs-extra';
 import os from 'os';
 import qs from 'qs';
 import yaml from 'js-yaml';
-import { exec } from 'child_process';
+import { execSync } from 'child_process';
 import prettier from 'prettier';
 import * as log from '../cli/log';
 
@@ -97,24 +97,16 @@ export function dirExistsOrExit(dirPath: string, msg?: string): void {
   process.exit(1);
 }
 
-export function getGitBranch(): Promise<string> {
-  return new Promise((resolve, reject) => {
-    exec(
-      'git symbolic-ref --short HEAD',
-      { encoding: 'utf8' },
-      (err, stdout, stderr) => {
-        if (err) {
-          console.error(`Uh oh! error thrown in getGitBranch: ${err.message}`);
-          resolve('UNKNOWN');
-        }
-        if (stderr) {
-          console.error(`Uh oh! stderr output in getGitBranch: ${stderr}`);
-          resolve('UNKNOWN');
-        }
-        resolve(stdout?.trim());
-      },
-    );
-  });
+export function getGitBranch(): string {
+  try {
+    const branch = execSync('git symbolic-ref --short HEAD', {
+      encoding: 'utf8',
+    });
+    return branch?.trim();
+  } catch (err) {
+    console.error(`Uh oh! error thrown in getGitBranch: ${err.message}`);
+    return '';
+  }
 }
 
 /**

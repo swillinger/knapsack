@@ -78,18 +78,6 @@ const PageWithSidebar: React.FC<Props> = ({
       <ErrorCatcher>
         <main className="ks-page-with-sidebar__page">
           <PageHeaderContainer title={title} section={section} />
-          {/* @TODO: Remove these KsButtons once the edit flow is established. */}
-          {canEdit && (
-            <div>
-              <KsButton
-                kind="primary"
-                size="m"
-                onClick={() => dispatch(saveToServer())}
-              >
-                Save it all
-              </KsButton>
-            </div>
-          )}
           {children}
         </main>
       </ErrorCatcher>

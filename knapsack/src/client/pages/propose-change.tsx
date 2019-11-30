@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
-import { Button, TextInputWrapper } from '@knapsack/design-system';
+import { KsButton, TextInputWrapper } from '@knapsack/design-system';
 import { saveToServer, useDispatch, useSelector } from '../store';
 import PageWithSidebar from '../layouts/page-with-sidebar';
 
@@ -77,9 +77,9 @@ export const ProposeChangePage: React.FC = () => {
               )}
             </Field>
             <br />
-            <Button kind="primary" type="submit">
+            <KsButton kind="primary" type="submit">
               Propose Change
-            </Button>
+            </KsButton>
           </Form>
         )}
       </Formik>

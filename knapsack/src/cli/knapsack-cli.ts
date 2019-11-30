@@ -21,13 +21,17 @@ import { writeFileSync, ensureDirSync, readJSONSync } from 'fs-extra';
 import * as log from './log';
 import { knapsackEvents, EVENTS } from '../server/events';
 import { serve } from '../server/server';
-import { readYamlSync, writeYaml } from '../server/server-utils';
+import { getGitBranch } from '../server/server-utils';
 import { build, testPatternRenders } from './commands';
 import { getMeta } from '../lib/config';
 import { bootstrapFromConfigFile } from '../lib/bootstrap';
 import { KnapsackPattern } from '../schemas/patterns';
 
 const { version } = readJSONSync(join(__dirname, '../../package.json'));
+
+getGitBranch().then(branch => {
+  log.info(`Git branch: "${branch}"`);
+});
 
 program
   .version(version)

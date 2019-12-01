@@ -233,10 +233,13 @@ export function formatCode({
       return format('typescript');
     case 'json':
       return format('json');
+    case 'yml':
+    case 'yaml':
+      return format('yaml');
     case 'md':
     case 'markdown':
       return format('markdown');
     default:
-      return code.trim();
+      return code?.trim();
   }
 }

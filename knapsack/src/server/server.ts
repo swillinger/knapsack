@@ -169,10 +169,7 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
       settingsState: {
         settings: await settings.getData(),
       },
-      patternsState: {
-        patterns: patterns.byId,
-        templateStatuses: await patterns.getTemplateStatuses(),
-      },
+      patternsState: await patterns.getData(),
       customPagesState: await customPages.getData(),
       assetSetsState: await assetSets.getData(),
       navsState: await navs.getData(),
@@ -229,6 +226,7 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
       settings.savePrep(state.settingsState.settings),
       customPages.savePrep(state.customPagesState),
       navs.savePrep(state.navsState),
+      patterns.savePrep(state.patternsState),
     ]).then(results => flattenArray(results));
 
     configFiles.forEach(configFile => {

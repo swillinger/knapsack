@@ -23,6 +23,7 @@ import os from 'os';
 import fs from 'fs-extra';
 import yaml from 'js-yaml';
 import { validateDataAgainstSchema } from '@knapsack/schema-utils';
+import { formatCode } from '../server-utils';
 import { knapsackEvents, EVENTS } from '../events';
 import { KnapsackDb, KnapsackFile } from '../../schemas/misc';
 
@@ -218,14 +219,20 @@ export class FileDb2<ConfigType> implements KnapsackDb<ConfigType> {
     this.validateConfig(config);
     switch (this.type) {
       case 'json': {
-        const contents = JSON.stringify(config, null, 2) + os.EOL;
+        const contents = formatCode({
+          code: JSON.stringify(config) + os.EOL,
+          language: 'json',
+        });
         return {
           contents,
           encoding: 'utf-8',
         };
       }
       case 'yml': {
-        const contents = yaml.safeDump(config);
+        const contents = formatCode({
+          code: yaml.safeDump(config),
+          language: 'yml',
+        });
         return {
           contents,
           encoding: 'utf-8',

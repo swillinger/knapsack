@@ -4,6 +4,7 @@ import { Action } from './types';
 import {
   KnapsackPattern,
   KnapsackPatternsConfig,
+  KnapsackPatternTemplate,
   KnapsackTemplateDemo,
 } from '../../schemas/patterns';
 
@@ -27,6 +28,7 @@ const REMOVE_TEMPLATE_DEMO = 'knapsack/patterns/REMOVE_TEMPLATE_DEMO';
 const ADD_TEMPLATE_DATA_DEMO = 'knapsack/patterns/ADD_TEMPLATE_DATA_DEMO';
 const UPDATE_PATTERN = 'knapsack/patterns/UPDATE_PATTERN';
 const UPDATE_PATTERN_INFO = 'knapsack/patterns/UPDATE_PATTERN_INFO';
+const UPDATE_TEMPLATE_INFO = 'knapsack/patterns/UPDATE_TEMPLATE_INFO';
 
 interface UpdateTemplateDemoAction extends Action {
   type: typeof UPDATE_TEMPLATE_DEMO;
@@ -125,6 +127,15 @@ interface UpdatePatternInfoAction extends Action {
   payload: Partial<KnapsackPattern>;
 }
 
+interface UpdateTemplateInfoAction extends Action {
+  type: typeof UPDATE_TEMPLATE_INFO;
+  payload: {
+    patternId: string;
+    templateId: string;
+    template: Partial<KnapsackPatternTemplate>;
+  };
+}
+
 /**
  * Update basic Pattern Info
  * Basically everything besides `templates`
@@ -142,9 +153,32 @@ export function updatePatternInfo(
   };
 }
 
+/**
+ * Update basic Template Info
+ */
+export function updateTemplateInfo({
+  patternId,
+  templateId,
+  template,
+}: {
+  patternId: string;
+  templateId: string;
+  template: Partial<KnapsackPatternTemplate>;
+}): UpdateTemplateInfoAction {
+  return {
+    type: UPDATE_TEMPLATE_INFO,
+    payload: {
+      patternId,
+      templateId,
+      template,
+    },
+  };
+}
+
 type Actions =
   | UpdatePatternAction
   | UpdatePatternInfoAction
+  | UpdateTemplateInfoAction
   | UpdateTemplateDemoAction
   | AddTemplateDataDemoAction
   | RemoveTemplateDemoAction;
@@ -169,6 +203,14 @@ export default function reducer(
           templates: pattern.templates,
           id: pattern.id,
         };
+      });
+
+    case UPDATE_TEMPLATE_INFO:
+      return produce(state, draft => {
+        const { patternId, templateId, template } = action.payload;
+        const { templates } = draft.patterns[patternId];
+        const oldTemplate = templates.find(t => t.id === templateId);
+        Object.assign(oldTemplate, template);
       });
 
     case UPDATE_TEMPLATE_DEMO:

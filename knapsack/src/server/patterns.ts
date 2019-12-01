@@ -32,8 +32,16 @@ import {
   KnapsackTemplateRenderer,
   KsRenderResults,
 } from '../schemas/knapsack-config';
+import { KnapsackDb, KnapsackFile } from '../schemas/misc';
 
-export class Patterns {
+export class Patterns
+  implements
+    KnapsackDb<{
+      patterns: {
+        [id: string]: KnapsackPattern;
+      };
+      templateStatuses: KnapsackTemplateStatus[];
+    }> {
   configDb: FileDb2<KnapsackPatternsConfig>;
 
   dataDir: string;
@@ -91,6 +99,42 @@ export class Patterns {
       this.templateRenderers[templateRenderer.id] = templateRenderer;
     });
     this.updatePatternsData();
+  }
+
+  async getData(): Promise<{
+    patterns: { [id: string]: KnapsackPattern };
+    templateStatuses: KnapsackTemplateStatus[];
+  }> {
+    const templateStatuses = await this.getTemplateStatuses();
+    return {
+      templateStatuses,
+      patterns: this.byId,
+    };
+  }
+
+  async savePrep(data: {
+    patterns: { [id: string]: KnapsackPattern };
+    templateStatuses?: KnapsackTemplateStatus[];
+  }): Promise<KnapsackFile[]> {
+    const allFiles: KnapsackFile[] = [];
+
+    await Promise.all(
+      Object.keys(data.patterns).map(async id => {
+        const pattern = data.patterns[id];
+        const db = new FileDb2<KnapsackPattern>({
+          filePath: join(this.dataDir, `knapsack.pattern.${id}.json`),
+          type: 'json',
+          watch: false,
+          writeFileIfAbsent: false,
+        });
+
+        const files = await db.savePrep(pattern);
+        files.forEach(file => allFiles.push(file));
+      }),
+    );
+    // @todo handle patterns that were deleted / renamed
+
+    return allFiles;
   }
 
   updatePatternsData() {

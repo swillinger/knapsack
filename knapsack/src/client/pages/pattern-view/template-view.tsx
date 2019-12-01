@@ -24,6 +24,7 @@ import {
   useDispatch,
   updateTemplateDemo,
   updatePatternInfo,
+  updateTemplateInfo,
   addTemplateDataDemo,
   removeTemplateDemo,
 } from '../../store';
@@ -199,6 +200,17 @@ const TemplateView: React.FC<Props> = ({
           }}
           handleAssetSetChange={newAssetSetId => {
             setAssetSetId(newAssetSetId);
+          }}
+          handleStatusChange={newStatusId => {
+            dispatch(
+              updateTemplateInfo({
+                templateId,
+                patternId,
+                template: {
+                  statusId: newStatusId,
+                },
+              }),
+            );
           }}
           handleDemoPrevClick={() => {
             setDemoIndex(prev => {

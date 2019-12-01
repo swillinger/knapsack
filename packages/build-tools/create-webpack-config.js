@@ -208,8 +208,7 @@ function createWebPackConfig({
       }),
     ],
     performance: {
-      // hints: isProd ? 'error' : false,
-      hints: 'warning', // @todo re-enable SOON - it's all the `aws-sdk` pkg's fault!! :P
+      hints: isProd ? 'error' : false,
       maxAssetSize,
       maxEntrypointSize: maxAssetSize,
       // if this function returns false it is not included in performance calculation
@@ -246,6 +245,7 @@ function createWebPackConfig({
   if (isProd) {
     webpackConfig.mode = 'production';
     webpackConfig.optimization = {
+      ...webpackConfig.optimization,
       minimizer: [
         new TerserPlugin({
           parallel: true,

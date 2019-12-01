@@ -22,31 +22,34 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { plugins } from '@knapsack/core';
+import Amplify from 'aws-amplify';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import urlJoin from 'url-join';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
+import awsconfig from '../aws-exports';
 import 'react-sortable-tree/style.css';
-import { useSelector } from './store';
+import { updateUser, useSelector, useDispatch } from './store';
 import { KnapsackContextProvider } from './context';
 import ErrorCatcher from './utils/error-catcher';
 import { BASE_PATHS } from '../lib/constants';
+import PageWithSidebar from './layouts/page-with-sidebar';
 import {
   LoadablePatternView,
   LoadableGraphiqlPage,
-  LoadablePageBuilderLandingPage,
   LoadablePatternsPage,
-  LoadablePageBuilder,
   LoadableSettingsPage,
   LoadableCustomPage,
   LoadableHome,
   LoadableChangelogPage,
   LoadableBadRoute,
-  LoadableProposeChange,
 } from './loadable-components';
 import './global/variables.css';
 import './style.scss';
+
+Amplify.configure(awsconfig);
 
 const apolloClient = new ApolloClient({
   // This ensures we don't have `__typename` appear everywhere in stored data ~ https://github.com/apollographql/apollo-client/issues/1913
@@ -56,10 +59,12 @@ const apolloClient = new ApolloClient({
 });
 
 export const App: React.FC = () => {
+  const dispatch = useDispatch();
   useEffect(() => {
-    plugins.loadPlugins({
-      sayHi: () => console.log('hi from plugin api'),
-    });
+    // plugins.loadPlugins({
+    //   sayHi: () => console.log('hi from plugin api'),
+    // });
+    dispatch(updateUser());
   }, []);
 
   const settings = useSelector(s => s.settingsState.settings);
@@ -97,20 +102,6 @@ export const App: React.FC = () => {
                       )
                     }
                   />
-                  <Route
-                    path={`${BASE_PATHS.PAGE_BUILDER}/:id`}
-                    render={({ match }) => (
-                      <LoadablePageBuilder id={match.params.id} />
-                    )}
-                  />
-                  <Route
-                    path={BASE_PATHS.PAGE_BUILDER}
-                    exact
-                    render={props => (
-                      <LoadablePageBuilderLandingPage {...props} />
-                    )}
-                  />
-
                   <Route
                     path={BASE_PATHS.PATTERNS}
                     exact
@@ -196,10 +187,6 @@ export const App: React.FC = () => {
                   />
                   <Route path="/changelog" component={LoadableChangelogPage} />
                   <Route
-                    path="/propose-change"
-                    component={LoadableProposeChange}
-                  />
-                  <Route
                     path={`${BASE_PATHS.PAGES}/:pageId`}
                     render={({
                       match: {
@@ -229,6 +216,30 @@ export const App: React.FC = () => {
                       );
                     }}
                   />
+
+                  {plugins.getPlugins().map(plugin => {
+                    if (!plugin.addPages) {
+                      return null;
+                    }
+                    return plugin.addPages().map(page => {
+                      const path = urlJoin('/', plugin.id, page.path);
+                      return (
+                        <Route
+                          key={path}
+                          path={path}
+                          render={() => (
+                            <PageWithSidebar
+                              title={page.title}
+                              section={page.section}
+                            >
+                              {page.render()}
+                            </PageWithSidebar>
+                          )}
+                        />
+                      );
+                    });
+                  })}
+
                   <Route path="*" render={() => <LoadableBadRoute />} />
                   <Redirect to="/" />
                 </Switch>

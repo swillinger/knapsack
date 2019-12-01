@@ -56,7 +56,10 @@ export function bootstrap(
   });
   log.verbose('All templateRenderers init done');
 
-  const settings = new Settings({ dataDir: config.data });
+  const settings = new Settings({
+    dataDir: config.data,
+    publicDir: config.public,
+  });
   const pageBuilderPages = new PageBuilder({ dataDir: config.data });
   const customPages = new CustomPages({ dataDir: config.data });
   const navs = new Navs({ dataDir: config.data });

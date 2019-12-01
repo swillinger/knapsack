@@ -19,15 +19,17 @@ import { ApolloServer, gql } from 'apollo-server-express';
 import { makeExecutableSchema, mergeSchemas } from 'graphql-tools';
 import WebSocket from 'ws';
 import bodyParser from 'body-parser';
-import fetch from 'node-fetch';
-import { join, relative } from 'path';
+import 'isomorphic-fetch';
+import { join } from 'path';
 import { writeFile } from 'fs-extra';
+import { KsUserInfo, KsFileSaver } from '@knapsack/core/dist/cloud';
+import { KsCloudConnect } from '../cloud/cloud-connect';
 import * as log from '../cli/log';
 import { EVENTS, knapsackEvents } from './events';
 import { getApiRoutes } from './rest-api';
 import { setupRoutes } from './routes';
 import { enableTemplatePush } from '../lib/features';
-import { getRole } from './auth';
+import { getUserInfo } from './auth';
 import { apiUrlBase, PERMISSIONS, HTTP_STATUS } from '../lib/constants';
 import {
   pageBuilderPagesResolvers,
@@ -43,7 +45,7 @@ import {
   KnapsackDataStoreSaveBody,
 } from '../schemas/misc';
 import { WS_EVENTS, WebSocketMessage } from '../schemas/web-sockets';
-import { flattenArray } from '../lib/utils';
+import { flattenArray, isBase64 } from '../lib/utils';
 
 export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
   const {
@@ -56,6 +58,7 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
     config,
     assetSets,
   } = getBrain();
+
   const port = process.env.KNAPSACK_PORT || 3999;
   const knapsackDistDir = join(__dirname, '../../dist/client');
 
@@ -103,7 +106,7 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
     context: ({ req }): GraphQlContext => {
       // const { host, origin } = req.headers;
       // log.verbose('request received', { host, origin }, 'graphql');
-      const role = getRole(req);
+      const { role } = getUserInfo(req);
       const canWrite = role.permissions.includes(PERMISSIONS.WRITE);
 
       return {
@@ -176,13 +179,28 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
     };
   }
 
-  async function saveFilesLocally(
-    files: KnapsackFile[],
-  ): Promise<GenericResponse> {
+  const fileSavers: Record<string, KsFileSaver> = {};
+
+  async function saveFilesLocally({
+    files,
+  }: {
+    files: KnapsackFile[];
+  }): Promise<GenericResponse> {
     await Promise.all(
-      files.map(({ contents, path, encoding }) =>
-        writeFile(path, contents, { encoding }),
-      ),
+      files.map(({ contents, path, encoding }) => {
+        switch (encoding) {
+          case 'utf-8':
+            return writeFile(path, contents, { encoding: 'utf8' });
+          case 'base64': {
+            const data = Buffer.from(contents, 'base64');
+            return writeFile(path, data);
+          }
+          default:
+            throw new Error(
+              `Incorrect encoding used when saving files locally: "${encoding}" for file ${path}.`,
+            );
+        }
+      }),
     );
 
     return {
@@ -191,96 +209,11 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
     };
   }
 
-  async function saveFilesToCloud({
-    files,
-    title = 'New changes',
-    message,
-  }: {
-    files: KnapsackFile[];
-    title?: string;
-    message?: string;
-  }): Promise<GenericResponse> {
-    if (!config.cloud) {
-      return {
-        ok: false,
-        message: 'No "cloud" in your "knapsack.config.js"',
-      };
-    }
-    const { apiKey, apiBase, repoRoot, repoName, repoOwner } = config.cloud;
+  fileSavers.local = saveFilesLocally;
 
-    interface Body {
-      owner: string;
-      repo: string;
-      baseBranch: string;
-      title: string;
-      message?: string;
-      payload?: {
-        files: {
-          path: string;
-          contents: string;
-        }[];
-      };
-    }
-
-    const body: Body = {
-      owner: repoOwner,
-      repo: repoName,
-      baseBranch: 'feature/users',
-      title,
-      message,
-      // commitMessage: message ? [title, '', message].join('\n') : title,
-      payload: {
-        files: files.map(file => {
-          return {
-            ...file,
-            path: relative(repoRoot, join(process.cwd(), file.path)),
-          };
-        }),
-      },
-    };
-    console.log('Sending save request to Knapsack Cloud...');
-    console.log(
-      'files paths',
-      body.payload.files.map(file => file.path).join('\n'),
-    );
-    const urlBase = apiBase.endsWith('/') ? apiBase : `${apiBase}/`;
-    const results = await fetch(`${urlBase}api/save`, {
-      method: 'POST',
-      body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    })
-      .then(async res => {
-        const { ok, status, statusText } = res;
-        console.log({ ok, status, statusText });
-        if (!ok) {
-          const result: GenericResponse = {
-            ok,
-            message: `${status} - ${statusText}`,
-          };
-          return result;
-        }
-        const data = await res.json();
-        return {
-          ok: true,
-          message: `PR created at ${data.prUrl}`,
-          data,
-        };
-      })
-      .catch(e => {
-        console.error('error saveFilesToCloud');
-        console.error(e);
-        const result: GenericResponse = {
-          ok: false,
-          message: `thrown error in saveFilesToCloud: ${e.message}`,
-        };
-
-        return result;
-      });
-
-    return results;
+  if (config.cloud) {
+    const { saveFilesToCloud } = new KsCloudConnect(config.cloud);
+    fileSavers.cloud = saveFilesToCloud;
   }
 
   async function handleNewDataStore({
@@ -288,63 +221,46 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
     title,
     message,
     storageLocation,
-  }: KnapsackDataStoreSaveBody): Promise<GenericResponse> {
-    try {
-      const configFiles: KnapsackFile[] = await Promise.all([
-        settings.savePrep(state.settingsState.settings),
-        customPages.savePrep(state.customPagesState),
-        navs.savePrep(state.navsState),
-      ]).then(results => flattenArray(results));
+    user,
+  }: KnapsackDataStoreSaveBody & { user: KsUserInfo }): Promise<
+    GenericResponse
+  > {
+    const configFiles: KnapsackFile[] = await Promise.all([
+      settings.savePrep(state.settingsState.settings),
+      customPages.savePrep(state.customPagesState),
+      navs.savePrep(state.navsState),
+    ]).then(results => flattenArray(results));
 
-      console.log('cloud', config.cloud);
-      let results;
-      switch (storageLocation) {
-        case 'local': {
-          results = await saveFilesLocally(configFiles);
-          break;
-        }
-        case 'cloud': {
-          if (config.cloud) {
-            results = await saveFilesToCloud({
-              files: configFiles,
-              title,
-              message,
-            });
-            break;
-          } else {
-            throw new Error(`No cloud config`);
-          }
-        }
-        default:
+    configFiles.forEach(configFile => {
+      if (configFile.encoding === 'base64') {
+        if (!isBase64(configFile.contents)) {
+          console.log(configFile);
           throw new Error(
-            `Must declare save location, passed in ${storageLocation}`,
+            `Pre-save check on Knapsack File "${configFile.path}" expected a base64 encoding and it is not.`,
           );
+        }
       }
-      // if (config.cloud) {
-      //   results = await saveFilesToCloud(configFiles);
-      // } else {
-      //   results = await saveFilesLocally(configFiles);
-      // }
-      console.log('cloud results', results);
+    });
 
-      return results;
-    } catch (e) {
-      console.error('handleNewDataStore', e);
-      return {
-        ok: false,
-        message: `Could not handleNewDataStore. ${e.message}`,
-      };
+    if (!fileSavers[storageLocation]) {
+      throw new Error(
+        `Must declare save location, passed in ${storageLocation}`,
+      );
     }
+
+    return fileSavers[storageLocation]({
+      files: configFiles,
+      title,
+      message,
+      user,
+    });
   }
 
   app.get(`${apiUrlBase}/data-store`, async (req, res) => {
-    const role = getRole(req);
     const dataStore = await getDataStore();
     const fullDataStore: PartialAppState = {
       ...dataStore,
       userState: {
-        role,
-        canEdit: role.permissions.includes(PERMISSIONS.WRITE),
         isLocalDev: process.env.NODE_ENV !== 'production',
       },
       metaState: {
@@ -370,23 +286,28 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
       });
     }
 
-    const { permissions } = getRole(req);
+    const user = getUserInfo(req);
+    const permissions = user?.role?.permissions;
 
     if (!permissions.includes(PERMISSIONS.WRITE)) {
       res.status(HTTP_STATUS.BAD.UNAUTHORIZED).send();
     } else {
-      const results = await handleNewDataStore({
-        storageLocation,
-        title,
-        message,
-        state,
-      });
-      console.log('handleNewDataStore results', results);
-
-      if (results.ok) {
-        res.status(HTTP_STATUS.GOOD.CREATED).send(results);
-      } else {
-        res.status(HTTP_STATUS.BAD.BAD_REQUEST).send(results);
+      try {
+        const results = await handleNewDataStore({
+          storageLocation,
+          title,
+          message,
+          state,
+          user,
+        });
+        // console.log('handleNewDataStore results', results);
+        res.send(results);
+      } catch (e) {
+        console.error('handleNewDataStore', e);
+        res.status(HTTP_STATUS.FAIL.INTERNAL_ERROR).send({
+          ok: false,
+          message: `Could not handleNewDataStore. ${e.message}`,
+        });
       }
     }
   });

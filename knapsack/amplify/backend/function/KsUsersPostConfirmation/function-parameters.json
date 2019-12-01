@@ -1,0 +1,12 @@
+{
+  "trigger": true,
+  "modules": ["add-to-group"],
+  "parentResource": "KsUsers",
+  "functionName": "KsUsersPostConfirmation",
+  "parentStack": "auth",
+  "triggerEnvs": "[]",
+  "triggerTemplate": "PostConfirmation.json.ejs",
+  "roleName": "KsUsersPostConfirmation",
+  "skipEdit": true,
+  "resourceName": "KsUsersPostConfirmation"
+}

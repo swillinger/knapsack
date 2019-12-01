@@ -21,7 +21,7 @@ import {
   validateUniqueIdsInArray,
   validateDataAgainstSchema,
 } from '@knapsack/schema-utils';
-import { knapsackDesignTokensSchema } from '@knapsack/core';
+import { knapsackDesignTokensSchema } from '@knapsack/core/dist/types';
 import { KnapsackRendererBase } from '../server/renderer-base';
 import * as log from '../cli/log';
 import { knapsackEvents, EVENTS } from '../server/events';
@@ -134,5 +134,6 @@ export async function getMeta(config: KnapsackConfig): Promise<KnapsackMeta> {
       ? await readFile(config.changelog, 'utf8')
       : null,
     version: config.version,
+    hasKnapsackCloud: 'cloud' in config,
   };
 }

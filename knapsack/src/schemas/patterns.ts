@@ -3,7 +3,7 @@
 // import { JsonSchemaObject } from './misc';
 // import { KnapsackTemplateRenderer } from './knapsack-config';
 
-import { JsonSchemaObject } from './misc';
+import { JsonSchemaObject } from '@knapsack/core/dist/types';
 
 /**
  * Used to render a template instead of the path to that file

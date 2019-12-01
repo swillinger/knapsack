@@ -221,14 +221,14 @@ export class FileDb2<ConfigType> implements KnapsackDb<ConfigType> {
         const contents = JSON.stringify(config, null, 2) + os.EOL;
         return {
           contents,
-          encoding: 'utf8',
+          encoding: 'utf-8',
         };
       }
       case 'yml': {
         const contents = yaml.safeDump(config);
         return {
           contents,
-          encoding: 'utf8',
+          encoding: 'utf-8',
         };
       }
       default:

@@ -17,6 +17,7 @@
 
 export interface KnapsackSettingsStoreConfig {
   dataDir: string;
+  publicDir: string;
 }
 
 /**

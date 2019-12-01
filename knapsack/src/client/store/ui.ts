@@ -7,7 +7,13 @@ const REMOVE_STATUS = 'knapsack/ui/REMOVE_STATUS';
 
 type Status = {
   type: StatusTypes;
+  /**
+   * Can contain markdown
+   */
   message: string;
+  /**
+   * After x seconds, remove
+   */
   dismissAfter?: number;
 };
 

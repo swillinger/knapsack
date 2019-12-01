@@ -18,14 +18,13 @@ import express from 'express';
 import urlJoin from 'url-join';
 import md from 'marked';
 import highlight from 'highlight.js';
-import { qsParse } from './server-utils';
 import { MemDb } from './dbs/mem-db';
 import * as log from '../cli/log';
 import {
   BASE_PATHS,
   // PERMISSIONS
 } from '../lib/constants';
-import { getRole } from './auth';
+import { getUserInfo } from './auth';
 import { KnapsackBrain, KnapsackConfig } from '../schemas/main-types';
 import { KnapsackMeta } from '../schemas/misc';
 import { KnapsackTemplateDemo } from '../schemas/patterns';
@@ -281,24 +280,9 @@ export function getApiRoutes({
   const url6 = urlJoin(baseUrl, 'permissions');
   registerEndpoint(url6);
   router.get(url6, (req, res) => {
-    const role = getRole(req);
+    const { role } = getUserInfo(req);
     res.send(role.permissions);
   });
-
-  // const url7 = urlJoin(baseUrl, 'upload');
-  // registerEndpoint(url7);
-  // router.post(url7, (req, res) => {
-  //   const role = getRole(req);
-  //   const canWrite = role.permissions.includes(PERMISSIONS.WRITE);
-  //   if (!canWrite) {
-  //     res.status(403).send({
-  //       ok: false,
-  //       message:
-  //         'You do not have write permissions so you cannot upload any file',
-  //     });
-  //   } else {
-  //   }
-  // });
 
   return router;
 }

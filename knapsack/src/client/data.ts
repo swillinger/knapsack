@@ -101,7 +101,7 @@ export function gqlQuery({
     .catch(console.log.bind(console));
 }
 
-type KnapsackDesignToken = import('@knapsack/core').KnapsackDesignToken;
+type KnapsackDesignToken = import('@knapsack/core/dist/types').KnapsackDesignToken;
 
 export function getDesignTokens(): Promise<KnapsackDesignToken[]> {
   return window.fetch(`${apiUrlBase}/design-tokens`).then(res => res.json());

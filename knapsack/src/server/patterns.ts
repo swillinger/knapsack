@@ -14,47 +14,24 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-import fs, { readJSONSync, readFile } from 'fs-extra';
-import { join, relative, resolve, parse } from 'path';
+import { readJSONSync } from 'fs-extra';
+import { join } from 'path';
 import globby from 'globby';
-import {
-  validateSchemaAndAssignDefaults,
-  validateUniqueIdsInArray,
-} from '@knapsack/schema-utils';
-import chokidar from 'chokidar';
 import { version as iframeResizerVersion } from 'iframe-resizer/package.json';
-import { KnapsackRendererBase } from '@knapsack/app';
-import {
-  createDemoUrl,
-  writeJson,
-  fileExists,
-  fileExistsOrExit,
-  isRemoteUrl,
-  readYamlSync,
-} from './server-utils';
-import { knapsackEvents, EVENTS, emitPatternsDataReady } from './events';
+import { fileExists, fileExistsOrExit, formatCode } from './server-utils';
+import { emitPatternsDataReady } from './events';
 import { FileDb2 } from './dbs/file-db';
 import * as log from '../cli/log';
-import { FILE_NAMES } from '../lib/constants';
 import {
   KnapsackPattern,
-  KnapsackPatternTemplate,
-  KnapsackPatternTemplateCode,
   KnapsackTemplateStatus,
   KnapsackPatternsConfig,
-  KnapsackTemplateData,
   KnapsackTemplateDemo,
 } from '../schemas/patterns';
-import { GenericResponse } from '../schemas/misc';
 import {
   KnapsackTemplateRenderer,
-  KnapsackTemplateRendererResults,
   KsRenderResults,
 } from '../schemas/knapsack-config';
-import {
-  KnapsackAssetSet,
-  KnapsackAssetSetConfig,
-} from '../schemas/asset-sets';
 
 export class Patterns {
   configDb: FileDb2<KnapsackPatternsConfig>;
@@ -342,11 +319,11 @@ if ('WebSocket' in window && location.hostname === 'localhost') {
     return {
       ...renderedTemplate,
       usage: renderer.formatCode(renderedTemplate.usage),
-      html: KnapsackRendererBase.formatCode({
+      html: formatCode({
         code: renderedTemplate.html,
         language: 'html',
       }),
-      wrappedHtml: KnapsackRendererBase.formatCode({
+      wrappedHtml: formatCode({
         code: wrappedHtml,
         language: 'html',
       }),

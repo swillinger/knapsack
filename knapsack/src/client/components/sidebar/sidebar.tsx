@@ -92,92 +92,95 @@ export const Sidebar: React.FC = () => {
         />
       </div>
 
-      <div
-        className={cn(
-          'ks-sidebar__enable-edit-btn',
-          isSidebarEditMode ? 'ks-sidebar__enable-edit-btn--hidden' : '',
-        )}
-      >
-        <KsButton
-          kind="icon-standard"
-          icon="edit"
-          floating
-          onClick={() => setIsSidebarEditMode(true)}
-        >
-          Edit Left Navigation
-        </KsButton>
-      </div>
-
-      <div
-        className={cn(
-          'ks-sidebar__edit-panel',
-          isSidebarEditMode ? 'ks-sidebar__edit-panel--show' : '',
-        )}
-      >
-        <div className="ks-sidebar__edit-panel__content">
-          {canEdit && (
-            <AddEntity
-              handleAdd={({ title: theTitle, entityType }) => {
-                // eslint-disable-next-line default-case
-                switch (entityType) {
-                  case 'page': {
-                    dispatch(
-                      addPage({
-                        title: theTitle,
-                      }),
-                    );
-                    break;
-                  }
-                  case 'group': {
-                    dispatch(
-                      addSecondaryNavItem({
-                        name: theTitle,
-                      }),
-                    );
-                  }
-                }
-              }}
-            />
-          )}
-          <div>
+      {canEdit && (
+        <>
+          <div
+            className={cn(
+              'ks-sidebar__enable-edit-btn',
+              isSidebarEditMode ? 'ks-sidebar__enable-edit-btn--hidden' : '',
+            )}
+          >
             <KsButton
-              kind="cancel"
-              onClick={() => {
-                setTreeItems(initialTreeItems);
-                setIsSidebarEditMode(false);
-              }}
+              kind="icon-standard"
+              icon="edit"
+              floating
+              onClick={() => setIsSidebarEditMode(true)}
             >
-              Cancel
-            </KsButton>
-            <KsButton
-              kind="primary"
-              onClick={() => {
-                const newFlatData = getFlatDataFromTree({
-                  treeData: treeItems,
-                  ignoreCollapsed: false,
-                  getNodeKey: (item: TreeIndex & TreeNode & KnapsackNavItem) =>
-                    item.id,
-                }).map(flatDataItem => {
-                  // console.log({ flatDataItem });
-                  const { node, parentNode } = flatDataItem;
-                  return {
-                    id: node.id,
-                    name: node.name,
-                    path: node.path || '',
-                    parentId: parentNode ? parentNode.id : rootKey,
-                  };
-                });
-
-                dispatch(updateSecondaryNav(newFlatData));
-
-                setIsSidebarEditMode(false);
-              }}
-            >
-              Save
+              Edit Left Navigation
             </KsButton>
           </div>
-        </div>
-      </div>
+
+          <div
+            className={cn(
+              'ks-sidebar__edit-panel',
+              isSidebarEditMode ? 'ks-sidebar__edit-panel--show' : '',
+            )}
+          >
+            <div className="ks-sidebar__edit-panel__content">
+              <AddEntity
+                handleAdd={({ title: theTitle, entityType }) => {
+                  // eslint-disable-next-line default-case
+                  switch (entityType) {
+                    case 'page': {
+                      dispatch(
+                        addPage({
+                          title: theTitle,
+                        }),
+                      );
+                      break;
+                    }
+                    case 'group': {
+                      dispatch(
+                        addSecondaryNavItem({
+                          name: theTitle,
+                        }),
+                      );
+                    }
+                  }
+                }}
+              />
+              <div>
+                <KsButton
+                  kind="cancel"
+                  onClick={() => {
+                    setTreeItems(initialTreeItems);
+                    setIsSidebarEditMode(false);
+                  }}
+                >
+                  Cancel
+                </KsButton>
+                <KsButton
+                  kind="primary"
+                  onClick={() => {
+                    const newFlatData = getFlatDataFromTree({
+                      treeData: treeItems,
+                      ignoreCollapsed: false,
+                      getNodeKey: (
+                        item: TreeIndex & TreeNode & KnapsackNavItem,
+                      ) => item.id,
+                    }).map(flatDataItem => {
+                      // console.log({ flatDataItem });
+                      const { node, parentNode } = flatDataItem;
+                      return {
+                        id: node.id,
+                        name: node.name,
+                        path: node.path || '',
+                        parentId: parentNode ? parentNode.id : rootKey,
+                      };
+                    });
+
+                    dispatch(updateSecondaryNav(newFlatData));
+
+                    setIsSidebarEditMode(false);
+                  }}
+                >
+                  Save
+                </KsButton>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

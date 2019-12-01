@@ -17,10 +17,12 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
+import { plugins } from '@knapsack/core';
 import { createStore } from './store';
 import { App } from './App';
 import { getStateFromLocalStorage } from './store/utils';
 import { getInitialState } from './data';
+import { createCloudClientPlugin } from '../cloud/client-plugin';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const mountEl = document.createElement('div');
@@ -33,6 +35,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     cachedState === false ? await getInitialState() : cachedState;
 
   const store = createStore(initialState);
+
+  plugins.register(createCloudClientPlugin({ store }));
 
   ReactDom.render(
     <Provider store={store}>

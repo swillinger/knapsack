@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { KnapsackDesignToken } from '@knapsack/core';
+import { KnapsackDesignToken } from '@knapsack/core/dist/types';
 import { convertColor, hasOpacity, parseColor } from '@knapsack/utils';
 import { Select, KsButton } from '../atoms';
 import { CopyToClipboard } from '../copy-to-clipboard/copy-to-clipboard';

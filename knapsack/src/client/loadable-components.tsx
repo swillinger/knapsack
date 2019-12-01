@@ -52,31 +52,9 @@ export const LoadableHome = Loadable({
   loading: Spinner,
 });
 
-export const LoadableProposeChange = Loadable({
-  loader: () =>
-    import(
-      /* webpackChunkName: "propose-change" */ './pages/propose-change'
-    ).then(({ ProposeChangePage }) => ProposeChangePage),
-  loading: Spinner,
-});
-
 export const LoadableGraphiqlPage = Loadable({
   loader: () =>
     import(/* webpackChunkName: "graphiql-page" */ './pages/graphiql-page'),
-  loading: Spinner,
-});
-
-export const LoadablePageBuilder = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "page-builder" */ './pages/page-builder'),
-  loading: Spinner,
-});
-
-export const LoadablePageBuilderLandingPage = Loadable({
-  loader: () =>
-    import(
-      /* webpackChunkName: "page-builder-landing-page" */ './pages/page-builder-landing-page'
-    ),
   loading: Spinner,
 });
 

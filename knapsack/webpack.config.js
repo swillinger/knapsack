@@ -4,7 +4,7 @@ const WebappWebpackPlugin = require('webapp-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = createWebPackConfig({
-  mainEntries: join(__dirname, './src/client/'),
+  mainEntries: [join(__dirname, './src/client/')],
   extraSrcDirs: [join(__dirname, './src')],
   dist: join(__dirname, './dist/client'),
   useHtmlWebpackPlugin: true,

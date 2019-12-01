@@ -9,3 +9,5 @@ knapsack/node_modules
 /docs-site/core
 /docs-site/build
 /knapsack/src/json-schemas
+/knapsack/src/aws-exports.js
+/knapsack/amplify

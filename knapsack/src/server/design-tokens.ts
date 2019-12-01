@@ -15,10 +15,10 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import GraphQLJSON from 'graphql-type-json';
-import { KnapsackDesignToken } from '@knapsack/core';
+import { KnapsackDesignToken } from '@knapsack/core/dist/types';
 import { hasItemsInItems } from '../lib/utils';
 
-export { designTokensTypeDef } from '@knapsack/core';
+export { designTokensTypeDef } from '@knapsack/core/dist/types';
 
 export class DesignTokens {
   tokens: KnapsackDesignToken[];

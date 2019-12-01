@@ -1,8 +1,8 @@
-import { KnapsackDesignToken } from '@knapsack/core';
+import { KnapsackDesignToken } from '@knapsack/core/dist/types';
+import { KsCloudConfig } from '@knapsack/core/dist/cloud';
 import {
   KnapsackPattern,
   KnapsackPatternTemplate,
-  KnapsackTemplateData,
   KnapsackTemplateDemo,
 } from './patterns';
 
@@ -113,14 +113,5 @@ export interface KnapsackConfig {
   };
   changelog?: string;
   version?: string;
-  cloud?: KnapsackCloud;
-}
-
-export interface KnapsackCloud {
-  apiBase: string;
-  apiKey: string;
-  apiId: string;
-  repoName: string;
-  repoOwner: string;
-  repoRoot: string;
+  cloud?: KsCloudConfig;
 }

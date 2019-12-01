@@ -17,9 +17,6 @@
 
 import React, { useState } from 'react';
 import { SchemaForm, Details, Select, KsButton } from '@knapsack/design-system';
-import { Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
-import shortid from 'shortid';
 import ReactTable from 'react-table';
 import {
   useSelector,
@@ -38,7 +35,6 @@ import {
   LoadableVariationDemo,
 } from '../../loadable-components';
 // import DosAndDonts from '../../components/dos-and-donts';
-import { getTemplateInfo } from '../../data';
 import { TemplateHeader } from './template-header';
 import './template-view.scss';
 import './shared/demo-grid-controls.scss';

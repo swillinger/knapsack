@@ -16,7 +16,7 @@
  */
 import React from 'react';
 import { SchemaTable } from '@knapsack/design-system/dist/schema-table/schema-table';
-import { knapsackDesignTokenSchema } from '@knapsack/core';
+import { knapsackDesignTokenSchema } from '@knapsack/core/dist/types';
 // import settings from '@knapsack/app/src/schemas/knapsack.settings.schema';
 // import patternMeta from '@knapsack/app/src/schemas/pattern-meta.schema';
 // import patternWithMeta from '@knapsack/app/src/schemas/pattern-w-meta.schema';

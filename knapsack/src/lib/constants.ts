@@ -14,13 +14,11 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
+import { PERMISSIONS } from '@knapsack/core/dist/cloud';
 
 const { API_URL_BASE } = process.env;
 
-export const PERMISSIONS = {
-  READ: 'read',
-  WRITE: 'write',
-};
+export { PERMISSIONS };
 
 /**
  * Base Paths for URLs

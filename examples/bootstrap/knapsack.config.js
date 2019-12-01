@@ -1,6 +1,7 @@
 const { join } = require('path');
 const HtmlRenderer = require('@knapsack/renderer-html');
 const TwigRenderer = require('@knapsack/renderer-twig');
+const { getGitBranch } = require('@knapsack/app/dist/server/server-utils');
 const designTokens = require('./assets/design-tokens/dist/knapsack-design-tokens');
 const { version } = require('./package.json');
 

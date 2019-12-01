@@ -35,7 +35,6 @@ import { updateUser, useSelector, useDispatch } from './store';
 import { KnapsackContextProvider } from './context';
 import ErrorCatcher from './utils/error-catcher';
 import { BASE_PATHS } from '../lib/constants';
-import PageWithSidebar from './layouts/page-with-sidebar';
 import {
   LoadablePatternView,
   LoadableGraphiqlPage,
@@ -45,6 +44,7 @@ import {
   LoadableHome,
   LoadableChangelogPage,
   LoadableBadRoute,
+  PageWithSidebar,
 } from './loadable-components';
 import './global/variables.css';
 import './style.scss';

@@ -237,6 +237,9 @@ function createWebPackConfig({
         maxSize: 300000,
       },
     },
+    externals: {
+      'aws-sdk': 'aws-sdk',
+    },
   };
 
   if (isProd) {

@@ -8,6 +8,7 @@ module.exports = createWebPackConfig({
   extraSrcDirs: [join(__dirname, './src')],
   dist: join(__dirname, './dist/client'),
   useHtmlWebpackPlugin: true,
+  outputStats: false,
   extraPlugins: [
     // https://github.com/jaketrent/html-webpack-template
     // template: https://github.com/jaketrent/html-webpack-template/blob/master/index.ejs

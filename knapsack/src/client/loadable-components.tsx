@@ -18,6 +18,14 @@ import Loadable from 'react-loadable';
 // need to keep this entry point small, so not importing entire design system
 import { Spinner } from '@knapsack/design-system/dist/spinner/spinner';
 
+export const PageWithSidebar = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "page-with-sidebar" */ './layouts/page-with-sidebar'
+    ),
+  loading: Spinner,
+});
+
 // @todo fix
 /* eslint-disable import/no-cycle */
 // export const LoadableCustomPage: typeof import('./pages/custom-page/custom-page').default = Loadable(

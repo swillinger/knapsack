@@ -86,7 +86,8 @@ export class KsCloudConnect {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        Authorization: user.Authorization,
+        // can't add auth just yet, cloud api uses it if present to attempt to authenticate as GitHub user (then falls back to GitHub app); this auth token is currently the AWS Cognito user.
+        // Authorization: user.Authorization,
         // 'x-api-key': apiKey,
       },
     })

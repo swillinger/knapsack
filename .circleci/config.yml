@@ -141,7 +141,7 @@ jobs:
           command: |
             npm i -g now
             now deploy --env EXAMPLE=bootstrap --local-config=./examples/bootstrap/now.json --team=basalt --token $ZEIT_TOKEN
-          no_output_timeout: 20m
+          no_output_timeout: 30m
 
   test--publish:
     executor: base

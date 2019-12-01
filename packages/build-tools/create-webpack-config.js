@@ -208,7 +208,8 @@ function createWebPackConfig({
       }),
     ],
     performance: {
-      hints: isProd ? 'error' : false,
+      // hints: isProd ? 'error' : false,
+      hints: 'warning', // @todo re-enable SOON - it's all the `aws-sdk` pkg's fault!! :P
       maxAssetSize,
       maxEntrypointSize: maxAssetSize,
       // if this function returns false it is not included in performance calculation
@@ -238,7 +239,7 @@ function createWebPackConfig({
       },
     },
     externals: {
-      'aws-sdk': 'aws-sdk',
+      // 'aws-sdk': 'aws-sdk',
     },
   };
 

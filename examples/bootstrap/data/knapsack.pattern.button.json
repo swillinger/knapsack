@@ -3,11 +3,7 @@
   "title": "Button",
   "description": "Use Bootstrap’s custom button styles for actions in forms, dialogs, and more with support for multiple sizes, states, and more.",
   "demoSize": "m",
-  "demoWidths": [
-    {
-      "width": 150
-    }
-  ],
+  "demoWidths": [{ "width": 150 }],
   "showAllTemplates": false,
   "templates": [
     {
@@ -16,7 +12,7 @@
       "templateLanguageId": "twig",
       "alias": "@components/button.twig",
       "path": "../assets/patterns/button/button.twig",
-      "statusId": "ready",
+      "statusId": "proposed",
       "assetSetIds": ["bootstrap", "blank"],
       "spec": {
         "props": {
@@ -26,14 +22,8 @@
           "description": "A Button for clicking!",
           "required": ["text", "url"],
           "properties": {
-            "text": {
-              "type": "string",
-              "title": "Text"
-            },
-            "url": {
-              "type": "string",
-              "title": "Url"
-            },
+            "text": { "type": "string", "title": "Text" },
+            "url": { "type": "string", "title": "Url" },
             "style": {
               "type": "string",
               "title": "Style",
@@ -88,31 +78,21 @@
           "title": "Primary style",
           "description": "Here is how what to use for the main call to action, try to limit these per page.",
           "data": {
-            "props": {
-              "text": "The Button",
-              "url": "#",
-              "style": "primary"
-            }
+            "props": { "text": "The Button", "url": "#", "style": "primary" }
           }
         },
         "template-test": {
           "id": "template-test",
           "title": "Template demo that uses another template, not props + source template",
           "type": "template",
-          "templateInfo": {
-            "alias": "@components/button-template-demo.twig"
-          }
+          "templateInfo": { "alias": "@components/button-template-demo.twig" }
         },
         "secondary": {
           "id": "secondary",
           "type": "data",
           "title": "Secondary style",
           "data": {
-            "props": {
-              "text": "Button",
-              "url": "#",
-              "style": "secondary"
-            }
+            "props": { "text": "Button", "url": "#", "style": "secondary" }
           }
         }
       },
@@ -134,14 +114,8 @@
           "description": "A Button for clicking!",
           "required": ["text", "url", "variant"],
           "properties": {
-            "text": {
-              "type": "string",
-              "title": "Text"
-            },
-            "url": {
-              "type": "string",
-              "title": "Url"
-            },
+            "text": { "type": "string", "title": "Text" },
+            "url": { "type": "string", "title": "Url" },
             "variant": {
               "type": "string",
               "title": "Variant",
@@ -149,11 +123,7 @@
               "enum": ["outlined", "text", "raised", "unelevated"],
               "enumNames": ["Outlined", "Text", "Raised", "Unelevated"]
             },
-            "dense": {
-              "type": "boolean",
-              "title": "Dense",
-              "default": false
-            },
+            "dense": { "type": "boolean", "title": "Dense", "default": false },
             "disabled": {
               "type": "boolean",
               "title": "Disabled",
@@ -168,11 +138,7 @@
           "type": "data",
           "title": "Raised Version",
           "data": {
-            "props": {
-              "text": "Button",
-              "url": "#",
-              "variant": "raised"
-            }
+            "props": { "text": "Button", "url": "#", "variant": "raised" }
           }
         }
       },

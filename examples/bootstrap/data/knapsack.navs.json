@@ -68,12 +68,7 @@
       "path": "/pages/shadows",
       "parentId": "design-tokens"
     },
-    {
-      "id": "docs",
-      "name": "Docs",
-      "path": "",
-      "parentId": "root"
-    },
+    { "id": "docs", "name": "Docs", "path": "", "parentId": "root" },
     {
       "id": "/pages/intro",
       "name": "Intro",

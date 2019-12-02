@@ -1,6 +1,6 @@
 {
   "id": "button",
-  "title": "Button",
+  "title": "Super Button",
   "description": "Use Bootstrap’s custom button styles for actions in forms, dialogs, and more with support for multiple sizes, states, and more.",
   "demoSize": "m",
   "demoWidths": [{ "width": 150 }],
@@ -78,7 +78,14 @@
           "title": "Primary style",
           "description": "Here is how what to use for the main call to action, try to limit these per page.",
           "data": {
-            "props": { "text": "The Button", "url": "#", "style": "primary" }
+            "props": {
+              "text": "The Button",
+              "url": "#",
+              "style": "primary",
+              "size": "md",
+              "disabled": false,
+              "outlined": false
+            }
           }
         },
         "template-test": {

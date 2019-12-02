@@ -14,17 +14,18 @@
       "path": "/patterns",
       "parentId": "root"
     },
+    { "id": "atoms", "name": "Atoms", "path": "", "parentId": "patterns-asdf" },
+    {
+      "id": "/pattern/button",
+      "name": "Super Button",
+      "path": "/pattern/button",
+      "parentId": "atoms"
+    },
     {
       "id": "components-asdf",
       "name": "Components",
       "path": "",
       "parentId": "patterns-asdf"
-    },
-    {
-      "id": "/pattern/button",
-      "name": "Button",
-      "path": "/pattern/button",
-      "parentId": "components-asdf"
     },
     {
       "id": "/pattern/card",

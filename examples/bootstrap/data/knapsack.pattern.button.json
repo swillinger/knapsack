@@ -13,7 +13,7 @@
       "alias": "@components/button.twig",
       "path": "../assets/patterns/button/button.twig",
       "statusId": "proposed",
-      "assetSetIds": ["blank", "bootstrap"],
+      "assetSetIds": ["bootstrap"],
       "spec": {
         "props": {
           "$schema": "http://json-schema.org/draft-07/schema",
@@ -78,7 +78,14 @@
           "title": "Primary style",
           "description": "Here is how what to use for the main call to action, try to limit these per page.",
           "data": {
-            "props": { "text": "The Button", "url": "#", "style": "primary" }
+            "props": {
+              "text": "The Button",
+              "url": "#",
+              "style": "primary",
+              "size": "md",
+              "disabled": false,
+              "outlined": false
+            }
           }
         },
         "template-test": {

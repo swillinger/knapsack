@@ -7,6 +7,7 @@ import {
   KnapsackPatternTemplate,
   KnapsackTemplateDemo,
 } from '../../schemas/patterns';
+import { KnapsackCustomPageSlice } from '../../schemas/custom-pages';
 
 type PatternsState = {
   isFetching?: boolean;
@@ -29,6 +30,28 @@ const ADD_TEMPLATE_DATA_DEMO = 'knapsack/patterns/ADD_TEMPLATE_DATA_DEMO';
 const UPDATE_PATTERN = 'knapsack/patterns/UPDATE_PATTERN';
 const UPDATE_PATTERN_INFO = 'knapsack/patterns/UPDATE_PATTERN_INFO';
 const UPDATE_TEMPLATE_INFO = 'knapsack/patterns/UPDATE_TEMPLATE_INFO';
+const UPDATE_PATTERN_SLICES = 'knapsack/patterns/UPDATE_PATTERN_SLICES';
+
+interface UpdatePatternSlicesAction extends Action {
+  type: typeof UPDATE_PATTERN_SLICES;
+  payload: {
+    patternId: string;
+    slices: KnapsackCustomPageSlice[];
+  };
+}
+
+export function updatePatternSlices(
+  patternId: string,
+  slices: KnapsackCustomPageSlice[],
+): UpdatePatternSlicesAction {
+  return {
+    type: UPDATE_PATTERN_SLICES,
+    payload: {
+      patternId,
+      slices,
+    },
+  };
+}
 
 interface UpdateTemplateDemoAction extends Action {
   type: typeof UPDATE_TEMPLATE_DEMO;
@@ -181,6 +204,7 @@ type Actions =
   | UpdateTemplateInfoAction
   | UpdateTemplateDemoAction
   | AddTemplateDataDemoAction
+  | UpdatePatternSlicesAction
   | RemoveTemplateDemoAction;
 
 export default function reducer(
@@ -248,6 +272,13 @@ export default function reducer(
         delete template.demosById[demoId];
         template.demos = template.demos.filter(d => d !== demoId);
         // @todo search all other pattern demos to find any slots that used this demo.
+      });
+
+    case UPDATE_PATTERN_SLICES:
+      return produce(state, draft => {
+        const { patternId, slices } = action.payload;
+        const pattern = draft.patterns[patternId];
+        pattern.slices = slices;
       });
     default:
       return {

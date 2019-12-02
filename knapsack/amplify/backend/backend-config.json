@@ -65,5 +65,38 @@
         }
       ]
     }
+  },
+  "storage": {
+    "KsStorage": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "KsUsers",
+          "attributes": ["UserPoolId"]
+        },
+        {
+          "category": "auth",
+          "resourceName": "userPoolGroups",
+          "attributes": ["adminsGroupRole"]
+        },
+        {
+          "category": "auth",
+          "resourceName": "userPoolGroups",
+          "attributes": ["editorsGroupRole"]
+        },
+        {
+          "category": "auth",
+          "resourceName": "userPoolGroups",
+          "attributes": ["contributorsGroupRole"]
+        },
+        {
+          "category": "auth",
+          "resourceName": "userPoolGroups",
+          "attributes": ["viewersGroupRole"]
+        }
+      ]
+    }
   }
 }

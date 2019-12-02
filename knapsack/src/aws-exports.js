@@ -13,7 +13,9 @@ const awsmobile = {
             "endpoint": "https://hk4scduk10.execute-api.us-west-2.amazonaws.com/local",
             "region": "us-west-2"
         }
-    ]
+    ],
+    "aws_user_files_s3_bucket": "ks-storage-assets162428-local",
+    "aws_user_files_s3_bucket_region": "us-west-2"
 };
 
 

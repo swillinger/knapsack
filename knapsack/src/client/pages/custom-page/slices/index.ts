@@ -4,6 +4,7 @@ import { markdownSlice } from './markdown-slice';
 import { designTokenDemoSlice } from './design-token-slice';
 import { patternTemplateSlice } from './pattern-template-slice';
 import { dosAndDontsSlice } from './dos-and-donts-slice';
+import { betterImageSlice } from './better-image-slice';
 
 export default [
   markdownSlice,
@@ -12,4 +13,5 @@ export default [
   designTokenDemoSlice,
   patternTemplateSlice,
   dosAndDontsSlice,
+  betterImageSlice,
 ];

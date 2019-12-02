@@ -519,71 +519,71 @@ const TemplateView: React.FC<Props> = ({
           </div>
         </nav>
       )}
-      {isCodeBlockShown && (
-        <div style={{ marginBottom: '1rem' }}>
-          <TemplateCodeBlock templateInfo={templateInfo} />
-        </div>
-      )}
-
-      {isReadmeShown && readme && (
-        <MdBlock
-          md={readme}
-          key={`${id}-${templateId}`}
-          isEditable={permissions.includes('write')}
-          title="Documentation (not wired up to save right now)"
-          handleSave={newReadme => {
-            // @todo save it
-            console.log('handleSave on readme called', newReadme);
-          }}
-        />
-      )}
-
-      {isVerbose && hasSchema && (
-        <>
-          <div>
-            <h4>Properties</h4>
-            <p>
-              The following properties make up the data that defines each
-              instance of this component.
-            </p>
-            <Details open>
-              <summary>Props Table</summary>
-              <LoadableSchemaTable schema={schema} />
-            </Details>
+      <details className="ks-details" open>
+        <summary>Code Details</summary>
+        {isCodeBlockShown && (
+          <div style={{ marginBottom: '1rem' }}>
+            <TemplateCodeBlock templateInfo={templateInfo} />
           </div>
-
-          {/* <LoadableVariationDemo */}
-          {/*  schema={schema} */}
-          {/*  templateId={templateId} */}
-          {/*  patternId={id} */}
-          {/*  data={demoDatas[demoDataIndex]} */}
-          {/*  key={`${id}-${templateId}-${demoDataIndex}`} */}
-          {/* /> */}
-        </>
-      )}
-
-      {isVerbose && spec.slots && (
-        <div>
-          <h4>Slots</h4>
-          <ReactTable
-            data={Object.keys(spec.slots).map(slotName => {
-              const { title: slotTitle, description } = spec.slots[slotName];
-              return {
-                slotName,
-                slotTitle,
-                description,
-              };
-            })}
-            columns={[
-              { Header: 'Slot Name', accessor: 'slotName' },
-              { Header: 'Title', accessor: 'slotTitle' },
-              { Header: 'Description', accessor: 'description' },
-            ]}
-            defaultPageSize={Object.keys(spec.slots).length}
-            showPagination={false}
+        )}
+        {isReadmeShown && readme && (
+          <MdBlock
+            md={readme}
+            key={`${id}-${templateId}`}
+            isEditable={permissions.includes('write')}
+            title="Documentation (not wired up to save right now)"
+            handleSave={newReadme => {
+              // @todo save it
+              console.log('handleSave on readme called', newReadme);
+            }}
           />
-        </div>
-      )}
+        )}
+        {isVerbose && hasSchema && (
+          <>
+            <div>
+              <h4>Properties</h4>
+              <p>
+                The following properties make up the data that defines each
+                instance of this component.
+              </p>
+              <Details open>
+                <summary>Props Table</summary>
+                <LoadableSchemaTable schema={schema} />
+              </Details>
+            </div>
+
+            {/* <LoadableVariationDemo */}
+            {/*  schema={schema} */}
+            {/*  templateId={templateId} */}
+            {/*  patternId={id} */}
+            {/*  data={demoDatas[demoDataIndex]} */}
+            {/*  key={`${id}-${templateId}-${demoDataIndex}`} */}
+            {/* /> */}
+          </>
+        )}
+        {isVerbose && spec.slots && (
+          <div>
+            <h4>Slots</h4>
+            <ReactTable
+              data={Object.keys(spec.slots).map(slotName => {
+                const { title: slotTitle, description } = spec.slots[slotName];
+                return {
+                  slotName,
+                  slotTitle,
+                  description,
+                };
+              })}
+              columns={[
+                { Header: 'Slot Name', accessor: 'slotName' },
+                { Header: 'Title', accessor: 'slotTitle' },
+                { Header: 'Description', accessor: 'description' },
+              ]}
+              defaultPageSize={Object.keys(spec.slots).length}
+              showPagination={false}
+            />
+          </div>
+        )}
+      </details>
     </article>
   );
 };

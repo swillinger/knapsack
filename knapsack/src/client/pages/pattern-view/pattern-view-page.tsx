@@ -15,10 +15,15 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React, { useState } from 'react';
-import { KsButton, Select, PatternStatusIcon } from '@knapsack/design-system';
-import { Link, useHistory } from 'react-router-dom';
+import { Select } from '@knapsack/design-system';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { updatePatternInfo, useSelector, useDispatch } from '../../store';
+import {
+  updatePatternInfo,
+  useSelector,
+  useDispatch,
+  updatePatternSlices,
+} from '../../store';
 import ErrorCatcher from '../../utils/error-catcher';
 // import DosAndDonts from '../../components/dos-and-donts';
 import { BASE_PATHS } from '../../../lib/constants';
@@ -207,9 +212,11 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
           <hr />
 
           <CustomSliceCollection
-            userCanSave
-            handleSave={() => {}}
-            initialSlices={[]}
+            userCanSave={canEdit}
+            handleSave={slices => {
+              dispatch(updatePatternSlices(patternId, slices));
+            }}
+            initialSlices={pattern.slices}
           />
 
           {/* {dosAndDonts.map(item => ( */}

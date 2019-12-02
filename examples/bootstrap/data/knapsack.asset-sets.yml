@@ -8,10 +8,6 @@ allAssetSets:
     assets:
       - src: ../public/css/bootstrap.css
       - src: ../public/css/knapsack-overrides.css
-  blank:
-    id: blank
-    title: Blank
-    assets: []
   material:
     id: material
     title: Material

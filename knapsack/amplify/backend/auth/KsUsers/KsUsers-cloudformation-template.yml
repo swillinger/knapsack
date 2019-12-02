@@ -131,7 +131,15 @@ Resources:
         !If [
           ShouldNotCreateEnvResources,
           'KsUser5fca1828_sns-role',
-          !Join ['', ['KsUser5fca1828_sns-role', '-', !Ref env]],
+          !Join [
+            '',
+            [
+              'sns',
+              !Select [3, !Split ['-', !Ref 'AWS::StackName']],
+              '-',
+              !Ref env,
+            ],
+          ],
         ]
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
@@ -266,7 +274,15 @@ Resources:
         !If [
           ShouldNotCreateEnvResources,
           !Ref userpoolClientLambdaRole,
-          !Join ['', [!Ref userpoolClientLambdaRole, '-', !Ref env]],
+          !Join [
+            '',
+            [
+              'upClientLambdaRole',
+              !Select [3, !Split ['-', !Ref 'AWS::StackName']],
+              '-',
+              !Ref env,
+            ],
+          ],
         ]
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
@@ -323,11 +339,7 @@ Resources:
     Properties:
       PolicyName: KsUser5fca1828_userpoolclient_lambda_iam_policy
       Roles:
-        - !If [
-            ShouldNotCreateEnvResources,
-            !Ref userpoolClientLambdaRole,
-            !Join ['', [!Ref userpoolClientLambdaRole, '-', !Ref env]],
-          ]
+        - !Ref UserPoolClientRole
       PolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -344,11 +356,7 @@ Resources:
     Properties:
       PolicyName: KsUser5fca1828_userpoolclient_lambda_log_policy
       Roles:
-        - !If [
-            ShouldNotCreateEnvResources,
-            !Ref userpoolClientLambdaRole,
-            !Join ['', [!Ref userpoolClientLambdaRole, '-', !Ref env]],
-          ]
+        - !Ref UserPoolClientRole
       PolicyDocument:
         Version: 2012-10-17
         Statement:

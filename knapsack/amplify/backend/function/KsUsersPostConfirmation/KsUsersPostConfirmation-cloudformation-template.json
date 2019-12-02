@@ -99,7 +99,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-knapsack-local-162428-deployment",
-          "S3Key": "amplify-builds/KsUsersPostConfirmation-53444c2b697056667030-build.zip"
+          "S3Key": "amplify-builds/KsUsersPostConfirmation-65445677424543784f50-build.zip"
         }
       }
     },

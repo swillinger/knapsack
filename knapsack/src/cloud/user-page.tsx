@@ -21,7 +21,6 @@ import { SignUp, Authenticator } from 'aws-amplify-react';
 import awsconfig from '../aws-exports';
 import { saveClientToken } from '../lib/user';
 import { useDispatch, useSelector, updateUser } from '../client/store';
-import './user-page.scss';
 
 export const UserPage: React.FC = () => {
   const user = useSelector(s => s.userState.user);
@@ -35,7 +34,7 @@ export const UserPage: React.FC = () => {
 
   return (
     <section className="ks-user-page">
-      <div className="ks-user-page__amplify-components">
+      <div className="ks-user-page__amplify-components ks-u-amplify-wrapper">
         <Authenticator
           amplifyConfig={awsconfig}
           hide={[SignUp]}

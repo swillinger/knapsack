@@ -40,7 +40,7 @@ export const TemplateHeader: React.FC<Props> = ({
   return (
     <header className="ks-template-header ks-template-view__flex-wrapper">
       {isTitleShown && <h3 className="ks-template-header__title">{title}</h3>}
-      {status && canEdit ? (
+      {status && canEdit && (
         <Select
           label="Status"
           value={status.id}
@@ -52,7 +52,8 @@ export const TemplateHeader: React.FC<Props> = ({
             };
           })}
         />
-      ) : (
+      )}
+      {status && !canEdit && (
         <h5 className="ks-eyebrow" style={{ marginBottom: '0' }}>
           Status: {status.title}
           <PatternStatusIcon color={status.color} title={status.title} />

@@ -105,6 +105,7 @@ export class Patterns
     patterns: { [id: string]: KnapsackPattern };
     templateStatuses: KnapsackTemplateStatus[];
   }> {
+    this.updatePatternsData();
     const templateStatuses = await this.getTemplateStatuses();
     return {
       templateStatuses,

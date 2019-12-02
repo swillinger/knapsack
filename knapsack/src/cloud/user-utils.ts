@@ -48,7 +48,7 @@ export async function getUserInfo(): Promise<{
     //   ksGithubRepos,
     // });
     groups = cognitoGroups;
-    ksRepoAccess = ksGithubRepos.split(',');
+    ksRepoAccess = ksGithubRepos?.split(',');
   }
   const role =
     groups.length === 0

@@ -3,7 +3,11 @@
   "title": "Button",
   "description": "Use Bootstrap’s custom button styles for actions in forms, dialogs, and more with support for multiple sizes, states, and more.",
   "demoSize": "m",
-  "demoWidths": [{"width": 150}],
+  "demoWidths": [
+    {
+      "width": 150
+    }
+  ],
   "showAllTemplates": false,
   "templates": [
     {
@@ -13,7 +17,7 @@
       "alias": "@components/button.twig",
       "path": "../assets/patterns/button/button.twig",
       "statusId": "ready",
-      "assetSetIds": ["bootstrap"],
+      "assetSetIds": ["bootstrap", "blank"],
       "spec": {
         "props": {
           "$schema": "http://json-schema.org/draft-07/schema",
@@ -112,7 +116,7 @@
           }
         }
       },
-      "demos": ["primary", "secondary", "template-test"]
+      "demos": ["primary", "secondary"]
     },
     {
       "title": "Material - Twig",
@@ -183,5 +187,6 @@
       "assetSetIds": ["bootstrap"],
       "demos": []
     }
-  ]
+  ],
+  "slices": []
 }

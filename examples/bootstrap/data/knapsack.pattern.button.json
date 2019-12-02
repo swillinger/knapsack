@@ -13,7 +13,7 @@
       "alias": "@components/button.twig",
       "path": "../assets/patterns/button/button.twig",
       "statusId": "proposed",
-      "assetSetIds": ["bootstrap", "blank"],
+      "assetSetIds": ["blank", "bootstrap"],
       "spec": {
         "props": {
           "$schema": "http://json-schema.org/draft-07/schema",

@@ -1,6 +1,6 @@
 {
   "name": "@knapsack/example-multi-templates",
-  "version": "1.8.1",
+  "version": "1.9.0",
   "description": "",
   "private": true,
   "main": "index.js",
@@ -21,7 +21,7 @@
     "@basalt/knapsack": "^1.8.1",
     "@knapsack/renderer-html": "^1.8.0",
     "@knapsack/renderer-react": "^1.8.0",
-    "@knapsack/renderer-twig": "^1.8.0",
+    "@knapsack/renderer-twig": "^1.9.0",
     "babel-loader": "^8.0.5",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",

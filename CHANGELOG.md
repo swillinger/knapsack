@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.0](https://github.com/basaltinc/knapsack/compare/v1.8.1...v1.9.0) (2019-12-03)
+
+
+### Features
+
+* upgrade Twig renderer to use new filter, map, reduce features ([77fa7c7](https://github.com/basaltinc/knapsack/commit/77fa7c7e297ffaaa11acd74cb412780a5c49ceab))
+
+
+
+
+
 ## [1.8.1](https://github.com/basaltinc/knapsack/compare/v1.8.0...v1.8.1) (2019-11-09)
 
 

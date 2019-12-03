@@ -1009,10 +1009,10 @@
   resolved "https://registry.yarnpkg.com/@basalt/demo-data/-/demo-data-0.5.1.tgz#97f1f11364864e890486919308fac42adf9a487e"
   integrity sha512-xMByiHFgi5IdxDULF8D3wFRojVhSJGn1l14JIPxoNlD0JkyrAu/vWxP5Zr2Pcel8JABL/ErZ2rWrMIB5lkhcIQ==
 
-"@basalt/twig-renderer@^0.12.2":
-  version "0.12.2"
-  resolved "https://registry.yarnpkg.com/@basalt/twig-renderer/-/twig-renderer-0.12.2.tgz#6ae38136eedacbc6d7d66cb6675d780ca9652e73"
-  integrity sha512-/XIWDwFooLzNAih/P05sbYgwBDymKmDZdMhc32kNc/OST/ZQ2JdZYhGEsEqn4mvkJNX/Tz72PxtTrKXzqtqVuA==
+"@basalt/twig-renderer@^0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@basalt/twig-renderer/-/twig-renderer-0.13.0.tgz#24a084d7bb046c9159f3795ba8f7840cd8ddcb88"
+  integrity sha512-mEKiwHPTyZvyIcwM6GtA6iG7GBXekEiJ9PnvsfgjGkIDRv/80GiHlMeZmvnAmVJa25db7HbBuh0H6P4Zmmf32g==
   dependencies:
     "@babel/core" "^7.2.0"
     "@babel/preset-env" "^7.2.0"
@@ -20826,7 +20826,7 @@ thenify-all@^1.0.0:
   dependencies:
     any-promise "^1.0.0"
 
-theo@^8.0.0, theo@^8.1.1:
+theo@^8.0.0:
   version "8.1.4"
   resolved "https://registry.yarnpkg.com/theo/-/theo-8.1.4.tgz#708237bb14ca4f7f1b231ddd777de377519e83dd"
   integrity sha512-WftCS/SqYdwPCQI1otdxDsCK50+y1ZuwKZHG8vZwbMT3ijfF2JkJ6/eDJtnKWo9wTDY5xJefChK/wHGEgGX/AQ==

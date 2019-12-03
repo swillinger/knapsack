@@ -141,6 +141,9 @@ jobs:
           command: |
             npm i -g now
             now deploy --env EXAMPLE=bootstrap --local-config=./examples/bootstrap/now.json --team=basalt --token $ZEIT_TOKEN
+            if [ "$CIRCLE_BRANCH" = "next" ]; then
+              now alias --local-config=./examples/bootstrap/now.json --scope=basalt
+            fi
           no_output_timeout: 30m
 
   test--publish:

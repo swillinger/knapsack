@@ -127,13 +127,7 @@ ${this.getFoot({ jsUrls, inlineJs, inlineCss, inlineFoot })}
     knapsackEvents.emit(EVENTS.PATTERN_TEMPLATE_REMOVED, { path });
   }
 
-  watch({
-    config,
-    templatePaths,
-  }: {
-    config: KnapsackConfig;
-    templatePaths: string[];
-  }): Promise<void> {
+  watch({ templatePaths }: { templatePaths: string[] }): Promise<void> {
     return new Promise((resolve, reject) => {
       const watcher = chokidar.watch(templatePaths, {
         ignoreInitial: true,

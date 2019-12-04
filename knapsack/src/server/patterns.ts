@@ -155,13 +155,10 @@ export class Patterns
     this.byId = byId;
     this.allPatterns = Object.values(byId);
     this.getAllTemplatePaths().forEach(path => {
-      const absPath = join(this.dataDir, path);
       fileExistsOrExit(
-        absPath,
+        path,
         `This file should exist but it doesn't:
-File path in config: ${path}
-Looking relative to ${this.dataDir}
-Resolved absolute path: ${absPath}
+Resolved absolute path: ${path}
       `,
       );
     });
@@ -180,13 +177,29 @@ Resolved absolute path: ${absPath}
    * Get all the pattern's template file paths
    * @return - paths to all template files
    */
-  getAllTemplatePaths({ relativeTo }: { relativeTo?: string } = {}): string[] {
+  getAllTemplatePaths({
+    templateLanguageId = '',
+  }: {
+    /**
+     * If provided, only templates for these languages will be provided.
+     * @see {import('./renderer-base').KnapsackRendererBase}
+     */
+    templateLanguageId?: string;
+  } = {}): string[] {
     const allTemplatePaths = [];
     this.allPatterns.forEach(pattern => {
       pattern.templates.forEach(template => {
-        allTemplatePaths.push(
-          relativeTo ? join(relativeTo, template.path) : template.path,
-        );
+        if (
+          templateLanguageId === '' ||
+          template.templateLanguageId === templateLanguageId
+        ) {
+          allTemplatePaths.push(
+            this.getTemplateAbsolutePath({
+              patternId: pattern.id,
+              templateId: template.id,
+            }),
+          );
+        }
       });
     });
     return allTemplatePaths;

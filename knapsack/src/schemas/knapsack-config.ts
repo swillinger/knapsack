@@ -38,14 +38,8 @@ export interface KnapsackTemplateRendererBase {
    * Used for syntax highlighting
    */
   language?: string;
-  build?: (opt: {
-    config: KnapsackConfig;
-    templatePaths: string[];
-  }) => Promise<void>;
-  watch?: (opt: {
-    config: KnapsackConfig;
-    templatePaths: string[];
-  }) => Promise<void>;
+  build?: (opt: { templatePaths: string[] }) => Promise<void>;
+  watch?: (opt: { templatePaths: string[] }) => Promise<void>;
   init?: (opt: { config: KnapsackConfig; patterns: Patterns }) => void;
   wrapHtml: (
     opt: {

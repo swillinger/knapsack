@@ -53,8 +53,6 @@ const configPath = join(process.cwd(), 'knapsack.config.js');
 
 const { patterns, config, assetSets } = bootstrapFromConfigFile(configPath);
 
-const allTemplatePaths = patterns.getAllTemplatePaths();
-
 program.command('serve').action(async () => {
   log.info('Serving...');
   const meta = await getMeta(config);
@@ -62,7 +60,7 @@ program.command('serve').action(async () => {
 });
 
 program.command('build').action(async () => {
-  await build(config, allTemplatePaths);
+  await build({ config, patterns });
 
   // @todo restore writing meta.json with useful demo url info
   // // writing meta
@@ -105,14 +103,13 @@ program.command('start').action(async () => {
   return Promise.all([
     // patterns.watch(), // @todo restore
     assetSets.watch(),
-    // ...templateRendererWatches.map(t =>
-    //   t.watch({
-    //     config,
-    //     templatePaths: allTemplatePaths.filter(templatePath =>
-    //       t.test(templatePath),
-    //     ),
-    //   }),
-    // ),
+    ...templateRendererWatches.map(t =>
+      t.watch({
+        templatePaths: patterns.getAllTemplatePaths({
+          templateLanguageId: t.id,
+        }),
+      }),
+    ),
     serve({ meta }),
   ])
     .then(() => log.info('Started!', null, 'start'))
@@ -123,7 +120,7 @@ program.command('start').action(async () => {
 });
 
 program.command('test').action(async () => {
-  await build(config, allTemplatePaths);
+  await build({ patterns, config });
   await testPatternRenders(patterns.allPatterns, patterns);
   knapsackEvents.emit(EVENTS.SHUTDOWN);
 });

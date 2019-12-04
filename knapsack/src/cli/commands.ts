@@ -2,14 +2,21 @@ import { flattenArray, flattenNestedArray } from '../lib/utils';
 import * as log from './log';
 import { Patterns } from '../schemas/main-types';
 
-export async function build(config, allTemplatePaths) {
+export async function build({
+  config,
+  patterns,
+}: {
+  config: KnapsackConfig;
+  patterns: Patterns;
+}): Promise<void> {
   log.info('Building...');
   await Promise.all(
     config.templateRenderers.map(async templateRenderer => {
       if (!templateRenderer.build) return;
       await templateRenderer.build({
-        config,
-        templatePaths: allTemplatePaths.filter(t => templateRenderer.test(t)),
+        templatePaths: patterns.getAllTemplatePaths({
+          templateLanguageId: templateRenderer.id,
+        }),
       });
       log.info('Built', null, `templateRenderer:${templateRenderer.id}`);
     }),

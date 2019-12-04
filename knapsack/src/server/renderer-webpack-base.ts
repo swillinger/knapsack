@@ -199,8 +199,8 @@ export class KnapsackRendererWebpackBase extends KnapsackRendererBase
     });
   }
 
-  async watch({ config, templatePaths }) {
-    await super.watch({ config, templatePaths });
+  async watch({ templatePaths }) {
+    await super.watch({ templatePaths });
     this.restartWebpackWatch = () => {
       log.verbose('Restarting Webpack Watch', null, this.logPrefix);
       this.webpackWatcher.close(() => {

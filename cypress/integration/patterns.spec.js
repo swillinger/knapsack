@@ -10,8 +10,9 @@ describe('Patterns', () => {
     cy.contains('Edit Form');
     cy.get('.ks-rjsf input[label="Body Title"]')
       .clear()
-      .type('Robots are awesome')
-      .type(' ');
+      .type('Robots are awesome', {
+        delay: 100,
+      });
 
     cy.wait(3000); // eslint-disable-line
     cy.percySnapshot('Pattern: Card', { widths: [400, 1200] });

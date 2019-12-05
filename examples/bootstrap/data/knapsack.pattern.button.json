@@ -12,7 +12,7 @@
       "templateLanguageId": "twig",
       "alias": "@components/button.twig",
       "path": "../assets/patterns/button/button.twig",
-      "statusId": "proposed",
+      "statusId": "needs-design",
       "assetSetIds": ["bootstrap"],
       "spec": {
         "props": {

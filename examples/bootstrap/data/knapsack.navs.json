@@ -21,22 +21,34 @@
       "parentId": "patterns-asdf"
     },
     {
-      "id": "/pattern/button",
-      "name": "Button",
-      "path": "/pattern/button",
-      "parentId": "components-asdf"
-    },
-    {
       "id": "/pattern/card",
       "name": "Card",
       "path": "/pattern/card/",
       "parentId": "components-asdf"
     },
     {
+      "id": "/pattern/button",
+      "name": "Button",
+      "path": "/pattern/button",
+      "parentId": "/pattern/card"
+    },
+    {
+      "id": "/pages/spacing",
+      "name": "Spacing",
+      "path": "/pages/spacing",
+      "parentId": "/pattern/button"
+    },
+    {
+      "id": "/pages/intro",
+      "name": "Intro",
+      "path": "/pages/intro",
+      "parentId": "/pages/spacing"
+    },
+    {
       "id": "design-tokens",
       "name": "Design Tokens",
       "path": "",
-      "parentId": "root"
+      "parentId": "/pages/intro"
     },
     {
       "id": "/pages/colors",
@@ -45,41 +57,30 @@
       "parentId": "design-tokens"
     },
     {
-      "id": "/pages/breakpoints",
-      "name": "Breakpoints",
-      "path": "/pages/breakpoints",
-      "parentId": "design-tokens"
-    },
-    {
-      "id": "/pages/spacing",
-      "name": "Spacing",
-      "path": "/pages/spacing",
-      "parentId": "design-tokens"
-    },
-    {
       "id": "/pages/animation",
       "name": "Animation",
       "path": "/pages/animation",
       "parentId": "design-tokens"
     },
-    {
-      "id": "/pages/shadows",
-      "name": "Shadows",
-      "path": "/pages/shadows",
-      "parentId": "design-tokens"
-    },
     { "id": "docs", "name": "Docs", "path": "", "parentId": "root" },
-    {
-      "id": "/pages/intro",
-      "name": "Intro",
-      "path": "/pages/intro",
-      "parentId": "docs"
-    },
     {
       "id": "/pages/accessibility",
       "name": "Accessibility",
       "path": "/pages/accessibility",
       "parentId": "docs"
+    },
+    { "id": "my-folder", "name": "My Folder", "path": "", "parentId": "root" },
+    {
+      "id": "/pages/breakpoints",
+      "name": "Breakpoints",
+      "path": "/pages/breakpoints",
+      "parentId": "my-folder"
+    },
+    {
+      "id": "/pages/shadows",
+      "name": "Shadows",
+      "path": "/pages/shadows",
+      "parentId": "my-folder"
     }
   ]
 }

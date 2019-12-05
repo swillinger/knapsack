@@ -16,10 +16,25 @@
  */
 import global from 'global';
 
-class PluginStore {
-  // @todo types
+export interface KsPlugin {
+  id: string;
+  title?: string;
+  description?: string;
+  addPages?: () => {
+    path: string;
+    navTitle: string;
+    title?: string;
+    section?: string;
+    includeInPrimaryNav?: boolean;
+    render: () => import('react').ReactNode;
+  }[];
+}
 
-  plugins: any;
+/**
+ * Plugins are internal alpha only for now, continued work on them with probably frequent API changes will happen until we feel confident in external use in the future.
+ */
+class PluginStore {
+  plugins: Record<string, KsPlugin>;
 
   homePage: any;
 
@@ -30,13 +45,18 @@ class PluginStore {
 
   /**
    * Register Knapsack plugin
-   * @param {string} name - machine name of plugin; no spaces, lowercase
-   * @param {Function} plugin - Plugin function
-   * @return {void} - Adds plugin to internal set
    */
-  register(name, plugin) {
-    // console.log('plugin registered', { name });
-    this.plugins[name] = plugin;
+  register(plugin?: KsPlugin): boolean {
+    if (plugin) {
+      const isInitialRegistration = !(plugin.id in this.plugins);
+      this.plugins[plugin.id] = plugin;
+      // console.log(`plugin registered`, plugin);
+      return isInitialRegistration;
+    }
+  }
+
+  getPlugins(): KsPlugin[] {
+    return Object.values(this.plugins);
   }
 
   /**
@@ -48,11 +68,11 @@ class PluginStore {
     this.homePage = { render };
   }
 
-  loadPlugins(api) {
-    Object.keys(this.plugins)
-      .map(name => this.plugins[name])
-      .forEach(plugin => plugin(api));
-  }
+  // loadPlugins(api) {
+  //   Object.keys(this.plugins)
+  //     .map(name => this.plugins[name])
+  //     .forEach(plugin => plugin(api));
+  // }
 }
 
 // Enforce plugins store to be a singleton
@@ -64,5 +84,4 @@ function getPluginStore() {
   return global[KEY];
 }
 
-/** @type {PluginStore} */
-export const plugins = getPluginStore();
+export const plugins: PluginStore = getPluginStore();

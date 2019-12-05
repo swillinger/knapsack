@@ -17,21 +17,10 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
-import { AppState, createStore } from './store';
-import { App } from './App';
+import { plugins } from '@knapsack/core';
 import { getStateFromLocalStorage } from './store/utils';
-import { apiUrlBase } from '../lib/constants';
-
-function getInitialState(): Promise<AppState> {
-  return window
-    .fetch(`${apiUrlBase}/data-store`)
-    .then(res => res.json())
-    .then(initialState => {
-      console.log({ initialState });
-      return initialState;
-    })
-    .catch(console.log.bind(console));
-}
+import { getInitialState } from './data';
+// import { createCloudClientPlugin } from '../cloud/client-plugin';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const mountEl = document.createElement('div');
@@ -43,7 +32,21 @@ document.addEventListener('DOMContentLoaded', async () => {
   const initialState =
     cachedState === false ? await getInitialState() : cachedState;
 
+  const createStore = await import(
+    /* webpackChunkName: "store" */ './store'
+  ).then(mod => mod.createStore);
+
   const store = createStore(initialState);
+
+  const createCloudClientPlugin = await import(
+    /* webpackChunkName: "cloud-client-plugin" */ '../cloud/client-plugin'
+  ).then(mod => mod.createCloudClientPlugin);
+
+  plugins.register(createCloudClientPlugin({ store }));
+
+  const App = await import(/* webpackChunkName: "app" */ './App').then(
+    mod => mod.App,
+  );
 
   ReactDom.render(
     <Provider store={store}>

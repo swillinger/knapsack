@@ -11,7 +11,7 @@ export function getStateFromLocalStorage(): AppState | false {
 }
 
 export const localStorageMiddleware = store => next => action => {
-  console.log('saving to local storage...');
+  // console.log('saving to local storage...');
   saveStateToLocalStorage(store.getState());
   return next(action);
 };

@@ -14,47 +14,34 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-import fs, { readJSONSync, readFile } from 'fs-extra';
-import { join, relative, resolve, parse } from 'path';
+import { readJSONSync } from 'fs-extra';
+import { join } from 'path';
 import globby from 'globby';
-import {
-  validateSchemaAndAssignDefaults,
-  validateUniqueIdsInArray,
-} from '@knapsack/schema-utils';
-import chokidar from 'chokidar';
 import { version as iframeResizerVersion } from 'iframe-resizer/package.json';
-import {
-  createDemoUrl,
-  writeJson,
-  fileExists,
-  fileExistsOrExit,
-  isRemoteUrl,
-  readYamlSync,
-} from './server-utils';
-import { knapsackEvents, EVENTS, emitPatternsDataReady } from './events';
+import { fileExists, fileExistsOrExit, formatCode } from './server-utils';
+import { emitPatternsDataReady } from './events';
 import { FileDb2 } from './dbs/file-db';
 import * as log from '../cli/log';
-import { FILE_NAMES } from '../lib/constants';
 import {
   KnapsackPattern,
-  KnapsackPatternTemplate,
-  KnapsackPatternTemplateCode,
   KnapsackTemplateStatus,
   KnapsackPatternsConfig,
-  KnapsackTemplateData,
   KnapsackTemplateDemo,
 } from '../schemas/patterns';
-import { GenericResponse } from '../schemas/misc';
 import {
   KnapsackTemplateRenderer,
-  KnapsackTemplateRenderResults,
+  KsRenderResults,
 } from '../schemas/knapsack-config';
-import {
-  KnapsackAssetSet,
-  KnapsackAssetSetConfig,
-} from '../schemas/asset-sets';
+import { KnapsackDb, KnapsackFile } from '../schemas/misc';
 
-export class Patterns {
+export class Patterns
+  implements
+    KnapsackDb<{
+      patterns: {
+        [id: string]: KnapsackPattern;
+      };
+      templateStatuses: KnapsackTemplateStatus[];
+    }> {
   configDb: FileDb2<KnapsackPatternsConfig>;
 
   dataDir: string;
@@ -112,6 +99,43 @@ export class Patterns {
       this.templateRenderers[templateRenderer.id] = templateRenderer;
     });
     this.updatePatternsData();
+  }
+
+  async getData(): Promise<{
+    patterns: { [id: string]: KnapsackPattern };
+    templateStatuses: KnapsackTemplateStatus[];
+  }> {
+    this.updatePatternsData();
+    const templateStatuses = await this.getTemplateStatuses();
+    return {
+      templateStatuses,
+      patterns: this.byId,
+    };
+  }
+
+  async savePrep(data: {
+    patterns: { [id: string]: KnapsackPattern };
+    templateStatuses?: KnapsackTemplateStatus[];
+  }): Promise<KnapsackFile[]> {
+    const allFiles: KnapsackFile[] = [];
+
+    await Promise.all(
+      Object.keys(data.patterns).map(async id => {
+        const pattern = data.patterns[id];
+        const db = new FileDb2<KnapsackPattern>({
+          filePath: join(this.dataDir, `knapsack.pattern.${id}.json`),
+          type: 'json',
+          watch: false,
+          writeFileIfAbsent: false,
+        });
+
+        const files = await db.savePrep(pattern);
+        files.forEach(file => allFiles.push(file));
+      }),
+    );
+    // @todo handle patterns that were deleted / renamed
+
+    return allFiles;
   }
 
   updatePatternsData() {
@@ -217,7 +241,6 @@ Resolved absolute path: ${absPath}
   async render({
     patternId,
     templateId = '',
-    wrapHtml = true,
     // demoDataId,
     demo,
     isInIframe = false,
@@ -226,10 +249,6 @@ Resolved absolute path: ${absPath}
   }: {
     patternId: string;
     templateId: string;
-    /**
-     * Should it wrap HTML results with `<head>` and include assets?
-     */
-    wrapHtml?: boolean;
     /**
      * Demo data to pass to template
      */
@@ -244,13 +263,14 @@ Resolved absolute path: ${absPath}
     isInIframe?: boolean;
     websocketsPort?: number;
     assetSetId?: string;
-  }): Promise<KnapsackTemplateRenderResults> {
+  }): Promise<KsRenderResults> {
     const pattern = this.getPattern(patternId);
     if (!pattern) {
       const message = `Pattern not found: '${patternId}'`;
       return {
         ok: false,
         html: `<p>${message}</p>`,
+        wrappedHtml: `<p>${message}</p>`,
         message,
       };
     }
@@ -277,25 +297,29 @@ Resolved absolute path: ${absPath}
       patternManifest: this,
     });
 
-    if (!renderedTemplate.ok) return renderedTemplate;
+    if (!renderedTemplate.ok) {
+      return {
+        ...renderedTemplate,
+        wrappedHtml: renderedTemplate.html, // many times error messages are in the html for users
+      };
+    }
 
-    if (wrapHtml) {
-      const assetSet = assetSetId
-        ? this.assetSets.getAssetSet(assetSetId)
-        : this.assetSets.getGlobalAssetSets()[0];
+    const assetSet = assetSetId
+      ? this.assetSets.getAssetSet(assetSetId)
+      : this.assetSets.getGlobalAssetSets()[0];
 
-      const {
-        assets,
-        inlineJs = '',
-        inlineCss = '',
-        inlineFoot = '',
-        inlineHead = '',
-      } = assetSet;
+    const {
+      assets,
+      inlineJs = '',
+      inlineCss = '',
+      inlineFoot = '',
+      inlineHead = '',
+    } = assetSet;
 
-      const inlineJSs = [inlineJs];
+    const inlineJSs = [inlineJs];
 
-      if (isInIframe) {
-        inlineJSs.push(`
+    if (isInIframe) {
+      inlineJSs.push(`
 /**
   * Prevents the natural click behavior of any links within the iframe.
   * Otherwise the iframe reloads with the current page or follows the url provided.
@@ -305,10 +329,10 @@ links.forEach(function(link) {
   link.addEventListener('click', function(e){e.preventDefault();});
 });
         `);
-      }
+    }
 
-      if (!isInIframe && websocketsPort) {
-        inlineJSs.push(`
+    if (!isInIframe && websocketsPort) {
+      inlineJSs.push(`
 if ('WebSocket' in window && location.hostname === 'localhost') {
   var socket = new window.WebSocket('ws://localhost:8000');
   socket.addEventListener('message', function() {
@@ -316,32 +340,38 @@ if ('WebSocket' in window && location.hostname === 'localhost') {
   });
 }
           `);
-      }
-      const wrappedHtml = renderer.wrapHtml({
-        html: renderedTemplate.html,
-        headJsUrls: [
-          isInIframe
-            ? `https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/${iframeResizerVersion}/iframeResizer.contentWindow.min.js`
-            : '',
-        ].filter(x => x),
-        cssUrls: assets
-          .filter(asset => asset.type === 'css')
-          // .map(asset => asset.publicPath),
-          .map(asset => this.assetSets.getAssetPublicPath(asset.src)),
-        jsUrls: assets
-          .filter(asset => asset.type === 'js')
-          // .map(asset => asset.publicPath),
-          .map(asset => this.assetSets.getAssetPublicPath(asset.src)),
-        inlineJs: inlineJSs.join('\n'),
-        inlineCss,
-        inlineHead,
-        inlineFoot,
-      });
-      return {
-        ...renderedTemplate,
-        html: wrappedHtml,
-      };
     }
-    return renderedTemplate;
+    const wrappedHtml = renderer.wrapHtml({
+      html: renderedTemplate.html,
+      headJsUrls: [
+        isInIframe
+          ? `https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/${iframeResizerVersion}/iframeResizer.contentWindow.min.js`
+          : '',
+      ].filter(x => x),
+      cssUrls: assets
+        .filter(asset => asset.type === 'css')
+        // .map(asset => asset.publicPath),
+        .map(asset => this.assetSets.getAssetPublicPath(asset.src)),
+      jsUrls: assets
+        .filter(asset => asset.type === 'js')
+        // .map(asset => asset.publicPath),
+        .map(asset => this.assetSets.getAssetPublicPath(asset.src)),
+      inlineJs: inlineJSs.join('\n'),
+      inlineCss,
+      inlineHead,
+      inlineFoot,
+    });
+    return {
+      ...renderedTemplate,
+      usage: renderer.formatCode(renderedTemplate.usage),
+      html: formatCode({
+        code: renderedTemplate.html,
+        language: 'html',
+      }),
+      wrappedHtml: formatCode({
+        code: wrappedHtml,
+        language: 'html',
+      }),
+    };
   }
 }

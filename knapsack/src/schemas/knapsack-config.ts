@@ -1,17 +1,23 @@
-import { KnapsackDesignToken } from '@knapsack/core';
+import { KnapsackDesignToken } from '@knapsack/core/dist/types';
+import { KsCloudConfig } from '@knapsack/core/dist/cloud';
 import {
   KnapsackPattern,
   KnapsackPatternTemplate,
-  KnapsackTemplateData,
   KnapsackTemplateDemo,
 } from './patterns';
 
 type Patterns = import('../server/patterns').Patterns;
 
-export interface KnapsackTemplateRenderResults {
+export interface KnapsackTemplateRendererResults {
   ok: boolean;
   html: string;
+  usage?: string;
+  templateLanguage?: string;
   message?: string;
+}
+
+export interface KsRenderResults extends KnapsackTemplateRendererResults {
+  wrappedHtml: string;
 }
 
 export interface GetHeadParams {
@@ -52,6 +58,7 @@ export interface KnapsackTemplateRendererBase {
   onChange: (opt: { path: string }) => void;
   onAdd: (opt: { path: string }) => void;
   onRemove: (opt: { path: string }) => void;
+  formatCode: (code: string) => string;
 }
 
 export interface KnapsackRenderParams {
@@ -64,7 +71,7 @@ export interface KnapsackRenderParams {
 
 export type KnapsackRenderFunc = (
   opt: KnapsackRenderParams,
-) => Promise<KnapsackTemplateRenderResults>;
+) => Promise<KnapsackTemplateRendererResults>;
 
 export interface KnapsackTemplateRenderer extends KnapsackTemplateRendererBase {
   render: KnapsackRenderFunc;
@@ -74,11 +81,11 @@ export interface KnapsackTemplateRenderer extends KnapsackTemplateRendererBase {
   //   demo?: KnapsackTemplateDemo;
   //   data?: KnapsackTemplateData;
   //   patternManifest: Patterns;
-  // }) => Promise<KnapsackTemplateRenderResults>;
+  // }) => Promise<KnapsackTemplateRendererResults>;
   // renderString?: (
   //   template: string,
   //   data?: KnapsackTemplateData,
-  // ) => Promise<KnapsackTemplateRenderResults>;
+  // ) => Promise<KnapsackTemplateRendererResults>;
   getUsage: (opt: KnapsackRenderParams) => Promise<string>;
   // getUsage?: (opt: {
   //   patternId: string;
@@ -106,4 +113,5 @@ export interface KnapsackConfig {
   };
   changelog?: string;
   version?: string;
+  cloud?: KsCloudConfig;
 }

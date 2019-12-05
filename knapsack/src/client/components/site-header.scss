@@ -27,53 +27,28 @@
     text-decoration: none;
   }
 
-  ul {
+  &__nav {
     list-style: none;
     display: flex;
     margin: 0 var(--space-xl);
-    padding: 0;
+    padding: var(--space-xxs) 0;
+    align-items: center;
   }
-  li {
+
+  &__nav-item {
     position: relative;
     margin: 0;
     &:not(:last-child) {
       padding-right: var(--space-xl);
     }
   }
-  a {
+
+  &__nav-link {
     display: inline-block;
-    padding: var(--space-xxs) 0;
     border-bottom: var(--space-xxxs) solid transparent;
     border-top: var(--space-xxxs) solid transparent;
     &[aria-current='page'] {
       border-bottom-color: var(--c-text-inverse);
-    }
-  }
-
-
-  // @TODO: Refactor
-  &__mobile-nav {
-    display: block;
-    ul {
-      background-color: var(--c-bg-dark);
-      z-index: 103;
-      display: block;
-      text-align: right;
-      position: absolute;
-      right: 0;
-      top: 50px;
-      padding: 2rem 1rem 2rem 1rem;
-      width: 100%;
-    }
-    li {
-      padding: 1rem 1rem 1rem 8rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.5);
-      max-width: 400px;
-      margin-left: auto;
-      padding-right: 35px;
-    }
-    a {
-      position: relative;
     }
   }
 

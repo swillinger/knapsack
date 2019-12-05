@@ -17,7 +17,7 @@ import {
   ColorSwatches,
   BreakpointsDemo,
 } from '@knapsack/design-system';
-import { KnapsackDesignToken } from '@knapsack/core';
+import { KnapsackDesignToken } from '@knapsack/core/dist/types';
 import { getDesignTokens } from '../../../data';
 import { containsString } from '../../../utils/string-helpers';
 import { Slice, SliceRenderParams } from './types';

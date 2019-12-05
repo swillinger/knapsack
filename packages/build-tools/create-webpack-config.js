@@ -24,6 +24,7 @@ const isProd = process.env.NODE_ENV === 'production';
  * @param {webpack.Plugin[]} [opt.extraPlugins=[]] - Extra WebPack plugins to include
  * @param {string} opt.tsConfigFile Path to `tsconfig.json` for TypeScript config
  * @param {boolean} opt.outputStats - if a `stats.html` file should get outputted so you can see why your WebPack bundle is too big
+ * @param {string} [opt.outputFilename='[name].bundle.[hash].js'] - format of file name that is outputted
  * @return {object} - WebPack config
  */
 function createWebPackConfig({
@@ -36,6 +37,7 @@ function createWebPackConfig({
   extraPlugins = [],
   tsConfigFile = '',
   outputStats = false,
+  outputFilename = '[name].bundle.[hash].js',
 }) {
   // The public URL of the output directory when referenced in a browser. The value of the option is prefixed to every URL created by the runtime or loaders. Because of this the value of this option ends with `/` in most cases.
   // Simple rule: The URL of your output.path from the view of the HTML page.
@@ -47,7 +49,7 @@ function createWebPackConfig({
       main: mainEntries,
     },
     output: {
-      filename: '[name].bundle.[hash].js',
+      filename: outputFilename,
       path: dist,
       publicPath,
       chunkFilename: '[name].chunk.[hash].js',
@@ -172,7 +174,7 @@ function createWebPackConfig({
     devtool: isProd ? 'none' : 'eval-source-map',
     resolve: {
       // symlinks: false, // @todo consider, but be careful
-      extensions: ['.jsx', '.js', '.ts', '.tsx', '.css', '.json'],
+      extensions: ['.mjs', '.jsx', '.js', '.ts', '.tsx', '.css', '.json'],
       mainFields: ['module', 'main'],
       modules: ['node_modules', resolve(__dirname, 'node_modules')],
       alias: {
@@ -235,11 +237,15 @@ function createWebPackConfig({
         maxSize: 300000,
       },
     },
+    externals: {
+      // 'aws-sdk': 'aws-sdk',
+    },
   };
 
   if (isProd) {
     webpackConfig.mode = 'production';
     webpackConfig.optimization = {
+      ...webpackConfig.optimization,
       minimizer: [
         new TerserPlugin({
           parallel: true,

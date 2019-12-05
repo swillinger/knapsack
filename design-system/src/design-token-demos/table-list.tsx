@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import { containsString } from '@knapsack/utils';
-import { KnapsackDesignToken } from '@knapsack/core';
+import { KnapsackDesignToken } from '@knapsack/core/dist/types';
 import { CopyToClipboard } from '../copy-to-clipboard/copy-to-clipboard';
 import './table-list.css';
 

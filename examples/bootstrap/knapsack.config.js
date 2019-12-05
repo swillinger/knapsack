@@ -1,9 +1,11 @@
+const { join } = require('path');
 const HtmlRenderer = require('@knapsack/renderer-html');
 const TwigRenderer = require('@knapsack/renderer-twig');
+const { getGitBranch } = require('@knapsack/app/dist/server/server-utils');
 const designTokens = require('./assets/design-tokens/dist/knapsack-design-tokens');
 const { version } = require('./package.json');
 
-/** @type {import('@knapsack/app/src/schemas/knapsack-config').KnapsackUserConfig} */
+/** @type {import('../../knapsack/src/schemas/knapsack-config.ts').KnapsackConfig} */
 const config = {
   designTokens: {
     createCodeSnippet: token => `$${token.name}`,
@@ -34,6 +36,14 @@ const config = {
       }
     }),
   ],
+  cloud: {
+    repoOwner: 'basaltinc',
+    repoName: 'knapsack',
+    repoRoot: join(__dirname, '../..'),
+    baseBranch: getGitBranch(),
+    apiBase: 'https://d4kez41c5b.execute-api.us-west-2.amazonaws.com/Prod',
+    // apiBase: 'http://127.0.0.1:3000',
+  },
 };
 
 module.exports = config;

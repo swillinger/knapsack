@@ -22,13 +22,7 @@ import ErrorCatcher from '../utils/error-catcher';
 import { SiteHeaderConnected } from '../components/site-header';
 import { PageHeaderContainer } from '../components/page-header';
 import './page-with-sidebar.scss';
-import {
-  useDispatch,
-  useSelector,
-  saveToServer,
-  disableEditMode,
-  enableEditMode,
-} from '../store';
+import { useDispatch, useSelector, saveToServer } from '../store';
 
 type Props = {
   isInitiallyCollapsed?: boolean;
@@ -49,7 +43,6 @@ const PageWithSidebar: React.FC<Props> = ({
     isInitiallyCollapsed,
   );
   const canEdit = useSelector(s => s.userState.canEdit);
-  const isEditMode = useSelector(s => s.ui.isEditMode);
   const dispatch = useDispatch();
 
   return (
@@ -85,27 +78,6 @@ const PageWithSidebar: React.FC<Props> = ({
       <ErrorCatcher>
         <main className="ks-page-with-sidebar__page">
           <PageHeaderContainer title={title} section={section} />
-          {/* @TODO: Remove these KsButtons once the edit flow is established. */}
-          {canEdit && (
-            <div>
-              <KsButton
-                kind="primary"
-                size="m"
-                onClick={() => dispatch(saveToServer())}
-              >
-                Save it all
-              </KsButton>
-              <KsButton
-                size="m"
-                onClick={() =>
-                  dispatch(isEditMode ? disableEditMode() : enableEditMode())
-                }
-              >
-                Turn edit mode {isEditMode ? 'off' : 'on'}
-              </KsButton>
-              <hr />
-            </div>
-          )}
           {children}
         </main>
       </ErrorCatcher>

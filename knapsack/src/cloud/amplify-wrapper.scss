@@ -1,0 +1,46 @@
+// customizes the `<Authenticator>` & all sub-components brought in by `aws-amplify-react`
+.ks-u-amplify-wrapper {
+  --button-background-color: var(--c-button-primary);
+  //--button-color: var(--white);
+  --button-click: var(--c-button-primary-active);
+  --link-color: var(--c-text-link);
+  //--form-color: var(--white);
+  --input-color: var(--c-gray-light);
+  //--input-background-color: var(--white);
+
+  //--font-family: "Amazon Ember","Helvetica Neue Light","Helvetica Neue","Helvetica" ,"Arial","sans-serif";
+  --body-background: white;
+
+  //--component-width-desktop: 460px;
+  //--component-width-mobile: 100%;
+
+  --color-primary: var(--c-button-primary);
+  --color-primary-accent: var(--c-button-primary-hover);
+  --color-primary-highlight: var(--c-button-primary-active);
+
+  //--color-background: #232F3E;
+
+  --color-secondary: var(--c-secondary);
+  --color-secondary-accent: var(--c-secondary);
+
+  --color-danger: var(--c-danger);
+  --color-error: var(--c-danger);
+
+  //--color-accent-brown: #828282;
+  //--color-accent-blue: #E1E4EA;
+
+  //--gradient-blaze: linear-gradient(270deg, #FFC300 0%, #FF9000 100%);
+
+  --color-blue: var(--c-blue);
+  --color-purple: var(--c-green);
+  --color-gray: var(--c-gray);
+  --color-white: white;
+
+  --input-border: var(--util-border);
+  --input-padding: var(--size-xs) var(--size-s);
+
+  --box-shadow: var(--shadow);
+  --button-height: var(--space-xl);
+
+  --ion-color-primary-tint: var(--c-button-primary-active);
+}

@@ -15,10 +15,15 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React, { useState } from 'react';
-import { KsButton, Select, PatternStatusIcon } from '@knapsack/design-system';
-import { Link, useHistory } from 'react-router-dom';
+import { Select } from '@knapsack/design-system';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { updatePatternInfo, useSelector, useDispatch } from '../../store';
+import {
+  updatePatternInfo,
+  useSelector,
+  useDispatch,
+  updatePatternSlices,
+} from '../../store';
 import ErrorCatcher from '../../utils/error-catcher';
 // import DosAndDonts from '../../components/dos-and-donts';
 import { BASE_PATHS } from '../../../lib/constants';
@@ -28,6 +33,7 @@ import './pattern-view-page.scss';
 import './shared/demo-grid-controls.scss';
 import { CustomSliceCollection } from '../custom-page/custom-slice-collection';
 import { InlineEditText } from '../../components/inline-edit';
+import { getBreadcrumb } from '../../utils';
 
 type Props = {
   patternId: string;
@@ -46,6 +52,16 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
     }
     return thePattern;
   });
+  const breadcrumb: string[] = useSelector(s => {
+    const patternNavItem = s.navsState.secondary.find(
+      item => item.path === `${BASE_PATHS.PATTERN}/${patternId}`,
+    );
+    if (!patternNavItem) return [];
+    return getBreadcrumb({
+      navItem: patternNavItem,
+      navItems: s.navsState.secondary,
+    });
+  });
   const dispatch = useDispatch();
 
   const showAllTemplates = templateId === 'all';
@@ -60,9 +76,7 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
       showAllTemplates &&
       !!templates.find(
         t =>
-          t.spec &&
-          t.spec.props &&
-          t.spec.props.properties &&
+          t.spec?.props?.properties &&
           Object.keys(t.spec.props.properties).length > 0,
       )
     );
@@ -70,9 +84,7 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
     const currentlySelectedTemplate = templates.find(t => t.id === templateId);
 
     hasSchema = !!(
-      currentlySelectedTemplate.spec &&
-      currentlySelectedTemplate.spec.props &&
-      currentlySelectedTemplate.spec.props.properties &&
+      currentlySelectedTemplate?.spec?.props?.properties &&
       Object.keys(currentlySelectedTemplate.spec.props.properties).length > 0
     );
   }
@@ -87,7 +99,7 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
                 className="ks-eyebrow"
                 style={{ textTransform: 'capitalize' }}
               >
-                @todo should show breadcrumb from navigation
+                {breadcrumb.join(' > ')}
               </h4>
               <h2 style={{ marginBottom: '0' }}>
                 <InlineEditText
@@ -200,9 +212,11 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
           <hr />
 
           <CustomSliceCollection
-            userCanSave
-            handleSave={() => {}}
-            initialSlices={[]}
+            userCanSave={canEdit}
+            handleSave={slices => {
+              dispatch(updatePatternSlices(patternId, slices));
+            }}
+            initialSlices={pattern.slices}
           />
 
           {/* {dosAndDonts.map(item => ( */}

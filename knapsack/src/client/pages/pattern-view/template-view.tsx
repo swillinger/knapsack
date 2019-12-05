@@ -17,9 +17,6 @@
 
 import React, { useState } from 'react';
 import { SchemaForm, Details, Select, KsButton } from '@knapsack/design-system';
-import { Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
-import shortid from 'shortid';
 import ReactTable from 'react-table';
 import {
   useSelector,
@@ -27,6 +24,7 @@ import {
   useDispatch,
   updateTemplateDemo,
   updatePatternInfo,
+  updateTemplateInfo,
   addTemplateDataDemo,
   removeTemplateDemo,
 } from '../../store';
@@ -38,7 +36,6 @@ import {
   LoadableVariationDemo,
 } from '../../loadable-components';
 // import DosAndDonts from '../../components/dos-and-donts';
-import { getTemplateUrl } from '../../data';
 import { TemplateHeader } from './template-header';
 import './template-view.scss';
 import './shared/demo-grid-controls.scss';
@@ -46,6 +43,7 @@ import { isDataDemo, isTemplateDemo } from '../../../schemas/patterns';
 import { TemplateThumbnail } from '../../components/template-thumbnail';
 import { Tabs } from '../../components/tabs';
 import { InlineEditText } from '../../components/inline-edit';
+import { KsRenderResults } from '../../../schemas/knapsack-config';
 
 const calculateDemoStageWidth = (size: string) => {
   switch (size) {
@@ -179,6 +177,9 @@ const TemplateView: React.FC<Props> = ({
   const [assetSetId, setAssetSetId] = useState(
     assetSets[0] ? assetSets[0].id : '',
   );
+  const [templateInfo, setTemplateInfo] = useState<
+    KsRenderResults & { url: string }
+  >();
 
   const showSchemaForm = isSchemaFormShown && hasSchema;
 
@@ -193,21 +194,23 @@ const TemplateView: React.FC<Props> = ({
           status={status}
           isTitleShown={!isVerbose && isTitleShown}
           handleOpenNewTabClick={() => {
-            getTemplateUrl({
-              patternId: id,
-              templateId,
-              demo,
-              isInIframe: false,
-              wrapHtml: true,
-              assetSetId,
-            })
-              .then(externalUrl => {
-                window.open(externalUrl, '_blank');
-              })
-              .catch(console.log.bind(console));
+            if (templateInfo?.url) {
+              window.open(templateInfo.url, '_blank');
+            }
           }}
           handleAssetSetChange={newAssetSetId => {
             setAssetSetId(newAssetSetId);
+          }}
+          handleStatusChange={newStatusId => {
+            dispatch(
+              updateTemplateInfo({
+                templateId,
+                patternId,
+                template: {
+                  statusId: newStatusId,
+                },
+              }),
+            );
           }}
           handleDemoPrevClick={() => {
             setDemoIndex(prev => {
@@ -256,6 +259,7 @@ const TemplateView: React.FC<Props> = ({
               assetSetId={assetSetId}
               demo={demo}
               isResizable
+              handleTemplateInfo={setTemplateInfo}
             />
           </div>
           {showSchemaForm && isDataDemo(demo) && (
@@ -515,75 +519,71 @@ const TemplateView: React.FC<Props> = ({
           </div>
         </nav>
       )}
-      {/* {isCodeBlockShown && false && ( */}
-      {/*  <div style={{ marginBottom: '1rem' }}> */}
-      {/*    <TemplateCodeBlock */}
-      {/*      patternId={id} */}
-      {/*      templateId={templateId} */}
-      {/*      data={dataState.data} */}
-      {/*    /> */}
-      {/*  </div> */}
-      {/* )} */}
-
-      {isReadmeShown && readme && (
-        <MdBlock
-          md={readme}
-          key={`${id}-${templateId}`}
-          isEditable={permissions.includes('write')}
-          title="Documentation (not wired up to save right now)"
-          handleSave={newReadme => {
-            // @todo save it
-            console.log('handleSave on readme called', newReadme);
-          }}
-        />
-      )}
-
-      {isVerbose && hasSchema && (
-        <>
-          <div>
-            <h4>Properties</h4>
-            <p>
-              The following properties make up the data that defines each
-              instance of this component.
-            </p>
-            <Details open>
-              <summary>Props Table</summary>
-              <LoadableSchemaTable schema={schema} />
-            </Details>
+      <details className="ks-details" open>
+        <summary>Code Details</summary>
+        {isCodeBlockShown && (
+          <div style={{ marginBottom: '1rem' }}>
+            <TemplateCodeBlock templateInfo={templateInfo} />
           </div>
-
-          {/* <LoadableVariationDemo */}
-          {/*  schema={schema} */}
-          {/*  templateId={templateId} */}
-          {/*  patternId={id} */}
-          {/*  data={demoDatas[demoDataIndex]} */}
-          {/*  key={`${id}-${templateId}-${demoDataIndex}`} */}
-          {/* /> */}
-        </>
-      )}
-
-      {isVerbose && spec.slots && (
-        <div>
-          <h4>Slots</h4>
-          <ReactTable
-            data={Object.keys(spec.slots).map(slotName => {
-              const { title: slotTitle, description } = spec.slots[slotName];
-              return {
-                slotName,
-                slotTitle,
-                description,
-              };
-            })}
-            columns={[
-              { Header: 'Slot Name', accessor: 'slotName' },
-              { Header: 'Title', accessor: 'slotTitle' },
-              { Header: 'Description', accessor: 'description' },
-            ]}
-            defaultPageSize={Object.keys(spec.slots).length}
-            showPagination={false}
+        )}
+        {isReadmeShown && readme && (
+          <MdBlock
+            md={readme}
+            key={`${id}-${templateId}`}
+            isEditable={permissions.includes('write')}
+            title="Documentation (not wired up to save right now)"
+            handleSave={newReadme => {
+              // @todo save it
+              console.log('handleSave on readme called', newReadme);
+            }}
           />
-        </div>
-      )}
+        )}
+        {isVerbose && hasSchema && (
+          <>
+            <div>
+              <h4>Properties</h4>
+              <p>
+                The following properties make up the data that defines each
+                instance of this component.
+              </p>
+              <Details open>
+                <summary>Props Table</summary>
+                <LoadableSchemaTable schema={schema} />
+              </Details>
+            </div>
+
+            {/* <LoadableVariationDemo */}
+            {/*  schema={schema} */}
+            {/*  templateId={templateId} */}
+            {/*  patternId={id} */}
+            {/*  data={demoDatas[demoDataIndex]} */}
+            {/*  key={`${id}-${templateId}-${demoDataIndex}`} */}
+            {/* /> */}
+          </>
+        )}
+        {isVerbose && spec.slots && (
+          <div>
+            <h4>Slots</h4>
+            <ReactTable
+              data={Object.keys(spec.slots).map(slotName => {
+                const { title: slotTitle, description } = spec.slots[slotName];
+                return {
+                  slotName,
+                  slotTitle,
+                  description,
+                };
+              })}
+              columns={[
+                { Header: 'Slot Name', accessor: 'slotName' },
+                { Header: 'Title', accessor: 'slotTitle' },
+                { Header: 'Description', accessor: 'description' },
+              ]}
+              defaultPageSize={Object.keys(spec.slots).length}
+              showPagination={false}
+            />
+          </div>
+        )}
+      </details>
     </article>
   );
 };

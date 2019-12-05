@@ -4,8 +4,10 @@ import { Action } from './types';
 import {
   KnapsackPattern,
   KnapsackPatternsConfig,
+  KnapsackPatternTemplate,
   KnapsackTemplateDemo,
 } from '../../schemas/patterns';
+import { KnapsackCustomPageSlice } from '../../schemas/custom-pages';
 
 type PatternsState = {
   isFetching?: boolean;
@@ -27,6 +29,29 @@ const REMOVE_TEMPLATE_DEMO = 'knapsack/patterns/REMOVE_TEMPLATE_DEMO';
 const ADD_TEMPLATE_DATA_DEMO = 'knapsack/patterns/ADD_TEMPLATE_DATA_DEMO';
 const UPDATE_PATTERN = 'knapsack/patterns/UPDATE_PATTERN';
 const UPDATE_PATTERN_INFO = 'knapsack/patterns/UPDATE_PATTERN_INFO';
+const UPDATE_TEMPLATE_INFO = 'knapsack/patterns/UPDATE_TEMPLATE_INFO';
+const UPDATE_PATTERN_SLICES = 'knapsack/patterns/UPDATE_PATTERN_SLICES';
+
+interface UpdatePatternSlicesAction extends Action {
+  type: typeof UPDATE_PATTERN_SLICES;
+  payload: {
+    patternId: string;
+    slices: KnapsackCustomPageSlice[];
+  };
+}
+
+export function updatePatternSlices(
+  patternId: string,
+  slices: KnapsackCustomPageSlice[],
+): UpdatePatternSlicesAction {
+  return {
+    type: UPDATE_PATTERN_SLICES,
+    payload: {
+      patternId,
+      slices,
+    },
+  };
+}
 
 interface UpdateTemplateDemoAction extends Action {
   type: typeof UPDATE_TEMPLATE_DEMO;
@@ -125,6 +150,15 @@ interface UpdatePatternInfoAction extends Action {
   payload: Partial<KnapsackPattern>;
 }
 
+interface UpdateTemplateInfoAction extends Action {
+  type: typeof UPDATE_TEMPLATE_INFO;
+  payload: {
+    patternId: string;
+    templateId: string;
+    template: Partial<KnapsackPatternTemplate>;
+  };
+}
+
 /**
  * Update basic Pattern Info
  * Basically everything besides `templates`
@@ -142,11 +176,35 @@ export function updatePatternInfo(
   };
 }
 
+/**
+ * Update basic Template Info
+ */
+export function updateTemplateInfo({
+  patternId,
+  templateId,
+  template,
+}: {
+  patternId: string;
+  templateId: string;
+  template: Partial<KnapsackPatternTemplate>;
+}): UpdateTemplateInfoAction {
+  return {
+    type: UPDATE_TEMPLATE_INFO,
+    payload: {
+      patternId,
+      templateId,
+      template,
+    },
+  };
+}
+
 type Actions =
   | UpdatePatternAction
   | UpdatePatternInfoAction
+  | UpdateTemplateInfoAction
   | UpdateTemplateDemoAction
   | AddTemplateDataDemoAction
+  | UpdatePatternSlicesAction
   | RemoveTemplateDemoAction;
 
 export default function reducer(
@@ -169,6 +227,14 @@ export default function reducer(
           templates: pattern.templates,
           id: pattern.id,
         };
+      });
+
+    case UPDATE_TEMPLATE_INFO:
+      return produce(state, draft => {
+        const { patternId, templateId, template } = action.payload;
+        const { templates } = draft.patterns[patternId];
+        const oldTemplate = templates.find(t => t.id === templateId);
+        Object.assign(oldTemplate, template);
       });
 
     case UPDATE_TEMPLATE_DEMO:
@@ -206,6 +272,13 @@ export default function reducer(
         delete template.demosById[demoId];
         template.demos = template.demos.filter(d => d !== demoId);
         // @todo search all other pattern demos to find any slots that used this demo.
+      });
+
+    case UPDATE_PATTERN_SLICES:
+      return produce(state, draft => {
+        const { patternId, slices } = action.payload;
+        const pattern = draft.patterns[patternId];
+        pattern.slices = slices;
       });
     default:
       return {

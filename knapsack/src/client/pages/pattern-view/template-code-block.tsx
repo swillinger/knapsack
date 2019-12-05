@@ -1,114 +1,42 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { CodeBlock } from '@knapsack/design-system';
-import gql from 'graphql-tag';
-import { gqlQuery } from '../../data';
+import { KsRenderResults } from '../../../schemas/knapsack-config';
 
 type Props = {
-  patternId: string;
-  templateId: string;
-  data?: object;
+  templateInfo: KsRenderResults & { url: string };
 };
 
-const TemplateCodeBlock: React.FC<Props> = ({
-  patternId,
-  templateId,
-  data = {},
-}: Props) => {
+const TemplateCodeBlock: React.FC<Props> = ({ templateInfo }: Props) => {
+  if (!templateInfo) return null;
+
+  const { templateLanguage, usage, html } = templateInfo;
+
   const codeBlockTabs = [
-    {
-      id: 'usage',
-      name: 'Usage',
-    },
-    {
-      id: 'data',
-      name: 'Data',
-    },
-    {
-      id: 'templateSrc',
-      name: 'Template Source',
-    },
-    {
-      id: 'html',
-      name: 'HTML',
-    },
-  ];
-
-  const [templateCode, setTemplateCode] = useState(null);
-
-  useEffect(() => {
-    gqlQuery({
-      gqlQueryObj: gql`
-        query TemplateCode(
-          $patternId: String
-          $templateId: String
-          $data: JSON
-        ) {
-          templateCode(
-            patternId: $patternId
-            templateId: $templateId
-            data: $data
-          ) {
-            language
-            usage
-            html
-            templateSrc
-          }
+    usage
+      ? {
+          id: 'usage',
+          name: 'Usage',
+          code: usage,
+          language: templateLanguage,
         }
-      `,
-      variables: {
-        patternId,
-        templateId,
-        data,
-      },
-    }).then(({ data: gqlData, errors }) => {
-      const { templateCode: newTemplateCode } = gqlData as {
-        templateCode: {
-          language: string;
-          usage: string;
-          html: string;
-          templateSrc: string;
-        };
-      };
-      setTemplateCode({
-        ...newTemplateCode,
-        data,
-      });
-      if (errors) {
-        console.error(errors);
-      }
-    });
-  }, [data, patternId, templateId]);
-
-  if (!templateCode) return null;
-
-  const items = codeBlockTabs
-    .map(({ id, name }) => {
-      let { language } = templateCode;
-      let code = templateCode[id];
-      if (id === 'data') {
-        language = 'json';
-        code =
-          Object.keys(code).length > 0
-            ? JSON.stringify(code, null, '  ')
-            : null;
-      } else if (id === 'html') {
-        language = 'html';
-      }
-      return {
-        id,
-        name,
-        code,
-        language,
-      };
-    })
-    .filter(tab => {
-      if (!tab.code) return false;
-      return true;
-    });
+      : null,
+    // {
+    //   id: 'templateSrc',
+    //   name: 'Template Source',
+    // },
+    html
+      ? {
+          id: 'html',
+          name: 'HTML',
+          language: 'html',
+          code: html,
+        }
+      : null,
+  ].filter(Boolean);
 
   return (
     <div>
-      <CodeBlock items={items} />
+      <CodeBlock items={codeBlockTabs} />
     </div>
   );
 };

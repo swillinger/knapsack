@@ -1,5 +1,5 @@
 import React from 'react';
-import { KnapsackDesignToken } from '@knapsack/core';
+import { KnapsackDesignToken } from '@knapsack/core/dist/types';
 import './shared/border-demo-box.scss';
 
 type Props = {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { KnapsackDesignToken } from '@knapsack/core';
+import { KnapsackDesignToken } from '@knapsack/core/dist/types';
 import { CopyToClipboard } from '../copy-to-clipboard/copy-to-clipboard';
 import './spacing.scss';
 

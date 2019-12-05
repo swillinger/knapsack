@@ -1,4 +1,5 @@
 import React from 'react';
+import marked from 'marked';
 import './status-message.scss';
 
 type StatusTypes = 'success' | 'info' | 'warning' | 'error';
@@ -36,16 +37,16 @@ export const StatusMessage: React.FC<Props> = ({
   type = 'info',
 }: Props) => {
   const theType = statusTypes.includes(type) ? type : 'info';
+  const html = marked.parse(message);
   return (
-    <aside
+    <div
       className="ks-status-message"
       style={{
         border: `2px solid ${statusColorSets[theType].border}`,
         backgroundColor: statusColorSets[theType].bg,
         color: statusColorSets[theType].text,
       }}
-    >
-      {message}
-    </aside>
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
   );
 };

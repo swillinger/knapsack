@@ -14,39 +14,31 @@
  You should have received a copy of the GNU General Public License along
  with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
+import {
+  KsUserInfo,
+  KS_USER_ROLES,
+  KS_USER_ROLE_IDS,
+} from '@knapsack/core/dist/cloud';
 
-import { PERMISSIONS } from '../lib/constants';
+export function getUserInfo(req: import('express').Request): KsUserInfo {
+  const Authorization = req.headers.authorization;
+  const roleId = req.headers['x-ks-cloud-role-id']?.toString();
+  const ksRepoAccess =
+    req.headers['x-ks-cloud-repo-access']?.toString()?.split(',') || [];
+  const username = req.headers['x-ks-cloud-username']?.toString();
 
-const isProd = process.env.NODE_ENV === 'production';
-
-export interface Role {
-  id: string;
-  permissions: string[];
-}
-
-export const ROLES: Record<'EDITOR' | 'ANONYMOUS', Role> = {
-  EDITOR: {
-    id: 'editor',
-    permissions: [PERMISSIONS.READ, PERMISSIONS.WRITE],
-  },
-  ANONYMOUS: {
-    id: 'anonymous',
-    permissions: [PERMISSIONS.READ],
-  },
-};
-
-/* eslint-disable no-unused-vars */
-
-/**
- * (Stubbed/Fake) Get Role from the user found in the `request` object
- * Not real - currently based on if the server is ran with `NODE_ENV=production`
- */
-export function getRole(req: import('express').Request): Role {
-  let role = ROLES.ANONYMOUS;
-  if (!isProd) {
-    role = ROLES.EDITOR;
+  let role = KS_USER_ROLES.anonymous;
+  if (roleId && roleId in KS_USER_ROLE_IDS) {
+    role = KS_USER_ROLES[roleId];
   }
-  return role;
-}
 
-/* eslint-enable no-unused-vars */
+  const userInfo = {
+    username,
+    role,
+    ksRepoAccess,
+    Authorization,
+  };
+
+  // console.log('getUserInfo', userInfo);
+  return userInfo;
+}

@@ -1,3 +1,5 @@
+const prettierConfig = require('./prettier.config');
+
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
@@ -75,6 +77,7 @@ module.exports = {
     ],
     'jsx-a11y/href-no-hash': 'off',
     'no-console': [0],
+    'default-case': [0],
     'no-inner-declarations': [0],
     'no-param-reassign': [
       1,
@@ -89,14 +92,7 @@ module.exports = {
       },
     ],
     'no-useless-constructor': 'off',
-    'prettier/prettier': [
-      'error',
-      {
-        trailingComma: 'all',
-        singleQuote: true,
-        semi: true,
-      },
-    ],
+    'prettier/prettier': ['error', prettierConfig],
     'react/boolean-prop-naming': [2],
     'react/destructuring-assignment': [0],
     'react/forbid-prop-types': [

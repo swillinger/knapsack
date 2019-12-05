@@ -17,6 +17,7 @@
 import React from 'react';
 import { KsButton, SchemaForm } from '@knapsack/design-system';
 import arrayMove from 'array-move';
+import produce from 'immer';
 import shortid from 'shortid';
 import knapsackSlices from './slices';
 import CustomSlice from './custom-slice';
@@ -79,29 +80,29 @@ export class CustomSliceCollection extends React.Component<Props, State> {
 
   setSliceData(index: number, data: KnapsackCustomPageSlice['data']): void {
     this.setState(prevState => {
-      const oldSlice = prevState.slices[index];
-      prevState.slices.splice(index, 1, {
+      const slices = [...prevState.slices];
+      const oldSlice = slices[index];
+      slices.splice(index, 1, {
         ...oldSlice,
         data,
       });
       return {
-        slices: prevState.slices,
+        slices,
       };
     });
   }
 
   addSlice(index: number, sliceId: string): void {
     const slice = knapsackSlices.find(b => b.id === sliceId);
-    this.setState(prevState => {
-      prevState.slices.splice(index, 0, {
-        id: shortid.generate(),
-        blockId: sliceId,
-        data: slice.initialData,
-      });
-      return {
-        slices: prevState.slices,
-      };
-    });
+    this.setState(
+      produce(draft => {
+        draft.slices.splice(index, 0, {
+          id: shortid.generate(),
+          blockId: sliceId,
+          data: slice.initialData,
+        });
+      }),
+    );
   }
 
   /**
@@ -109,9 +110,11 @@ export class CustomSliceCollection extends React.Component<Props, State> {
    * @return sets state
    */
   moveSliceUp(index: number): void {
-    this.setState(prevState => ({
-      slices: arrayMove(prevState.slices, index, index - 1),
-    }));
+    this.setState(prevState => {
+      return produce(prevState, draft => {
+        draft.slices = arrayMove(draft.slices, index, index - 1);
+      });
+    });
   }
 
   /**
@@ -119,9 +122,11 @@ export class CustomSliceCollection extends React.Component<Props, State> {
    * @return sets state
    */
   moveSliceDown(index: number): void {
-    this.setState(prevState => ({
-      slices: arrayMove(prevState.slices, index, index + 1),
-    }));
+    this.setState(prevState => {
+      return produce(prevState, draft => {
+        draft.slices = arrayMove(prevState.slices, index, index + 1);
+      });
+    });
   }
 
   /**
@@ -129,9 +134,11 @@ export class CustomSliceCollection extends React.Component<Props, State> {
    * @return sets state
    */
   deleteSlice(sliceId: string): void {
-    this.setState(prevState => ({
-      slices: prevState.slices.filter(slice => slice.id !== sliceId),
-    }));
+    this.setState(prevState => {
+      return produce(prevState, draft => {
+        draft.slices = draft.slices.filter(slice => slice.id !== sliceId);
+      });
+    });
   }
 
   render() {
@@ -155,7 +162,7 @@ export class CustomSliceCollection extends React.Component<Props, State> {
                   }))
                 }
               >
-                Toggle Edit Mode
+                Edit Slices
               </KsButton>
               <KsButton
                 onClick={() => {

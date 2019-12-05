@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import pretty from 'pretty';
 import js from 'refractor/lang/javascript';
 import json from 'refractor/lang/json';
 import jsx from 'refractor/lang/jsx';
@@ -72,8 +71,7 @@ export const CodeSnippet = ({ language, code = '' }) => {
     }
   }
 
-  const preppedCode =
-    language === 'html' ? pretty(code.trim(), { ocd: true }) : code.trim();
+  const preppedCode = code?.trim();
 
   const ast = refractor.highlight(code, language);
 

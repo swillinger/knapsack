@@ -1,5 +1,5 @@
 import React from 'react';
-import { KnapsackDesignToken } from '@knapsack/core';
+import { KnapsackDesignToken } from '@knapsack/core/dist/types';
 import { TypographyChildrenDemoWrapper } from './shared/typography-children-demo-wrapper';
 
 type Props = {

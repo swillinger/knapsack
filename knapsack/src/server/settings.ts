@@ -15,17 +15,25 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import { join } from 'path';
+import parseDataUrl from 'data-urls';
 import { FileDb2 } from './dbs/file-db';
 import {
   KnapsackSettings,
   KnapsackSettingsStoreConfig,
 } from '../schemas/knapsack.settings';
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
 import knapsackSettingsSchema from '../json-schemas/schemaKnapsackSettings';
+import { KnapsackFile } from '../schemas/misc';
+
+/**
+ * @link https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs
+ */
+const isDataUrl = (dataString: string): boolean =>
+  dataString.startsWith('data:');
 
 export class Settings extends FileDb2<KnapsackSettings> {
-  constructor({ dataDir }: KnapsackSettingsStoreConfig) {
+  private publicDir: string;
+
+  constructor({ dataDir, publicDir }: KnapsackSettingsStoreConfig) {
     const defaults: KnapsackSettings = {
       title: 'My Title',
       parentBrand: {},
@@ -37,5 +45,43 @@ export class Settings extends FileDb2<KnapsackSettings> {
       type: 'json',
       validationSchema: knapsackSettingsSchema,
     });
+
+    this.publicDir = publicDir;
+  }
+
+  async savePrep(config: KnapsackSettings): Promise<KnapsackFile[]> {
+    const files: KnapsackFile[] = [];
+    let { parentBrand } = config;
+    if (parentBrand?.logo && isDataUrl(parentBrand.logo)) {
+      const { mimeType, body } = parseDataUrl(parentBrand.logo);
+      // console.log();
+
+      const { type, subtype, parameters } = mimeType;
+      const name = parameters.get('name');
+      const logoPath = `/${name}`;
+      // if (type === 'image') {
+      files.push({
+        path: join(this.publicDir, name),
+        // contents: parentBrand.logo,
+        contents: Buffer.from(body as string).toString('base64'),
+        encoding: 'base64',
+      });
+      // }
+      parentBrand = {
+        ...parentBrand,
+        logo: logoPath,
+      };
+    }
+    return [
+      ...files,
+      ...(await super.savePrep({
+        ...config,
+        parentBrand,
+      })),
+    ];
+  }
+
+  async getData(): Promise<KnapsackSettings> {
+    return super.getData();
   }
 }

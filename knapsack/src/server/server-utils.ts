@@ -18,6 +18,8 @@ import fs from 'fs-extra';
 import os from 'os';
 import qs from 'qs';
 import yaml from 'js-yaml';
+import { execSync } from 'child_process';
+import prettier from 'prettier';
 import * as log from '../cli/log';
 
 /**
@@ -93,6 +95,18 @@ export function dirExistsOrExit(dirPath: string, msg?: string): void {
   if (dirExists(dirPath)) return;
   log.error(msg || `This folder does not exist! ${dirPath}`);
   process.exit(1);
+}
+
+export function getGitBranch(): string {
+  try {
+    const branch = execSync('git symbolic-ref --short HEAD', {
+      encoding: 'utf8',
+    });
+    return branch?.trim();
+  } catch (err) {
+    console.error(`Uh oh! error thrown in getGitBranch: ${err.message}`);
+    return '';
+  }
 }
 
 /**
@@ -175,4 +189,57 @@ export function createDemoUrl({
 
   const queryString = qsStringify(queryData);
   return `/api/render?${queryString}`;
+}
+
+export function base64ToString(b64: string): string {
+  return Buffer.from(b64, 'base64').toString();
+}
+
+export function stringToBase64(string: string): string {
+  return Buffer.from(string).toString('base64');
+}
+
+/**
+ * Format code with Prettier
+ * If it can't format, it just returns original code
+ * @link https://prettier.io/docs/en/options.html#parser
+ */
+export function formatCode({
+  code,
+  language,
+}: {
+  code: string;
+  language: string;
+}): string {
+  const format = parser =>
+    prettier.format(code.trim(), {
+      trailingComma: 'all',
+      singleQuote: true,
+      semi: true,
+      parser,
+      htmlWhitespaceSensitivity: 'ignore',
+    });
+
+  switch (language) {
+    case 'html':
+      return format('html');
+    case 'react':
+    case 'js':
+    case 'jsx':
+      return format('babel');
+    case 'ts':
+    case 'tsx':
+    case 'react-typescript':
+      return format('typescript');
+    case 'json':
+      return format('json');
+    case 'yml':
+    case 'yaml':
+      return format('yaml');
+    case 'md':
+    case 'markdown':
+      return format('markdown');
+    default:
+      return code?.trim();
+  }
 }

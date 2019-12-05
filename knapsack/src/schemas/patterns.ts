@@ -3,7 +3,8 @@
 // import { JsonSchemaObject } from './misc';
 // import { KnapsackTemplateRenderer } from './knapsack-config';
 
-import { JsonSchemaObject } from './misc';
+import { JsonSchemaObject } from '@knapsack/core/dist/types';
+import { KnapsackCustomPageSlice } from './custom-pages';
 
 /**
  * Used to render a template instead of the path to that file
@@ -154,6 +155,7 @@ export interface KnapsackPattern {
    */
   showAllTemplates?: boolean;
   // designs?: PatternDesignSlice['id'][];
+  slices?: KnapsackCustomPageSlice[];
 }
 
 export interface KnapsackPatternTemplateCode {

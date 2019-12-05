@@ -15,4 +15,3 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 export * from './plugins';
-export * from './schemas/design-tokens';

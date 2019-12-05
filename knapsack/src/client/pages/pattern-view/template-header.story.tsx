@@ -39,6 +39,7 @@ export const full = () => (
     handleAssetSetChange={action('handleAssetSetChange')}
     handleDemoPrevClick={action('handleDemoPrevClick')}
     handleDemoNextClick={action('handleDemoNextClick')}
+    handleStatusChange={action('handleStatusChange')}
   />
 );
 
@@ -62,6 +63,7 @@ export const allVariations = () => (
           handleAssetSetChange={action('handleAssetSetChange')}
           handleDemoPrevClick={action('handleDemoPrevClick')}
           handleDemoNextClick={action('handleDemoNextClick')}
+          handleStatusChange={action('handleStatusChange')}
         />
         <hr />
       </>
@@ -79,6 +81,7 @@ export const justData = () => (
     handleAssetSetChange={action('handleAssetSetChange')}
     handleDemoPrevClick={action('handleDemoPrevClick')}
     handleDemoNextClick={action('handleDemoNextClick')}
+    handleStatusChange={action('handleStatusChange')}
   />
 );
 
@@ -91,6 +94,7 @@ export const justAssetSets = () => (
     handleOpenNewTabClick={action('handleOpenNewTabClick')}
     handleAssetSetChange={action('handleAssetSetChange')}
     handleDemoPrevClick={action('handleDemoPrevClick')}
+    handleStatusChange={action('handleStatusChange')}
     handleDemoNextClick={action('handleDemoNextClick')}
   />
 );
@@ -101,6 +105,7 @@ export const simple = () => (
     handleOpenNewTabClick={action('handleOpenNewTabClick')}
     handleAssetSetChange={action('handleAssetSetChange')}
     handleDemoPrevClick={action('handleDemoPrevClick')}
+    handleStatusChange={action('handleStatusChange')}
     handleDemoNextClick={action('handleDemoNextClick')}
     isTitleShown
   />

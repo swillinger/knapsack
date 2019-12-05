@@ -14,8 +14,8 @@
  You should have received a copy of the GNU General Public License along
  with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-import React from 'react';
-import { SchemaForm } from '@knapsack/design-system';
+import React, { useEffect, useState } from 'react';
+import { SchemaForm, CircleSpinner } from '@knapsack/design-system';
 import {
   useSelector,
   updateSettings,
@@ -28,10 +28,35 @@ export const SiteSettings: React.FC = () => {
   const settings = useSelector(store => store.settingsState.settings);
   const dispatch = useDispatch();
 
+  const [data, setData] = useState();
+  useEffect(() => {
+    if (settings.parentBrand?.logo) {
+      fetch(settings.parentBrand.logo)
+        .then(res => res.blob())
+        .then(blob => {
+          const reader = new FileReader();
+          reader.readAsDataURL(blob);
+          reader.onloadend = () => {
+            const base64data = reader.result;
+            setData({
+              ...settings,
+              parentBrand: {
+                ...settings.parentBrand,
+                logo: base64data,
+              },
+            });
+          };
+        });
+    } else {
+      setData(settings);
+    }
+  }, []);
+
+  if (!data) return <CircleSpinner />;
   return (
     <SchemaForm
       schema={schema}
-      formData={settings}
+      formData={data}
       onSubmit={({ formData }) => {
         dispatch(updateSettings(formData));
         dispatch(
@@ -44,6 +69,11 @@ export const SiteSettings: React.FC = () => {
       }}
       hasSubmit
       uiSchema={{
+        parentBrand: {
+          logo: {
+            'ui:widget': 'file',
+          },
+        },
         customSections: {
           'ui:detailsOpen': true,
           items: {

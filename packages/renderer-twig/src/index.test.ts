@@ -12,8 +12,8 @@ describe('renderer-twig twig usage template', () => {
 
     const expected = `
 {% include "@components/button.twig" with {
-  title: "A Button",
-  isDark: true,
+   title: "A Button",
+   isDark: true,
 } only %}
     `;
     expect(actual.trim()).toBe(expected.trim());
@@ -36,9 +36,9 @@ describe('renderer-twig twig usage template', () => {
 
     const expected = `
 {% include "@components/button.twig" with {
-  title: "A Button",
-  isDark: true,
-  footer: footer,
+   title: "A Button",
+   isDark: true,
+   footer: footer,
 } only %}
     `;
     expect(actual.trim()).toBe(expected.trim());
@@ -56,9 +56,9 @@ describe('renderer-twig twig usage template', () => {
 
     const expected = `
 {% include "@components/button.twig" with {
-  title: "A Button",
-  isDark: true,
-  tags: ["tag1","tag2","tag3"],
+   title: "A Button",
+   isDark: true,
+   tags: ["tag1","tag2","tag3"],
 } only %}
     `;
     expect(actual.trim()).toBe(expected.trim());
@@ -86,9 +86,9 @@ describe('renderer-twig twig usage template', () => {
     // @todo nicely nest array of objects on multiple lines
     const expected = `
 {% include "@components/button.twig" with {
-  title: "A Button",
-  isDark: true,
-  buttons: [{"title":"Home","path":"/"},{"tile":"Blog","path":"/blog"}],
+   title: "A Button",
+   isDark: true,
+   buttons: [{"title":"Home","path":"/"},{"tile":"Blog","path":"/blog"}],
 } only %}
     `;
     expect(actual.trim()).toBe(expected.trim());
@@ -121,9 +121,9 @@ describe('renderer-twig twig usage template', () => {
 {# Here's some "before" text #}
 
 {% include "@components/button.twig" with {
-  title: "A Button",
-  isDark: true,
-  buttons: [{"title":"Home","path":"/"},{"tile":"Blog","path":"/blog"}],
+   title: "A Button",
+   isDark: true,
+   buttons: [{"title":"Home","path":"/"},{"tile":"Blog","path":"/blog"}],
 } only %}
 
 {# Here's some "after" text #}

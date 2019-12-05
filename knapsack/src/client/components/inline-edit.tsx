@@ -109,12 +109,7 @@ export const InlineEditText: React.FC<ConnectedProps> = (
   props: ConnectedProps,
 ) => {
   const canEdit = useSelector(s => s.userState.canEdit);
-  const isEditMode = useSelector(s => s.ui.isEditMode);
   return (
-    <InlineEditTextBase
-      {...props}
-      canEdit={canEdit}
-      showControls={isEditMode}
-    />
+    <InlineEditTextBase {...props} canEdit={canEdit} showControls={canEdit} />
   );
 };

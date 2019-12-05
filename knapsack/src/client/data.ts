@@ -21,6 +21,8 @@ import {
   KnapsackTemplateData,
   KnapsackTemplateDemo,
 } from '../schemas/patterns';
+import { AppState } from './store';
+import { KsRenderResults } from '../schemas/knapsack-config';
 
 /**
  * GraphQL Query Object to String
@@ -99,7 +101,7 @@ export function gqlQuery({
     .catch(console.log.bind(console));
 }
 
-type KnapsackDesignToken = import('@knapsack/core').KnapsackDesignToken;
+type KnapsackDesignToken = import('@knapsack/core/dist/types').KnapsackDesignToken;
 
 export function getDesignTokens(): Promise<KnapsackDesignToken[]> {
   return window.fetch(`${apiUrlBase}/design-tokens`).then(res => res.json());
@@ -135,10 +137,51 @@ export function saveData(data: object): Promise<string> {
     .catch(console.log.bind(console));
 }
 
+export function getInitialState(): Promise<AppState> {
+  return window
+    .fetch(`${apiUrlBase}/data-store`)
+    .then(res => res.json())
+    .then(initialState => {
+      // console.log({ initialState });
+      return initialState;
+    })
+    .catch(console.log.bind(console));
+}
+
+export function renderTemplate(options: {
+  patternId: string;
+  templateId: string;
+  assetSetId?: string;
+  /**
+   * Data id from `saveData()`
+   */
+  dataId?: string;
+  /**
+   * Should it wrap HTML results with `<head>` and include assets?
+   */
+  wrapHtml?: boolean;
+  /**
+   * Will this be in an iFrame?
+   */
+  isInIframe?: boolean;
+}): Promise<KsRenderResults> {
+  return window
+    .fetch(`${apiUrlBase}/render`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(options),
+    })
+    .then(res => res.json())
+    .catch(console.log.bind(console));
+}
+
 /**
  * Get a URL where this Pattern's Template can be viewed
  */
-export async function getTemplateUrl({
+export async function getTemplateInfo({
   patternId,
   templateId,
   assetSetId,
@@ -156,7 +199,11 @@ export async function getTemplateUrl({
   // data?: KnapsackTemplateData;
   demo: KnapsackTemplateDemo;
   extraParams?: object;
-}): Promise<string> {
+}): Promise<
+  {
+    url: string;
+  } & KsRenderResults
+> {
   const dataId = await saveData(demo);
   const query: Record<string, any> = {
     patternId,
@@ -166,6 +213,17 @@ export async function getTemplateUrl({
   if (assetSetId) query.assetSetId = assetSetId;
   if (typeof wrapHtml === 'boolean') query.wrapHtml = wrapHtml;
   if (typeof isInIframe === 'boolean') query.isInIframe = isInIframe;
-
-  return `${apiUrlBase}/render?${qs.stringify({ ...query, dataId })}`;
+  const renderResults = await renderTemplate({
+    patternId,
+    templateId,
+    dataId,
+    assetSetId,
+    isInIframe,
+    wrapHtml,
+  });
+  const url = `${apiUrlBase}/render?${qs.stringify({ ...query, dataId })}`;
+  return {
+    url,
+    ...renderResults,
+  };
 }

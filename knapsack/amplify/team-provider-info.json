@@ -1,0 +1,25 @@
+{
+  "local": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-knapsack-local-162428-authRole",
+      "UnauthRoleArn": "arn:aws:iam::227699676304:role/amplify-knapsack-local-162428-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::227699676304:role/amplify-knapsack-local-162428-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-knapsack-local-162428-deployment",
+      "UnauthRoleName": "amplify-knapsack-local-162428-unauthRole",
+      "StackName": "amplify-knapsack-local-162428",
+      "StackId": "arn:aws:cloudformation:us-west-2:227699676304:stack/amplify-knapsack-local-162428/4640c290-10ac-11ea-a83b-0a88797ee3c4",
+      "AmplifyAppId": "dree21qke9pm0"
+    },
+    "categories": {
+      "function": {
+        "KsUsersPostConfirmation": {
+          "GROUP": "contributors"
+        }
+      },
+      "auth": {
+        "KsUsers": {}
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { KnapsackDesignToken } from '@knapsack/core';
+import { KnapsackDesignToken } from '@knapsack/core/dist/types';
 import { DeviceWidth, commonWidths } from './device-widths';
 import './breakpoints-demo.scss';
 

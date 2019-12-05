@@ -58,3 +58,39 @@ export function flattenNestedArray<T>(arr: T[]): T[] {
 export function flattenArray<T>(arrayOfArrays: T[][]): T[] {
   return [].concat(...arrayOfArrays);
 }
+
+export function isBase64(
+  v: any,
+  { mimeRequired = false, allowMime = true } = {},
+): boolean {
+  if (v instanceof Boolean || typeof v === 'boolean') {
+    return false;
+  }
+
+  // if (!(opts instanceof Object)) {
+  //   opts = {};
+  // }
+  //
+  // if (opts.allowEmpty === false && v === '') {
+  //   return false;
+  // }
+
+  let regex =
+    '(?:[A-Za-z0-9+\\/]{4})*(?:[A-Za-z0-9+\\/]{2}==|[A-Za-z0-9+/]{3}=)?';
+  const mimeRegex = '(data:\\w+\\/[a-zA-Z\\+\\-\\.]+;base64,)';
+
+  if (mimeRequired === true) {
+    regex = mimeRegex + regex;
+  } else if (allowMime === true) {
+    regex = `${mimeRegex}?${regex}`;
+  }
+
+  // if (opts.paddingRequired === false) {
+  //   regex =
+  //     '(?:[A-Za-z0-9+\\/]{4})*(?:[A-Za-z0-9+\\/]{2}(==)?|[A-Za-z0-9+\\/]{3}=?)?';
+  // }
+
+  const result = new RegExp(`^${regex}$`, 'gi').test(v);
+
+  return result;
+}

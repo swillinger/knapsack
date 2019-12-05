@@ -19,14 +19,17 @@ import { ApolloServer, gql } from 'apollo-server-express';
 import { makeExecutableSchema, mergeSchemas } from 'graphql-tools';
 import WebSocket from 'ws';
 import bodyParser from 'body-parser';
+import 'isomorphic-fetch';
 import { join } from 'path';
 import { writeFile } from 'fs-extra';
+import { KsUserInfo, KsFileSaver } from '@knapsack/core/dist/cloud';
+import { KsCloudConnect } from '../cloud/cloud-connect';
 import * as log from '../cli/log';
 import { EVENTS, knapsackEvents } from './events';
 import { getApiRoutes } from './rest-api';
 import { setupRoutes } from './routes';
 import { enableTemplatePush } from '../lib/features';
-import { getRole } from './auth';
+import { getUserInfo } from './auth';
 import { apiUrlBase, PERMISSIONS, HTTP_STATUS } from '../lib/constants';
 import {
   pageBuilderPagesResolvers,
@@ -34,9 +37,15 @@ import {
 } from './page-builder';
 import { designTokensResolvers, designTokensTypeDef } from './design-tokens';
 import { getBrain } from '../lib/bootstrap';
-import { GraphQlContext, KnapsackMeta, KnapsackFile } from '../schemas/misc';
+import {
+  GraphQlContext,
+  KnapsackMeta,
+  KnapsackFile,
+  GenericResponse,
+  KnapsackDataStoreSaveBody,
+} from '../schemas/misc';
 import { WS_EVENTS, WebSocketMessage } from '../schemas/web-sockets';
-import { flattenArray } from '../lib/utils';
+import { flattenArray, isBase64 } from '../lib/utils';
 
 export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
   const {
@@ -49,6 +58,7 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
     config,
     assetSets,
   } = getBrain();
+
   const port = process.env.KNAPSACK_PORT || 3999;
   const knapsackDistDir = join(__dirname, '../../dist/client');
 
@@ -96,7 +106,7 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
     context: ({ req }): GraphQlContext => {
       // const { host, origin } = req.headers;
       // log.verbose('request received', { host, origin }, 'graphql');
-      const role = getRole(req);
+      const { role } = getUserInfo(req);
       const canWrite = role.permissions.includes(PERMISSIONS.WRITE);
 
       return {
@@ -159,75 +169,146 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
       settingsState: {
         settings: await settings.getData(),
       },
-      patternsState: {
-        patterns: patterns.byId,
-        templateStatuses: await patterns.getTemplateStatuses(),
-      },
+      patternsState: await patterns.getData(),
       customPagesState: await customPages.getData(),
       assetSetsState: await assetSets.getData(),
       navsState: await navs.getData(),
     };
   }
 
-  async function handleNewDataStore(data: AppState) {
-    try {
-      const configFiles: KnapsackFile[] = await Promise.all([
-        settings.savePrep(data.settingsState.settings),
-        customPages.savePrep(data.customPagesState),
-        navs.savePrep(data.navsState),
-      ]).then(results => flattenArray(results));
+  const fileSavers: Record<string, KsFileSaver> = {};
 
-      await Promise.all(
-        configFiles.map(({ contents, path, encoding }) =>
-          writeFile(path, contents, { encoding }),
-        ),
-      );
+  async function saveFilesLocally({
+    files,
+  }: {
+    files: KnapsackFile[];
+  }): Promise<GenericResponse> {
+    await Promise.all(
+      files.map(({ contents, path, encoding }) => {
+        switch (encoding) {
+          case 'utf-8':
+            return writeFile(path, contents, { encoding: 'utf8' });
+          case 'base64': {
+            const data = Buffer.from(contents, 'base64');
+            return writeFile(path, data);
+          }
+          default:
+            throw new Error(
+              `Incorrect encoding used when saving files locally: "${encoding}" for file ${path}.`,
+            );
+        }
+      }),
+    );
 
-      return {
-        ok: true,
-        message: 'We got it!',
-      };
-    } catch (e) {
-      console.error('handleNewDataStore', e);
-      return {
-        ok: false,
-        message: `Could not handleNewDataStore. ${e.message}`,
-      };
-    }
+    return {
+      ok: true,
+      message: 'All config files saved locally.',
+    };
   }
 
-  app
-    .route(`${apiUrlBase}/data-store`)
-    .get(async (req, res) => {
-      const role = getRole(req);
-      const dataStore = await getDataStore();
-      const fullDataStore: PartialAppState = {
-        ...dataStore,
-        userState: {
-          role,
-          canEdit: role.permissions.includes(PERMISSIONS.WRITE),
-        },
-        metaState: {
-          meta,
-        },
-      };
+  fileSavers.local = saveFilesLocally;
 
-      res.send(fullDataStore);
-    })
-    .post(async (req, res) => {
-      const { permissions } = getRole(req);
+  if (config.cloud) {
+    const { saveFilesToCloud } = new KsCloudConnect(config.cloud);
+    fileSavers.cloud = saveFilesToCloud;
+  }
 
-      if (!permissions.includes(PERMISSIONS.WRITE)) {
-        res.status(HTTP_STATUS.BAD.UNAUTHORIZED).send();
-      } else {
-        const results = await handleNewDataStore(req.body);
-        if (results.ok) {
-          res.status(HTTP_STATUS.GOOD.CREATED).send(results);
-        } else {
-          res.status(HTTP_STATUS.BAD.BAD_REQUEST).send(results);
+  async function handleNewDataStore({
+    state,
+    title,
+    message,
+    storageLocation,
+    user,
+  }: KnapsackDataStoreSaveBody & { user: KsUserInfo }): Promise<
+    GenericResponse
+  > {
+    const configFiles: KnapsackFile[] = await Promise.all([
+      settings.savePrep(state.settingsState.settings),
+      customPages.savePrep(state.customPagesState),
+      navs.savePrep(state.navsState),
+      patterns.savePrep(state.patternsState),
+    ]).then(results => flattenArray(results));
+
+    configFiles.forEach(configFile => {
+      if (configFile.encoding === 'base64') {
+        if (!isBase64(configFile.contents)) {
+          console.log(configFile);
+          throw new Error(
+            `Pre-save check on Knapsack File "${configFile.path}" expected a base64 encoding and it is not.`,
+          );
         }
       }
     });
+
+    if (!fileSavers[storageLocation]) {
+      throw new Error(
+        `Must declare save location, passed in ${storageLocation}`,
+      );
+    }
+
+    return fileSavers[storageLocation]({
+      files: configFiles,
+      title,
+      message,
+      user,
+    });
+  }
+
+  app.get(`${apiUrlBase}/data-store`, async (req, res) => {
+    const dataStore = await getDataStore();
+    const fullDataStore: PartialAppState = {
+      ...dataStore,
+      userState: {
+        isLocalDev: process.env.NODE_ENV !== 'production',
+      },
+      metaState: {
+        meta,
+      },
+    };
+
+    res.send(fullDataStore);
+  });
+
+  app.post(`${apiUrlBase}/data-store`, async (req, res) => {
+    const {
+      state,
+      title,
+      message,
+      storageLocation,
+    } = req.body as KnapsackDataStoreSaveBody;
+
+    if (!(storageLocation === 'local' || storageLocation === 'cloud')) {
+      return res.status(HTTP_STATUS.BAD.BAD_REQUEST).send({
+        ok: false,
+        message: `loc param must be local or cloud, was: ${storageLocation}`,
+      });
+    }
+
+    const user = getUserInfo(req);
+    const permissions = user?.role?.permissions;
+
+    if (!permissions.includes(PERMISSIONS.WRITE)) {
+      res.status(HTTP_STATUS.BAD.UNAUTHORIZED).send();
+    } else {
+      try {
+        const results = await handleNewDataStore({
+          storageLocation,
+          title,
+          message,
+          state,
+          user,
+        });
+        // console.log('handleNewDataStore results', results);
+        res.send(results);
+      } catch (e) {
+        console.error('handleNewDataStore', e);
+        res.status(HTTP_STATUS.FAIL.INTERNAL_ERROR).send({
+          ok: false,
+          message: `Could not handleNewDataStore. ${e.message}`,
+        });
+      }
+    }
+  });
 
   const regularRoutes = setupRoutes({
     patterns,

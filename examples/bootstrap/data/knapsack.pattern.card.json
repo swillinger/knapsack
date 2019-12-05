@@ -29,22 +29,10 @@
           "description": "A Card for containing content",
           "required": ["cardTitle", "cardBody"],
           "properties": {
-            "cardHeader": {
-              "type": "string",
-              "title": "Card Header Text"
-            },
-            "cardTitle": {
-              "type": "string",
-              "title": "Body Title"
-            },
-            "cardSubTitle": {
-              "type": "string",
-              "title": "Body Sub Title"
-            },
-            "cardBody": {
-              "type": "string",
-              "title": "Card Body Text"
-            },
+            "cardHeader": { "type": "string", "title": "Card Header Text" },
+            "cardTitle": { "type": "string", "title": "Body Title" },
+            "cardSubTitle": { "type": "string", "title": "Body Sub Title" },
+            "cardBody": { "type": "string", "title": "Card Body Text" },
             "textAlign": {
               "type": "string",
               "title": "Text Align",
@@ -52,14 +40,8 @@
               "enumNames": ["Left", "Center", "Right"],
               "default": "left"
             },
-            "imgSrc": {
-              "type": "string",
-              "title": "Image Source"
-            },
-            "imgAlt": {
-              "type": "string",
-              "title": "Image Alt Text"
-            }
+            "imgSrc": { "type": "string", "title": "Image Source" },
+            "imgAlt": { "type": "string", "title": "Image Alt Text" }
           }
         }
       },
@@ -99,23 +81,11 @@
               "list": {
                 "flush": true,
                 "listItems": [
-                  {
-                    "itemText": "Cras justo odio",
-                    "active": true
-                  },
-                  {
-                    "itemText": "Dapibus ac facilisis in"
-                  },
-                  {
-                    "itemText": "Morbi leo risus",
-                    "disabled": true
-                  },
-                  {
-                    "itemText": "Porta ac consectetur ac"
-                  },
-                  {
-                    "itemText": "Vestibulum at eros"
-                  }
+                  { "itemText": "Cras justo odio", "active": true },
+                  { "itemText": "Dapibus ac facilisis in" },
+                  { "itemText": "Morbi leo risus", "disabled": true },
+                  { "itemText": "Porta ac consectetur ac" },
+                  { "itemText": "Vestibulum at eros" }
                 ]
               }
             }

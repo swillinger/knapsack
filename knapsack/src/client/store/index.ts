@@ -27,6 +27,7 @@ export * from './meta';
 export * from './custom-pages';
 export * from './patterns';
 export * from './navs';
+export * from './user';
 // export * from './asset-sets';
 
 export { useDispatch, shallowEqual } from 'react-redux';
@@ -77,3 +78,5 @@ export const useSelector: TypedUseSelectorHook<AppState> = (
 export function createStore(initialState) {
   return createReduxStore(rootReducer, initialState, rootEnhancer);
 }
+
+export type StoreType = ReturnType<typeof createStore>;

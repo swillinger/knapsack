@@ -161,7 +161,6 @@ const Template: React.FC<Props> = ({
   const content = (
     <iframe
       className="ks-template__iframe"
-      id={id}
       title={id}
       ref={iframeRef}
       src={htmlUrl}

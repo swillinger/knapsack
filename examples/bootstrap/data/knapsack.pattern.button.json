@@ -1,6 +1,6 @@
 {
   "id": "button",
-  "title": "Button",
+  "title": "Buttons are awesome",
   "description": "Use Bootstrap’s custom button styles for actions in forms, dialogs, and more with support for multiple sizes, states, and more.",
   "demoSize": "m",
   "demoWidths": [{ "width": 150 }],
@@ -79,7 +79,7 @@
           "description": "Here is how what to use for the main call to action, try to limit these per page.",
           "data": {
             "props": {
-              "text": "The Button",
+              "text": "The Button... ROCKS!",
               "url": "#",
               "style": "primary",
               "size": "md",

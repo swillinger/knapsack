@@ -161,5 +161,13 @@
       "demos": []
     }
   ],
-  "slices": []
+  "slices": [
+    {
+      "id": "F7hy-O0G",
+      "blockId": "better-image-slice",
+      "data": {
+        "imgKey": "https://ks-storage-assets162428-local.s3.us-west-2.amazonaws.com/public/me_2019_500x500.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIATKA7VKSIOHLSRIJE%2F20191205%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20191205T005739Z&X-Amz-Expires=900&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEAkaCXVzLXdlc3QtMiJGMEQCIGHpTs3lJn8UNUHyPV6Pmj5rbanF%2FuW5%2BtEFy%2BZZ4UA5AiBrbDgxq%2FomBPWYAH91TpQsbxvtVqszQqIFpUe%2BuDzIxyr%2BAwhSEAEaDDIyNzY5OTY3NjMwNCIMdZ8rWmn%2BKRc%2FCn29KtsDWrBMEwne4AZHNfWX2XL106BH4LhNCoPwt1zeL3vWHyvstzvYvUDqAkQS8814Se1pfSAdiJYc5G4Lbam3jcF0AjSceVHNx7e%2BrEGKfnGBRnURWij0MEl5GegEV12886OKFrRcDofcWs80rLeTwJmabeUv1IIILFIUlkmPL5DvcMgHFk8lmIO2txA3vfHH6Ywo9INby3b%2B2IJz2S0UfKttEy5dPpXhWkpGjSriDOa73U0bQO7g9hz%2BnNg9CfuPD5VhImVKQgP7ICroDcsxL1COQWhXaGwRs6%2FndEVEFx1yBxKjL%2BtJZe6dvbXNJypKxE%2BqonUGZIM%2BE6%2FodZc1wdeRYT96v5y1QZNDPlIUSDmep7GXyRQost%2Bvw%2BFXXr7C3C7PfMzwIMSwOQPFMtYLkzKg1LzQ8CFGxBwaQhjET9ycw6601AIsVpB%2FNbpJ%2FG8rhXPp%2FZXVE64r4nsfU4tDt%2FY7hnTI%2FHC0wvQPES7gYG%2BK3f2kEV7hdoNIElVYhLkKrd75bfVg39XCAM9YywsgZ2OXi%2FV43aNYJM305%2Bo%2BbntDHCa20Petd8QKBkgN1T4Kuz%2BOUFmviz4gzwkf63ENfmo4fvMkO6UIo%2B9MT9PLJPkiQBn3pLDwzXhuFdHo3jDtq6HvBTrMAlvHvCSAsmWkzzPz9mtws70IuMfj8Th78LXWXRefZUG%2FnfRyjfHQlPpUONUj85xk%2BrabsDZqs111OyR2ovEEkruHuzic4zzGdxmaSLoeBLTnd2nnRbt5oe83QNldk2RAfuwa5iRfHpmFwGrwYIHj6qSJgu3uLC7Bu7ouDufcSwttYkP%2BCTyaFFLGWI15ALsD%2Bf4zi0c%2B4FQ04QrbbE6AM1AeD9zJvan2MS26s7lpT60nPSG2q0HEY%2F4fGQfa3ILFJHshZvFzZ2NmvJqY7RLlouqFSuO0lC4eRbtJKBW5WG9R0zpMk0GUdwsf9kLbt8sz02XsyTrM9J6Qv1QPL13ert%2F%2BtWs2mS7O7mznhdCGYsADwHEqTAur9mwMsxKUYy%2B4vbu%2BPXwF7d2%2Fcgl5d7CtiCQmkClZ15BtDcC2eeVLVMWy8Hjywq%2ByuHoi4U03&X-Amz-Signature=ca112dacd5f850b0980f085715f0c8527e7ef7be2eb717f1d9b9c7ba363687ac&X-Amz-SignedHeaders=host"
+      }
+    }
+  ]
 }

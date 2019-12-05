@@ -24,7 +24,7 @@ export interface JsonSchemaObject {
           default?: any;
           type: 'string';
           enum: string[];
-          enumNames: string[];
+          enumNames?: string[];
         }
       | {
           title?: string;

@@ -33,6 +33,9 @@ export default function CustomField(props) {
       <label className="ks-select__label" tabIndex={0}>
         <span className="ks-select__wrapper ks-select__wrapper--variant">
           {children}
+          <span className="ks-select__icon">
+            <Icon size="s" symbol="dropdown-carrot" />
+          </span>
         </span>
       </label>
     );

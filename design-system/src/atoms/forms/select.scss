@@ -18,29 +18,30 @@
     max-width: 100%;
     margin: 0;
 
-    // variant display required for select element created by custom fields to span entire container
+    // Variant display required for select element created by custom fields to span containing form
     &--variant {
       display: inherit;
     }
-  }
 
-  &__select,
-  // styling for general select required when select is created as custom field and receives no class
-  select {
-    cursor: pointer;
-    position: relative;
-    width: 100%;
-    background-color: transparent;
-    font-size: var(--font-base-size);
-    border: 1px solid var(--c-frame);
-    border-radius: var(--radius-m);
-    height: 40px;
-    margin: auto 0;
-    padding: 0.3rem 2rem 0.3rem 1rem;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    outline: none;
-    z-index: 1;
+    /* Styling for general select required when select is created
+     as custom field and receives no '.ks-select' class
+    */
+    select {
+      cursor: pointer;
+      position: relative;
+      width: 100%;
+      background-color: transparent;
+      font-size: var(--font-base-size);
+      border: 1px solid var(--c-frame);
+      border-radius: var(--radius-m);
+      height: 40px;
+      margin: auto 0;
+      padding: 0.3rem 2rem 0.3rem 1rem;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      outline: none;
+      z-index: 1;
+    }
   }
 
   &__icon {

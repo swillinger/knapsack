@@ -51,7 +51,7 @@ import './style.scss';
 import '../cloud/amplify-wrapper.scss';
 
 Amplify.configure(awsconfig);
-//Amplify.Logger.LOG_LEVEL = 'DEBUG';
+// Amplify.Logger.LOG_LEVEL = 'DEBUG';
 
 const apolloClient = new ApolloClient({
   // This ensures we don't have `__typename` appear everywhere in stored data ~ https://github.com/apollographql/apollo-client/issues/1913

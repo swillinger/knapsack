@@ -99,6 +99,7 @@
     background-color: var(--c-bg);
     border-radius: var(--radius-m);
     box-shadow: var(--shadow);
+    z-index: 99;
   }
 
   &__nav-dropdown-item {

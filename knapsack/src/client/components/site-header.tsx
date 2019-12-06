@@ -138,16 +138,15 @@ export const SiteHeader: React.FC<Props> = ({
                 <NavLink to="/settings">General Settings</NavLink>
               </li>
               <li className="ks-site-header__nav-dropdown-item">
-                <NavLink to="/">Knapsack Docs</NavLink>
+                <a href="https://knapsack.basalt.io/docs/getting-started">
+                  Knapsack Docs
+                </a>
               </li>
               <li className="ks-site-header__nav-dropdown-item">
-                <NavLink to="/demos-urls">Demo URLS</NavLink>
+                <a href="/demo-urls">Demo URLs</a>
               </li>
               <li className="ks-site-header__nav-dropdown-item">
                 <NavLink to="/changelog">Changelog</NavLink>
-              </li>
-              <li className="ks-site-header__nav-dropdown-item">
-                <NavLink to="/">Login</NavLink>
               </li>
             </ul>
           </div>

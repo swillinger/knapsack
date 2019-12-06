@@ -5,7 +5,9 @@
 describe('Patterns', () => {
   it('Re-renders when form is edited', () => {
     cy.visit('/pattern/card/twig');
-    cy.get('main header h2').as('page-title');
+    cy.get('.ks-pattern-view-page__header h2 .ks-inline-edit__text').as(
+      'page-title',
+    );
     cy.get('@page-title').should('have.text', 'Card');
     cy.contains('Edit Form');
     cy.get('.ks-rjsf input[label="Body Title"]')

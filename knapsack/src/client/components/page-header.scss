@@ -1,10 +1,15 @@
 .ks-page-header {
   margin-bottom: var(--size-m);
+
+  &--is-empty {
+    margin-bottom: 0;
+  }
+
   &__section {
     color: var(--c-gray-light);
     font-size: 1rem;
     margin-bottom: 0;
   }
-  &__title {
-  }
+
+  &__title {}
 }

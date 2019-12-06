@@ -8,7 +8,8 @@ body {
 
 .ks-eyebrow {
   color: var(--c-gray-light);
-  font-size: 1rem;
+  font-size: var(--font-base-size);
+  font-weight: normal;
   margin-bottom: 0;
 }
 

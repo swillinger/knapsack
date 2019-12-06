@@ -1,18 +1,23 @@
+.ks-schema-table {
+  margin-top: var(--space-m);
+}
+
+/* stylelint-disable selector-max-class */
 .ReactTable .rt-table .rt-tbody .rt-td:first-child {
   background: unset;
 }
 
 .schema-table__title {
-  margin-right: 10px;
+  margin-right: var(--space-s);
 }
 
 .schema-table__required-label {
-  color: #e3522d;
+  color: var(--c-danger);
 }
 
 .schema-table .rt-th {
-  background: hsl(0,0%,95%);
+  background: var(--c-shade);
   border-top: 3px solid transparent;
   border-bottom: 3px solid transparent;
-  color: hsl(200,55%,19%);
+  color: var(--c-text-default);
 }

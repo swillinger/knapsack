@@ -14,24 +14,21 @@
 }
 
 .ks-template__resizable {
+  border: 1px solid var(--c-frame);
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   position: relative;
   resize: horizontal;
   overflow: hidden;
-  padding: 10px;
   width: 100%;
   max-width: 100%;
-  background-color: rgba(77, 77, 77, 0.15);
 
-  &__size-tab {
+  &__size-reading {
+    font-size: var(--font-size-s);
+    color: var(--c-text-subdued);
     position: absolute;
     bottom: 0;
-    right: 20px;
-    padding: 3px;
-    height: 18px;
-    line-height: 18px;
-    font-size: 10px;
+    right: var(--space-m);
   }
 }

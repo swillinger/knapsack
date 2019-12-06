@@ -35,10 +35,7 @@ export const full = () => (
     demoDataIndex={0}
     demoDatasLength={3}
     isTitleShown
-    handleOpenNewTabClick={action('handleOpenNewTabClick')}
     handleAssetSetChange={action('handleAssetSetChange')}
-    handleDemoPrevClick={action('handleDemoPrevClick')}
-    handleDemoNextClick={action('handleDemoNextClick')}
     handleStatusChange={action('handleStatusChange')}
   />
 );
@@ -61,8 +58,6 @@ export const allVariations = () => (
           {...props}
           handleOpenNewTabClick={action('handleOpenNewTabClick')}
           handleAssetSetChange={action('handleAssetSetChange')}
-          handleDemoPrevClick={action('handleDemoPrevClick')}
-          handleDemoNextClick={action('handleDemoNextClick')}
           handleStatusChange={action('handleStatusChange')}
         />
         <hr />
@@ -77,10 +72,7 @@ export const justData = () => (
     demoDatasLength={3}
     demoDataIndex={0}
     isTitleShown
-    handleOpenNewTabClick={action('handleOpenNewTabClick')}
     handleAssetSetChange={action('handleAssetSetChange')}
-    handleDemoPrevClick={action('handleDemoPrevClick')}
-    handleDemoNextClick={action('handleDemoNextClick')}
     handleStatusChange={action('handleStatusChange')}
   />
 );
@@ -91,22 +83,16 @@ export const justAssetSets = () => (
     assetSets={assetSets}
     assetSetId={assetSets[0].id}
     isTitleShown
-    handleOpenNewTabClick={action('handleOpenNewTabClick')}
     handleAssetSetChange={action('handleAssetSetChange')}
-    handleDemoPrevClick={action('handleDemoPrevClick')}
     handleStatusChange={action('handleStatusChange')}
-    handleDemoNextClick={action('handleDemoNextClick')}
   />
 );
 
 export const simple = () => (
   <TemplateHeader
     title="A Template Title"
-    handleOpenNewTabClick={action('handleOpenNewTabClick')}
     handleAssetSetChange={action('handleAssetSetChange')}
-    handleDemoPrevClick={action('handleDemoPrevClick')}
     handleStatusChange={action('handleStatusChange')}
-    handleDemoNextClick={action('handleDemoNextClick')}
     isTitleShown
   />
 );

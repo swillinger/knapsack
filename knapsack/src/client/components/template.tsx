@@ -173,7 +173,9 @@ const Template: React.FC<Props> = ({
         <div className="ks-template__resizable">
           {content}
           {width && (
-            <div className="ks-template__resizable__size-tab">{width}px</div>
+            <div className="ks-template__resizable__size-reading">
+              {width}px
+            </div>
           )}
         </div>
       </div>

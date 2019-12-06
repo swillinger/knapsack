@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import './schema-table.css';
+import './schema-table.scss';
 
 /*
  * Takes a string and returns the same string with first letter
@@ -191,15 +191,17 @@ export const SchemaTable = ({ schema }) => {
   ];
 
   return (
-    <ReactTable
-      // classname prefix ks- not added due to third party library
-      className="schema-table -striped -highlight"
-      data={data}
-      columns={columns}
-      showPagination={false}
-      defaultPageSize={data.length}
-      SubComponent={row => SchemaTableExpandable(row)}
-    />
+    <div className="ks-schema-table">
+      <ReactTable
+        // classname prefix ks- not added due to third party library
+        className="schema-table -striped -highlight"
+        data={data}
+        columns={columns}
+        showPagination={false}
+        defaultPageSize={data.length}
+        SubComponent={row => SchemaTableExpandable(row)}
+      />
+    </div>
   );
 };
 

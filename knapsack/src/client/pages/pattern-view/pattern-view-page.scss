@@ -1,9 +1,39 @@
-.pattern-view-page__header {
-  position: relative;
-  margin-bottom: 2rem;
-  display: grid;
-  grid: 2fr / 1fr;
-  @media screen and (min-width: 951px) {
-    grid: 1fr / 1fr 350px;
+.ks-pattern-view-page {}
+
+.ks-pattern-view-page__header {
+  display: flex;
+  align-items: flex-start;
+
+  &__info-wrap {
+    flex: 1;
+    &__title {
+      margin-top: var(--space-s);
+      margin-bottom: var(--space-m);
+    }
+
+    &__description {
+      margin-top: 0;
+      margin-bottom: var(--space-l);
+    }
+  }
+
+  &__controls {
+    border-radius: var(--space-xs);
+    box-shadow: 0 1px 3px 0 var(--c-shadow);
+    margin-left: var(--space-m);
+    padding: var(--space-xs) var(--space-s);
+
+    & > div + div {
+      margin-top: var(--space-xs);
+    }
+
+    // @TODO: Get rid of this and add block style option to Select
+    .ks-select__label-text {
+      margin-bottom: var(--space-xxs);
+    }
+    label,
+    .ks-select__wrapper {
+      width: 100%;
+    }
   }
 }

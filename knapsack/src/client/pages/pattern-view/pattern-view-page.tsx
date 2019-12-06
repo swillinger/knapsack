@@ -94,14 +94,14 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
       <PageWithSidebar>
         <section className="ks-pattern-view-page">
           <header className="ks-pattern-view-page__header">
-            <div>
+            <div className="ks-pattern-view-page__header__info-wrap">
               <h4
                 className="ks-eyebrow"
                 style={{ textTransform: 'capitalize' }}
               >
-                {breadcrumb.join(' > ')}
+                {breadcrumb.join(' / ')} /
               </h4>
-              <h2 style={{ marginBottom: '0' }}>
+              <h2 className="ks-pattern-view-page__header__info-wrap__title">
                 <InlineEditText
                   text={title}
                   isHeading
@@ -115,7 +115,7 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
                 />
               </h2>
 
-              <p style={{ marginTop: '1rem' }}>
+              <p className="ks-pattern-view-page__header__info-wrap__description">
                 <InlineEditText
                   text={description}
                   handleSave={text => {
@@ -128,8 +128,31 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
                 />
               </p>
             </div>
-            <div>
-              <div className="ks-pattern-view-demo-grid-controls">
+            <div className="ks-pattern-view-page__header__controls">
+              <div>
+                {templates.length > 1 && (
+                  <Select
+                    label="Template"
+                    value={templateId}
+                    items={[
+                      {
+                        value: 'all',
+                        title: 'Show All',
+                      },
+                      ...templates.map(t => ({
+                        value: t.id,
+                        title: t.title,
+                      })),
+                    ]}
+                    handleChange={value => {
+                      history.push(
+                        `${BASE_PATHS.PATTERN}/${patternId}/${value}`,
+                      );
+                    }}
+                  />
+                )}
+              </div>
+              <div>
                 {hasSchema && (
                   <Select
                     items={[
@@ -153,29 +176,6 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
                     value={demoSize}
                     handleChange={setDemoSize}
                     label="Stage Size"
-                  />
-                )}
-              </div>
-              <div className="ks-pattern-view-demo-grid-controls">
-                {templates.length > 1 && (
-                  <Select
-                    label="Template"
-                    value={templateId}
-                    items={[
-                      {
-                        value: 'all',
-                        title: 'Show All',
-                      },
-                      ...templates.map(t => ({
-                        value: t.id,
-                        title: t.title,
-                      })),
-                    ]}
-                    handleChange={value => {
-                      history.push(
-                        `${BASE_PATHS.PATTERN}/${patternId}/${value}`,
-                      );
-                    }}
                   />
                 )}
               </div>

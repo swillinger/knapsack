@@ -17,18 +17,24 @@
 }
 
 .ks-template-view__demo-stage {
-  background-image: linear-gradient(45deg, hsl(0, 0%, 90%) 25%, transparent 25%),
-    linear-gradient(-45deg, hsl(0, 0%, 90%) 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, hsl(0, 0%, 90%) 75%),
-    linear-gradient(-45deg, transparent 75%, hsl(0, 0%, 90%) 75%);
+  background-color: var(--c-shade);
+  border: 1px solid var(--c-frame);
+  border-right-width: 0;
+  border-top-left-radius: var(--space-xs);
+  border-bottom-left-radius: var(--space-xs);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
-  background-size: 20px 20px;
-  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  padding: var(--space-xs);
   width: 100%;
+  position: relative;
+
+  &__open-btn {
+    position: absolute;
+    top: var(--space-xxs);
+    right: var(--space-xxs);
+  }
 
   @media (max-width: $bp-large - 1) {
     width: 100% !important;
@@ -40,9 +46,11 @@
   justify-content: center;
   overflow: initial;
   overflow-y: visible;
-  border: dotted 1px var(--c-gray-xlight);
+  border: 1px solid var(--c-gray-xlight);
+  border-top-right-radius: var(--space-xs);
+  border-bottom-right-radius: var(--space-xs);
   position: relative;
-  padding: 0.5rem;
+  padding: var(--space-xs) var(--space-s);
   width: 100%;
 
   @media (max-width: $bp-large - 1) {
@@ -64,6 +72,14 @@
 
     form > div > label {
       display: none;
+    }
+  }
+
+  &__header {
+    margin-bottom: var(--space-m);
+    h3 {
+      margin-top: 0;
+      margin-bottom: var(--space-xxs);
     }
   }
 }

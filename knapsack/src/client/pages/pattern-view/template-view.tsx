@@ -193,11 +193,6 @@ const TemplateView: React.FC<Props> = ({
           demoDataIndex={demoIndex}
           status={status}
           isTitleShown={!isVerbose && isTitleShown}
-          handleOpenNewTabClick={() => {
-            if (templateInfo?.url) {
-              window.open(templateInfo.url, '_blank');
-            }
-          }}
           handleAssetSetChange={newAssetSetId => {
             setAssetSetId(newAssetSetId);
           }}
@@ -211,28 +206,6 @@ const TemplateView: React.FC<Props> = ({
                 },
               }),
             );
-          }}
-          handleDemoPrevClick={() => {
-            setDemoIndex(prev => {
-              const newIndex = prev - 1;
-              setDemo(demos[newIndex]);
-              return newIndex;
-            });
-            // setDataState(prevState => ({
-            //   demoDataIndex: prevState.demoDataIndex - 1,
-            //   data: demoDatas[prevState.demoDataIndex - 1],
-            // }));
-          }}
-          handleDemoNextClick={() => {
-            setDemoIndex(prev => {
-              const newIndex = prev + 1;
-              setDemo(demos[newIndex]);
-              return newIndex;
-            });
-            // setDataState(prevState => ({
-            //   demoDataIndex: prevState.demoDataIndex + 1,
-            //   data: demoDatas[prevState.demoDataIndex + 1],
-            // }));
           }}
         />
 
@@ -253,6 +226,20 @@ const TemplateView: React.FC<Props> = ({
               ),
             }}
           >
+            <span className="ks-template-view__demo-stage__open-btn">
+              <KsButton
+                kind="icon"
+                icon="external-link"
+                flush
+                onClick={() => {
+                  if (templateInfo?.url) {
+                    window.open(templateInfo.url, '_blank');
+                  }
+                }}
+              >
+                Open in New Window
+              </KsButton>
+            </span>
             <Template
               patternId={id}
               templateId={templateId}
@@ -271,9 +258,10 @@ const TemplateView: React.FC<Props> = ({
             >
               <div className="ks-template-view__schema-form__inner">
                 <header className="ks-template-view__schema-form__header">
-                  <h4>
+                  <h3>
                     <InlineEditText
                       text={demo.title}
+                      isHeading
                       handleSave={text => {
                         dispatch(
                           updateTemplateDemo({
@@ -287,7 +275,7 @@ const TemplateView: React.FC<Props> = ({
                         );
                       }}
                     />
-                  </h4>
+                  </h3>
                   <p>
                     <InlineEditText
                       text={demo.description}

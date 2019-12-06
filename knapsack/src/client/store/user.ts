@@ -29,13 +29,15 @@ const initialState: UserState = {
 };
 
 export function updateUser() {
-  return async dispatch => {
+  return async (dispatch, store) => {
+    const state: import('./index').AppState = store.getState();
+    const { isLocalDev } = state.userState;
     const { user, canEdit, role } = await getUserInfo();
     // console.log('updateUser', { canEdit, user, role, groups, ksRepoAccess });
     dispatch(
       updateUserState({
         user,
-        canEdit,
+        canEdit: isLocalDev || canEdit,
         role,
       }),
     );

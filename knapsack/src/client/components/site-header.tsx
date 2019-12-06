@@ -23,6 +23,16 @@ export const SiteHeader: React.FC<Props> = ({
 }: Props) => {
   const dispatch = useDispatch();
 
+  // Use state instead of classes if dropdown is going to be used as a separate component
+  const handleDropdown = () => {
+    const btn = document.querySelector('.ks-site-header__nav-dropdown');
+    if (btn.classList.contains('ks-site-header__nav-dropdown--active')) {
+      btn.classList.remove('class', 'ks-site-header__nav-dropdown--active');
+    } else {
+      btn.classList.add('ks-site-header__nav-dropdown--active');
+    }
+  };
+
   return (
     <header className="ks-site-header">
       <h3>
@@ -112,6 +122,35 @@ export const SiteHeader: React.FC<Props> = ({
             </a>
           </li>
         )}
+        <li className="ks-site-header__nav-item">
+          <span className="ks-site-header__nav-icon">
+            <KsButton
+              icon="settings"
+              kind="icon"
+              size="m"
+              onClick={handleDropdown}
+              onKeyPress={handleDropdown}
+            />
+          </span>
+          <div className="ks-site-header__nav-dropdown">
+            <ul className="ks-site-header__nav-dropdown-list">
+              <li className="ks-site-header__nav-dropdown-item">
+                <NavLink to="/settings">General Settings</NavLink>
+              </li>
+              <li className="ks-site-header__nav-dropdown-item">
+                <a href="https://knapsack.basalt.io/docs/getting-started">
+                  Knapsack Docs
+                </a>
+              </li>
+              <li className="ks-site-header__nav-dropdown-item">
+                <a href="/demo-urls">Demo URLs</a>
+              </li>
+              <li className="ks-site-header__nav-dropdown-item">
+                <NavLink to="/changelog">Changelog</NavLink>
+              </li>
+            </ul>
+          </div>
+        </li>
       </ul>
     </header>
   );

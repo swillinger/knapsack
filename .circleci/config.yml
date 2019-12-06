@@ -140,9 +140,9 @@ jobs:
           name: Deploy Knapsack Bootstrap Example
           command: |
             npm i -g now
-            now deploy --env EXAMPLE=bootstrap --local-config=./examples/bootstrap/now.json --team=basalt --token $ZEIT_TOKEN
+            now deploy --env EXAMPLE=bootstrap --local-config=./examples/bootstrap/now.json --scope=basalt --token $ZEIT_TOKEN
             if [ "$CIRCLE_BRANCH" = "next" ]; then
-              now alias --local-config=./examples/bootstrap/now.json --scope=basalt
+              now alias --local-config=./examples/bootstrap/now.json --scope=basalt --token $ZEIT_TOKEN
             fi
           no_output_timeout: 30m
 

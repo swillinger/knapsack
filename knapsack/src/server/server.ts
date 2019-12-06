@@ -260,6 +260,7 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
       ...dataStore,
       userState: {
         isLocalDev: process.env.NODE_ENV !== 'production',
+        canEdit: process.env.NODE_ENV !== 'production',
       },
       metaState: {
         meta,

@@ -10,10 +10,18 @@ describe('Patterns', () => {
     );
     cy.get('@page-title').should('have.text', 'Card');
     cy.contains('Edit Form');
+
+    // @todo fix weird delay where sometimes the last keystroke is not rendered in template
     cy.get('.ks-rjsf input[label="Body Title"]')
       .clear()
       .type('Robots are awesome', {
         delay: 100,
+      })
+      .type(' ', {
+        delay: 300,
+      })
+      .type('{backspace}', {
+        delay: 500,
       });
 
     cy.wait(3000); // eslint-disable-line

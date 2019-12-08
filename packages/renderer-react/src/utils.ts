@@ -1,6 +1,69 @@
 import { log } from '@knapsack/app';
+import { formatCode } from '@knapsack/app/dist/server/server-utils';
 import fs from 'fs-extra';
 import path from 'path';
+import { compile } from 'ejs';
+import { readFileSync } from 'fs';
+
+const renderUsageTemplate = compile(
+  readFileSync(path.join(__dirname, 'template.react.ejs'), 'utf8'),
+  {
+    filename: 'template.react.ejs',
+    async: true,
+  },
+);
+
+const renderDemoAppTemplate = compile(
+  readFileSync(path.join(__dirname, 'demo-app.jsx.ejs'), 'utf8'),
+  {
+    filename: 'demo-app.jsx.ejs',
+    async: true,
+  },
+);
+
+export async function getUsage(data: {
+  templateName: string;
+  props: object;
+  children?: string;
+  format?: boolean;
+}): Promise<string> {
+  const props = Object.keys(data.props).map(key => {
+    const value = JSON.stringify(data.props[key]);
+    return {
+      key,
+      value,
+    };
+  });
+  const { templateName, children } = data;
+  const result = await renderUsageTemplate({
+    templateName,
+    props,
+    children,
+  });
+  return data.format
+    ? formatCode({
+        code: result,
+        language: 'react',
+      })
+    : result.trim();
+}
+
+export async function getDemoAppUsage({
+  children,
+  imports,
+}: {
+  children: string;
+  imports: string;
+}): Promise<string> {
+  const code = await renderDemoAppTemplate({
+    children,
+    imports,
+  });
+  return formatCode({
+    code,
+    language: 'react',
+  });
+}
 
 /**
  * @param fileName - path to where JSON file should be read

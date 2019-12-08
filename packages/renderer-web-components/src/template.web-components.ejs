@@ -1,0 +1,12 @@
+<% if (before) { -%>
+<%- before %>
+<% } %>
+
+<<%= templateName %> <%- attributes %>>
+<%- children %>
+</<%= templateName %>>
+
+<% if (after) { -%>
+
+<%- after -%>
+<% } -%>

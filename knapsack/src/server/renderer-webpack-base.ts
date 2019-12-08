@@ -9,8 +9,6 @@ import {
   KnapsackConfig,
 } from '../schemas/knapsack-config';
 
-import { KnapsackPattern } from '../schemas/patterns';
-
 export class KnapsackRendererWebpackBase extends KnapsackRendererBase
   implements KnapsackTemplateRendererBase {
   webpack: typeof import('webpack');
@@ -80,6 +78,7 @@ export class KnapsackRendererWebpackBase extends KnapsackRendererBase
         library: ['knapsack', '[name]'],
         libraryTarget: 'var',
       },
+      optimization: {},
       // @todo implement code splitting
       // optimization: {
       //   minimize: process.env.NODE_ENV === 'production',
@@ -209,20 +208,6 @@ export class KnapsackRendererWebpackBase extends KnapsackRendererBase
       });
     };
     this.webpackWatcher = this.webpackWatch();
-  }
-
-  async render({ pattern, template, data }) {
-    if (!this.webpackManifest) await this.setManifest();
-    const id = `${pattern.id}-${template.id}`;
-    const html = `
-<script type="application/json">${JSON.stringify(data)}</script>
-<script src="${this.webpackManifest[`${id}.js`]}"></script>
-    `;
-
-    return {
-      ok: true,
-      html,
-    };
   }
 
   // eslint-disable-next-line class-methods-use-this

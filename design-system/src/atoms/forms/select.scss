@@ -4,11 +4,16 @@
   padding-right: 3px;
 
   &__label-text {
-    display: inline-block;
-    margin-right: 5px;
+    display: block;
+    margin-bottom: var(--size-xxs);
 
-    &:after {
-      content: ':';
+    .ks-select--label-inline & {
+      display: inline-block;
+      margin-right: var(--size-xxs);
+
+      &:after {
+        content: ':';
+      }
     }
   }
 

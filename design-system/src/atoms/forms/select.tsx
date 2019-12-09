@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import cn from 'classnames';
 import './select.scss';
 import shortid from 'shortid';
 import { Icon } from '../icon';
@@ -23,6 +24,7 @@ import { Icon } from '../icon';
 
 type Props = {
   label?: string;
+  isLabelInline?: boolean;
   handleChange: (value: string) => void;
   value?: string;
   items: {
@@ -36,6 +38,7 @@ export const Select: React.FC<Props> = ({
   handleChange,
   items,
   value = items.length === 0 ? '' : items[0].value,
+  isLabelInline = true,
 }: Props) => {
   const [id, setId] = useState('');
   useEffect(() => {
@@ -44,8 +47,12 @@ export const Select: React.FC<Props> = ({
 
   const [currentValue, setValue] = useState(value);
 
+  const classes = cn({
+    'ks-select': true,
+    'ks-select--label-inline': isLabelInline,
+  });
   return (
-    <label className="ks-select" htmlFor={id} tabIndex={0}>
+    <label className={classes} htmlFor={id} tabIndex={0}>
       {label && <div className="ks-select__label-text">{label}</div>}
       <span className="ks-select__wrapper">
         <select

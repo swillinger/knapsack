@@ -17,7 +17,7 @@ import {
   KnapsackTemplateData,
 } from '../../../../schemas/patterns';
 import { useSelector } from '../../../store';
-import slotsDataSchema from '../../../../json-schemas/schemaKnapsackTemplateDataSlots';
+// import slotsDataSchema from '../../../../json-schemas/schemaKnapsackTemplateDataSlots';
 
 type Props = {
   slotsData?: KnapsackTemplateData['slots'];
@@ -81,19 +81,19 @@ export const KsSlotsForm: React.FC<Props> = ({
         validateOnChange
         validate={values => {
           const errors = {};
-          Object.keys(values).forEach(value => {
-            const slotDatas = values[value];
-            slotDatas.forEach(slotData => {
-              const results = validateDataAgainstSchema(
-                slotsDataSchema,
-                slotData,
-              );
-              if (!results.ok) {
-                console.log(results, values);
-                errors[value] = results.message;
-              }
-            });
-          });
+          // Object.keys(values).forEach(value => {
+          //   const slotDatas = values[value];
+          //   slotDatas.forEach(slotData => {
+          //     const results = validateDataAgainstSchema(
+          //       slotsDataSchema,
+          //       slotData,
+          //     );
+          //     if (!results.ok) {
+          //       console.log(results, values);
+          //       errors[value] = results.message;
+          //     }
+          //   });
+          // });
           return errors;
         }}
       >

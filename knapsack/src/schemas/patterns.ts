@@ -100,7 +100,7 @@ export interface KnapsackPatternTemplate {
   /**
    * Relative file path to the template from the config file it is declared in
    */
-  path: string;
+  path?: string;
   /**
    * To use this template, would the simple `path` work?
    * If not, then how one would pull this template in to use

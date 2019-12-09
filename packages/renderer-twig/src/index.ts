@@ -75,6 +75,9 @@ class KnapsackTwigRenderer extends KnapsackRendererBase
               const slottedTemplates = slots[slotName];
               slotProps[slotName] = await Promise.all(
                 slottedTemplates.map(async slottedTemplate => {
+                  if (KnapsackRendererBase.isSlottedText(slottedTemplate)) {
+                    return `  ${slottedTemplate}`;
+                  }
                   const thisPattern = patternManifest.getPattern(
                     slottedTemplate.patternId,
                   );

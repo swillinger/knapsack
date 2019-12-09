@@ -1,6 +1,13 @@
 const { join } = require('path');
 const HtmlRenderer = require('@knapsack/renderer-html');
 const TwigRenderer = require('@knapsack/renderer-twig');
+const {
+  KnapsackWebComponentRenderer,
+} = require('@knapsack/renderer-web-components');
+const { KnapsackReactRenderer } = require('@knapsack/renderer-react');
+const webpack = require('webpack');
+const babelConfig = require('@knapsack/babel-config/es');
+const webpackConfig = require('./webpack.config');
 const { getGitBranch } = require('@knapsack/app/dist/server/server-utils');
 const designTokens = require('./assets/design-tokens/dist/knapsack-design-tokens');
 const { version } = require('./package.json');
@@ -17,6 +24,13 @@ const config = {
   version,
   changelog: './CHANGELOG.md',
   templateRenderers: [
+    new KnapsackReactRenderer({
+      webpackConfig,
+      webpack,
+      babelConfig,
+      // demoWrapperPath: join(__dirname, './demo-wrapper.tsx'),
+    }),
+    new KnapsackWebComponentRenderer(),
     new HtmlRenderer(),
     new TwigRenderer({
       src: {
@@ -33,7 +47,7 @@ const config = {
             paths: ['./assets/pages'],
           },
         ],
-      }
+      },
     }),
   ],
   cloud: {

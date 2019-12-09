@@ -15,3 +15,11 @@ allAssetSets:
       - src: ../public/css/material.css
       - src: ../public/css/material-theming.css
       - src: ../public/css/knapsack-overrides.css
+  web-components:
+    id: web-components
+    title: Web Components
+    assets:
+      - src: ../public/dist/main.js
+        tagLocation: head
+      - src: ../public/css/bootstrap.css
+      - src: ../public/css/knapsack-overrides.css

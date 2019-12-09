@@ -18,6 +18,7 @@
 import React, { useState } from 'react';
 import { SchemaForm, Details, Select, KsButton } from '@knapsack/design-system';
 import ReactTable from 'react-table';
+import produce from 'immer';
 import {
   useSelector,
   updatePattern,
@@ -30,13 +31,13 @@ import {
 } from '../../store';
 import MdBlock from '../../components/md-block';
 import Template from '../../components/template';
-import TemplateCodeBlock from './template-code-block';
+import TemplateCodeBlock from './components/template-code-block';
 import {
   LoadableSchemaTable,
   LoadableVariationDemo,
 } from '../../loadable-components';
 // import DosAndDonts from '../../components/dos-and-donts';
-import { TemplateHeader } from './template-header';
+import { TemplateHeader } from './components/template-header';
 import './template-view.scss';
 import './shared/demo-grid-controls.scss';
 import { isDataDemo, isTemplateDemo } from '../../../schemas/patterns';
@@ -44,6 +45,7 @@ import { TemplateThumbnail } from '../../components/template-thumbnail';
 import { Tabs } from '../../components/tabs';
 import { InlineEditText } from '../../components/inline-edit';
 import { KsRenderResults } from '../../../schemas/knapsack-config';
+import { KsSlotsForm } from './components/slots-form';
 
 const calculateDemoStageWidth = (size: string) => {
   switch (size) {
@@ -189,8 +191,6 @@ const TemplateView: React.FC<Props> = ({
         <TemplateHeader
           title={title}
           assetSets={assetSets}
-          demoDatasLength={demos.length}
-          demoDataIndex={demoIndex}
           status={status}
           isTitleShown={!isVerbose && isTitleShown}
           handleAssetSetChange={newAssetSetId => {
@@ -306,18 +306,13 @@ const TemplateView: React.FC<Props> = ({
                               schema={schema}
                               formData={demo.data.props}
                               onChange={({ formData }) => {
-                                // @todo ensure it saves
-                                setDemo(prevDemo => {
-                                  if (isDataDemo(prevDemo)) {
-                                    return {
-                                      ...prevDemo,
-                                      data: {
-                                        ...prevDemo.data,
-                                        props: formData,
-                                      },
-                                    };
-                                  }
-                                });
+                                setDemo(prevDemo =>
+                                  produce(prevDemo, draft => {
+                                    if (isDataDemo(draft)) {
+                                      draft.data.props = formData;
+                                    }
+                                  }),
+                                );
                               }}
                             />
                           </>
@@ -329,98 +324,23 @@ const TemplateView: React.FC<Props> = ({
                           menuItem: 'Slots',
                           render: () => {
                             if (!isDataDemo(demo)) return;
-                            const { slots } = spec;
-                            if (!demo.data.slots) {
-                              // @todo refactor
-                              setDemo(prevDemo => {
-                                if (isDataDemo(prevDemo)) {
-                                  return {
-                                    ...prevDemo,
-                                    data: {
-                                      ...prevDemo.data,
-                                      slots: {},
-                                    },
-                                  };
-                                }
-                              });
-                              return;
-                            }
 
                             return (
-                              <>
-                                <h4>Slots</h4>
-                                {Object.keys(slots).map(slotName => {
-                                  const slotDef = slots[slotName];
-
-                                  const items = [{ title: 'None', value: '' }];
-                                  slotDef.allowedPatternIds.forEach(
-                                    allowedPatternId => {
-                                      patterns[
-                                        allowedPatternId
-                                      ].templates.forEach(t => {
-                                        if (
-                                          t.templateLanguageId ===
-                                          template.templateLanguageId
-                                        ) {
-                                          t.demos.forEach(demoId => {
-                                            const {
-                                              title: demoTitle,
-                                            } = t.demosById[demoId];
-                                            items.push({
-                                              title: `${patterns[allowedPatternId].title} - ${demoTitle}`,
-                                              value: JSON.stringify({
-                                                patternId: allowedPatternId,
-                                                templateId: t.id,
-                                                demoId,
-                                              }),
-                                            });
-                                          });
-                                        }
-                                      });
-                                    },
+                              <KsSlotsForm
+                                slotsData={demo.data.slots}
+                                slotsSpec={spec.slots}
+                                templateLanguageId={template.templateLanguageId}
+                                handleData={slotsData => {
+                                  // console.log('new slots data', slotsData);
+                                  setDemo(prevDemo =>
+                                    produce(prevDemo, draft => {
+                                      if (isDataDemo(draft)) {
+                                        draft.data.slots = slotsData;
+                                      }
+                                    }),
                                   );
-                                  if (!isDataDemo(demo)) return;
-
-                                  return (
-                                    <div key={slotName}>
-                                      <h5>{slotName}</h5>
-                                      <Select
-                                        items={items}
-                                        value={JSON.stringify(
-                                          demo.data.slots[slotName]
-                                            ? demo.data.slots[slotName][0]
-                                            : '',
-                                        )}
-                                        handleChange={newSlotInfo => {
-                                          const newSlotData:
-                                            | {
-                                                patternId: string;
-                                                templateId: string;
-                                                demoId: string;
-                                              }[]
-                                            | [] = newSlotInfo
-                                            ? [JSON.parse(newSlotInfo)]
-                                            : [];
-                                          setDemo(prevDemo => {
-                                            if (isDataDemo(prevDemo)) {
-                                              return {
-                                                ...prevDemo,
-                                                data: {
-                                                  ...prevDemo.data,
-                                                  slots: {
-                                                    ...prevDemo.data.slots,
-                                                    [slotName]: newSlotData,
-                                                  },
-                                                },
-                                              };
-                                            }
-                                          });
-                                        }}
-                                      />
-                                    </div>
-                                  );
-                                })}
-                              </>
+                                }}
+                              />
                             );
                           },
                         }

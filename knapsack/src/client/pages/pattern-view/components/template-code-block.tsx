@@ -1,6 +1,6 @@
 import React from 'react';
 import { CodeBlock } from '@knapsack/design-system';
-import { KsRenderResults } from '../../../schemas/knapsack-config';
+import { KsRenderResults } from '../../../../schemas/knapsack-config';
 
 type Props = {
   templateInfo: KsRenderResults & { url: string };

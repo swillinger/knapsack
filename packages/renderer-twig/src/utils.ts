@@ -20,7 +20,7 @@ export async function getTwigUsage(data: {
   before?: string;
   after?: string;
 }): Promise<string> {
-  const props = Object.keys(data.props).map(key => {
+  const props = Object.keys(data.props || {}).map(key => {
     const value = JSON.stringify(data.props[key]);
     return {
       key,

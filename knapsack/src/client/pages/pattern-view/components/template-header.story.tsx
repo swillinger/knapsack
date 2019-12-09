@@ -32,8 +32,6 @@ export const full = () => (
     title="A Template Title"
     assetSets={assetSets}
     assetSetId={assetSets[1].id}
-    demoDataIndex={0}
-    demoDatasLength={3}
     isTitleShown
     handleAssetSetChange={action('handleAssetSetChange')}
     handleStatusChange={action('handleStatusChange')}
@@ -47,7 +45,6 @@ const options = {
     'Really long title lorem ipsum dolor sit amet, consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
   ],
   assetSets: [assetSets, []],
-  demoDatasLength: [0, 3],
 };
 
 export const allVariations = () => (
@@ -69,8 +66,6 @@ export const allVariations = () => (
 export const justData = () => (
   <TemplateHeader
     title="A Template Title"
-    demoDatasLength={3}
-    demoDataIndex={0}
     isTitleShown
     handleAssetSetChange={action('handleAssetSetChange')}
     handleStatusChange={action('handleStatusChange')}

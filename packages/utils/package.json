@@ -3,14 +3,18 @@
   "license": "GPL-2.0-or-later",
   "version": "1.7.1",
   "description": "A Knapsack component that helps build Design Systems",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist--cjs/index.js",
+  "module": "dist--mjs/index.js",
+  "types": "dist--mjs/index.d.ts",
   "scripts": {
     "clean": "rm -rf dist tsconfig.tsbuildinfo",
-    "build": "babel --config-file @knapsack/babel-config/es --source-maps --ignore 'src/*.test.js' --extensions .js,.ts --out-dir dist/ src/",
+    "build:mjs": "babel --config-file @knapsack/babel-config/es --source-maps --ignore 'src/*.test.js' --extensions .js,.ts --out-dir dist--mjs/ src/",
+    "build:cjs": "babel --config-file @knapsack/babel-config --source-maps --ignore 'src/*.test.js' --extensions .js,.ts --out-dir dist--cjs/ src/",
+    "build": "yarn build:mjs && yarn build:cjs",
+    "watch:mjs": "yarn build:mjs --watch",
+    "watch:cjs": "yarn build:cjs --watch",
     "prepublishOnly": "yarn build",
-    "start": "yarn build --watch"
+    "start": "run-p watch:*"
   },
   "dependencies": {
     "@knapsack/core": "^1.7.0",

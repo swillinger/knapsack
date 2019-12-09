@@ -1,15 +1,13 @@
 import React from 'react';
-import { KsButton, PatternStatusIcon, Select } from '@knapsack/design-system';
-import { useSelector } from '../../store';
+import { PatternStatusIcon, Select } from '@knapsack/design-system';
+import { useSelector } from '../../../store';
 import './template-header.scss';
-import { KnapsackTemplateStatus } from '../../../schemas/patterns';
+import { KnapsackTemplateStatus } from '../../../../schemas/patterns';
 
 type Props = {
   title: string;
   assetSets?: { title: string; id: string }[];
   assetSetId?: string;
-  demoDataIndex?: number;
-  demoDatasLength?: number;
   isTitleShown?: boolean;
   status?: KnapsackTemplateStatus;
   handleAssetSetChange: (newAssetSetId: string) => void;

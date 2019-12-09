@@ -285,10 +285,17 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
       });
     }
 
+    const isLocalDev =
+      state.userState.isLocalDev && process.env.NODE_ENV === 'production';
+
     const user = getUserInfo(req);
     const permissions = user?.role?.permissions;
 
-    if (!permissions.includes(PERMISSIONS.WRITE)) {
+    if (
+      !permissions.includes(PERMISSIONS.WRITE) &&
+      !isLocalDev &&
+      storageLocation !== 'local'
+    ) {
       res.status(HTTP_STATUS.BAD.UNAUTHORIZED).send();
     } else {
       try {

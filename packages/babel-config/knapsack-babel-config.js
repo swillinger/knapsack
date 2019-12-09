@@ -1,11 +1,10 @@
-const isProd = process.env.NODE_ENV === 'production';
-
 function getConfig({
   useESModules = false,
   targets = {
-    browsers: isProd
-      ? ['last 2 versions', '> 5%', 'not ie <= 11']
-      : ['last 2 versions'],
+    esmodules: true,
+    // browsers: isProd
+    //   ? ['last 2 versions', '> 5%', 'not ie <= 11']
+    //   : ['last 2 versions'],
   },
 }) {
   return {
@@ -45,6 +44,13 @@ function getConfig({
         },
       ],
       require.resolve('@babel/plugin-proposal-object-rest-spread'),
+      require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
+      [
+        require.resolve('@babel/plugin-proposal-decorators'),
+        {
+          decoratorsBeforeExport: true,
+        },
+      ],
       require.resolve('@babel/plugin-proposal-class-properties'),
       require.resolve('@babel/plugin-proposal-optional-chaining'),
     ].filter(Boolean),

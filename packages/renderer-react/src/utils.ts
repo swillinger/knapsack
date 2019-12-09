@@ -25,19 +25,40 @@ export async function getUsage(data: {
   templateName: string;
   props: object;
   children?: string;
+  extraProps?: {
+    key: string;
+    value: string;
+  }[];
   format?: boolean;
 }): Promise<string> {
-  const props = Object.keys(data.props).map(key => {
-    const value = JSON.stringify(data.props[key]);
+  const props = Object.keys(data.props || {}).map(key => {
+    const value = data.props[key];
     return {
       key,
       value,
     };
   });
-  const { templateName, children } = data;
+
+  const { templateName, children, extraProps = [] } = data;
+
+  const attributes: string[] = props.map(({ key, value }) => {
+    switch (typeof value) {
+      case 'string':
+        return `${key}="${value}"`;
+      case 'boolean':
+        return value ? `${key}` : `${key}={${value}}`;
+      default:
+        return `${key}={${JSON.stringify(value)}}`;
+    }
+  });
+
+  const extraAttributes: string[] = extraProps.map(
+    ({ key, value }) => `${key}={${value}}`,
+  );
+
   const result = await renderUsageTemplate({
     templateName,
-    props,
+    attributes: [...attributes, ...extraAttributes].join(' '),
     children,
   });
   return data.format
@@ -53,7 +74,7 @@ export async function getDemoAppUsage({
   imports,
 }: {
   children: string;
-  imports: string;
+  imports?: string;
 }): Promise<string> {
   const code = await renderDemoAppTemplate({
     children,

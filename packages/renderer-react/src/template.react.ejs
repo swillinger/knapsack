@@ -1,7 +1,5 @@
 <<%= templateName %>
-  <%_ props.forEach(prop => { -%>
-   <%= prop.key %>={<%- prop.value -%>}
-  <%_ }); -%>
+  <%- attributes %>
 <% if (children) { %>
 >
   <%- children %>

@@ -121,6 +121,23 @@ export class KnapsackRendererWebpackBase extends KnapsackRendererBase
             patternId: pattern.id,
             templateId: template.id,
           });
+
+          const demos = Object.values(template?.demosById ?? {});
+          if (demos) {
+            demos
+              .filter(KnapsackRendererWebpackBase.isTemplateDemo)
+              .forEach(demo => {
+                if (demo?.templateInfo?.path) {
+                  entry[
+                    `${pattern.id}-${template.id}-${demo.id}`
+                  ] = patterns.getTemplateDemoAbsolutePath({
+                    patternId: pattern.id,
+                    templateId: template.id,
+                    demoId: demo.id,
+                  });
+                }
+              });
+          }
         });
     });
     return entry;
@@ -169,6 +186,17 @@ export class KnapsackRendererWebpackBase extends KnapsackRendererBase
         return manifest;
       })
       .catch(console.log.bind(console));
+  }
+
+  getWebPackEntryPath(id: string, ext = '.js'): string {
+    const entry = `${id}${ext}`;
+    const result = this.webpackManifest[entry];
+    if (!result) {
+      const msg = `Could not find webpack entry "${entry}".`;
+      console.error(`Possible ids: "${Object.keys(this.webpackManifest)}"`);
+      throw new Error(msg);
+    }
+    return result;
   }
 
   build(): Promise<void> {

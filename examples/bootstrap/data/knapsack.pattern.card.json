@@ -73,6 +73,7 @@
       "title": "Web Component",
       "id": "web-component",
       "templateLanguageId": "web-components",
+      "path": "../assets/patterns/card/card.wc.js",
       "alias": "bs-card",
       "assetSetIds": ["web-components"],
       "spec": {

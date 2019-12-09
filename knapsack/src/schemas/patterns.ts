@@ -1,16 +1,12 @@
-// import gql from 'graphql-tag';
-// import { KnapsackAssetSet } from './asset-sets';
-// import { JsonSchemaObject } from './misc';
-// import { KnapsackTemplateRenderer } from './knapsack-config';
-
 import { JsonSchemaObject } from '@knapsack/core/dist/types';
 import { KnapsackCustomPageSlice } from './custom-pages';
 
 /**
- * Used to render a template instead of the path to that file
- * i.e. `@components/button.twig`
- * How a template file is used via `include`, `import`, etc
- * Better name? `src`?
+ * Used by template renderers in addition to `path`
+ * Twig: `@components/button.twig`
+ * Web Components: `my-button` => `<my-button>`
+ * React: a named export of the file if not `default`
+ * @todo Replace this with `rendererOptions`
  */
 type TemplateAlias = string;
 
@@ -100,12 +96,7 @@ export interface KnapsackPatternTemplate {
   /**
    * Relative file path to the template from the config file it is declared in
    */
-  path?: string;
-  /**
-   * To use this template, would the simple `path` work?
-   * If not, then how one would pull this template in to use
-   * in the production environment in a different way?
-   */
+  path: string;
   alias?: TemplateAlias;
   /**
    * Which template language?

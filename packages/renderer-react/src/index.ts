@@ -9,9 +9,9 @@ import {
   KnapsackTemplateRendererBase,
   KnapsackRenderParams,
 } from '@knapsack/app/src/schemas/knapsack-config';
-import { isDataDemo } from '@knapsack/app/dist/schemas/patterns';
 import camelCase from 'camelcase';
 import * as babel from '@babel/core';
+import { readFile } from 'fs-extra';
 import { join } from 'path';
 import { copyReactAssets, getUsage, getDemoAppUsage } from './utils';
 
@@ -31,6 +31,7 @@ type ImportInfo = {
   path: string;
   patternId: string;
   templateId: string;
+  demoId?: string;
 };
 
 export class KnapsackReactRenderer extends KnapsackRendererWebpackBase
@@ -109,63 +110,23 @@ export class KnapsackReactRenderer extends KnapsackRendererWebpackBase
     });
   }
 
-  async render(
-    opt: KnapsackRenderParams,
-  ): Promise<KnapsackTemplateRendererResults> {
-    const { usage, imports } = await this.getUsageAndImports(opt);
-    const importCode = imports
-      .map(({ isNamedImport, path, name }) => {
-        return `import ${isNamedImport ? `{ ${name} }` : name} from '${path}';`;
-      })
-      .join('\n');
-    const ksImportCode = imports
-      .map(({ name, isNamedImport, templateId, patternId }) => {
-        const exportName = isNamedImport ? name : 'default';
-        return `const ${name} = window.knapsack['${patternId}-${templateId}'].${exportName};`;
-      })
-      .join('\n');
-    const webpackScriptSrcs = imports.map(imp => {
-      const id = `${imp.patternId}-${imp.templateId}.js`;
-      const src = this.webpackManifest[id];
-      if (!src) {
-        const msg = `Error: cannot find "${id}" in webpack manifest: `;
-        console.error(msg, this.webpackManifest);
-        throw new Error(msg);
-      }
-      return src;
-    });
-
-    const formattedUsage = KnapsackRendererWebpackBase.formatCode({
-      code: `${importCode}\n\n${usage}`,
-      language: this.language,
-    });
-    const demoAppUsage = await getDemoAppUsage({
-      children: usage,
-      imports: ksImportCode,
-    });
-    const demoApp = await getDemoAppUsage({
-      children: usage,
-      imports: importCode,
-    });
-    // return {
-    //   ok: true,
-    //   html: `<h2>temp disabled</h2>`,
-    //   usage,
-    //   templateLanguage: this.language,
-    // };
-    const { pattern, template, patternManifest, demo } = opt;
-    const exportName = template.alias || 'default';
-    const props =
-      demo && KnapsackReactRenderer.isDataDemo(demo) ? demo.data?.props : {};
+  async prepClientRenderResults({
+    webpackScriptSrcs,
+    usage,
+    demoApp,
+  }: {
+    usage: string;
+    demoApp: string;
+    webpackScriptSrcs: string[];
+  }): Promise<KnapsackTemplateRendererResults> {
     if (!this.webpackManifest) await this.setManifest();
-    console.log(this.webpackManifest, demo);
-    const id = `${pattern.id}-${template.id}`;
+
     let code = `
 const root = document.getElementById('render-root');
 const DemoWrapper = window.knapsack['demo-wrapper'].default;
 const ErrorCatcher = window.knapsack['error-catcher'].default;
 
-${demoAppUsage}
+${demoApp}
 
 ReactDOM.render(
   <ErrorCatcher>
@@ -184,14 +145,13 @@ ReactDOM.render(
     });
 
     const html = `
-    <script>window.MY_REACT_DOCS = window.MY_REACT_DOCS || {}; </script>
 ${this.assets.map(asset => `<script src="${asset}"></script>`).join('')}
-<script src="${this.webpackManifest['demo-wrapper.js']}"></script>
-<script src="${this.webpackManifest['error-catcher.js']}"></script>
+<script src="${this.getWebPackEntryPath('demo-wrapper')}"></script>
+<script src="${this.getWebPackEntryPath('error-catcher')}"></script>
 ${webpackScriptSrcs
   .map(webpackScriptSrc => `<script src="${webpackScriptSrc}"></script>`)
-  .join('')}
-<div id="render-root" data-dev-note="Knapsack React Template Wrapper" data-id="${id}"></div>
+  .join('\n')}
+<div id="render-root" data-dev-note="Knapsack React Template Wrapper"></div>
 <script type="application/javascript">${code}</script>
     `;
 
@@ -201,11 +161,85 @@ ${webpackScriptSrcs
         code: html,
         language: 'html',
       }),
-      usage: demoApp,
+      usage,
       // usage: await this.babelTransform(demoAppUsage),
       // usage: html,
       templateLanguage: this.language,
     };
+  }
+
+  async render(
+    opt: KnapsackRenderParams,
+  ): Promise<KnapsackTemplateRendererResults> {
+    if (KnapsackReactRenderer.isTemplateDemo(opt.demo)) {
+      const id = `${opt.pattern.id}-${opt.template.id}-${opt.demo.id}`;
+
+      const templateDemoPath = opt.patternManifest.getTemplateDemoAbsolutePath({
+        patternId: opt.pattern.id,
+        templateId: opt.template.id,
+        demoId: opt.demo.id,
+      });
+      const usage = await readFile(templateDemoPath, 'utf-8');
+      const exportName = opt.demo?.templateInfo?.alias || 'default';
+
+      const ksImportCode = `const DemoApp = window.knapsack['${id}'].${exportName};`;
+
+      const demoApp = `
+${ksImportCode}
+      `;
+      const results = await this.prepClientRenderResults({
+        usage,
+        demoApp,
+        webpackScriptSrcs: [this.getWebPackEntryPath(id)],
+      });
+
+      return results;
+    }
+    if (KnapsackReactRenderer.isDataDemo(opt.demo)) {
+      const { usage, imports } = await this.getUsageAndImports(opt);
+
+      const importCode = imports
+        .map(({ isNamedImport, path, name }) => {
+          return `import ${
+            isNamedImport ? `{ ${name} }` : name
+          } from '${path}';`;
+        })
+        .join('\n');
+
+      const ksImportCode = imports
+        .map(({ name, isNamedImport, templateId, patternId, demoId }) => {
+          const exportName = isNamedImport ? name : 'default';
+          return `const ${name} = window.knapsack['${patternId}-${templateId}${
+            demoId ? `-${demoId}` : ''
+          }'].${exportName};`;
+        })
+        .join('\n');
+
+      const webpackScriptSrcs = imports.map(imp => {
+        const id = `${imp.patternId}-${imp.templateId}`;
+        return this.getWebPackEntryPath(id);
+      });
+
+      const formattedUsage = KnapsackRendererWebpackBase.formatCode({
+        code: `${importCode}\n\n${usage}`,
+        language: this.language,
+      });
+
+      const demoAppUsage = await getDemoAppUsage({
+        children: usage,
+        imports: importCode,
+      });
+      const demoApp = await getDemoAppUsage({
+        children: usage,
+        imports: ksImportCode,
+      });
+
+      return this.prepClientRenderResults({
+        demoApp,
+        usage: demoAppUsage,
+        webpackScriptSrcs,
+      });
+    }
   }
 
   async getUsageAndImports(
@@ -283,17 +317,6 @@ ${webpackScriptSrcs
             }
           });
         });
-      // const importsX = new Set<string>();
-      // importsX.add(
-      //   `import ${isNamedImport ? `{ ${templateName} }` : templateName} from '${
-      //     template.path
-      //   }';`,
-      // );
-      //
-      // kids.forEach(kid => {
-      //   kid.imports.forEach(i => importsX.add(i));
-      // });
-      //
 
       return {
         usage,
@@ -310,51 +333,5 @@ ${webpackScriptSrcs
   async getUsage(opt: KnapsackRenderParams): Promise<string> {
     const { usage } = await this.getUsageAndImports(opt);
     return usage;
-    // const { pattern, template, patternManifest, demo } = opt;
-    // if (isDataDemo(demo)) {
-    //   const {
-    //     data: { props, slots },
-    //   } = demo;
-    //   const templateName =
-    //     template.alias && template.alias !== 'default'
-    //       ? template.alias
-    //       : pattern.id;
-    //   const childItems: Promise<string>[] = [];
-    //   if (slots) {
-    //     Object.keys(slots).forEach(slotName => {
-    //       slots[slotName].forEach(slotItem => {
-    //         const slotPattern = patternManifest.getPattern(slotItem.patternId);
-    //
-    //         const slotTemplate = slotPattern.templates.find(
-    //           t => t.id === slotItem.templateId,
-    //         );
-    //         childItems.push(
-    //           this.getUsage({
-    //             pattern: slotPattern,
-    //             template: slotTemplate,
-    //             demo: slotTemplate.demosById[slotItem.demoId],
-    //             patternManifest,
-    //           }),
-    //         );
-    //       });
-    //     });
-    //   }
-    //
-    //   return getUsage({
-    //     templateName: upperCamelCase(templateName),
-    //     props,
-    //     children: await Promise.all(childItems).then(x => x.join('\n')),
-    //   });
-    // }
-    //
-    // return `Uh oh, don't know how to help`;
-    // // @todo show how to `import` the React component
-    //     return `
-    // const data = ${JSON.stringify(data, null, '  ')};
-    //
-    // function Example() {
-    //   return <${upperCamelCase(patternId)} {...data} />;
-    // }
-    //     `.trim();
   }
 }

@@ -205,6 +205,7 @@
       "title": "Web Component",
       "id": "web-component",
       "templateLanguageId": "web-components",
+      "path": "../assets/patterns/button/button.wc.js",
       "alias": "bs-button",
       "assetSetIds": ["web-components"],
       "spec": {

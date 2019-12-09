@@ -14,6 +14,29 @@ import { KnapsackCustomPageSlice } from './custom-pages';
  */
 type TemplateAlias = string;
 
+type SlottedTemplateDemo = {
+  patternId: string;
+  templateId: string;
+  // data: TemplateDemo;
+  demoId: DemoBase['id'];
+};
+
+type SlottedText = string;
+
+type SlottedData = SlottedText | SlottedTemplateDemo;
+
+export const isSlottedText = (
+  slottedData: SlottedData,
+): slottedData is SlottedText => typeof slottedData === 'string';
+
+export function isSlottedTemplateDemo(
+  slottedData: SlottedData,
+): slottedData is SlottedTemplateDemo {
+  if (!isSlottedText(slottedData)) {
+    return 'patternId' in slottedData;
+  }
+}
+
 export type KnapsackTemplateData = {
   /**
    * @todo Ideal would be `{ [key: string]: string | boolean | number }`
@@ -22,12 +45,7 @@ export type KnapsackTemplateData = {
     [prop: string]: any;
   };
   slots?: {
-    [slotName: string]: {
-      patternId: string;
-      templateId: string;
-      // data: TemplateDemo;
-      demoId: DemoBase['id'];
-    }[];
+    [slotName: string]: Array<SlottedTemplateDemo | SlottedText>;
   };
   // cssVars?: {
   //   [varName: string]: string;
@@ -112,19 +130,20 @@ export interface KnapsackPatternTemplate {
     slots?: {
       [name: string]: {
         title: string;
-        description: string;
+        description?: string;
+        disallowText?: boolean;
         allowedPatternIds?: string[];
       };
     };
     /**
      * @todo evaluate & refine
      */
-    cssProps?: {
-      [name: string]: {
-        title: string;
-        description: string;
-      };
-    };
+    // cssProps?: {
+    //   [name: string]: {
+    //     title: string;
+    //     description: string;
+    //   };
+    // };
   };
 
   /**

@@ -14,4 +14,5 @@ dist
 tsconfig.tsbuildinfo
 /knapsack/src/json-schemas/*.json
 /knapsack/src/json-schemas/*.ts
-
+dist--mjs
+dist--cjs

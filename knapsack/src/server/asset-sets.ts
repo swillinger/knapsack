@@ -55,21 +55,32 @@ export class AssetSets extends FileDb2<KnapsackAssetSetsConfig> {
         assets: assetSet.assets.map(asset => {
           const isRemote = isRemoteUrl(asset.src);
           const src = isRemote ? asset.src : resolve(this.dataDir, asset.src);
+          const { ext } = parse(src);
 
           if (!isRemote) {
             fileExistsOrExit(src);
             if (relative(this.publicDir, src).includes('..')) {
               log.error(
                 `Some CSS or JS is not publically accessible! These must be either remote or places inside the "public" dir (${this.publicDir})`,
+                {
+                  asset,
+                },
               );
               process.exit(1);
             }
+          } else {
+            return {
+              ...asset,
+              src,
+              publicPath: src,
+              type: ext.replace('.', ''),
+            };
           }
 
-          const { ext } = parse(src);
           const [size] = getFileSizes([src]);
 
           return {
+            ...asset,
             src,
             // isInHead: asset.isInHead === true,
             publicPath: isRemote ? src : `/${relative(this.publicDir, src)}`,

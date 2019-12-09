@@ -211,35 +211,41 @@ export function formatCode({
   code: string;
   language: string;
 }): string {
-  const format = parser =>
-    prettier.format(code.trim(), {
-      trailingComma: 'all',
-      singleQuote: true,
-      semi: true,
-      parser,
-      htmlWhitespaceSensitivity: 'ignore',
-    });
+  if (!code) return code;
+  try {
+    const format = parser =>
+      prettier.format(code?.trim(), {
+        trailingComma: 'all',
+        singleQuote: true,
+        semi: true,
+        parser,
+        htmlWhitespaceSensitivity: 'ignore',
+      });
 
-  switch (language) {
-    case 'html':
-      return format('html');
-    case 'react':
-    case 'js':
-    case 'jsx':
-      return format('babel');
-    case 'ts':
-    case 'tsx':
-    case 'react-typescript':
-      return format('typescript');
-    case 'json':
-      return format('json');
-    case 'yml':
-    case 'yaml':
-      return format('yaml');
-    case 'md':
-    case 'markdown':
-      return format('markdown');
-    default:
-      return code?.trim();
+    switch (language) {
+      case 'html':
+        return format('html');
+      case 'react':
+      case 'js':
+      case 'jsx':
+        return format('babel');
+      case 'ts':
+      case 'tsx':
+      case 'react-typescript':
+        return format('typescript');
+      case 'json':
+        return format('json');
+      case 'yml':
+      case 'yaml':
+        return format('yaml');
+      case 'md':
+      case 'markdown':
+        return format('markdown');
+      default:
+        return code?.trim();
+    }
+  } catch (error) {
+    console.error(error);
+    return code;
   }
 }

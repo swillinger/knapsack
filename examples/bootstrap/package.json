@@ -9,10 +9,13 @@
     "build": "NODE_ENV=production run-s --print-name clean build:tokens build:knapsack",
     "build:knapsack": "NODE_ENV=production node $NODE_DEBUG_OPTION ./node_modules/.bin/knapsack build",
     "build:tokens": "style-dictionary build --config ./style-dictionary.config.js",
+    "build:wp": "webpack",
     "clean": "rm -rf ./assets/design-tokens/dist",
-    "dev:knapsack": "nodemon --config ../nodemon.json --exec 'yarn start:knapsack'",
+    "watch:knapsack": "nodemon --config ../nodemon.json --exec 'yarn start:knapsack'",
     "serve": "NODE_ENV=production node $NODE_DEBUG_OPTION ./node_modules/.bin/knapsack serve",
-    "start": "run-s clean build:tokens dev:knapsack",
+    "start": "run-s clean build:tokens watch",
+    "watch:wp": "yarn build:wp --watch",
+    "watch": "run-p watch:*",
     "start:knapsack": "node $NODE_DEBUG_OPTION ./node_modules/.bin/knapsack start",
     "test": "knapsack test"
   },
@@ -21,6 +24,8 @@
     "@knapsack/app": "^1.7.1",
     "@knapsack/renderer-html": "^1.6.0",
     "@knapsack/renderer-twig": "^1.6.0",
+    "@knapsack/renderer-web-components": "^1.6.0",
+    "lit-element": "^2.2.1",
     "lodash.template": "^4.4.0"
   },
   "devDependencies": {

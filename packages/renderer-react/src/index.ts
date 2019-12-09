@@ -45,7 +45,7 @@ export class KnapsackReactRenderer extends KnapsackRendererWebpackBase
     webpackConfig,
     webpack,
     babelConfig,
-    demoWrapperPath = join(__dirname, './demo-wrapper'),
+    demoWrapperPath = join(__dirname, './demo-wrapper.js'),
   }: {
     id: string;
     extension: string;
@@ -91,7 +91,7 @@ export class KnapsackReactRenderer extends KnapsackRendererWebpackBase
     }
     return {
       [id]: this.demoWrapperPath,
-      'error-catcher': join(__dirname, './error-catcher'),
+      'error-catcher': join(__dirname, './error-catcher.js'),
       ...entry,
     };
   }
@@ -155,7 +155,8 @@ export class KnapsackReactRenderer extends KnapsackRendererWebpackBase
     // };
     const { pattern, template, patternManifest, demo } = opt;
     const exportName = template.alias || 'default';
-    const props = demo && isDataDemo(demo) ? demo.data?.props : {};
+    const props =
+      demo && KnapsackReactRenderer.isDataDemo(demo) ? demo.data?.props : {};
     if (!this.webpackManifest) await this.setManifest();
     console.log(this.webpackManifest, demo);
     const id = `${pattern.id}-${template.id}`;
@@ -214,7 +215,7 @@ ${webpackScriptSrcs
     imports: ImportInfo[];
   }> {
     const { pattern, template, patternManifest, demo } = opt;
-    if (demo?.type && isDataDemo(demo)) {
+    if (demo?.type && KnapsackReactRenderer.isDataDemo(demo)) {
       const {
         data: { props, slots },
       } = demo;

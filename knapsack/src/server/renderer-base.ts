@@ -8,6 +8,12 @@ import {
   KnapsackTemplateRendererBase,
   KnapsackConfig,
 } from '../schemas/knapsack-config';
+import {
+  isSlottedText,
+  isDataDemo,
+  isTemplateDemo,
+  isSlottedTemplateDemo,
+} from '../schemas/patterns';
 
 /* eslint-disable class-methods-use-this, no-empty-function, no-unused-vars */
 export class KnapsackRendererBase implements KnapsackTemplateRendererBase {
@@ -38,6 +44,14 @@ export class KnapsackRendererBase implements KnapsackTemplateRendererBase {
   }
 
   static formatCode = formatCode;
+
+  static isSlottedText = isSlottedText;
+
+  static isDataDemo = isDataDemo;
+
+  static isTemplateDemo = isTemplateDemo;
+
+  static isSlottedTemplateDemo = isSlottedTemplateDemo;
 
   /**
    * Each sub-class should implement this themselves, probably using `KnapsackRendererBase.formatCode()`

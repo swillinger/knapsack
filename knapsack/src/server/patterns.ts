@@ -27,6 +27,7 @@ import {
   KnapsackTemplateStatus,
   KnapsackPatternsConfig,
   KnapsackTemplateDemo,
+  isTemplateDemo,
 } from '../schemas/patterns';
 import {
   KnapsackTemplateRenderer,
@@ -188,20 +189,35 @@ Resolved absolute path: ${path}
   } = {}): string[] {
     const allTemplatePaths = [];
     this.allPatterns.forEach(pattern => {
-      pattern.templates.forEach(template => {
-        if (
-          templateLanguageId === '' ||
-          template.templateLanguageId === templateLanguageId
-        ) {
-          allTemplatePaths.push(
-            this.getTemplateAbsolutePath({
-              patternId: pattern.id,
-              templateId: template.id,
-            }),
-          );
-        }
-      });
+      pattern.templates
+        .filter(t => t.path) // some just use `alias`
+        .forEach(template => {
+          if (
+            templateLanguageId === '' ||
+            template.templateLanguageId === templateLanguageId
+          ) {
+            allTemplatePaths.push(
+              this.getTemplateAbsolutePath({
+                patternId: pattern.id,
+                templateId: template.id,
+              }),
+            );
+          }
+          // Object.values(template.demosById || {})
+          //   .filter(isTemplateDemo)
+          //   .filter(({ templateInfo }) => templateInfo.path)
+          //   .forEach(demo => {
+          //     allTemplatePaths.push(
+          //       this.getTemplateDemoAbsolutePath({
+          //         patternId: pattern.id,
+          //         templateId: template.id,
+          //         demoId: demo.id,
+          //       }),
+          //     );
+          //   });
+        });
     });
+
     return allTemplatePaths;
   }
 
@@ -214,6 +230,35 @@ Resolved absolute path: ${path}
         `Could not find template ${templateId} in pattern ${patternId}`,
       );
     const relPath = join(this.dataDir, template.path);
+    const path = join(process.cwd(), relPath);
+    if (!fileExists(path)) throw new Error(`File does not exist: ${path}`);
+    return path;
+  }
+
+  getTemplateDemoAbsolutePath({ patternId, templateId, demoId }): string {
+    const pattern = this.byId[patternId];
+    if (!pattern) throw new Error(`Could not find pattern ${patternId}`);
+    const template = pattern.templates.find(t => t.id === templateId);
+    if (!template)
+      throw new Error(
+        `Could not find template ${templateId} in pattern ${patternId}`,
+      );
+    const demo = template.demosById[demoId];
+    if (!demo)
+      throw new Error(
+        `Could not find demo "${demoId}" in template ${templateId} in pattern ${patternId}`,
+      );
+    if (!isTemplateDemo(demo)) {
+      throw new Error(
+        `Demo is not a "template" type of demo; cannot retrieve path for demo "${demoId}" in template ${templateId} in pattern ${patternId}`,
+      );
+    }
+    if (!demo.templateInfo?.path) {
+      throw new Error(
+        `No "path" in demo "${demoId}" in template ${templateId} in pattern ${patternId}`,
+      );
+    }
+    const relPath = join(this.dataDir, demo.templateInfo.path);
     const path = join(process.cwd(), relPath);
     if (!fileExists(path)) throw new Error(`File does not exist: ${path}`);
     return path;
@@ -277,62 +322,65 @@ Resolved absolute path: ${path}
     websocketsPort?: number;
     assetSetId?: string;
   }): Promise<KsRenderResults> {
-    const pattern = this.getPattern(patternId);
-    if (!pattern) {
-      const message = `Pattern not found: '${patternId}'`;
-      return {
-        ok: false,
-        html: `<p>${message}</p>`,
-        wrappedHtml: `<p>${message}</p>`,
-        message,
-      };
-    }
+    try {
+      const pattern = this.getPattern(patternId);
+      if (!pattern) {
+        const message = `Pattern not found: '${patternId}'`;
+        return {
+          ok: false,
+          html: `<p>${message}</p>`,
+          wrappedHtml: `<p>${message}</p>`,
+          message,
+        };
+      }
 
-    const template = pattern.templates.find(t => t.id === templateId);
-    if (!template) {
-      throw new Error(
-        `Could not find template ${templateId} in pattern ${patternId}`,
-      );
-    }
+      const template = pattern.templates.find(t => t.id === templateId);
+      if (!template) {
+        throw new Error(
+          `Could not find template ${templateId} in pattern ${patternId}`,
+        );
+      }
 
-    const renderer = this.templateRenderers[template.templateLanguageId];
+      const renderer = this.templateRenderers[template.templateLanguageId];
 
-    // const demoData = null;
-    // @todo restore
-    // const demoData = demoDataId ? template.demosById[demoDataId] : null;
+      // const demoData = null;
+      // @todo restore
+      // const demoData = demoDataId ? template.demosById[demoDataId] : null;
 
-    const renderedTemplate = await renderer.render({
-      pattern,
-      template,
-      // data: demoData || data || {},
-      // data,
-      demo,
-      patternManifest: this,
-    });
+      const renderedTemplate = await renderer.render({
+        pattern,
+        template,
+        // data: demoData || data || {},
+        // data,
+        demo,
+        patternManifest: this,
+      });
 
-    if (!renderedTemplate.ok) {
-      return {
-        ...renderedTemplate,
-        wrappedHtml: renderedTemplate.html, // many times error messages are in the html for users
-      };
-    }
+      if (!renderedTemplate.ok) {
+        return {
+          ...renderedTemplate,
+          wrappedHtml: renderedTemplate.html, // many times error messages are in the html for users
+        };
+      }
 
-    const assetSet = assetSetId
-      ? this.assetSets.getAssetSet(assetSetId)
-      : this.assetSets.getGlobalAssetSets()[0];
+      const globalAssetSets = this.assetSets.getGlobalAssetSets();
+      let assetSet = globalAssetSets ? globalAssetSets[0] : globalAssetSets[0];
+      if (assetSetId) {
+        assetSet = this.assetSets.getAssetSet(assetSetId);
+      }
 
-    const {
-      assets,
-      inlineJs = '',
-      inlineCss = '',
-      inlineFoot = '',
-      inlineHead = '',
-    } = assetSet;
+      const {
+        assets = [],
+        inlineJs = '',
+        inlineCss = '',
+        inlineFoot = '',
+        inlineHead = '',
+      } = assetSet ?? {};
 
-    const inlineJSs = [inlineJs];
+      const inlineJSs = [inlineJs];
 
-    if (isInIframe) {
-      inlineJSs.push(`
+      if (isInIframe) {
+        inlineJSs.push(`
 /**
   * Prevents the natural click behavior of any links within the iframe.
   * Otherwise the iframe reloads with the current page or follows the url provided.
@@ -342,10 +390,10 @@ links.forEach(function(link) {
   link.addEventListener('click', function(e){e.preventDefault();});
 });
         `);
-    }
+      }
 
-    if (!isInIframe && websocketsPort) {
-      inlineJSs.push(`
+      if (!isInIframe && websocketsPort) {
+        inlineJSs.push(`
 if ('WebSocket' in window && location.hostname === 'localhost') {
   var socket = new window.WebSocket('ws://localhost:8000');
   socket.addEventListener('message', function() {
@@ -353,38 +401,70 @@ if ('WebSocket' in window && location.hostname === 'localhost') {
   });
 }
           `);
-    }
-    const wrappedHtml = renderer.wrapHtml({
-      html: renderedTemplate.html,
-      headJsUrls: [
-        isInIframe
-          ? `https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/${iframeResizerVersion}/iframeResizer.contentWindow.min.js`
-          : '',
-      ].filter(x => x),
-      cssUrls: assets
-        .filter(asset => asset.type === 'css')
-        // .map(asset => asset.publicPath),
-        .map(asset => this.assetSets.getAssetPublicPath(asset.src)),
-      jsUrls: assets
+      }
+
+      const jsUrls = assets
         .filter(asset => asset.type === 'js')
-        // .map(asset => asset.publicPath),
-        .map(asset => this.assetSets.getAssetPublicPath(asset.src)),
-      inlineJs: inlineJSs.join('\n'),
-      inlineCss,
-      inlineHead,
-      inlineFoot,
-    });
-    return {
-      ...renderedTemplate,
-      usage: renderer.formatCode(renderedTemplate.usage),
-      html: formatCode({
-        code: renderedTemplate.html,
-        language: 'html',
-      }),
-      wrappedHtml: formatCode({
-        code: wrappedHtml,
-        language: 'html',
-      }),
-    };
+        .filter(asset => asset.tagLocation !== 'head')
+        .map(asset => this.assetSets.getAssetPublicPath(asset.src));
+
+      const headJsUrls = assets
+        .filter(asset => asset.type === 'js')
+        .filter(asset => asset.tagLocation === 'head')
+        .map(asset => this.assetSets.getAssetPublicPath(asset.src));
+
+      const wrappedHtml = renderer.wrapHtml({
+        html: renderedTemplate.html,
+        headJsUrls: [
+          ...headJsUrls,
+          isInIframe
+          ? `https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/${iframeResizerVersion}/iframeResizer.contentWindow.min.js`
+            : '',
+        ].filter(x => x),
+        cssUrls: assets
+          .filter(asset => asset.type === 'css')
+          // .map(asset => asset.publicPath),
+          .map(asset => this.assetSets.getAssetPublicPath(asset.src)),
+        jsUrls,
+        inlineJs: inlineJSs.join('\n'),
+        inlineCss,
+        inlineHead,
+        inlineFoot,
+      });
+      return {
+        ...renderedTemplate,
+        usage: renderer.formatCode(renderedTemplate.usage),
+        html: formatCode({
+          code: renderedTemplate.html,
+          language: 'html',
+        }),
+        wrappedHtml: formatCode({
+          code: wrappedHtml,
+          language: 'html',
+        }),
+      };
+    } catch (error) {
+      log.error(
+        error.message,
+        {
+          patternId,
+          templateId,
+          demo,
+          isInIframe,
+          assetSetId,
+          error,
+        },
+        'pattern render',
+      );
+      const html = `<h1>Error in Pattern Render</h1>
+      <pre><code>${error.toString()}</pre></code>`;
+
+      return {
+        ok: false,
+        html,
+        message: html,
+        wrappedHtml: html,
+      };
+    }
   }
 }

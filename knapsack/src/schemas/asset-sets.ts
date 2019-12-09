@@ -7,20 +7,28 @@ interface KnapsackAssetSetBase {
   inlineFoot?: string;
 }
 
+type KsAssetConfig = {
+  src: string;
+  /**
+   * Force this asset to load in either the head or foot of the HTML page.
+   * CSS defaults to head and JS default to foot
+   */
+  tagLocation?: 'head' | 'foot';
+};
+
 export interface KnapsackAssetSetConfig extends KnapsackAssetSetBase {
-  assets: {
-    src: string;
-  }[];
+  assets: KsAssetConfig[];
 }
 
+type KsAssetData = KsAssetConfig & {
+  publicPath: string;
+  type: string;
+  sizeKb?: string;
+  sizeRaw?: number;
+};
+
 export interface KnapsackAssetSetData extends KnapsackAssetSetBase {
-  assets: {
-    src: string;
-    publicPath: string;
-    type: string;
-    sizeKb: string;
-    sizeRaw: number;
-  }[];
+  assets: KsAssetData[];
 }
 
 export type KnapsackAssetSet = KnapsackAssetSetData;

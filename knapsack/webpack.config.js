@@ -2,6 +2,7 @@ const { join } = require('path');
 const { createWebPackConfig } = require('@knapsack/build-tools');
 const WebappWebpackPlugin = require('webapp-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 
 module.exports = createWebPackConfig({
   mainEntries: [join(__dirname, './src/client/')],
@@ -22,6 +23,9 @@ module.exports = createWebPackConfig({
       mobile: true,
       hash: true,
       filename: 'index.html',
+    }),
+    new ScriptExtHtmlWebpackPlugin({
+      module: [/js$/],
     }),
     new WebappWebpackPlugin(join(__dirname, './src/client/assets/favicon.png')),
   ],

@@ -174,7 +174,7 @@ function createWebPackConfig({
     devtool: isProd ? 'none' : 'eval-source-map',
     resolve: {
       // symlinks: false, // @todo consider, but be careful
-      extensions: ['.mjs', '.jsx', '.js', '.ts', '.tsx', '.css', '.json'],
+      extensions: ['.mjs', '.tsx', '.jsx', '.ts', '.js', '.css', '.json'],
       mainFields: ['module', 'main'],
       modules: ['node_modules', resolve(__dirname, 'node_modules')],
       alias: {

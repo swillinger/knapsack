@@ -1,10 +1,11 @@
 {
-  "ignore": [
-    "*.d.ts",
-    "*.map",
-    "client/**",
-    "store/**"
-  ],
+  "ignore": ["*.d.ts", "*.map", "client/**", "store/**"],
   "verbose": false,
-  "watch": ["../../knapsack/dist/"]
+  "delay": 1500,
+  "watch": [
+    "../../knapsack/dist/",
+    "../../packages/renderer-twig/dist/",
+    "../../packages/renderer-react/dist/",
+    "../../packages/renderer-web-components/dist/"
+  ]
 }

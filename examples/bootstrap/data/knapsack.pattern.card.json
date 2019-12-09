@@ -7,7 +7,7 @@
   "showAllTemplates": false,
   "templates": [
     {
-      "title": "Card Bootstrap - Twig",
+      "title": "Twig",
       "id": "twig",
       "templateLanguageId": "twig",
       "alias": "@components/card.twig",
@@ -93,6 +93,139 @@
         }
       },
       "demos": ["a", "b"]
+    },
+    {
+      "title": "Web Component",
+      "id": "web-component",
+      "templateLanguageId": "web-components",
+      "alias": "bs-card",
+      "assetSetIds": ["web-components"],
+      "spec": {
+        "slots": {
+          "default": {
+            "title": "Default",
+            "description": "Bottom of the card",
+            "allowedPatternIds": ["button"]
+          },
+          "body": { "title": "Body" }
+        },
+        "props": {
+          "$schema": "http://json-schema.org/draft-07/schema",
+          "type": "object",
+          "title": "Card",
+          "description": "A Card for containing content",
+          "required": ["cardTitle", "cardBody"],
+          "properties": {
+            "cardHeader": { "type": "string", "title": "Card Header Text" },
+            "cardTitle": { "type": "string", "title": "Body Title" },
+            "cardSubTitle": { "type": "string", "title": "Body Sub Title" },
+            "cardBody": { "type": "string", "title": "Card Body Text" },
+            "textAlign": {
+              "type": "string",
+              "title": "Text Align",
+              "enum": ["left", "center", "right"],
+              "enumNames": ["Left", "Center", "Right"],
+              "default": "left"
+            },
+            "imgSrc": { "type": "string", "title": "Image Source" }
+          }
+        }
+      },
+      "demosById": {
+        "primary": {
+          "id": "primary",
+          "title": "Main",
+          "type": "data",
+          "data": {
+            "slots": {
+              "default": [
+                {
+                  "patternId": "button",
+                  "templateId": "web-component",
+                  "demoId": "main"
+                },
+                {
+                  "patternId": "button",
+                  "templateId": "web-component",
+                  "demoId": "Nayeue1b"
+                }
+              ],
+              "body": ["Some body text"]
+            },
+            "props": {
+              "cardTitle": "Card Title",
+              "cardBody": "Some quick example text to build on the card title and make up the bulk of the card's content.",
+              "textAlign": "left",
+              "imgSrc": "/images/demoImg2.jpg",
+              "imgAlt": "Nature Picture"
+            }
+          }
+        }
+      },
+      "demos": ["primary"]
+    },
+    {
+      "title": "React",
+      "id": "react",
+      "templateLanguageId": "react",
+      "path": "../assets/patterns/card/card.tsx",
+      "statusId": "proposed",
+      "assetSetIds": ["bootstrap"],
+      "spec": {
+        "slots": {
+          "children": {
+            "title": "Children",
+            "description": "Bottom of the card",
+            "allowedPatternIds": ["button"]
+          }
+        },
+        "props": {
+          "$schema": "http://json-schema.org/draft-07/schema",
+          "type": "object",
+          "title": "Card",
+          "description": "A Card for containing content",
+          "required": ["cardTitle", "cardBody"],
+          "properties": {
+            "cardHeader": { "type": "string", "title": "Card Header Text" },
+            "cardTitle": { "type": "string", "title": "Body Title" },
+            "cardSubTitle": { "type": "string", "title": "Body Sub Title" },
+            "cardBody": { "type": "string", "title": "Card Body Text" },
+            "textAlign": {
+              "type": "string",
+              "title": "Text Align",
+              "enum": ["left", "center", "right"],
+              "enumNames": ["Left", "Center", "Right"],
+              "default": "left"
+            },
+            "imgSrc": { "type": "string", "title": "Image Source" }
+          }
+        }
+      },
+      "demosById": {
+        "primary": {
+          "id": "primary",
+          "title": "Main",
+          "type": "data",
+          "data": {
+            "slots": {
+              "footerSlot": [
+                {
+                  "patternId": "button",
+                  "templateId": "react",
+                  "demoId": "primary"
+                }
+              ]
+            },
+            "props": {
+              "cardTitle": "Card Title2",
+              "cardBody": "Some quick example text to build on the card title and make up the bulk of the card's content.",
+              "imgSrc": "/images/demoImg2.jpg",
+              "imgAlt": "Nature Picture"
+            }
+          }
+        }
+      },
+      "demos": ["primary"]
     }
   ]
 }

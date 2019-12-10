@@ -154,6 +154,7 @@ export const KsSlotsForm: React.FC<Props> = ({
                           <div className="ks-slots-form__add-buttons">
                             {isPatternItemsAllowed && (
                               <button
+                                type="button"
                                 onClick={() =>
                                   arrayHelpers.push({
                                     patternId: '',
@@ -169,6 +170,7 @@ export const KsSlotsForm: React.FC<Props> = ({
 
                             {isTextItemsAllowed && (
                               <button
+                                type="button"
                                 onClick={() => arrayHelpers.push('Text')} // remove a friend from the list
                                 // onKeyPress={() => arrayHelpers.insert(index)} // remove a friend from the list
                               >
@@ -191,6 +193,7 @@ export const KsSlotsForm: React.FC<Props> = ({
                                 <div>
                                   {index !== 0 && (
                                     <button
+                                      type="button"
                                       onClick={() =>
                                         arrayHelpers.move(index, index - 1)
                                       } // remove a friend from the list
@@ -200,6 +203,7 @@ export const KsSlotsForm: React.FC<Props> = ({
                                   )}
                                   {index !== slottedDatas.length - 1 && (
                                     <button
+                                      type="button"
                                       onClick={() =>
                                         arrayHelpers.move(index, index + 1)
                                       } // remove a friend from the list
@@ -226,6 +230,7 @@ export const KsSlotsForm: React.FC<Props> = ({
                                   >
                                     {controls}
                                     <div className="ks-text-field">
+                                      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
                                       <label className="ks-text-field__label">
                                         <span>Text</span>
                                         <Field

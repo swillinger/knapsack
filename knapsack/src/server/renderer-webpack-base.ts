@@ -143,13 +143,13 @@ export class KnapsackRendererWebpackBase extends KnapsackRendererBase
     return entry;
   }
 
-  init({
+  async init({
     config,
     patterns,
   }: {
     config: KnapsackConfig;
     patterns: import('@knapsack/app/src/server/patterns').Patterns;
-  }): void {
+  }): Promise<void> {
     this.distDirAbsolute = path.resolve(config.dist, this.outputDirName);
     this.publicPath = `/${path.relative(config.dist, this.distDirAbsolute)}/`;
     this.webpackEntry = this.createWebpackEntryFromPatterns(patterns);

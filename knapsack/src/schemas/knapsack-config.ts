@@ -40,7 +40,7 @@ export interface KnapsackTemplateRendererBase {
   language?: string;
   build?: (opt: { templatePaths: string[] }) => Promise<void>;
   watch?: (opt: { templatePaths: string[] }) => Promise<void>;
-  init?: (opt: { config: KnapsackConfig; patterns: Patterns }) => void;
+  init?: (opt: { config: KnapsackConfig; patterns: Patterns }) => Promise<void>;
   wrapHtml: (
     opt: {
       html: string;

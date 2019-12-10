@@ -72,11 +72,11 @@ export class KnapsackReactRenderer extends KnapsackRendererWebpackBase
     this.demoWrapperPath = demoWrapperPath;
   }
 
-  init: KnapsackTemplateRendererBase['init'] = ({
+  init: KnapsackTemplateRendererBase['init'] = async ({
     patterns,
     config,
-  }): ReturnType<KnapsackTemplateRendererBase['init']> => {
-    super.init({ config, patterns });
+  }): Promise<void> => {
+    await super.init({ config, patterns });
     this.assets = copyReactAssets(this.distDirAbsolute, this.publicPath);
   };
 

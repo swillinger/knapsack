@@ -21,7 +21,7 @@ import { writeFileSync, ensureDirSync, readJSONSync } from 'fs-extra';
 import * as log from './log';
 import { knapsackEvents, EVENTS } from '../server/events';
 import { serve } from '../server/server';
-import { build, testPatternRenders } from './commands';
+import { init, build, testPatternRenders } from './commands';
 import { getMeta } from '../lib/config';
 import { bootstrapFromConfigFile } from '../lib/bootstrap';
 import { KnapsackPattern } from '../schemas/patterns';
@@ -51,15 +51,19 @@ if (isDevMode) log.info('Knapsack Dev Mode on');
 
 const configPath = join(process.cwd(), 'knapsack.config.js');
 
-const { patterns, config, assetSets } = bootstrapFromConfigFile(configPath);
+const ksBrain = bootstrapFromConfigFile(configPath);
+
+const { patterns, config, assetSets } = ksBrain;
 
 program.command('serve').action(async () => {
+  await init(ksBrain);
   log.info('Serving...');
   const meta = await getMeta(config);
   await serve({ meta });
 });
 
 program.command('build').action(async () => {
+  await init(ksBrain);
   await build({ config, patterns });
 
   // @todo restore writing meta.json with useful demo url info
@@ -96,6 +100,7 @@ program.command('build').action(async () => {
 });
 
 program.command('start').action(async () => {
+  await init(ksBrain);
   log.info('Starting...');
   const meta = await getMeta(config);
   const templateRendererWatches = config.templateRenderers.filter(t => t.watch);
@@ -120,6 +125,7 @@ program.command('start').action(async () => {
 });
 
 program.command('test').action(async () => {
+  await init(ksBrain);
   await build({ patterns, config });
   await testPatternRenders(patterns.allPatterns, patterns);
   knapsackEvents.emit(EVENTS.SHUTDOWN);

@@ -14,7 +14,7 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-import { readJSONSync } from 'fs-extra';
+import { readJSON } from 'fs-extra';
 import { join } from 'path';
 import globby from 'globby';
 import { version as iframeResizerVersion } from 'iframe-resizer/package.json';
@@ -59,6 +59,8 @@ export class Patterns
 
   private assetSets: import('./asset-sets').AssetSets;
 
+  isReady: boolean;
+
   constructor({
     dataDir,
     templateRenderers,
@@ -94,19 +96,25 @@ export class Patterns
     this.assetSets = assetSets;
     this.dataDir = dataDir;
     this.templateRenderers = {};
+    this.allPatterns = [];
+    this.byId = {};
+    this.isReady = false;
 
     // @todo should probably convert this at a higher level later
     templateRenderers.forEach(templateRenderer => {
       this.templateRenderers[templateRenderer.id] = templateRenderer;
     });
-    this.updatePatternsData();
+  }
+
+  async init(): Promise<void> {
+    await this.updatePatternsData();
   }
 
   async getData(): Promise<{
     patterns: { [id: string]: KnapsackPattern };
     templateStatuses: KnapsackTemplateStatus[];
   }> {
-    this.updatePatternsData();
+    await this.updatePatternsData();
     const templateStatuses = await this.getTemplateStatuses();
     return {
       templateStatuses,
@@ -139,8 +147,8 @@ export class Patterns
     return allFiles;
   }
 
-  updatePatternsData() {
-    const patternDataFiles = globby.sync(
+  async updatePatternsData() {
+    const patternDataFiles = await globby(
       `${join(this.dataDir, 'knapsack.pattern.*.json')}`,
       {
         expandDirectories: false,
@@ -148,11 +156,13 @@ export class Patterns
       },
     );
     const byId = {};
-    patternDataFiles.forEach(fileName => {
-      const pattern: KnapsackPattern = readJSONSync(fileName);
-      // @todo validate: template path exists, has template render that exists, using assetSets that exist
-      byId[pattern.id] = pattern;
-    });
+    await Promise.all(
+      patternDataFiles.map(async fileName => {
+        const pattern: KnapsackPattern = await readJSON(fileName);
+        // @todo validate: template path exists, has template render that exists, using assetSets that exist
+        byId[pattern.id] = pattern;
+      }),
+    );
     this.byId = byId;
     this.allPatterns = Object.values(byId);
     this.getAllTemplatePaths().forEach(path => {
@@ -163,6 +173,8 @@ Resolved absolute path: ${path}
       `,
       );
     });
+    this.isReady = true;
+    log.info('Done: updatePatternsData');
     emitPatternsDataReady(this.allPatterns);
   }
 
@@ -418,7 +430,7 @@ if ('WebSocket' in window && location.hostname === 'localhost') {
         headJsUrls: [
           ...headJsUrls,
           isInIframe
-          ? `https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/${iframeResizerVersion}/iframeResizer.contentWindow.min.js`
+            ? `https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/${iframeResizerVersion}/iframeResizer.contentWindow.min.js`
             : '',
         ].filter(x => x),
         cssUrls: assets

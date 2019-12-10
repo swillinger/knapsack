@@ -1,6 +1,26 @@
 import { flattenArray, flattenNestedArray } from '../lib/utils';
 import * as log from './log';
-import { Patterns } from '../schemas/main-types';
+import { KnapsackBrain, Patterns } from '../schemas/main-types';
+
+export async function init(ksBrain: KnapsackBrain): Promise<void> {
+  const { config, patterns } = ksBrain;
+  log.info('Initializing...');
+  await patterns.init();
+
+  await Promise.all(
+    config.templateRenderers.map(async templateRenderer => {
+      if (templateRenderer.init) {
+        await templateRenderer.init({
+          config,
+          patterns,
+        });
+        log.info('Init done', null, `templateRenderer:${templateRenderer.id}`);
+      }
+    }),
+  );
+  log.verbose('All templateRenderers init done');
+  log.info('Done: Initializing');
+}
 
 export async function build({
   config,

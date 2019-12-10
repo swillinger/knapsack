@@ -45,17 +45,6 @@ export function bootstrap(
     templateRenderers: config.templateRenderers,
   });
 
-  config.templateRenderers.forEach(templateRenderer => {
-    if (templateRenderer.init) {
-      templateRenderer.init({
-        config,
-        patterns,
-      });
-      log.info('Init done', null, `templateRenderer:${templateRenderer.id}`);
-    }
-  });
-  log.verbose('All templateRenderers init done');
-
   const settings = new Settings({
     dataDir: config.data,
     publicDir: config.public,
@@ -75,6 +64,8 @@ export function bootstrap(
     assetSets,
     config,
   };
+
+  log.verbose('Brain built');
 
   isReady = true;
 

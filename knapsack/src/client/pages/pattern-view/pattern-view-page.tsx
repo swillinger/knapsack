@@ -38,9 +38,14 @@ import { getBreadcrumb } from '../../utils';
 type Props = {
   patternId: string;
   templateId: string;
+  demoId?: string;
 };
 
-const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
+const PatternViewPage: React.FC<Props> = ({
+  patternId,
+  templateId,
+  demoId,
+}: Props) => {
   const history = useHistory();
   const canEdit = useSelector(store => store.userState.canEdit);
   const pattern = useSelector(store => {
@@ -186,6 +191,7 @@ const PatternViewPage: React.FC<Props> = ({ patternId, templateId }: Props) => {
             <TemplateView
               id={patternId}
               templateId={templateId}
+              demoId={demoId}
               key={`${patternId}-${templateId}`}
               demoSize={demoSize || defaultDemoSize}
               isVerbose

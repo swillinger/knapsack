@@ -1,5 +1,6 @@
 import React from 'react';
 import { KsButton, KsTextField, Select } from '@knapsack/design-system';
+import { Link } from 'react-router-dom';
 import cn from 'classnames';
 import {
   Formik,
@@ -19,6 +20,7 @@ import {
   KnapsackTemplateData,
 } from '../../../../schemas/patterns';
 import { useSelector } from '../../../store';
+import { BASE_PATHS } from '../../../../lib/constants';
 // import slotsDataSchema from '../../../../json-schemas/schemaKnapsackTemplateDataSlots';
 
 type Props = {
@@ -259,7 +261,21 @@ export const KsSlotsForm: React.FC<Props> = ({
                                   key={key}
                                   className="ks-slots-form__slot-item"
                                 >
-                                  {controls}
+                                  <div
+                                    style={{
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                    }}
+                                  >
+                                    {controls}
+                                    {patternId && templateId && demoId && (
+                                      <Link
+                                        to={`${BASE_PATHS.PATTERN}/${patternId}/${templateId}/${demoId}`}
+                                      >
+                                        View Pattern
+                                      </Link>
+                                    )}
+                                  </div>
                                   <Field
                                     name={`${slotName}.${index}.patternId`}
                                     validate={validateSimpleString}

@@ -17,6 +17,7 @@
 
 import React, { useState } from 'react';
 import { SchemaForm, Details, Select, KsButton } from '@knapsack/design-system';
+import { useHistory } from 'react-router-dom';
 import ReactTable from 'react-table';
 import produce from 'immer';
 import {
@@ -46,6 +47,7 @@ import { Tabs } from '../../components/tabs';
 import { InlineEditText } from '../../components/inline-edit';
 import { KsRenderResults } from '../../../schemas/knapsack-config';
 import { KsSlotsForm } from './components/slots-form';
+import { BASE_PATHS } from '../../../lib/constants';
 
 const calculateDemoStageWidth = (size: string) => {
   switch (size) {
@@ -79,6 +81,7 @@ export type Props = {
    */
   id: string;
   templateId: string;
+  demoId?: string;
   isVerbose?: boolean;
   /**
    * @todo remove `string` - it's just to make Typescript happy
@@ -99,6 +102,7 @@ const TemplateView: React.FC<Props> = ({
   isCodeBlockShown = false,
   id,
   templateId,
+  demoId,
 }: Props) => {
   const patternId = id;
   const permissions = useSelector(store => store.userState.role.permissions);
@@ -116,6 +120,7 @@ const TemplateView: React.FC<Props> = ({
     console.error(msg);
     throw new Error(msg);
   }
+  const history = useHistory();
   const allStatuses = useSelector(s => s.patternsState.templateStatuses);
   const { allAssetSets, globalAssetSetIds } = useSelector(
     ({ assetSetsState }) => ({
@@ -162,9 +167,11 @@ const TemplateView: React.FC<Props> = ({
     schema.properties &&
     Object.keys(schema.properties).length > 0
   );
+  const [firstDemo] = demos;
+  const initialDemo = demoId ? demosById[demoId] : firstDemo;
 
   const [demoIndex, setDemoIndex] = useState(0);
-  const [demo, setDemo] = useState(demos[demoIndex]);
+  const [demo, setDemo] = useState(initialDemo);
   const demoWidth =
     pattern.demoWidths && pattern.demoWidths.length > 0
       ? pattern.demoWidths[0].width
@@ -184,6 +191,12 @@ const TemplateView: React.FC<Props> = ({
   >();
 
   const showSchemaForm = isSchemaFormShown && hasSchema;
+
+  if (!initialDemo) {
+    throw new Error(
+      `No demo found for pattern ${id} template ${templateId} demo ${demoId}`,
+    );
+  }
 
   return (
     <article className="ks-template-view">
@@ -419,6 +432,9 @@ const TemplateView: React.FC<Props> = ({
                   renderedWidth={demoWidth > 200 ? demoWidth : 200}
                   actualWidth={200}
                   handleSelection={() => {
+                    history.push(
+                      `${BASE_PATHS.PATTERN}/${patternId}/${templateId}/${aDemo.id}`,
+                    );
                     setDemo(aDemo);
                   }}
                 />

@@ -165,7 +165,10 @@ export const App: React.FC = () => {
                   />
 
                   <Route
-                    path={`${BASE_PATHS.PATTERN}/:id/:templateId`}
+                    path={[
+                      `${BASE_PATHS.PATTERN}/:id/:templateId`,
+                      `${BASE_PATHS.PATTERN}/:id/:templateId/:demoId`,
+                    ]}
                     exact
                     render={({ match, ...rest }) => {
                       if (patterns[match.params.id]) {
@@ -173,6 +176,7 @@ export const App: React.FC = () => {
                           <LoadablePatternView
                             patternId={match.params.id}
                             templateId={match.params.templateId}
+                            demoId={match.params.demoId}
                             size="m"
                             key={match.params.id}
                           />

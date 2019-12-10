@@ -1,5 +1,7 @@
 node_modules
 dist
+dist--cjs
+dist--mjs
 examples
 /packages/create-knapsack/generators/twig/templates/
 packages/*/node_modules

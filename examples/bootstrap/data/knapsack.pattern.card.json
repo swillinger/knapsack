@@ -50,7 +50,7 @@
           "type": "data",
           "data": {
             "slots": {
-              "footerSlot": [
+              "children": [
                 {
                   "patternId": "button",
                   "templateId": "react",

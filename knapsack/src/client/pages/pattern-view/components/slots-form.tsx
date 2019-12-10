@@ -137,36 +137,48 @@ export const KsSlotsForm: React.FC<Props> = ({
                     <FieldArray name={slotName}>
                       {arrayHelpers => {
                         const slottedDatas = values[slotName];
-                        const addButtons = (
-                          <div className="ks-slots-form__add-buttons">
-                            <button
-                              onClick={() =>
-                                arrayHelpers.push({
-                                  patternId: '',
-                                  templateId: '',
-                                  demoId: '',
-                                })
-                              } // remove a friend from the list
-                              // onKeyPress={() => arrayHelpers.insert(index)} // remove a friend from the list
-                            >
-                              Add Pattern Demo
-                            </button>
-                            <button
-                              onClick={() => arrayHelpers.push('Text')} // remove a friend from the list
-                              // onKeyPress={() => arrayHelpers.insert(index)} // remove a friend from the list
-                            >
-                              Add Text
-                            </button>
-                          </div>
-                        );
-                        if (!slottedDatas) {
-                          return addButtons;
-                        }
+
                         const allowedPatterns = Array.isArray(allowedPatternIds)
                           ? patternList.filter(({ id }) =>
                               allowedPatternIds.includes(id),
                             )
                           : patternList;
+
+                        const isPatternItemsAllowed =
+                          allowedPatterns.length !== 0;
+                        const isTextItemsAllowed = !disallowText;
+
+                        const addButtons = (
+                          <div className="ks-slots-form__add-buttons">
+                            {isPatternItemsAllowed && (
+                              <button
+                                onClick={() =>
+                                  arrayHelpers.push({
+                                    patternId: '',
+                                    templateId: '',
+                                    demoId: '',
+                                  })
+                                } // remove a friend from the list
+                                // onKeyPress={() => arrayHelpers.insert(index)} // remove a friend from the list
+                              >
+                                Add Pattern Demo
+                              </button>
+                            )}
+
+                            {isTextItemsAllowed && (
+                              <button
+                                onClick={() => arrayHelpers.push('Text')} // remove a friend from the list
+                                // onKeyPress={() => arrayHelpers.insert(index)} // remove a friend from the list
+                              >
+                                Add Text
+                              </button>
+                            )}
+                          </div>
+                        );
+                        if (!slottedDatas) {
+                          return addButtons;
+                        }
+
                         return (
                           <div>
                             {addButtons}
@@ -259,11 +271,23 @@ export const KsSlotsForm: React.FC<Props> = ({
                                         label="Pattern"
                                         isLabelInline={false}
                                         value={value}
-                                        handleChange={newValue => {
+                                        handleChange={newPatternId => {
+                                          const [
+                                            firstTemplate,
+                                          ] = allowedPatterns.find(
+                                            p => p.id === newPatternId,
+                                          ).templates;
+
+                                          const [
+                                            firstDemo,
+                                          ] = firstTemplate.demos;
+
                                           setFieldValue(
                                             `${slotName}.${index}`,
                                             {
-                                              patternId: newValue,
+                                              patternId: newPatternId,
+                                              templateId: firstTemplate.id,
+                                              demoId: firstDemo.id,
                                             },
                                           );
                                         }}
@@ -274,54 +298,68 @@ export const KsSlotsForm: React.FC<Props> = ({
                                       />
                                     )}
                                   </Field>
-                                  <Field
-                                    name={`${slotName}.${index}.templateId`}
-                                    validate={validateSimpleString}
-                                  >
-                                    {({
-                                      field: { name, value },
-                                    }: FieldProps) => (
-                                      <Select
-                                        label="Template"
-                                        isLabelInline={false}
-                                        value={value}
-                                        handleChange={newValue => {
-                                          setFieldValue(
-                                            `${slotName}.${index}`,
-                                            {
-                                              patternId,
-                                              templateId: newValue,
-                                            },
-                                          );
-                                        }}
-                                        items={[
-                                          { value: '', title: '' },
-                                          ...templateItems,
-                                        ]}
-                                      />
-                                    )}
-                                  </Field>
-                                  <Field
-                                    name={`${slotName}.${index}.demoId`}
-                                    validate={validateSimpleString}
-                                  >
-                                    {({
-                                      field: { name, value },
-                                    }: FieldProps) => (
-                                      <Select
-                                        label="Demo"
-                                        value={value}
-                                        isLabelInline={false}
-                                        handleChange={newValue => {
-                                          setFieldValue(name, newValue);
-                                        }}
-                                        items={[
-                                          { value: '', title: '' },
-                                          ...demoItems,
-                                        ]}
-                                      />
-                                    )}
-                                  </Field>
+                                  {templateItems && templateItems.length > 1 && (
+                                    <Field
+                                      name={`${slotName}.${index}.templateId`}
+                                      validate={validateSimpleString}
+                                    >
+                                      {({
+                                        field: { name, value },
+                                      }: FieldProps) => (
+                                        <Select
+                                          label="Template"
+                                          isLabelInline={false}
+                                          value={value}
+                                          handleChange={newTemplateId => {
+                                            const [
+                                              firstDemo,
+                                            ] = allowedPatterns
+                                              .find(p => p.id === patternId)
+                                              .templates.find(
+                                                t => t.id === newTemplateId,
+                                              ).demos;
+
+                                            setFieldValue(
+                                              `${slotName}.${index}`,
+                                              {
+                                                patternId,
+                                                templateId: newTemplateId,
+                                                demoId: firstDemo.id,
+                                              },
+                                            );
+                                          }}
+                                          items={[
+                                            // { value: '', title: '' },
+                                            ...templateItems,
+                                          ]}
+                                        />
+                                      )}
+                                    </Field>
+                                  )}
+
+                                  {demoItems && demoItems.length > 1 && (
+                                    <Field
+                                      name={`${slotName}.${index}.demoId`}
+                                      validate={validateSimpleString}
+                                    >
+                                      {({
+                                        field: { name, value },
+                                      }: FieldProps) => (
+                                        <Select
+                                          label="Demo"
+                                          value={value}
+                                          isLabelInline={false}
+                                          handleChange={newValue => {
+                                            setFieldValue(name, newValue);
+                                          }}
+                                          items={[
+                                            // { value: '', title: '' },
+                                            ...demoItems,
+                                          ]}
+                                        />
+                                      )}
+                                    </Field>
+                                  )}
                                 </div>
                               );
                             })}

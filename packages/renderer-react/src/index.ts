@@ -257,46 +257,57 @@ ${ksImportCode}
       const templateName = upperCamelCase(
         isNamedImport ? template.alias : pattern.id,
       );
-      const childItems: Promise<{
-        usage: string;
-        imports?: ImportInfo[];
-      }>[] = [];
+
+      const importInfos: ImportInfo[] = [];
+      const children: string[] = [];
+      const extraProps: { key: string; value: string }[] = [];
+
       if (slots) {
-        Object.keys(slots).forEach(slotName => {
-          slots[slotName].forEach(slotItem => {
-            if (KnapsackRendererBase.isSlottedText(slotItem)) {
-              childItems.push(
-                Promise.resolve({
-                  usage: slotItem,
-                }),
-              );
-            } else {
-              const slotPattern = patternManifest.getPattern(
-                slotItem.patternId,
-              );
+        const slotNames = Object.keys(slots);
+        await Promise.all(
+          slotNames.map(async slotName => {
+            const slotItems = slots[slotName];
+            await Promise.all(
+              slotItems.map(async slotItem => {
+                if (KnapsackRendererBase.isSlottedText(slotItem)) {
+                  children.push(slotItem);
+                } else {
+                  const slotPattern = patternManifest.getPattern(
+                    slotItem.patternId,
+                  );
 
-              const slotTemplate = slotPattern.templates.find(
-                t => t.id === slotItem.templateId,
-              );
-              childItems.push(
-                this.getUsageAndImports({
-                  pattern: slotPattern,
-                  template: slotTemplate,
-                  demo: slotTemplate.demosById[slotItem.demoId],
-                  patternManifest,
-                }),
-              );
-            }
-          });
-        });
+                  const slotTemplate = slotPattern.templates.find(
+                    t => t.id === slotItem.templateId,
+                  );
+
+                  const { usage, imports } = await this.getUsageAndImports({
+                    pattern: slotPattern,
+                    template: slotTemplate,
+                    demo: slotTemplate?.demosById[slotItem.demoId],
+                    patternManifest,
+                  });
+
+                  imports.forEach(i => importInfos.push(i));
+                  if (slotName === 'children') {
+                    children.push(usage);
+                  } else {
+                    extraProps.push({
+                      key: slotName,
+                      value: usage,
+                    });
+                  }
+                }
+              }),
+            );
+          }),
+        );
       }
-
-      const kids = await Promise.all(childItems);
 
       const usage = await getUsage({
         templateName,
         props,
-        children: kids.map(kid => kid.usage).join('\n'),
+        children: children.join('\n'),
+        extraProps,
       });
 
       const imports: ImportInfo[] = [];
@@ -307,16 +318,12 @@ ${ksImportCode}
         patternId: pattern.id,
         templateId: template.id,
       });
-      kids
-        .filter(kid => kid.imports)
-        .forEach(kid => {
-          kid.imports.forEach(kidImport => {
-            // make unique
-            if (!imports.some(i => i.name === kidImport.name)) {
-              imports.push(kidImport);
-            }
-          });
-        });
+      importInfos.forEach(importInfo => {
+        // make unique
+        if (!imports.some(i => i.name === importInfo.name)) {
+          imports.push(importInfo);
+        }
+      });
 
       return {
         usage,

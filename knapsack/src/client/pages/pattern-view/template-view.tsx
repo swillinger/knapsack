@@ -197,8 +197,6 @@ const TemplateView: React.FC<Props> = ({
 
   const showSchemaForm = isSchemaFormShown && hasSchema;
 
-
-
   return (
     <article className="ks-template-view">
       <div className="ks-template-view__overview-wrapper">

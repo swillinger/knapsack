@@ -13,6 +13,8 @@ import {
 import { validateDataAgainstSchema } from '@knapsack/schema-utils';
 import './slots-form.scss';
 import {
+  isSlottedTemplateDemo,
+  isSlottedText,
   KnapsackPatternTemplate,
   KnapsackTemplateData,
 } from '../../../../schemas/patterns';
@@ -69,6 +71,35 @@ export const KsSlotsForm: React.FC<Props> = ({
     'k-slots-form': true,
   });
 
+  const validateForm = values => {
+    const errors = {};
+    Object.keys(values).forEach(value => {
+      const slotDatas = values[value];
+      slotDatas.forEach((slotData, i) => {
+        if (isSlottedText(slotData)) {
+          if (!slotData) {
+            errors[value + i] = 'Need non-empty strings';
+          }
+        }
+        if (isSlottedTemplateDemo(slotData)) {
+          const { patternId, templateId, demoId } = slotData;
+          if (!patternId || !templateId || !demoId) {
+            errors[value + i] = 'Need more info';
+          }
+        }
+      });
+    });
+
+    return errors;
+  };
+
+  const checkAndHandleData = (data: KnapsackTemplateData['slots']): void => {
+    const errors = validateForm(data);
+    if (Object.keys(errors).length === 0) {
+      handleData(data);
+    }
+  };
+
   return (
     <div className={classes}>
       <h4>Slots Form</h4>
@@ -78,24 +109,9 @@ export const KsSlotsForm: React.FC<Props> = ({
           console.log('formik submit', { values, actions });
           // handleData(values);
         }}
+        validateOnBlur
         validateOnChange
-        validate={values => {
-          const errors = {};
-          // Object.keys(values).forEach(value => {
-          //   const slotDatas = values[value];
-          //   slotDatas.forEach(slotData => {
-          //     const results = validateDataAgainstSchema(
-          //       slotsDataSchema,
-          //       slotData,
-          //     );
-          //     if (!results.ok) {
-          //       console.log(results, values);
-          //       errors[value] = results.message;
-          //     }
-          //   });
-          // });
-          return errors;
-        }}
+        validate={validateForm}
       >
         {({
           values,
@@ -104,15 +120,10 @@ export const KsSlotsForm: React.FC<Props> = ({
           isValid,
           errors,
           submitForm,
+          handleSubmit,
+          handleReset,
         }) => {
-          // console.log('isValid?', isValid);
-          // console.log(values);
-          if (isValid) {
-            console.log('form sending data up');
-            handleData(values);
-          } else {
-            console.log('not valid', errors, values);
-          }
+          checkAndHandleData(values);
           return (
             <Form>
               {Object.keys(slotsSpec).map(slotName => {
@@ -224,6 +235,7 @@ export const KsSlotsForm: React.FC<Props> = ({
                                 ? allowedPatterns.find(p => p.id === patternId)
                                     .templates
                                 : [];
+
                               const demoItems =
                                 templateId && templateItems
                                   ? templateItems.find(t => t.id === templateId)

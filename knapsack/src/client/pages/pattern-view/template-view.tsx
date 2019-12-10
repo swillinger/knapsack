@@ -169,6 +169,11 @@ const TemplateView: React.FC<Props> = ({
   );
   const [firstDemo] = demos;
   const initialDemo = demoId ? demosById[demoId] : firstDemo;
+  if (demoId && !initialDemo) {
+    throw new Error(
+      `No demo found for pattern ${id} template ${templateId} demo ${demoId}`,
+    );
+  }
 
   const [demoIndex, setDemoIndex] = useState(0);
   const [demo, setDemo] = useState(initialDemo);
@@ -192,11 +197,7 @@ const TemplateView: React.FC<Props> = ({
 
   const showSchemaForm = isSchemaFormShown && hasSchema;
 
-  if (!initialDemo) {
-    throw new Error(
-      `No demo found for pattern ${id} template ${templateId} demo ${demoId}`,
-    );
-  }
+
 
   return (
     <article className="ks-template-view">

@@ -50,7 +50,7 @@
           "type": "data",
           "data": {
             "slots": {
-              "children": [
+              "footerSlot": [
                 {
                   "patternId": "button",
                   "templateId": "react",
@@ -73,7 +73,6 @@
       "title": "Web Component",
       "id": "web-component",
       "templateLanguageId": "web-components",
-      "path": "../assets/patterns/card/card.wc.js",
       "alias": "bs-card",
       "assetSetIds": ["web-components"],
       "spec": {
@@ -228,5 +227,6 @@
       },
       "demos": ["a", "b"]
     }
-  ]
+  ],
+  "slices": []
 }

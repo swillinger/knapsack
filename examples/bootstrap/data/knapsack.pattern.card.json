@@ -50,7 +50,7 @@
           "type": "data",
           "data": {
             "slots": {
-              "children": [
+              "footerSlot": [
                 {
                   "patternId": "button",
                   "templateId": "react",
@@ -73,7 +73,6 @@
       "title": "Web Component",
       "id": "web-component",
       "templateLanguageId": "web-components",
-      "path": "../assets/patterns/card/card.wc.js",
       "alias": "bs-card",
       "assetSetIds": ["web-components"],
       "spec": {
@@ -110,7 +109,7 @@
       "demosById": {
         "primary": {
           "id": "primary",
-          "title": "Main",
+          "title": "Main 2",
           "type": "data",
           "data": {
             "slots": {
@@ -130,8 +129,9 @@
             },
             "props": {
               "cardTitle": "Card Title",
+              "cardSubTitle": "jhfhjgjhgjk",
               "cardBody": "Some quick example text to build on the card title and make up the bulk of the card's content.",
-              "textAlign": "left",
+              "textAlign": "right",
               "imgSrc": "/images/demoImg2.jpg",
               "imgAlt": "Nature Picture"
             }

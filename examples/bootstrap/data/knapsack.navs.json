@@ -30,19 +30,13 @@
       "id": "/pattern/card",
       "name": "Card",
       "path": "/pattern/card/",
-      "parentId": "components-asdf"
+      "parentId": "/pattern/button"
     },
     {
       "id": "design-tokens",
       "name": "Design Tokens",
       "path": "",
       "parentId": "root"
-    },
-    {
-      "id": "/pages/colors",
-      "name": "Colors",
-      "path": "/pages/colors",
-      "parentId": "design-tokens"
     },
     {
       "id": "/pages/breakpoints",
@@ -54,6 +48,12 @@
       "id": "/pages/spacing",
       "name": "Spacing",
       "path": "/pages/spacing",
+      "parentId": "design-tokens"
+    },
+    {
+      "id": "/pages/colors",
+      "name": "Colors",
+      "path": "/pages/colors",
       "parentId": "design-tokens"
     },
     {

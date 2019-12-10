@@ -1,6 +1,6 @@
 {
   "id": "card",
-  "title": "Card",
+  "title": "Teaser Layout",
   "description": "Use Bootstrap’s custom card styles as a flexible and extensible content container. It includes options for headers and footers, a wide variety of content, contextual background colors, and powerful display options.",
   "demoSize": "m",
   "demoWidths": [{ "width": 320 }],
@@ -50,7 +50,7 @@
           "type": "data",
           "data": {
             "slots": {
-              "children": [
+              "footerSlot": [
                 {
                   "patternId": "button",
                   "templateId": "react",
@@ -73,7 +73,6 @@
       "title": "Web Component",
       "id": "web-component",
       "templateLanguageId": "web-components",
-      "path": "../assets/patterns/card/card.wc.js",
       "alias": "bs-card",
       "assetSetIds": ["web-components"],
       "spec": {

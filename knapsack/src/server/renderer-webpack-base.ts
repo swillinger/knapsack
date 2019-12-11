@@ -189,6 +189,11 @@ export class KnapsackRendererWebpackBase extends KnapsackRendererBase
   }
 
   getWebPackEntryPath(id: string, ext = '.js'): string {
+    if (!this.webpackManifest) {
+      throw new Error(
+        `Webpack has not been built yet, cannot access id "${id}"`,
+      );
+    }
     const entry = `${id}${ext}`;
     const result = this.webpackManifest[entry];
     if (!result) {
@@ -207,7 +212,7 @@ export class KnapsackRendererWebpackBase extends KnapsackRendererBase
           reject();
           return;
         }
-        this.setManifest();
+        await this.setManifest();
         resolve();
       });
     });
@@ -215,15 +220,23 @@ export class KnapsackRendererWebpackBase extends KnapsackRendererBase
 
   webpackWatch(): import('webpack').Compiler.Watching {
     log.verbose('Starting Webpack watch...', null, this.logPrefix);
-    return this.webpackCompiler.watch({}, (err, stats) => {
-      if (err || stats.hasErrors()) {
-        log.error(stats.toString(), err, this.logPrefix);
-        return;
-      }
-      this.setManifest();
-      log.info('Webpack recompiled', null, this.logPrefix);
-      super.onChange({ path: '' }); // @todo get path of file changed from `stats` and pass it in here
-    });
+
+    const watchOptions: import('webpack').Compiler.WatchOptions = {};
+
+    return this.webpackCompiler.watch(
+      watchOptions,
+      async (err: Error, stats: import('webpack').Stats) => {
+        if (err || stats.hasErrors()) {
+          log.error(stats.toString(), err, this.logPrefix);
+          return;
+        }
+        await this.setManifest();
+        log.info('Webpack recompiled', null, this.logPrefix);
+        super.onChange({
+          path: '',
+        }); // @todo get path of file changed from `stats` and pass it in here
+      },
+    );
   }
 
   async watch({ templatePaths }) {

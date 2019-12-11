@@ -189,7 +189,7 @@
               "footerSlot": [
                 {
                   "patternId": "button",
-                  "templateId": "bootstrap-twig",
+                  "templateId": "twig",
                   "demoId": "primary"
                 }
               ]

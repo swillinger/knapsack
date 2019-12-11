@@ -174,7 +174,7 @@ Resolved absolute path: ${path}
       );
     });
     this.isReady = true;
-    log.info('Done: updatePatternsData');
+    log.verbose('Done: updatePatternsData');
     emitPatternsDataReady(this.allPatterns);
   }
 

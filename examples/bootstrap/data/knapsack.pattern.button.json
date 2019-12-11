@@ -246,6 +246,16 @@
                 "Dark",
                 "Link"
               ]
+            },
+            "disabled": {
+              "type": "boolean",
+              "title": "Disabled",
+              "default": false
+            },
+            "outlined": {
+              "type": "boolean",
+              "title": "Outlined",
+              "default": false
             }
           }
         },

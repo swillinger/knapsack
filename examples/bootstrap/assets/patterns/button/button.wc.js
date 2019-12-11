@@ -10,6 +10,12 @@ import {
 export class MyButton extends LitElement {
   @property() size = 'md';
   @property() type = 'primary';
+  @property({
+    type: Boolean
+  }) outlined = false;
+  @property({
+    type: Boolean
+  }) disabled = false;
 
   static get styles() {
     return css`
@@ -29,7 +35,8 @@ export class MyButton extends LitElement {
     const classes = [
       'bootstrap',
       'btn',
-      `btn-${this.type}`,
+      this.outlined ? `btn-outline-${this.type}` : `btn-${this.type}`,
+      this.disabled ? 'disabled' : '',
       this.size ? `btn-${this.size}` : '',
     ].join(' ');
     return html`

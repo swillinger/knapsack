@@ -30,11 +30,12 @@ export async function getUsage(data: {
         case 'string':
           return `${key}="${value}"`;
         case 'boolean':
-          return value ? `${key}` : `${key}="${value}"`;
+          return value ? `${key}` : '';
         default:
           return `${key}="${JSON.stringify(value)}"`;
       }
     })
+    .filter(Boolean)
     .join(' ');
   const { templateName, children, before, after } = data;
   const result = await renderUsageTemplate({

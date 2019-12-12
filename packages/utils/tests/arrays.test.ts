@@ -14,24 +14,24 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-import { uniqueArray, flattenArray, concatArrays } from '..';
+import test from 'ava';
 
-describe('arrays', () => {
-  test('uniqueArray', () => {
-    const results = uniqueArray([1, 2, 2, 3]);
-    expect(results).toEqual([1, 2, 3]);
-  });
+import { uniqueArray, flattenArray, concatArrays } from '../dist--mjs';
 
-  test('flattenArray', () => {
-    const results = flattenArray([
-      [1, 2, 3],
-      [4, 5, 6],
-    ]);
-    expect(results).toEqual([1, 2, 3, 4, 5, 6]);
-  });
+test('uniqueArray', t => {
+  const results = uniqueArray([1, 2, 2, 3]);
+  t.deepEqual(results, [1, 2, 3]);
+});
 
-  test('concatArrays', () => {
-    const results = concatArrays([1, 2, 3], ['yes', 'ok', 'maybe']);
-    expect(results).toEqual([1, 2, 3, 'yes', 'ok', 'maybe']);
-  });
+test('flattenArray', t => {
+  const results = flattenArray([
+    [1, 2, 3],
+    [4, 5, 6],
+  ]);
+  t.deepEqual(results, [1, 2, 3, 4, 5, 6]);
+});
+
+test('concatArrays', t => {
+  const results = concatArrays([1, 2, 3], ['yes', 'ok', 'maybe']);
+  t.deepEqual(results, [1, 2, 3, 'yes', 'ok', 'maybe']);
 });

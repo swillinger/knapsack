@@ -78,7 +78,7 @@ jobs:
     steps:
       - attach_workspace:
           at: '~'
-      - run: yarn jest
+      - run: yarn ava
       - run: yarn build:private
       - run: yarn test:examples
       - restore_cache:

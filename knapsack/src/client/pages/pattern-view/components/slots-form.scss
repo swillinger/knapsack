@@ -1,16 +1,56 @@
 .ks-slots-form {
-  &__add-buttons {
-    border: var(--util-border);
-    padding: var(--size-xs);
-    margin-bottom: var(--size-m);
-  }
   &__slot {
-    border: solid 1px var(--c-gray-dark);
-    padding: var(--size-s);
-    margin-bottom: var(--size-m);
+    & + & {
+      padding-top: var(--space-m);
+      margin-top: var(--space-m);
+      border-top: 1px solid var(--c-frame);
+    }
+
+    &__slot-name {
+      margin-bottom: var(--space-xs);
+    }
   }
+
   &__slot-item {
-    border: var(--util-border);
-    padding: var(--size-xs);
+    padding: var(--space-xxs);
+    position: relative;
+
+    &:hover {
+      background-color: var(--c-shade);
+    }
+
+    & + & {
+      margin-top: var(--space-xs);
+    }
+
+    .ks-select {
+      vertical-align: bottom;
+
+      select {
+        background-color: var(--c-bg);
+      }
+    }
+  }
+
+  &__slot-controls {
+    position: absolute;
+    top: var(--space-xxs);
+    right: var(--space-xxs);
+  }
+
+  &__add-buttons {
+    margin-top: var(--space-m);
+  }
+
+  &__pattern-link {
+    display: inline-block;
+    vertical-align: bottom;
+    line-height: var(--space-xl);
+    padding-left: var(--space-xs);
+
+    svg {
+      vertical-align: bottom;
+      height: var(--space-xl);
+    }
   }
 }

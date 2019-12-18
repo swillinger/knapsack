@@ -313,7 +313,6 @@ const TemplateView: React.FC<Props> = ({
                       render: () => {
                         return (
                           <>
-                            <h4>Edit Form</h4>
                             <SchemaForm
                               schema={schema}
                               formData={demo.data.props}

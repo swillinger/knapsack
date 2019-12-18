@@ -48,9 +48,10 @@ hr {
 }
 
 code {
-  background: var(--c-gray-xlight);
-  padding: 0 3px;
-  border-radius: 4px;
+  background: var(--c-frame);
+  padding: 0 var(--space-xxs);
+  border-radius: var(--space-xxxs);
+  display: inline-block;
 }
 
 pre {

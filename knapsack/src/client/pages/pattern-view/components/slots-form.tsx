@@ -1,5 +1,5 @@
 import React from 'react';
-import { KsButton, KsTextField, Select } from '@knapsack/design-system';
+import { KsButton, KsTextField, Select, Icon } from '@knapsack/design-system';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 import {
@@ -104,7 +104,6 @@ export const KsSlotsForm: React.FC<Props> = ({
 
   return (
     <div className={classes}>
-      <h4>Slots Form</h4>
       <Formik
         initialValues={slotsData}
         onSubmit={({ values, actions }) => {
@@ -133,9 +132,10 @@ export const KsSlotsForm: React.FC<Props> = ({
                 const { allowedPatternIds, disallowText } = slotDef;
                 return (
                   <div key={slotName} className="ks-slots-form__slot">
-                    <h5 title={`${slotDef.title} - ${slotDef.description}`}>
-                      <code>{slotName}</code>
-                    </h5>
+                    <p className="ks-slots-form__slot__slot-name">
+                      Slot Name: <code>{slotName}</code>
+                    </p>
+
                     <FieldArray name={slotName}>
                       {arrayHelpers => {
                         const slottedDatas = values[slotName];
@@ -153,8 +153,10 @@ export const KsSlotsForm: React.FC<Props> = ({
                         const addButtons = (
                           <div className="ks-slots-form__add-buttons">
                             {isPatternItemsAllowed && (
-                              <button
-                                type="button"
+                              <KsButton
+                                icon="add"
+                                size="s"
+                                // onKeyPress={() => arrayHelpers.insert(index)} // remove a friend from the list
                                 onClick={() =>
                                   arrayHelpers.push({
                                     patternId: '',
@@ -162,66 +164,70 @@ export const KsSlotsForm: React.FC<Props> = ({
                                     demoId: '',
                                   })
                                 } // remove a friend from the list
-                                // onKeyPress={() => arrayHelpers.insert(index)} // remove a friend from the list
                               >
-                                Add Pattern Demo
-                              </button>
+                                Pattern Demo
+                              </KsButton>
                             )}
 
                             {isTextItemsAllowed && (
-                              <button
-                                type="button"
+                              <KsButton
+                                icon="add"
+                                size="s"
                                 onClick={() => arrayHelpers.push('Text')} // remove a friend from the list
                                 // onKeyPress={() => arrayHelpers.insert(index)} // remove a friend from the list
                               >
                                 Add Text
-                              </button>
+                              </KsButton>
                             )}
                           </div>
                         );
+
                         if (!slottedDatas) {
                           return addButtons;
                         }
 
                         return (
                           <div>
-                            {addButtons}
                             {slottedDatas.map((slottedData, index) => {
                               // const key = JSON.stringify(slottedData);
                               const key = index;
+
                               const controls = (
-                                <div>
+                                <div className="ks-slots-form__slot-controls">
                                   {index !== 0 && (
-                                    <button
-                                      type="button"
+                                    <KsButton
+                                      size="s"
                                       onClick={() =>
                                         arrayHelpers.move(index, index - 1)
-                                      } // remove a friend from the list
+                                      }
                                     >
-                                      Up
-                                    </button>
+                                      Move Up
+                                    </KsButton>
                                   )}
                                   {index !== slottedDatas.length - 1 && (
-                                    <button
-                                      type="button"
+                                    <KsButton
+                                      size="s"
                                       onClick={() =>
                                         arrayHelpers.move(index, index + 1)
-                                      } // remove a friend from the list
+                                      }
                                     >
-                                      Down
-                                    </button>
+                                      Move Down
+                                    </KsButton>
                                   )}
                                   <KsButton
                                     icon="delete"
                                     kind="icon"
+                                    emphasis="danger"
                                     size="s"
-                                    onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
+                                    flush
+                                    onClick={() => arrayHelpers.remove(index)}
                                     onKeyPress={() =>
                                       arrayHelpers.remove(index)
-                                    } // remove a friend from the list
+                                    }
                                   />
                                 </div>
                               );
+
                               if (typeof slottedData === 'string') {
                                 return (
                                   <div
@@ -229,21 +235,23 @@ export const KsSlotsForm: React.FC<Props> = ({
                                     className="ks-slots-form__slot-item"
                                   >
                                     {controls}
-                                    <div className="ks-text-field">
-                                      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                                      <label className="ks-text-field__label">
-                                        <span>Text</span>
-                                        <Field
-                                          className="ks-text-field__input"
-                                          name={`${slotName}.${index}`}
-                                          type="text"
-                                          validate={validateSimpleString}
+                                    <Field
+                                      name={`${slotName}.${index}`}
+                                      validate={validateSimpleString}
+                                    >
+                                      {({ field, form, meta }) => (
+                                        <KsTextField
+                                          label="Text"
+                                          inputProps={field}
+                                          error={meta.error}
+                                          flush
                                         />
-                                      </label>
-                                    </div>
+                                      )}
+                                    </Field>
                                   </div>
                                 );
                               }
+
                               const {
                                 patternId,
                                 templateId,
@@ -266,21 +274,7 @@ export const KsSlotsForm: React.FC<Props> = ({
                                   key={key}
                                   className="ks-slots-form__slot-item"
                                 >
-                                  <div
-                                    style={{
-                                      display: 'flex',
-                                      alignItems: 'center',
-                                    }}
-                                  >
-                                    {controls}
-                                    {patternId && templateId && demoId && (
-                                      <Link
-                                        to={`${BASE_PATHS.PATTERN}/${patternId}/${templateId}/${demoId}`}
-                                      >
-                                        View Pattern
-                                      </Link>
-                                    )}
-                                  </div>
+                                  {controls}
                                   <Field
                                     name={`${slotName}.${index}.patternId`}
                                     validate={validateSimpleString}
@@ -381,9 +375,21 @@ export const KsSlotsForm: React.FC<Props> = ({
                                       )}
                                     </Field>
                                   )}
+                                  {patternId && templateId && demoId && (
+                                    <span className="ks-slots-form__pattern-link">
+                                      <Link
+                                        to={`${BASE_PATHS.PATTERN}/${patternId}/${templateId}/${demoId}`}
+                                        target="_blank"
+                                      >
+                                        View Pattern{' '}
+                                        <Icon symbol="external-link" size="s" />
+                                      </Link>
+                                    </span>
+                                  )}
                                 </div>
                               );
                             })}
+                            {addButtons}
                           </div>
                         );
                       }}

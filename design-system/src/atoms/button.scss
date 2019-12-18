@@ -89,6 +89,15 @@
     }
   }
 
+  &-standard,
+  &-primary {
+    svg {
+      height: 100%;
+      vertical-align: top;
+      margin-right: var(--space-xxxs);
+    }
+  }
+
   &-cancel {
     background-color: transparent;
     color: var(--c-button-cancel);

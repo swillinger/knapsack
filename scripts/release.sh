@@ -15,8 +15,8 @@ fi
 # hmm.. that's not working; perhaps CI has `~/.npmrc`
 git config --global user.email "$GH_EMAIL"
 git config --global user.name "BasaltBot"
-git remote remove origin
-git remote add origin "https://${GH_TOKEN}@github.com/basaltinc/knapsack.git"
+#git remote remove origin
+#git remote add origin "https://${GH_TOKEN}@github.com/basaltinc/knapsack.git"
 cp ./scripts/.npmrc-ci ~/.npmrc
 PREV_VERSION=`git describe --abbrev=0`
 # see `lerna.json` for options

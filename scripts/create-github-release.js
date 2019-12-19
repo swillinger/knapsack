@@ -2,7 +2,7 @@
 const readline = require('readline');
 const {
   commentOnIssue,
-  createRelease,
+  // createRelease,
   parseChangelog,
 } = require('./github-util');
 
@@ -28,8 +28,9 @@ rl.on('close', async () => {
     console.log('No changelog found');
     process.exit(0);
   }
-  await createRelease(tag, changelog.trim());
+  // await createRelease(tag, changelog.trim());
   const { issues } = parseChangelog(changelog);
+  console.log('github issues: ', issues);
   if (issues) {
     const issueResults = await Promise.all(
       issues.map(issue =>

@@ -90,6 +90,38 @@ export function isTemplateDemo(
   return demo.type === 'template';
 }
 
+/**
+ * Supersedes `schema`
+ */
+export type KsTemplateSpec = {
+  isInferred?: boolean;
+  /**
+   * JSON Schema defining the serializable data passed in
+   * The classic, formerly `schema`
+   */
+  props?: JsonSchemaObject;
+  /**
+   * @todo evaluate & refine
+   */
+  slots?: {
+    [name: string]: {
+      title: string;
+      description?: string;
+      disallowText?: boolean;
+      allowedPatternIds?: string[];
+    };
+  };
+  /**
+   * @todo evaluate & refine
+   */
+  // cssProps?: {
+  //   [name: string]: {
+  //     title: string;
+  //     description: string;
+  //   };
+  // };
+};
+
 export interface KnapsackPatternTemplate {
   id: string;
   title?: string;
@@ -106,36 +138,7 @@ export interface KnapsackPatternTemplate {
   templateLanguageId: string;
   assetSetIds?: string[];
   statusId?: string;
-  /**
-   * Supersedes `schema`
-   */
-  spec?: {
-    /**
-     * JSON Schema defining the serializable data passed in
-     * The classic, formerly `schema`
-     */
-    props?: JsonSchemaObject;
-    /**
-     * @todo evaluate & refine
-     */
-    slots?: {
-      [name: string]: {
-        title: string;
-        description?: string;
-        disallowText?: boolean;
-        allowedPatternIds?: string[];
-      };
-    };
-    /**
-     * @todo evaluate & refine
-     */
-    // cssProps?: {
-    //   [name: string]: {
-    //     title: string;
-    //     description: string;
-    //   };
-    // };
-  };
+  spec?: KsTemplateSpec;
 
   /**
    * Supercedes `demoData`, a `{}[]`

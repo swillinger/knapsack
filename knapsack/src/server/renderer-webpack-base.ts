@@ -151,6 +151,7 @@ export class KnapsackRendererWebpackBase extends KnapsackRendererBase
     patterns: import('@knapsack/app/src/server/patterns').Patterns;
   }): Promise<void> {
     this.distDirAbsolute = path.resolve(config.dist, this.outputDirName);
+    await fs.emptyDir(this.distDirAbsolute);
     this.publicPath = `/${path.relative(config.dist, this.distDirAbsolute)}/`;
     this.webpackEntry = this.createWebpackEntryFromPatterns(patterns);
     this.createWebpackCompiler(this.webpackEntry);

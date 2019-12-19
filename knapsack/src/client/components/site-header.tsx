@@ -7,6 +7,7 @@ import knapsackLogo from '../assets/knapsack-logo-trans.svg';
 import './site-header.scss';
 import { useSelector, saveToServer, useDispatch } from '../store';
 import { KnapsackNavItem } from '../../schemas/nav';
+import { KnapsackSettings } from '../../schemas/knapsack.settings';
 
 type Props = {
   settings: KnapsackSettings;

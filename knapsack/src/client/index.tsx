@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const mountEl = document.createElement('div');
   mountEl.setAttribute('id', 'app');
   document.body.appendChild(mountEl);
+  mountEl.textContent = 'Loading...';
 
   // const cachedState = getStateFromLocalStorage();
   const cachedState = false;
@@ -47,6 +48,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const App = await import(/* webpackChunkName: "app" */ './App').then(
     mod => mod.App,
   );
+
+  mountEl.textContent = '';
 
   ReactDom.render(
     <Provider store={store}>

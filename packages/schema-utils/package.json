@@ -11,7 +11,8 @@
     "start": "yarn build --watch"
   },
   "dependencies": {
-    "ajv": "^6.6.1"
+    "ajv": "^6.6.1",
+    "ajv-keywords": "^3.4.1"
   },
   "author": "Basalt (https://basalt.io/)",
   "publishConfig": {

@@ -18,6 +18,9 @@ import Ajv from 'ajv'; // https://github.com/epoberezkin/ajv
 
 export const ajv = new Ajv();
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require('ajv-keywords/keywords/typeof')(ajv);
+
 type ajvErrors = import('ajv').ErrorObject[];
 
 const ajvDefaults = new Ajv({

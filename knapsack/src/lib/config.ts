@@ -64,30 +64,31 @@ function validateConfig(config: KnapsackConfig): boolean {
   // @todo check if `config.patterns` exists; but can't now as it can contain globs
   dirExistsOrExit(config.public);
 
-  {
-    const { message, ok } = validateDataAgainstSchema(
-      knapsackDesignTokensSchema,
-      config.designTokens.data,
-    );
+  if (config.designTokens?.data) {
+    {
+      const { message, ok } = validateDataAgainstSchema(
+        knapsackDesignTokensSchema,
+        config.designTokens.data,
+      );
 
-    if (!ok) {
-      log.error(message);
-      process.exit(1);
+      if (!ok) {
+        log.error(message);
+        process.exit(1);
+      }
+    }
+    {
+      const { ok, message } = validateUniqueIdsInArray(
+        config.designTokens.data.tokens,
+        'name',
+      );
+      if (!ok) {
+        log.error(`Error in Design Tokens. ${message}`);
+        process.exit(1);
+      }
     }
   }
 
-  {
-    const { ok, message } = validateUniqueIdsInArray(
-      config.designTokens.data.tokens,
-      'name',
-    );
-    if (!ok) {
-      log.error(`Error in Design Tokens. ${message}`);
-      process.exit(1);
-    }
-  }
-
-  if (config.designTokens.createCodeSnippet) {
+  if (config.designTokens?.createCodeSnippet) {
     config.designTokens.data.tokens = config.designTokens.data.tokens.map(
       token => {
         if (token.code) return token;

@@ -2,46 +2,38 @@ import React from 'react';
 import cn from 'classnames';
 import './icon.scss';
 
-export const iconSizes = ['s', 'm'];
-export const symbols = [
-  'add',
-  'collapser',
-  'delete',
-  'close',
-  'save',
-  'drag-handle',
-  'dropdown-carrot',
-  'edit',
-  'edit-text',
-  'search',
-  'settings',
-  'sort-alphabetically',
-  'folder',
-  'external-link',
-];
+export enum IconSizes {
+  's' = 's',
+  'm' = 'm',
+}
+
+export enum Icons {
+  'add' = 'add',
+  'collapser' = 'collapser',
+  'delete' = 'delete',
+  'close' = 'close',
+  'save' = 'save',
+  'drag-handle' = 'drag-handle',
+  'dropdown-carrot' = 'dropdown-carrot',
+  'edit' = 'edit',
+  'edit-text' = 'edit-text',
+  'search' = 'search',
+  'settings' = 'settings',
+  'sort-alphabetically' = 'sort-alphabetically',
+  'folder' = 'folder',
+  'external-link' = 'external-link',
+}
+
+// export const symbols = Object.keys(Icons);
 
 export type Props = {
-  size?: 's' | 'm';
-  symbol?:
-    | 'add'
-    | 'collapser'
-    | 'delete'
-    | 'close'
-    | 'save'
-    | 'drag-handle'
-    | 'dropdown-carrot'
-    | 'edit'
-    | 'edit-text'
-    | 'search'
-    | 'settings'
-    | 'sort-alphabetically'
-    | 'folder'
-    | 'external-link';
+  size?: keyof typeof IconSizes;
+  symbol?: keyof typeof Icons;
 };
 
 export const Icon: React.FC<Props> = ({
-  size = 'm',
-  symbol = 'edit',
+  size = IconSizes.m,
+  symbol = Icons.edit,
 }: Props) => {
   const classes = cn({
     'ks-icon': true,
@@ -52,7 +44,7 @@ export const Icon: React.FC<Props> = ({
     let returnSymbol;
 
     switch (symbol) {
-      case 'add':
+      case Icons.add:
         returnSymbol = (
           <g>
             <title>Add</title>
@@ -62,7 +54,7 @@ export const Icon: React.FC<Props> = ({
         );
         break;
 
-      case 'collapser':
+      case Icons.collapser:
         returnSymbol = (
           <g>
             <title>Collapse / Expand</title>
@@ -71,9 +63,13 @@ export const Icon: React.FC<Props> = ({
         );
         break;
 
-      case 'delete':
+      case Icons.delete:
         returnSymbol = (
-          <g>
+          <g
+            style={{
+              stroke: 'var(--c-button-primary-danger)',
+            }}
+          >
             <title>Delete</title>
             <polyline points="3 6 5 6 21 6" />
             <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
@@ -83,7 +79,7 @@ export const Icon: React.FC<Props> = ({
         );
         break;
 
-      case 'close':
+      case Icons.close:
         returnSymbol = (
           <g>
             <title>Close or Cancel</title>
@@ -93,7 +89,7 @@ export const Icon: React.FC<Props> = ({
         );
         break;
 
-      case 'save':
+      case Icons.save:
         returnSymbol = (
           <g>
             <title>Save</title>
@@ -104,7 +100,7 @@ export const Icon: React.FC<Props> = ({
         );
         break;
 
-      case 'drag-handle':
+      case Icons['drag-handle']:
         returnSymbol = (
           <g>
             <title>Drag Handle</title>
@@ -118,7 +114,7 @@ export const Icon: React.FC<Props> = ({
         );
         break;
 
-      case 'dropdown-carrot':
+      case Icons['dropdown-carrot']:
         returnSymbol = (
           <g>
             <title>Dropdown Carrot</title>
@@ -127,7 +123,7 @@ export const Icon: React.FC<Props> = ({
         );
         break;
 
-      case 'edit':
+      case Icons.edit:
         returnSymbol = (
           <g>
             <title>Edit</title>
@@ -136,7 +132,7 @@ export const Icon: React.FC<Props> = ({
         );
         break;
 
-      case 'edit-text':
+      case Icons['edit-text']:
         returnSymbol = (
           <g>
             <title>Edit Text</title>
@@ -146,7 +142,7 @@ export const Icon: React.FC<Props> = ({
         );
         break;
 
-      case 'search':
+      case Icons.search:
         returnSymbol = (
           <g>
             <title>Search</title>
@@ -156,7 +152,7 @@ export const Icon: React.FC<Props> = ({
         );
         break;
 
-      case 'settings':
+      case Icons.settings:
         returnSymbol = (
           <g>
             <title>Settings</title>
@@ -166,7 +162,7 @@ export const Icon: React.FC<Props> = ({
         );
         break;
 
-      case 'sort-alphabetically':
+      case Icons['sort-alphabetically']:
         returnSymbol = (
           <g>
             <title>Sort Alphabetically</title>
@@ -178,13 +174,13 @@ export const Icon: React.FC<Props> = ({
         );
         break;
 
-      case 'folder':
+      case Icons.folder:
         returnSymbol = (
           <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
         );
         break;
 
-      case 'external-link':
+      case Icons['external-link']:
         returnSymbol = (
           <g>
             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />

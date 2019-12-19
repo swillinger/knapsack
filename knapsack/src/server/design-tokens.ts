@@ -24,12 +24,13 @@ export class DesignTokens {
   tokens: KnapsackDesignToken[];
 
   constructor({
-    data: { tokens = [] },
+    data,
   }: {
     data: {
       tokens?: KnapsackDesignToken[];
     };
   }) {
+    const tokens = data?.tokens || [];
     this.tokens = tokens.map(token => {
       return {
         originalValue: token.value,

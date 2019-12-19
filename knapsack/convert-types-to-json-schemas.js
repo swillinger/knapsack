@@ -15,6 +15,7 @@ const typeNamesToExportToJsonSchema = [
   'KnapsackAssetSetsConfig',
   'KnapsackPattern',
   'KnapsackNavsConfig',
+  'KsTemplateSpec',
 ];
 const fileNamePrefix = 'schema';
 const deleteUnusedFilesAfter = false;

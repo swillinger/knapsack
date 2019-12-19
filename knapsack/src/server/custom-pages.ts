@@ -37,6 +37,7 @@ export class CustomPages implements KnapsackDb<KnapsackCustomPagesData> {
 
     await globby(join(this.dataDir, 'knapsack.custom-page.*.yml')).then(
       async configFilePaths => {
+        if (!configFilePaths) return;
         return Promise.all(
           configFilePaths.map(async configFilePath => {
             const db = new FileDb2<KnapsackCustomPage>({

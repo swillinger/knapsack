@@ -14,7 +14,7 @@
     "ejs": "^2.7.4"
   },
   "peerDependencies": {
-    "@knapsack/app": "^1.0.0"
+    "@knapsack/app": "^2.0.0-beta.3"
   },
   "author": "Basalt (https://basalt.io/)",
   "publishConfig": {

@@ -2,6 +2,8 @@ import produce from 'immer';
 import shortid from 'shortid';
 import { Action } from './types';
 import {
+  isDataDemo,
+  isSlottedTemplateDemo,
   KnapsackPattern,
   KnapsackPatternsConfig,
   KnapsackPatternTemplate,
@@ -271,7 +273,33 @@ export default function reducer(
         const template = pattern.templates.find(t => t.id === templateId);
         delete template.demosById[demoId];
         template.demos = template.demos.filter(d => d !== demoId);
-        // @todo search all other pattern demos to find any slots that used this demo.
+
+        // searching all other pattern demos to find any slots that used this demo.
+        Object.values(draft.patterns).forEach(({ templates }) => {
+          templates.forEach(t => {
+            Object.values(t.demosById || {})
+              .filter(isDataDemo)
+              .filter(demo => demo.data?.slots)
+              .forEach(demo => {
+                Object.entries(demo.data.slots || {}).forEach(
+                  ([slotName, slotDatas]) => {
+                    demo.data.slots[slotName] = slotDatas.filter(slotData => {
+                      if (isSlottedTemplateDemo(slotData)) {
+                        if (
+                          slotData.patternId === patternId &&
+                          slotData.templateId === templateId &&
+                          slotData.demoId === demoId
+                        ) {
+                          return false;
+                        }
+                      }
+                      return true;
+                    });
+                  },
+                );
+              });
+          });
+        });
       });
 
     case UPDATE_PATTERN_SLICES:

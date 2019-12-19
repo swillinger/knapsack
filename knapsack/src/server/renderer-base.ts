@@ -1,4 +1,6 @@
 import chokidar from 'chokidar';
+import { validateDataAgainstSchema } from '@knapsack/schema-utils';
+import { GenericResponse } from '@knapsack/core/src/types';
 import { knapsackEvents, EVENTS } from './events';
 import * as log from '../cli/log';
 import { formatCode } from './server-utils';
@@ -13,7 +15,9 @@ import {
   isDataDemo,
   isTemplateDemo,
   isSlottedTemplateDemo,
+  KsTemplateSpec,
 } from '../schemas/patterns';
+import specSchema from '../json-schemas/schemaKsTemplateSpec';
 
 /* eslint-disable class-methods-use-this, no-empty-function, no-unused-vars */
 export class KnapsackRendererBase implements KnapsackTemplateRendererBase {
@@ -52,6 +56,19 @@ export class KnapsackRendererBase implements KnapsackTemplateRendererBase {
   static isTemplateDemo = isTemplateDemo;
 
   static isSlottedTemplateDemo = isSlottedTemplateDemo;
+
+  static validateSpec(spec: KsTemplateSpec): GenericResponse {
+    const { ok, message, errors } = validateDataAgainstSchema(specSchema, spec);
+    if (!ok) {
+      return {
+        ok,
+        message,
+      };
+    }
+    return {
+      ok,
+    };
+  }
 
   /**
    * Each sub-class should implement this themselves, probably using `KnapsackRendererBase.formatCode()`

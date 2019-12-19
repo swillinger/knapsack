@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
+import marked from 'marked';
 import './schema-table.scss';
 
 /*
@@ -42,7 +43,11 @@ function SchemaTableExpandable(row) {
       {row.original.data.description && (
         <>
           <h5>Description</h5>
-          <p>{row.original.data.description}</p>
+          <p
+            dangerouslySetInnerHTML={{
+              __html: marked.parse(row.original.data.description),
+            }}
+           />
         </>
       )}
       {/* Display a props table for objects */}

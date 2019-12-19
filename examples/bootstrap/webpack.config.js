@@ -4,6 +4,7 @@ const { join } = require('path');
 const config = createWebPackConfig({
   mainEntries: join(__dirname, './assets/'),
   extraSrcDirs: [
+    __dirname,
     join(__dirname, './assets'),
   ],
   dist: join(__dirname, './public/dist'),

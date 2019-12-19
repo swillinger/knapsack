@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import cn from 'classnames';
 import { KsButton, Icon } from '@knapsack/design-system';
-import { shallowEqual } from 'react-redux';
 import {
   getTreeFromFlatData,
   getFlatDataFromTree,
@@ -53,7 +52,10 @@ export const Sidebar: React.FC = () => {
     const expandedTreeItems = toggleExpandedForAll({
       treeData: initialTreeData,
     });
-    setTreeItems(expandedTreeItems);
+    // fixes this weird bug where the nav appears blank sometimes
+    setTimeout(() => {
+      setTreeItems(expandedTreeItems);
+    }, 250);
     return expandedTreeItems;
   }, [JSON.stringify(secondaryNavItems)]);
 

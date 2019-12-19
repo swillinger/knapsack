@@ -2,6 +2,7 @@ import React from 'react';
 import ReactTable from 'react-table';
 import { NavLink } from 'react-router-dom';
 import { BASE_PATHS } from '../../lib/constants';
+import { KnapsackPattern } from '../../schemas/patterns';
 
 type Props = {
   allPatterns: KnapsackPattern[];

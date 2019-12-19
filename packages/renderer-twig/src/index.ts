@@ -5,6 +5,7 @@ import {
   KnapsackTemplateRendererResults,
 } from '@knapsack/app/src/schemas/knapsack-config';
 import TwigRenderer from '@basalt/twig-renderer';
+import { readFile } from 'fs-extra';
 import { getTwigUsage } from './utils';
 
 /* eslint-disable class-methods-use-this */
@@ -49,11 +50,12 @@ class KnapsackTwigRenderer extends KnapsackRendererBase
     }
     switch (demo.type) {
       case 'template': {
-        const { templateInfo } = demo;
-        return getTwigUsage({
-          templateName: templateInfo.alias,
-          props: {},
+        const templateDemoPath = patternManifest.getTemplateDemoAbsolutePath({
+          patternId: pattern.id,
+          templateId: template.id,
+          demoId: demo.id,
         });
+        return readFile(templateDemoPath, 'utf-8');
       }
       case 'data': {
         const {

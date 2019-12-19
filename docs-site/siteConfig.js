@@ -60,7 +60,7 @@ const siteConfig = {
 
   disableHeaderTitle: true,
   docsSideNavCollapsible: false,
-  editUrl: 'https://github.com/basaltinc/knapsack/blob/master/docs/',
+  editUrl: 'https://github.com/basaltinc/knapsack/blob/next/docs/',
 
   // If you have users set above, you add it here:
   users,

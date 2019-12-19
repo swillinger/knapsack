@@ -1,6 +1,8 @@
 import { flattenArray, flattenNestedArray } from '../lib/utils';
 import * as log from './log';
 import { KnapsackBrain, Patterns } from '../schemas/main-types';
+import { KnapsackConfig } from '../schemas/knapsack-config';
+import { KnapsackPattern } from '../schemas/patterns';
 
 export async function init(ksBrain: KnapsackBrain): Promise<void> {
   const { config, patterns } = ksBrain;

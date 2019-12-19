@@ -18,7 +18,8 @@
     */
     // "sourceRoot": ""
   },
-  "references": [{
+  "references": [
+    {
       "path": "../packages/utils"
     },
     {

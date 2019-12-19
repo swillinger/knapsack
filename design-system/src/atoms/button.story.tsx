@@ -1,7 +1,7 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 import PropMatrix from 'react-prop-matrix';
-import { KsButton, sizes, kinds, emphasiss } from './button';
+import { KsButton, SIZES, KINDS, EMPHASSIS } from './button';
 
 export default {
   title: 'Components|Atoms/KsButton',
@@ -11,16 +11,16 @@ export default {
 };
 
 const options = {
-  size: sizes,
-  kind: kinds,
-  emphasis: emphasiss,
+  size: Object.keys(SIZES),
+  kind: Object.keys(KINDS),
+  emphasis: Object.keys(EMPHASSIS),
 };
 export const allVariations = () => (
   <PropMatrix options={options}>
     {({ text, kind, emphasis, ...props }) => (
       <>
         <KsButton
-          onClick={action('button-click')}
+          handleTrigger={action('button-click')}
           kind={kind}
           icon={kind === 'icon' || kind === 'icon-standard' ? 'add' : null}
           emphasis={emphasis}

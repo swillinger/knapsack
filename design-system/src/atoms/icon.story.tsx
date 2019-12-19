@@ -1,6 +1,6 @@
 import React from 'react';
 import PropMatrix from 'react-prop-matrix';
-import { Icon, iconSizes, symbols } from './icon';
+import { Icon, IconSizes, Icons } from './icon';
 
 export default {
   title: 'Components|Atoms/Icon',
@@ -10,8 +10,8 @@ export default {
 };
 
 const options = {
-  size: iconSizes,
-  symbol: symbols,
+  size: Object.keys(IconSizes),
+  symbol: Object.keys(Icons),
 };
 
 export const allVariations = () => (

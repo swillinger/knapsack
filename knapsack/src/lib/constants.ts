@@ -24,15 +24,15 @@ export { PERMISSIONS };
  * Base Paths for URLs
  * DO NOT INCLUDE TRAILING SLASH!
  */
-export const BASE_PATHS = {
-  PATTERN: '/pattern',
-  PATTERNS: '/patterns',
-  PAGES: '/pages',
-  PAGE_BUILDER: '/page-builder',
-  CUSTOM_PAGES: '/custom-pages',
-  GRAPHIQL_PLAYGROUND: '/graphql-playground',
-  DOCS: '/docs-dir',
-};
+export enum BASE_PATHS {
+  PATTERN = '/pattern',
+  PATTERNS = '/patterns',
+  PAGES = '/pages',
+  PAGE_BUILDER = '/page-builder',
+  CUSTOM_PAGES = '/custom-pages',
+  GRAPHIQL_PLAYGROUND = '/graphql-playground',
+  DOCS = '/docs-dir',
+}
 
 export const FILE_NAMES = {
   PATTERN_CONFIG: 'knapsack.pattern.js',

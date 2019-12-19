@@ -7,6 +7,7 @@ export default {
   files: [
     'knapsack/tests/**/*',
     'packages/*/tests/**/*',
+    '!dist',
     // 'packages/renderer-twig/tests/*',
   ],
   extensions: ['.test.ts'],
@@ -21,7 +22,7 @@ export default {
   //   MY_ENVIRONMENT_VARIABLE: 'some value',
   // },
   // tap: true,
-  verbose: true,
+  // verbose: true,
   // compileEnhancements: false,
   require: ['@babel/register'],
   babel: {

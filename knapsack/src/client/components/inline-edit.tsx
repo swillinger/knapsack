@@ -81,8 +81,7 @@ export const InlineEditTextBase: React.FC<TextProps> = ({
               kind="icon"
               flush
               emphasis="danger"
-              onClick={handleTargetFocus}
-              onKeyPress={handleTargetFocus}
+              handleTrigger={handleTargetFocus}
             >
               close
             </KsButton>
@@ -92,8 +91,7 @@ export const InlineEditTextBase: React.FC<TextProps> = ({
             icon={btnState}
             kind="icon"
             flush
-            onClick={handleControlTrigger}
-            onKeyPress={handleControlTrigger}
+            handleTrigger={handleControlTrigger}
           >
             {btnState}
           </KsButton>

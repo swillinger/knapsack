@@ -22,5 +22,8 @@
   "author": "Basalt (https://basalt.io/)",
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "@types/json-schema": "^7.0.3"
   }
 }

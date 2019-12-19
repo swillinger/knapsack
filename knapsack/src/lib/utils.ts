@@ -94,3 +94,11 @@ export function isBase64(
 
   return result;
 }
+
+export function timer(): () => number {
+  const startTime = new Date().getTime();
+  return () => {
+    const endTime = new Date().getTime();
+    return (endTime - startTime) / 1000;
+  };
+}

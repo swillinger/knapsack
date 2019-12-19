@@ -18,6 +18,7 @@ git config --global user.name "BasaltBot"
 git remote remove origin
 git remote add origin "https://${GH_TOKEN}@github.com/basaltinc/knapsack.git"
 git config --global push.default matching
+git branch --set-upstream-to=origin/$CIRCLE_BRANCH $CIRCLE_BRANCH
 cp ./scripts/.npmrc-ci ~/.npmrc
 PREV_VERSION=`git describe --abbrev=0`
 # see `lerna.json` for options

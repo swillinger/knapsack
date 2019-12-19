@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.4](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.3...v2.0.0-beta.4) (2019-12-19)
+
+
+### Bug Fixes
+
+* setting origin branch ([6d593c5](https://github.com/basaltinc/knapsack/commit/6d593c576bec2eba6f58db8cede5f06b657a9cfd))
+* style pass slots form ([53772ec](https://github.com/basaltinc/knapsack/commit/53772ec25d245c86c1ddb1fde0da5e13103b4f21))
+
+
+
+
+
 # [2.0.0-beta.3](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.1...v2.0.0-beta.3) (2019-12-19)
 
 

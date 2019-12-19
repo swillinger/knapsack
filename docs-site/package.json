@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/docs-site",
   "private": true,
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0-beta.1",
   "scripts": {
     "examples": "docusaurus-examples",
     "start": "yarn build:wp && run-p start:docs start:wp",
@@ -16,7 +16,7 @@
     "rename-version": "docusaurus-rename-version"
   },
   "devDependencies": {
-    "@knapsack/app": "^2.0.0-beta.0",
+    "@knapsack/app": "^2.0.0-beta.1",
     "@knapsack/schema-table": "^1.7.0",
     "docusaurus": "next",
     "node-sass": "^4.0.0",

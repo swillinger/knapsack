@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.1](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.0...v2.0.0-beta.1) (2019-12-19)
+
+
+### Bug Fixes
+
+* test core change ([de681e3](https://github.com/basaltinc/knapsack/commit/de681e3f87842c13a81c49ee50ad56c47b54a614))
+
+
+
+
+
 # [1.7.0](https://github.com/basaltinc/knapsack/compare/v1.6.2...v1.7.0) (2019-10-24)
 
 

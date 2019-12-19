@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.1](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.0...v2.0.0-beta.1) (2019-12-19)
+
+**Note:** Version bump only for package @knapsack/plugin-custom-homepage
+
+
+
+
+
 # [1.7.0](https://github.com/basaltinc/knapsack/compare/v1.6.2...v1.7.0) (2019-10-24)
 
 **Note:** Version bump only for package @knapsack/plugin-custom-homepage

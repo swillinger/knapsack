@@ -1,6 +1,6 @@
 {
   "name": "@knapsack/renderer-web-components",
-  "version": "1.6.0",
+  "version": "2.0.0-beta.0",
   "description": "Render Web Components",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,7 +9,6 @@
     "clean": "rm -rf dist tsconfig.tsbuildinfo",
     "start": "yarn build --watch"
   },
-  "dependencies": {},
   "peerDependencies": {
     "@knapsack/app": "^1.0.0"
   },

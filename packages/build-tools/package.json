@@ -1,11 +1,11 @@
 {
   "name": "@knapsack/build-tools",
-  "version": "1.7.1",
+  "version": "2.0.0-beta.0",
   "description": "",
   "main": "create-webpack-config.js",
   "scripts": {},
   "dependencies": {
-    "@knapsack/babel-config": "^1.7.1"
+    "@knapsack/babel-config": "^2.0.0-beta.0"
   },
   "devDependencies": {
     "babel-loader": "^8.0.0",

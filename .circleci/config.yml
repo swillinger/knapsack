@@ -165,23 +165,23 @@ workflows:
   main:
     jobs:
       - setup
-      # - tests:
-      #     requires:
-      #       - setup
-      # - test--publish:
-      #     requires:
-      #       - setup
-      # - deploys:
-      #     requires:
-      #       - setup
-      # - deploy-knapsack
+      - tests:
+          requires:
+            - setup
+      - test--publish:
+          requires:
+            - setup
+      - deploys:
+          requires:
+            - setup
+      - deploy-knapsack
       - release:
           requires:
             - setup
-            # - tests
-            # - test--publish
-            # - deploys
-            # - deploy-knapsack
+            - tests
+            - test--publish
+            - deploys
+            - deploy-knapsack
           filters:
             branches:
               only: next

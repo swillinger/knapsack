@@ -199,214 +199,208 @@ const TemplateView: React.FC<Props> = ({
 
   return (
     <article className="ks-template-view">
-      <div className="ks-template-view__overview-wrapper">
-        <TemplateHeader
-          title={title}
-          assetSets={assetSets}
-          status={status}
-          isTitleShown={!isVerbose && isTitleShown}
-          handleAssetSetChange={newAssetSetId => {
-            setAssetSetId(newAssetSetId);
-          }}
-          handleStatusChange={newStatusId => {
-            dispatch(
-              updateTemplateInfo({
-                templateId,
-                patternId,
-                template: {
-                  statusId: newStatusId,
-                },
-              }),
-            );
-          }}
-        />
+      <TemplateHeader
+        title={title}
+        assetSets={assetSets}
+        status={status}
+        isTitleShown={!isVerbose && isTitleShown}
+        handleAssetSetChange={newAssetSetId => {
+          setAssetSetId(newAssetSetId);
+        }}
+        handleStatusChange={newStatusId => {
+          dispatch(
+            updateTemplateInfo({
+              templateId,
+              patternId,
+              template: {
+                statusId: newStatusId,
+              },
+            }),
+          );
+        }}
+      />
 
+      <div
+        className="ks-template-view__demo-grid"
+        style={{
+          display:
+            (showSchemaForm ? demoSize : 'full') === 'full' ? 'block' : 'flex',
+        }}
+      >
         <div
-          className="ks-template-view__demo-grid"
+          className="ks-template-view__demo-stage"
           style={{
-            display:
-              (showSchemaForm ? demoSize : 'full') === 'full'
-                ? 'block'
-                : 'flex',
+            width: calculateDemoStageWidth(showSchemaForm ? demoSize : 'full'),
           }}
         >
-          <div
-            className="ks-template-view__demo-stage"
-            style={{
-              width: calculateDemoStageWidth(
-                showSchemaForm ? demoSize : 'full',
-              ),
-            }}
-          >
-            <span className="ks-template-view__demo-stage__open-btn">
-              <KsButton
-                kind="icon"
-                icon="external-link"
-                flush
-                onClick={() => {
-                  if (templateInfo?.url) {
-                    window.open(templateInfo.url, '_blank');
-                  }
-                }}
-              >
-                Open in New Window
-              </KsButton>
-            </span>
-            <Template
-              patternId={id}
-              templateId={templateId}
-              assetSetId={assetSetId}
-              demo={demo}
-              isResizable
-              handleTemplateInfo={setTemplateInfo}
-            />
-          </div>
-          {showSchemaForm && isDataDemo(demo) && (
-            <div
-              className="ks-template-view__schema-form"
-              style={{
-                width: calculateSchemaFormWidth(demoSize),
+          <span className="ks-template-view__demo-stage__open-btn">
+            <KsButton
+              kind="icon"
+              icon="external-link"
+              flush
+              onClick={() => {
+                if (templateInfo?.url) {
+                  window.open(templateInfo.url, '_blank');
+                }
               }}
             >
-              <div className="ks-template-view__schema-form__inner">
-                <header className="ks-template-view__schema-form__header">
-                  <h3>
-                    <InlineEditText
-                      text={demo.title}
-                      isHeading
-                      handleSave={text => {
-                        dispatch(
-                          updateTemplateDemo({
-                            patternId,
-                            templateId,
-                            demo: {
-                              ...demo,
-                              title: text,
-                            },
-                          }),
-                        );
-                      }}
-                    />
-                  </h3>
-                  <p>
-                    <InlineEditText
-                      text={demo.description}
-                      handleSave={text => {
-                        dispatch(
-                          updateTemplateDemo({
-                            patternId,
-                            templateId,
-                            demo: {
-                              ...demo,
-                              description: text,
-                            },
-                          }),
-                        );
-                      }}
-                    />
-                  </p>
-                </header>
-                <Tabs
-                  panes={[
-                    {
-                      menuItem: 'Props',
-                      render: () => {
-                        return (
-                          <>
-                            <SchemaForm
-                              schema={schema}
-                              formData={demo.data.props}
-                              onChange={({ formData }) => {
+              Open in New Window
+            </KsButton>
+          </span>
+          <Template
+            patternId={id}
+            templateId={templateId}
+            assetSetId={assetSetId}
+            demo={demo}
+            isResizable
+            handleTemplateInfo={setTemplateInfo}
+          />
+        </div>
+        {showSchemaForm && isDataDemo(demo) && (
+          <div
+            className="ks-template-view__schema-form"
+            style={{
+              width: calculateSchemaFormWidth(demoSize),
+            }}
+          >
+            <div className="ks-template-view__schema-form__inner">
+              <header className="ks-template-view__schema-form__header">
+                <h3>
+                  <InlineEditText
+                    text={demo.title}
+                    isHeading
+                    handleSave={text => {
+                      dispatch(
+                        updateTemplateDemo({
+                          patternId,
+                          templateId,
+                          demo: {
+                            ...demo,
+                            title: text,
+                          },
+                        }),
+                      );
+                    }}
+                  />
+                </h3>
+                <p>
+                  <InlineEditText
+                    text={demo.description}
+                    handleSave={text => {
+                      dispatch(
+                        updateTemplateDemo({
+                          patternId,
+                          templateId,
+                          demo: {
+                            ...demo,
+                            description: text,
+                          },
+                        }),
+                      );
+                    }}
+                  />
+                </p>
+              </header>
+              <Tabs
+                panes={[
+                  {
+                    menuItem: 'Props',
+                    render: () => {
+                      return (
+                        <>
+                          <SchemaForm
+                            schema={schema}
+                            formData={demo.data.props}
+                            onChange={({ formData }) => {
+                              setDemo(prevDemo =>
+                                produce(prevDemo, draft => {
+                                  if (isDataDemo(draft)) {
+                                    draft.data.props = formData;
+                                  }
+                                }),
+                              );
+                            }}
+                          />
+                        </>
+                      );
+                    },
+                  },
+                  spec.slots
+                    ? {
+                        menuItem: 'Slots',
+                        render: () => {
+                          if (!isDataDemo(demo)) return;
+
+                          return (
+                            <KsSlotsForm
+                              slotsData={demo.data.slots}
+                              slotsSpec={spec.slots}
+                              templateLanguageId={template.templateLanguageId}
+                              handleData={slotsData => {
+                                // console.log('new slots data', slotsData);
                                 setDemo(prevDemo =>
                                   produce(prevDemo, draft => {
                                     if (isDataDemo(draft)) {
-                                      draft.data.props = formData;
+                                      draft.data.slots = slotsData;
                                     }
                                   }),
                                 );
                               }}
                             />
-                          </>
-                        );
-                      },
-                    },
-                    spec.slots
-                      ? {
-                          menuItem: 'Slots',
-                          render: () => {
-                            if (!isDataDemo(demo)) return;
-
-                            return (
-                              <KsSlotsForm
-                                slotsData={demo.data.slots}
-                                slotsSpec={spec.slots}
-                                templateLanguageId={template.templateLanguageId}
-                                handleData={slotsData => {
-                                  // console.log('new slots data', slotsData);
-                                  setDemo(prevDemo =>
-                                    produce(prevDemo, draft => {
-                                      if (isDataDemo(draft)) {
-                                        draft.data.slots = slotsData;
-                                      }
-                                    }),
-                                  );
-                                }}
-                              />
-                            );
-                          },
-                        }
-                      : null,
-                  ].filter(Boolean)}
-                />
-                {canEdit && (
-                  <>
-                    <hr />
-                    <KsButton
-                      kind="primary"
-                      onClick={() => {
-                        dispatch(
-                          updateTemplateDemo({
-                            patternId,
-                            templateId,
-                            demo,
-                          }),
-                        );
-                      }}
-                    >
-                      Save Demo
-                    </KsButton>
-                    <KsButton
-                      onClick={() => {
-                        dispatch(
-                          addTemplateDataDemo({
-                            patternId,
-                            templateId,
-                          }),
-                        );
-                        // @todo go to it after
-                      }}
-                    >
-                      Add new demo
-                    </KsButton>
-                    <KsButton
-                      onClick={() => {
-                        dispatch(
-                          removeTemplateDemo({
-                            patternId,
-                            templateId,
-                            demoId: demo.id,
-                          }),
-                        );
-                      }}
-                    >
-                      Remove demo
-                    </KsButton>
-                  </>
-                )}
-              </div>
+                          );
+                        },
+                      }
+                    : null,
+                ].filter(Boolean)}
+              />
+              {canEdit && (
+                <>
+                  <hr />
+                  <KsButton
+                    kind="primary"
+                    onClick={() => {
+                      dispatch(
+                        updateTemplateDemo({
+                          patternId,
+                          templateId,
+                          demo,
+                        }),
+                      );
+                    }}
+                  >
+                    Save Demo
+                  </KsButton>
+                  <KsButton
+                    onClick={() => {
+                      dispatch(
+                        addTemplateDataDemo({
+                          patternId,
+                          templateId,
+                        }),
+                      );
+                      // @todo go to it after
+                    }}
+                  >
+                    Add new demo
+                  </KsButton>
+                  <KsButton
+                    onClick={() => {
+                      dispatch(
+                        removeTemplateDemo({
+                          patternId,
+                          templateId,
+                          demoId: demo.id,
+                        }),
+                      );
+                    }}
+                  >
+                    Remove demo
+                  </KsButton>
+                </>
+              )}
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       {demos && demos.length > 1 && (
@@ -441,6 +435,7 @@ const TemplateView: React.FC<Props> = ({
           </div>
         </nav>
       )}
+
       <details className="ks-details" open>
         <summary>Code Details</summary>
         {isCodeBlockShown && (

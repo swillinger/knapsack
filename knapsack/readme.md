@@ -10,6 +10,3 @@ cd my-design-system
 npm install
 npm start
 ```
-
-
-

@@ -1,56 +1,168 @@
 @import '../../global/breakpoints';
 
-.ks-template-view__demo-grid {
-  position: relative;
-  flex-grow: 1;
-
-  @media (max-width: $bp-large - 1) {
-    display: block !important;
-  }
-}
-
-.ks-template-view__demo-stage {
+// Demos List
+.ks-template-view__demos-list {
   background-color: var(--c-shade);
   border: 1px solid var(--c-frame);
-  border-right-width: 0;
-  border-top-left-radius: var(--space-xs);
-  border-bottom-left-radius: var(--space-xs);
+  border-bottom-width: 0;
+  border-radius: var(--space-xs) var(--space-xs) 0 0;
+  padding: var(--space-m) 0 var(--space-m) var(--space-m);
+  white-space: nowrap;
+  overflow-x: auto;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-xs);
-  width: 100%;
-  position: relative;
 
-  &__open-btn {
-    position: absolute;
-    top: var(--space-xxs);
-    right: var(--space-xxs);
+  &__add-btn {
+    display: inline-flex;
+    vertical-align: top;
+    margin-left: var(--space-m);
+    height: calc((var(--demo-item-size) * 1px) + 2px);
+
+    button {
+      width: calc((var(--demo-item-size) * 1px) + 2px);
+      height: auto;
+    }
+    button svg {
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
   }
 
-  @media (max-width: $bp-large - 1) {
-    width: 100% !important;
+  &:after { // simulate right padding
+    content: ' ';
+    display: inline-block;
+    vertical-align: top;
+    width: var(--space-m);
+    height: 100%;
+  }
+}
+.ks-template-view__demos-list__item {
+  width: calc((var(--demo-item-size) * 1px) + 2px);
+  text-align: center;
+  margin: 0;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+
+  &__actions {
+    position: absolute;
+    /* stylelint-disable function-calc-no-invalid */
+    top: calc(var(--space-xs) * -1);
+    right: calc(var(--space-xxs) * -1);
+    /* styleline-enable function-calc-no-invalid */
+    z-index: 5;
+    opacity: 0;
+    transition: opacity 200ms ease;
+  }
+  &__actions button {
+    margin-left: var(--space-xs);
+  }
+
+  &__thumbnail-wrap {
+    border: 1px solid transparent;
+  }
+
+  figcaption {
+    font-size: var(--font-size-s);
+    color: var(--c-text-subdued);
+    margin-top: var(--space-xxxs);
+  }
+
+  &:hover,
+  &:focus {
+    .ks-template-view__demos-list__item__actions {
+      opacity: 1;
+    }
+
+    .ks-template-view__demos-list__item__thumbnail-wrap {
+      border-color: var(--c-frame);
+    }
+  }
+
+  &--active,
+  &--active:hover,
+  &--active:focus {
+    .ks-template-view__demos-list__item__thumbnail-wrap {
+      border-color: var(--c-active);
+    }
+
+    figcaption {
+      color: var(--c-active);
+    }
+  }
+
+  & + & {
+    margin-left: var(--space-xs);
   }
 }
 
-.ks-template-view__schema-form {
-  display: flex;
-  justify-content: center;
-  overflow: initial;
-  overflow-y: visible;
-  border: 1px solid var(--c-gray-xlight);
-  border-top-right-radius: var(--space-xs);
-  border-bottom-right-radius: var(--space-xs);
+// Demo Editor
+.ks-template-view__demo-editor {
   position: relative;
-  padding: var(--space-xs) var(--space-s);
-  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  margin-bottom: var(--space-m);
 
-  @media (max-width: $bp-large - 1) {
-    width: 100% !important;
+  &--full {
+    display: block;
+
+    .ks-template-view__demo-editor__stage {
+      border-right-width: 1px;
+      border-top-right-radius: 1px;
+      border-bottom-left-radius: 0;
+    }
+
+    .ks-template-view__demo-editor__schema {
+      border-top-width: 0;
+      border-top-right-radius: 0;
+    }
   }
 
-  &__inner {
+  &--has-demos {
+    .ks-template-view__demo-editor__stage {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+    .ks-template-view__demo-editor__schema {
+      border-top-right-radius: 0;
+    }
+  }
+
+  &__stage {
+    background-color: var(--c-shade);
+    border: 1px solid var(--c-frame);
+    border-right-width: 0;
+    border-top-left-radius: var(--space-xs);
+    border-bottom-left-radius: var(--space-xs);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xs);
+    width: 100%;
+    position: relative;
+
+    &__open-btn {
+      position: absolute;
+      top: var(--space-xxs);
+      right: var(--space-xxs);
+    }
+  }
+
+  &__schema {
+    display: flex;
+    justify-content: center;
+    overflow: initial;
+    overflow-y: visible;
+    border: 1px solid var(--c-gray-xlight);
+    border-top-right-radius: var(--space-xs);
+    border-bottom-right-radius: var(--space-xs);
+    position: relative;
+    padding: var(--space-xs) var(--space-s);
+    width: 100%;
+  }
+  &__schema__inner {
     top: 0;
     right: 0;
     bottom: 0;
@@ -67,46 +179,38 @@
       display: none;
     }
   }
-
-  &__header {
+  &__schema__header {
     margin-bottom: var(--space-m);
+  }
+  &__schema__title {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: var(--space-xxs);
+
     h3 {
-      margin-top: 0;
-      margin-bottom: var(--space-xxs);
+      flex: 1;
+      margin: 0;
+    }
+  }
+
+  @media (max-width: $bp-large - 1) {
+    display: block !important;
+
+    &__stage,
+    &__schema {
+      width: 100% !important;
     }
   }
 }
 
-.ks-template-view__demos-container {
-  border: 1px solid var(--c-frame);
-  padding: var(--size-m);
-  margin-bottom: var(--size-l);
+.ks-template-view__code-block-wrapper {
+  margin-bottom: var(--space-l);
 }
 
-.ks-template-view__demos {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-}
+.ks-template-view__properties-table {
+  margin-bottom: var(--space-m);
 
-.ks-template-view__demos__item {
-  border: 1px solid var(--c-frame);
-  margin: 0;
-
-  & + & {
-    margin-left: var(--space-m);
-  }
-
-  figcaption {
-    border-bottom: 1px solid var(--c-frame);
-    padding: var(--space-xs);
-  }
-
-  &--active {
-    border-color: var(--c-active);
-
-    figcaption {
-      border-color: var(--c-active);
-    }
+  p {
+    margin-bottom: var(--space-m);
   }
 }

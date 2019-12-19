@@ -16,9 +16,16 @@
  */
 
 import React, { useState } from 'react';
-import { SchemaForm, Details, Select, KsButton } from '@knapsack/design-system';
+import {
+  SchemaForm,
+  Details,
+  Select,
+  KsButton,
+  Icon,
+} from '@knapsack/design-system';
 import { useHistory } from 'react-router-dom';
 import ReactTable from 'react-table';
+import cn from 'classnames';
 import produce from 'immer';
 import {
   useSelector,
@@ -177,16 +184,6 @@ const TemplateView: React.FC<Props> = ({
 
   const [demoIndex, setDemoIndex] = useState(0);
   const [demo, setDemo] = useState(initialDemo);
-  const demoWidth =
-    pattern.demoWidths && pattern.demoWidths.length > 0
-      ? pattern.demoWidths[0].width
-      : 400;
-  // const demo = demos[demoIndex];
-
-  // const [dataState, setDataState] = useState({
-  //   demoDataIndex: 0,
-  //   data: demoDatas[0],
-  // });
 
   const [assetSetId, setAssetSetId] = useState(
     assetSets[0] ? assetSets[0].id : '',
@@ -220,20 +217,101 @@ const TemplateView: React.FC<Props> = ({
         }}
       />
 
+      {demos && demos.length > 1 && (
+        <nav className="ks-template-view__demos-list">
+          {demos.map((aDemo, i) => (
+            <figure
+              key={aDemo.id}
+              className={cn(
+                'ks-template-view__demos-list__item',
+                demoIndex === i
+                  ? 'ks-template-view__demos-list__item--active'
+                  : '',
+              )}
+            >
+              <div className="ks-template-view__demos-list__item__actions">
+                {aDemo.description && (
+                  <span title={aDemo.description}>
+                    <Icon symbol="info" size="s" />
+                  </span>
+                )}
+                {canEdit && (
+                  <KsButton
+                    kind="icon"
+                    emphasis="danger"
+                    icon="delete"
+                    size="s"
+                    flush
+                    onClick={() => {
+                      dispatch(
+                        removeTemplateDemo({
+                          patternId,
+                          templateId,
+                          demoId: aDemo.id,
+                        }),
+                      );
+                    }}
+                  >
+                    Delete Demo
+                  </KsButton>
+                )}
+              </div>
+              <div className="ks-template-view__demos-list__item__thumbnail-wrap">
+                <TemplateThumbnail
+                  patternId={id}
+                  templateId={templateId}
+                  assetSetId={assetSetId}
+                  demo={aDemo}
+                  handleSelection={() => {
+                    history.push(
+                      `${BASE_PATHS.PATTERN}/${patternId}/${templateId}/${aDemo.id}`,
+                    );
+                    setDemo(aDemo);
+                  }}
+                />
+              </div>
+              <figcaption>{aDemo.title}</figcaption>
+            </figure>
+          ))}
+          {canEdit && (
+            <span className="ks-template-view__demos-list__add-btn">
+              <KsButton
+                icon="add"
+                onClick={() => {
+                  dispatch(
+                    addTemplateDataDemo({
+                      patternId,
+                      templateId,
+                    }),
+                  );
+                  // @todo go to it after
+                }}
+              >
+                Data Demo
+              </KsButton>
+            </span>
+          )}
+        </nav>
+      )}
+
       <div
-        className="ks-template-view__demo-grid"
-        style={{
-          display:
-            (showSchemaForm ? demoSize : 'full') === 'full' ? 'block' : 'flex',
-        }}
+        className={cn(
+          'ks-template-view__demo-editor',
+          (showSchemaForm ? demoSize : 'full') === 'full'
+            ? 'ks-template-view__demo-editor--full'
+            : '',
+          demos && demos.length > 1
+            ? 'ks-template-view__demo-editor--has-demos'
+            : '',
+        )}
       >
         <div
-          className="ks-template-view__demo-stage"
+          className="ks-template-view__demo-editor__stage"
           style={{
             width: calculateDemoStageWidth(showSchemaForm ? demoSize : 'full'),
           }}
         >
-          <span className="ks-template-view__demo-stage__open-btn">
+          <span className="ks-template-view__demo-editor__stage__open-btn">
             <KsButton
               kind="icon"
               icon="external-link"
@@ -258,31 +336,50 @@ const TemplateView: React.FC<Props> = ({
         </div>
         {showSchemaForm && isDataDemo(demo) && (
           <div
-            className="ks-template-view__schema-form"
+            className="ks-template-view__demo-editor__schema"
             style={{
               width: calculateSchemaFormWidth(demoSize),
             }}
           >
-            <div className="ks-template-view__schema-form__inner">
-              <header className="ks-template-view__schema-form__header">
-                <h3>
-                  <InlineEditText
-                    text={demo.title}
-                    isHeading
-                    handleSave={text => {
-                      dispatch(
-                        updateTemplateDemo({
-                          patternId,
-                          templateId,
-                          demo: {
-                            ...demo,
-                            title: text,
-                          },
-                        }),
-                      );
-                    }}
-                  />
-                </h3>
+            <div className="ks-template-view__demo-editor__schema__inner">
+              <header className="ks-template-view__demo-editor__schema__header">
+                <div className="ks-template-view__demo-editor__schema__title">
+                  <h3>
+                    <InlineEditText
+                      text={demo.title}
+                      isHeading
+                      handleSave={text => {
+                        dispatch(
+                          updateTemplateDemo({
+                            patternId,
+                            templateId,
+                            demo: {
+                              ...demo,
+                              title: text,
+                            },
+                          }),
+                        );
+                      }}
+                    />
+                  </h3>
+                  {canEdit && (
+                    <KsButton
+                      kind="primary"
+                      size="s"
+                      onClick={() => {
+                        dispatch(
+                          updateTemplateDemo({
+                            patternId,
+                            templateId,
+                            demo,
+                          }),
+                        );
+                      }}
+                    >
+                      Save Demo
+                    </KsButton>
+                  )}
+                </div>
                 <p>
                   <InlineEditText
                     text={demo.description}
@@ -353,154 +450,74 @@ const TemplateView: React.FC<Props> = ({
                     : null,
                 ].filter(Boolean)}
               />
-              {canEdit && (
-                <>
-                  <hr />
-                  <KsButton
-                    kind="primary"
-                    onClick={() => {
-                      dispatch(
-                        updateTemplateDemo({
-                          patternId,
-                          templateId,
-                          demo,
-                        }),
-                      );
-                    }}
-                  >
-                    Save Demo
-                  </KsButton>
-                  <KsButton
-                    onClick={() => {
-                      dispatch(
-                        addTemplateDataDemo({
-                          patternId,
-                          templateId,
-                        }),
-                      );
-                      // @todo go to it after
-                    }}
-                  >
-                    Add new demo
-                  </KsButton>
-                  <KsButton
-                    onClick={() => {
-                      dispatch(
-                        removeTemplateDemo({
-                          patternId,
-                          templateId,
-                          demoId: demo.id,
-                        }),
-                      );
-                    }}
-                  >
-                    Remove demo
-                  </KsButton>
-                </>
-              )}
             </div>
           </div>
         )}
       </div>
 
-      {demos && demos.length > 1 && (
-        <nav className="ks-template-view__demos-container">
-          <h4>Demos</h4>
-          <div className="ks-template-view__demos">
-            {demos.map((aDemo, i) => (
-              <figure
-                className={`ks-template-view__demos__item ${
-                  demoIndex === i ? 'ks-template-view__demos__item--active' : ''
-                }`}
-                key={aDemo.id}
-                style={{ width: '200px' }}
-              >
-                <figcaption title={aDemo.description}>{aDemo.title}</figcaption>
-                <TemplateThumbnail
-                  patternId={id}
-                  templateId={templateId}
-                  assetSetId={assetSetId}
-                  demo={aDemo}
-                  renderedWidth={demoWidth > 200 ? demoWidth : 200}
-                  actualWidth={200}
-                  handleSelection={() => {
-                    history.push(
-                      `${BASE_PATHS.PATTERN}/${patternId}/${templateId}/${aDemo.id}`,
-                    );
-                    setDemo(aDemo);
-                  }}
-                />
-              </figure>
-            ))}
-          </div>
-        </nav>
+      {isCodeBlockShown && (
+        <div className="ks-template-view__code-block-wrapper">
+          <TemplateCodeBlock templateInfo={templateInfo} />
+        </div>
       )}
 
-      <details className="ks-details" open>
-        <summary>Code Details</summary>
-        {isCodeBlockShown && (
-          <div style={{ marginBottom: '1rem' }}>
-            <TemplateCodeBlock templateInfo={templateInfo} />
+      {isReadmeShown && readme && (
+        <MdBlock
+          md={readme}
+          key={`${id}-${templateId}`}
+          isEditable={permissions.includes('write')}
+          title="Documentation (not wired up to save right now)"
+          handleSave={newReadme => {
+            // @todo save it
+            console.log('handleSave on readme called', newReadme);
+          }}
+        />
+      )}
+      {isVerbose && hasSchema && (
+        <>
+          <div className="ks-template-view__properties-table">
+            <h4>Properties</h4>
+            <p>
+              The following properties make up the data that defines each
+              instance of this component.
+            </p>
+            <Details open>
+              <summary>Props Table</summary>
+              <LoadableSchemaTable schema={schema} />
+            </Details>
           </div>
-        )}
-        {isReadmeShown && readme && (
-          <MdBlock
-            md={readme}
-            key={`${id}-${templateId}`}
-            isEditable={permissions.includes('write')}
-            title="Documentation (not wired up to save right now)"
-            handleSave={newReadme => {
-              // @todo save it
-              console.log('handleSave on readme called', newReadme);
-            }}
-          />
-        )}
-        {isVerbose && hasSchema && (
-          <>
-            <div>
-              <h4>Properties</h4>
-              <p>
-                The following properties make up the data that defines each
-                instance of this component.
-              </p>
-              <Details open>
-                <summary>Props Table</summary>
-                <LoadableSchemaTable schema={schema} />
-              </Details>
-            </div>
 
-            {/* <LoadableVariationDemo */}
-            {/*  schema={schema} */}
-            {/*  templateId={templateId} */}
-            {/*  patternId={id} */}
-            {/*  data={demoDatas[demoDataIndex]} */}
-            {/*  key={`${id}-${templateId}-${demoDataIndex}`} */}
-            {/* /> */}
-          </>
-        )}
-        {isVerbose && spec.slots && (
-          <div>
-            <h4>Slots</h4>
-            <ReactTable
-              data={Object.keys(spec.slots).map(slotName => {
-                const { title: slotTitle, description } = spec.slots[slotName];
-                return {
-                  slotName,
-                  slotTitle,
-                  description,
-                };
-              })}
-              columns={[
-                { Header: 'Slot Name', accessor: 'slotName' },
-                { Header: 'Title', accessor: 'slotTitle' },
-                { Header: 'Description', accessor: 'description' },
-              ]}
-              defaultPageSize={Object.keys(spec.slots).length}
-              showPagination={false}
-            />
-          </div>
-        )}
-      </details>
+          {/* <LoadableVariationDemo */}
+          {/*  schema={schema} */}
+          {/*  templateId={templateId} */}
+          {/*  patternId={id} */}
+          {/*  data={demoDatas[demoDataIndex]} */}
+          {/*  key={`${id}-${templateId}-${demoDataIndex}`} */}
+          {/* /> */}
+        </>
+      )}
+      {isVerbose && spec.slots && (
+        <div>
+          <h4>Slots</h4>
+          <ReactTable
+            data={Object.keys(spec.slots).map(slotName => {
+              const { title: slotTitle, description } = spec.slots[slotName];
+              return {
+                slotName,
+                slotTitle,
+                description,
+              };
+            })}
+            columns={[
+              { Header: 'Slot Name', accessor: 'slotName' },
+              { Header: 'Title', accessor: 'slotTitle' },
+              { Header: 'Description', accessor: 'description' },
+            ]}
+            defaultPageSize={Object.keys(spec.slots).length}
+            showPagination={false}
+          />
+        </div>
+      )}
     </article>
   );
 };

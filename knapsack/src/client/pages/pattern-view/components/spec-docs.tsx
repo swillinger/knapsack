@@ -8,6 +8,7 @@ import { LoadableSchemaTable } from '../../../loadable-components';
 
 type Props = {};
 
+// eslint-disable-next-line no-empty-pattern
 export const KsSpecDocs: React.FC<Props> = ({}: Props) => {
   const { hasSchema, spec } = useContext(CurrentTemplateContext);
 

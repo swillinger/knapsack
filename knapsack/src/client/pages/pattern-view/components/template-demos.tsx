@@ -10,6 +10,7 @@ import { AddTemplateDemo } from './add-template-demo';
 
 type Props = {};
 
+// eslint-disable-next-line no-empty-pattern
 export const KsTemplateDemos: React.FC<Props> = ({}: Props) => {
   const {
     pattern,
@@ -122,17 +123,17 @@ export const KsTemplateDemos: React.FC<Props> = ({}: Props) => {
           >
             Data Demo
           </KsButton>
-          {/*<KsButton*/}
-          {/*  kind="standard"*/}
-          {/*  size="m"*/}
-          {/*  handleTrigger={() => {*/}
-          {/*    //*/}
-          {/*  }}*/}
-          {/*>*/}
-          {/*  <Icon symbol="add" />*/}
-          {/*  <br />*/}
-          {/*  Data Demo*/}
-          {/*</KsButton>*/}
+          {/* <KsButton */}
+          {/*  kind="standard" */}
+          {/*  size="m" */}
+          {/*  handleTrigger={() => { */}
+          {/*    // */}
+          {/*  }} */}
+          {/* > */}
+          {/*  <Icon symbol="add" /> */}
+          {/*  <br /> */}
+          {/*  Data Demo */}
+          {/* </KsButton> */}
         </div>
       </div>
     </nav>

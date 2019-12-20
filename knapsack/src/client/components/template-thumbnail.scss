@@ -3,6 +3,7 @@
   position: relative;
   width: calc(var(--demo-item-size) * 1px); // convert number to px value
   height: calc(var(--demo-item-size) * 1px); // convert number to px value
+  overflow: hidden;
 
   &__overlay {
     position: absolute;

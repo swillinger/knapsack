@@ -9,10 +9,9 @@ describe('Patterns', () => {
       'page-title',
     );
     cy.get('@page-title').should('have.text', 'Card');
-    cy.contains('Edit Form');
 
     // @todo fix weird delay where sometimes the last keystroke is not rendered in template
-    cy.get('.ks-rjsf input[label="Body Title"]')
+    cy.get('.ks-demo-stage__form .ks-rjsf input[label="Body Title"]')
       .clear()
       .type('Robots are awesome', {
         delay: 100,

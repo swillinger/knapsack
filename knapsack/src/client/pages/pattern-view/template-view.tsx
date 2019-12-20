@@ -49,12 +49,14 @@ import {
   CurrentTemplateData,
 } from './current-template-context';
 import {
-  // AddTemplateDemo,
+  AddTemplateDemo,
   KsSlotsForm,
   TemplateCodeBlock,
   TemplateHeader,
   KsDemoStage,
+  KsSpecDocs,
 } from './components';
+import { KsTemplateDemos } from './components/template-demos';
 
 export type Props = {
   /**
@@ -111,6 +113,7 @@ const TemplateView: React.FC<Props> = ({
     }),
   );
   const dispatch = useDispatch();
+  const { socket } = useWebsocket();
 
   const { templates } = pattern;
 
@@ -159,10 +162,7 @@ const TemplateView: React.FC<Props> = ({
 
   const [demoIndex, setDemoIndex] = useState(0);
   const [demo, setDemo] = useState<KnapsackTemplateDemo>(initialDemo);
-  const demoWidth =
-    pattern.demoWidths && pattern.demoWidths.length > 0
-      ? pattern.demoWidths[0].width
-      : 400;
+
   // const demo = demos[demoIndex];
 
   // const [dataState, setDataState] = useState({
@@ -183,9 +183,11 @@ const TemplateView: React.FC<Props> = ({
 
   const currentTemplateData: CurrentTemplateData = {
     patternId,
+    pattern,
     templateId,
     template,
     demo,
+    demos,
     templateInfo,
     spec,
     canEdit,
@@ -219,6 +221,8 @@ const TemplateView: React.FC<Props> = ({
             }}
           />
 
+          <KsTemplateDemos />
+
           <KsDemoStage
             demoSize={demoSize}
             isFormVisible={showSchemaForm}
@@ -243,89 +247,6 @@ const TemplateView: React.FC<Props> = ({
             }}
           />
         </div>
-
-        <nav className="ks-template-view__demos-container">
-          <h4>Demos</h4>
-          <div className="ks-template-view__demos">
-            {demos.map((aDemo, i) => (
-              <figure
-                className={`ks-template-view__demos__item ${
-                  demo.id === aDemo.id
-                    ? 'ks-template-view__demos__item--active'
-                    : ''
-                }`}
-                key={aDemo.id}
-                style={{ width: '200px' }}
-              >
-                <figcaption title={aDemo.description}>
-                  {aDemo.title}
-                  <KsButton
-                    kind="icon"
-                    icon="delete"
-                    floating
-                    size="s"
-                    handleTrigger={() => {
-                      dispatch(
-                        removeTemplateDemo({
-                          patternId,
-                          templateId,
-                          demoId: aDemo.id,
-                        }),
-                      );
-                      const isRemovedDemoCurrent = aDemo.id === demo.id;
-                      if (isRemovedDemoCurrent) {
-                        const [aFirstDemo] = demos.filter(
-                          d => d.id !== aDemo.id,
-                        );
-                        history.push(
-                          `${BASE_PATHS.PATTERN}/${patternId}/${templateId}/${aFirstDemo.id}`,
-                        );
-                        setDemo(aFirstDemo);
-                      }
-                    }}
-                  />
-                </figcaption>
-                <TemplateThumbnail
-                  patternId={id}
-                  templateId={templateId}
-                  assetSetId={assetSetId}
-                  demo={aDemo}
-                  renderedWidth={demoWidth > 200 ? demoWidth : 200}
-                  actualWidth={200}
-                  handleSelection={() => {
-                    history.push(
-                      `${BASE_PATHS.PATTERN}/${patternId}/${templateId}/${aDemo.id}`,
-                    );
-                    setDemo(aDemo);
-                  }}
-                />
-              </figure>
-            ))}
-            <div
-              className="ks-template-view__demos__item"
-              style={{
-                width: '200px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
-            >
-              <KsButton
-                kind="standard"
-                size="m"
-                handleTrigger={() => {
-                  //
-                }}
-              >
-                <Icon symbol="add" />
-                <br />
-                Data Demo
-              </KsButton>
-              <br />
-              {/* <AddTemplateDemo /> */}
-            </div>
-          </div>
-        </nav>
 
         <details className="ks-details" open>
           <summary>Code Details</summary>
@@ -402,53 +323,8 @@ const TemplateView: React.FC<Props> = ({
               }}
             />
           )}
-          {isVerbose && hasSchema && (
-            <>
-              <div>
-                <h4>Properties</h4>
-                <p>
-                  The following properties make up the data that defines each
-                  instance of this component.
-                </p>
-                <Details open>
-                  <summary>Props Table</summary>
-                  <LoadableSchemaTable schema={schema} />
-                </Details>
-              </div>
 
-              {/* <LoadableVariationDemo */}
-              {/*  schema={schema} */}
-              {/*  templateId={templateId} */}
-              {/*  patternId={id} */}
-              {/*  data={demoDatas[demoDataIndex]} */}
-              {/*  key={`${id}-${templateId}-${demoDataIndex}`} */}
-              {/* /> */}
-            </>
-          )}
-          {isVerbose && spec.slots && (
-            <div>
-              <h4>Slots</h4>
-              <ReactTable
-                data={Object.keys(spec.slots).map(slotName => {
-                  const { title: slotTitle, description } = spec.slots[
-                    slotName
-                  ];
-                  return {
-                    slotName,
-                    slotTitle,
-                    description,
-                  };
-                })}
-                columns={[
-                  { Header: 'Slot Name', accessor: 'slotName' },
-                  { Header: 'Title', accessor: 'slotTitle' },
-                  { Header: 'Description', accessor: 'description' },
-                ]}
-                defaultPageSize={Object.keys(spec.slots).length}
-                showPagination={false}
-              />
-            </div>
-          )}
+          {isVerbose && <KsSpecDocs />}
         </details>
       </article>
     </CurrentTemplateContext.Provider>

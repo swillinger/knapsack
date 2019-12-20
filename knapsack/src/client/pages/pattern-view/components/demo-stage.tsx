@@ -63,20 +63,23 @@ export const KsDemoStage: React.FC<Props> = ({
     patternId,
     templateId,
     assetSetId,
+    demos,
+    canEdit,
   } = useContext(CurrentTemplateContext);
   const dispatch = useDispatch();
 
-  const classes = cn({
-    'ks-demo-stage': true,
-  });
+  const classes = cn(
+    'ks-demo-stage',
+    'ks-template-view__demo-editor',
+    (isFormVisible ? demoSize : 'full') === 'full'
+      ? 'ks-template-view__demo-editor--full'
+      : '',
+    (demos && demos.length > 1) || canEdit
+      ? 'ks-template-view__demo-editor--has-demos'
+      : '',
+  );
   return (
-    <div
-      className={classes}
-      style={{
-        display:
-          (isFormVisible ? demoSize : 'full') === 'full' ? 'block' : 'flex',
-      }}
-    >
+    <div className={classes}>
       <div
         className="ks-demo-stage__stage"
         style={{
@@ -115,24 +118,26 @@ export const KsDemoStage: React.FC<Props> = ({
         >
           <div className="ks-demo-stage__form__inner">
             <header className="ks-demo-stage__form__header">
-              <h3>
-                <InlineEditText
-                  text={demo.title}
-                  isHeading
-                  handleSave={text => {
-                    dispatch(
-                      updateTemplateDemo({
-                        patternId,
-                        templateId,
-                        demo: {
-                          ...demo,
-                          title: text,
-                        },
-                      }),
-                    );
-                  }}
-                />
-              </h3>
+              <div className="ks-demo-stage__form__header__title">
+                <h3>
+                  <InlineEditText
+                    text={demo.title}
+                    isHeading
+                    handleSave={text => {
+                      dispatch(
+                        updateTemplateDemo({
+                          patternId,
+                          templateId,
+                          demo: {
+                            ...demo,
+                            title: text,
+                          },
+                        }),
+                      );
+                    }}
+                  />
+                </h3>
+              </div>
               <p>
                 <InlineEditText
                   text={demo.description}

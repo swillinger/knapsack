@@ -1,0 +1,111 @@
+.ks-template-demos {
+  background-color: var(--c-shade);
+  border: 1px solid var(--c-frame);
+  border-bottom-width: 0;
+  border-radius: var(--space-xs) var(--space-xs) 0 0;
+  padding: var(--space-m) 0 var(--space-m) var(--space-m);
+  white-space: nowrap;
+  overflow-x: auto;
+  display: flex;
+
+  &__add-btn {
+    display: inline-flex;
+    vertical-align: top;
+    //margin-left: var(--space-m);
+    //height: calc((var(--demo-item-size) * 1px) + 2px);
+
+    button {
+      //width: calc((var(--demo-item-size) * 1px) + 2px);
+      height: auto;
+    }
+    button svg {
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+  }
+
+  &:after {
+    // simulate right padding
+    content: ' ';
+    display: inline-block;
+    vertical-align: top;
+    width: var(--space-m);
+    height: 100%;
+  }
+
+  &__items {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  &__item {
+    width: calc((var(--demo-item-size) * 1px) + 2px);
+    text-align: center;
+    margin: 0 0 var(--space-m);
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+
+    &__actions {
+      position: absolute;
+      /* stylelint-disable function-calc-no-invalid */
+      top: calc(var(--space-xs) * -1);
+      right: calc(var(--space-xxs) * -1);
+      /* styleline-enable function-calc-no-invalid */
+      z-index: 5;
+      opacity: 0;
+      transition: opacity 200ms ease;
+    }
+    &__actions button {
+      margin-left: var(--space-xs);
+    }
+
+    &__thumbnail-wrap {
+      border: 1px solid transparent;
+    }
+
+    figcaption {
+      font-size: var(--font-size-s);
+      color: var(--c-text-subdued);
+      margin-top: var(--space-xxxs);
+    }
+
+    &:hover,
+    &:focus {
+      .ks-template-view__demos-list__item__actions {
+        opacity: 1;
+      }
+
+      .ks-template-view__demos-list__item__thumbnail-wrap {
+        border-color: var(--c-frame);
+      }
+    }
+
+    &--active,
+    &--active:hover,
+    &--active:focus {
+      .ks-template-view__demos-list__item__thumbnail-wrap {
+        border-color: var(--c-active);
+      }
+
+      figcaption {
+        color: var(--c-active);
+      }
+    }
+
+    & + & {
+      margin-left: var(--space-xs);
+    }
+
+    &--btns {
+      display: flex;
+      flex-direction: column;
+
+      .ks-btn {
+        margin-bottom: var(--size-s);
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+.u-body-small {
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+}
+
+.ks-add-template-demo {
+  &__intro {
+    color: var(--c-text-subdued);
+  }
+  &__content {
+    width: 360px;
+  }
+}

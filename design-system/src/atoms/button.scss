@@ -2,7 +2,6 @@
   border: none;
   cursor: pointer;
   padding: 0 var(--space-m);
-  height: var(--space-xl);
   line-height: var(--space-xl);
   border-radius: var(--radius-m);
   vertical-align: middle;
@@ -51,7 +50,7 @@
 
     svg {
       height: calc(var(--space-xl) - 2px);
-      vertical-align: top;
+      //vertical-align: top;
     }
 
     &.ks-btn--floating {

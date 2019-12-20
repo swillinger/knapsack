@@ -7,36 +7,16 @@
   margin-bottom: 1rem;
 }
 
-.ks-template-view__demos-container {
-  border: 1px solid var(--c-frame);
-  padding: var(--size-m);
-  margin-bottom: var(--size-l);
+// Code block
+.ks-template-view__code-block-wrapper {
+  margin-bottom: var(--space-l);
 }
 
-.ks-template-view__demos {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-}
+// Props table
+.ks-template-view__properties-table {
+  margin-bottom: var(--space-m);
 
-.ks-template-view__demos__item {
-  border: 1px solid var(--c-frame);
-  margin: 0 0 var(--space-m);
-
-  & + & {
-    margin-left: var(--space-m);
-  }
-
-  figcaption {
-    border-bottom: 1px solid var(--c-frame);
-    padding: var(--space-xs);
-  }
-
-  &--active {
-    border-color: var(--c-active);
-
-    figcaption {
-      border-color: var(--c-active);
-    }
+  p {
+    margin-bottom: var(--space-m);
   }
 }

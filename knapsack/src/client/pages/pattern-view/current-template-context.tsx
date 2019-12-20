@@ -8,11 +8,13 @@ import { KsRenderResults } from '../../../schemas/knapsack-config';
 
 export type CurrentTemplateData = {
   patternId: string;
+  pattern: KnapsackPattern;
   templateId: string;
-  assetSetId: string;
   template: KnapsackPatternTemplate;
+  assetSetId: string;
   title: string;
   demo: KnapsackTemplateDemo;
+  demos: KnapsackTemplateDemo[];
   templateInfo: KsRenderResults & { url: string };
   spec: KsTemplateSpec;
   canEdit: boolean;

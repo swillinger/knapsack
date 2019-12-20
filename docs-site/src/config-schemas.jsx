@@ -15,12 +15,12 @@
  with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import { SchemaTable } from '@knapsack/design-system/dist/schema-table/schema-table';
-import { knapsackDesignTokenSchema } from '@knapsack/core/dist/types';
+// import { SchemaTable } from '@knapsack/design-system/dist/schema-table/schema-table';
+// import { knapsackDesignTokenSchema } from '@knapsack/core/dist/types';
 // import settings from '@knapsack/app/src/schemas/knapsack.settings.schema';
 // import patternMeta from '@knapsack/app/src/schemas/pattern-meta.schema';
 // import patternWithMeta from '@knapsack/app/src/schemas/pattern-w-meta.schema';
-import patternSchema from '@knapsack/app/src/json-schemas/schemaKnapsackPattern';
+// import patternSchema from '@knapsack/app/src/json-schemas/schemaKnapsackPattern';
 
 // const patternTemplates = require('@knapsack/app/src/schemas/pattern-templates.schema.js');
 
@@ -29,12 +29,12 @@ const ConfigSchemas = () => (
     <header className="postHeader">
       <h1>Config Schemas</h1>
     </header>
-    <h2>{patternSchema.title}</h2>
-    <SchemaTable schema={patternSchema} />
+    {/*<h2>{patternSchema.title}</h2>*/}
+    {/*<SchemaTable schema={patternSchema} />*/}
 
     {/* @todo fix, having `Cannot read property 'title' of undefined` errors */}
-    <h2>{knapsackDesignTokenSchema.title}</h2>
-    <SchemaTable schema={knapsackDesignTokenSchema} />
+    {/*<h2>{knapsackDesignTokenSchema.title}</h2>*/}
+    {/*<SchemaTable schema={knapsackDesignTokenSchema} />*/}
   </div>
 );
 

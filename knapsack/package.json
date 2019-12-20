@@ -33,6 +33,7 @@
     "data-urls": "^1.1.0",
     "ejs": "^2.7.2",
     "express": "4.16.4",
+    "fflip": "^4.0.0",
     "fs-extra": "^7.0.0",
     "get-file-sizes": "^1.1.1",
     "globby": "^8.0.1",

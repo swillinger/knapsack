@@ -2,12 +2,14 @@ import produce from 'immer';
 import { KsUserRole, KS_USER_ROLES } from '@knapsack/core/dist/cloud';
 import { User, getUserInfo } from '../../cloud/user-utils';
 import { Action } from './types';
+import { KsFeatures } from '../../lib/features';
 
 export interface UserState {
   role?: KsUserRole;
   canEdit?: boolean;
   isLocalDev?: boolean;
   user?: User;
+  features?: KsFeatures;
 }
 
 const USER_UPDATE = 'knapsack/user/update';

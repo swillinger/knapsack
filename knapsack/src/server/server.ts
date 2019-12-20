@@ -28,7 +28,7 @@ import * as log from '../cli/log';
 import { EVENTS, knapsackEvents } from './events';
 import { getApiRoutes } from './rest-api';
 import { setupRoutes } from './routes';
-import { enableTemplatePush } from '../lib/features';
+import { enableTemplatePush, getFeaturesForUser } from '../lib/features';
 import { getUserInfo } from './auth';
 import { apiUrlBase, PERMISSIONS, HTTP_STATUS } from '../lib/constants';
 import {
@@ -256,11 +256,14 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
 
   app.get(`${apiUrlBase}/data-store`, async (req, res) => {
     const dataStore = await getDataStore();
+    const userInfo = getUserInfo(req);
+    const features = getFeaturesForUser(userInfo);
     const fullDataStore: PartialAppState = {
       ...dataStore,
       userState: {
         isLocalDev: process.env.NODE_ENV !== 'production',
         canEdit: process.env.NODE_ENV !== 'production',
+        features,
       },
       metaState: {
         meta,
@@ -326,8 +329,7 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
   });
   app.use(regularRoutes);
 
-  /** @type {WebSocket.Server} */
-  let wss;
+  let wss: WebSocket.Server;
 
   /**
    * @returns if successful
@@ -353,8 +355,12 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
       port: meta.websocketsPort,
       clientTracking: true,
     });
+    // wss.on('connection', ws => {
+    //   ws.on('message', msg => {
+    //     console.log('wss messge', msg);
+    //   });
+    // });
   }
-
   app.listen(port, () => {
     log.silly('Available endpoints', endpoints, 'server');
 

@@ -35,7 +35,6 @@ export const SchemaForm = ({
   uiSchema = {},
   ...rest
 }: Props<typeof formData>) => {
-
   return (
     <div className={className}>
       <Form

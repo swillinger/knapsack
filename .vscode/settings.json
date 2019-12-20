@@ -1,0 +1,27 @@
+{
+  "json.schemas": [{
+      "fileMatch": [
+        "**/knapsack.pattern.*.json"
+      ],
+      "url": "./knapsack/src/json-schemas/schemaKnapsackPattern.json"
+    },
+    {
+      "fileMatch": [
+        "**/knapsack.navs.json"
+      ],
+      "url": "./knapsack/src/json-schemas/schemaKnapsackNavsConfig.json"
+    },
+    {
+      "fileMatch": [
+        "**/knapsack.asset-sets.json"
+      ],
+      "url": "./knapsack/src/json-schemas/schemaKnapsackAssetSetsConfig.json"
+    },
+    {
+      "fileMatch": [
+        "**/knapsack.settings.json"
+      ],
+      "url": "./knapsack/src/json-schemas/schemaKnapsackSettings.json"
+    },
+  ],
+}

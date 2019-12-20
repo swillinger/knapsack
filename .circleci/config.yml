@@ -61,7 +61,7 @@ jobs:
 #      - run: yarn clean
       - run: yarn build
       - run: yarn build:types
-      - run: yarn lint:js
+      - run: yarn lint:js --quiet
       - run: yarn lint:style
 #      - run: yarn build:types
       - run: bash ./scripts/ensure-clean-git-repo.sh

@@ -1,9 +1,13 @@
 import React from 'react';
-import Form, { FormProps, FieldProps, IChangeEvent } from 'react-jsonschema-form';
+import Form, {
+  FormProps,
+  FieldProps,
+  IChangeEvent,
+} from 'react-jsonschema-form';
 import uuid from 'uuid/v4';
 // import { JSONSchema7 } from 'json-schema';
 // import { JsonSchemaObject } from '@knapsack/core/src/types';
-import { KsButton } from '../atoms';
+import { KsButton, KsTextField } from '../atoms';
 import './schema-form.css';
 import ObjectFieldTemplate from './custom-templates/custom-object';
 import CustomArrayField from './custom-templates/array-field';
@@ -17,6 +21,9 @@ type Props<T> = Omit<FormProps<T>, 'schema'> & {
   isInline?: boolean;
   hasSubmit?: boolean;
   className?: string;
+  children?: React.ReactNode;
+};
+
 };
 
 export const SchemaForm = ({

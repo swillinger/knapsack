@@ -22,7 +22,7 @@ import { version as iframeResizerVersion } from 'iframe-resizer/package.json';
 import { validateDataAgainstSchema } from '@knapsack/schema-utils';
 import { fileExists, fileExistsOrExit, formatCode } from './server-utils';
 import { KnapsackRendererBase } from './renderer-base';
-import { emitPatternsDataReady } from './events';
+import { emitPatternsDataReady, EVENTS, knapsackEvents } from './events';
 import { FileDb2 } from './dbs/file-db';
 import * as log from '../cli/log';
 import {
@@ -127,6 +127,8 @@ export class Patterns
       );
       await this.updatePatternData(patternConfigFilePath);
     });
+
+    knapsackEvents.on(EVENTS.SHUTDOWN, () => this.watcher.close());
   }
 
   async init(): Promise<void> {

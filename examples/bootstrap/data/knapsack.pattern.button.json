@@ -210,9 +210,9 @@
       "assetSetIds": ["web-components"],
       "spec": {
         "props": {
-          "$schema": "http://json-schema.org/draft-04/schema#",
+          "$schema": "http://json-schema.org/draft-07/schema#",
           "type": "object",
-          "required": ["text"],
+          "required": [],
           "properties": {
             "size": {
               "type": "string",
@@ -299,7 +299,8 @@
       "path": "../assets/patterns/button/button.html",
       "statusId": "inProgress",
       "assetSetIds": ["bootstrap"],
-      "demos": []
+      "demos": [],
+      "spec": {}
     }
   ],
   "slices": []

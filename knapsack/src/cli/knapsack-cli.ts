@@ -63,8 +63,14 @@ program.command('serve').action(async () => {
 });
 
 program.command('build').action(async () => {
-  await init(ksBrain);
-  await build({ config, patterns });
+  await init(ksBrain).catch(err => {
+    log.error('Knapsack init error', err, 'init');
+    process.exit(1);
+  });
+  await build({ config, patterns }).catch(err => {
+    log.error('Knapsack build error', err, 'build');
+    process.exit(1);
+  });
 
   // @todo restore writing meta.json with useful demo url info
   // // writing meta

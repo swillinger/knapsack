@@ -6,33 +6,39 @@ export interface GenericResponse {
   data?: object;
 }
 
-type Props =
-  | {
-      title?: string;
-      description?: string;
+type PropBase = {
+  title?: string;
+  description?: string;
+};
+
+type SchemaObject = {
+  type: 'object';
+  required?: string[];
+  properties: {
+    [prop: string]: any;
+  };
+} & PropBase;
+
+type PropertyTypes =
+  | ({
       default?: any;
       type: 'string' | 'boolean' | 'number';
-    }
-  | {
-      title?: string;
-      description?: string;
+    } & PropBase)
+  | ({
       default?: any;
       type: 'string';
       enum: string[];
       enumNames?: string[];
-    }
-  | {
+    } & PropBase)
+  | ({
       typeof: 'function';
-      title?: string;
-      description?: string;
       default?: string;
-    }
-  | {
-      title?: string;
-      description?: string;
+    } & PropBase)
+  | SchemaObject
+  | ({
       type: 'array';
-      items?: JsonSchemaObject;
-    };
+      items?: SchemaObject;
+    } & PropBase);
 
 export type JsonSchemaObject = {
   $schema?: string;
@@ -40,6 +46,8 @@ export type JsonSchemaObject = {
   description?: string;
   type: string;
   required?: string[];
-  properties: Record<string, Props | JsonSchemaObject>;
+  properties: {
+    [prop: string]: PropertyTypes;
+  };
   examples?: {}[];
 };

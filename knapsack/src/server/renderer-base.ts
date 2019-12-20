@@ -1,5 +1,8 @@
 import chokidar from 'chokidar';
-import { validateDataAgainstSchema } from '@knapsack/schema-utils';
+import {
+  validateDataAgainstSchema,
+  validateSchema,
+} from '@knapsack/schema-utils';
 import { GenericResponse } from '@knapsack/core/src/types';
 import { knapsackEvents, EVENTS } from './events';
 import * as log from '../cli/log';
@@ -17,7 +20,7 @@ import {
   isSlottedTemplateDemo,
   KsTemplateSpec,
 } from '../schemas/patterns';
-import specSchema from '../json-schemas/schemaKsTemplateSpec';
+import specSlotsSchema from '../json-schemas/schemaKsTemplateSpecSlots';
 
 /* eslint-disable class-methods-use-this, no-empty-function, no-unused-vars */
 export class KnapsackRendererBase implements KnapsackTemplateRendererBase {
@@ -58,15 +61,31 @@ export class KnapsackRendererBase implements KnapsackTemplateRendererBase {
   static isSlottedTemplateDemo = isSlottedTemplateDemo;
 
   static validateSpec(spec: KsTemplateSpec): GenericResponse {
-    const { ok, message, errors } = validateDataAgainstSchema(specSchema, spec);
-    if (!ok) {
-      return {
-        ok,
-        message,
-      };
+    let ok = true;
+    const msgs: string[] = [];
+
+    if (spec?.props) {
+      const result = validateSchema(spec.props);
+      if (!result.ok) {
+        ok = false;
+        msgs.push('Invalid "spec.props":');
+        msgs.push(result.message);
+      }
     }
+
+    if (spec?.slots) {
+      const result = validateDataAgainstSchema(specSlotsSchema, spec.slots);
+      if (!result.ok) {
+        ok = false;
+        msgs.push('Invalid "spec.slots":');
+        msgs.push(result.message);
+        result.errors.forEach(e => msgs.push(e.message));
+      }
+    }
+
     return {
       ok,
+      message: msgs.join('\n'),
     };
   }
 

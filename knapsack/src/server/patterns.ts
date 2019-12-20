@@ -17,8 +17,11 @@
 import { readJSON } from 'fs-extra';
 import { join } from 'path';
 import globby from 'globby';
+import chokidar from 'chokidar';
 import { version as iframeResizerVersion } from 'iframe-resizer/package.json';
+import { validateDataAgainstSchema } from '@knapsack/schema-utils';
 import { fileExists, fileExistsOrExit, formatCode } from './server-utils';
+import { KnapsackRendererBase } from './renderer-base';
 import { emitPatternsDataReady } from './events';
 import { FileDb2 } from './dbs/file-db';
 import * as log from '../cli/log';
@@ -28,12 +31,14 @@ import {
   KnapsackPatternsConfig,
   KnapsackTemplateDemo,
   isTemplateDemo,
+  isDataDemo,
 } from '../schemas/patterns';
 import {
   KnapsackTemplateRenderer,
   KsRenderResults,
 } from '../schemas/knapsack-config';
 import { KnapsackDb, KnapsackFile } from '../schemas/misc';
+import { timer } from '../lib/utils';
 
 export class Patterns
   implements
@@ -60,6 +65,10 @@ export class Patterns
   private assetSets: import('./asset-sets').AssetSets;
 
   isReady: boolean;
+
+  filePathsThatTriggerNewData: Map<string, string>;
+
+  private watcher: chokidar.FSWatcher;
 
   constructor({
     dataDir,
@@ -99,22 +108,46 @@ export class Patterns
     this.allPatterns = [];
     this.byId = {};
     this.isReady = false;
+    this.filePathsThatTriggerNewData = new Map();
 
-    // @todo should probably convert this at a higher level later
     templateRenderers.forEach(templateRenderer => {
       this.templateRenderers[templateRenderer.id] = templateRenderer;
+    });
+
+    this.watcher = chokidar.watch([], {
+      ignoreInitial: true,
+    });
+
+    this.watcher.on('change', async path => {
+      const patternConfigFilePath = this.filePathsThatTriggerNewData.get(path);
+      log.verbose(
+        `changed file - path: ${path} patternConfigFilePath: ${patternConfigFilePath}`,
+        null,
+        'pattern data',
+      );
+      await this.updatePatternData(patternConfigFilePath);
     });
   }
 
   async init(): Promise<void> {
-    await this.updatePatternsData();
+    try {
+      await this.updatePatternsData();
+    } catch (error) {
+      console.log();
+      log.error('Pattern Init failed', error.message);
+      console.log();
+      log.verbose('', error);
+      process.exit(1);
+    }
   }
 
   async getData(): Promise<{
     patterns: { [id: string]: KnapsackPattern };
     templateStatuses: KnapsackTemplateStatus[];
   }> {
-    await this.updatePatternsData();
+    if (!this.byId) {
+      await this.updatePatternsData();
+    }
     const templateStatuses = await this.getTemplateStatuses();
     return {
       templateStatuses,
@@ -131,6 +164,14 @@ export class Patterns
     await Promise.all(
       Object.keys(data.patterns).map(async id => {
         const pattern = data.patterns[id];
+        pattern.templates.forEach(template => {
+          if (template?.spec?.isInferred) {
+            template.spec = {
+              isInferred: true,
+            };
+          }
+        });
+
         const db = new FileDb2<KnapsackPattern>({
           filePath: join(this.dataDir, `knapsack.pattern.${id}.json`),
           type: 'json',
@@ -147,7 +188,103 @@ export class Patterns
     return allFiles;
   }
 
+  // async validatePatterns(patterns: KnapsackPattern[]): Promise<void> {}
+
+  async updatePatternData(patternConfigPath: string): Promise<void> {
+    const finish = timer();
+    const pattern: KnapsackPattern = await readJSON(patternConfigPath);
+    // @todo validate: template path exists, has template render that exists, using assetSets that exist
+    const templates = await Promise.all(
+      pattern.templates.map(async template => {
+        let { spec = {} } = template;
+
+        if (spec?.props && template.demosById) {
+          // validating data demos against spec
+          Object.values(template.demosById)
+            .filter(isDataDemo)
+            .forEach((demo, i) => {
+              // @todo if we come across `{ typeof: 'function' }` in JSON Schema, the demo won't validate since we store as a string - i.e. `"() => alert('hi')"`
+              const isJsPresent = false;
+              const data = isJsPresent
+                ? {
+                    ...demo.data.props,
+                    // handleClick: () => {},
+                  }
+                : demo.data.props;
+              const results = validateDataAgainstSchema(spec.props, data);
+              if (results.ok) {
+                // console.log(`ok - ${pattern.id} ${template.id} ${i}`);
+              } else {
+                log.warn(
+                  `invalid demo: ${pattern.id}, ${template.id}, ${demo.id}`,
+                  null,
+                  'pattern data',
+                );
+                // console.log(results.message);
+                // console.log(demo.data.props);
+                // console.log();
+              }
+            });
+        }
+
+        // inferring specs
+        if (spec?.isInferred) {
+          const renderer = this.templateRenderers[template.templateLanguageId];
+          if (renderer?.inferSpec) {
+            let path;
+            try {
+              path = require.resolve(template.path);
+            } catch (e) {
+              const relPath = join(this.dataDir, template.path);
+              path = join(process.cwd(), relPath);
+            }
+            if (!fileExists(path)) {
+              throw new Error(`File does not exist: ${path}`);
+            }
+            this.filePathsThatTriggerNewData.set(path, patternConfigPath);
+            spec = {
+              ...spec,
+              ...(await renderer.inferSpec({
+                templatePath: path,
+                template,
+              })),
+              isInferred: true,
+            };
+            // console.log('inferred spec');
+            // console.log(spec);
+            // console.log(spec?.props?.properties);
+          }
+        }
+        const { ok, message, data } = KnapsackRendererBase.validateSpec(spec);
+
+        if (!ok) {
+          const msg = [
+            `Spec did not validate for pattern "${pattern.id}" template "${template.id}"`,
+            message,
+          ].join('\n');
+          console.log(data);
+          log.verbose('Spec that failed', JSON.stringify(spec, null, '  '));
+          throw new Error(msg);
+        }
+
+        return {
+          ...template,
+          spec,
+        };
+      }),
+    );
+
+    this.byId[pattern.id] = {
+      ...pattern,
+      templates,
+    };
+    log.info(`${finish()}s for ${pattern.id}`, null, 'pattern data');
+  }
+
   async updatePatternsData() {
+    const s = timer();
+    this.watcher.unwatch([...this.filePathsThatTriggerNewData.values()]);
+    this.filePathsThatTriggerNewData.clear();
     const patternDataFiles = await globby(
       `${join(this.dataDir, 'knapsack.pattern.*.json')}`,
       {
@@ -155,16 +292,13 @@ export class Patterns
         onlyFiles: true,
       },
     );
-    const byId = {};
     await Promise.all(
-      patternDataFiles.map(async fileName => {
-        const pattern: KnapsackPattern = await readJSON(fileName);
-        // @todo validate: template path exists, has template render that exists, using assetSets that exist
-        byId[pattern.id] = pattern;
+      patternDataFiles.map(async file => {
+        this.filePathsThatTriggerNewData.set(file, file);
+        return this.updatePatternData(file);
       }),
     );
-    this.byId = byId;
-    this.allPatterns = Object.values(byId);
+    this.allPatterns = Object.values(this.byId);
     this.getAllTemplatePaths().forEach(path => {
       fileExistsOrExit(
         path,
@@ -173,8 +307,9 @@ Resolved absolute path: ${path}
       `,
       );
     });
+    this.watcher.add([...this.filePathsThatTriggerNewData.values()]);
     this.isReady = true;
-    log.verbose('Done: updatePatternsData');
+    log.verbose(`updatePatternsData took: ${s()}`, null, 'pattern data');
     emitPatternsDataReady(this.allPatterns);
   }
 
@@ -215,18 +350,6 @@ Resolved absolute path: ${path}
               }),
             );
           }
-          // Object.values(template.demosById || {})
-          //   .filter(isTemplateDemo)
-          //   .filter(({ templateInfo }) => templateInfo.path)
-          //   .forEach(demo => {
-          //     allTemplatePaths.push(
-          //       this.getTemplateDemoAbsolutePath({
-          //         patternId: pattern.id,
-          //         templateId: template.id,
-          //         demoId: demo.id,
-          //       }),
-          //     );
-          //   });
         });
     });
 
@@ -235,15 +358,20 @@ Resolved absolute path: ${path}
 
   getTemplateAbsolutePath({ patternId, templateId }): string {
     const pattern = this.byId[patternId];
-    if (!pattern) throw new Error(`Could not find pattern ${patternId}`);
+    if (!pattern) throw new Error(`Could not find pattern "${patternId}"`);
     const template = pattern.templates.find(t => t.id === templateId);
     if (!template)
       throw new Error(
-        `Could not find template ${templateId} in pattern ${patternId}`,
+        `Could not find template "${templateId}" in pattern "${patternId}"`,
       );
-    const relPath = join(this.dataDir, template.path);
-    const path = join(process.cwd(), relPath);
-    if (!fileExists(path)) throw new Error(`File does not exist: ${path}`);
+    let path;
+    try {
+      path = require.resolve(template.path);
+    } catch (e) {
+      const relPath = join(this.dataDir, template.path);
+      path = join(process.cwd(), relPath);
+    }
+    if (!fileExists(path)) throw new Error(`File does not exist: "${path}"`);
     return path;
   }
 
@@ -253,7 +381,7 @@ Resolved absolute path: ${path}
     const template = pattern.templates.find(t => t.id === templateId);
     if (!template)
       throw new Error(
-        `Could not find template ${templateId} in pattern ${patternId}`,
+        `Could not find template "${templateId}" in pattern "${patternId}"`,
       );
     const demo = template.demosById[demoId];
     if (!demo)
@@ -262,17 +390,17 @@ Resolved absolute path: ${path}
       );
     if (!isTemplateDemo(demo)) {
       throw new Error(
-        `Demo is not a "template" type of demo; cannot retrieve path for demo "${demoId}" in template ${templateId} in pattern ${patternId}`,
+        `Demo is not a "template" type of demo; cannot retrieve path for demo "${demoId}" in template "${templateId}" in pattern "${patternId}"`,
       );
     }
     if (!demo.templateInfo?.path) {
       throw new Error(
-        `No "path" in demo "${demoId}" in template ${templateId} in pattern ${patternId}`,
+        `No "path" in demo "${demoId}" in template "${templateId}" in pattern "${patternId}"`,
       );
     }
     const relPath = join(this.dataDir, demo.templateInfo.path);
     const path = join(process.cwd(), relPath);
-    if (!fileExists(path)) throw new Error(`File does not exist: ${path}`);
+    if (!fileExists(path)) throw new Error(`File does not exist: "${path}"`);
     return path;
   }
 
@@ -280,30 +408,6 @@ Resolved absolute path: ${path}
     const config = await this.configDb.getData();
     return config.templateStatuses;
   }
-
-  // watch(): void {
-  //   const configFilesToWatch = [];
-  //   this.allPatterns.forEach(pattern => {
-  //     configFilesToWatch.push(
-  //       join(pattern.dir, FILE_NAMES.PATTERN_CONFIG),
-  //       join(pattern.dir, FILE_NAMES.PATTERN_META),
-  //       ...pattern.templates
-  //         .filter(t => t.docPath)
-  //         .map(t => join(pattern.dir, t.docPath)),
-  //     );
-  //   });
-  //   const watcher = chokidar.watch(configFilesToWatch, {
-  //     ignoreInitial: true,
-  //   });
-  //
-  //   watcher.on('ready', () => {
-  //     log.silly(
-  //       `Core Patterns is watching these files:`,
-  //       watcher.getWatched(),
-  //       'patterns',
-  //     );
-  //   });
-  // }
 
   /**
    * Render template

@@ -28,7 +28,7 @@
     "apollo-boost": "^0.4.4",
     "apollo-server-express": "^2.9.7",
     "body-parser": "1.18.3",
-    "chokidar": "^2.0.4",
+    "chokidar": "^3.3.1",
     "commander": "^2.19.0",
     "data-urls": "^1.1.0",
     "ejs": "^2.7.2",

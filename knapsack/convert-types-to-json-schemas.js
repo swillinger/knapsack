@@ -15,7 +15,7 @@ const typeNamesToExportToJsonSchema = [
   'KnapsackAssetSetsConfig',
   'KnapsackPattern',
   'KnapsackNavsConfig',
-  'KsTemplateSpec',
+  'KsTemplateSpecSlots',
 ];
 const fileNamePrefix = 'schema';
 const deleteUnusedFilesAfter = false;
@@ -88,7 +88,7 @@ ${relative(process.cwd(), typesFile)}
 ${relative(process.cwd(), __filename)}
 `);
     } else {
-      console.log('b');
+      // console.log('b');
     }
     console.log('Failed: converting TypeScript types to JSON Schemas');
     process.exit(1);

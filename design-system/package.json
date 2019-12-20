@@ -22,6 +22,7 @@
     "react-icons": "^3.8.0",
     "react-jsonschema-form": "1.0.7",
     "react-table": "^6.9.0",
+    "react-tiny-popover": "^4.0.0",
     "refractor": "^2.6.2",
     "shortid": "2.2.15"
   },

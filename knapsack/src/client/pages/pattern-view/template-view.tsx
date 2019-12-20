@@ -217,62 +217,64 @@ const TemplateView: React.FC<Props> = ({
         }}
       />
 
-      {demos && demos.length > 1 && (
+      {((demos && demos.length > 1) || canEdit) && (
         <nav className="ks-template-view__demos-list">
-          {demos.map((aDemo, i) => (
-            <figure
-              key={aDemo.id}
-              className={cn(
-                'ks-template-view__demos-list__item',
-                demoIndex === i
-                  ? 'ks-template-view__demos-list__item--active'
-                  : '',
-              )}
-            >
-              <div className="ks-template-view__demos-list__item__actions">
-                {aDemo.description && (
-                  <span title={aDemo.description}>
-                    <Icon symbol="info" size="s" />
-                  </span>
-                )}
-                {canEdit && (
-                  <KsButton
-                    kind="icon"
-                    emphasis="danger"
-                    icon="delete"
-                    size="s"
-                    flush
-                    onClick={() => {
-                      dispatch(
-                        removeTemplateDemo({
-                          patternId,
-                          templateId,
-                          demoId: aDemo.id,
-                        }),
-                      );
-                    }}
-                  >
-                    Delete Demo
-                  </KsButton>
-                )}
-              </div>
-              <div className="ks-template-view__demos-list__item__thumbnail-wrap">
-                <TemplateThumbnail
-                  patternId={id}
-                  templateId={templateId}
-                  assetSetId={assetSetId}
-                  demo={aDemo}
-                  handleSelection={() => {
-                    history.push(
-                      `${BASE_PATHS.PATTERN}/${patternId}/${templateId}/${aDemo.id}`,
-                    );
-                    setDemo(aDemo);
-                  }}
-                />
-              </div>
-              <figcaption>{aDemo.title}</figcaption>
-            </figure>
-          ))}
+          {demos && demos.length > 1
+            ? demos.map((aDemo, i) => (
+                <figure
+                  key={aDemo.id}
+                  className={cn(
+                    'ks-template-view__demos-list__item',
+                    demoIndex === i
+                      ? 'ks-template-view__demos-list__item--active'
+                      : '',
+                  )}
+                >
+                  <div className="ks-template-view__demos-list__item__actions">
+                    {aDemo.description && (
+                      <span title={aDemo.description}>
+                        <Icon symbol="info" size="s" />
+                      </span>
+                    )}
+                    {canEdit && (
+                      <KsButton
+                        kind="icon"
+                        emphasis="danger"
+                        icon="delete"
+                        size="s"
+                        flush
+                        onClick={() => {
+                          dispatch(
+                            removeTemplateDemo({
+                              patternId,
+                              templateId,
+                              demoId: aDemo.id,
+                            }),
+                          );
+                        }}
+                      >
+                        Delete Demo
+                      </KsButton>
+                    )}
+                  </div>
+                  <div className="ks-template-view__demos-list__item__thumbnail-wrap">
+                    <TemplateThumbnail
+                      patternId={id}
+                      templateId={templateId}
+                      assetSetId={assetSetId}
+                      demo={aDemo}
+                      handleSelection={() => {
+                        history.push(
+                          `${BASE_PATHS.PATTERN}/${patternId}/${templateId}/${aDemo.id}`,
+                        );
+                        setDemo(aDemo);
+                      }}
+                    />
+                  </div>
+                  <figcaption>{aDemo.title}</figcaption>
+                </figure>
+              ))
+            : ''}
           {canEdit && (
             <span className="ks-template-view__demos-list__add-btn">
               <KsButton
@@ -300,7 +302,7 @@ const TemplateView: React.FC<Props> = ({
           (showSchemaForm ? demoSize : 'full') === 'full'
             ? 'ks-template-view__demo-editor--full'
             : '',
-          demos && demos.length > 1
+          (demos && demos.length > 1) || canEdit
             ? 'ks-template-view__demo-editor--has-demos'
             : '',
         )}

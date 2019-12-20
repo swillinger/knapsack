@@ -4,10 +4,15 @@ import './template-thumbnail.scss';
 
 type Props = Omit<TemplateProps, 'isResizable'> & {
   handleSelection?: () => void;
+  /**
+   * The width in pixels that the pattern prefers to be demoed at; a button might be 150, a card 450, and a hero 1100
+   */
+  patternWidth?: number;
 };
 
 export const TemplateThumbnail: React.FC<Props> = ({
   handleSelection = () => {},
+  patternWidth = 400,
   ...rest
 }: Props) => {
   return (

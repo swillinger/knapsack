@@ -27,6 +27,10 @@ export const KsTemplateDemos: React.FC<Props> = ({}: Props) => {
       ? pattern.demoWidths[0].width
       : 400;
 
+  const patternWidth = Array.isArray(pattern.demoWidths)
+    ? pattern.demoWidths[0]?.width
+    : undefined;
+
   const classes = cn({
     'ks-template-demos': true,
   });
@@ -79,6 +83,7 @@ export const KsTemplateDemos: React.FC<Props> = ({}: Props) => {
             <div className="ks-template-demos__item__thumbnail-wrap">
               <TemplateThumbnail
                 patternId={patternId}
+                patternWidth={patternWidth}
                 templateId={templateId}
                 assetSetId={assetSetId}
                 demo={aDemo}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { ArrayFieldTemplateProps as Props } from 'react-jsonschema-form';
 import { FormIconButton } from './form-icon-button';
 import { FormArrayItem } from './form-array-item';
 import { FormIconTray } from './form-icon-tray';
@@ -7,18 +8,6 @@ import upArrow from '../assets/angle-up.svg';
 import downArrow from '../assets/angle-down.svg';
 import add from '../assets/plus-square-o.svg';
 import remove from '../assets/trash.svg';
-
-type Props = {
-  canAdd: boolean;
-  className: string;
-  idSchema: {
-    $id: string;
-  };
-  items: any[]; // @todo
-  onAddClick: () => {};
-  title: string;
-  uiSchema?: object;
-};
 
 const CustomArrayField: React.FC<Props> = ({
   canAdd,

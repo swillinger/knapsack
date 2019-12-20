@@ -1,7 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { ObjectFieldTemplateProps } from 'react-jsonschema-form';
 
-export default function ObjectFieldTemplate({ properties }) {
+const ObjectFieldTemplate: React.FC<ObjectFieldTemplateProps> = ({
+  properties,
+}: ObjectFieldTemplateProps) => {
   return (
     <div className="ks-custom-object">
       {properties.map(prop => (
@@ -11,12 +13,6 @@ export default function ObjectFieldTemplate({ properties }) {
       ))}
     </div>
   );
-}
-
-ObjectFieldTemplate.defaultProps = {
-  properties: [],
 };
 
-ObjectFieldTemplate.propTypes = {
-  properties: PropTypes.arrayOf(PropTypes.object),
-};
+export default ObjectFieldTemplate;

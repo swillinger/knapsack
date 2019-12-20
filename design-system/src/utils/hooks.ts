@@ -1,15 +1,19 @@
 import { useEffect, useState, useRef } from 'react';
+import deepEqual from 'deep-equal';
 
 /**
  * Creates a duplicate internal state, so we can preserve instant value editing while debouncing top-level state updates that are slow
- * @param globalVal
- * @param globalSet
  * @example
  * const [code, setCode] = useValueDebounce<string>(globalCode, handleChange);
+ * Borrowed with appreciation from `react-view`
  */
 export function useValueDebounce<T>(
   globalVal: T,
   globalSet: (val: T) => void,
+  /**
+   * ms to delay
+   */
+  delay = 250,
 ): [T, (val: T) => void] {
   const [val, set] = useState(globalVal);
 
@@ -17,8 +21,13 @@ export function useValueDebounce<T>(
     // begins a countdown when 'val' changes. if it changes before countdown
     // ends, clear the timeout avoids lodash debounce to avoid stale
     // values in globalSet.
-    if (val !== globalVal) {
-      const timeout = setTimeout(() => globalSet(val), 250);
+    const isEqual =
+      typeof globalVal === 'string'
+        ? val === globalVal
+        : deepEqual(val, globalVal);
+
+    if (!isEqual) {
+      const timeout = setTimeout(() => globalSet(val), delay);
       return () => clearTimeout(timeout);
     }
     // return void 0;
@@ -35,6 +44,7 @@ export function useValueDebounce<T>(
  * @example
  * const [hoverRef, isHover] = useHover();
  * <div ref={hoverRef as any}>when hovered, `isHover` is true
+ * Borrowed with appreciation from `react-view`
  */
 export function useHover() {
   const [value, setValue] = useState<boolean>(false);

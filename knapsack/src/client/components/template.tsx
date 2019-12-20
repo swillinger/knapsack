@@ -131,20 +131,26 @@ const Template: React.FC<Props> = ({
   }, []);
 
   useEffect(() => {
-    getTemplateInfo({
-      patternId,
-      templateId,
-      demo,
-      assetSetId,
-      isInIframe: true,
-      wrapHtml: true,
-      extraParams: { cacheBuster: id },
-    })
-      .then(info => {
-        handleTemplateInfo(info);
-        setHtmlUrl(info.url);
+    // begins a countdown when 'val' changes. if it changes before countdown
+    // ends, clear the timeout avoids lodash debounce to avoid stale
+    // values in globalSet.
+    const timeout = setTimeout(() => {
+      getTemplateInfo({
+        patternId,
+        templateId,
+        demo,
+        assetSetId,
+        isInIframe: true,
+        wrapHtml: true,
+        extraParams: { cacheBuster: id },
       })
-      .catch(console.log.bind(console));
+        .then(info => {
+          handleTemplateInfo(info);
+          setHtmlUrl(info.url);
+        })
+        .catch(console.log.bind(console));
+    }, 175);
+    return () => clearTimeout(timeout);
   }, [patternId, templateId, demo, assetSetId, id]);
 
   const content = (

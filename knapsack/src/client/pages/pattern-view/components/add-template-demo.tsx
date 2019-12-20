@@ -48,7 +48,11 @@ export const AddTemplateDemo: React.FC<Props> = ({}: Props) => {
   });
   return (
     <div className={classes}>
-      <KsPopover isOpen={isOpen} content={content}>
+      <KsPopover
+        isOpen={isOpen}
+        content={content}
+        onClickOutside={() => setOpen(false)}
+      >
         <KsButton
           kind="standard"
           icon="add"

@@ -31,6 +31,8 @@ import {
   KnapsackTemplateDemo,
 } from '../../schemas/patterns';
 import { KsRenderResults } from '../../schemas/knapsack-config';
+import { useSelector } from '../store';
+import { useWebsocket } from '../hooks';
 
 export type Props = {
   patternId: string;
@@ -58,9 +60,37 @@ const Template: React.FC<Props> = ({
   const [width, setWidth] = useState(null);
   const iframeRef = useRef(null);
   const resizeRef = useRef(null);
-  const {
-    meta: { websocketsPort },
-  } = useContext(KnapsackContext);
+  const templatePush = useSelector(s => s.userState.features.templatePush);
+  const { socket } = useWebsocket(templatePush);
+
+  if (socket && templatePush) {
+    socket.addEventListener('message', messageEvent => {
+      // let messageData = { event: '' }; // eslint-disable-line no-unused-vars
+      let messageData: WebSocketMessage;
+      try {
+        messageData = JSON.parse(messageEvent.data);
+      } catch (error) {
+        console.warn(
+          'Tried to parse JSON string from WebSocket message so Template can re-fetch new data.',
+          { messageEvent, error },
+        );
+      }
+      if (!messageData) return;
+
+      switch (messageData.event) {
+        case WS_EVENTS.PATTERN_TEMPLATE_CHANGED:
+          // console.log(WS_EVENTS.PATTERN_TEMPLATE_CHANGED);
+          setId(makeId());
+          break;
+        case WS_EVENTS.PATTERN_ASSET_CHANGED:
+          // console.log(WS_EVENTS.PATTERN_ASSET_CHANGED);
+          setId(makeId());
+          break;
+        default:
+          console.log('ws default');
+      }
+    });
+  }
 
   // Setup iFrame Resizer
   useEffect(() => {
@@ -97,47 +127,6 @@ const Template: React.FC<Props> = ({
         thisIframeResizer.close(); // https://github.com/davidjbradshaw/iframe-resizer/issues/576
       }
       clearInterval(resizerIntervalId);
-    };
-  }, []);
-
-  // Setup WebSockets for refreshing page when templates change
-  useEffect(() => {
-    if (!websocketsPort) {
-      return;
-    }
-    const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
-    const socket = new window.WebSocket(
-      `${protocol}://localhost:${websocketsPort}`,
-    );
-    socket.addEventListener('message', messageEvent => {
-      // let messageData = { event: '' }; // eslint-disable-line no-unused-vars
-      let messageData: WebSocketMessage;
-      try {
-        messageData = JSON.parse(messageEvent.data);
-      } catch (error) {
-        console.warn(
-          'Tried to parse JSON string from WebSocket message so Template can re-fetch new data.',
-          { messageEvent, error },
-        );
-      }
-      if (!messageData) return;
-
-      switch (messageData.event) {
-        case WS_EVENTS.PATTERN_TEMPLATE_CHANGED:
-          // console.log(WS_EVENTS.PATTERN_TEMPLATE_CHANGED);
-          setId(makeId());
-          break;
-        case WS_EVENTS.PATTERN_ASSET_CHANGED:
-          // console.log(WS_EVENTS.PATTERN_ASSET_CHANGED);
-          setId(makeId());
-          break;
-        default:
-          console.log('ws default');
-      }
-    });
-
-    return (): void => {
-      socket.close(1000, 'unmounting');
     };
   }, []);
 

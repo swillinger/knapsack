@@ -23,6 +23,7 @@ import {
 } from '../schemas/patterns';
 import { AppState } from './store';
 import { KsRenderResults } from '../schemas/knapsack-config';
+import { timer } from '../lib/utils';
 
 /**
  * GraphQL Query Object to String
@@ -138,10 +139,12 @@ export function saveData(data: object): Promise<string> {
 }
 
 export function getInitialState(): Promise<AppState> {
+  const getTime = timer();
   return window
     .fetch(`${apiUrlBase}/data-store`)
     .then(res => res.json())
     .then(initialState => {
+      console.debug(`KS: initial state fetch took: ${getTime()}s`);
       // console.log({ initialState });
       return initialState;
     })

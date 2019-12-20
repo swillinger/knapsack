@@ -6,7 +6,7 @@ type Props = {
   templateInfo: KsRenderResults & { url: string };
 };
 
-const TemplateCodeBlock: React.FC<Props> = ({ templateInfo }: Props) => {
+export const TemplateCodeBlock: React.FC<Props> = ({ templateInfo }: Props) => {
   if (!templateInfo) return null;
 
   const { templateLanguage, usage, html } = templateInfo;
@@ -40,5 +40,3 @@ const TemplateCodeBlock: React.FC<Props> = ({ templateInfo }: Props) => {
     </div>
   );
 };
-
-export default TemplateCodeBlock;

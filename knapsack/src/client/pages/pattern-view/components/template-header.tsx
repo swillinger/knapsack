@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { PatternStatusIcon, Select } from '@knapsack/design-system';
+import { CurrentTemplateContext } from '../current-template-context';
 import { useSelector } from '../../../store';
 import './template-header.scss';
 import { KnapsackTemplateStatus } from '../../../../schemas/patterns';
 
 type Props = {
-  title: string;
+  title?: string;
   assetSets?: { title: string; id: string }[];
   assetSetId?: string;
   isTitleShown?: boolean;
@@ -15,16 +16,16 @@ type Props = {
 };
 
 export const TemplateHeader: React.FC<Props> = ({
-  title,
   assetSets = [],
   assetSetId,
   status,
   handleAssetSetChange,
   handleStatusChange,
   isTitleShown = false,
+  ...rest
 }: Props) => {
-  const canEdit = useSelector(s => s.userState.canEdit);
   const statuses = useSelector(s => s.patternsState.templateStatuses);
+  const { title = rest.title, canEdit } = useContext(CurrentTemplateContext);
 
   return (
     <header className="ks-template-header ks-template-view__flex-wrapper">

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.5](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.4...v2.0.0-beta.5) (2019-12-20)
+
+
+### Bug Fixes
+
+* **docs-site:** config-schemas.jsx ([3d11290](https://github.com/basaltinc/knapsack/commit/3d11290375557cc3fc2993015bb10d11d53bb37e))
+
+
+
+
+
 # [2.0.0-beta.4](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.3...v2.0.0-beta.4) (2019-12-19)
 
 **Note:** Version bump only for package @knapsack/docs-site

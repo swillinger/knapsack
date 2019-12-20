@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.5](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.4...v2.0.0-beta.5) (2019-12-20)
+
+
+### Bug Fixes
+
+* interum commit of demo thumbnail changes and save buttons moved ([ccfe2d5](https://github.com/basaltinc/knapsack/commit/ccfe2d507a2086a03fe84c377278a9a0ae051c7c))
+
+
+
+
+
 # [2.0.0-beta.4](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.3...v2.0.0-beta.4) (2019-12-19)
 
 **Note:** Version bump only for package @knapsack/example-bootstrap

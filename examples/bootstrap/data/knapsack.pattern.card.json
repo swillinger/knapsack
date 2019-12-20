@@ -61,6 +61,7 @@
             "props": {
               "cardTitle": "Card Title2",
               "cardBody": "Some quick example text to build on the card title and make up the bulk of the card's content.",
+              "textAlign": "left",
               "imgSrc": "/images/demoImg2.jpg",
               "imgAlt": "Nature Picture"
             }

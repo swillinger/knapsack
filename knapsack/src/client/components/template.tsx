@@ -170,7 +170,7 @@ const Template: React.FC<Props> = ({
       </div>
     );
   }
-  return <aside className="ks-template">{content}</aside>;
+  return <div className="ks-template">{content}</div>;
 };
 
 export default Template;

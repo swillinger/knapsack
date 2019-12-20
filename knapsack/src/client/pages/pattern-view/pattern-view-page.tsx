@@ -100,12 +100,9 @@ const PatternViewPage: React.FC<Props> = ({
         <section className="ks-pattern-view-page">
           <header className="ks-pattern-view-page__header">
             <div className="ks-pattern-view-page__header__info-wrap">
-              <h4
-                className="ks-eyebrow"
-                style={{ textTransform: 'capitalize' }}
-              >
+              <p className="ks-pattern-view-page__header__info-wrap__breadcrumbs">
                 {breadcrumb.join(' / ')} /
-              </h4>
+              </p>
               <h2 className="ks-pattern-view-page__header__info-wrap__title">
                 <InlineEditText
                   text={title}

@@ -19,6 +19,7 @@ import React, { useState } from 'react';
 import { CodeBlock, Details, KsButton, Icon } from '@knapsack/design-system';
 import { useHistory } from 'react-router-dom';
 import ReactTable from 'react-table';
+import cn from 'classnames';
 import produce from 'immer';
 import {
   addTemplateDataDemo,

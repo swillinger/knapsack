@@ -6,6 +6,11 @@
 
   &__info-wrap {
     flex: 1;
+
+    &__breadcrumbs {
+      color: var(--c-text-subdued);
+    }
+
     &__title {
       margin-top: var(--space-s);
       margin-bottom: var(--space-m);

@@ -1,15 +1,19 @@
 .ks-template-thumbnail {
+  background-color: var(--c-bg);
   position: relative;
+  width: calc(var(--demo-item-size) * 1px); // convert number to px value
+  height: calc(var(--demo-item-size) * 1px); // convert number to px value
+
   &__overlay {
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    &:hover {
-      cursor: pointer;
-    }
+    z-index: 5;
+    cursor: pointer;
   }
+
   &__template {
   }
 }

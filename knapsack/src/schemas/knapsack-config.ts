@@ -4,6 +4,7 @@ import {
   KnapsackPattern,
   KnapsackPatternTemplate,
   KnapsackTemplateDemo,
+  KsTemplateSpec,
 } from './patterns';
 
 type Patterns = import('../server/patterns').Patterns;
@@ -53,6 +54,10 @@ export interface KnapsackTemplateRendererBase {
   onAdd: (opt: { path: string }) => void;
   onRemove: (opt: { path: string }) => void;
   formatCode: (code: string) => string;
+  inferSpec?: ({
+    template: KnapsackPatternTemplate,
+    templatePath: string,
+  }) => Promise<KsTemplateSpec>;
 }
 
 export interface KnapsackRenderParams {

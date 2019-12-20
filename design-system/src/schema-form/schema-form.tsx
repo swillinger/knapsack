@@ -24,8 +24,6 @@ type Props<T> = Omit<FormProps<T>, 'schema'> & {
   children?: React.ReactNode;
 };
 
-};
-
 export const SchemaForm = ({
   schema,
   className = '',

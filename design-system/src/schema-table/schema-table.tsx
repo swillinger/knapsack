@@ -47,7 +47,7 @@ function SchemaTableExpandable(row) {
             dangerouslySetInnerHTML={{
               __html: marked.parse(row.original.data.description),
             }}
-           />
+          />
         </>
       )}
       {/* Display a props table for objects */}

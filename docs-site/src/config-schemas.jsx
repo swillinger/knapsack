@@ -29,12 +29,12 @@ const ConfigSchemas = () => (
     <header className="postHeader">
       <h1>Config Schemas</h1>
     </header>
-    {/*<h2>{patternSchema.title}</h2>*/}
-    {/*<SchemaTable schema={patternSchema} />*/}
+    {/* <h2>{patternSchema.title}</h2> */}
+    {/* <SchemaTable schema={patternSchema} /> */}
 
     {/* @todo fix, having `Cannot read property 'title' of undefined` errors */}
-    {/*<h2>{knapsackDesignTokenSchema.title}</h2>*/}
-    {/*<SchemaTable schema={knapsackDesignTokenSchema} />*/}
+    {/* <h2>{knapsackDesignTokenSchema.title}</h2> */}
+    {/* <SchemaTable schema={knapsackDesignTokenSchema} /> */}
   </div>
 );
 

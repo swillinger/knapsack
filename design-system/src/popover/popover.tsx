@@ -40,4 +40,3 @@ export const KsPopover: React.FC<Props> = ({
     </Popover>
   );
 };
-

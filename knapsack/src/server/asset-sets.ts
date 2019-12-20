@@ -25,8 +25,8 @@ export class AssetSets extends FileDb2<KnapsackAssetSetsConfig> {
 
   constructor({ dataDir, publicDir }: { dataDir: string; publicDir: string }) {
     super({
-      filePath: join(dataDir, 'knapsack.asset-sets.yml'),
-      type: 'yml',
+      filePath: join(dataDir, 'knapsack.asset-sets.json'),
+      type: 'json',
       validationSchema: schema,
       defaults: {},
     });

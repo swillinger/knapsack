@@ -1,6 +1,8 @@
 import React from 'react';
-import Form from 'react-jsonschema-form';
+import Form, { FormProps, FieldProps, IChangeEvent } from 'react-jsonschema-form';
 import uuid from 'uuid/v4';
+// import { JSONSchema7 } from 'json-schema';
+// import { JsonSchemaObject } from '@knapsack/core/src/types';
 import { KsButton } from '../atoms';
 import './schema-form.css';
 import ObjectFieldTemplate from './custom-templates/custom-object';
@@ -9,36 +11,16 @@ import CustomField from './custom-templates/custom-field';
 import CheckboxWidget from './custom-templates/checkbox-widget';
 import CheckboxesWidget from './custom-templates/checkboxes-widget';
 
-type SchemaFormData<T> = {
-  uiSchema: object;
-  edit: boolean;
-  idSchema: object;
-  formData: T;
-  // formData: Record<string, any>;
-  errorsSchema: object;
-  errors: any[];
-};
-
-type Props<T> = {
-  schema: object;
-  uiSchema?: object;
-  onChange?: (data: SchemaFormData<T>) => void;
-  onError?: (data: SchemaFormData<T>) => void;
-  onSubmit?: (data: SchemaFormData<T>) => void;
+type Props<T> = Omit<FormProps<T>, 'schema'> & {
+  schema: any;
   isDebug?: boolean;
-  idPrefix?: string;
   isInline?: boolean;
-  formData?: T;
   hasSubmit?: boolean;
   className?: string;
 };
 
-/* eslint-disable no-console */
 export const SchemaForm = ({
   schema,
-  onChange = () => {},
-  onError = () => {},
-  onSubmit = () => {},
   className = '',
   formData = {},
   hasSubmit = false,
@@ -48,26 +30,6 @@ export const SchemaForm = ({
   uiSchema = {},
   ...rest
 }: Props<typeof formData>) => {
-  const handleChange = (data: SchemaFormData<typeof formData>) => {
-    if (isDebug) {
-      console.debug('Form Data changed ', data);
-    }
-    onChange(data);
-  };
-
-  const handleSubmit = (data: SchemaFormData<typeof formData>) => {
-    if (isDebug) {
-      console.debug('Form Data submitted ', data);
-    }
-    onSubmit(data);
-  };
-
-  const handleError = (data: SchemaFormData<typeof formData>) => {
-    if (isDebug) {
-      console.debug('Form Data error ', data);
-    }
-    onError(data);
-  };
 
   return (
     <div className={className}>
@@ -76,12 +38,12 @@ export const SchemaForm = ({
         formData={formData}
         schema={schema}
         uiSchema={uiSchema || undefined}
-        onSubmit={handleSubmit}
-        onError={handleError}
-        onChange={handleChange}
         ObjectFieldTemplate={ObjectFieldTemplate}
         ArrayFieldTemplate={CustomArrayField}
         FieldTemplate={CustomField}
+        // fields={{
+        //   FunctionField,
+        // }}
         className={isInline ? 'ks-rjsf ks-rjsf--inline' : 'ks-rjsf'}
         widgets={{
           // can add any of our own OR replace any of these core ones: https://react-jsonschema-form.readthedocs.io/en/latest/advanced-customization/#customizing-the-default-fields-and-widgets

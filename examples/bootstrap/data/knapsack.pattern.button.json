@@ -3,7 +3,7 @@
   "title": "Button",
   "description": "Use Bootstrap’s custom button styles for actions in forms, dialogs, and more with support for multiple sizes, states, and more.",
   "demoSize": "m",
-  "demoWidths": [{ "width": 150 }],
+  "demoWidths": [{ "width": 180 }],
   "showAllTemplates": false,
   "templates": [
     {

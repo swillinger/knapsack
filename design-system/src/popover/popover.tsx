@@ -21,6 +21,8 @@ export const KsPopover: React.FC<Props> = ({
 
   return (
     <Popover
+      // @todo re-enable, then fix bug where you can see it but the z-index is too low (shows popover as a popunder)
+      transitionDuration={0}
       isOpen={isHoverTriggered ? (isHovered as boolean) : isOpen}
       content={({ position, targetRect, popoverRect }) => {
         const popoverContent = <div className="ks-popover__box">{content}</div>;

@@ -70,13 +70,8 @@ export const KsDemoStage: React.FC<Props> = ({
 
   const classes = cn(
     'ks-demo-stage',
-    'ks-template-view__demo-editor',
-    (isFormVisible ? demoSize : 'full') === 'full'
-      ? 'ks-template-view__demo-editor--full'
-      : '',
-    (demos && demos.length > 1) || canEdit
-      ? 'ks-template-view__demo-editor--has-demos'
-      : '',
+    (isFormVisible ? demoSize : 'full') === 'full' ? 'ks-demo-stage--full' : '',
+    (demos && demos.length > 1) || canEdit ? 'ks-demo-stage--has-demos' : '',
   );
   return (
     <div className={classes}>

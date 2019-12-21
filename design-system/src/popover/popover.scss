@@ -1,4 +1,7 @@
 .ks-popover {
+  &__children {
+    display: inline-block;
+  }
   &__box {
     display: block;
     margin: 4px; // needed b/c we're surrounded by an `overflow: hidden` & it's cutting off our `box-shadow`

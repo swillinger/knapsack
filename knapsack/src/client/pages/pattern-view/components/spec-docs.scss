@@ -1,1 +1,9 @@
-.ks-spec-docs {}
+.ks-spec-docs {
+  &__properties {
+    margin-bottom: var(--space-m);
+
+    p {
+      margin-bottom: var(--space-m);
+    }
+  }
+}

@@ -1,9 +1,14 @@
 import React, { useContext } from 'react';
 import cn from 'classnames';
-import { Icon, KsButton } from '@knapsack/design-system';
+import { Icon, KsButton, KsPopover } from '@knapsack/design-system';
+import { useHistory } from 'react-router-dom';
 import { CurrentTemplateContext } from '../current-template-context';
 import './template-demos.scss';
-import { removeTemplateDemo } from '../../../store';
+import {
+  removeTemplateDemo,
+  useDispatch,
+  addTemplateDataDemo,
+} from '../../../store';
 import { BASE_PATHS } from '../../../../lib/constants';
 import { TemplateThumbnail } from '../../../components/template-thumbnail';
 import { AddTemplateDemo } from './add-template-demo';
@@ -20,7 +25,10 @@ export const KsTemplateDemos: React.FC<Props> = ({}: Props) => {
     patternId,
     templateId,
     canEdit,
+    setDemo,
   } = useContext(CurrentTemplateContext);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const demoWidth =
     pattern.demoWidths && pattern.demoWidths.length > 0
@@ -46,9 +54,14 @@ export const KsTemplateDemos: React.FC<Props> = ({}: Props) => {
           >
             <div className="ks-template-demos__item__actions">
               {aDemo.description && (
-                <span title={aDemo.description}>
+                <KsPopover
+                  isHoverTriggered
+                  content={
+                    <p style={{ maxWidth: '200px' }}>{aDemo.description}</p>
+                  }
+                >
                   <Icon symbol="info" size="s" />
-                </span>
+                </KsPopover>
               )}
               {canEdit && (
                 <KsButton
@@ -58,22 +71,21 @@ export const KsTemplateDemos: React.FC<Props> = ({}: Props) => {
                   size="s"
                   flush
                   onClick={() => {
-                    // @todo re-enable
-                    // dispatch(
-                    //   removeTemplateDemo({
-                    //     patternId,
-                    //     templateId,
-                    //     demoId: aDemo.id,
-                    //   }),
-                    // );
-                    // const isRemovedDemoCurrent = aDemo.id === demo.id;
-                    // if (isRemovedDemoCurrent) {
-                    //   const [aFirstDemo] = demos.filter(d => d.id !== aDemo.id);
-                    //   history.push(
-                    //     `${BASE_PATHS.PATTERN}/${patternId}/${templateId}/${aFirstDemo.id}`,
-                    //   );
-                    //   setDemo(aFirstDemo);
-                    // }
+                    dispatch(
+                      removeTemplateDemo({
+                        patternId,
+                        templateId,
+                        demoId: aDemo.id,
+                      }),
+                    );
+                    const isRemovedDemoCurrent = aDemo.id === demo.id;
+                    if (isRemovedDemoCurrent) {
+                      const [aFirstDemo] = demos.filter(d => d.id !== aDemo.id);
+                      history.push(
+                        `${BASE_PATHS.PATTERN}/${patternId}/${templateId}/${aFirstDemo.id}`,
+                      );
+                      setDemo(aFirstDemo);
+                    }
                   }}
                 >
                   Delete Demo
@@ -88,11 +100,10 @@ export const KsTemplateDemos: React.FC<Props> = ({}: Props) => {
                 assetSetId={assetSetId}
                 demo={aDemo}
                 handleSelection={() => {
-                  // @todo re-enable
-                  // history.push(
-                  //   `${BASE_PATHS.PATTERN}/${patternId}/${templateId}/${aDemo.id}`,
-                  // );
-                  // setDemo(aDemo);
+                  history.push(
+                    `${BASE_PATHS.PATTERN}/${patternId}/${templateId}/${aDemo.id}`,
+                  );
+                  setDemo(aDemo);
                 }}
               />
             </div>
@@ -117,12 +128,12 @@ export const KsTemplateDemos: React.FC<Props> = ({}: Props) => {
             icon="add"
             onClick={() => {
               // @todo re-enable
-              // dispatch(
-              //   addTemplateDataDemo({
-              //     patternId,
-              //     templateId,
-              //   }),
-              // );
+              dispatch(
+                addTemplateDataDemo({
+                  patternId,
+                  templateId,
+                }),
+              );
               // @todo go to it after
             }}
           >

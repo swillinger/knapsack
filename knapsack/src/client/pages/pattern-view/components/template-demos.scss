@@ -54,7 +54,7 @@
       top: calc(var(--space-xs) * -1);
       right: calc(var(--space-xxs) * -1);
       /* styleline-enable function-calc-no-invalid */
-      z-index: 5;
+      z-index: 50;
       opacity: 0;
       transition: opacity 200ms ease;
     }
@@ -74,11 +74,11 @@
 
     &:hover,
     &:focus {
-      .ks-template-view__demos-list__item__actions {
+      .ks-template-demos__item__actions {
         opacity: 1;
       }
 
-      .ks-template-view__demos-list__item__thumbnail-wrap {
+      .ks-template-demos__item__thumbnail-wrap {
         border-color: var(--c-frame);
       }
     }
@@ -86,7 +86,7 @@
     &--active,
     &--active:hover,
     &--active:focus {
-      .ks-template-view__demos-list__item__thumbnail-wrap {
+      .ks-template-demos__item__thumbnail-wrap {
         border-color: var(--c-active);
       }
 

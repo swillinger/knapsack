@@ -16,21 +16,11 @@
  */
 
 import React, { useState } from 'react';
-import { CodeBlock, Details, KsButton, Icon } from '@knapsack/design-system';
+import { CodeBlock } from '@knapsack/design-system';
 import { useHistory } from 'react-router-dom';
-import ReactTable from 'react-table';
-import cn from 'classnames';
 import produce from 'immer';
-import {
-  addTemplateDataDemo,
-  removeTemplateDemo,
-  updateTemplateDemo,
-  updateTemplateInfo,
-  useDispatch,
-  useSelector,
-} from '../../store';
+import { updateTemplateInfo, useDispatch, useSelector } from '../../store';
 import MdBlock from '../../components/md-block';
-import { LoadableSchemaTable } from '../../loadable-components';
 // import DosAndDonts from '../../components/dos-and-donts';
 import './template-view.scss';
 import './shared/demo-grid-controls.scss';
@@ -39,8 +29,6 @@ import {
   isTemplateDemo,
   KnapsackTemplateDemo,
 } from '../../../schemas/patterns';
-import { TemplateThumbnail } from '../../components/template-thumbnail';
-import { InlineEditText } from '../../components/inline-edit';
 import { KsRenderResults } from '../../../schemas/knapsack-config';
 import { BASE_PATHS } from '../../../lib/constants';
 import { useWebsocket } from '../../hooks';
@@ -48,14 +36,7 @@ import {
   CurrentTemplateContext,
   CurrentTemplateData,
 } from './current-template-context';
-import {
-  AddTemplateDemo,
-  KsSlotsForm,
-  TemplateCodeBlock,
-  TemplateHeader,
-  KsDemoStage,
-  KsSpecDocs,
-} from './components';
+import { TemplateHeader, KsDemoStage, KsSpecDocs } from './components';
 import { KsTemplateDemos } from './components/template-demos';
 
 export type Props = {
@@ -91,7 +72,6 @@ const TemplateView: React.FC<Props> = ({
   const permissions = useSelector(store => store.userState.role.permissions);
   const canEdit = useSelector(store => store.userState.canEdit);
   const isLocalDev = useSelector(store => store.userState.isLocalDev);
-  const patterns = useSelector(({ patternsState }) => patternsState.patterns);
   const allPatterns = useSelector(({ patternsState }) =>
     Object.values(patternsState.patterns),
   );
@@ -113,7 +93,6 @@ const TemplateView: React.FC<Props> = ({
     }),
   );
   const dispatch = useDispatch();
-  const { socket } = useWebsocket();
 
   const { templates } = pattern;
 
@@ -152,12 +131,11 @@ const TemplateView: React.FC<Props> = ({
     schema.properties &&
     Object.keys(schema.properties).length > 0
   );
+
   const [firstDemo] = demos;
-  const initialDemo = demoId ? demosById[demoId] : firstDemo;
-  if (demoId && !initialDemo) {
-    throw new Error(
-      `No demo found for pattern ${id} template ${templateId} demo ${demoId}`,
-    );
+  const initialDemo = demosById[demoId] ?? firstDemo;
+  if (demoId && !demosById[demoId]) {
+    history.replace(`${BASE_PATHS.PATTERN}/${patternId}/${templateId}`);
   }
 
   const [demoIndex, setDemoIndex] = useState(0);
@@ -195,6 +173,7 @@ const TemplateView: React.FC<Props> = ({
     title,
     hasSchema,
     assetSetId,
+    setDemo,
   };
 
   return (
@@ -248,84 +227,80 @@ const TemplateView: React.FC<Props> = ({
           />
         </div>
 
-        <details className="ks-details" open>
-          <summary>Code Details</summary>
-          {isCodeBlockShown && (
-            <div style={{ marginBottom: '1rem' }}>
-              <>
-                <CodeBlock
-                  items={[
-                    templateInfo?.usage
-                      ? {
-                          id: 'usage',
-                          name: 'Usage',
-                          code: templateInfo.usage,
-                          language: templateInfo.templateLanguage,
-                          // isEditable: isCodeBlockEditable,
-                          isEditable: false,
-                          // handleChange: newCode => {
-                          //   // socket.send(
-                          //   //   JSON.stringify({
-                          //   //     patternId,
-                          //   //     templateId,
-                          //   //     demoId: demo.id,
-                          //   //     code: newCode,
-                          //   //   }),
-                          //   // );
-                          //   window
-                          //     .fetch('/api/tmp-save', {
-                          //       method: 'POST',
-                          //       headers: {
-                          //         'Content-Type': 'application/json',
-                          //         Accept: 'application/json',
-                          //       },
-                          //       body: JSON.stringify({
-                          //         patternId,
-                          //         templateId,
-                          //         demoId: demo.id,
-                          //         code: newCode,
-                          //       }),
-                          //     })
-                          //     .then(res => res.json())
-                          //     .then(x => {
-                          //       console.log(x);
-                          //     });
-                          //   // console.log('new code', newCode);
-                          // },
-                        }
-                      : null,
-                    // {
-                    //   id: 'templateSrc',
-                    //   name: 'Template Source',
-                    // },
-                    templateInfo?.html
-                      ? {
-                          id: 'html',
-                          name: 'HTML',
-                          language: 'html',
-                          code: templateInfo.html,
-                        }
-                      : null,
-                  ].filter(Boolean)}
-                />
-              </>
-            </div>
-          )}
-          {isReadmeShown && readme && (
-            <MdBlock
-              md={readme}
-              key={`${id}-${templateId}`}
-              isEditable={permissions.includes('write')}
-              title="Documentation (not wired up to save right now)"
-              handleSave={newReadme => {
-                // @todo save it
-                console.log('handleSave on readme called', newReadme);
-              }}
+        {isCodeBlockShown && (
+          <div className="ks-template-view__code-block-wrapper">
+            <CodeBlock
+              items={[
+                templateInfo?.usage
+                  ? {
+                      id: 'usage',
+                      name: 'Usage',
+                      code: templateInfo.usage,
+                      language: templateInfo.templateLanguage,
+                      // isEditable: isCodeBlockEditable,
+                      isEditable: false,
+                      // handleChange: newCode => {
+                      //   // socket.send(
+                      //   //   JSON.stringify({
+                      //   //     patternId,
+                      //   //     templateId,
+                      //   //     demoId: demo.id,
+                      //   //     code: newCode,
+                      //   //   }),
+                      //   // );
+                      //   window
+                      //     .fetch('/api/tmp-save', {
+                      //       method: 'POST',
+                      //       headers: {
+                      //         'Content-Type': 'application/json',
+                      //         Accept: 'application/json',
+                      //       },
+                      //       body: JSON.stringify({
+                      //         patternId,
+                      //         templateId,
+                      //         demoId: demo.id,
+                      //         code: newCode,
+                      //       }),
+                      //     })
+                      //     .then(res => res.json())
+                      //     .then(x => {
+                      //       console.log(x);
+                      //     });
+                      //   // console.log('new code', newCode);
+                      // },
+                    }
+                  : null,
+                // {
+                //   id: 'templateSrc',
+                //   name: 'Template Source',
+                // },
+                templateInfo?.html
+                  ? {
+                      id: 'html',
+                      name: 'HTML',
+                      language: 'html',
+                      code: templateInfo.html,
+                    }
+                  : null,
+              ].filter(Boolean)}
             />
-          )}
+          </div>
+        )}
 
-          {isVerbose && <KsSpecDocs />}
-        </details>
+        {isReadmeShown && readme && (
+          <MdBlock
+            md={readme}
+            key={`${id}-${templateId}`}
+            isEditable={permissions.includes('write')}
+            title="Documentation (not wired up to save right now)"
+            handleSave={newReadme => {
+              // @todo save it
+              console.log('handleSave on readme called', newReadme);
+            }}
+          />
+        )}
+
+        {isVerbose && <KsSpecDocs />}
       </article>
     </CurrentTemplateContext.Provider>
   );

@@ -19,7 +19,7 @@ export const KsSpecDocs: React.FC<Props> = ({}: Props) => {
     <div className={classes}>
       {hasSchema && (
         <>
-          <div>
+          <div className="ks-spec-docs__properties">
             <h4>Properties</h4>
             <p>
               The following properties make up the data that defines each

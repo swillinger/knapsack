@@ -15,14 +15,19 @@ export const TemplateThumbnail: React.FC<Props> = ({
   patternWidth = 400,
   ...rest
 }: Props) => {
+  const centeringTranslate = 'translate(-50%, -50%)';
+
   return (
     <div className="ks-template-thumbnail">
       <div
         className="ks-template-thumbnail__template"
-        // GET DEMO'S ACTUAL WIDTH
-        // style={{
-        //   transform: `scale(calc(var(--demo-item-size) / ${demoWidth}))`,
-        // }}
+        style={{
+          width: `${patternWidth}px`,
+          transform:
+            120 / patternWidth < 1
+              ? `${centeringTranslate} scale(${120 / patternWidth})`
+              : centeringTranslate,
+        }}
       >
         <Template {...rest} isResizable={false} />
       </div>

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.8](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.7...v2.0.0-beta.8) (2019-12-21)
+
+
+### Bug Fixes
+
+* **app:** template demo previews ([#345](https://github.com/basaltinc/knapsack/issues/345)) ([3f80aec](https://github.com/basaltinc/knapsack/commit/3f80aec0f8c9dda7b48f226a75a4b9e35c52d372))
+
+
+
+
+
 # [2.0.0-beta.7](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.6...v2.0.0-beta.7) (2019-12-20)
 
 **Note:** Version bump only for package @knapsack/monorepo

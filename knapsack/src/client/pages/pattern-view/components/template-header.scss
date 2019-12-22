@@ -1,10 +1,14 @@
 .ks-template-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
   margin-bottom: var(--space-xxs);
 
-  &__title {}
+  &__title {
+    margin-bottom: 0;
+    margin-right: var(--space-s);
+  }
   &__controls {
     display: flex;
     justify-content: flex-end;

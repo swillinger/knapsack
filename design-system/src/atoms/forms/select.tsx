@@ -47,6 +47,10 @@ export const Select: React.FC<Props> = ({
 
   const [currentValue, setValue] = useState(value);
 
+  useEffect(() => {
+    setValue(value);
+  }, [value]);
+
   const classes = cn({
     'ks-select': true,
     'ks-select--label-inline': isLabelInline,

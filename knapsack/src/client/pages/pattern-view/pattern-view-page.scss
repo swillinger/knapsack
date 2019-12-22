@@ -27,6 +27,9 @@
     box-shadow: 0 1px 3px 0 var(--c-shadow);
     margin-left: var(--space-m);
     padding: var(--space-xs) var(--space-s);
+    &:empty {
+      display: none;
+    }
 
     & > div + div {
       margin-top: var(--space-xs);

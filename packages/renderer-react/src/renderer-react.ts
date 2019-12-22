@@ -11,9 +11,11 @@ import {
 } from '@knapsack/app/src/schemas/knapsack-config';
 import camelCase from 'camelcase';
 import * as babel from '@babel/core';
-import { readFile } from 'fs-extra';
+import { readFile, readFileSync } from 'fs-extra';
 import { join } from 'path';
 import { copyReactAssets, getUsage, getDemoAppUsage } from './utils';
+
+const iconSvg = readFileSync(join(__dirname, '../react-logo.svg'), 'utf-8');
 
 /* eslint-disable class-methods-use-this */
 
@@ -78,6 +80,18 @@ export class KnapsackReactRenderer extends KnapsackRendererWebpackBase
   }): Promise<void> => {
     await super.init({ config, patterns });
     this.assets = copyReactAssets(this.distDirAbsolute, this.publicPath);
+  };
+
+  getMeta: KnapsackTemplateRenderer['getMeta'] = () => {
+    return {
+      id: this.id,
+      title: 'React',
+      iconSvg,
+      aliasUse: 'optional',
+      aliasTitle: 'Named Export',
+      aliasDescription:
+        'If `export X` was used instead of `export default`, then provide X.',
+    };
   };
 
   createWebpackEntryFromPatterns(

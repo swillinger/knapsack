@@ -33,6 +33,17 @@ export interface GetFootParams {
   inlineFoot?: string;
 }
 
+export interface TemplateRendererMeta {
+  id: string;
+  title: string;
+  iconSvg?: string;
+  version?: string;
+  aliasTitle?: string;
+  aliasDescription?: string;
+  aliasUse: 'off' | 'optional' | 'required';
+  syntaxHighlightingLanguage?: string;
+}
+
 export interface KnapsackTemplateRendererBase {
   id: string;
   /**
@@ -86,6 +97,7 @@ export interface KnapsackTemplateRenderer extends KnapsackTemplateRendererBase {
   //   data?: KnapsackTemplateData,
   // ) => Promise<KnapsackTemplateRendererResults>;
   getUsage: (opt: KnapsackRenderParams) => Promise<string>;
+  getMeta: () => TemplateRendererMeta;
   // getUsage?: (opt: {
   //   patternId: string;
   //   template: KnapsackPatternTemplate;

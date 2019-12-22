@@ -31,7 +31,12 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import awsconfig from '../aws-exports';
 import 'react-sortable-tree/style.css';
-import { updateUser, useSelector, useDispatch } from './store';
+import {
+  updateUser,
+  useSelector,
+  useDispatch,
+  setCurrentTemplateRenderer,
+} from './store';
 import { KnapsackContextProvider } from './context';
 import ErrorCatcher from './utils/error-catcher';
 import { BASE_PATHS } from '../lib/constants';
@@ -77,6 +82,11 @@ export const App: React.FC = () => {
     // grabbing just what we need in here so the whole App doesn't re-render any time other data inside `patterns` changes
     return state.patternsState.patterns;
   });
+  const firstRenderer = useSelector(s => {
+    return Object.keys(s.patternsState?.renderers ?? {})[0];
+  });
+  const currentTemplateRenderer =
+    useSelector(s => s.ui.currentTemplateRenderer) ?? firstRenderer;
 
   const knapsackContext = {
     settings,
@@ -126,69 +136,56 @@ export const App: React.FC = () => {
                   )}
 
                   <Route
-                    path={`${BASE_PATHS.PATTERN}/:id`}
-                    exact
-                    render={({ match }) => {
-                      const pattern = patterns[match.params.id];
-                      if (!pattern) {
-                        return (
-                          <LoadableBadRoute
-                            title={`Pattern "${match.params.id}" was not found in the system`}
-                            subtitle="Hold your horses"
-                            message={`We're having trouble finding the pattern "${match.params.id}" you requested. Please double check your url and the pattern meta.`}
-                          />
-                        );
-                      }
-
-                      const [firstTemplate] = pattern.templates;
-                      if (!firstTemplate) {
-                        return (
-                          <LoadableBadRoute
-                            title={`Pattern "${match.params.id}" was found, but it did not having any templates in the system`}
-                            subtitle="Hold your horses"
-                            message={`We're having trouble finding the pattern "${match.params.id}" you requested. Please double check your url and the pattern meta.`}
-                          />
-                        );
-                      }
-
-                      if (pattern && firstTemplate) {
-                        const templateId = pattern.showAllTemplates
-                          ? 'all'
-                          : firstTemplate.id;
-                        return (
-                          <Redirect
-                            to={`${BASE_PATHS.PATTERN}/${match.params.id}/${templateId}`}
-                          />
-                        );
-                      }
-                    }}
-                  />
-
-                  <Route
                     path={[
-                      `${BASE_PATHS.PATTERN}/:id/:templateId`,
-                      `${BASE_PATHS.PATTERN}/:id/:templateId/:demoId`,
+                      `${BASE_PATHS.PATTERN}/:patternId`,
+                      `${BASE_PATHS.PATTERN}/:patternId/:templateId`,
+                      `${BASE_PATHS.PATTERN}/:patternId/:templateId/:demoId`,
                     ]}
                     exact
                     render={({ match, ...rest }) => {
-                      if (patterns[match.params.id]) {
+                      const { patternId, demoId } = match.params;
+                      let { templateId } = match.params;
+                      const pattern = patterns[patternId];
+                      if (!pattern) {
                         return (
-                          <LoadablePatternView
-                            patternId={match.params.id}
-                            templateId={match.params.templateId}
-                            demoId={match.params.demoId}
-                            size="m"
-                            key={match.params.id}
+                          <LoadableBadRoute
+                            title={`Pattern "${patternId}" was not found in the system`}
+                            subtitle="Hold your horses"
+                            message={`We're having trouble finding the pattern "${patternId}" you requested. Please double check your url and the pattern meta.`}
                           />
                         );
                       }
+
+                      if (templateId) {
+                        const templateLanguageId = pattern?.templates?.find(
+                          t => t.id === templateId,
+                        )?.templateLanguageId;
+                        if (templateLanguageId !== currentTemplateRenderer) {
+                          dispatch(
+                            setCurrentTemplateRenderer({
+                              id: templateLanguageId,
+                            }),
+                          );
+                        }
+                      }
+
+                      if (!templateId) {
+                        templateId = pattern?.templates?.find(
+                          t => t.templateLanguageId === currentTemplateRenderer,
+                        )?.id;
+                      }
+
+                      // if (patternId && templateId && demoId) {
                       return (
-                        <LoadableBadRoute
-                          title={`Pattern "${match.params.id}" was not found in the system`}
-                          subtitle="Hold your horses"
-                          message={`We're having trouble finding the pattern "${match.params.id}" you requested. Please double check your url and the pattern meta.`}
+                        <LoadablePatternView
+                          patternId={patternId}
+                          templateId={templateId}
+                          demoId={demoId}
+                          size="m"
+                          key={patternId}
                         />
                       );
+                      // }
                     }}
                   />
                   <Route path="/changelog" component={LoadableChangelogPage} />

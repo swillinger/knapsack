@@ -4,8 +4,14 @@ import {
   KnapsackTemplateRenderer,
   KnapsackTemplateRendererResults,
 } from '@knapsack/app/src/schemas/knapsack-config';
-import { readFile } from 'fs-extra';
+import { readFile, readFileSync } from 'fs-extra';
+import { join } from 'path';
 import { getUsage } from './utils';
+
+const iconSvg = readFileSync(
+  join(__dirname, '../web-components-logo.svg'),
+  'utf-8',
+);
 
 /* eslint-disable class-methods-use-this */
 
@@ -14,8 +20,8 @@ export class KnapsackWebComponentRenderer extends KnapsackRendererBase
   constructor() {
     super({
       id: 'web-components',
-      language: 'web-components',
-      extension: '.js',
+      language: 'html',
+      extension: '.html',
     });
   }
 
@@ -131,4 +137,16 @@ export class KnapsackWebComponentRenderer extends KnapsackRendererBase
         throw new Error(`Must pass in a demo.type`);
     }
   }
+
+  getMeta: KnapsackTemplateRenderer['getMeta'] = () => {
+    return {
+      id: this.id,
+      title: 'Web Components',
+      iconSvg,
+      aliasUse: 'required',
+      aliasTitle: 'Tag Name',
+      aliasDescription:
+        'The HTML tag, i.e. if you use `<my-card>` then `my-card`',
+    };
+  };
 }

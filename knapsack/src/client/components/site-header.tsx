@@ -8,6 +8,7 @@ import './site-header.scss';
 import { useSelector, saveToServer, useDispatch } from '../store';
 import { KnapsackNavItem } from '../../schemas/nav';
 import { KnapsackSettings } from '../../schemas/knapsack.settings';
+import { KsTemplateLanguageSelect } from './template-language-select';
 
 type Props = {
   settings: KnapsackSettings;
@@ -23,6 +24,9 @@ export const SiteHeader: React.FC<Props> = ({
   canEdit,
 }: Props) => {
   const dispatch = useDispatch();
+  const hasMultipleTemplateRenderers = useSelector(
+    s => Object.keys(s.patternsState?.renderers ?? {}).length > 1,
+  );
 
   // Use state instead of classes if dropdown is going to be used as a separate component
   const handleDropdown = () => {
@@ -98,6 +102,12 @@ export const SiteHeader: React.FC<Props> = ({
             >
               Save
             </KsButton>
+          </li>
+        )}
+
+        {hasMultipleTemplateRenderers && (
+          <li className="ks-site-header__nav-item">
+            <KsTemplateLanguageSelect />
           </li>
         )}
 

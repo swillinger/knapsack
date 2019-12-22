@@ -37,7 +37,7 @@ import { getBreadcrumb } from '../../utils';
 
 type Props = {
   patternId: string;
-  templateId: string;
+  templateId?: string;
   demoId?: string;
 };
 
@@ -57,6 +57,9 @@ const PatternViewPage: React.FC<Props> = ({
     }
     return thePattern;
   });
+  const currentTemplateRenderer = useSelector(
+    s => s.ui.currentTemplateRenderer,
+  );
   const breadcrumb: string[] = useSelector(s => {
     const patternNavItem = s.navsState.secondary.find(
       item => item.path === `${BASE_PATHS.PATTERN}/${patternId}`,
@@ -70,8 +73,10 @@ const PatternViewPage: React.FC<Props> = ({
   const dispatch = useDispatch();
 
   const showAllTemplates = templateId === 'all';
-
-  const { title, description, templates, demoSize: defaultDemoSize } = pattern;
+  const { title, templates, description, demoSize: defaultDemoSize } = pattern;
+  const templatesList = templates.filter(
+    t => t.templateLanguageId === currentTemplateRenderer,
+  );
 
   const [demoSize, setDemoSize] = useState<string>(defaultDemoSize);
 
@@ -131,17 +136,18 @@ const PatternViewPage: React.FC<Props> = ({
               </p>
             </div>
             <div className="ks-pattern-view-page__header__controls">
-              <div>
-                {templates.length > 1 && (
+              {templatesList.length > 1 && (
+                <div>
                   <Select
                     label="Template"
                     value={templateId}
                     items={[
                       {
+                        // @todo consider how to show all when we only have 1 template of each language
                         value: 'all',
                         title: 'Show All',
                       },
-                      ...templates.map(t => ({
+                      ...templatesList.map(t => ({
                         value: t.id,
                         title: t.title,
                       })),
@@ -152,10 +158,10 @@ const PatternViewPage: React.FC<Props> = ({
                       );
                     }}
                   />
-                )}
-              </div>
-              <div>
-                {hasSchema && (
+                </div>
+              )}
+              {hasSchema && (
+                <div>
                   <Select
                     items={[
                       {
@@ -179,8 +185,8 @@ const PatternViewPage: React.FC<Props> = ({
                     handleChange={setDemoSize}
                     label="Stage Size"
                   />
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </header>
 

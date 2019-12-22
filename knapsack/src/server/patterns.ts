@@ -36,18 +36,20 @@ import {
 import {
   KnapsackTemplateRenderer,
   KsRenderResults,
+  TemplateRendererMeta,
 } from '../schemas/knapsack-config';
 import { KnapsackDb, KnapsackFile } from '../schemas/misc';
 import { timer } from '../lib/utils';
 
-export class Patterns
-  implements
-    KnapsackDb<{
-      patterns: {
-        [id: string]: KnapsackPattern;
-      };
-      templateStatuses: KnapsackTemplateStatus[];
-    }> {
+type PatternsState = import('../client/store').AppState['patternsState'];
+// type Old = {
+//   patterns: {
+//     [id: string]: KnapsackPattern;
+//   };
+//   templateStatuses: KnapsackTemplateStatus[];
+// };
+
+export class Patterns implements KnapsackDb<PatternsState> {
   configDb: FileDb2<KnapsackPatternsConfig>;
 
   dataDir: string;
@@ -55,8 +57,6 @@ export class Patterns
   templateRenderers: {
     [id: string]: KnapsackTemplateRenderer;
   };
-
-  allPatterns: KnapsackPattern[];
 
   byId: {
     [id: string]: KnapsackPattern;
@@ -105,10 +105,9 @@ export class Patterns
     this.assetSets = assetSets;
     this.dataDir = dataDir;
     this.templateRenderers = {};
-    this.allPatterns = [];
     this.byId = {};
     this.isReady = false;
-    this.filePathsThatTriggerNewData = new Map();
+    this.filePathsThatTriggerNewData = new Map<string, string>();
 
     templateRenderers.forEach(templateRenderer => {
       this.templateRenderers[templateRenderer.id] = templateRenderer;
@@ -126,6 +125,7 @@ export class Patterns
         'pattern data',
       );
       await this.updatePatternData(patternConfigFilePath);
+      emitPatternsDataReady(this.allPatterns);
     });
 
     knapsackEvents.on(EVENTS.SHUTDOWN, () => this.watcher.close());
@@ -143,10 +143,24 @@ export class Patterns
     }
   }
 
-  async getData(): Promise<{
-    patterns: { [id: string]: KnapsackPattern };
-    templateStatuses: KnapsackTemplateStatus[];
-  }> {
+  get allPatterns(): KnapsackPattern[] {
+    return Object.values(this.byId);
+  }
+
+  getRendererMeta(): { [id: string]: { meta: TemplateRendererMeta } } {
+    const results: { [id: string]: { meta: TemplateRendererMeta } } = {};
+    Object.entries(this.templateRenderers).forEach(([id, renderer]) => {
+      const meta = renderer.getMeta();
+      results[id] = {
+        meta,
+      };
+    });
+    return results;
+  }
+
+  async getData(): Promise<
+    import('../client/store').AppState['patternsState']
+  > {
     if (!this.byId) {
       await this.updatePatternsData();
     }
@@ -154,6 +168,7 @@ export class Patterns
     return {
       templateStatuses,
       patterns: this.byId,
+      renderers: this.getRendererMeta(),
     };
   }
 
@@ -195,9 +210,10 @@ export class Patterns
   async updatePatternData(patternConfigPath: string): Promise<void> {
     const finish = timer();
     const pattern: KnapsackPattern = await readJSON(patternConfigPath);
+    let { templates = [] } = pattern;
     // @todo validate: template path exists, has template render that exists, using assetSets that exist
-    const templates = await Promise.all(
-      pattern.templates.map(async template => {
+    templates = await Promise.all(
+      templates.map(async template => {
         let { spec = {} } = template;
 
         if (spec?.props && template.demosById) {
@@ -300,7 +316,6 @@ export class Patterns
         return this.updatePatternData(file);
       }),
     );
-    this.allPatterns = Object.values(this.byId);
     this.getAllTemplatePaths().forEach(path => {
       fileExistsOrExit(
         path,
@@ -329,12 +344,14 @@ Resolved absolute path: ${path}
    */
   getAllTemplatePaths({
     templateLanguageId = '',
+    includeTemplateDemos = true,
   }: {
     /**
      * If provided, only templates for these languages will be provided.
      * @see {import('./renderer-base').KnapsackRendererBase}
      */
     templateLanguageId?: string;
+    includeTemplateDemos?: boolean;
   } = {}): string[] {
     const allTemplatePaths = [];
     this.allPatterns.forEach(pattern => {
@@ -351,6 +368,19 @@ Resolved absolute path: ${path}
                 templateId: template.id,
               }),
             );
+            if (includeTemplateDemos) {
+              Object.values(template?.demosById || {})
+                .filter(isTemplateDemo)
+                .forEach(demo => {
+                  allTemplatePaths.push(
+                    this.getTemplateDemoAbsolutePath({
+                      patternId: pattern.id,
+                      templateId: template.id,
+                      demoId: demo.id,
+                    }),
+                  );
+                });
+            }
           }
         });
     });
@@ -465,14 +495,26 @@ Resolved absolute path: ${path}
       // @todo restore
       // const demoData = demoDataId ? template.demosById[demoDataId] : null;
 
-      const renderedTemplate = await renderer.render({
-        pattern,
-        template,
-        // data: demoData || data || {},
-        // data,
-        demo,
-        patternManifest: this,
-      });
+      const renderedTemplate = await renderer
+        .render({
+          pattern,
+          template,
+          // data: demoData || data || {},
+          // data,
+          demo,
+          patternManifest: this,
+        })
+        .catch(e => {
+          log.error('Error', e, 'pattern render');
+          const html = `<p>${e.message}</p>`;
+          return {
+            ok: false,
+            html,
+            wrappedHtml: html,
+            usage: html,
+            message: e.message,
+          };
+        });
 
       if (!renderedTemplate.ok) {
         return {

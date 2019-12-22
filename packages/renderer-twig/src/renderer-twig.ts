@@ -5,11 +5,15 @@ import {
   KnapsackTemplateRendererResults,
 } from '@knapsack/app/src/schemas/knapsack-config';
 import TwigRenderer from '@basalt/twig-renderer';
-import { readFile } from 'fs-extra';
+import { join } from 'path';
+import { readFile, readFileSync } from 'fs-extra';
 import { getTwigUsage } from './utils';
 
-/* eslint-disable class-methods-use-this */
+const iconSvg = readFileSync(join(__dirname, '../twig-logo.svg'), 'utf-8');
 
+// @todo add types
+// type TwigRendererConfig = import('@basalt/twig-renderer').TwigRendererConfig;
+// type Config = TwigRendererConfig & {};
 class KnapsackTwigRenderer extends KnapsackRendererBase
   implements KnapsackTemplateRenderer {
   twigRenderer: TwigRenderer;
@@ -133,6 +137,18 @@ ${slotCodes.join('\n\n')}
         throw new Error(`Must pass in a demo.type`);
     }
   }
+
+  getMeta: KnapsackTemplateRenderer['getMeta'] = () => {
+    return {
+      id: this.id,
+      title: 'Twig',
+      iconSvg,
+      aliasUse: 'optional',
+      aliasTitle: 'Namespaced Path',
+      aliasDescription:
+        "If using Twig Namespaces (i.e. `@components`) then provide the value you'd provide to a Twig `include`, such as `@components/card.twig`.",
+    };
+  };
 }
 
 // @todo v3 - change to `export` - need to keep `module.exports` to preserve backwards compatibility

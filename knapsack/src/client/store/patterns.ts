@@ -10,6 +10,7 @@ import {
   KnapsackTemplateDemo,
 } from '../../schemas/patterns';
 import { KnapsackCustomPageSlice } from '../../schemas/custom-pages';
+import { TemplateRendererMeta } from '../../schemas/knapsack-config';
 
 type PatternsState = {
   isFetching?: boolean;
@@ -17,13 +18,18 @@ type PatternsState = {
   patterns: {
     [id: string]: KnapsackPattern;
   };
-  // nav: [];
+  renderers: {
+    [id: string]: {
+      meta: TemplateRendererMeta;
+    };
+  };
 } & KnapsackPatternsConfig;
 
 const initialState: PatternsState = {
   isFetching: false,
   didInvalidate: false,
   patterns: {},
+  renderers: {},
 };
 
 const UPDATE_TEMPLATE_DEMO = 'knapsack/patterns/UPDATE_TEMPLATE_DEMO';

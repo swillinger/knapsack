@@ -5,6 +5,9 @@ import {
   KnapsackTemplateRendererResults,
 } from '@knapsack/app/src/schemas/knapsack-config';
 import fs from 'fs-extra';
+import { join } from 'path';
+
+const iconSvg = fs.readFileSync(join(__dirname, '../html-logo.svg'), 'utf-8');
 
 /* eslint-disable class-methods-use-this */
 
@@ -44,6 +47,16 @@ class KnapsackHtmlRenderer extends KnapsackRendererBase
   async getUsage({ template }) {
     return fs.readFile(template.absolutePath, 'utf8');
   }
+
+  getMeta: KnapsackTemplateRenderer['getMeta'] = () => {
+    return {
+      id: this.id,
+      title: 'HTML',
+      iconSvg,
+      syntaxHighlightingLanguage: 'html',
+      aliasUse: 'off',
+    };
+  };
 }
 
 // @todo v3 - change to `export` - need to keep `module.exports` to preserve backwards compatibility

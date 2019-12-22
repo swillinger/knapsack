@@ -3,6 +3,7 @@ import { Action } from './types';
 type StatusTypes = 'success' | 'info' | 'warning' | 'error';
 
 const SET_STATUS = 'knapsack/ui/SET_STATUS';
+const SET_TEMPLATE_RENDERER = 'knapsack/ui/SET_TEMPLATE_RENDERER';
 const REMOVE_STATUS = 'knapsack/ui/REMOVE_STATUS';
 
 type Status = {
@@ -23,6 +24,27 @@ export interface UiState {
     message: string;
     dismissAfter?: number;
   };
+  currentTemplateRenderer?: string;
+}
+
+interface SetTemplateRenderer extends Action {
+  type: typeof SET_TEMPLATE_RENDERER;
+  payload: {
+    id: string;
+  };
+}
+
+export function setCurrentTemplateRenderer({
+  id,
+}: {
+  id: string;
+}): SetTemplateRenderer {
+  return {
+    type: SET_TEMPLATE_RENDERER,
+    payload: {
+      id,
+    },
+  };
 }
 
 interface SetStatusAction extends Action {
@@ -34,7 +56,7 @@ interface RemoveStatusAction extends Action {
   type: typeof REMOVE_STATUS;
 }
 
-type UiActionTypes = SetStatusAction | RemoveStatusAction;
+type UiActionTypes = SetStatusAction | RemoveStatusAction | SetTemplateRenderer;
 
 export function removeStatus(): RemoveStatusAction {
   return {
@@ -72,6 +94,11 @@ export default function reducer(
       return {
         ...state,
         status: null,
+      };
+    case SET_TEMPLATE_RENDERER:
+      return {
+        ...state,
+        currentTemplateRenderer: action.payload.id,
       };
     default:
       return {

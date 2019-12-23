@@ -32,14 +32,14 @@ export const KsTemplateLanguageSelect: React.FC = () => {
         handleChange={id => {
           dispatch(setCurrentTemplateRenderer({ id }));
 
-          if (pathname?.startsWith(BASE_PATHS.PATTERN)) {
+          if (pathname?.startsWith(`${BASE_PATHS.PATTERN}/`)) {
             const [_, base, patternId, templateId, demoId] = pathname.split(
               '/',
             );
             const newTemplateId =
               patterns[patternId]?.templates?.find(
                 t => t.templateLanguageId === id,
-              )?.id ?? id;
+              )?.id ?? '';
             const url = `${BASE_PATHS.PATTERN}/${patternId}/${newTemplateId}`;
             history.push(url);
           }

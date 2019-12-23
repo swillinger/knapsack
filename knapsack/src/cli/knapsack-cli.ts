@@ -42,13 +42,6 @@ program.on('option:loglevel', loglevel => {
   log.setLogLevel(loglevel);
 });
 
-// If any of our parent directories are not `node_modules`, then we are in "dev mode", which basically means that we are Knapsack developers working on this package in the monorepo.
-const isDevMode = !dirname(__dirname)
-  .split('/')
-  .includes('node_modules');
-
-if (isDevMode) log.info('Knapsack Dev Mode on');
-
 const configPath = join(process.cwd(), 'knapsack.config.js');
 
 const ksBrain = bootstrapFromConfigFile(configPath);

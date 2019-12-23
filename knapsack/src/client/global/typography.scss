@@ -63,11 +63,11 @@ p {
 
 
 ul, ol {
-  margin: 0 0 1rem;
+  margin: 0 0 1em;
 }
 
 li {
-  margin: 0 0 1rem;
+  margin: 0 0 0.8em;
 }
 
 a, a:link {
@@ -103,4 +103,9 @@ blockquote {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
+}
+
+.ks-u-body-small {
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
 }

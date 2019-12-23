@@ -15,6 +15,7 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import log from 'npmlog'; // https://www.npmjs.com/package/npmlog
+import util from 'util';
 
 export function error(msg: string, extra?: any, prefix = ''): void {
   if (extra) {
@@ -54,6 +55,17 @@ export function silly(msg: string, extra?: any, prefix = ''): void {
   } else {
     log.silly(prefix, msg);
   }
+}
+
+/**
+ * Log deeply nested object
+ */
+export function inspect(obj: {}, name = 'inspect', depth = 5): void {
+  console.log();
+  console.log(`Start: ${name} ================`);
+  console.log(util.inspect(obj, { showHidden: false, depth: 5 }));
+  console.log(`End: ${name} ----------------`);
+  console.log();
 }
 
 type LogLevelValues = 'error' | 'warn' | 'http' | 'info' | 'verbose' | 'silly';

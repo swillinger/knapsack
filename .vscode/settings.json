@@ -24,4 +24,5 @@
       "url": "./knapsack/src/json-schemas/schemaKnapsackSettings.json"
     },
   ],
+  "typescript.tsdk": "node_modules/typescript/lib",
 }

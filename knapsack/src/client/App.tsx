@@ -67,17 +67,11 @@ const apolloClient = new ApolloClient({
 
 export const App: React.FC = () => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    // plugins.loadPlugins({
-    //   sayHi: () => console.log('hi from plugin api'),
-    // });
-    dispatch(updateUser());
-  }, []);
 
   const settings = useSelector(s => s.settingsState.settings);
   const pages = useSelector(s => s.customPagesState.pages);
   const meta = useSelector(s => s.metaState.meta);
-  const role = useSelector(s => s.userState.role);
+  const { canEdit, isLocalDev, role } = useSelector(s => s.userState);
   const patterns = useSelector(state => {
     // grabbing just what we need in here so the whole App doesn't re-render any time other data inside `patterns` changes
     return state.patternsState.patterns;
@@ -85,8 +79,21 @@ export const App: React.FC = () => {
   const firstRenderer = useSelector(s => {
     return Object.keys(s.patternsState?.renderers ?? {})[0];
   });
-  const currentTemplateRenderer =
-    useSelector(s => s.ui.currentTemplateRenderer) ?? firstRenderer;
+  const currentTemplateRenderer = useSelector(
+    s => s.ui.currentTemplateRenderer,
+  );
+
+  useEffect(() => {
+    // plugins.loadPlugins({
+    //   sayHi: () => console.log('hi from plugin api'),
+    // });
+    dispatch(updateUser());
+    dispatch(
+      setCurrentTemplateRenderer({
+        id: firstRenderer,
+      }),
+    );
+  }, []);
 
   const knapsackContext = {
     settings,
@@ -125,7 +132,7 @@ export const App: React.FC = () => {
                     exact
                     render={props => <LoadableGraphiqlPage {...props} />}
                   />
-                  {role.permissions.includes('write') && (
+                  {canEdit && (
                     <Route
                       path={['/settings', '/settings/:kind']}
                       exact
@@ -142,7 +149,7 @@ export const App: React.FC = () => {
                       `${BASE_PATHS.PATTERN}/:patternId/:templateId/:demoId`,
                     ]}
                     exact
-                    render={({ match, ...rest }) => {
+                    render={({ match }) => {
                       const { patternId, demoId } = match.params;
                       let { templateId } = match.params;
                       const pattern = patterns[patternId];
@@ -175,7 +182,6 @@ export const App: React.FC = () => {
                         )?.id;
                       }
 
-                      // if (patternId && templateId && demoId) {
                       return (
                         <LoadablePatternView
                           patternId={patternId}
@@ -185,7 +191,6 @@ export const App: React.FC = () => {
                           key={patternId}
                         />
                       );
-                      // }
                     }}
                   />
                   <Route path="/changelog" component={LoadableChangelogPage} />

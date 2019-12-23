@@ -20,7 +20,7 @@
     "query-string": "^6.1.0",
     "react-copy-to-clipboard": "^5.0.1",
     "react-icons": "^3.8.0",
-    "react-jsonschema-form": "1.0.7",
+    "react-jsonschema-form": "^1.8.1",
     "react-table": "^6.9.0",
     "react-tiny-popover": "^4.0.0",
     "refractor": "^2.6.2",

@@ -91,6 +91,7 @@ module.exports = {
       },
     ],
     'no-useless-constructor': 'off',
+    // 'lines-between-class-members': ['2', 'always', { exceptAfterSingleLine: true }],
     'prettier/prettier': ['error', prettierConfig],
     'react/boolean-prop-naming': [2],
     'react/destructuring-assignment': [0],

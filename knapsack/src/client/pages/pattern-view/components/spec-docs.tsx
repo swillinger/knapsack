@@ -2,9 +2,11 @@ import React, { useContext } from 'react';
 import { Details } from '@knapsack/design-system';
 import ReactTable from 'react-table';
 import cn from 'classnames';
+import { Link } from 'react-router-dom';
 import { CurrentTemplateContext } from '../current-template-context';
 import './spec-docs.scss';
 import { LoadableSchemaTable } from '../../../loadable-components';
+import { BASE_PATHS } from '../../../../lib/constants';
 
 type Props = {};
 
@@ -40,21 +42,53 @@ export const KsSpecDocs: React.FC<Props> = ({}: Props) => {
           {/* /> */}
         </>
       )}
-      {spec.slots && (
+      {Object.keys(spec?.slots || {})?.length > 0 && (
         <div>
           <h4>Slots</h4>
           <ReactTable
             data={Object.keys(spec.slots).map(slotName => {
-              const { title: slotTitle, description } = spec.slots[slotName];
+              const {
+                title: slotTitle,
+                description,
+                allowedPatternIds,
+              } = spec.slots[slotName];
               return {
                 slotName,
                 slotTitle,
                 description,
+                allowedPatternIds,
               };
             })}
             columns={[
-              { Header: 'Slot Name', accessor: 'slotName' },
-              { Header: 'Title', accessor: 'slotTitle' },
+              {
+                Header: 'Slot Name',
+                accessor: 'slotName',
+                Cell: cell => <code>{cell.value}</code>,
+              },
+              {
+                Header: 'Allowed Patterns',
+                accessor: 'allowedPatternIds',
+                Cell: cell => {
+                  const { value: allowedPatternIds } = cell;
+                  if (!Array.isArray(allowedPatternIds)) {
+                    return <span>All</span>;
+                  }
+                  if (allowedPatternIds.length === 0) {
+                    return <span>None</span>;
+                  }
+                  return allowedPatternIds.map((pId, i) => {
+                    const isLast = allowedPatternIds.length === i + 1;
+                    return (
+                      <>
+                        <Link key={pId} to={`${BASE_PATHS.PATTERN}/${pId}`}>
+                          {pId}
+                        </Link>
+                        {!isLast && <span>, </span>}
+                      </>
+                    );
+                  });
+                },
+              },
               { Header: 'Description', accessor: 'description' },
             ]}
             defaultPageSize={Object.keys(spec.slots).length}

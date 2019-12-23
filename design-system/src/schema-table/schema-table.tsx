@@ -81,7 +81,7 @@ export const SchemaTable = ({ schema }) => {
       const property = schema.properties[propName];
       return {
         prop: propName,
-        title: property.title || toTitleCase(propName),
+        // title: property.title || toTitleCase(propName),
         type: property.type,
         data: property,
         required: property.required || required.includes(propName),
@@ -97,7 +97,7 @@ export const SchemaTable = ({ schema }) => {
       const property = schema.items.properties[propName];
       return {
         prop: propName,
-        title: property.title || toTitleCase(propName),
+        // title: property.title || toTitleCase(propName),
         type: property.type,
         data: property,
       };
@@ -107,8 +107,8 @@ export const SchemaTable = ({ schema }) => {
     data = [
       {
         prop: schema.items.title || 'item',
-        title:
-          (schema.items.title && toTitleCase(schema.items.title)) || 'Item',
+        // title:
+        //   (schema.items.title && toTitleCase(schema.items.title)) || 'Item',
         type: schema.items.type,
         data: schema.items,
       },
@@ -116,32 +116,44 @@ export const SchemaTable = ({ schema }) => {
   }
 
   const columns = [
+    // {
+    //   Header: 'Name',
+    //   accessor: 'title',
+    //   minWidth: 60,
+    //   Cell: cell => (
+    //     <div>
+    //       <span className="schema-table__title">{cell.value}</span>
+    //       {cell.original.required && (
+    //         <span className="schema-table__required-label">*</span>
+    //       )}
+    //     </div>
+    //   ),
+    // },
     {
-      Header: 'Name',
-      accessor: 'title',
+      Header: 'Prop',
+      accessor: 'prop',
       minWidth: 60,
       Cell: cell => (
         <div>
-          <span className="schema-table__title">{cell.value}</span>
+          <code>{cell.value}</code>
           {cell.original.required && (
-            <span className="schema-table__required-label">*</span>
+            <span style={{ color: 'var(--c-danger)' }}>*</span>
           )}
         </div>
       ),
     },
     {
-      Header: 'Prop',
-      accessor: 'prop',
-      minWidth: 60,
-    },
-    {
       Header: 'Type',
       id: 'type',
-      accessor: item =>
-        item.type ||
-        item.data.typeof ||
-        (item.title === 'children' && 'React Children') ||
-        'undefined',
+      accessor: item => {
+        if (item.type) return item.type;
+        if (item.data.typeof) {
+          if (item.data.description) return item.data.description;
+          return item.data.typeof;
+        }
+
+        return 'unknown';
+      },
       Cell: cell => {
         let displayedType = cell.value;
         if (cell.value === 'array') {

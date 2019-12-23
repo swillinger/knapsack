@@ -14,7 +14,7 @@ import { localStorageMiddleware } from './utils';
 import settingsState from './settings';
 import patternsState from './patterns';
 import userState from './user';
-import metaState from './meta';
+import metaState, { autoSaveMiddleware } from './meta';
 import ui from './ui';
 import assetSetsState from './asset-sets';
 import customPagesState from './custom-pages';
@@ -23,7 +23,7 @@ import navsState from './navs';
 // export out all action creator functions
 export * from './settings';
 export * from './ui';
-export * from './meta';
+export { saveToServer } from './meta';
 export * from './custom-pages';
 export * from './patterns';
 export * from './navs';
@@ -57,7 +57,7 @@ const composeEnhancers =
 /* eslint-enable no-underscore-dangle */
 
 const rootEnhancer = composeEnhancers(
-  applyMiddleware(thunk, localStorageMiddleware),
+  applyMiddleware(thunk, localStorageMiddleware, autoSaveMiddleware),
 );
 
 /**
@@ -75,7 +75,7 @@ export const useSelector: TypedUseSelectorHook<AppState> = (
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function createStore(initialState) {
+export function createStore(initialState: AppState) {
   return createReduxStore(rootReducer, initialState, rootEnhancer);
 }
 

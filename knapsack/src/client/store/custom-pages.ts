@@ -47,13 +47,14 @@ export function addPage(
     const id = pages[potentialId]
       ? `${potentialId}-${generateId()}`
       : potentialId;
-    dispatch({
+    const addPageAction: AddPage = {
       type: ADD_PAGE,
       payload: {
         id,
         title: page.title,
       },
-    });
+    };
+    dispatch(addPageAction);
     dispatch(
       addSecondaryNavItem({
         name: page.title,

@@ -1,8 +1,11 @@
+import { ThunkAction, ThunkMiddleware } from 'redux-thunk';
 import { Action } from './types';
 import { setStatus } from './ui';
 import { getUserInfo } from '../../cloud/user-utils';
 import { apiUrlBase } from '../../lib/constants';
 import { KnapsackDataStoreSaveBody } from '../../schemas/misc';
+
+type AppState = import('./index').AppState;
 
 const SAVE_TO_SERVER_REQUEST = 'knapsack/meta/SAVE_TO_SERVER_REQUEST';
 const SAVE_TO_SERVER_SUCCESS = 'knapsack/meta/SAVE_TO_SERVER_SUCCESS';
@@ -12,24 +15,49 @@ export interface MetaState {
   meta: import('../../schemas/misc').KnapsackMeta;
 }
 
+const initialState: MetaState = {
+  meta: {},
+};
+
 interface SaveToServerRequestAction extends Action {
   type: typeof SAVE_TO_SERVER_REQUEST;
 }
+
+interface SaveToServerSuccessAction extends Action {
+  type: typeof SAVE_TO_SERVER_SUCCESS;
+}
+
+interface SaveToServerFailAction extends Action {
+  type: typeof SAVE_TO_SERVER_FAIL;
+}
+
+type Actions =
+  | SaveToServerRequestAction
+  | SaveToServerSuccessAction
+  | SaveToServerFailAction;
 
 export function saveToServer({
   storageLocation,
   title,
   message,
-}: Omit<KnapsackDataStoreSaveBody, 'state'>) {
+}: Omit<KnapsackDataStoreSaveBody, 'state'>): ThunkAction<
+  void,
+  AppState,
+  {},
+  Actions
+> {
+  const showStatusMsgs = storageLocation === 'cloud';
   return async (dispatch, getState) => {
     dispatch({ type: SAVE_TO_SERVER_REQUEST });
-    dispatch(
-      setStatus({
-        message: 'Saving...',
-        type: 'info',
-      }),
-    );
-    const state: import('./').AppState = getState();
+    if (showStatusMsgs) {
+      dispatch(
+        setStatus({
+          message: 'Saving...',
+          type: 'info',
+        }),
+      );
+    }
+    const state = getState();
     const body: KnapsackDataStoreSaveBody = {
       storageLocation,
       state,
@@ -47,7 +75,7 @@ export function saveToServer({
         }
       : {};
 
-    window
+    return window
       .fetch(`${apiUrlBase}/data-store/`, {
         method: 'POST',
         headers: {
@@ -69,27 +97,25 @@ export function saveToServer({
             }),
           );
         } else {
-          // const results = await res.json();
           dispatch({ type: SAVE_TO_SERVER_SUCCESS });
-          dispatch(
-            setStatus({
-              message: `Success: ${results.message}`,
-              type: 'success',
-              dismissAfter: 5,
-            }),
-          );
+          if (showStatusMsgs) {
+            dispatch(
+              setStatus({
+                message: `Success: ${results.message}`,
+                type: 'success',
+                dismissAfter: 30,
+              }),
+            );
+          }
         }
+        return results;
       });
   };
 }
 
-const initialState: MetaState = {
-  meta: {},
-};
-
 export default function reducer(
   state = initialState,
-  action: Action,
+  action: Actions,
 ): MetaState {
   switch (action.type) {
     default:
@@ -99,3 +125,43 @@ export default function reducer(
       };
   }
 }
+
+let timeoutId: any;
+
+export const autoSaveMiddleware: ThunkMiddleware<
+  AppState,
+  Actions
+> = store => next => (action: Actions) => {
+  const ignoredActionBases = ['knapsack/ui', 'knapsack/meta', 'knapsack/user'];
+  if (ignoredActionBases.some(x => action.type.startsWith(x))) {
+    return next(action);
+  }
+  const {
+    isLocalDev,
+    features: { autosave },
+  } = store.getState().userState;
+  if (!isLocalDev || !autosave) {
+    return next(action);
+  }
+  /**
+   * Ms after last action to autosave, if enabled
+   */
+  const autosaveDelay = action.meta?.autosaveDelay ?? 1500;
+  if (autosaveDelay === -1) {
+    // console.log('skipping');
+    return next(action);
+  }
+
+  if (timeoutId) {
+    clearTimeout(timeoutId);
+  }
+  timeoutId = setTimeout(() => {
+    store.dispatch(
+      saveToServer({
+        storageLocation: 'local',
+      }),
+    );
+    timeoutId = '';
+  }, autosaveDelay);
+  return next(action);
+};

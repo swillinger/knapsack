@@ -1,4 +1,7 @@
+import { Middleware } from 'redux';
+
 type AppState = import('./index').AppState;
+
 const key = 'knapsack-store';
 export function saveStateToLocalStorage(state: AppState): void {
   window.localStorage.setItem(key, JSON.stringify(state));
@@ -10,8 +13,9 @@ export function getStateFromLocalStorage(): AppState | false {
   return JSON.parse(string);
 }
 
-export const localStorageMiddleware = store => next => action => {
+export const localStorageMiddleware: Middleware = store => next => action => {
   // console.log('saving to local storage...');
-  saveStateToLocalStorage(store.getState());
+  const state: AppState = store.getState();
+  saveStateToLocalStorage(state);
   return next(action);
 };

@@ -91,20 +91,6 @@ export const SiteHeader: React.FC<Props> = ({
             });
         })}
 
-        {isLocalDev && (
-          <li className="ks-site-header__nav-item">
-            <KsButton
-              kind="standard"
-              size="s"
-              onClick={() =>
-                dispatch(saveToServer({ storageLocation: 'local' }))
-              }
-            >
-              Save
-            </KsButton>
-          </li>
-        )}
-
         {hasMultipleTemplateRenderers && (
           <li className="ks-site-header__nav-item">
             <KsTemplateLanguageSelect />

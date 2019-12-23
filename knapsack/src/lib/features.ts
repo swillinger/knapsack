@@ -23,6 +23,8 @@ export enum FeatureList {
    * Used to hide/show UI that does not save/work. Useful for in-progress work.
    */
   'showNonFunctioningUi' = 'showNonFunctioningUi',
+  /** Automatically save to local files upon change */
+  'autosave' = 'autosave',
 }
 
 enum Criteria {
@@ -66,6 +68,12 @@ const featuresConfig: {
     id: FeatureList.showNonFunctioningUi,
     criteria: {
       isKsDev: true,
+    },
+  },
+  {
+    id: FeatureList.autosave,
+    criteria: {
+      isLocalDev: true,
     },
   },
 ];

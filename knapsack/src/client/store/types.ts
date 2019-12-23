@@ -20,5 +20,11 @@ export interface Action {
   /**
    * The optional `meta` property MAY be any type of value. It is intended for any extra information that is not part of the payload.
    */
-  meta?: object;
+  meta?: {
+    /**
+     * How long to trigger an autosave afterwards in ms.
+     * Set to `-1` to disable
+     */
+    autosaveDelay?: number;
+  };
 }

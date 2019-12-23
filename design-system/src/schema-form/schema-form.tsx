@@ -32,7 +32,9 @@ const StringField: React.FC<FieldProps> = (props: FieldProps) => {
     props.uiSchema['ui:widget'] === 'file';
   // console.log({ props });
   return (
-    <>
+    <div
+      className={`ks-rjsf__string-field ks-rjsf__string-field--${props.name}`}
+    >
       <KsTextField
         type={isFile ? 'file' : 'text'}
         inputProps={{
@@ -40,7 +42,7 @@ const StringField: React.FC<FieldProps> = (props: FieldProps) => {
           onChange: event => props.onChange(event.target.value),
         }}
       />
-    </>
+    </div>
   );
 };
 

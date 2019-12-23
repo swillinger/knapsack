@@ -5,13 +5,16 @@
 describe('Patterns', () => {
   it('Re-renders when form is edited', () => {
     cy.visit('/pattern/card/twig');
-    cy.get('.ks-pattern-view-page__header h2 .ks-inline-edit__text').as(
-      'page-title',
-    );
+    cy.get(
+      '.ks-pattern-view-page__header__info-wrap__title .ks-inline-edit__text',
+    ).as('page-title');
+
     cy.get('@page-title').should('have.text', 'Card');
 
     // @todo fix weird delay where sometimes the last keystroke is not rendered in template
-    cy.get('.ks-demo-stage__form .ks-rjsf input[label="Body Title"]')
+    cy.get(
+      '.ks-demo-stage__form .ks-rjsf .ks-rjsf__string-field--cardTitle input',
+    )
       .clear()
       .type('Robots are awesome');
 

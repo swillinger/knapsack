@@ -1,19 +1,28 @@
+import * as babel from '@babel/core';
 import {
   KnapsackRendererBase,
   KnapsackRendererWebpackBase,
 } from '@knapsack/app';
 import {
-  KnapsackTemplateRenderer,
-  KnapsackConfig,
-  KnapsackTemplateRendererResults,
-  KnapsackTemplateRendererBase,
   KnapsackRenderParams,
+  KnapsackTemplateRenderer,
+  KnapsackTemplateRendererBase,
+  KnapsackTemplateRendererResults,
 } from '@knapsack/app/src/schemas/knapsack-config';
+import {
+  KnapsackPatternTemplate,
+  KsTemplateSpec,
+} from '@knapsack/app/src/schemas/patterns';
 import camelCase from 'camelcase';
-import * as babel from '@babel/core';
+
 import { readFile, readFileSync } from 'fs-extra';
 import { join } from 'path';
-import { copyReactAssets, getUsage, getDemoAppUsage } from './utils';
+import {
+  copyReactAssets,
+  getDemoAppUsage,
+  getReactDocs,
+  getUsage,
+} from './utils';
 
 const iconSvg = readFileSync(join(__dirname, '../react-logo.svg'), 'utf-8');
 
@@ -355,4 +364,17 @@ ${ksImportCode}
     const { usage } = await this.getUsageAndImports(opt);
     return usage;
   }
+
+  inferSpec: KnapsackTemplateRendererBase['inferSpec'] = async ({
+    template,
+    templatePath,
+  }: {
+    template: KnapsackPatternTemplate;
+    templatePath: string;
+  }): Promise<KsTemplateSpec> => {
+    return getReactDocs({
+      src: templatePath,
+      exportName: template.alias || 'default',
+    });
+  };
 }

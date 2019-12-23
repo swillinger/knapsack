@@ -10,7 +10,9 @@
     "start": "yarn build --watch"
   },
   "dependencies": {
-    "camelcase": "^4.1.0"
+    "camelcase": "^4.1.0",
+    "react-docgen": "^4.1.1",
+    "react-docgen-typescript": "^1.16.1"
   },
   "peerDependencies": {
     "@knapsack/app": "^2.0.0-beta.3",

@@ -1,5 +1,9 @@
 import test from 'ava';
-import { getUsage } from '../dist/utils';
+import { join } from 'path';
+import { KnapsackRendererBase } from '@knapsack/app';
+import { KnapsackReactRenderer } from '../dist/renderer-react';
+// eslint-disable-next-line import/extensions
+import { getUsage, getReactDocs } from '../dist/utils.js';
 
 test('renderer-react usage template a', async t => {
   const actual = await getUsage({
@@ -47,4 +51,58 @@ test('renderer-react usage template b', async t => {
   });
 
   t.snapshot(actual);
+});
+
+test('inferDocs card.jsx with prop types', async t => {
+  const cardPath = join(__dirname, './helpers/card.jsx');
+  const spec = await getReactDocs({
+    src: cardPath,
+    exportName: 'Card',
+  });
+
+  const { ok, message } = KnapsackRendererBase.validateSpec(spec);
+  // console.log(JSON.stringify(spec, null, '  '));
+
+  if (!ok) {
+    console.log(message);
+  }
+
+  t.is(ok, true);
+});
+
+test('inferDocs card.tsx with types', async t => {
+  const cardPath = join(__dirname, './helpers/card.tsx');
+  const spec = await getReactDocs({
+    src: cardPath,
+    exportName: 'Card',
+  });
+
+  // console.log(JSON.stringify(spec, null, '  '));
+
+  const { ok, message } = KnapsackRendererBase.validateSpec(spec);
+
+  if (!ok) {
+    console.log(message);
+  }
+
+  t.is(ok, true);
+});
+
+test('inferDocs button.tsx with types', async t => {
+  const cardPath =
+    '/Users/Evan/dev/basalt/knapsack-repos/knapsack-2/examples/bootstrap/assets/patterns/card/card.tsx';
+  const spec = await getReactDocs({
+    src: cardPath,
+    exportName: 'default',
+  });
+
+  // console.log(JSON.stringify(spec, null, '  '));
+
+  const { ok, message } = KnapsackRendererBase.validateSpec(spec);
+
+  if (!ok) {
+    console.log(message);
+  }
+
+  t.is(ok, true);
 });

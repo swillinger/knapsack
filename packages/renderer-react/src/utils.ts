@@ -1,9 +1,57 @@
 import { log } from '@knapsack/app';
 import { formatCode } from '@knapsack/app/dist/server/server-utils';
-import fs from 'fs-extra';
-import path from 'path';
+import { validateSchema } from '@knapsack/schema-utils';
+import path, { parse } from 'path';
 import { compile } from 'ejs';
-import { readFileSync } from 'fs';
+import fs, { readFileSync, readFile } from 'fs-extra';
+import * as reactDocs from 'react-docgen';
+import * as rdTs from 'react-docgen-typescript';
+import { JsonSchemaObject } from '@knapsack/core/src/types';
+import { KsTemplateSpec } from '@knapsack/app/dist/schemas/patterns';
+
+/**
+ * The name of the type, which is usually corresponds to the function name in `React.PropTypes`. However, for types define with `oneOf`, we use `"enum"` and for `oneOfType` we use `"union"`. If a custom function is provided or the type cannot be resolved to anything of `React.PropTypes`, we use `"custom"`.
+ */
+type RdTypeName =
+  | 'number'
+  | 'string'
+  | 'custom'
+  | 'union'
+  | 'bool'
+  | 'node'
+  | 'func';
+
+/**
+ * Some types accept parameters which define the type in more detail (such as `arrayOf`, `instanceOf`, `oneOf`, etc). Those are stored in `<typeValue>`. The data type of `<typeValue>` depends on the type definition.
+ */
+type RdTypeValue = string;
+
+type RdProps = {
+  [prop: string]: {
+    defaultValue?: {
+      value: string;
+      computed: boolean;
+    };
+    type: {
+      name: RdTypeName;
+      value?: RdTypeValue;
+      raw?: string;
+    };
+    flowType?: string;
+    tsType?: string;
+    description?: string;
+    required: boolean;
+  };
+};
+
+type RdResults = {
+  /**
+   * Name of function, class, or const
+   */
+  displayName: string;
+  description?: string;
+  props: RdProps;
+};
 
 const renderUsageTemplate = compile(
   readFileSync(path.join(__dirname, 'template.react.ejs'), 'utf8'),
@@ -44,6 +92,10 @@ export async function getUsage(data: {
   const attributes: string[] = props.map(({ key, value }) => {
     switch (typeof value) {
       case 'string':
+        if (value.startsWith('(')) {
+          // assume it's a function
+          return `${key}={${value}}`;
+        }
         return `${key}="${value}"`;
       case 'boolean':
         return value ? `${key}` : `${key}={${value}}`;
@@ -84,6 +136,216 @@ export async function getDemoAppUsage({
     code,
     language: 'react',
   });
+}
+
+export async function getReactTypeScriptDocs({
+  src,
+  exportName,
+}: {
+  src: string;
+  exportName?: string;
+}): Promise<KsTemplateSpec> {
+  try {
+    const results = await rdTs.parse(src, {
+      // shouldExtractLiteralValuesFromEnum: true,
+      savePropValueAsString: true,
+    });
+
+    const spec: KsTemplateSpec = {
+      props: {
+        $schema: 'http://json-schema.org/draft-07/schema',
+        type: 'object',
+        required: [],
+        properties: {},
+      },
+      slots: {},
+    };
+
+    const isDefaultExport = !exportName || exportName === 'default';
+
+    // if `isDefaultExport` then we just grab last result since `export default` TENDS to be last. that'll we can do really...
+    const result = isDefaultExport
+      ? results.pop()
+      : results.find(r => r.displayName === exportName);
+
+    // console.log(JSON.stringify(result, null, '  '));
+    // return false;
+
+    const { displayName } = result;
+    // console.log({ displayName, exportName });
+    spec.props.description = result.description;
+    // console.log(displayName);
+    // console.log(result.props);
+    Object.entries(result.props || {}).forEach(([propName, propDef]) => {
+      const {
+        name,
+        description,
+        defaultValue,
+        required,
+        type,
+        parent,
+      } = propDef;
+      if (type?.name?.startsWith('(')) {
+        if (required) spec.props.required.push(propName);
+        spec.props.properties[propName] = {
+          description: `\`${type.name}\` ${description}`,
+          // default: defaultValue,
+          typeof: 'function',
+        };
+      }
+      switch (type?.name) {
+        case 'string':
+          if (required) spec.props.required.push(propName);
+          spec.props.properties[propName] = {
+            description,
+            default: defaultValue,
+            type: 'string',
+          };
+          break;
+        case 'bool':
+          if (required) spec.props.required.push(propName);
+          spec.props.properties[propName] = {
+            description,
+            default: defaultValue,
+            type: 'boolean',
+          };
+          break;
+        case 'ReactNode':
+          spec.slots[propName] = {
+            description,
+            title: propName,
+          };
+          break;
+      }
+
+      // console.log('type', type);
+    });
+
+    return spec;
+  } catch (error) {
+    log.warn(
+      'Could not infer spec from React TypeScript file',
+      {
+        src,
+        exportName,
+        error,
+      },
+      'react renderer',
+    );
+    return {};
+  }
+}
+export async function getReactPropTypesDocs({
+  src,
+  exportName,
+}: {
+  src: string;
+  exportName?: string;
+}): Promise<KsTemplateSpec> {
+  try {
+    // console.log({reactDocs});
+    const fileSrc = await readFile(src);
+    const {
+      findAllComponentDefinitions,
+      findExportedComponentDefinition,
+      findAllExportedComponentDefinitions,
+    } = reactDocs.resolver;
+    const results: RdResults[] = reactDocs.parse(
+      fileSrc,
+      findAllExportedComponentDefinitions,
+      null,
+      {
+        filename: src,
+        // babelrc: false,
+      },
+    );
+
+    const isDefaultExport = !exportName || exportName === 'default';
+
+    // if `isDefaultExport` then we just grab last result since `export default` TENDS to be last. that'll we can do really...
+    const result = isDefaultExport
+      ? results.pop()
+      : results.find(r => r.displayName === exportName);
+
+    // console.log(JSON.stringify(result, null, '  '));
+
+    const spec: KsTemplateSpec = {
+      isInferred: true,
+      props: {
+        $schema: 'http://json-schema.org/draft-07/schema',
+        type: 'object',
+        required: [],
+        properties: {},
+      },
+      slots: {},
+    };
+
+    Object.entries(result.props || {}).forEach(([propName, propDef]) => {
+      const { required, description, defaultValue } = propDef;
+      switch (propDef?.type?.name) {
+        case 'string':
+          if (required) spec.props.required.push(propName);
+          spec.props.properties[propName] = {
+            type: 'string',
+            description,
+            default: defaultValue?.value,
+          };
+          break;
+        case 'func':
+          if (required) spec.props.required.push(propName);
+          spec.props.properties[propName] = {
+            type: 'string',
+            description,
+            default: defaultValue?.value,
+          };
+          break;
+        case 'bool':
+          if (required) spec.props.required.push(propName);
+          spec.props.properties[propName] = {
+            type: 'boolean',
+            description,
+            default: defaultValue?.value,
+          };
+          break;
+        case 'node':
+          spec.slots[propName] = {
+            title: propName,
+            description,
+          };
+      }
+    });
+
+    return spec;
+  } catch (error) {
+    log.warn(
+      'Could not infer spec from React PropTypes',
+      {
+        src,
+        exportName,
+        error,
+      },
+      'react renderer',
+    );
+    return {};
+  }
+}
+
+export async function getReactDocs({
+  src,
+  exportName,
+}: {
+  src: string;
+  exportName?: string;
+}): Promise<KsTemplateSpec> {
+  const { ext } = parse(src);
+  switch (ext) {
+    case '.js':
+    case '.jsx':
+      return getReactPropTypesDocs({ src, exportName });
+    case '.ts':
+    case '.tsx':
+      return getReactTypeScriptDocs({ src, exportName });
+  }
 }
 
 /**
@@ -151,7 +413,7 @@ export function copyReactAssets(
       ),
     ];
   } catch (error) {
-    log.error(
+    log.warn(
       'Error trying to copy "react" and "react-dom" JS files, are they installed? We want to use your exact versions.',
       error,
       'templateRenderer:react',

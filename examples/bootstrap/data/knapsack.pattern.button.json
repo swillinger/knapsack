@@ -184,12 +184,6 @@
             }
           }
         },
-        "template-test": {
-          "id": "template-test",
-          "title": "Template demo that uses another template, not props + source template",
-          "type": "template",
-          "templateInfo": { "alias": "@components/button-template-demo.twig" }
-        },
         "secondary": {
           "id": "secondary",
           "type": "data",

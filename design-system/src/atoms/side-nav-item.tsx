@@ -10,6 +10,7 @@ type Btn = React.PropsWithoutRef<JSX.IntrinsicElements['button']>;
 type Props = {
   isEditMode?: boolean;
   isDragging?: boolean;
+  canEditTitle?: boolean;
   title: string;
   path?: string;
   active?: boolean;
@@ -34,6 +35,7 @@ export const SideNavItem: React.FC<Props> = ({
   statusColor,
   isSearchMatch,
   isSearchFocus,
+  canEditTitle,
 }: Props) => {
   const classes = cn({
     'ks-side-nav-item': true,
@@ -79,7 +81,8 @@ export const SideNavItem: React.FC<Props> = ({
         ) : (
           <p>{title}</p>
         )}
-        {isEditMode && (
+        {/* @todo wire up save functionality */}
+        {canEditTitle && isEditMode && (
           <div className="ks-side-nav-item__edit-title-btn">
             <KsButton kind="icon" size="s" icon="edit-text" flush>
               Edit Title

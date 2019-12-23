@@ -19,27 +19,53 @@ import { KsUserInfo } from '@knapsack/core/src/cloud';
 
 export enum FeatureList {
   'templatePush' = 'templatePush',
+  /**
+   * Used to hide/show UI that does not save/work. Useful for in-progress work.
+   */
+  'showNonFunctioningUi' = 'showNonFunctioningUi',
+}
+
+enum Criteria {
+  'isLocalDev' = 'isLocalDev',
+  'isKsDev' = 'isKsDev',
 }
 
 export type Features = keyof typeof FeatureList;
 export type KsFeatures = Record<Features, boolean>;
 
-const isProd = process.env.NODE_ENV === 'production';
+const { NODE_ENV, KS_DEV } = process.env;
+
+const isProd = NODE_ENV === 'production';
 
 const criteria = [
   {
-    id: 'isLocalDev',
+    id: Criteria.isLocalDev,
     check: (user: KsUserInfo, arg: boolean): boolean => {
       return arg !== isProd;
     },
   },
+  {
+    id: Criteria.isKsDev,
+    check: () => {
+      return KS_DEV === 'yes';
+    },
+  },
 ];
 
-const featuresConfig = [
+const featuresConfig: {
+  id: keyof typeof FeatureList;
+  criteria: Partial<Record<keyof typeof Criteria, boolean>>;
+}[] = [
   {
     id: FeatureList.templatePush,
     criteria: {
       isLocalDev: true,
+    },
+  },
+  {
+    id: FeatureList.showNonFunctioningUi,
+    criteria: {
+      isKsDev: true,
     },
   },
 ];

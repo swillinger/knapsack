@@ -2,6 +2,7 @@ import React from 'react';
 import { NodeRendererProps, TreeItem } from 'react-sortable-tree';
 import { SideNavItem } from '@knapsack/design-system';
 import './node-content-renderer.scss';
+import { useSelector } from '../../../store';
 
 export type ExtraProps = {
   isSidebarEditMode: boolean;
@@ -56,6 +57,9 @@ export const FileThemeNodeContentRenderer: React.FC<Props> = ({
   ksNavItem,
   ...otherProps
 }: Props) => {
+  const showNonFunctioningUi = useSelector(
+    s => s.userState.features?.showNonFunctioningUi,
+  );
   const isDraggedDescendant = draggedNode && isDescendant(draggedNode, node);
   const isLandingPadActive = !didDrop && isDragging;
 
@@ -108,6 +112,7 @@ export const FileThemeNodeContentRenderer: React.FC<Props> = ({
       <div className="node-content__inner">
         <SideNavItem
           title={ksNavItem.name}
+          canEditTitle={showNonFunctioningUi}
           isEditMode={isSidebarEditMode}
           hasChildren={
             toggleChildrenVisibility &&
@@ -125,7 +130,7 @@ export const FileThemeNodeContentRenderer: React.FC<Props> = ({
           path={ksNavItem.path}
           active={
             ksNavItem.path
-              ? window.location.href.includes(ksNavItem.path)
+              ? window.location.href.startsWith(ksNavItem.path)
               : false
           }
           isDragging={isDragging}

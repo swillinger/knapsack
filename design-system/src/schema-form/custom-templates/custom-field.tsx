@@ -16,18 +16,18 @@ export default function CustomField(props) {
     errors,
     children,
   } = props;
-  const fieldDescription = description.props.description;
-  const inputSchema = children.props.schema;
+  const fieldDescription = description.props?.description;
+  const inputSchema = children?.props?.schema;
   let inputContent = <div />;
   const textWrapperInputs = ['string', 'integer', 'number'];
-  const uiSchema = children.props.uiSchema ? children.props.uiSchema : {};
+  const uiSchema = children?.props?.uiSchema;
   if (
-    inputSchema.type === 'string' &&
+    inputSchema?.type === 'string' &&
     !!inputSchema.enum &&
     !!uiSchema['ui:widget']
   ) {
     inputContent = <RadioInputWrapper>{children}</RadioInputWrapper>;
-  } else if (inputSchema.type === 'string' && !!inputSchema.enum) {
+  } else if (inputSchema?.type === 'string' && !!inputSchema.enum) {
     inputContent = (
       // eslint-disable-next-line jsx-a11y/label-has-associated-control
       <label className="ks-select__label" tabIndex={0}>
@@ -39,7 +39,7 @@ export default function CustomField(props) {
         </span>
       </label>
     );
-  } else if (textWrapperInputs.includes(inputSchema.type)) {
+  } else if (textWrapperInputs.includes(inputSchema?.type)) {
     inputContent = <TextInputWrapper>{children}</TextInputWrapper>;
   } else {
     inputContent = children;

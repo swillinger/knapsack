@@ -1,0 +1,48 @@
+.ks-rjsf {
+  .panel-title {
+    font-size: var(--font-base-size);
+  }
+
+  .error-detail {
+    font-size: var(--font-size-s);
+    padding-top: var(--size-xs);
+  }
+
+  .text-danger {
+    color: var(--c-error);
+  }
+
+  .panel-danger {
+    background-color: var(--c-shade);
+    padding: var(--size-s);
+    border-radius: var(--radius-l);
+    .ks-u-shade-bg & {
+      background-color: var(--c-white);
+    }
+  }
+}
+
+// stylelint-disable
+.ks-rjsf-custom-object-grid-3.ks-rjsf-custom-object-grid-3.ks-rjsf-custom-object-grid-3.ks-rjsf-custom-object-grid-3
+> .ks-custom-object {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ks-rjsf-custom-object-grid-3.ks-rjsf-custom-object-grid-3.ks-rjsf-custom-object-grid-3.ks-rjsf-custom-object-grid-3
+> .ks-custom-object
+> .ks-custom-object-item {
+  width: 30%;
+}
+
+.ks-rjsf-custom-object-grid-2.ks-rjsf-custom-object-grid-2.ks-rjsf-custom-object-grid-2.ks-rjsf-custom-object-grid-2
+> .ks-custom-object {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ks-rjsf-custom-object-grid-2.ks-rjsf-custom-object-grid-2.ks-rjsf-custom-object-grid-2.ks-rjsf-custom-object-grid-2
+> .ks-custom-object
+> .ks-custom-object-item {
+  width: 48%;
+}

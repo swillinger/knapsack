@@ -1,10 +1,14 @@
 import React from 'react';
-import Form, { FormProps, FieldProps } from 'react-jsonschema-form';
+import Form, {
+  FormProps,
+  FieldProps,
+  ErrorListProps,
+} from 'react-jsonschema-form';
 import uuid from 'uuid/v4';
 // import { JSONSchema7 } from 'json-schema';
 // import { JsonSchemaObject } from '@knapsack/core/src/types';
 import { KsButton, KsTextField } from '../atoms';
-import './schema-form.css';
+import './schema-form.scss';
 import ObjectFieldTemplate from './custom-templates/custom-object';
 import CustomArrayField from './custom-templates/array-field';
 import CustomField from './custom-templates/custom-field';
@@ -22,17 +26,36 @@ type Props<T> = Omit<FormProps<T>, 'schema'> & {
   children?: React.ReactNode;
 };
 
-const FunctionField: React.FC<FieldProps> = (props: FieldProps) => {
+const StringField: React.FC<FieldProps> = (props: FieldProps) => {
+  const isFile =
+    props.uiSchema['ui:widget'] === 'data-url' ||
+    props.uiSchema['ui:widget'] === 'file';
   // console.log({ props });
   return (
     <>
       <KsTextField
+        type={isFile ? 'file' : 'text'}
         inputProps={{
-          value: props.formData,
+          value: props?.formData ?? '',
           onChange: event => props.onChange(event.target.value),
         }}
       />
     </>
+  );
+};
+
+export const SchemaFormErrorList = (props: ErrorListProps) => {
+  return (
+    <div className="panel panel-danger">
+      <h3 className="panel-title">Errors</h3>
+      <ul>
+        {props.errors.map(error => (
+          <li key={error.stack} className="text-danger">
+            {error.stack}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 
@@ -60,6 +83,8 @@ export const SchemaForm = ({
   return (
     <div className={className}>
       <Form
+        showErrorList={false}
+        ErrorList={SchemaFormErrorList}
         {...rest}
         formData={formData}
         schema={schema}
@@ -68,7 +93,8 @@ export const SchemaForm = ({
         ArrayFieldTemplate={CustomArrayField}
         FieldTemplate={CustomField}
         fields={{
-          FunctionField,
+          FunctionField: StringField,
+          StringField,
         }}
         className={isInline ? 'ks-rjsf ks-rjsf--inline' : 'ks-rjsf'}
         widgets={{

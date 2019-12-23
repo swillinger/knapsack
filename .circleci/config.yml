@@ -113,24 +113,24 @@ jobs:
             # DEPLOY_URL=`./scripts/get-latest-deploy.js 'knapsack-docs'`
             # echo "Adding GitHub check for DEPLOY_URL: $DEPLOY_URL"
             # REPO_SLUG=basaltinc/knapsack GITHUB_TOKEN=$GH_TOKEN npx ci-utils gh-status --state success --url $DEPLOY_URL --description 'Docs Deploy' --context 'deploy/docs'
-      - run:
-          name: Build Storybook
-          command: yarn build:storybook
-      - run:
-          name: Deploy Storybook
-          command: |
-            cp ./design-system/storybook/now.json ./design-system/storybook/dist
-            if [ "$CIRCLE_BRANCH" = "master" ]; then
-              now deploy --scope=basalt --prod --token $ZEIT_TOKEN ./design-system/storybook/dist --local-config=./design-system/storybook/dist/now.json
-            else
-              now deploy --scope=basalt --target staging --token $ZEIT_TOKEN ./design-system/storybook/dist --local-config=./design-system/storybook/dist/now.json
-            fi
-            DEPLOY_URL=`./scripts/get-latest-deploy.js 'knapsack-storybook'`
-            echo "Adding GitHub check for DEPLOY_URL: $DEPLOY_URL"
-            REPO_SLUG=basaltinc/knapsack GITHUB_TOKEN=$GH_TOKEN npx ci-utils gh-status --state success --url $DEPLOY_URL --description 'Storybook Deploy' --context 'deploy/storybook'
-      - run:
-          name: Run Percy Visual Regression Tests on Storybook
-          command: PERCY_TOKEN=$PERCY_TOKEN_STORYBOOK yarn test:percy-storybook
+      # - run:
+      #     name: Build Storybook
+      #     command: yarn build:storybook
+      # - run:
+      #     name: Deploy Storybook
+      #     command: |
+      #       cp ./design-system/storybook/now.json ./design-system/storybook/dist
+      #       if [ "$CIRCLE_BRANCH" = "master" ]; then
+      #         now deploy --scope=basalt --prod --token $ZEIT_TOKEN ./design-system/storybook/dist --local-config=./design-system/storybook/dist/now.json
+      #       else
+      #         now deploy --scope=basalt --target staging --token $ZEIT_TOKEN ./design-system/storybook/dist --local-config=./design-system/storybook/dist/now.json
+      #       fi
+      #       DEPLOY_URL=`./scripts/get-latest-deploy.js 'knapsack-storybook'`
+      #       echo "Adding GitHub check for DEPLOY_URL: $DEPLOY_URL"
+      #       REPO_SLUG=basaltinc/knapsack GITHUB_TOKEN=$GH_TOKEN npx ci-utils gh-status --state success --url $DEPLOY_URL --description 'Storybook Deploy' --context 'deploy/storybook'
+      # - run:
+      #     name: Run Percy Visual Regression Tests on Storybook
+      #     command: PERCY_TOKEN=$PERCY_TOKEN_STORYBOOK yarn test:percy-storybook
 
   deploy-knapsack:
     executor: cypress-with-php

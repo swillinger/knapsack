@@ -52,18 +52,6 @@ export function setupRoutes({
     router.use(express.static(publicDir));
   }
 
-  // Since this is a Single Page App, we will send all html requests to the `index.html` file in the dist
-  router.use('*', (req, res, next) => {
-    const { accept = '' } = req.headers;
-    const accepted = accept.split(',');
-    // this is for serving up a Netlify CMS folder if present
-    if (!req.baseUrl.startsWith('/admin') && accepted.includes('text/html')) {
-      res.sendFile(join(knapsackDistDir, 'index.html'));
-    } else {
-      next();
-    }
-  });
-
   // This page is mainly so IE can get a list of links to view the individual templates outside of the system
   router.route('/demo-urls').get((req, res) => {
     const patternDemos = patterns.getPatterns().map(pattern => {
@@ -122,6 +110,18 @@ ${patternDemos
 </ul>
     `);
     /* eslint-enable prettier/prettier */
+  });
+
+  // Since this is a Single Page App, we will send all html requests to the `index.html` file in the dist
+  router.use('*', (req, res, next) => {
+    const { accept = '' } = req.headers;
+    const accepted = accept.split(',');
+    // this is for serving up a Netlify CMS folder if present
+    if (!req.baseUrl.startsWith('/admin') && accepted.includes('text/html')) {
+      res.sendFile(join(knapsackDistDir, 'index.html'));
+    } else {
+      next();
+    }
   });
 
   return router;

@@ -3,7 +3,11 @@ import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import slugify from 'slugify';
 import { generate as generateId } from 'shortid';
 import { Action } from './types';
-import { addSecondaryNavItem, Actions as NavActions } from './navs';
+import {
+  addSecondaryNavItem,
+  deleteNavItem,
+  Actions as NavActions,
+} from './navs';
 import {
   KnapsackCustomPage,
   KnapsackCustomPagesData,
@@ -29,12 +33,40 @@ export function updateCustomPage(page: KnapsackCustomPage): UpdatePageAction {
   };
 }
 
+const DELETE_PAGE = 'knapsack/custom-pages/DELETE_PAGE';
+interface DeletePageAction extends Action {
+  type: typeof DELETE_PAGE;
+  payload: {
+    id: string;
+  };
+}
+export function deletePage(
+  payload: DeletePageAction['payload'],
+): ThunkAction<void, AppState, {}, Actions | NavActions> {
+  return (dispatch, getState) => {
+    const navId = getState()?.navsState?.secondary?.find(
+      navItem => navItem.path === `${BASE_PATHS.PAGES}/${payload.id}`,
+    )?.id;
+    const deletePageAction: DeletePageAction = {
+      type: DELETE_PAGE,
+      payload,
+    };
+    dispatch(deletePageAction);
+    dispatch(
+      deleteNavItem({
+        id: navId,
+        nav: 'secondary',
+      }),
+    );
+  };
+}
+
 interface AddPage extends Action {
   type: typeof ADD_PAGE;
   payload: Pick<KnapsackCustomPage, 'id' | 'title'>;
 }
 
-type Actions = UpdatePageAction | AddPage;
+type Actions = UpdatePageAction | AddPage | DeletePageAction;
 
 type AppState = import('./index').AppState;
 
@@ -75,6 +107,7 @@ export default function(
       return produce(state, draft => {
         draft.pages[action.payload.id] = action.payload;
       });
+
     case UPDATE_PAGE:
       return produce(state, draft => {
         draft.pages[action.payload.id] = {
@@ -82,6 +115,12 @@ export default function(
           ...action.payload,
         };
       });
+
+    case DELETE_PAGE:
+      return produce(state, draft => {
+        delete draft.pages[action.payload.id];
+      });
+
     default:
       return state;
   }

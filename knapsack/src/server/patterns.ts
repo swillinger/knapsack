@@ -181,11 +181,12 @@ export class Patterns implements KnapsackDb<PatternsState> {
     patterns: { [id: string]: KnapsackPattern };
     templateStatuses?: KnapsackTemplateStatus[];
   }): Promise<KnapsackFile[]> {
+    const patternIdsToDelete = new Set(Object.keys(this.byId));
+    this.byId = {};
     const allFiles: KnapsackFile[] = [];
 
     await Promise.all(
       Object.keys(data.patterns).map(async id => {
-        const isNew = !(id in this.byId);
         const pattern = data.patterns[id];
 
         pattern.templates.forEach(template => {
@@ -196,9 +197,8 @@ export class Patterns implements KnapsackDb<PatternsState> {
           }
         });
 
-        if (isNew) {
-          this.byId[id] = pattern;
-        }
+        this.byId[id] = pattern;
+        patternIdsToDelete.delete(id);
 
         const db = new FileDb2<KnapsackPattern>({
           filePath: join(this.dataDir, `knapsack.pattern.${id}.json`),
@@ -211,7 +211,15 @@ export class Patterns implements KnapsackDb<PatternsState> {
         files.forEach(file => allFiles.push(file));
       }),
     );
-    // @todo handle patterns that were deleted / renamed
+
+    patternIdsToDelete.forEach(id => {
+      allFiles.push({
+        isDeleted: true,
+        contents: '',
+        encoding: 'utf-8',
+        path: join(this.dataDir, `knapsack.pattern.${id}.json`),
+      });
+    });
 
     return allFiles;
   }

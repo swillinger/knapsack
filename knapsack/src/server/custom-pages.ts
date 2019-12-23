@@ -64,10 +64,13 @@ export class CustomPages implements KnapsackDb<KnapsackCustomPagesData> {
   }
 
   async savePrep(data: KnapsackCustomPagesData): Promise<KnapsackFile[]> {
+    const ogData = await this.getData();
+    const idsToDelete = new Set(Object.keys(ogData.pages));
     const allFiles: KnapsackFile[] = [];
 
     await Promise.all(
       Object.keys(data.pages).map(async id => {
+        idsToDelete.delete(id);
         const page = data.pages[id];
         const db = new FileDb2<KnapsackCustomPage>({
           filePath: join(this.dataDir, `knapsack.custom-page.${id}.yml`),
@@ -80,7 +83,15 @@ export class CustomPages implements KnapsackDb<KnapsackCustomPagesData> {
         files.forEach(file => allFiles.push(file));
       }),
     );
-    // @todo handle custom pages that were deleted / renamed
+
+    idsToDelete.forEach(id => {
+      allFiles.push({
+        isDeleted: true,
+        contents: '',
+        encoding: 'utf-8',
+        path: join(this.dataDir, 'knapsack.custom-page.*.yml'),
+      });
+    });
 
     return allFiles;
   }

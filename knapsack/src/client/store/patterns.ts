@@ -13,7 +13,11 @@ import {
   KnapsackTemplateDemo,
 } from '../../schemas/patterns';
 import { KnapsackCustomPageSlice } from '../../schemas/custom-pages';
-import { addSecondaryNavItem, Actions as NavActions } from './navs';
+import {
+  addSecondaryNavItem,
+  deleteNavItem,
+  Actions as NavActions,
+} from './navs';
 import { TemplateRendererMeta } from '../../schemas/knapsack-config';
 import { BASE_PATHS } from '../../lib/constants';
 
@@ -50,6 +54,41 @@ const ADD_PATTERN = 'knapsack/patterns/ADD_PATTERN';
 const UPDATE_PATTERN_INFO = 'knapsack/patterns/UPDATE_PATTERN_INFO';
 const UPDATE_TEMPLATE_INFO = 'knapsack/patterns/UPDATE_TEMPLATE_INFO';
 const UPDATE_PATTERN_SLICES = 'knapsack/patterns/UPDATE_PATTERN_SLICES';
+
+const DELETE_PATTERN = 'knapsack/patterns/DELETE_PATTERN';
+interface DeletePatternAction extends Action {
+  type: typeof DELETE_PATTERN;
+  payload: {
+    patternId: string;
+  };
+}
+export function deletePattern({
+  patternId,
+}: DeletePatternAction['payload']): ThunkAction<
+  void,
+  AppState,
+  {},
+  Actions | NavActions
+> {
+  return (dispatch, getState) => {
+    const navId = getState()?.navsState?.secondary?.find(
+      navItem => navItem.path === `${BASE_PATHS.PATTERN}/${patternId}`,
+    )?.id;
+    const deleteAction: DeletePatternAction = {
+      type: DELETE_PATTERN,
+      payload: {
+        patternId,
+      },
+    };
+    dispatch(deleteAction);
+    dispatch(
+      deleteNavItem({
+        id: navId,
+        nav: 'secondary',
+      }),
+    );
+  };
+}
 
 interface UpdatePatternSlicesAction extends Action {
   type: typeof UPDATE_PATTERN_SLICES;
@@ -218,6 +257,9 @@ interface RemoveTemplateDemoAction extends Action {
   };
 }
 
+/**
+ * @todo add option to delete file (ifTemplateDemo)
+ */
 export function removeTemplateDemo({
   patternId,
   templateId,
@@ -350,6 +392,7 @@ export function updateTemplateInfo({
 
 type Actions =
   | AddPatternAction
+  | DeletePatternAction
   | AddTemplateAction
   | UpdatePatternAction
   | UpdatePatternInfoAction
@@ -368,6 +411,11 @@ export default function reducer(
     case UPDATE_PATTERN:
       return produce(state, draft => {
         draft.patterns[action.payload.id] = action.payload;
+      });
+
+    case DELETE_PATTERN:
+      return produce(state, draft => {
+        delete draft.patterns[action.payload.patternId];
       });
 
     case UPDATE_PATTERN_INFO:

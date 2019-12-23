@@ -14,6 +14,8 @@ const initialState: KnapsackNavsConfig = {
   secondary: [],
 };
 
+type Navs = 'primary' | 'secondary';
+
 interface UpdateSecondaryNav extends Action {
   type: typeof UPDATE_SECONDARY_NAV;
   payload: KnapsackNavItem[];
@@ -39,6 +41,23 @@ export function addSecondaryNavItem(
   return {
     type: ADD_SECONDARY_NAV_ITEM,
     payload: navItem,
+  };
+}
+
+const DELETE_NAV_ITEM = 'knapsack/navs/DELETE_NAV_ITEM';
+interface DeleteNavItemAction extends Action {
+  type: typeof DELETE_NAV_ITEM;
+  payload: {
+    id: string;
+    nav: Navs;
+  };
+}
+export function deleteNavItem(
+  payload: DeleteNavItemAction['payload'],
+): DeleteNavItemAction {
+  return {
+    type: DELETE_NAV_ITEM,
+    payload,
   };
 }
 
@@ -88,7 +107,10 @@ export function addSecondaryNavItem(
 //   };
 // }
 
-export type Actions = UpdateSecondaryNav | AddSecondaryNavItem;
+export type Actions =
+  | UpdateSecondaryNav
+  | AddSecondaryNavItem
+  | DeleteNavItemAction;
 
 export default function(
   state = initialState,
@@ -118,6 +140,23 @@ export default function(
           ...newItem,
           id,
         });
+      });
+
+    case DELETE_NAV_ITEM:
+      return produce(state, draft => {
+        const { id, nav } = action.payload;
+        const { parentId } = draft[nav].find(item => item.id === id);
+        draft[nav] = draft[nav]
+          // delete item
+          .filter(item => item.id !== id)
+          // if it has any children, lift them up one level
+          .map(item => {
+            if (item.parentId !== id) return item;
+            return {
+              ...item,
+              parentId,
+            };
+          });
       });
     default:
       return state;

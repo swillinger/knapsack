@@ -21,7 +21,7 @@ import WebSocket from 'ws';
 import bodyParser from 'body-parser';
 import 'isomorphic-fetch';
 import { join } from 'path';
-import { writeFile } from 'fs-extra';
+import { writeFile, remove } from 'fs-extra';
 import { KsUserInfo, KsFileSaver } from '@knapsack/core/dist/cloud';
 import { KsCloudConnect } from '../cloud/cloud-connect';
 import * as log from '../cli/log';
@@ -185,7 +185,10 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
     files: KnapsackFile[];
   }): Promise<GenericResponse> {
     await Promise.all(
-      files.map(({ contents, path, encoding }) => {
+      files.map(({ contents, path, encoding, isDeleted }) => {
+        if (isDeleted) {
+          return remove(path);
+        }
         switch (encoding) {
           case 'utf-8':
             return writeFile(path, contents, { encoding: 'utf8' });

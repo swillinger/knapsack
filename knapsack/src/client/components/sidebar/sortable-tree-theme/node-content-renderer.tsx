@@ -2,7 +2,14 @@ import React from 'react';
 import { NodeRendererProps, TreeItem } from 'react-sortable-tree';
 import { SideNavItem } from '@knapsack/design-system';
 import './node-content-renderer.scss';
-import { useSelector } from '../../../store';
+import {
+  useSelector,
+  useDispatch,
+  deleteNavItem,
+  deletePattern,
+  deletePage,
+} from '../../../store';
+import { BASE_PATHS } from '../../../../lib/constants';
 
 export type ExtraProps = {
   isSidebarEditMode: boolean;
@@ -60,6 +67,9 @@ export const FileThemeNodeContentRenderer: React.FC<Props> = ({
   const showNonFunctioningUi = useSelector(
     s => s.userState.features?.showNonFunctioningUi,
   );
+  const { canEdit } = useSelector(s => s.userState);
+  const patternIds = useSelector(s => Object.keys(s.patternsState.patterns));
+  const dispatch = useDispatch();
   const isDraggedDescendant = draggedNode && isDescendant(draggedNode, node);
   const isLandingPadActive = !didDrop && isDragging;
 
@@ -113,6 +123,7 @@ export const FileThemeNodeContentRenderer: React.FC<Props> = ({
         <SideNavItem
           title={ksNavItem.name}
           canEditTitle={showNonFunctioningUi}
+          canDelete={canEdit}
           isEditMode={isSidebarEditMode}
           hasChildren={
             toggleChildrenVisibility &&
@@ -120,6 +131,42 @@ export const FileThemeNodeContentRenderer: React.FC<Props> = ({
             node.children.length > 0
           }
           isCollapsed={!node.expanded}
+          handleDelete={() => {
+            // is group
+            if (!node.path) {
+              dispatch(
+                deleteNavItem({
+                  id: node.id,
+                  nav: 'secondary',
+                }),
+              );
+            }
+
+            // is pattern
+            if (node?.path?.startsWith(`${BASE_PATHS.PATTERN}/`)) {
+              const [_, base, patternId] = node.path.split('/');
+              if (!patternIds.includes(patternId)) {
+                console.error({ patternId, patternIds });
+                throw new Error(
+                  `Cannot delete patternId "${patternId}" b/c it is not in the list of patterns`,
+                );
+              }
+              dispatch(
+                deletePattern({
+                  patternId,
+                }),
+              );
+            }
+
+            // is page
+            if (node?.path?.startsWith(`${BASE_PATHS.PAGES}/`)) {
+              const [_, base, pageId] = node.path.split('/');
+              dispatch(deletePage({ id: pageId }));
+            }
+          }}
+          handleEdit={opt => {
+            // @todo
+          }}
           onClickToggleCollapse={() =>
             toggleChildrenVisibility({
               node,

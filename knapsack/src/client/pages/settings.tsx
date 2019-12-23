@@ -20,7 +20,7 @@ import { useHistory } from 'react-router-dom';
 import { Tabs } from '../components/tabs';
 import { SiteSettings } from './settings/site-settings';
 import PageWithSidebar from '../layouts/page-with-sidebar';
-import PatternsSettings from '../components/patterns-settings';
+// import PatternsSettings from '../components/patterns-settings';
 
 type Props = {
   /**
@@ -37,10 +37,10 @@ const SettingsPage: React.FC<Props> = ({ initialTab = '' }: Props) => {
       render: () => <SiteSettings />,
       menuItem: 'Site',
     },
-    {
-      render: () => <PatternsSettings />,
-      menuItem: 'Patterns',
-    },
+    // {
+    //   render: () => <PatternsSettings />,
+    //   menuItem: 'Patterns',
+    // },
   ];
 
   const defaultActiveIndex = panes.reduce((prev, pane, current) => {

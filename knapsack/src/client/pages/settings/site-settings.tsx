@@ -71,7 +71,8 @@ export const SiteSettings: React.FC = () => {
       uiSchema={{
         parentBrand: {
           logo: {
-            'ui:widget': 'file',
+            // @todo re-enable file upload of logo
+            // 'ui:widget': 'file',
           },
         },
         customSections: {

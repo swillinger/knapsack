@@ -43,7 +43,7 @@ export const KsSlotsForm: React.FC<Props> = ({
   templateLanguageId,
 }: Props) => {
   const patternList = useSelector(({ patternsState }) => {
-    return Object.values(patternsState.patterns).map(
+    return Object.values(patternsState.patterns || {}).map(
       ({ id, title, templates }) => ({
         id,
         title,
@@ -51,11 +51,11 @@ export const KsSlotsForm: React.FC<Props> = ({
         // only can include other templates that are the same language as this one. PS asset sets not accounted for
         templates: templates
           .filter(t => t.templateLanguageId === templateLanguageId)
-          .map(t => ({
+          ?.map(t => ({
             id: t.id,
             value: t.id,
             title: t.title,
-            demos: t.demos.map(demoId => {
+            demos: t.demos?.map(demoId => {
               const demo = t.demosById[demoId];
               return {
                 id: demoId,
@@ -127,7 +127,7 @@ export const KsSlotsForm: React.FC<Props> = ({
           checkAndHandleData(values);
           return (
             <Form>
-              {Object.keys(slotsSpec).map(slotName => {
+              {Object.keys(slotsSpec || {}).map(slotName => {
                 const slotDef = slotsSpec[slotName];
                 const { allowedPatternIds, disallowText } = slotDef;
                 return (

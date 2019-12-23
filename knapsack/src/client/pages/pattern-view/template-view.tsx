@@ -15,7 +15,7 @@
  with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CodeBlock } from '@knapsack/design-system';
 import { useHistory } from 'react-router-dom';
 import produce from 'immer';
@@ -97,12 +97,6 @@ const TemplateView: React.FC<Props> = ({
   const { templates } = pattern;
 
   const template = templates.find(t => t.id === templateId);
-  if (!template) {
-    const availableTemplateIds = templates.map(t => t.id).join(', ');
-    const msg = `In the pattern "${id}", the template "${templateId}" was not found, these are the available ids: "${availableTemplateIds}".`;
-    console.error(msg);
-    throw new Error(msg);
-  }
 
   const {
     spec = {},
@@ -124,7 +118,18 @@ const TemplateView: React.FC<Props> = ({
     ...allAssetSets[assetSetId],
   }));
 
-  const demos = template.demos.map(d => demosById[d]);
+  const backupDemo: DataDemo = {
+    type: 'data',
+    id: 'blank',
+    description: '',
+    title: 'Blank',
+    data: {
+      props: {},
+      slots: {},
+    },
+  };
+
+  const demos = template?.demos?.map(d => demosById[d]) ?? [];
 
   const hasSchema = !!(
     schema &&
@@ -133,7 +138,8 @@ const TemplateView: React.FC<Props> = ({
   );
 
   const [firstDemo] = demos;
-  const initialDemo = demosById[demoId] ?? firstDemo;
+  const initialDemo =
+    demosById && demoId ? demosById[demoId] : firstDemo ?? backupDemo;
   if (demoId && !demosById[demoId]) {
     history.replace(`${BASE_PATHS.PATTERN}/${patternId}/${templateId}`);
   }
@@ -141,6 +147,12 @@ const TemplateView: React.FC<Props> = ({
   const [demoIndex, setDemoIndex] = useState(0);
   const [demo, setDemo] = useState<KnapsackTemplateDemo>(initialDemo);
 
+  useEffect(() => {
+    if (demoId) {
+      // console.log('new demo!');
+      setDemo(demosById[demoId]);
+    }
+  }, [demoId]);
   // const demo = demos[demoIndex];
 
   // const [dataState, setDataState] = useState({

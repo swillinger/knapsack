@@ -169,7 +169,7 @@ export const KsDemoStage: React.FC<Props> = ({
                     );
                   },
                 },
-                spec.slots
+                Object.keys(spec?.slots || {})?.length > 0
                   ? {
                       menuItem: 'Slots',
                       render: () => {

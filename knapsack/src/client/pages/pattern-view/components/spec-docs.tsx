@@ -79,12 +79,10 @@ export const KsSpecDocs: React.FC<Props> = ({}: Props) => {
                   return allowedPatternIds.map((pId, i) => {
                     const isLast = allowedPatternIds.length === i + 1;
                     return (
-                      <>
-                        <Link key={pId} to={`${BASE_PATHS.PATTERN}/${pId}`}>
-                          {pId}
-                        </Link>
+                      <span key={pId}>
+                        <Link to={`${BASE_PATHS.PATTERN}/${pId}`}>{pId}</Link>
                         {!isLast && <span>, </span>}
-                      </>
+                      </span>
                     );
                   });
                 },

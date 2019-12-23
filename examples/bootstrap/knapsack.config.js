@@ -28,10 +28,9 @@ const config = {
       webpackConfig,
       webpack,
       babelConfig,
-      // demoWrapperPath: join(__dirname, './demo-wrapper.tsx'),
+      demoWrapperPath: join(__dirname, './demo-wrapper.jsx'),
     }),
     new KnapsackWebComponentRenderer(),
-    new HtmlRenderer(),
     new TwigRenderer({
       src: {
         roots: ['./assets/patterns'],
@@ -49,6 +48,7 @@ const config = {
         ],
       },
     }),
+    new HtmlRenderer(),
   ],
   cloud: {
     repoOwner: 'basaltinc',

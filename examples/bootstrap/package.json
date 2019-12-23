@@ -11,7 +11,7 @@
     "build:tokens": "style-dictionary build --config ./style-dictionary.config.js",
     "build:wp": "webpack",
     "clean": "rm -rf ./assets/design-tokens/dist",
-    "watch:knapsack": "nodemon --config ../nodemon.json --exec 'yarn start:knapsack'",
+    "watch:knapsack": "nodemon --config ../nodemon.json --exec 'KS_DEV=no yarn start:knapsack'",
     "serve": "NODE_ENV=production node $NODE_DEBUG_OPTION ./node_modules/.bin/knapsack serve",
     "start": "run-s clean build:tokens watch",
     "watch:wp": "yarn build:wp --watch",

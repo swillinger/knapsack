@@ -20,7 +20,12 @@ import globby from 'globby';
 import chokidar from 'chokidar';
 import { version as iframeResizerVersion } from 'iframe-resizer/package.json';
 import { validateDataAgainstSchema } from '@knapsack/schema-utils';
-import { fileExists, fileExistsOrExit, formatCode } from './server-utils';
+import {
+  fileExists,
+  fileExistsOrExit,
+  formatCode,
+  resolvePath,
+} from './server-utils';
 import { KnapsackRendererBase } from './renderer-base';
 import { emitPatternsDataReady, EVENTS, knapsackEvents } from './events';
 import { FileDb2 } from './dbs/file-db';
@@ -180,7 +185,9 @@ export class Patterns implements KnapsackDb<PatternsState> {
 
     await Promise.all(
       Object.keys(data.patterns).map(async id => {
+        const isNew = !(id in this.byId);
         const pattern = data.patterns[id];
+
         pattern.templates.forEach(template => {
           if (template?.spec?.isInferred) {
             template.spec = {
@@ -188,6 +195,10 @@ export class Patterns implements KnapsackDb<PatternsState> {
             };
           }
         });
+
+        if (isNew) {
+          this.byId[id] = pattern;
+        }
 
         const db = new FileDb2<KnapsackPattern>({
           filePath: join(this.dataDir, `knapsack.pattern.${id}.json`),
@@ -242,7 +253,7 @@ export class Patterns implements KnapsackDb<PatternsState> {
                 // console.log(demo.data.props);
                 // console.log();
               }
-            });
+          });
         }
 
         // inferring specs
@@ -392,19 +403,18 @@ Resolved absolute path: ${path}
     const pattern = this.byId[patternId];
     if (!pattern) throw new Error(`Could not find pattern "${patternId}"`);
     const template = pattern.templates.find(t => t.id === templateId);
-    if (!template)
+    if (!template) {
       throw new Error(
         `Could not find template "${templateId}" in pattern "${patternId}"`,
       );
-    let path;
-    try {
-      path = require.resolve(template.path);
-    } catch (e) {
-      const relPath = join(this.dataDir, template.path);
-      path = join(process.cwd(), relPath);
     }
-    if (!fileExists(path)) throw new Error(`File does not exist: "${path}"`);
-    return path;
+    const { exists, absolutePath } = resolvePath({
+      path: template.path,
+      resolveFromDirs: [this.dataDir],
+    });
+
+    if (!exists) throw new Error(`File does not exist: "${template.path}"`);
+    return absolutePath;
   }
 
   getTemplateDemoAbsolutePath({ patternId, templateId, demoId }): string {

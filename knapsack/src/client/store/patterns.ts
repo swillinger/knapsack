@@ -1,6 +1,9 @@
 import produce from 'immer';
 import shortid from 'shortid';
+import slugify from 'slugify';
+import { ThunkAction } from 'redux-thunk';
 import { Action } from './types';
+import { saveToServer } from './meta';
 import {
   isDataDemo,
   isSlottedTemplateDemo,
@@ -10,7 +13,11 @@ import {
   KnapsackTemplateDemo,
 } from '../../schemas/patterns';
 import { KnapsackCustomPageSlice } from '../../schemas/custom-pages';
+import { addSecondaryNavItem, Actions as NavActions } from './navs';
 import { TemplateRendererMeta } from '../../schemas/knapsack-config';
+import { BASE_PATHS } from '../../lib/constants';
+
+type AppState = import('./index').AppState;
 
 type PatternsState = {
   isFetching?: boolean;
@@ -35,7 +42,11 @@ const initialState: PatternsState = {
 const UPDATE_TEMPLATE_DEMO = 'knapsack/patterns/UPDATE_TEMPLATE_DEMO';
 const REMOVE_TEMPLATE_DEMO = 'knapsack/patterns/REMOVE_TEMPLATE_DEMO';
 const ADD_TEMPLATE_DATA_DEMO = 'knapsack/patterns/ADD_TEMPLATE_DATA_DEMO';
+const ADD_TEMPLATE_TEMPLATE_DEMO =
+  'knapsack/patterns/ADD_TEMPLATE_TEMPLATE_DEMO';
+const ADD_TEMPLATE = 'knapsack/patterns/ADD_TEMPLATE';
 const UPDATE_PATTERN = 'knapsack/patterns/UPDATE_PATTERN';
+const ADD_PATTERN = 'knapsack/patterns/ADD_PATTERN';
 const UPDATE_PATTERN_INFO = 'knapsack/patterns/UPDATE_PATTERN_INFO';
 const UPDATE_TEMPLATE_INFO = 'knapsack/patterns/UPDATE_TEMPLATE_INFO';
 const UPDATE_PATTERN_SLICES = 'knapsack/patterns/UPDATE_PATTERN_SLICES';
@@ -94,21 +105,106 @@ interface AddTemplateDataDemoAction extends Action {
   payload: {
     patternId: string;
     templateId: string;
+    demoId?: string;
+  };
+}
+
+interface AddTemplateAction extends Action {
+  type: typeof ADD_TEMPLATE;
+  payload: {
+    patternId: string;
+    templateId?: string;
+    templateLanguageId: string;
+    path: string;
+    alias?: string;
+    assetSetIds?: string[];
+  };
+}
+
+export function addTemplate({
+  path,
+  alias,
+  patternId,
+  templateId,
+  templateLanguageId,
+  assetSetIds,
+}: AddTemplateAction['payload']): ThunkAction<
+  void,
+  AppState,
+  {},
+  Actions | NavActions
+> {
+  return async (dispatch, getState) => {
+    const globalAssetSetIds = getState()?.assetSetsState?.globalAssetSetIds;
+    const assetSetId = Array.isArray(globalAssetSetIds)
+      ? globalAssetSetIds[0]
+      : null;
+    const addTemplateAction: AddTemplateAction = {
+      type: ADD_TEMPLATE,
+      payload: {
+        path,
+        alias,
+        patternId,
+        templateId,
+        templateLanguageId,
+        assetSetIds,
+      },
+      meta: {
+        autosaveDelay: 0,
+      },
+    };
+    dispatch(addTemplateAction);
+    return {
+      templateId,
+    };
   };
 }
 
 export function addTemplateDataDemo({
   patternId,
   templateId,
+  demoId,
 }: {
   patternId: string;
   templateId: string;
+  demoId?: string;
 }): AddTemplateDataDemoAction {
   return {
     type: ADD_TEMPLATE_DATA_DEMO,
     payload: {
       patternId,
       templateId,
+      demoId,
+    },
+  };
+}
+
+interface AddTemplateTemplateDemoAction extends Action {
+  type: typeof ADD_TEMPLATE_TEMPLATE_DEMO;
+  payload: {
+    patternId: string;
+    templateId: string;
+    path: string;
+    alias?: string;
+  };
+}
+
+export function addTemplateTemplateDemo({
+  path,
+  alias,
+  patternId,
+  templateId,
+}: AddTemplateTemplateDemoAction['payload']): AddTemplateTemplateDemoAction {
+  return {
+    type: ADD_TEMPLATE_TEMPLATE_DEMO,
+    payload: {
+      path,
+      alias,
+      patternId,
+      templateId,
+    },
+    meta: {
+      autosaveDelay: 0,
     },
   };
 }
@@ -167,6 +263,52 @@ interface UpdateTemplateInfoAction extends Action {
   };
 }
 
+interface AddPatternAction extends Action {
+  type: typeof ADD_PATTERN;
+  payload: {
+    patternId?: string;
+    title: string;
+  };
+}
+
+export function addPattern({
+  patternId,
+  title,
+}: AddPatternAction['payload']): ThunkAction<
+  void,
+  AppState,
+  {},
+  Actions | NavActions
+> {
+  return async (dispatch, getState) => {
+    const { secondary } = getState()?.navsState;
+    const parentId =
+      secondary.find(navItem => navItem.path === BASE_PATHS.PATTERNS)?.id ??
+      'root';
+    const id = patternId ?? slugify(title.toLowerCase());
+    const pattern = {
+      patternId: id,
+      title,
+    };
+    const addPatternAction: AddPatternAction = {
+      type: ADD_PATTERN,
+      payload: pattern,
+      meta: {
+        autosaveDelay: 0,
+      },
+    };
+    dispatch(addPatternAction);
+    const addNavAction = addSecondaryNavItem({
+      name: title,
+      id,
+      path: `${BASE_PATHS.PATTERN}/${id}`,
+      parentId,
+    });
+    dispatch(addNavAction);
+    return pattern;
+  };
+}
+
 /**
  * Update basic Pattern Info
  * Basically everything besides `templates`
@@ -207,13 +349,16 @@ export function updateTemplateInfo({
 }
 
 type Actions =
+  | AddPatternAction
+  | AddTemplateAction
   | UpdatePatternAction
   | UpdatePatternInfoAction
   | UpdateTemplateInfoAction
   | UpdateTemplateDemoAction
   | AddTemplateDataDemoAction
   | UpdatePatternSlicesAction
-  | RemoveTemplateDemoAction;
+  | RemoveTemplateDemoAction
+  | AddTemplateTemplateDemoAction;
 
 export default function reducer(
   state = initialState,
@@ -237,6 +382,40 @@ export default function reducer(
         };
       });
 
+    case ADD_PATTERN:
+      return produce(state, draft => {
+        const { patternId, title } = action.payload;
+        draft.patterns[patternId] = {
+          id: patternId,
+          title,
+          templates: [],
+        };
+      });
+
+    case ADD_TEMPLATE:
+      return produce(state, draft => {
+        const { patterns } = draft;
+        const {
+          alias,
+          templateLanguageId,
+          path,
+          templateId,
+          patternId,
+          assetSetIds,
+        } = action.payload;
+        const { templates } = patterns[patternId];
+        templates.push({
+          id: templateId || templateLanguageId,
+          title: templateId,
+          path,
+          alias,
+          templateLanguageId,
+          assetSetIds: assetSetIds ?? [],
+          demosById: {},
+          demos: [],
+        });
+      });
+
     case UPDATE_TEMPLATE_INFO:
       return produce(state, draft => {
         const { patternId, templateId, template } = action.payload;
@@ -255,10 +434,10 @@ export default function reducer(
 
     case ADD_TEMPLATE_DATA_DEMO:
       return produce(state, draft => {
-        const { templateId, patternId } = action.payload;
+        const { templateId, patternId, demoId } = action.payload;
         const pattern = draft.patterns[patternId];
         const template = pattern.templates.find(t => t.id === templateId);
-        const id = shortid.generate();
+        const id = demoId || shortid.generate();
         template.demosById[id] = {
           id,
           title: 'My New Demo',
@@ -270,6 +449,28 @@ export default function reducer(
           },
         };
         template.demos.push(id);
+      });
+
+    case ADD_TEMPLATE_TEMPLATE_DEMO:
+      return produce(state, draft => {
+        const { patterns } = draft;
+        const { alias, path, templateId, patternId } = action.payload;
+        const template = patterns[patternId]?.templates.find(
+          t => t.id === templateId,
+        );
+        const { demosById, demos } = template;
+        const id = shortid.generate();
+
+        demosById[id] = {
+          id,
+          title: 'My new template demo',
+          type: 'template',
+          templateInfo: {
+            alias,
+            path,
+          },
+        };
+        demos.push(id);
       });
 
     case REMOVE_TEMPLATE_DEMO:

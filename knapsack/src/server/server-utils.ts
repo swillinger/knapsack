@@ -20,6 +20,7 @@ import qs from 'qs';
 import yaml from 'js-yaml';
 import { execSync } from 'child_process';
 import prettier from 'prettier';
+import { relative, resolve, join, isAbsolute } from 'path';
 import * as log from '../cli/log';
 
 /**
@@ -107,6 +108,66 @@ export function getGitBranch(): string {
     console.error(`Uh oh! error thrown in getGitBranch: ${err.message}`);
     return '';
   }
+}
+
+export function resolvePath({
+  path,
+  resolveFromDirs = [],
+}: {
+  path: string;
+  resolveFromDirs?: string[];
+}): {
+  exists: boolean;
+  absolutePath?: string;
+  relativePathFromCwd?: string;
+  originalPath: string;
+} {
+  if (isAbsolute(path)) {
+    return {
+      originalPath: path,
+      absolutePath: path,
+      exists: fileExists(path),
+      relativePathFromCwd: relative(process.cwd(), path),
+    };
+  }
+  let absolutePath: string;
+  try {
+    absolutePath = require.resolve(path);
+    const exists = fileExists(path);
+    if (absolutePath && exists) {
+      return {
+        originalPath: path,
+        exists,
+        absolutePath,
+        relativePathFromCwd: relative(process.cwd(), absolutePath),
+      };
+    }
+  } catch (e) {
+    // oh well
+  }
+  let result: {
+    exists: boolean;
+    absolutePath?: string;
+    relativePathFromCwd?: string;
+    originalPath: string;
+  };
+  resolveFromDirs.forEach(base => {
+    const x = resolve(process.cwd(), join(base, path));
+    if (fileExists(x)) {
+      result = {
+        exists: true,
+        absolutePath: x,
+        originalPath: path,
+        relativePathFromCwd: relative(process.cwd(), x),
+      };
+    }
+  });
+  if (result?.exists) return result;
+
+  return {
+    exists: false,
+    originalPath: path,
+  };
 }
 
 /**

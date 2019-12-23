@@ -3,7 +3,11 @@ import cn from 'classnames';
 import { KsButton, SchemaForm } from '@knapsack/design-system';
 import Template, { Props as TemplateProps } from '../../../components/template';
 import { CurrentTemplateContext } from '../current-template-context';
-import { isDataDemo, KnapsackTemplateData } from '../../../../schemas/patterns';
+import {
+  isDataDemo,
+  isTemplateDemo,
+  KnapsackTemplateData,
+} from '../../../../schemas/patterns';
 import { InlineEditText } from '../../../components/inline-edit';
 import { updateTemplateDemo, useDispatch } from '../../../store';
 import { Tabs } from '../../../components/tabs';
@@ -45,6 +49,7 @@ type Props = {
   setTemplateInfo: TemplateProps['handleTemplateInfo'];
   handlePropsChange: (props: {}) => void;
   handleSlotsChange: (slotsData: KnapsackTemplateData['slots']) => void;
+  codeBlock?: React.ReactNode;
 };
 
 export const KsDemoStage: React.FC<Props> = ({
@@ -53,6 +58,7 @@ export const KsDemoStage: React.FC<Props> = ({
   setTemplateInfo,
   handlePropsChange,
   handleSlotsChange,
+  codeBlock,
 }: Props) => {
   const {
     templateInfo,
@@ -104,6 +110,16 @@ export const KsDemoStage: React.FC<Props> = ({
           handleTemplateInfo={setTemplateInfo}
         />
       </div>
+      {isTemplateDemo(demo) && codeBlock && (
+        <div
+          className="ks-demo-stage__form"
+          style={{
+            width: calculateSchemaFormWidth(demoSize),
+          }}
+        >
+          {codeBlock}
+        </div>
+      )}
       {hasSchema && isFormVisible && isDataDemo(demo) && (
         <div
           className="ks-demo-stage__form"

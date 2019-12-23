@@ -21,6 +21,7 @@ import {
   KnapsackTemplateData,
   KnapsackTemplateDemo,
 } from '../schemas/patterns';
+import * as Files from '../schemas/api/files';
 import { AppState } from './store';
 import { KsRenderResults } from '../schemas/knapsack-config';
 import { timer } from '../lib/utils';
@@ -106,6 +107,19 @@ type KnapsackDesignToken = import('@knapsack/core/dist/types').KnapsackDesignTok
 
 export function getDesignTokens(): Promise<KnapsackDesignToken[]> {
   return window.fetch(`${apiUrlBase}/design-tokens`).then(res => res.json());
+}
+
+export function files(x: Files.Actions): Promise<Files.ActionResponses> {
+  return window
+    .fetch(Files.endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(x),
+    })
+    .then(res => res.json());
 }
 
 /**

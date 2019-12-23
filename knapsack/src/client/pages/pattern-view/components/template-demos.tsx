@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import cn from 'classnames';
+import shortid from 'shortid';
 import { Icon, KsButton, KsPopover } from '@knapsack/design-system';
 import { useHistory } from 'react-router-dom';
 import { CurrentTemplateContext } from '../current-template-context';
@@ -8,10 +9,12 @@ import {
   removeTemplateDemo,
   useDispatch,
   addTemplateDataDemo,
+  addTemplateTemplateDemo,
 } from '../../../store';
 import { BASE_PATHS } from '../../../../lib/constants';
 import { TemplateThumbnail } from '../../../components/template-thumbnail';
-import { AddTemplateDemo } from './add-template-demo';
+import { EditTemplateDemo } from './edit-template-demo';
+import { isTemplateDemo } from '../../../../schemas/patterns';
 
 type Props = {};
 
@@ -25,6 +28,7 @@ export const KsTemplateDemos: React.FC<Props> = ({}: Props) => {
     patternId,
     templateId,
     canEdit,
+    isLocalDev,
     setDemo,
   } = useContext(CurrentTemplateContext);
   const dispatch = useDispatch();
@@ -61,6 +65,41 @@ export const KsTemplateDemos: React.FC<Props> = ({}: Props) => {
                   }
                 >
                   <Icon symbol="info" size="s" />
+                </KsPopover>
+              )}
+              {isLocalDev && isTemplateDemo(aDemo) && (
+                <KsPopover
+                  content={
+                    <EditTemplateDemo
+                      data={{
+                        path: aDemo?.templateInfo?.path,
+                        alias: aDemo?.templateInfo?.alias,
+                      }}
+                      maxWidth={360}
+                      handleSubmit={({ path, alias }) => {
+                        dispatch(
+                          addTemplateTemplateDemo({
+                            alias,
+                            path,
+                            patternId,
+                            templateId,
+                          }),
+                        );
+                        // toggleOpen();
+                      }}
+                    />
+                  }
+                  trigger="click"
+                >
+                  <KsButton
+                    kind="icon"
+                    // emphasis="danger"
+                    icon="edit"
+                    size="s"
+                    flush
+                  >
+                    Edit
+                  </KsButton>
                 </KsPopover>
               )}
               {canEdit && (
@@ -121,20 +160,52 @@ export const KsTemplateDemos: React.FC<Props> = ({}: Props) => {
             }
           }
         >
-          <AddTemplateDemo />
+          <KsPopover
+            content={
+              <EditTemplateDemo
+                maxWidth={360}
+                handleSubmit={({ path, alias }) => {
+                  dispatch(
+                    addTemplateTemplateDemo({
+                      alias,
+                      path,
+                      patternId,
+                      templateId,
+                    }),
+                  );
+                  // @todo close
+                }}
+              />
+            }
+            trigger="click"
+          >
+            <KsButton
+              kind="standard"
+              icon="add"
+              size="s"
+            >
+              Template Demo
+            </KsButton>
+          </KsPopover>
+
           <KsButton
             size="s"
             kind="standard"
             icon="add"
             onClick={() => {
-              // @todo re-enable
+              const demoId = shortid.generate();
               dispatch(
                 addTemplateDataDemo({
                   patternId,
                   templateId,
+                  demoId,
                 }),
               );
-              // @todo go to it after
+              setTimeout(() => {
+                history.push(
+                  `${BASE_PATHS.PATTERN}/${patternId}/${templateId}/${demoId}`,
+                );
+              }, 100);
             }}
           >
             Data Demo

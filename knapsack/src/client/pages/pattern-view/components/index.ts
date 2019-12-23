@@ -1,4 +1,4 @@
-export * from './add-template-demo';
+export * from './edit-template-demo';
 export * from './spec-docs';
 export * from './demo-stage';
 export * from './slots-form';

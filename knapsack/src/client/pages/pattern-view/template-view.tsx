@@ -25,6 +25,7 @@ import MdBlock from '../../components/md-block';
 import './template-view.scss';
 import './shared/demo-grid-controls.scss';
 import {
+  DataDemo,
   isDataDemo,
   isTemplateDemo,
   KnapsackTemplateDemo,
@@ -36,7 +37,12 @@ import {
   CurrentTemplateContext,
   CurrentTemplateData,
 } from './current-template-context';
-import { TemplateHeader, KsDemoStage, KsSpecDocs } from './components';
+import {
+  TemplateHeader,
+  KsDemoStage,
+  KsSpecDocs,
+  EditTemplateDemo,
+} from './components';
 import { KsTemplateDemos } from './components/template-demos';
 
 export type Props = {
@@ -188,6 +194,66 @@ const TemplateView: React.FC<Props> = ({
     setDemo,
   };
 
+  const codeBlock = (
+    <div className="ks-template-view__code-block-wrapper">
+      <CodeBlock
+        items={[
+          templateInfo?.usage
+            ? {
+                id: 'usage',
+                name: 'Usage',
+                code: templateInfo.usage,
+                language: templateInfo.templateLanguage,
+                // isEditable: isCodeBlockEditable,
+                isEditable: false,
+                // handleChange: newCode => {
+                //   // socket.send(
+                //   //   JSON.stringify({
+                //   //     patternId,
+                //   //     templateId,
+                //   //     demoId: demo.id,
+                //   //     code: newCode,
+                //   //   }),
+                //   // );
+                //   window
+                //     .fetch('/api/tmp-save', {
+                //       method: 'POST',
+                //       headers: {
+                //         'Content-Type': 'application/json',
+                //         Accept: 'application/json',
+                //       },
+                //       body: JSON.stringify({
+                //         patternId,
+                //         templateId,
+                //         demoId: demo.id,
+                //         code: newCode,
+                //       }),
+                //     })
+                //     .then(res => res.json())
+                //     .then(x => {
+                //       console.log(x);
+                //     });
+                //   // console.log('new code', newCode);
+                // },
+              }
+            : null,
+          // {
+          //   id: 'templateSrc',
+          //   name: 'Template Source',
+          // },
+          templateInfo?.html
+            ? {
+                id: 'html',
+                name: 'HTML',
+                language: 'html',
+                code: templateInfo.html,
+              }
+            : null,
+        ].filter(Boolean)}
+      />
+    </div>
+  );
+
   return (
     <CurrentTemplateContext.Provider value={currentTemplateData}>
       <article className="ks-template-view">
@@ -217,6 +283,7 @@ const TemplateView: React.FC<Props> = ({
           <KsDemoStage
             demoSize={demoSize}
             isFormVisible={showSchemaForm}
+            // codeBlock={codeBlock}
             setTemplateInfo={setTemplateInfo}
             handlePropsChange={props => {
               setDemo(prevDemo =>
@@ -239,65 +306,7 @@ const TemplateView: React.FC<Props> = ({
           />
         </div>
 
-        {isCodeBlockShown && (
-          <div className="ks-template-view__code-block-wrapper">
-            <CodeBlock
-              items={[
-                templateInfo?.usage
-                  ? {
-                      id: 'usage',
-                      name: 'Usage',
-                      code: templateInfo.usage,
-                      language: templateInfo.templateLanguage,
-                      // isEditable: isCodeBlockEditable,
-                      isEditable: false,
-                      // handleChange: newCode => {
-                      //   // socket.send(
-                      //   //   JSON.stringify({
-                      //   //     patternId,
-                      //   //     templateId,
-                      //   //     demoId: demo.id,
-                      //   //     code: newCode,
-                      //   //   }),
-                      //   // );
-                      //   window
-                      //     .fetch('/api/tmp-save', {
-                      //       method: 'POST',
-                      //       headers: {
-                      //         'Content-Type': 'application/json',
-                      //         Accept: 'application/json',
-                      //       },
-                      //       body: JSON.stringify({
-                      //         patternId,
-                      //         templateId,
-                      //         demoId: demo.id,
-                      //         code: newCode,
-                      //       }),
-                      //     })
-                      //     .then(res => res.json())
-                      //     .then(x => {
-                      //       console.log(x);
-                      //     });
-                      //   // console.log('new code', newCode);
-                      // },
-                    }
-                  : null,
-                // {
-                //   id: 'templateSrc',
-                //   name: 'Template Source',
-                // },
-                templateInfo?.html
-                  ? {
-                      id: 'html',
-                      name: 'HTML',
-                      language: 'html',
-                      code: templateInfo.html,
-                    }
-                  : null,
-              ].filter(Boolean)}
-            />
-          </div>
-        )}
+        {isCodeBlockShown && codeBlock}
 
         {isReadmeShown && readme && (
           <MdBlock

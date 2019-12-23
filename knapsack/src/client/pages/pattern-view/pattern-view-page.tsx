@@ -23,6 +23,7 @@ import {
   useSelector,
   useDispatch,
   updatePatternSlices,
+  addTemplate,
 } from '../../store';
 import ErrorCatcher from '../../utils/error-catcher';
 // import DosAndDonts from '../../components/dos-and-donts';
@@ -34,6 +35,7 @@ import './shared/demo-grid-controls.scss';
 import { CustomSliceCollection } from '../custom-page/custom-slice-collection';
 import { InlineEditText } from '../../components/inline-edit';
 import { getBreadcrumb } from '../../utils';
+import { EditTemplateDemo } from './components';
 
 type Props = {
   patternId: string;
@@ -71,12 +73,13 @@ const PatternViewPage: React.FC<Props> = ({
     });
   });
   const dispatch = useDispatch();
-
   const showAllTemplates = templateId === 'all';
   const { title, templates, description, demoSize: defaultDemoSize } = pattern;
   const templatesList = templates.filter(
     t => t.templateLanguageId === currentTemplateRenderer,
   );
+
+  const [hasTemplates, setHasTemplates] = useState(templatesList.length > 0);
 
   const [demoSize, setDemoSize] = useState<string>(defaultDemoSize);
 
@@ -105,9 +108,11 @@ const PatternViewPage: React.FC<Props> = ({
         <section className="ks-pattern-view-page">
           <header className="ks-pattern-view-page__header">
             <div className="ks-pattern-view-page__header__info-wrap">
-              <p className="ks-pattern-view-page__header__info-wrap__breadcrumbs">
-                {breadcrumb.join(' / ')} /
-              </p>
+              {breadcrumb.length > 0 && (
+                <p className="ks-pattern-view-page__header__info-wrap__breadcrumbs">
+                  {breadcrumb.join(' / ')} /
+                </p>
+              )}
               <h2 className="ks-pattern-view-page__header__info-wrap__title">
                 <InlineEditText
                   text={title}
@@ -190,7 +195,33 @@ const PatternViewPage: React.FC<Props> = ({
             </div>
           </header>
 
-          {!showAllTemplates && (
+          {templatesList.length === 0 && (
+            <div
+              className="ks-u-shade-bg"
+              style={{
+                padding: 'var(--space-l)',
+                borderRadius: 'var(--radius-l)',
+              }}
+            >
+              <h3>Add Template</h3>
+              <EditTemplateDemo
+                handleSubmit={({ path, alias }) => {
+                  dispatch(
+                    addTemplate({
+                      alias,
+                      path,
+                      patternId,
+                      templateLanguageId: currentTemplateRenderer,
+                    }),
+                  );
+                  // delay a beat so server can be ready to render new template
+                  setTimeout(() => setHasTemplates(true), 100);
+                }}
+              />
+            </div>
+          )}
+
+          {hasTemplates && templatesList.length > 0 && !showAllTemplates && (
             <TemplateView
               id={patternId}
               templateId={templateId}
@@ -202,7 +233,9 @@ const PatternViewPage: React.FC<Props> = ({
             />
           )}
 
-          {showAllTemplates &&
+          {hasTemplates &&
+            templatesList.length > 0 &&
+            showAllTemplates &&
             templates.map(template => (
               <div key={template.id}>
                 <TemplateView
@@ -240,11 +273,6 @@ const PatternViewPage: React.FC<Props> = ({
       </PageWithSidebar>
     </ErrorCatcher>
   );
-};
-
-PatternViewPage.propTypes = {
-  patternId: PropTypes.string.isRequired,
-  templateId: PropTypes.string.isRequired,
 };
 
 export default PatternViewPage;

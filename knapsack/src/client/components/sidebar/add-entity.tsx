@@ -62,7 +62,6 @@ export const AddEntity: React.FC<Props> = ({
         <Formik
           initialValues={initialValues}
           onSubmit={(values, actions) => {
-            console.log({ values });
             handleAdd(values);
             actions.setSubmitting(false);
             setIsShowing(!isShowing);
@@ -73,14 +72,14 @@ export const AddEntity: React.FC<Props> = ({
             <Form>
               <div className="ks-radio-group">
                 {/* @TODO: Remove opacity style once this is no longer disabled */}
-                <label htmlFor="pattern" style={{ opacity: 0.5 }}>
+                <label htmlFor="pattern">
                   <Field
                     name="entityType"
                     type="radio"
                     value="pattern"
                     id="pattern"
                   />
-                  Pattern (coming soon)
+                  Pattern
                 </label>
                 <span className="ks-radio-group__subtitle">
                   A new UI pattern (e.g. button, hero, tabs). This content type

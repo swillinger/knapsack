@@ -9,6 +9,8 @@ import {
   TreeNode,
 } from 'react-sortable-tree';
 import deepEqual from 'deep-equal';
+import { useHistory } from 'react-router';
+import slugify from 'slugify';
 import { SecondaryNav } from './secondary-nav';
 import { AddEntity } from './add-entity';
 import {
@@ -17,10 +19,12 @@ import {
   updateSecondaryNav,
   addPage,
   addSecondaryNavItem,
+  addPattern,
 } from '../../store';
 import { getTitleFromPath } from '../../../lib/routes';
 import './sidebar.scss';
 import { KnapsackNavItem } from '../../../schemas/nav';
+import { BASE_PATHS } from '../../../lib/constants';
 
 const rootKey = 'root';
 
@@ -30,13 +34,14 @@ export const Sidebar: React.FC = () => {
   const secondaryNavItems = useSelector(s => {
     return s.navsState.secondary.map(navItem => {
       if (!navItem.path) return navItem;
-      const name = getTitleFromPath(navItem.path, s);
+      // const name = getTitleFromPath(navItem.path, s);
       return {
         ...navItem,
-        name: name || navItem.name,
+        name: navItem.name || navItem.path,
       };
     });
   }, deepEqual);
+  const history = useHistory();
 
   const [isSidebarEditMode, setIsSidebarEditMode] = useState(false);
   const [searchString, setSearchString] = useState('');
@@ -123,6 +128,19 @@ export const Sidebar: React.FC = () => {
                 handleAdd={({ title: theTitle, entityType }) => {
                   // eslint-disable-next-line default-case
                   switch (entityType) {
+                    case 'pattern': {
+                      const patternId = slugify(theTitle.toLowerCase());
+                      dispatch(
+                        addPattern({
+                          title: theTitle,
+                          patternId,
+                        }),
+                      );
+                      setTimeout(() => {
+                        history.push(`${BASE_PATHS.PATTERN}/${patternId}`);
+                      }, 1000);
+                      break;
+                    }
                     case 'page': {
                       dispatch(
                         addPage({

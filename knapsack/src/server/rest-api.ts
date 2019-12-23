@@ -17,18 +17,19 @@
 import express from 'express';
 import urlJoin from 'url-join';
 import md from 'marked';
+import fs from 'fs-extra';
+import { isAbsolute, join, relative } from 'path';
 import highlight from 'highlight.js';
+import * as Files from '../schemas/api/files';
 import { MemDb } from './dbs/mem-db';
 import * as log from '../cli/log';
-import {
-  BASE_PATHS,
-  // PERMISSIONS
-} from '../lib/constants';
+import { BASE_PATHS } from '../lib/constants';
 import { getUserInfo } from './auth';
 import { KnapsackBrain, KnapsackConfig } from '../schemas/main-types';
 import { KnapsackMeta } from '../schemas/misc';
 import { KnapsackTemplateDemo } from '../schemas/patterns';
 import { KsRenderResults } from '../schemas/knapsack-config';
+import { fileExists, resolvePath } from './server-utils';
 
 const router = express.Router();
 const memDb = new MemDb<KnapsackTemplateDemo>();
@@ -46,8 +47,10 @@ export function getApiRoutes({
   meta,
   baseUrl,
   tokens,
+  config,
 }: {
   patternManifest: KnapsackBrain['patterns'];
+  config: KnapsackBrain['config'];
   webroot: string;
   public: string;
   baseUrl: string;
@@ -111,15 +114,25 @@ export function getApiRoutes({
       isInIframe?: boolean;
     }): Promise<KsRenderResults> {
       const demo = dataId ? memDb.getData(dataId) : null;
-      return patternManifest.render({
-        patternId,
-        templateId,
-        demo,
-        isInIframe,
-        websocketsPort: meta.websocketsPort,
-        assetSetId,
-        // demoDataId,
-      });
+      try {
+        const results = patternManifest.render({
+          patternId,
+          templateId,
+          demo,
+          isInIframe,
+          websocketsPort: meta.websocketsPort,
+          assetSetId,
+          // demoDataId,
+        });
+        return results;
+      } catch (e) {
+        return {
+          ok: false,
+          html: `<p>${e.message}</p>`,
+          wrappedHtml: `<p>${e.message}</p>`,
+          message: e.message,
+        };
+      }
     }
 
     const url = urlJoin(baseUrl, '/render');
@@ -201,6 +214,103 @@ export function getApiRoutes({
       const results = await patternManifest.getPatterns();
       res.send(results);
     });
+
+    {
+      const url = Files.endpoint;
+      registerEndpoint(url);
+      router.post(url, async (req, res) => {
+        let response: Files.ActionResponses;
+
+        const reqBody: Files.Actions = req.body;
+
+        const { data: dataDir } = config;
+
+        switch (reqBody.type) {
+          case Files.ACTIONS.verify: {
+            const { alias, path } = reqBody.payload;
+            const { exists, absolutePath } = resolvePath({
+              path,
+              resolveFromDirs: [dataDir],
+            });
+
+            response = {
+              type: Files.ACTIONS.verify,
+              payload: {
+                exists,
+                path: exists ? relative(dataDir, absolutePath) : path,
+              },
+            };
+            break;
+          }
+          case Files.ACTIONS.saveTemplateDemo: {
+            const { patternId, templateId, demoId, code } = reqBody.payload;
+            const fullPath = patternManifest.getTemplateDemoAbsolutePath({
+              patternId,
+              templateId,
+              demoId,
+            });
+
+            try {
+              await fs.writeFile(fullPath, code, 'utf-8');
+              response = {
+                type: Files.ACTIONS.saveTemplateDemo,
+                payload: {
+                  ok: true,
+                },
+              };
+            } catch (e) {
+              response = {
+                type: Files.ACTIONS.saveTemplateDemo,
+                payload: {
+                  ok: false,
+                  message: e.message,
+                },
+              };
+            }
+            break;
+          }
+          case Files.ACTIONS.deleteTemplateDemo: {
+            const { path } = reqBody.payload;
+            const { exists, absolutePath } = resolvePath({
+              path,
+              resolveFromDirs: [dataDir],
+            });
+            if (!exists) {
+              response = {
+                type: Files.ACTIONS.deleteTemplateDemo,
+                payload: {
+                  ok: false,
+                  message: 'File already did not exist',
+                },
+              };
+            } else {
+              try {
+                await fs.remove(absolutePath);
+                response = {
+                  type: Files.ACTIONS.deleteTemplateDemo,
+                  payload: {
+                    ok: true,
+                  },
+                };
+              } catch (e) {
+                log.error('Files.ACTIONS.deleteTemplateDemo', e, '/api/files');
+                response = {
+                  type: Files.ACTIONS.deleteTemplateDemo,
+                  payload: {
+                    ok: false,
+                    message: e.message,
+                  },
+                };
+              }
+            }
+
+            break;
+          }
+        }
+
+        res.send(response);
+      });
+    }
   }
 
   if (pageBuilder) {

@@ -157,6 +157,7 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
     pageBuilder: pageBuilderPages,
     settingsStore: settings,
     tokens,
+    config,
   });
 
   app.use(restApiRoutes);
@@ -258,6 +259,7 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
     const dataStore = await getDataStore();
     const userInfo = getUserInfo(req);
     const features = getFeaturesForUser(userInfo);
+    log.info('features', features);
     const fullDataStore: PartialAppState = {
       ...dataStore,
       userState: {

@@ -253,7 +253,7 @@ export class Patterns implements KnapsackDb<PatternsState> {
                 // console.log(demo.data.props);
                 // console.log();
               }
-          });
+            });
         }
 
         // inferring specs

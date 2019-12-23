@@ -179,11 +179,7 @@ export const KsTemplateDemos: React.FC<Props> = ({}: Props) => {
             }
             trigger="click"
           >
-            <KsButton
-              kind="standard"
-              icon="add"
-              size="s"
-            >
+            <KsButton kind="standard" icon="add" size="s">
               Template Demo
             </KsButton>
           </KsPopover>

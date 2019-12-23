@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import cn from 'classnames';
-import shortid from 'shortid';
 import './text-input.scss';
 import { Icon, Props as IconProps } from '../icon';
+import { useFallbackId } from '../../utils/hooks';
 
 type Props = {
   label?: string;
@@ -29,8 +29,7 @@ export const KsTextField: React.FC<Props> = ({
   flush,
   endIcon,
 }: Props) => {
-  // ensure we only generate the id once at first render
-  const id = `id-${useMemo(shortid.generate, [])}`;
+  const id = useFallbackId();
 
   const classes = cn({
     'ks-text-field': true,

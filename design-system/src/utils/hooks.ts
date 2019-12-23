@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
+import shortid from 'shortid';
 import deepEqual from 'deep-equal';
 
 /**
@@ -66,3 +67,11 @@ export function useHover() {
   }, [ref.current]);
   return [ref, value];
 }
+
+/**
+ * Generate a unique ID that won't change between renders.
+ * Useful for forms
+ */
+export const useFallbackId = () => {
+  return useRef(`ks-fallback-id-${shortid()}`).current;
+};

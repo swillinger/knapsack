@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/core",
   "license": "GPL-2.0-or-later",
-  "version": "2.0.0-beta.7",
+  "version": "2.0.0-beta.9",
   "description": "The core of Knapsack",
   "main": "dist/index.js",
   "module": "dist/index.js",

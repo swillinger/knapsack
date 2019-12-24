@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.9](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.8...v2.0.0-beta.9) (2019-12-24)
+
+**Note:** Version bump only for package @knapsack/example-simple
+
+
+
+
+
 # [2.0.0-beta.8](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.7...v2.0.0-beta.8) (2019-12-21)
 
 **Note:** Version bump only for package @knapsack/example-simple

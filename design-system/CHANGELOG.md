@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.9](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.8...v2.0.0-beta.9) (2019-12-24)
+
+
+### Bug Fixes
+
+* **design-system:** improvements to schema-form style ([7f263db](https://github.com/basaltinc/knapsack/commit/7f263db71afc3c4ade63c0e07f54055294d4eb91))
+* better props table ([c396ada](https://github.com/basaltinc/knapsack/commit/c396ada44408ea654738108d82d93588aec9775d))
+
+
+### Features
+
+* **design-system:** add useFallbackId ([5082a2d](https://github.com/basaltinc/knapsack/commit/5082a2dc3521df83b5f74b49a668e5143596ae2b))
+* **design-system:** popover improvements ([66c44f1](https://github.com/basaltinc/knapsack/commit/66c44f17049367a182c2a57a24f2f8a283ab69a8))
+* add feature flag for showNonFunctioningUi, hide side nav edit ([1cbba87](https://github.com/basaltinc/knapsack/commit/1cbba87fe1046c219dcade76ef5b42224079ae73))
+* global template language select ([bad4142](https://github.com/basaltinc/knapsack/commit/bad41426d8a88b1fb9278a6ad77d71211316839c))
+
+
+
+
+
 # [2.0.0-beta.8](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.7...v2.0.0-beta.8) (2019-12-21)
 
 

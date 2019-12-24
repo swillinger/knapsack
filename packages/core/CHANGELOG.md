@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.9](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.8...v2.0.0-beta.9) (2019-12-24)
+
+
+### Features
+
+* delete patterns, pages, groups from nav ([412cba3](https://github.com/basaltinc/knapsack/commit/412cba32ca4e5386d112cf365df74400ede9d9cc))
+
+
+
+
+
 # [2.0.0-beta.7](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.6...v2.0.0-beta.7) (2019-12-20)
 
 **Note:** Version bump only for package @knapsack/core

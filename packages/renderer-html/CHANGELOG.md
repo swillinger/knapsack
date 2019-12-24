@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.9](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.8...v2.0.0-beta.9) (2019-12-24)
+
+
+### Features
+
+* global template language select ([bad4142](https://github.com/basaltinc/knapsack/commit/bad41426d8a88b1fb9278a6ad77d71211316839c))
+
+
+
+
+
 # [2.0.0-beta.7](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.6...v2.0.0-beta.7) (2019-12-20)
 
 **Note:** Version bump only for package @knapsack/renderer-html

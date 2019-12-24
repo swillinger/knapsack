@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.9](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.8...v2.0.0-beta.9) (2019-12-24)
+
+
+### Bug Fixes
+
+* better props table ([c396ada](https://github.com/basaltinc/knapsack/commit/c396ada44408ea654738108d82d93588aec9775d))
+* improve resiliancy when some data is abscent ([4e42edd](https://github.com/basaltinc/knapsack/commit/4e42eddce21db0bb8b3323b59e3ec18c1b98a2f5))
+* restore /demo-urls ([25548b3](https://github.com/basaltinc/knapsack/commit/25548b32d7ee3cd064d6aa463d84004ae1071e7a))
+
+
+### Features
+
+* add feature flag for showNonFunctioningUi, hide side nav edit ([1cbba87](https://github.com/basaltinc/knapsack/commit/1cbba87fe1046c219dcade76ef5b42224079ae73))
+* add patterns and templates via UI ([e0f14e0](https://github.com/basaltinc/knapsack/commit/e0f14e0ca5b29be4a8cb2961a56303520d7b6f45))
+* delete patterns, pages, groups from nav ([412cba3](https://github.com/basaltinc/knapsack/commit/412cba32ca4e5386d112cf365df74400ede9d9cc))
+* global template language select ([bad4142](https://github.com/basaltinc/knapsack/commit/bad41426d8a88b1fb9278a6ad77d71211316839c))
+* localDev autosave ([bdae964](https://github.com/basaltinc/knapsack/commit/bdae9644ea1d96d4af0ecb70ff590cb42685ed96))
+
+
+
+
+
 # [2.0.0-beta.8](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.7...v2.0.0-beta.8) (2019-12-21)
 
 

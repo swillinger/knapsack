@@ -87,22 +87,3 @@ test('inferDocs card.tsx with types', async t => {
 
   t.is(ok, true);
 });
-
-test('inferDocs button.tsx with types', async t => {
-  const cardPath =
-    '/Users/Evan/dev/basalt/knapsack-repos/knapsack-2/examples/bootstrap/assets/patterns/card/card.tsx';
-  const spec = await getReactDocs({
-    src: cardPath,
-    exportName: 'default',
-  });
-
-  // console.log(JSON.stringify(spec, null, '  '));
-
-  const { ok, message } = KnapsackRendererBase.validateSpec(spec);
-
-  if (!ok) {
-    console.log(message);
-  }
-
-  t.is(ok, true);
-});

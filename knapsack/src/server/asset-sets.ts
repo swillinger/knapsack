@@ -28,7 +28,27 @@ export class AssetSets extends FileDb2<KnapsackAssetSetsConfig> {
       filePath: join(dataDir, 'knapsack.asset-sets.json'),
       type: 'json',
       validationSchema: schema,
-      defaults: {},
+      defaults: {
+        globalAssetSetIds: [],
+        allAssetSets: {
+          example: {
+            id: 'example',
+            title: 'Example',
+            inlineCss: '',
+            inlineJs: '',
+            assets: [
+              {
+                src:
+                  'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css',
+              },
+              {
+                src:
+                  'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js',
+              },
+            ],
+          },
+        },
+      },
     });
 
     this.dataDir = dataDir;

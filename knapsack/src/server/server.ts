@@ -262,7 +262,7 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
     const dataStore = await getDataStore();
     const userInfo = getUserInfo(req);
     const features = getFeaturesForUser(userInfo);
-    log.info('features', features);
+    log.verbose('features', features);
     const fullDataStore: PartialAppState = {
       ...dataStore,
       userState: {

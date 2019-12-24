@@ -162,9 +162,8 @@ export class FileDb2<ConfigType> implements KnapsackDb<ConfigType> {
     this.filePath = filePath;
 
     if (writeFileIfAbsent && !fs.existsSync(this.filePath)) {
-      const x = this.serialize(defaults);
-      console.log('x', x);
-      fs.writeFileSync(this.filePath, x);
+      const { contents } = this.serialize(defaults);
+      fs.writeFileSync(this.filePath, contents);
       // this.write(defaults, { sync: true }).then(() => {});
     }
 

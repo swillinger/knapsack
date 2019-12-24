@@ -1,11 +1,12 @@
 import React from 'react';
+import { FieldTemplateProps } from 'react-jsonschema-form';
 import { FaInfoCircle } from 'react-icons/fa';
 import { RadioInputWrapper, TextInputWrapper, Tooltip } from '../../atoms';
 import { Icon } from '../../atoms/icon';
 import './custom-field.scss';
 
 /* eslint-disable react/prop-types */
-export default function CustomField(props) {
+export default function CustomField(props: FieldTemplateProps) {
   const {
     id,
     classNames,

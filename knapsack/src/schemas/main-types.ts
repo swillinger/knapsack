@@ -5,7 +5,7 @@ export type KnapsackConfig = import('./knapsack-config').KnapsackConfig;
 export interface KnapsackBrain {
   patterns: Patterns;
   settings: import('../server/settings').Settings;
-  pageBuilderPages: import('../server/page-builder').PageBuilder;
+  pageBuilderPages?: import('../server/page-builder').PageBuilder;
   customPages: import('../server/custom-pages').CustomPages;
   tokens: import('../server/design-tokens').DesignTokens;
   assetSets: import('../server/asset-sets').AssetSets;

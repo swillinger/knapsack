@@ -1,9 +1,9 @@
 import { log } from '@knapsack/app';
 import { formatCode } from '@knapsack/app/dist/server/server-utils';
 import { validateSchema } from '@knapsack/schema-utils';
-import path, { parse } from 'path';
+import path from 'path';
 import { compile } from 'ejs';
-import fs, { readFileSync, readFile } from 'fs-extra';
+import fs, { readFileSync, readFile, exists, existsSync } from 'fs-extra';
 import * as reactDocs from 'react-docgen';
 import * as rdTs from 'react-docgen-typescript';
 import { JsonSchemaObject } from '@knapsack/core/src/types';
@@ -145,11 +145,20 @@ export async function getReactTypeScriptDocs({
   src: string;
   exportName?: string;
 }): Promise<KsTemplateSpec> {
+  const tsConfigPath = path.resolve(process.cwd(), './tsconfig.json');
+  const tsConfigExists = existsSync(tsConfigPath);
   try {
-    const results = await rdTs.parse(src, {
+    const config = {
       // shouldExtractLiteralValuesFromEnum: true,
       savePropValueAsString: true,
-    });
+    };
+    const parse = tsConfigExists
+      ? rdTs.withCustomConfig(tsConfigPath, config).parse
+      : rdTs.withDefaultConfig(config).parse;
+    const results = parse(src);
+    // log.inspect({ results, tsConfigExists }, 'ts result');
+
+    if (!results?.length) return;
 
     const spec: KsTemplateSpec = {
       props: {
@@ -337,7 +346,7 @@ export async function getReactDocs({
   src: string;
   exportName?: string;
 }): Promise<KsTemplateSpec> {
-  const { ext } = parse(src);
+  const { ext } = path.parse(src);
   switch (ext) {
     case '.js':
     case '.jsx':

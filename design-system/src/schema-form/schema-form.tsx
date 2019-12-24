@@ -96,7 +96,7 @@ export const SchemaForm = ({
         FieldTemplate={CustomField}
         fields={{
           FunctionField: StringField,
-          StringField,
+          // StringField,
         }}
         className={isInline ? 'ks-rjsf ks-rjsf--inline' : 'ks-rjsf'}
         widgets={{

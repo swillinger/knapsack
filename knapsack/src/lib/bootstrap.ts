@@ -49,7 +49,7 @@ export function bootstrap(
     dataDir: config.data,
     publicDir: config.public,
   });
-  const pageBuilderPages = new PageBuilder({ dataDir: config.data });
+  // const pageBuilderPages = new PageBuilder({ dataDir: config.data });
   const customPages = new CustomPages({ dataDir: config.data });
   const navs = new Navs({ dataDir: config.data });
   const tokens = new DesignTokens(config.designTokens);
@@ -57,7 +57,7 @@ export function bootstrap(
   brain = {
     patterns,
     settings,
-    pageBuilderPages,
+    // pageBuilderPages,
     customPages,
     tokens,
     navs,

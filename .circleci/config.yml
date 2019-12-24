@@ -181,7 +181,7 @@ workflows:
             - tests
             - test--publish
             - deploys
-            - deploy-knapsack
+            # - deploy-knapsack
           filters:
             branches:
               only: next

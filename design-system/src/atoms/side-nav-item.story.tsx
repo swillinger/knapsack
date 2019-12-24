@@ -27,7 +27,12 @@ export const allVariations = () => (
     <PropMatrix options={options}>
       {({ ...props }) => (
         <>
-          <SideNavItem title="Title" {...props} />
+          <SideNavItem
+            handleDelete={() => {}}
+            handleEdit={() => {}}
+            title="Title"
+            {...props}
+          />
         </>
       )}
     </PropMatrix>

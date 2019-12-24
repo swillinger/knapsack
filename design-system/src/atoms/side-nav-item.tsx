@@ -21,6 +21,9 @@ type Props = {
   statusColor?: string;
   isSearchMatch?: boolean;
   isSearchFocus?: boolean;
+  canDelete?: boolean;
+  handleDelete: () => void;
+  handleEdit: (opt: { path: string; title: string }) => void;
 };
 
 export const SideNavItem: React.FC<Props> = ({
@@ -36,6 +39,9 @@ export const SideNavItem: React.FC<Props> = ({
   isSearchMatch,
   isSearchFocus,
   canEditTitle,
+  handleDelete,
+  handleEdit,
+  canDelete,
 }: Props) => {
   const classes = cn({
     'ks-side-nav-item': true,
@@ -84,8 +90,28 @@ export const SideNavItem: React.FC<Props> = ({
         {/* @todo wire up save functionality */}
         {canEditTitle && isEditMode && (
           <div className="ks-side-nav-item__edit-title-btn">
-            <KsButton kind="icon" size="s" icon="edit-text" flush>
+            <KsButton
+              handleTrigger={() => handleEdit({ path, title })}
+              kind="icon"
+              size="s"
+              icon="edit-text"
+              flush
+            >
               Edit Title
+            </KsButton>
+          </div>
+        )}
+
+        {canDelete && isEditMode && (
+          <div className="ks-side-nav-item__edit-title-btn">
+            <KsButton
+              handleTrigger={handleDelete}
+              kind="icon"
+              size="s"
+              icon="delete"
+              flush
+            >
+              Delete
             </KsButton>
           </div>
         )}

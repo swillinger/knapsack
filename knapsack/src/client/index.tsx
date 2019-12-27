@@ -28,10 +28,20 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.body.appendChild(mountEl);
   mountEl.textContent = 'Loading...';
 
-  // const cachedState = getStateFromLocalStorage();
-  const cachedState = false;
-  const initialState =
-    cachedState === false ? await getInitialState() : cachedState;
+  const cachedState = getStateFromLocalStorage();
+
+  let initialState = await getInitialState();
+
+  if (cachedState !== false) {
+    // just restoring `ui` for now
+    initialState = {
+      ...initialState,
+      ui: {
+        ...initialState.ui,
+        ...cachedState.ui,
+      },
+    };
+  }
 
   const createStore = await import(
     /* webpackChunkName: "store" */ './store'

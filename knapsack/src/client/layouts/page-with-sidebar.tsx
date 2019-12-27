@@ -14,7 +14,7 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-import React, { useState } from 'react';
+import React from 'react';
 import classnames from 'classnames';
 import { KsButton } from '@knapsack/design-system';
 import { Sidebar } from '../components/sidebar/sidebar';
@@ -22,10 +22,9 @@ import ErrorCatcher from '../utils/error-catcher';
 import { SiteHeaderConnected } from '../components/site-header';
 import { PageHeaderContainer } from '../components/page-header';
 import './page-with-sidebar.scss';
-import { useDispatch, useSelector, saveToServer } from '../store';
+import { useDispatch, useSelector, setSidebarVisibility } from '../store';
 
 type Props = {
-  isInitiallyCollapsed?: boolean;
   /**
    * Slot for navigation on the left
    */
@@ -40,24 +39,20 @@ type Props = {
 };
 
 const PageWithSidebar: React.FC<Props> = ({
-  isInitiallyCollapsed = false,
   sidebar,
   children,
   slottedDetails,
   title,
   section,
 }: Props) => {
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(
-    isInitiallyCollapsed,
-  );
-  const { pageDetailsOpen } = useSelector(s => s.ui);
+  const { pageDetailsOpen, sidebarOpen } = useSelector(s => s.ui);
   const dispatch = useDispatch();
 
   return (
     <div
       className={classnames({
         'ks-page-with-sidebar': true,
-        'ks-page-with-sidebar--sidebar-collapsed': isSidebarCollapsed,
+        'ks-page-with-sidebar--sidebar-collapsed': !sidebarOpen,
         'ks-page-with-sidebar--details-collapsed':
           slottedDetails && !pageDetailsOpen,
       })}
@@ -66,22 +61,24 @@ const PageWithSidebar: React.FC<Props> = ({
       <div
         className={classnames({
           'ks-page-with-sidebar__sidebar': true,
-          'ks-page-with-sidebar__sidebar--collapsed': isSidebarCollapsed,
+          'ks-page-with-sidebar__sidebar--collapsed': !sidebarOpen,
         })}
       >
         {sidebar || <Sidebar />}
         <div
           className={classnames({
             'ks-page-with-sidebar__sidebar__collapse-ctrl': true,
-            'ks-page-with-sidebar__sidebar__collapse-ctrl--collapsed': isSidebarCollapsed,
+            'ks-page-with-sidebar__sidebar__collapse-ctrl--collapsed': !sidebarOpen,
           })}
         >
           <KsButton
             kind="icon-standard"
             icon="collapser"
-            onClick={() => setIsSidebarCollapsed(current => !current)}
+            onClick={() =>
+              dispatch(setSidebarVisibility({ isOpen: !sidebarOpen }))
+            }
           >
-            {isSidebarCollapsed ? 'Expand' : 'Collapse'}
+            {sidebarOpen ? 'Collapse' : 'Expand'}
           </KsButton>
         </div>
       </div>

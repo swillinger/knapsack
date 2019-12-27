@@ -14,8 +14,11 @@ export function getStateFromLocalStorage(): AppState | false {
 }
 
 export const localStorageMiddleware: Middleware = store => next => action => {
-  // console.log('saving to local storage...');
-  const state: AppState = store.getState();
-  saveStateToLocalStorage(state);
+  // we want to run after the state has been update from whatever action triggered this, so we run on the next stack
+  setTimeout(() => {
+    // console.log('saving to local storage...');
+    const state: AppState = store.getState();
+    saveStateToLocalStorage(state);
+  }, 0);
   return next(action);
 };

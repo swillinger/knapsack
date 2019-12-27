@@ -48,6 +48,7 @@ type Props = {
   emphasis?: keyof typeof EMPHASSIS;
   icon?: keyof typeof Icons;
   tabIndex?: number;
+  className?: string;
 };
 
 export const KsButton: React.FC<Props> = ({
@@ -61,6 +62,7 @@ export const KsButton: React.FC<Props> = ({
   floating = false,
   size = SIZES.m,
   flush = false,
+  className = '',
   emphasis = EMPHASSIS.none,
   icon,
   tabIndex,
@@ -72,6 +74,7 @@ export const KsButton: React.FC<Props> = ({
     [`ks-btn--emphasis-${emphasis}`]: true,
     'ks-btn--floating': floating,
     'ks-btn--flush': flush,
+    className,
   });
 
   const isIconBtn = kind === KINDS.icon || kind === KINDS['icon-standard'];
@@ -82,7 +85,21 @@ export const KsButton: React.FC<Props> = ({
       className={classes}
       disabled={disabled}
       onClick={handleTrigger || onClick}
-      onKeyPress={handleTrigger || onKeyPress}
+      onKeyPress={e => {
+        // only continue if key is enter or space
+        if (
+          // enter
+          e.which === 13 ||
+          // space
+          e.which === 32
+        ) {
+          if (handleTrigger) {
+            handleTrigger();
+          } else {
+            onKeyPress(e);
+          }
+        }
+      }}
       type={type}
       tabIndex={tabIndex}
     >
@@ -95,3 +112,7 @@ export const KsButton: React.FC<Props> = ({
     </button>
   );
 };
+
+export const KsButtonGroup = ({ children }) => (
+  <div className="ks-btn-group">{children}</div>
+);

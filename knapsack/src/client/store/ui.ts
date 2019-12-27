@@ -25,6 +25,26 @@ export interface UiState {
     dismissAfter?: number;
   };
   currentTemplateRenderer?: string;
+  /**
+   * Is right sidebar open?
+   */
+  pageDetailsOpen?: boolean;
+}
+
+const SET_PAGE_DETAILS_VISIBILITY = 'knapsack/ui/SET_PAGE_DETAILS_VISIBILITY';
+interface SetPageDetailsVisibilityAction extends Action {
+  type: typeof SET_PAGE_DETAILS_VISIBILITY;
+  payload: {
+    isOpen: boolean;
+  };
+}
+export function setPageDetailsVisibility(
+  payload: SetPageDetailsVisibilityAction['payload'],
+): SetPageDetailsVisibilityAction {
+  return {
+    type: SET_PAGE_DETAILS_VISIBILITY,
+    payload,
+  };
 }
 
 interface SetTemplateRenderer extends Action {
@@ -56,7 +76,11 @@ interface RemoveStatusAction extends Action {
   type: typeof REMOVE_STATUS;
 }
 
-type UiActionTypes = SetStatusAction | RemoveStatusAction | SetTemplateRenderer;
+type UiActionTypes =
+  | SetStatusAction
+  | RemoveStatusAction
+  | SetTemplateRenderer
+  | SetPageDetailsVisibilityAction;
 
 export function removeStatus(): RemoveStatusAction {
   return {
@@ -78,7 +102,9 @@ export function setStatus(status: Status) {
   };
 }
 
-const initialState: UiState = {};
+const initialState: UiState = {
+  pageDetailsOpen: true,
+};
 
 export default function reducer(
   state = initialState,
@@ -99,6 +125,11 @@ export default function reducer(
       return {
         ...state,
         currentTemplateRenderer: action.payload.id,
+      };
+    case SET_PAGE_DETAILS_VISIBILITY:
+      return {
+        ...state,
+        pageDetailsOpen: action.payload.isOpen,
       };
     default:
       return {

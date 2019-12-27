@@ -26,7 +26,14 @@ import { useDispatch, useSelector, saveToServer } from '../store';
 
 type Props = {
   isInitiallyCollapsed?: boolean;
+  /**
+   * Slot for navigation on the left
+   */
   sidebar?: React.ReactNode;
+  /**
+   * Slot for details on a page, aka the rigth sidebar
+   */
+  slottedDetails?: React.ReactNode;
   title?: string;
   section?: string;
   children: React.ReactNode;
@@ -36,13 +43,14 @@ const PageWithSidebar: React.FC<Props> = ({
   isInitiallyCollapsed = false,
   sidebar,
   children,
+  slottedDetails,
   title,
   section,
 }: Props) => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(
     isInitiallyCollapsed,
   );
-  const canEdit = useSelector(s => s.userState.canEdit);
+  const { pageDetailsOpen } = useSelector(s => s.ui);
   const dispatch = useDispatch();
 
   return (
@@ -50,6 +58,8 @@ const PageWithSidebar: React.FC<Props> = ({
       className={classnames({
         'ks-page-with-sidebar': true,
         'ks-page-with-sidebar--sidebar-collapsed': isSidebarCollapsed,
+        'ks-page-with-sidebar--details-collapsed':
+          slottedDetails && !pageDetailsOpen,
       })}
     >
       <SiteHeaderConnected />
@@ -81,6 +91,11 @@ const PageWithSidebar: React.FC<Props> = ({
           {children}
         </main>
       </ErrorCatcher>
+      {slottedDetails && (
+        <aside className="ks-page-with-sidebar__details">
+          {slottedDetails}
+        </aside>
+      )}
     </div>
   );
 };

@@ -2,7 +2,12 @@ import React from 'react';
 import cn from 'classnames';
 import { FieldTemplateProps } from 'react-jsonschema-form';
 import { FaInfoCircle } from 'react-icons/fa';
-import { RadioInputWrapper, TextInputWrapper, Tooltip } from '../../atoms';
+import {
+  RadioInputWrapper,
+  TextInputWrapper,
+  Tooltip,
+  KsTextField,
+} from '../../atoms';
 import { Icon } from '../../atoms/icon';
 import './custom-field.scss';
 
@@ -18,19 +23,15 @@ export default function CustomField(props: FieldTemplateProps) {
     errors,
     children,
     rawErrors,
+    schema,
+    uiSchema,
   } = props;
   const fieldDescription = description.props?.description;
-  const inputSchema = children?.props?.schema;
   let inputContent = <div />;
   const textWrapperInputs = ['string', 'integer', 'number'];
-  const uiSchema = children?.props?.uiSchema;
-  if (
-    inputSchema?.type === 'string' &&
-    !!inputSchema.enum &&
-    !!uiSchema['ui:widget']
-  ) {
+  if (schema?.type === 'string' && !!schema.enum && !!uiSchema['ui:widget']) {
     inputContent = <RadioInputWrapper>{children}</RadioInputWrapper>;
-  } else if (inputSchema?.type === 'string' && !!inputSchema.enum) {
+  } else if (schema?.type === 'string' && !!schema.enum) {
     inputContent = (
       // eslint-disable-next-line jsx-a11y/label-has-associated-control
       <label className="ks-select__label" tabIndex={0}>
@@ -42,10 +43,16 @@ export default function CustomField(props: FieldTemplateProps) {
         </span>
       </label>
     );
-    // } else if (textWrapperInputs.includes(inputSchema?.type)) {
+    // }
+    // else if (
+    //   typeof schema?.type === 'string' &&
+    //   textWrapperInputs.includes(schema?.type) &&
+    //   !schema.enum
+    // ) {
+    // <KsTextField />
   } else {
     inputContent = (
-      <div className="ks-text-field--size-s">
+      <div className="ks-text-field">
         <div className="ks-text-input-wrapper ks-text-field__wrapper">
           {children}
         </div>

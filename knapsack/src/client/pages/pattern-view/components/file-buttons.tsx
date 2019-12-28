@@ -37,29 +37,36 @@ export const KsFileButtons: React.FC<Props> = ({ filePath }: Props) => {
   return (
     <div className="ks-file-buttons">
       <KsButtonGroup>
-        <KsPopover
-          content={
-            <p>
-              Open in external editor; passes <br />
-              absolute path to <code>open</code> command.
-            </p>
-          }
-          trigger="hover"
-        >
-          <KsButton disabled={disabledBtns} handleTrigger={handleOpen} size="s">
-            Open in Editor
-          </KsButton>
-        </KsPopover>
-        <KsPopover
-          content={<p>Copy absolute file path to clipboard</p>}
-          trigger="hover"
-        >
-          <CopyToClipboard text={absolutePath}>
-            <KsButton disabled={disabledBtns} size="s">
-              Copy Path
-            </KsButton>
-          </CopyToClipboard>
-        </KsPopover>
+        <KsButton disabled={disabledBtns} handleTrigger={handleOpen} size="s">
+          <KsPopover
+            content={
+              <p>
+                Open in external editor; passes <br />
+                absolute path to <code>open</code> command.
+              </p>
+            }
+            trigger="hover"
+          >
+            <div>Open in Editor</div>
+          </KsPopover>
+        </KsButton>
+
+        <KsButton disabled={disabledBtns} size="s">
+          <KsPopover
+            content={
+              <p>
+                Copy absolute file path to clipboard.
+                <br />
+                <code>{absolutePath}</code>
+              </p>
+            }
+            trigger="hover"
+          >
+            <CopyToClipboard text={absolutePath}>
+              <span>Copy Path</span>
+            </CopyToClipboard>
+          </KsPopover>
+        </KsButton>
       </KsButtonGroup>
     </div>
   );

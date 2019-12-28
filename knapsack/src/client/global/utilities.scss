@@ -4,6 +4,7 @@
     background-color: var(--c-white);
   }
 }
+
 $spaces: [ 'xxxs', 'xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl' ];
 @each $space in $spaces {
   .ks-u-margin-top--#{$space} {
@@ -19,4 +20,11 @@ $spaces: [ 'xxxs', 'xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl' ];
 }
 .ks-u-margin-bottom--none {
   margin-bottom: 0 !important;
+}
+
+.ks-eyebrow {
+  color: var(--c-gray-light);
+  font-size: var(--font-base-size);
+  font-weight: normal;
+  margin-bottom: 0;
 }

@@ -10,16 +10,20 @@ import { KsFileButtons } from './file-buttons';
 type Props = {
   maxWidth?: number;
   handleSubmit: (data: { path: string; alias: string }) => void;
+  handleDelete?: () => void;
   data?: {
     path: string;
     alias: string;
   };
+  btnSize?: 's' | 'm';
 };
 
 export const EditTemplateDemo: React.FC<Props> = ({
   handleSubmit,
   maxWidth,
   data: initialData,
+  btnSize = 'm',
+  handleDelete,
 }: Props) => {
   const [data, setData] = useState(initialData);
   const [errors, setErrors] = useState<{ msg: string }[]>([]);
@@ -80,6 +84,16 @@ export const EditTemplateDemo: React.FC<Props> = ({
             className="ks-edit-template-demo__logo"
             dangerouslySetInnerHTML={{ __html: iconSvg }}
           />
+          {handleDelete && (
+            <KsButton
+              icon="delete"
+              kind="icon"
+              size="s"
+              flush
+              handleTrigger={handleDelete}
+              className="ks-edit-template-demo__delete"
+            />
+          )}
         </h5>
         <p className="ks-edit-template-demo__intro ks-u-body-small">
           A template demo references is a reference to a pre-coded file, rather
@@ -103,54 +117,56 @@ export const EditTemplateDemo: React.FC<Props> = ({
           </div>
         )}
 
-        <SchemaForm
-          formData={data}
-          schema={schema}
-          hasSubmit
-          onChange={event => {
-            setData(event.formData);
-          }}
-          liveValidate={false}
-          validate={(formData, formErrors) => {
-            // if (data.path === 'f') {
-            //   formErrors.path.addError('cannot start with f');
-            //   formErrors.path.addError('cannot start with f!!');
-            // }
-            return formErrors;
-          }}
-          submitText={initialData?.path ? 'Update' : 'Add'}
-          showErrorList
-          onSubmit={x => {
-            const { path, alias } = x.formData;
-            setErrors([]);
+        <div className="ks-edit-template-demo__form">
+          <SchemaForm
+            formData={data}
+            schema={schema}
+            onChange={event => {
+              setData(event.formData);
+            }}
+            liveValidate={false}
+            validate={(formData, formErrors) => {
+              // if (data.path === 'f') {
+              //   formErrors.path.addError('cannot start with f');
+              //   formErrors.path.addError('cannot start with f!!');
+              // }
+              return formErrors;
+            }}
+            showErrorList
+            onSubmit={x => {
+              const { path, alias } = x.formData;
+              setErrors([]);
 
-            files({
-              type: Files.ACTIONS.verify,
-              payload: {
-                path,
-              },
-            }).then(result => {
-              if (result.type === Files.ACTIONS.verify) {
-                const { relativePath, exists } = result.payload;
-                if (exists) {
-                  handleSubmit({
-                    path: relativePath,
-                    alias,
-                  });
-                } else {
-                  setErrors([
-                    {
-                      msg: `Path: does not exist. Please create the file first.`,
-                    },
-                  ]);
-                  console.error('does not exist!');
+              files({
+                type: Files.ACTIONS.verify,
+                payload: {
+                  path,
+                },
+              }).then(result => {
+                if (result.type === Files.ACTIONS.verify) {
+                  const { relativePath, exists } = result.payload;
+                  if (exists) {
+                    handleSubmit({
+                      path: relativePath,
+                      alias,
+                    });
+                  } else {
+                    setErrors([
+                      {
+                        msg: `Path: does not exist. Please create the file first.`,
+                      },
+                    ]);
+                    console.error('does not exist!');
+                  }
                 }
-              }
-            });
-          }}
-        >
-          <KsButton type="submit">Add</KsButton>
-        </SchemaForm>
+              });
+            }}
+          >
+            <KsButton size={btnSize} type="submit" kind="primary">
+              {initialData?.path ? 'Update' : 'Add'}
+            </KsButton>
+          </SchemaForm>
+        </div>
       </div>
     </div>
   );

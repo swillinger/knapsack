@@ -32,6 +32,10 @@ export const KsPropEditor: React.FC<PropEditorProps> = ({
     type: 'object',
     required: [],
     properties: {
+      title: {
+        type: 'string',
+        title: 'Title',
+      },
       description: {
         type: 'string',
         title: 'Description',
@@ -88,43 +92,6 @@ export const KsPropEditor: React.FC<PropEditorProps> = ({
 
   return (
     <div className="ks-prop-editor">
-      <div className="ks-prop-editor__id">
-        <SchemaForm
-          // the `id` prop is handled by itself since it's so important, and also causes the `key` to change which remounts whole component causing it to lose local state (like isOpen). So we change it `onSubmit` instead of `onChange`
-          schema={{
-            type: 'object',
-            required: ['id'],
-            properties: {
-              id: {
-                type: 'string',
-                title: 'ID',
-                description: 'Changing may have unintended consequences.',
-              },
-            },
-          }}
-          formData={{
-            id: prop.id,
-          }}
-          onSubmit={({ formData: { id } }) => {
-            handleChange({
-              ...prop,
-              id,
-            });
-          }}
-          validate={(newFormData: { id: string }, errors) => {
-            if (newFormData.id.includes(' ')) {
-              errors.id.addError('No spaces');
-            }
-            return errors;
-          }}
-          isInline
-        >
-          <KsButton type="submit" size="s">
-            Save Id
-          </KsButton>
-        </SchemaForm>
-      </div>
-
       <div className="ks-u-margin-top--s">
         <Select
           label="Type"
@@ -178,12 +145,14 @@ export const KsPropEditor: React.FC<PropEditorProps> = ({
               description,
               options,
               defaultValue: newDefaultValue,
+              title,
             } = newFormData;
             const newData: PropTypeDataBase = {
               ...prop,
               isRequired,
               data: {
                 ...prop.data,
+                title,
                 description,
                 default: newDefaultValue,
               },

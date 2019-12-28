@@ -67,15 +67,17 @@ export const KsButton: React.FC<Props> = ({
   icon,
   tabIndex,
 }: Props) => {
-  const classes = cn({
-    'ks-btn': true,
-    [`ks-btn--kind-${kind}`]: true,
-    [`ks-btn--size-${size}`]: true,
-    [`ks-btn--emphasis-${emphasis}`]: true,
-    'ks-btn--floating': floating,
-    'ks-btn--flush': flush,
+  const classes = cn(
+    {
+      'ks-btn': true,
+      [`ks-btn--kind-${kind}`]: true,
+      [`ks-btn--size-${size}`]: true,
+      [`ks-btn--emphasis-${emphasis}`]: true,
+      'ks-btn--floating': floating,
+      'ks-btn--flush': flush,
+    },
     className,
-  });
+  );
 
   const isIconBtn = kind === KINDS.icon || kind === KINDS['icon-standard'];
 

@@ -27,12 +27,21 @@ import {
 import produce from 'immer';
 import arrayMove from 'array-move';
 import { validateSpec } from '../../../../../lib/utils';
-import { useDispatch, updateSpec } from '../../../../store';
+import {
+  useDispatch,
+  updateSpec,
+  useSelector,
+  updateTemplateInfo,
+} from '../../../../store';
 import { KsTemplateSpec, KsSlotInfo } from '../../../../../schemas/patterns';
 import { SpecItemTypes, SlotData } from './shared';
 import { KsPropEditor } from './prop-editor';
 import { KsSlotEditor } from './slot-editor';
 import { KsSpecItem } from './spec-item';
+import { EditTemplateDemo } from '../edit-template-demo';
+import './pattern-settings.scss';
+
+const removeSpaces = (string: string): string => string.replace(/ /g, '');
 
 type SpecItemsProps = {
   type: keyof typeof SpecItemTypes;
@@ -68,12 +77,20 @@ export const KsPatternSettings: React.FC<Props> = ({
   activeTemplateId,
 }: Props) => {
   const dispatch = useDispatch();
+
   const { templates, title } = pattern;
   const hasTemplate = templates?.length > 0;
   const template =
     hasTemplate && activeTemplateId
       ? templates?.find(t => t.id === activeTemplateId)
       : templates[0];
+  const rendererMeta = useSelector(
+    s =>
+      Object.values(s.patternsState.renderers).find(
+        ({ meta }) => meta.id === template.templateLanguageId,
+      )?.meta,
+  );
+
   const spec = template?.spec ?? {};
 
   function determinePropType(prop: string): PropTypeDataBase {
@@ -198,6 +215,31 @@ export const KsPatternSettings: React.FC<Props> = ({
           </ul>
         </div>
       )}
+      <div className="ks-pattern-settings__edit-template ks-u-margin-top--s">
+        <EditTemplateDemo
+          btnSize="s"
+          data={{
+            path: template.path,
+            alias: template.alias,
+          }}
+          handleSubmit={({ path, alias }) => {
+            dispatch(
+              updateTemplateInfo({
+                patternId: pattern.id,
+                templateId: template.id,
+                template: {
+                  path,
+                  alias,
+                },
+              }),
+            );
+            //
+          }}
+          handleDelete={() => {
+            //
+          }}
+        />
+      </div>
       <h4 className="ks-pattern-settings__sub-title">Templates</h4>
       <KsButtonGroup isGapless={false}>
         <KsButton
@@ -260,17 +302,16 @@ export const KsPatternSettings: React.FC<Props> = ({
               key={prop.id}
               index={index}
               id={prop.id}
-              title={prop.data?.title ?? prop.id}
               moveItem={moveProp}
               deleteItem={deleteProp}
               type={SpecItemTypes.Prop}
               // isInitiallyOpen={index === 0}
-              handleNewTitle={newTitle => {
+              handleNewId={newId => {
                 setProps(curProps =>
                   produce(curProps, draft => {
                     draft = draft.map((curProp, i) => {
                       if (i !== index) return curProp;
-                      curProp.data.title = newTitle;
+                      curProp.id = removeSpaces(newId);
                       return curProp;
                     });
                   }),
@@ -297,9 +338,7 @@ export const KsPatternSettings: React.FC<Props> = ({
           );
         })}
       </KsSpecItems>
-
       <hr />
-
       <KsSpecItems
         type={SpecItemTypes.Slot}
         handleAdd={() => {
@@ -317,22 +356,18 @@ export const KsPatternSettings: React.FC<Props> = ({
             <KsSpecItem
               key={slot.id}
               index={index}
-              title={slot?.data?.title ?? slot.id}
               id={slot.id}
               moveItem={moveSlot}
               deleteItem={deleteSlot}
               type={SpecItemTypes.Slot}
               // isInitiallyOpen={index === 0}
-              handleNewTitle={newTitle => {
+              handleNewId={newId => {
                 setSlots(curSlots =>
                   curSlots.map((curSlot, i) => {
                     if (i !== index) return curSlot;
                     return {
                       ...curSlot,
-                      data: {
-                        ...curSlot.data,
-                        title: newTitle,
-                      },
+                      id: removeSpaces(newId),
                     };
                   }),
                 );

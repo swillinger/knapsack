@@ -29,24 +29,22 @@ interface DragItem {
 type SpecItemProps = {
   index: number;
   id: string;
-  title: string;
   type: keyof typeof SpecItemTypes;
   children: React.ReactNode;
   moveItem: (from: number, to: number) => void;
   deleteItem: (index: number) => void;
-  handleNewTitle: (newTitle: string) => void;
+  handleNewId: (newTitle: string) => void;
   isInitiallyOpen?: boolean;
 };
 
 export const KsSpecItem: React.FC<SpecItemProps> = ({
   id,
-  title,
   children,
   type,
   moveItem,
   deleteItem,
   index,
-  handleNewTitle,
+  handleNewId,
   isInitiallyOpen = false,
 }: SpecItemProps) => {
   const [isOpen, setOpen] = useState(isInitiallyOpen);
@@ -125,11 +123,7 @@ export const KsSpecItem: React.FC<SpecItemProps> = ({
           <Icon symbol="drag-handle" />
         </div>
         <h4 className="ks-spec-item__title" style={{ marginTop: '0' }}>
-          <InlineEditText
-            showControls
-            text={title}
-            handleSave={handleNewTitle}
-          />
+          <InlineEditText showControls text={id} handleSave={handleNewId} />
         </h4>
         <div
           style={{

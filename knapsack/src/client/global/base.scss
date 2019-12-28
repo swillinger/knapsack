@@ -6,13 +6,6 @@ body {
   padding: 0;
 }
 
-.ks-eyebrow {
-  color: var(--c-gray-light);
-  font-size: var(--font-base-size);
-  font-weight: normal;
-  margin-bottom: 0;
-}
-
 img {
   max-width: 100%;
   height: auto;
@@ -79,4 +72,12 @@ pre {
 /* stylelint-disable selector-max-id */
 #app {
   min-height: 100vh;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-size: var(--font-base-size);
 }

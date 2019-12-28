@@ -1,0 +1,7 @@
+.ks-pattern-settings {
+  --text-field-size: var(--space-l);
+  --font-base-size: var(--font-size-s);
+  .ks-text-field__wrapper > input {
+    --text-field-size: var(--space-l);
+  }
+}

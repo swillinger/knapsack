@@ -15,4 +15,10 @@
   &__intro {
     color: var(--c-text-subdued);
   }
+  &__form {
+    margin-top: var(--space-m);
+  }
+  &__delete {
+    margin-left: var(--space-m);
+  }
 }

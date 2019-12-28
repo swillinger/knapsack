@@ -9,10 +9,11 @@
 
   &__wrapper > input {
     --text-field-border-color: var(--c-frame, hsl(0, 0%, 87%));
+    --text-field-size: var(--space-xl, 40px);
     background-color: var(--c-bg);
     border: 1px solid var(--text-field-border-color);
     border-radius: var(--radius-m);
-    height: var(--space-xl);
+    height: var(--text-field-size);
     line-height: var(--space-xl);
     width: 100%;
     padding-left: var(--space-s);
@@ -22,7 +23,7 @@
       border-color: var(--c-focus);
     }
     .ks-text-field--size-s & {
-      height: var(--space-l);
+      --text-field-size: var(--space-l, 24px);
     }
   }
 

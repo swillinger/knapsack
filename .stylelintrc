@@ -16,7 +16,6 @@
       }
     ],
     "no-descending-specificity": null,
-    "at-rule-no-unknown": true,
     "color-no-invalid-hex": true,
     "color-no-hex": true,
     "selector-max-id": 0,
@@ -43,6 +42,9 @@
     ],
     "no-eol-whitespace": true,
     "no-extra-semicolons": true,
-    "no-missing-end-of-source-newline": true
+    "no-missing-end-of-source-newline": true,
+    "at-rule-no-unknown": [true, {
+      "ignoreAtRules": ["function", "if", "each", "include", "mixin"]
+    }]
   }
 }

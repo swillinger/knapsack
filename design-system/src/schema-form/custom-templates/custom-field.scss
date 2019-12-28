@@ -1,10 +1,9 @@
 /* stylelint-disable selector-max-class */
 .ks-custom-field {
   padding: 0;
-  margin: var(--size-m) 0;
+  margin-bottom: var(--size-m);
 
   .ks-rjsf--inline & {
-
     > div.ks-custom-object {
       display: flex;
       justify-content: left;
@@ -19,6 +18,10 @@
     .form-group {
       margin-bottom: 0;
     }
+  }
+
+  &--has-errors {
+    --text-field-border-color: var(--c-danger, red);
   }
 
   .patterns-filters & {

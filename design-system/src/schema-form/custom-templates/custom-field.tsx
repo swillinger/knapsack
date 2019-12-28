@@ -1,4 +1,5 @@
 import React from 'react';
+import cn from 'classnames';
 import { FieldTemplateProps } from 'react-jsonschema-form';
 import { FaInfoCircle } from 'react-icons/fa';
 import { RadioInputWrapper, TextInputWrapper, Tooltip } from '../../atoms';
@@ -16,6 +17,7 @@ export default function CustomField(props: FieldTemplateProps) {
     description,
     errors,
     children,
+    rawErrors,
   } = props;
   const fieldDescription = description.props?.description;
   const inputSchema = children?.props?.schema;
@@ -40,15 +42,24 @@ export default function CustomField(props: FieldTemplateProps) {
         </span>
       </label>
     );
-  } else if (textWrapperInputs.includes(inputSchema?.type)) {
-    inputContent = <TextInputWrapper>{children}</TextInputWrapper>;
+    // } else if (textWrapperInputs.includes(inputSchema?.type)) {
   } else {
-    inputContent = children;
+    inputContent = (
+      <div className="ks-text-field--size-s">
+        <div className="ks-text-input-wrapper ks-text-field__wrapper">
+          {children}
+        </div>
+      </div>
+    );
+    // inputContent = children;
   }
-
   /* eslint-disable no-alert, jsx-a11y/label-has-for */
   return (
-    <div className={`ks-custom-field ${classNames}`}>
+    <div
+      className={cn(`ks-custom-field`, classNames, {
+        'ks-custom-field--has-errors': rawErrors?.length > 0,
+      })}
+    >
       <label htmlFor={id} className="ks-field-label">
         {label}
         {label && required ? '*' : null}

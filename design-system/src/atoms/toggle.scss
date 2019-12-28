@@ -11,7 +11,7 @@
   }
 
   .ks-checkbox-label {
-    margin-left: 0.25rem;
+    margin-left: var(--space-xxs, 0.25rem);
   }
 
   .ks-checkbox-toggler {

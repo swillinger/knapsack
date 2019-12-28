@@ -25,6 +25,7 @@ export enum FeatureList {
   'showNonFunctioningUi' = 'showNonFunctioningUi',
   /** Automatically save to local files upon change */
   'autosave' = 'autosave',
+  isLocalDev = 'isLocalDev',
 }
 
 enum Criteria {
@@ -72,6 +73,12 @@ const featuresConfig: {
   },
   {
     id: FeatureList.autosave,
+    criteria: {
+      isLocalDev: true,
+    },
+  },
+  {
+    id: FeatureList.isLocalDev,
     criteria: {
       isLocalDev: true,
     },

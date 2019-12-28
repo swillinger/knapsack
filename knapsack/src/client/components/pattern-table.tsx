@@ -8,6 +8,10 @@ type Props = {
   allPatterns: KnapsackPattern[];
 };
 
+/**
+ * @todo expand all rows by default
+ * @todo add delete pattern button
+ */
 export const PatternTable: React.FC<Props> = ({ allPatterns }: Props) => {
   const data = [];
   allPatterns.forEach(

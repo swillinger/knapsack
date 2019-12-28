@@ -17,7 +17,7 @@
 import React, { useState } from 'react';
 import { Select } from '@knapsack/design-system';
 import { useHistory } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import cn from 'classnames';
 import {
   updatePatternInfo,
   useSelector,
@@ -29,6 +29,7 @@ import ErrorCatcher from '../../utils/error-catcher';
 // import DosAndDonts from '../../components/dos-and-donts';
 import { BASE_PATHS } from '../../../lib/constants';
 import PageWithSidebar from '../../layouts/page-with-sidebar';
+import { KsPatternSettings } from './components/pattern-settings';
 import TemplateView from './template-view';
 import './pattern-view-page.scss';
 import './shared/demo-grid-controls.scss';
@@ -102,10 +103,18 @@ const PatternViewPage: React.FC<Props> = ({
     );
   }
 
+  const classes = cn('ks-pattern-view-page', {
+    'ks-pattern-view-page--right-sidebar-open': false,
+  });
+
   return (
     <ErrorCatcher>
-      <PageWithSidebar>
-        <section className="ks-pattern-view-page">
+      <PageWithSidebar
+        slottedDetails={
+          <KsPatternSettings pattern={pattern} activeTemplateId={templateId} />
+        }
+      >
+        <section className={classes}>
           <header className="ks-pattern-view-page__header">
             <div className="ks-pattern-view-page__header__info-wrap">
               {breadcrumb.length > 0 && (

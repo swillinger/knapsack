@@ -6,11 +6,6 @@
   border-radius: var(--radius-m);
   vertical-align: middle;
 
-  // if a button follow a button, put some space between
-  &:not(.ks-btn--flush) + & {
-    margin-left: var(--size-s);
-  }
-
   &:focus {
     box-shadow: 0 0 0 2px var(--c-focus);
   }
@@ -191,15 +186,25 @@
 
 .ks-btn-group {
   margin-top: var(--space-m);
-  .ks-btn {
-    border-radius: 0;
-    &:first-child {
-      border-radius: var(--radius-m) 0 0 var(--radius-m);
-
-    }
-    &:last-child {
-      border-radius: 0 var(--radius-m) var(--radius-m) 0;
-
+  .ks-btn--size-s {
+    margin-right: var(--space-s);
+  }
+  .ks-btn--size-m {
+    margin-right: var(--space-m);
+  }
+  .ks-btn:last-child {
+    margin-right: 0;
+  }
+  &--is-gapless {
+    .ks-btn {
+      margin-right: 0;
+      border-radius: 0;
+      &:first-child {
+        border-radius: var(--radius-m) 0 0 var(--radius-m);
+      }
+      &:last-child {
+        border-radius: 0 var(--radius-m) var(--radius-m) 0;
+      }
     }
   }
 }

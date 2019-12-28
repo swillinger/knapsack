@@ -1,5 +1,5 @@
 import React from 'react';
-import Form, {
+import JsonSchemaForm, {
   FormProps,
   FieldProps,
   ErrorListProps,
@@ -14,6 +14,7 @@ import CustomArrayField from './custom-templates/array-field';
 import CustomField from './custom-templates/custom-field';
 import CheckboxWidget from './custom-templates/checkbox-widget';
 import CheckboxesWidget from './custom-templates/checkboxes-widget';
+import { useFallbackId } from '../utils/hooks';
 
 type Props<T> = Omit<FormProps<T>, 'schema'> & {
   // formData: T;
@@ -67,12 +68,14 @@ export const SchemaForm = ({
   formData = {},
   hasSubmit = false,
   submitText = 'Submit',
-  idPrefix = `ks-schema-form--${uuid()}`,
   isDebug = false,
   isInline = false,
   uiSchema = {},
+  children,
   ...rest
 }: Props<typeof formData>) => {
+  const idPrefix = useFallbackId('ks-schema-form');
+
   Object.keys(schema.properties).forEach(key => {
     const value: any = schema.properties[key];
     if (value?.typeof && value.typeof === 'function') {
@@ -84,13 +87,14 @@ export const SchemaForm = ({
 
   return (
     <div className={className}>
-      <Form
+      <JsonSchemaForm
         showErrorList={false}
         ErrorList={SchemaFormErrorList}
         {...rest}
         formData={formData}
         schema={schema}
         uiSchema={uiSchema || undefined}
+        idPrefix={idPrefix}
         ObjectFieldTemplate={ObjectFieldTemplate}
         ArrayFieldTemplate={CustomArrayField}
         FieldTemplate={CustomField}
@@ -105,13 +109,14 @@ export const SchemaForm = ({
           CheckboxesWidget,
         }}
       >
-        {!hasSubmit && <span />}
+        {children}
+        {!hasSubmit && React.Children.count(children) === 0 && <span />}
         {hasSubmit && (
           <KsButton kind="primary" type="submit">
             {submitText}
           </KsButton>
         )}
-      </Form>
+      </JsonSchemaForm>
     </div>
   );
 };

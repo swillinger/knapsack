@@ -113,6 +113,19 @@ export const KsButton: React.FC<Props> = ({
   );
 };
 
-export const KsButtonGroup = ({ children }) => (
-  <div className="ks-btn-group">{children}</div>
+type GroupProps = {
+  children: React.ReactNode;
+  isGapless?: boolean;
+};
+export const KsButtonGroup: React.FC<GroupProps> = ({
+  children,
+  isGapless = true,
+}: GroupProps) => (
+  <div
+    className={cn('ks-btn-group', {
+      'ks-btn-group--is-gapless': isGapless,
+    })}
+  >
+    {children}
+  </div>
 );

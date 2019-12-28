@@ -2,14 +2,20 @@ html {
   font-size: var(--font-base-size);
 }
 
-h1, .h1,
-h2, .h2,
-h3, .h3,
-h4, .h4,
-h5, .h5,
-h6, .h6 {
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
   font-weight: normal;
-  margin: 0 0 var(--space-m);
+  margin: 1em 0 0; // `em` make spacing proportionate to font-size
   line-height: 1.15;
 
   &:first-child {
@@ -20,33 +26,39 @@ h6, .h6 {
     margin-bottom: 0;
   }
 
-  p + & {
-    margin-top: var(--space-l);
-  }
+  // p + & {
+  //   margin-top: var(--space-l);
+  // }
 }
 
-h1, .h1 {
+h1,
+.h1 {
   font-size: var(--space-xl);
 }
 
-h2, .h2 {
+h2,
+.h2 {
   font-size: calc(var(--space-l) + var(--space-s));
 }
 
-h3, .h3 {
+h3,
+.h3 {
   font-size: var(--space-l);
 }
 
-h4, .h4 {
+h4,
+.h4 {
   font-size: var(--space-m);
   font-weight: bold;
 }
 
-h5, .h5 {
+h5,
+.h5 {
   font-size: 1rem;
 }
 
-h6, .h6 {
+h6,
+.h6 {
   font-size: 1rem;
 }
 
@@ -54,23 +66,33 @@ p {
   color: var(--c-text-black);
   font-size: 1rem;
   line-height: 1.4;
-  margin: 0;
+  margin: 0.5em 0 0;
 
-  & + p {
-    margin-top: var(--space-xs);
+  // & + p {
+  //   margin-top: var(--space-xs);
+  // }
+  &:first-child {
+    margin-top: 0;
   }
 }
 
-
-ul, ol {
-  margin: 0 0 1em;
+ul,
+ol {
+  margin: 0.5em 0 0;
+  &:first-child {
+    margin-top: 0;
+  }
 }
 
 li {
-  margin: 0 0 0.8em;
+  margin: 0.5em 0 0;
+  &:first-child {
+    margin-top: 0;
+  }
 }
 
-a, a:link {
+a,
+a:link {
   color: var(--c-text-link);
   text-decoration: none;
 
@@ -90,8 +112,8 @@ a, a:link {
 blockquote {
   font-style: italic;
   border-left: 3px solid var(--c-shade);
-  margin: 2rem;
-  padding: 2.25rem 4rem;
+  margin: 2em;
+  padding: 2.25em 4em;
 }
 
 .ks-u-screen-reader-only {

@@ -194,37 +194,64 @@ export async function getReactTypeScriptDocs({
         type,
         parent,
       } = propDef;
+
+      // functions
       if (type?.name?.startsWith('(')) {
-        if (required) spec.props.required.push(propName);
         spec.props.properties[propName] = {
           description: `\`${type.name}\` ${description}`,
-          // default: defaultValue,
           typeof: 'function',
         };
       }
+
+      // enums / unions (multi-choice strings)
+      if (type?.name?.includes('|')) {
+        // comes in like this: `{ name: '"option1" | "option2" | "option3"' }`
+        const options = type.name
+          .split('|')
+          .map(enumItem => enumItem.trim()?.replace(/"/g, ''))
+          .filter(Boolean);
+
+        if (options?.length) {
+          spec.props.properties[propName] = {
+            type: 'string',
+            enum: options,
+          };
+        }
+      }
+
       switch (type?.name) {
         case 'string':
-          if (required) spec.props.required.push(propName);
           spec.props.properties[propName] = {
-            description,
-            default: defaultValue,
             type: 'string',
           };
           break;
-        case 'bool':
-          if (required) spec.props.required.push(propName);
+        case 'number':
           spec.props.properties[propName] = {
-            description,
-            default: defaultValue,
+            type: 'number',
+          };
+          break;
+        case 'boolean':
+        case 'bool':
+          spec.props.properties[propName] = {
             type: 'boolean',
           };
           break;
         case 'ReactNode':
           spec.slots[propName] = {
-            description,
             title: propName,
           };
           break;
+      }
+
+      // assigning info that all would have
+      if (spec.props.properties[propName]) {
+        if (required) spec.props.required.push(propName);
+        if (description && !spec.props.properties[propName].description) {
+          spec.props.properties[propName].description = description;
+        }
+        if (defaultValue) {
+          spec.props.properties[propName].default = defaultValue;
+        }
       }
 
       // console.log('type', type);

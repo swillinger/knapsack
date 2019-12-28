@@ -16,7 +16,7 @@
  */
 import React from 'react';
 import { useSelector } from '../store';
-import PageWithoutSidebar from '../layouts/page-without-sidebar';
+import PageSidebar from '../layouts/page-with-sidebar';
 import { HomeSplash } from '../components/home-splash';
 
 const HomePage: React.FC = () => {
@@ -30,14 +30,14 @@ const HomePage: React.FC = () => {
   const version = useSelector(s => s.metaState.meta.version);
 
   return (
-    <PageWithoutSidebar>
+    <PageSidebar>
       <HomeSplash
         title={title}
         subtitle={subtitle}
         slogan={slogan}
         version={version}
       />
-    </PageWithoutSidebar>
+    </PageSidebar>
   );
 };
 

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { KsButton, SchemaForm } from '@knapsack/design-system';
 import cn from 'classnames';
-import { JsonSchemaObject } from '@knapsack/core/src/types';
+import { JsonSchemaObject } from '@knapsack/core/types';
 import { useSelector } from '../../../store';
-import { files } from '../../../data';
-import * as Files from '../../../../schemas/api/files';
+import { files, Files } from '../../../data';
 import './edit-template-demo.scss';
+import { KsFileButtons } from './file-buttons';
 
 type Props = {
   maxWidth?: number;
@@ -86,6 +86,8 @@ export const EditTemplateDemo: React.FC<Props> = ({
           than being built via the schema data editor.
         </p>
 
+        {data?.path && <KsFileButtons filePath={data?.path} />}
+
         {errors.length > 0 && (
           <div className="ks-rjsf">
             <div className="panel panel-danger">
@@ -126,14 +128,13 @@ export const EditTemplateDemo: React.FC<Props> = ({
               type: Files.ACTIONS.verify,
               payload: {
                 path,
-                alias,
               },
             }).then(result => {
               if (result.type === Files.ACTIONS.verify) {
-                const { path: xpath, exists } = result.payload;
+                const { relativePath, exists } = result.payload;
                 if (exists) {
                   handleSubmit({
-                    path: xpath,
+                    path: relativePath,
                     alias,
                   });
                 } else {

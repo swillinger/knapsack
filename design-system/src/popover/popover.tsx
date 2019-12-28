@@ -25,7 +25,7 @@ export const KsPopover: React.FC<Props> = ({
     }
   };
   // @todo re-enable, fix offset arrow caused by margin
-  const hasArrow = false;
+  const hasArrow = true;
 
   let open;
   switch (trigger) {
@@ -49,8 +49,16 @@ export const KsPopover: React.FC<Props> = ({
           setOpen(false);
         }
       }}
+      containerClassName="ks-popover__box"
+      containerStyle={{
+        // set to override `overflow: hidden` from lib since that was cutting off our `box-shadow`; may have un-intended consequences
+        overflow: 'visible',
+      }}
+      padding={10}
       content={({ position, targetRect, popoverRect }) => {
-        const popoverContent = <div className="ks-popover__box">{content}</div>;
+        const popoverContent = (
+          <div className="ks-popover__box-inner">{content}</div>
+        );
         if (hasArrow) {
           return (
             <ArrowContainer
@@ -59,7 +67,10 @@ export const KsPopover: React.FC<Props> = ({
               popoverRect={popoverRect}
               arrowColor="white"
               arrowSize={10}
-              arrowStyle={{ opacity: 0.7 }}
+              arrowStyle={{
+                opacity: 1,
+                zIndex: 201, // 1 higher than `.ks-popover__box-inner`
+              }}
             >
               {popoverContent}
             </ArrowContainer>

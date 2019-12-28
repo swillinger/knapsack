@@ -90,6 +90,14 @@ export function isTemplateDemo(
   return demo.type === 'template';
 }
 
+export type KsSlotInfo = {
+  title: string;
+  description?: string;
+  disallowText?: boolean;
+  isRequired?: boolean;
+  allowedPatternIds?: string[];
+};
+
 /**
  * Supersedes `schema`
  */
@@ -101,15 +109,10 @@ export type KsTemplateSpec = {
    */
   props?: JsonSchemaObject;
   /**
-   * @todo evaluate & refine
+   * Child component slots
    */
   slots?: {
-    [name: string]: {
-      title: string;
-      description?: string;
-      disallowText?: boolean;
-      allowedPatternIds?: string[];
-    };
+    [name: string]: KsSlotInfo;
   };
   /**
    * @todo evaluate & refine

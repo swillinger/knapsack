@@ -7,13 +7,13 @@ export enum ACTIONS {
   verify = 'verify',
   saveTemplateDemo = 'saveTemplateDemo',
   deleteTemplateDemo = 'deleteTemplateDemo',
+  openFile = 'openFile',
 }
 
 export interface VerifyData {
   type: ACTIONS.verify;
   payload: {
     path: string;
-    alias?: string;
   };
 }
 
@@ -21,7 +21,8 @@ export interface VerifyDataResponse {
   type: ACTIONS.verify;
   payload: {
     exists: boolean;
-    path: string;
+    relativePath: string;
+    absolutePath: string;
   };
 }
 
@@ -52,8 +53,26 @@ export interface DeleteTemplateDemoResponse {
   payload: GenericResponse;
 }
 
-export type Actions = VerifyData | SaveTemplateDemo | DeleteTemplateDemo;
+export interface OpenFileRequest {
+  type: ACTIONS.openFile;
+  payload: {
+    filePath: string;
+  };
+}
+
+export interface OpenFileResponse {
+  type: ACTIONS.openFile;
+  payload: GenericResponse;
+}
+
+export type Actions =
+  | VerifyData
+  | SaveTemplateDemo
+  | DeleteTemplateDemo
+  | OpenFileRequest;
+
 export type ActionResponses =
   | VerifyDataResponse
   | SaveTemplateDemoResponse
-  | DeleteTemplateDemoResponse;
+  | DeleteTemplateDemoResponse
+  | OpenFileResponse;

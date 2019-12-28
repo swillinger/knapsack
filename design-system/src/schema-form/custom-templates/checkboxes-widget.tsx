@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import shortid from 'shortid';
+import cn from 'classnames';
 import { Toggle } from '../../atoms';
 
 function selectValue(value, selected, all) {
@@ -18,9 +19,10 @@ function deselectValue(value, selected) {
 function CheckboxesWidget(props) {
   const { id, disabled, options, value, readonly, onChange } = props;
   const { enumOptions, enumDisabled, inline } = options;
+
   return (
     <div
-      className="ks-checkboxes"
+      className={cn(`ks-checkboxes`, { 'ks-checkboxes--inline': inline })}
       id={id}
       style={
         inline
@@ -41,7 +43,7 @@ function CheckboxesWidget(props) {
         return (
           <div
             style={{
-              marginRight: '.75rem',
+              marginRight: 'var(--space-s, 0.75rem)',
             }}
             key={itemId}
           >
@@ -55,7 +57,7 @@ function CheckboxesWidget(props) {
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  marginBottom: '.75rem',
+                  marginBottom: 'var(--space-s, 0.75rem)',
                 }}
                 htmlFor={itemId}
               >

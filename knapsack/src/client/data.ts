@@ -26,6 +26,8 @@ import { AppState } from './store';
 import { KsRenderResults } from '../schemas/knapsack-config';
 import { timer } from '../lib/utils';
 
+export { Files };
+
 /**
  * GraphQL Query Object to String
  * @param gqlQueryObject -  GraphQL query made from `gql` - https://github.com/apollographql/graphql-tag/issues/150

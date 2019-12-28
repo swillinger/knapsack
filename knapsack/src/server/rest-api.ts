@@ -19,17 +19,19 @@ import urlJoin from 'url-join';
 import md from 'marked';
 import fs from 'fs-extra';
 import { isAbsolute, join, relative } from 'path';
+import { exec } from 'child_process';
 import highlight from 'highlight.js';
 import * as Files from '../schemas/api/files';
 import { MemDb } from './dbs/mem-db';
 import * as log from '../cli/log';
-import { BASE_PATHS } from '../lib/constants';
+import { BASE_PATHS, HTTP_STATUS } from '../lib/constants';
 import { getUserInfo } from './auth';
 import { KnapsackBrain, KnapsackConfig } from '../schemas/main-types';
 import { KnapsackMeta } from '../schemas/misc';
 import { KnapsackTemplateDemo } from '../schemas/patterns';
 import { KsRenderResults } from '../schemas/knapsack-config';
 import { fileExists, resolvePath } from './server-utils';
+import { getFeaturesForUser } from '../lib/features';
 
 const router = express.Router();
 const memDb = new MemDb<KnapsackTemplateDemo>();
@@ -219,15 +221,22 @@ export function getApiRoutes({
       const url = Files.endpoint;
       registerEndpoint(url);
       router.post(url, async (req, res) => {
+        const userInfo = getUserInfo(req);
+        const { isLocalDev } = getFeaturesForUser(userInfo);
+        if (!isLocalDev) {
+          return res.status(HTTP_STATUS.BAD.BAD_REQUEST).send({
+            ok: false,
+            message: 'This endpoint only available to local developers',
+          });
+        }
+
         let response: Files.ActionResponses;
-
         const reqBody: Files.Actions = req.body;
-
         const { data: dataDir } = config;
 
         switch (reqBody.type) {
           case Files.ACTIONS.verify: {
-            const { alias, path } = reqBody.payload;
+            const { path } = reqBody.payload;
             const { exists, absolutePath } = resolvePath({
               path,
               resolveFromDirs: [dataDir],
@@ -237,7 +246,8 @@ export function getApiRoutes({
               type: Files.ACTIONS.verify,
               payload: {
                 exists,
-                path: exists ? relative(dataDir, absolutePath) : path,
+                relativePath: exists ? relative(dataDir, absolutePath) : '',
+                absolutePath,
               },
             };
             break;
@@ -305,6 +315,30 @@ export function getApiRoutes({
             }
 
             break;
+          }
+
+          case Files.ACTIONS.openFile: {
+            const { filePath } = reqBody.payload;
+            const { exists, absolutePath } = resolvePath({
+              path: filePath,
+              resolveFromDirs: [dataDir],
+            });
+            if (exists) {
+              exec(`open ${absolutePath}`, err => {
+                if (err)
+                  log.error(`error opening file: ${err.message}`, {
+                    filePath,
+                    err,
+                  });
+                response = {
+                  type: Files.ACTIONS.openFile,
+                  payload: {
+                    ok: !err,
+                    message: err ? err.message : '',
+                  },
+                };
+              });
+            }
           }
         }
 

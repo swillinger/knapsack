@@ -7,9 +7,10 @@
     margin-bottom: var(--space-xxs);
   }
 
-  &__input {
+  &__wrapper > input {
+    --text-field-border-color: var(--c-frame, hsl(0, 0%, 87%));
     background-color: var(--c-bg);
-    border: 1px solid var(--c-frame);
+    border: 1px solid var(--text-field-border-color);
     border-radius: var(--radius-m);
     height: var(--space-xl);
     line-height: var(--space-xl);
@@ -19,6 +20,9 @@
 
     &:focus {
       border-color: var(--c-focus);
+    }
+    .ks-text-field--size-s & {
+      height: var(--space-l);
     }
   }
 
@@ -56,7 +60,7 @@
   }
 
   &--has-error {
-    .ks-text-field__input {
+    .ks-text-field__wrapper > input {
       border-color: var(--c-error);
 
       &:focus {
@@ -65,10 +69,10 @@
     }
   }
 
-  &__input-icon-wrapper {
+  &__wrapper--icon {
     position: relative;
 
-    .ks-text-field__input {
+    > input {
       padding-right: var(--space-xl);
     }
 

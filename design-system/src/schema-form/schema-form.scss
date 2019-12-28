@@ -1,4 +1,12 @@
 .ks-rjsf {
+  &.ks-rjsf--inline {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    > * {
+      margin: var(--space-s) var(--space-xs) 0 0;
+    }
+  }
   .panel-title {
     font-size: var(--font-base-size);
   }

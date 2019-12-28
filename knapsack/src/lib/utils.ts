@@ -15,6 +15,42 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 // IMPORTANT: Only put vanilla JavaScript in here: this should all work in the server or client
+import {
+  validateDataAgainstSchema,
+  validateSchema,
+} from '@knapsack/schema-utils';
+import { GenericResponse } from '@knapsack/core/types';
+import specSlotsSchema from '../json-schemas/schemaKsTemplateSpecSlots';
+import { KsTemplateSpec } from '../schemas/patterns';
+
+export function validateSpec(spec: KsTemplateSpec): GenericResponse {
+  let ok = true;
+  const msgs: string[] = [];
+
+  if (spec?.props) {
+    const result = validateSchema(spec.props);
+    if (!result.ok) {
+      ok = false;
+      msgs.push('Invalid "spec.props":');
+      msgs.push(result.message);
+    }
+  }
+
+  if (spec?.slots) {
+    const result = validateDataAgainstSchema(specSlotsSchema, spec.slots);
+    if (!result.ok) {
+      ok = false;
+      msgs.push('Invalid "spec.slots":');
+      msgs.push(result.message);
+      result.errors.forEach(e => msgs.push(e.message));
+    }
+  }
+
+  return {
+    ok,
+    message: msgs.join('\n'),
+  };
+}
 
 /**
  * Is Some Of This Array In That Array?

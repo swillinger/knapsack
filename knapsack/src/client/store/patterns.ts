@@ -11,6 +11,7 @@ import {
   KnapsackPatternsConfig,
   KnapsackPatternTemplate,
   KnapsackTemplateDemo,
+  KsTemplateSpec,
 } from '../../schemas/patterns';
 import { KnapsackCustomPageSlice } from '../../schemas/custom-pages';
 import {
@@ -87,6 +88,24 @@ export function deletePattern({
         nav: 'secondary',
       }),
     );
+  };
+}
+
+const UPDATE_SPEC = 'knapsack/patterns/Update Spec';
+interface UpdateSpecAction extends Action {
+  type: typeof UPDATE_SPEC;
+  payload: {
+    patternId: string;
+    templateId: string;
+    spec: KsTemplateSpec;
+  };
+}
+export function updateSpec(
+  payload: UpdateSpecAction['payload'],
+): UpdateSpecAction {
+  return {
+    type: UPDATE_SPEC,
+    payload,
   };
 }
 
@@ -401,7 +420,8 @@ type Actions =
   | AddTemplateDataDemoAction
   | UpdatePatternSlicesAction
   | RemoveTemplateDemoAction
-  | AddTemplateTemplateDemoAction;
+  | AddTemplateTemplateDemoAction
+  | UpdateSpecAction;
 
 export default function reducer(
   state = initialState,
@@ -562,6 +582,20 @@ export default function reducer(
         const { patternId, slices } = action.payload;
         const pattern = draft.patterns[patternId];
         pattern.slices = slices;
+      });
+
+    case UPDATE_SPEC:
+      return produce(state, draft => {
+        const { patternId, templateId, spec } = action.payload;
+        const template = draft.patterns[patternId]?.templates?.find(
+          t => t.id === templateId,
+        );
+        if (!template) {
+          throw new Error(
+            `Could not find pattern "${patternId}" template "${templateId}"`,
+          );
+        }
+        template.spec = spec;
       });
     default:
       return {

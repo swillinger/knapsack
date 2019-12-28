@@ -29,6 +29,7 @@ export const InlineEditTextBase: React.FC<TextProps> = ({
   const handleTargetFocus = () => {
     if (isEditing) {
       setIsEditing(false);
+      textEl.current.textContent = text;
       // de-select text
       setTimeout(() => {
         window.getSelection().removeAllRanges();
@@ -64,11 +65,23 @@ export const InlineEditTextBase: React.FC<TextProps> = ({
 
   return (
     <span className={classes}>
+      {/* eslint-disable-next-line jsx-a11y/interactive-supports-focus */}
       <span
         className="ks-inline-edit__text"
         ref={textEl}
         contentEditable={isEditing}
         suppressContentEditableWarning={isEditing}
+        role="textbox"
+        onKeyDown={e => {
+          // enter key
+          if (e.which === 13) {
+            handleControlTrigger();
+          }
+          // esc key
+          if (e.which === 27) {
+            handleTargetFocus();
+          }
+        }}
       >
         {text}
       </span>

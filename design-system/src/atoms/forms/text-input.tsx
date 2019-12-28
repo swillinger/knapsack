@@ -4,6 +4,11 @@ import './text-input.scss';
 import { Icon, Props as IconProps } from '../icon';
 import { useFallbackId } from '../../utils/hooks';
 
+enum Sizes {
+  s = 's',
+  m = 'm',
+}
+
 type Props = {
   label?: string;
   placeholder?: string;
@@ -11,8 +16,11 @@ type Props = {
   inlineLabelWidth?: string;
   inputProps?: any;
   type?: string;
+  handleChange?: (text: string) => void;
+  value?: string;
   description?: string;
   error?: string;
+  size?: keyof typeof Sizes;
   flush?: boolean;
   endIcon?: IconProps['symbol'];
 };
@@ -24,9 +32,12 @@ export const KsTextField: React.FC<Props> = ({
   isLabelInline = false,
   inlineLabelWidth,
   inputProps = {},
+  size = Sizes.m,
   error,
   description,
   flush,
+  handleChange = () => {},
+  value = '',
   endIcon,
 }: Props) => {
   const id = useFallbackId();
@@ -37,6 +48,7 @@ export const KsTextField: React.FC<Props> = ({
     'ks-text-field--has-error': error,
     'ks-text-field--has-label': label,
     'ks-text-field--flush': flush,
+    [`ks-text-field--size-${size}`]: true,
   });
 
   return (
@@ -53,7 +65,10 @@ export const KsTextField: React.FC<Props> = ({
 
       <div
         className={cn({
+          'ks-text-field__wrapper': true,
+          'ks-text-field__wrapper--inline': isLabelInline,
           'ks-text-field__inline-wrapper': isLabelInline,
+          'ks-text-field__wrapper--icon': endIcon,
           'ks-text-field__input-icon-wrapper': endIcon,
         })}
       >
@@ -62,6 +77,8 @@ export const KsTextField: React.FC<Props> = ({
           id={id}
           type={type}
           placeholder={placeholder}
+          value={value}
+          onChange={event => handleChange(event.target.value)}
           {...inputProps}
         />
 

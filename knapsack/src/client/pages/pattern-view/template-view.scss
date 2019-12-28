@@ -1,5 +1,21 @@
 @import '../../global/breakpoints';
 
+.ks-template-view__page-details-toggle {
+  background-color: var(--c-gray-xxlight);
+  transition: background-color 0.3s ease-in;
+  padding: var(--size-xs);
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: var(--space-m);
+  right: 0;
+  border-radius: var(--radius-l) 0 0 var(--radius-l);
+  &:hover {
+    cursor: pointer;
+    background-color: var(--c-active-highlight);
+  }
+}
+
 .ks-template-view__overview-wrapper {
   width: 100%;
   display: flex;

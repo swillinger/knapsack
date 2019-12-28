@@ -4,7 +4,11 @@ import './select.scss';
 import shortid from 'shortid';
 import { Icon } from '../icon';
 
-//
+enum Sizes {
+  s = 's',
+  m = 'm',
+}
+
 // Select.defaultProps = {
 //   initialItem: 0,
 //   label: '',
@@ -25,6 +29,7 @@ import { Icon } from '../icon';
 type Props = {
   label?: string;
   isLabelInline?: boolean;
+  size?: keyof typeof Sizes;
   handleChange: (value: string) => void;
   value?: string;
   items: {
@@ -37,6 +42,7 @@ export const Select: React.FC<Props> = ({
   label,
   handleChange,
   items,
+  size = Sizes.m,
   value = items.length === 0 ? '' : items[0].value,
   isLabelInline = true,
 }: Props) => {
@@ -53,6 +59,7 @@ export const Select: React.FC<Props> = ({
 
   const classes = cn({
     'ks-select': true,
+    [`ks-select--size-${size}`]: true,
     'ks-select--label-inline': isLabelInline,
   });
   return (

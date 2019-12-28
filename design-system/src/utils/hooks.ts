@@ -72,6 +72,6 @@ export function useHover() {
  * Generate a unique ID that won't change between renders.
  * Useful for forms
  */
-export const useFallbackId = () => {
-  return useRef(`ks-fallback-id-${shortid()}`).current;
+export const useFallbackId = (prefix = 'ks-fallback-id') => {
+  return useRef(`${prefix}--${shortid()}`).current;
 };

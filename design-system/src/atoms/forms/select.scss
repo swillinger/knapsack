@@ -7,6 +7,10 @@
     display: block;
     margin-bottom: var(--size-xxs);
 
+    .ks-select--size-s & {
+      font-size: var(--font-size-s);
+    }
+
     .ks-select--label-inline & {
       display: inline-block;
       margin-right: var(--size-xxs);
@@ -36,16 +40,22 @@
       position: relative;
       width: 100%;
       //background-color: transparent;
-      font-size: var(--font-base-size);
       border: 1px solid var(--c-frame);
       border-radius: var(--radius-m);
-      height: 40px;
       margin: auto 0;
-      padding: 0.3rem 2rem 0.3rem 1rem;
+      padding: 0.3em 2em 0.3em 1em;
       -webkit-appearance: none;
       -moz-appearance: none;
       outline: none;
       z-index: 1;
+      .ks-select--size-s & {
+        height: 24px;
+        font-size: var(--font-size-s);
+      }
+      .ks-select--size-m & {
+        height: 40px;
+        font-size: var(--font-base-size);
+      }
     }
   }
 

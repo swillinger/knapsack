@@ -1,15 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import './text-input-wrapper.scss';
 
-export function TextInputWrapper(props) {
-  return <div className="ks-text-input-wrapper">{props.children}</div>;
-}
-
-TextInputWrapper.defaultProps = {
-  children: null,
+type Props = {
+  children: React.ReactNode;
 };
-
-TextInputWrapper.propTypes = {
-  children: PropTypes.element,
+export const TextInputWrapper: React.FC<Props> = ({ children }: Props) => {
+  return (
+    <div className="ks-text-input-wrapper ks-text-field__wrapper">
+      {children}
+    </div>
+  );
 };

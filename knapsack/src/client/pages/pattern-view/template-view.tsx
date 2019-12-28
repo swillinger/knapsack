@@ -16,10 +16,15 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { CodeBlock } from '@knapsack/design-system';
+import { CodeBlock, Icon } from '@knapsack/design-system';
 import { useHistory } from 'react-router-dom';
 import produce from 'immer';
-import { updateTemplateInfo, useDispatch, useSelector } from '../../store';
+import {
+  updateTemplateInfo,
+  useDispatch,
+  useSelector,
+  setPageDetailsVisibility,
+} from '../../store';
 import MdBlock from '../../components/md-block';
 // import DosAndDonts from '../../components/dos-and-donts';
 import './template-view.scss';
@@ -98,6 +103,7 @@ const TemplateView: React.FC<Props> = ({
       globalAssetSetIds: assetSetsState.globalAssetSetIds,
     }),
   );
+  const { pageDetailsOpen } = useSelector(s => s.ui);
   const dispatch = useDispatch();
 
   const { templates } = pattern;
@@ -257,6 +263,22 @@ const TemplateView: React.FC<Props> = ({
   return (
     <CurrentTemplateContext.Provider value={currentTemplateData}>
       <article className="ks-template-view">
+        <div
+          className="ks-template-view__page-details-toggle"
+          onClick={() => {
+            dispatch(setPageDetailsVisibility({ isOpen: !pageDetailsOpen }));
+          }}
+          onKeyDown={e => {
+            // only for space or enter
+            if (!(e.which === 13 || e.which === 32)) return;
+            dispatch(setPageDetailsVisibility({ isOpen: !pageDetailsOpen }));
+          }}
+          tabIndex={0}
+          role="button"
+        >
+          {/* @todo add `>` or `<` icon based on open status */}
+          <Icon symbol="settings" />
+        </div>
         <div className="ks-template-view__overview-wrapper">
           <TemplateHeader
             assetSets={assetSets}
@@ -305,9 +327,7 @@ const TemplateView: React.FC<Props> = ({
             }}
           />
         </div>
-
         {isCodeBlockShown && codeBlock}
-
         {isReadmeShown && readme && (
           <MdBlock
             md={readme}
@@ -320,7 +340,6 @@ const TemplateView: React.FC<Props> = ({
             }}
           />
         )}
-
         {isVerbose && <KsSpecDocs />}
       </article>
     </CurrentTemplateContext.Provider>

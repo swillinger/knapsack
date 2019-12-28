@@ -1,0 +1,13 @@
+.ks-spec-item {
+  &__handle {
+    &:hover {
+      cursor: grab;
+    }
+  }
+  &--dragging .ks-spec-item__handle {
+    cursor: grabbing;
+  }
+  &__body {
+    --font-base-size: var(--font-size-s);
+  }
+}

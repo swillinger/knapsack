@@ -48,8 +48,10 @@
 
   /* Font Families */
   --font-family: 'Roboto', "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  --font-base-size: var(--space-m);
-  --font-size-s: var(--space-s);
+  --font-family--code: 'monospace'; /* @todo better code font */
+  --font-base-size: 16px;
+  --font-size-s: 12px;
+  --font-size-m: var(--font-base-size);
   --line-height-s: var(--space-m);
 
   /* Border Radius */

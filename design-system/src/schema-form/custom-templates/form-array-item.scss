@@ -2,13 +2,26 @@
 /* stylelint-disable max-nesting-depth */
 .ks-form-array-item {
   padding: 0.25rem;
+  &--inline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    .ks-custom-field {
+      margin: 0;
+    }
+  }
 
   &:last-child {
     margin-bottom: 0;
   }
 
   &:nth-child(odd) {
-    background-color: var(--c-gray-xlight);
+    background-color: var(--c-frame);
+  }
+
+  &:nth-child(even) {
+    background-color: var(--c-shade);
   }
 
   .field {
@@ -28,7 +41,7 @@
   }
 
   &:not(:last-child) {
-    padding-bottom: 0.75rem;
+    // padding-bottom: 0.75rem;
     border-bottom: 1px solid var(--c-gray-xlight);
   }
 }

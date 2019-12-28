@@ -4,3 +4,19 @@
     background-color: var(--c-white);
   }
 }
+$spaces: [ 'xxxs', 'xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl' ];
+@each $space in $spaces {
+  .ks-u-margin-top--#{$space} {
+    margin-top: var(--space-#{$space}) !important;
+  }
+  .ks-u-margin-bottom--#{$space} {
+    margin-bottom: var(--space-#{$space}) !important;
+  }
+}
+
+.ks-u-margin-top--none {
+  margin-top: 0 !important;
+}
+.ks-u-margin-bottom--none {
+  margin-bottom: 0 !important;
+}

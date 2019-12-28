@@ -1,0 +1,12 @@
+.ks-prop-editor {
+  &__id {
+    .ks-rjsf--inline {
+      > .ks-custom-field:first-child {
+        flex-grow: 1;
+      }
+      > .ks-btn {
+        margin-right: 0;
+      }
+    }
+  }
+}

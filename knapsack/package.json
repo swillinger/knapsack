@@ -70,6 +70,7 @@
     "array-move": "^1.0.0",
     "aws-amplify": "^1.2.4",
     "aws-amplify-react": "^2.5.4",
+    "change-case": "^4.1.1",
     "deep-equal": "^1.1.1",
     "formik": "^2.0.4",
     "graphiql": "^0.12.0",

@@ -12,11 +12,11 @@ describe('Patterns', () => {
     cy.get('@page-title').should('have.text', 'Card');
 
     // @todo fix weird delay where sometimes the last keystroke is not rendered in template
-    cy.get(
-      '.ks-demo-stage__form .ks-rjsf .ks-rjsf__string-field--cardTitle input',
-    )
+    cy.get('.ks-demo-stage__form .ks-rjsf input[value="Card Title"]')
       .clear()
-      .type('Robots are awesome');
+      .type('Robots are awesome', {
+        delay: 120,
+      });
 
     cy.wait(3000); // eslint-disable-line
     cy.percySnapshot('Pattern: Card', { widths: [400, 1200] });

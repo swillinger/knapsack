@@ -114,7 +114,7 @@ export function setStatus(status: Status) {
 }
 
 const initialState: UiState = {
-  pageDetailsOpen: true,
+  pageDetailsOpen: false,
   sidebarOpen: true,
 };
 

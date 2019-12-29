@@ -111,7 +111,12 @@ const PatternViewPage: React.FC<Props> = ({
     <ErrorCatcher>
       <PageWithSidebar
         slottedDetails={
-          <KsPatternSettings pattern={pattern} activeTemplateId={templateId} />
+          canEdit && (
+            <KsPatternSettings
+              pattern={pattern}
+              activeTemplateId={templateId}
+            />
+          )
         }
       >
         <section className={classes}>

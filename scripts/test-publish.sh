@@ -119,7 +119,7 @@ git status
 echo 'about to clean those ^^^'
 git reset
 git clean -df
-./scripts/publish.sh prerelease --yes --force-publish=* --exact --npm-tag=latest --no-git-tag-version --no-push --registry="$custom_registry_url"
+./scripts/publish.sh prerelease --yes --force-publish=* --exact --dist-tag=latest --canary --no-git-tag-version --no-push --registry="$custom_registry_url"
 
 echo 'Publish test successfull'
 # ******************************************************************************

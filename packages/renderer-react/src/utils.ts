@@ -319,19 +319,16 @@ export async function getReactPropTypesDocs({
       const { required, description, defaultValue } = propDef;
       switch (propDef?.type?.name) {
         case 'string':
-          if (required) spec.props.required.push(propName);
           spec.props.properties[propName] = {
             type: 'string',
           };
           break;
         case 'func':
-          if (required) spec.props.required.push(propName);
           spec.props.properties[propName] = {
             type: 'string',
           };
           break;
         case 'bool':
-          if (required) spec.props.required.push(propName);
           spec.props.properties[propName] = {
             type: 'boolean',
           };

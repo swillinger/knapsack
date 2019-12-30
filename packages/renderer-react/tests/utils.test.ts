@@ -63,11 +63,7 @@ test('inferDocs card.jsx with prop types', async t => {
   const { ok, message } = KnapsackRendererBase.validateSpec(spec);
   // console.log(JSON.stringify(spec, null, '  '));
 
-  if (!ok) {
-    console.log(message);
-  }
-
-  t.is(ok, true);
+  t.is(ok, true, message);
 });
 
 // eslint-disable-next-line ava/no-skip-test
@@ -86,5 +82,5 @@ test.skip('inferDocs card.tsx with types', async t => {
     console.log(message);
   }
 
-  t.is(ok, true);
+  t.is(ok, true, message);
 });

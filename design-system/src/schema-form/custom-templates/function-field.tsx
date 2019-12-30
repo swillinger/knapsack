@@ -16,7 +16,7 @@ import JsonSchemaForm, {
 import './function-field.scss';
 
 export const FunctionField: React.FC<FieldProps> = (props: FieldProps) => {
-  const timeoutId = useRef<NodeJS.Timeout | null>(null);
+  const timeoutId = useRef<any>(null);
   // ensure there is only one `setTimeout` waiting
   if (timeoutId.current) clearTimeout(timeoutId.current);
 

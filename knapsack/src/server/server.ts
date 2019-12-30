@@ -331,6 +331,7 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
     knapsackDistDir,
     distDir: config.dist,
     publicDir: config.public,
+    cacheDir: meta.cacheDir,
   });
   app.use(regularRoutes);
 

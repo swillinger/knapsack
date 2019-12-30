@@ -10,11 +10,13 @@ export function setupRoutes({
   knapsackDistDir,
   distDir,
   publicDir,
+  cacheDir,
 }: {
   patterns: import('./patterns').Patterns;
   knapsackDistDir: string;
   distDir?: string;
   publicDir?: string;
+  cacheDir: string;
 }): typeof router {
   router.use('*', async (req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -43,6 +45,14 @@ export function setupRoutes({
   if (distDir) {
     router.use(
       express.static(distDir, {
+        maxAge: '1d',
+      }),
+    );
+  }
+
+  if (cacheDir) {
+    router.use(
+      express.static(cacheDir, {
         maxAge: '1d',
       }),
     );

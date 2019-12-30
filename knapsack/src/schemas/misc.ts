@@ -22,6 +22,10 @@ export interface KnapsackMeta {
   version?: string;
   changelog?: string;
   hasKnapsackCloud?: boolean;
+  /**
+   * Absolute path to directory where Knapsack can keep it's own files
+   */
+  cacheDir: string;
 }
 
 export interface GraphQlContext extends KnapsackBrain {

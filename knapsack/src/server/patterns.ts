@@ -76,6 +76,8 @@ export class Patterns implements KnapsackDb<PatternsState> {
 
   private watcher: chokidar.FSWatcher;
 
+  cacheDir: string;
+
   constructor({
     dataDir,
     templateRenderers,
@@ -137,7 +139,8 @@ export class Patterns implements KnapsackDb<PatternsState> {
     knapsackEvents.on(EVENTS.SHUTDOWN, () => this.watcher.close());
   }
 
-  async init(): Promise<void> {
+  async init({ cacheDir }: { cacheDir: string }): Promise<void> {
+    this.cacheDir = cacheDir;
     try {
       await this.updatePatternsData();
     } catch (error) {

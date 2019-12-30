@@ -52,7 +52,11 @@ export interface KnapsackTemplateRendererBase {
   language?: string;
   build?: (opt: { templatePaths: string[] }) => Promise<void>;
   watch?: (opt: { templatePaths: string[] }) => Promise<void>;
-  init?: (opt: { config: KnapsackConfig; patterns: Patterns }) => Promise<void>;
+  init?: (opt: {
+    config: KnapsackConfig;
+    patterns: Patterns;
+    cacheDir: string;
+  }) => Promise<void>;
   wrapHtml: (
     opt: {
       html: string;

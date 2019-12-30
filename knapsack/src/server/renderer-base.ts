@@ -6,6 +6,7 @@ import {
 import { GenericResponse, JsonSchemaObject } from '@knapsack/core/src/types';
 import { compile, JSONSchema } from 'json-schema-to-typescript';
 import { pascalCase } from 'change-case';
+import { join } from 'path';
 import { knapsackEvents, EVENTS } from './events';
 import * as log from '../cli/log';
 import { formatCode } from './server-utils';
@@ -37,6 +38,10 @@ export class KnapsackRendererBase implements KnapsackTemplateRendererBase {
 
   logPrefix: string;
 
+  cacheDir: string;
+
+  outputDir: string;
+
   constructor({
     id,
     extension,
@@ -51,6 +56,17 @@ export class KnapsackRendererBase implements KnapsackTemplateRendererBase {
     this.language = language;
     this.outputDirName = `knapsack-renderer-${this.id}`;
     this.logPrefix = `templateRenderer:${this.id}`;
+  }
+
+  async init({
+    cacheDir,
+  }: {
+    config: KnapsackConfig;
+    patterns: import('@knapsack/app/src/server/patterns').Patterns;
+    cacheDir: string;
+  }): Promise<void> {
+    this.cacheDir = cacheDir;
+    this.outputDir = join(cacheDir, this.outputDirName);
   }
 
   static formatCode = formatCode;
@@ -70,7 +86,7 @@ export class KnapsackRendererBase implements KnapsackTemplateRendererBase {
    * This base implementation just returns the original code so it can be reliably ran
    * @see {KnapsackRendererBase.formatCode}
    */
-  formatCode(code) {
+  formatCode(code: string): string {
     return code?.trim();
   }
 

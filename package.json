@@ -24,7 +24,7 @@
     "lerna:publish": "lerna publish --verify-access",
     "lint": "run-s --continue-on-error lint:style lint:js",
     "lint:js": "yarn eslint .",
-    "lint:js:fix": "yarn lint:js --fix",
+    "lint:js:fix": "yarn lint:js --quiet --fix",
     "lint:style": "stylelint 'knapsack/src/**/*.scss' 'components/**/*.scss'",
     "lint:style:fix": "yarn lint:style --fix",
     "open:ci": "open https://circleci.com/gh/basaltinc/knapsack",

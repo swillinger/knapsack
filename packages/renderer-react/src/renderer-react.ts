@@ -10,6 +10,7 @@ import {
   KnapsackTemplateRenderer,
   KnapsackTemplateRendererBase,
   KnapsackTemplateRendererResults,
+  KnapsackConfig,
 } from '@knapsack/app/src/schemas/knapsack-config';
 import {
   KnapsackPatternTemplate,
@@ -85,13 +86,14 @@ export class KnapsackReactRenderer extends KnapsackRendererWebpackBase
     this.demoWrapperPath = demoWrapperPath;
   }
 
-  init: KnapsackTemplateRendererBase['init'] = async ({
-    patterns,
-    config,
-  }): Promise<void> => {
-    await super.init({ config, patterns });
-    this.assets = copyReactAssets(this.distDirAbsolute, this.publicPath);
-  };
+  async init(opt: {
+    config: KnapsackConfig;
+    patterns: import('@knapsack/app/src/server/patterns').Patterns;
+    cacheDir: string;
+  }): Promise<void> {
+    await super.init(opt);
+    this.assets = copyReactAssets(this.outputDir, this.publicPath);
+  }
 
   getMeta: KnapsackTemplateRenderer['getMeta'] = () => {
     return {
@@ -406,6 +408,7 @@ ${ksImportCode}
           schema.properties[id] = {
             typeof: 'function',
             tsType: 'React.ReactNode',
+
             description: info.allowedPatternIds
               ? `${info.description}. Only use: ${info.allowedPatternIds.join(
                   ', ',

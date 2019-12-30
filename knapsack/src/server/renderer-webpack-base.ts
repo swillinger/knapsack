@@ -17,8 +17,6 @@ export class KnapsackRendererWebpackBase extends KnapsackRendererBase
 
   webpackEntry: {};
 
-  distDirAbsolute: string;
-
   publicPath: string;
 
   language: string;
@@ -72,7 +70,7 @@ export class KnapsackRendererWebpackBase extends KnapsackRendererBase
       },
       output: {
         filename: '[name].bundle.[hash].js',
-        path: this.distDirAbsolute,
+        path: this.outputDir,
         publicPath: this.publicPath,
         chunkFilename: '[name].chunk.[hash].js',
         library: ['knapsack', '[name]'],
@@ -143,23 +141,21 @@ export class KnapsackRendererWebpackBase extends KnapsackRendererBase
     return entry;
   }
 
-  async init({
-    config,
-    patterns,
-  }: {
+  async init(opt: {
     config: KnapsackConfig;
     patterns: import('@knapsack/app/src/server/patterns').Patterns;
+    cacheDir: string;
   }): Promise<void> {
-    this.distDirAbsolute = path.resolve(config.dist, this.outputDirName);
-    await fs.emptyDir(this.distDirAbsolute);
-    this.publicPath = `/${path.relative(config.dist, this.distDirAbsolute)}/`;
-    this.webpackEntry = this.createWebpackEntryFromPatterns(patterns);
+    super.init(opt);
+    await fs.emptyDir(this.outputDir);
+    this.publicPath = `/${path.relative(this.cacheDir, this.outputDir)}/`;
+    this.webpackEntry = this.createWebpackEntryFromPatterns(opt.patterns);
     this.createWebpackCompiler(this.webpackEntry);
 
     knapsackEvents.on(
       EVENTS.PATTERNS_DATA_READY,
       (allPatterns: KnapsackEventsData['PATTERNS_DATA_READY']) => {
-        const entry = this.createWebpackEntryFromPatterns(patterns);
+        const entry = this.createWebpackEntryFromPatterns(opt.patterns);
         if (
           Object.keys(this.webpackEntry)
             .sort()
@@ -180,7 +176,7 @@ export class KnapsackRendererWebpackBase extends KnapsackRendererBase
 
   setManifest() {
     return fs
-      .readFile(path.join(this.distDirAbsolute, 'manifest.json'), 'utf8')
+      .readFile(path.join(this.outputDir, 'manifest.json'), 'utf8')
       .then(manifestString => JSON.parse(manifestString))
       .then(manifest => {
         this.webpackManifest = manifest;

@@ -1,5 +1,8 @@
-import fs from 'fs-extra';
-import { join } from 'path';
+import fs, { readFile } from 'fs-extra';
+import portfinder from 'portfinder';
+import findCacheDir from 'find-cache-dir';
+import { resolve, join } from 'path';
+import { readJson } from '../server/server-utils';
 import { flattenArray, flattenNestedArray, timer } from '../lib/utils';
 import * as log from './log';
 import { KnapsackBrain, Patterns } from '../schemas/main-types';
@@ -8,11 +11,30 @@ import {
   KnapsackTemplateRenderer,
 } from '../schemas/knapsack-config';
 import { KnapsackPattern } from '../schemas/patterns';
+import { KnapsackMeta } from '../schemas/misc';
 
-export async function init(ksBrain: KnapsackBrain): Promise<void> {
-  const { config, patterns } = ksBrain;
+export async function getMeta(config: KnapsackConfig): Promise<KnapsackMeta> {
+  const { version, name } = await readJson(
+    join(__dirname, '../../package.json'),
+  );
+  const cacheDir = findCacheDir({ name, create: true });
+  return {
+    websocketsPort: await portfinder.getPortPromise(),
+    knapsackVersion: version,
+    cacheDir,
+    changelog: config.changelog
+      ? await readFile(config.changelog, 'utf8')
+      : null,
+    version: config.version,
+    hasKnapsackCloud: 'cloud' in config,
+  };
+}
+
+export async function initAll(ksBrain: KnapsackBrain): Promise<KnapsackMeta> {
   log.info('Initializing...');
-  await patterns.init();
+  const { config, patterns } = ksBrain;
+  const meta = await getMeta(config);
+  await patterns.init({ cacheDir: meta.cacheDir });
 
   await Promise.all(
     config.templateRenderers.map(async templateRenderer => {
@@ -20,13 +42,15 @@ export async function init(ksBrain: KnapsackBrain): Promise<void> {
         await templateRenderer.init({
           config,
           patterns,
+          cacheDir: meta.cacheDir,
         });
         log.info('Init done', null, `templateRenderer:${templateRenderer.id}`);
       }
     }),
   );
-  log.verbose('All templateRenderers init done');
+
   log.info('Done: Initializing');
+  return meta;
 }
 
 export async function writeTemplateMeta({

@@ -14,9 +14,7 @@
  You should have received a copy of the GNU General Public License along
  with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-import { readFile } from 'fs-extra';
-import portfinder from 'portfinder';
-import { resolve, join } from 'path';
+import { resolve } from 'path';
 import {
   validateUniqueIdsInArray,
   validateDataAgainstSchema,
@@ -25,9 +23,8 @@ import { knapsackDesignTokensSchema } from '@knapsack/core/dist/types';
 import { KnapsackRendererBase } from '../server/renderer-base';
 import * as log from '../cli/log';
 import { knapsackEvents, EVENTS } from '../server/events';
-import { dirExistsOrExit, readJson } from '../server/server-utils';
+import { dirExistsOrExit } from '../server/server-utils';
 import { KnapsackConfig } from '../schemas/knapsack-config';
-import { KnapsackMeta } from '../schemas/misc';
 
 /**
  * Handle backwards compatibility of config
@@ -124,17 +121,4 @@ export function processConfig(
   knapsackEvents.emit(EVENTS.CONFIG_READY, config);
 
   return config;
-}
-
-export async function getMeta(config: KnapsackConfig): Promise<KnapsackMeta> {
-  const { version } = await readJson(join(__dirname, '../../package.json'));
-  return {
-    websocketsPort: await portfinder.getPortPromise(),
-    knapsackVersion: version,
-    changelog: config.changelog
-      ? await readFile(config.changelog, 'utf8')
-      : null,
-    version: config.version,
-    hasKnapsackCloud: 'cloud' in config,
-  };
 }

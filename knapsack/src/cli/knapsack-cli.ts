@@ -16,15 +16,18 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import program from 'commander';
-import { join, dirname } from 'path';
-import { writeFileSync, ensureDirSync, readJSONSync } from 'fs-extra';
+import { join } from 'path';
+import { readJSONSync } from 'fs-extra';
 import * as log from './log';
 import { knapsackEvents, EVENTS, KnapsackEventsData } from '../server/events';
 import { serve } from '../server/server';
-import { init, build, testPatternRenders, writeTemplateMeta } from './commands';
-import { getMeta } from '../lib/config';
+import {
+  initAll,
+  build,
+  testPatternRenders,
+  writeTemplateMeta,
+} from './commands';
 import { bootstrapFromConfigFile } from '../lib/bootstrap';
-import { KnapsackPattern } from '../schemas/patterns';
 
 const { version } = readJSONSync(join(__dirname, '../../package.json'));
 
@@ -49,14 +52,13 @@ const ksBrain = bootstrapFromConfigFile(configPath);
 const { patterns, config, assetSets } = ksBrain;
 
 program.command('serve').action(async () => {
-  await init(ksBrain);
+  const meta = await initAll(ksBrain);
   log.info('Serving...');
-  const meta = await getMeta(config);
   await serve({ meta });
 });
 
 program.command('build').action(async () => {
-  await init(ksBrain).catch(err => {
+  await initAll(ksBrain).catch(err => {
     log.error('Knapsack init error', err, 'init');
     process.exit(1);
   });
@@ -99,14 +101,13 @@ program.command('build').action(async () => {
 });
 
 program.command('start').action(async () => {
-  await init(ksBrain);
+  const meta = await initAll(ksBrain);
   log.info('Starting...');
   await writeTemplateMeta({
     allPatterns: patterns.allPatterns,
     templateRenderers: config.templateRenderers,
     distDir: config.dist,
   });
-  const meta = await getMeta(config);
   const templateRendererWatches = config.templateRenderers.filter(t => t.watch);
   knapsackEvents.on(
     EVENTS.PATTERNS_DATA_READY,
@@ -139,7 +140,7 @@ program.command('start').action(async () => {
 });
 
 program.command('test').action(async () => {
-  await init(ksBrain);
+  const meta = await initAll(ksBrain);
   await build({ patterns, config });
   await testPatternRenders(patterns.allPatterns, patterns);
   knapsackEvents.emit(EVENTS.SHUTDOWN);

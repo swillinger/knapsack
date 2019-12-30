@@ -110,7 +110,7 @@ class PageBuilderSidebar extends Component {
             onClick={this.props.handleCancelAddSlice}
             onKeyPress={this.props.handleCancelAddSlice}
             type="button"
-            className="ks-button ks-button--color-white ks-button--space-xsmall"
+            className="ks-button ks-button--color-white ks-button--size-small"
           >
             Cancel
           </KsButton>

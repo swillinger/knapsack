@@ -60,6 +60,14 @@ function SchemaTableExpandable(row) {
           <SchemaTable schema={row.original.data} />
         </>
       )}
+      {/* Display the possible enums for a string */}
+      {row.original.data.type === 'string' && 'enum' in row.original.data && (
+        <>
+          <span>One of: </span>
+          <code>{row.original.data.enum.join(', ')}</code>
+        </>
+      )}
+
       {/* Display a message if no info is available */}
       {noInfoAvailable && (
         <p>
@@ -165,18 +173,25 @@ export const SchemaTable = ({ schema }) => {
         return (
           <span>
             <code>{displayedType}</code>
-            {cell.original.data.enum && (
-              <details>
-                <summary>One of:</summary>
-                {cell.original.data.enum.join(', ')}
-              </details>
-            )}
           </span>
         );
       },
       minWidth: 50,
       style: {
         whiteSpace: 'initial',
+      },
+    },
+    {
+      Header: 'Details',
+      id: 'details',
+      accessor: item => {
+        if (item.data.tsType) {
+          return <code>{item.data.tsType}</code>;
+        }
+        if (item.data.enum) {
+          return <span>Options viewable in More</span>;
+        }
+        return '';
       },
     },
     {

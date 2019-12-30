@@ -53,19 +53,19 @@
   }
 
   & &__nav-link { // extra `&` for stronger selector
-    color: var(--c-text-white);
+    color: var(--c-text-inverse);
     text-decoration: none;
   }
 
   &__hamburger {
-    color: var(--c-text-white);
+    color: var(--c-text-inverse);
     float: right;
     font-size: 1.5rem;
     cursor: pointer;
   }
 
   &__hamburger-close {
-    color: var(--c-text-white);
+    color: var(--c-text-inverse);
     float: right;
     font-size: 1.5rem;
     cursor: pointer;
@@ -83,7 +83,7 @@
     button,
     button:hover,
     button:focus {
-      color: var(--c-bg);
+      color: var(--c-text-inverse);
     }
   }
 

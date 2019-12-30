@@ -1,8 +1,8 @@
 .ks-dtd-font-size {
   &--listed {
-    border-bottom: 1px solid var(--c-gray-light);
-    padding-bottom: var(--size-m);
-    margin-bottom: var(--size-l);
+    border-bottom: 1px solid var(--c-frame);
+    padding-bottom: var(--space-m);
+    margin-bottom: var(--space-l);
   }
 
   blockquote::first-line {

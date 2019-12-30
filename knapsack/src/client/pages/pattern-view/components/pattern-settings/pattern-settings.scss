@@ -3,14 +3,14 @@
   --font-base-size: var(--font-size-s);
   height: 100%;
   overflow: auto;
-  padding: var(--size-m);
+  padding: var(--space-m);
 
   &:after {
     // create bottom padding
     content: " ";
     display: block;
     width: 100%;
-    height: var(--size-m);
+    height: var(--space-m);
   }
 
   .ks-text-field__wrapper > input {

@@ -1,7 +1,7 @@
 /* stylelint-disable selector-max-class */
 .ks-custom-field {
   padding: 0;
-  margin-bottom: var(--size-m);
+  margin-bottom: var(--space-m);
 
   .ks-rjsf--inline & {
     > div.ks-custom-object {
@@ -11,7 +11,7 @@
       align-items: flex-end;
       > div.ks-custom-object-item {
         padding: 0;
-        margin-right: var(--size-m);
+        margin-right: var(--space-m);
       }
     }
 
@@ -40,9 +40,8 @@
   }
 
   & > label {
-    // @todo add font family, check color & line height
     display: block;
-    color: var(--c-black);
+    color: var(--c-text-default);
     font-size: var(--font-base-size);
     font-weight: normal;
     line-height: var(--space-l);
@@ -64,7 +63,7 @@
     .field-object > label {
       font-size: calc(var(--font-base-size) * 0.88);
       font-weight: bold;
-      color: var(--c-text-black);
+      color: var(--c-text-default);
     }
   }
 
@@ -96,6 +95,6 @@
 
   &__info-icon {
     margin-left: 3px;
-    color: var(--c-gray-dark);
+    color: var(--c-text-subdued);
   }
 }

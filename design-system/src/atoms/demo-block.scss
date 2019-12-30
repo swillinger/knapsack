@@ -1,5 +1,5 @@
 .ks-demo-block {
-  margin: var(--size-xl) 0;
+  margin: var(--space-xl) 0;
 
   [contenteditable]:focus {
     outline: none;
@@ -14,9 +14,9 @@
 
   blockquote[contenteditable]:hover,
   blockquote[contenteditable]:focus {
-    border-top: 1px dashed var(--c-gray-light);
-    border-right: 1px dashed var(--c-gray-light);
-    border-bottom: 1px dashed var(--c-gray-light);
+    border-top: 1px dashed var(--c-frame);
+    border-right: 1px dashed var(--c-frame);
+    border-bottom: 1px dashed var(--c-frame);
   }
 
   [contenteditable]:not(blockquote) {
@@ -26,6 +26,6 @@
 
   [contenteditable]:not(blockquote):hover,
   [contenteditable]:not(blockquote):focus {
-    border: 1px dashed var(--c-gray-light);
+    border: 1px dashed var(--c-frame);
   }
 }

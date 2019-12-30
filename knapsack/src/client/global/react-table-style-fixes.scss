@@ -12,7 +12,8 @@
     background: var(--c-shade);
     border-top: 3px solid transparent;
     border-bottom: 3px solid transparent;
-    color: var(--c-blue);
+    color: var(--c-text-default);
+    font-weight: normal;
 
     &:focus,
     &:active {
@@ -21,12 +22,12 @@
 
     &.-sort-asc {
       box-shadow: none;
-      border-top: 3px solid var(--c-blue);
+      border-top: 3px solid var(--c-active);
     }
 
     &.-sort-desc {
       box-shadow: none;
-      border-bottom: 3px solid var(--c-blue);
+      border-bottom: 3px solid var(--c-active);
     }
   }
   .rt-thead.-filters {
@@ -35,7 +36,7 @@
   .rt-tbody {
     .rt-td:first-child {
       background: var(--c-shade);
-      color: var(--c-blue);
+      color: var(--c-active);
       font-weight: bold;
     }
   }

@@ -1,7 +1,7 @@
 .ks-details {
-  background: var(--c-gray-xxlight);
-  padding: var(--size-m) var(--size-s);
-  border: 1px solid var(--c-gray-xlight);
+  background: var(--c-shade);
+  padding: var(--space-m) var(--space-xs);
+  border: 1px solid var(--c-frame);
   margin: 0 0 10px;
 
   & > summary {

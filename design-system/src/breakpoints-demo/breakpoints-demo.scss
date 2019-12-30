@@ -9,13 +9,13 @@
 
 .ks-breakpoints-demo__breakpoint-item {
   position: absolute;
-  border-left: solid 3px var(--c-gray-dark);
+  border-left: solid 3px var(--c-frame);
   opacity: 0.7;
   height: 100%;
 
   & > .label {
     display: block;
-    background: var(--c-gray-dark);
+    background: var(--c-frame);
     opacity: 0.7;
     padding: 3px;
     color: white;
@@ -23,11 +23,9 @@
 
   &:hover {
     opacity: 1;
-    border-left-color: var(--c-gray-xdark);
     z-index: 2;
     & > .label {
       opacity: 1;
-      background: var(--c-gray-xdark);
     }
   }
 }
@@ -38,9 +36,9 @@
 }
 
 .ks-breakpoints-demo__device-item {
-  border-bottom: solid 3px var(--c-gray-xlight);
+  border-bottom: solid 3px var(--c-frame);
   text-align: right;
-  margin-bottom: var(--size-m);
-  padding-right: var(--size-m);
-  border-right: solid 3px var(--c-gray-xlight);
+  margin-bottom: var(--space-m);
+  padding-right: var(--space-m);
+  border-right: solid 3px var(--c-frame);
 }

@@ -17,11 +17,12 @@ export interface KnapsackDataStoreSaveBody {
 }
 
 export interface KnapsackMeta {
-  websocketsPort?: number;
-  knapsackVersion?: string;
+  serverPort: number;
+  websocketsPort: number;
+  knapsackVersion: string;
   version?: string;
   changelog?: string;
-  hasKnapsackCloud?: boolean;
+  hasKnapsackCloud: boolean;
   /**
    * Absolute path to directory where Knapsack can keep it's own files
    */

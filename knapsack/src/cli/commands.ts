@@ -18,8 +18,11 @@ export async function getMeta(config: KnapsackConfig): Promise<KnapsackMeta> {
     join(__dirname, '../../package.json'),
   );
   const cacheDir = findCacheDir({ name, create: true });
+  const serverPort = await portfinder.getPortPromise({ port: 3999 });
+  const websocketsPort = await portfinder.getPortPromise();
   return {
-    websocketsPort: await portfinder.getPortPromise(),
+    websocketsPort,
+    serverPort,
     knapsackVersion: version,
     cacheDir,
     changelog: config.changelog

@@ -59,7 +59,7 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
     assetSets,
   } = getBrain();
 
-  const port = process.env.KNAPSACK_PORT || 3999;
+  const port = process.env.KNAPSACK_PORT || meta.serverPort;
   const knapsackDistDir = join(__dirname, '../../dist/client');
 
   const metaTypeDef = gql`

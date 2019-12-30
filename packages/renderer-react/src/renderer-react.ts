@@ -392,7 +392,6 @@ ${ksImportCode}
         return false;
       }
     }
-    log.inspect({ spec }, 'infered spec');
     return spec;
   };
 

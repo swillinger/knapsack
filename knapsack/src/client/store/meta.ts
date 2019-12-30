@@ -12,12 +12,10 @@ const SAVE_TO_SERVER_SUCCESS = 'knapsack/meta/SAVE_TO_SERVER_SUCCESS';
 const SAVE_TO_SERVER_FAIL = 'knapsack/meta/SAVE_TO_SERVER_FAIL';
 
 export interface MetaState {
-  meta: import('../../schemas/misc').KnapsackMeta;
+  meta?: import('../../schemas/misc').KnapsackMeta;
 }
 
-const initialState: MetaState = {
-  meta: {},
-};
+const initialState: MetaState = {};
 
 interface SaveToServerRequestAction extends Action {
   type: typeof SAVE_TO_SERVER_REQUEST;

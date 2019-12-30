@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.16](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.15...v2.0.0-beta.16) (2019-12-30)
+
+
+### Bug Fixes
+
+* remove depricated css vars ([c868e12](https://github.com/basaltinc/knapsack/commit/c868e12e7a6963cf99e72388a746b32c5cd88686))
+* undo find and replace errs ([efe2ca4](https://github.com/basaltinc/knapsack/commit/efe2ca4fe27e733a308bda8933074c8e29fb2902))
+
+
+
+
+
 # [2.0.0-beta.15](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.14...v2.0.0-beta.15) (2019-12-30)
 
 

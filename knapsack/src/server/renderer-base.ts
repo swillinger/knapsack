@@ -23,6 +23,7 @@ import {
   KsTemplateSpec,
 } from '../schemas/patterns';
 import specSlotsSchema from '../json-schemas/schemaKsTemplateSpecSlots';
+import { validateSpec } from '../lib/utils';
 
 /* eslint-disable class-methods-use-this, no-empty-function, no-unused-vars */
 export class KnapsackRendererBase implements KnapsackTemplateRendererBase {
@@ -62,34 +63,7 @@ export class KnapsackRendererBase implements KnapsackTemplateRendererBase {
 
   static isSlottedTemplateDemo = isSlottedTemplateDemo;
 
-  static validateSpec(spec: KsTemplateSpec): GenericResponse {
-    let ok = true;
-    const msgs: string[] = [];
-
-    if (spec?.props) {
-      const result = validateSchema(spec.props);
-      if (!result.ok) {
-        ok = false;
-        msgs.push('Invalid "spec.props":');
-        msgs.push(result.message);
-      }
-    }
-
-    if (spec?.slots) {
-      const result = validateDataAgainstSchema(specSlotsSchema, spec.slots);
-      if (!result.ok) {
-        ok = false;
-        msgs.push('Invalid "spec.slots":');
-        msgs.push(result.message);
-        result.errors.forEach(e => msgs.push(e.message));
-      }
-    }
-
-    return {
-      ok,
-      message: msgs.join('\n'),
-    };
-  }
+  static validateSpec = validateSpec;
 
   /**
    * Each sub-class should implement this themselves, probably using `KnapsackRendererBase.formatCode()`

@@ -23,7 +23,7 @@ function stringifyDeep(obj: {}, depth = 5): string {
 
 export function error(msg: string, extra?: any, prefix = ''): void {
   if (extra) {
-    log.error(prefix, msg, extra);
+    log.error(prefix, msg);
   } else {
     log.error(prefix, msg);
   }
@@ -31,7 +31,7 @@ export function error(msg: string, extra?: any, prefix = ''): void {
 
 export function info(msg: string, extra?: any, prefix = ''): void {
   if (extra) {
-    log.info(prefix, msg, extra);
+    log.info(prefix, msg, stringifyDeep(extra));
   } else {
     log.info(prefix, msg);
   }
@@ -39,7 +39,7 @@ export function info(msg: string, extra?: any, prefix = ''): void {
 
 export function warn(msg: string, extra?: any, prefix = ''): void {
   if (extra) {
-    log.warn(prefix, msg, extra);
+    log.warn(prefix, msg, stringifyDeep(extra));
   } else {
     log.warn(prefix, msg);
   }
@@ -55,7 +55,7 @@ export function verbose(msg: string, extra?: any, prefix = ''): void {
 
 export function silly(msg: string, extra?: any, prefix = ''): void {
   if (extra) {
-    log.silly(prefix, msg, extra);
+    log.silly(prefix, msg, stringifyDeep(extra));
   } else {
     log.silly(prefix, msg);
   }

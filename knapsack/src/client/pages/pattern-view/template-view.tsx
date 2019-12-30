@@ -19,6 +19,7 @@ import React, { useEffect, useState } from 'react';
 import { CodeBlock, Icon } from '@knapsack/design-system';
 import { useHistory } from 'react-router-dom';
 import produce from 'immer';
+import deepEqual from 'deep-equal';
 import {
   updateTemplateInfo,
   useDispatch,
@@ -88,6 +89,7 @@ const TemplateView: React.FC<Props> = ({
   );
   const pattern = useSelector(
     ({ patternsState }) => patternsState.patterns[id],
+    deepEqual,
   );
   if (!pattern) {
     const availablePatternIds = allPatterns.map(p => p.id).join(', ');
@@ -266,12 +268,20 @@ const TemplateView: React.FC<Props> = ({
         <div
           className="ks-template-view__page-details-toggle"
           onClick={() => {
-            dispatch(setPageDetailsVisibility({ isOpen: !pageDetailsOpen }));
+            dispatch(
+              setPageDetailsVisibility({
+                isOpen: !pageDetailsOpen,
+              }),
+            );
           }}
           onKeyDown={e => {
             // only for space or enter
             if (!(e.which === 13 || e.which === 32)) return;
-            dispatch(setPageDetailsVisibility({ isOpen: !pageDetailsOpen }));
+            dispatch(
+              setPageDetailsVisibility({
+                isOpen: !pageDetailsOpen,
+              }),
+            );
           }}
           tabIndex={0}
           role="button"
@@ -324,6 +334,9 @@ const TemplateView: React.FC<Props> = ({
                   }
                 }),
               );
+            }}
+            handleDemoReset={() => {
+              setDemo(prevDemo => demosById[prevDemo.id]);
             }}
           />
         </div>

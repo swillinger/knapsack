@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import cn from 'classnames';
-import { KsButton, SchemaForm } from '@knapsack/design-system';
+import { KsButton, KsButtonGroup, SchemaForm } from '@knapsack/design-system';
 import Template, { Props as TemplateProps } from '../../../components/template';
 import { CurrentTemplateContext } from '../current-template-context';
 import {
@@ -50,6 +50,7 @@ type Props = {
   setTemplateInfo: TemplateProps['handleTemplateInfo'];
   handlePropsChange: (props: {}) => void;
   handleSlotsChange: (slotsData: KnapsackTemplateData['slots']) => void;
+  handleDemoReset: () => void;
   codeBlock?: React.ReactNode;
 };
 
@@ -59,6 +60,7 @@ export const KsDemoStage: React.FC<Props> = ({
   setTemplateInfo,
   handlePropsChange,
   handleSlotsChange,
+  handleDemoReset,
   codeBlock,
 }: Props) => {
   const {
@@ -80,6 +82,7 @@ export const KsDemoStage: React.FC<Props> = ({
     (isFormVisible ? demoSize : 'full') === 'full' ? 'ks-demo-stage--full' : '',
     (demos && demos.length > 1) || canEdit ? 'ks-demo-stage--has-demos' : '',
   );
+
   return (
     <div className={classes}>
       <div
@@ -210,6 +213,28 @@ export const KsDemoStage: React.FC<Props> = ({
                   : null,
               ].filter(Boolean)}
             />
+            <footer className="ks-demo-stage__footer ks-u-margin-top--m">
+              <KsButtonGroup>
+                <KsButton
+                  kind="primary"
+                  size="s"
+                  handleTrigger={() => {
+                    dispatch(
+                      updateTemplateDemo({
+                        patternId,
+                        templateId,
+                        demo,
+                      }),
+                    );
+                  }}
+                >
+                  Save Demo
+                </KsButton>
+                <KsButton size="s" handleTrigger={handleDemoReset}>
+                  Reset Demo
+                </KsButton>
+              </KsButtonGroup>
+            </footer>
           </div>
         </div>
       )}

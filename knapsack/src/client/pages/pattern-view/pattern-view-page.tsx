@@ -24,6 +24,7 @@ import {
   useDispatch,
   updatePatternSlices,
   addTemplate,
+  deletePattern,
 } from '../../store';
 import ErrorCatcher from '../../utils/error-catcher';
 // import DosAndDonts from '../../components/dos-and-donts';
@@ -111,7 +112,8 @@ const PatternViewPage: React.FC<Props> = ({
     <ErrorCatcher>
       <PageWithSidebar
         slottedDetails={
-          canEdit && (
+          canEdit &&
+          templatesList.length !== 0 && (
             <KsPatternSettings
               pattern={pattern}
               activeTemplateId={templateId}
@@ -230,6 +232,13 @@ const PatternViewPage: React.FC<Props> = ({
                   );
                   // delay a beat so server can be ready to render new template
                   setTimeout(() => setHasTemplates(true), 100);
+                }}
+                handleDelete={() => {
+                  dispatch(
+                    deletePattern({
+                      patternId: pattern.id,
+                    }),
+                  );
                 }}
               />
             </div>

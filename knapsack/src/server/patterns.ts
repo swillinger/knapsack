@@ -346,15 +346,16 @@ export class Patterns implements KnapsackDb<PatternsState> {
             }
           }
         }
-        const { ok, message, data } = KnapsackRendererBase.validateSpec(spec);
+        const { ok, message } = KnapsackRendererBase.validateSpec(spec);
 
         if (!ok) {
           const msg = [
             `Spec did not validate for pattern "${pattern.id}" template "${template.id}"`,
             message,
           ].join('\n');
-          console.log(data);
-          log.verbose('Spec that failed', JSON.stringify(spec, null, '  '));
+          log.error('Spec that failed', {
+            spec,
+          });
           throw new Error(msg);
         }
 

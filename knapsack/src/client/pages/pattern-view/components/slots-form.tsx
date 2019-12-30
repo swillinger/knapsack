@@ -1,5 +1,11 @@
 import React from 'react';
-import { KsButton, KsTextField, Select, Icon } from '@knapsack/design-system';
+import {
+  KsButton,
+  KsButtonGroup,
+  KsTextField,
+  Select,
+  Icon,
+} from '@knapsack/design-system';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 import {
@@ -106,6 +112,8 @@ export const KsSlotsForm: React.FC<Props> = ({
     <div className={classes}>
       <Formik
         initialValues={slotsData}
+        // @todo come up with something better than `key` it's caching the `slotsData` too aggressively; need to trigger a remount when it changes sadly. try using "Reset Demo" to test
+        key={JSON.stringify(slotsData)}
         onSubmit={({ values, actions }) => {
           console.log('formik submit', { values, actions });
           // handleData(values);
@@ -152,33 +160,35 @@ export const KsSlotsForm: React.FC<Props> = ({
 
                         const addButtons = (
                           <div className="ks-slots-form__add-buttons">
-                            {isPatternItemsAllowed && (
-                              <KsButton
-                                icon="add"
-                                size="s"
-                                // onKeyPress={() => arrayHelpers.insert(index)} // remove a friend from the list
-                                onClick={() =>
-                                  arrayHelpers.push({
-                                    patternId: '',
-                                    templateId: '',
-                                    demoId: '',
-                                  })
-                                } // remove a friend from the list
-                              >
-                                Pattern Demo
-                              </KsButton>
-                            )}
+                            <KsButtonGroup>
+                              {isPatternItemsAllowed && (
+                                <KsButton
+                                  icon="add"
+                                  size="s"
+                                  // onKeyPress={() => arrayHelpers.insert(index)} // remove a friend from the list
+                                  onClick={() =>
+                                    arrayHelpers.push({
+                                      patternId: '',
+                                      templateId: '',
+                                      demoId: '',
+                                    })
+                                  } // remove a friend from the list
+                                >
+                                  Pattern Demo
+                                </KsButton>
+                              )}
 
-                            {isTextItemsAllowed && (
-                              <KsButton
-                                icon="add"
-                                size="s"
-                                onClick={() => arrayHelpers.push('Text')} // remove a friend from the list
-                                // onKeyPress={() => arrayHelpers.insert(index)} // remove a friend from the list
-                              >
-                                Add Text
-                              </KsButton>
-                            )}
+                              {isTextItemsAllowed && (
+                                <KsButton
+                                  icon="add"
+                                  size="s"
+                                  onClick={() => arrayHelpers.push('Text')} // remove a friend from the list
+                                  // onKeyPress={() => arrayHelpers.insert(index)} // remove a friend from the list
+                                >
+                                  Add Text
+                                </KsButton>
+                              )}
+                            </KsButtonGroup>
                           </div>
                         );
 

@@ -34,6 +34,7 @@ import {
   updateSpec,
   useSelector,
   updateTemplateInfo,
+  deletePattern,
 } from '../../../../store';
 import { KsTemplateSpec, KsSlotInfo } from '../../../../../schemas/patterns';
 import { SpecItemTypes, SlotData } from './shared';
@@ -80,7 +81,7 @@ export const KsPatternSettings: React.FC<Props> = ({
 }: Props) => {
   const dispatch = useDispatch();
 
-  const { templates, title } = pattern;
+  const { templates } = pattern;
   const hasTemplate = templates?.length > 0;
   const template =
     hasTemplate && activeTemplateId
@@ -136,6 +137,9 @@ export const KsPatternSettings: React.FC<Props> = ({
 
   function convertPropData(propDatas: PropTypeData[]): KsTemplateSpec['props'] {
     const props: KsTemplateSpec['props'] = {
+      $schema: 'http://json-schema.org/draft-07/schema',
+      description: pattern.description,
+      type: 'object',
       ...spec.props,
       required: [],
       properties: {},
@@ -235,10 +239,13 @@ export const KsPatternSettings: React.FC<Props> = ({
                 },
               }),
             );
-            //
           }}
           handleDelete={() => {
-            //
+            dispatch(
+              deletePattern({
+                patternId: pattern.id,
+              }),
+            );
           }}
         />
       </div>
@@ -296,7 +303,6 @@ export const KsPatternSettings: React.FC<Props> = ({
               isRequired: false,
               data: {
                 type: 'string',
-                title: 'New Prop',
               },
             };
 
@@ -373,6 +379,10 @@ export const KsPatternSettings: React.FC<Props> = ({
                     if (i !== index) return curSlot;
                     return {
                       ...curSlot,
+                      data: {
+                        ...curSlot.data,
+                        title: newId, // temp convience
+                      },
                       id: removeSpaces(newId),
                     };
                   }),

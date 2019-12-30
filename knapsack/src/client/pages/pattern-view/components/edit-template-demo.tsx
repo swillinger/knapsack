@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { KsButton, SchemaForm } from '@knapsack/design-system';
+import { KsButton, SchemaForm, KsPopover } from '@knapsack/design-system';
 import cn from 'classnames';
 import { JsonSchemaObject } from '@knapsack/core/types';
 import { useSelector } from '../../../store';
@@ -7,14 +7,18 @@ import { files, Files } from '../../../data';
 import './edit-template-demo.scss';
 import { KsFileButtons } from './file-buttons';
 
+type Data = {
+  title?: string;
+  description?: string;
+  path: string;
+  alias: string;
+};
+
 type Props = {
   maxWidth?: number;
-  handleSubmit: (data: { path: string; alias: string }) => void;
+  handleSubmit: (data: Data) => void;
   handleDelete?: () => void;
-  data?: {
-    path: string;
-    alias: string;
-  };
+  data?: Data;
   btnSize?: 's' | 'm';
 };
 
@@ -25,7 +29,7 @@ export const EditTemplateDemo: React.FC<Props> = ({
   btnSize = 'm',
   handleDelete,
 }: Props) => {
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState<Data>(initialData);
   const [errors, setErrors] = useState<{ msg: string }[]>([]);
   const currentTemplateRendererId = useSelector(
     s => s.ui.currentTemplateRenderer,
@@ -72,6 +76,23 @@ export const EditTemplateDemo: React.FC<Props> = ({
     }
   }
 
+  if (typeof data?.title === 'string') {
+    schema.required.push('title');
+    schema.properties.title = {
+      type: 'string',
+      title: 'Title',
+      description: 'A new demo',
+    };
+  }
+
+  if (typeof data?.description === 'string') {
+    schema.properties.description = {
+      type: 'string',
+      title: 'Description',
+      description: '',
+    };
+  }
+
   return (
     <div
       className={classes}
@@ -85,14 +106,30 @@ export const EditTemplateDemo: React.FC<Props> = ({
             dangerouslySetInnerHTML={{ __html: iconSvg }}
           />
           {handleDelete && (
-            <KsButton
-              icon="delete"
-              kind="icon"
-              size="s"
-              flush
-              handleTrigger={handleDelete}
-              className="ks-edit-template-demo__delete"
-            />
+            <KsPopover
+              trigger="click"
+              content={
+                <p>
+                  Are you sure?{' '}
+                  <KsButton
+                    kind="primary"
+                    emphasis="danger"
+                    size="s"
+                    handleTrigger={handleDelete}
+                  >
+                    Yes
+                  </KsButton>
+                </p>
+              }
+            >
+              <KsButton
+                icon="delete"
+                kind="icon"
+                size="s"
+                flush
+                className="ks-edit-template-demo__delete"
+              />
+            </KsPopover>
           )}
         </h5>
         <p className="ks-edit-template-demo__intro ks-u-body-small">
@@ -133,8 +170,8 @@ export const EditTemplateDemo: React.FC<Props> = ({
               return formErrors;
             }}
             showErrorList
-            onSubmit={x => {
-              const { path, alias } = x.formData;
+            onSubmit={({ formData }: { formData: Data }) => {
+              const { path, alias } = formData;
               setErrors([]);
 
               files({
@@ -146,10 +183,7 @@ export const EditTemplateDemo: React.FC<Props> = ({
                 if (result.type === Files.ACTIONS.verify) {
                   const { relativePath, exists } = result.payload;
                   if (exists) {
-                    handleSubmit({
-                      path: relativePath,
-                      alias,
-                    });
+                    handleSubmit(formData);
                   } else {
                     setErrors([
                       {

@@ -10,6 +10,7 @@ import {
   useDispatch,
   addTemplateDataDemo,
   addTemplateTemplateDemo,
+  updateTemplateDemo,
 } from '../../../store';
 import { BASE_PATHS } from '../../../../lib/constants';
 import { TemplateThumbnail } from '../../../components/template-thumbnail';
@@ -72,17 +73,27 @@ export const KsTemplateDemos: React.FC<Props> = ({}: Props) => {
                   content={
                     <EditTemplateDemo
                       data={{
+                        title: aDemo?.title,
+                        description: aDemo?.description ?? '',
                         path: aDemo?.templateInfo?.path,
                         alias: aDemo?.templateInfo?.alias,
                       }}
                       maxWidth={360}
-                      handleSubmit={({ path, alias }) => {
+                      handleSubmit={({ path, alias, title, description }) => {
                         dispatch(
-                          addTemplateTemplateDemo({
-                            alias,
-                            path,
+                          updateTemplateDemo({
                             patternId,
                             templateId,
+                            demo: {
+                              ...aDemo,
+                              title,
+                              description,
+                              templateInfo: {
+                                ...aDemo.templateInfo,
+                                path,
+                                alias,
+                              },
+                            },
                           }),
                         );
                         // toggleOpen();
@@ -206,17 +217,6 @@ export const KsTemplateDemos: React.FC<Props> = ({}: Props) => {
           >
             Data Demo
           </KsButton>
-          {/* <KsButton */}
-          {/*  kind="standard" */}
-          {/*  size="m" */}
-          {/*  handleTrigger={() => { */}
-          {/*    // */}
-          {/*  }} */}
-          {/* > */}
-          {/*  <Icon symbol="add" /> */}
-          {/*  <br /> */}
-          {/*  Data Demo */}
-          {/* </KsButton> */}
         </div>
       </div>
     </nav>

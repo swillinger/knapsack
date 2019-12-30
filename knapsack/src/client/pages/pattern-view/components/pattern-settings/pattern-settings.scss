@@ -1,6 +1,18 @@
 .ks-pattern-settings {
   --text-field-size: var(--space-l);
   --font-base-size: var(--font-size-s);
+  height: 100%;
+  overflow: auto;
+  padding: var(--size-m);
+
+  &:after {
+    // create bottom padding
+    content: " ";
+    display: block;
+    width: 100%;
+    height: var(--size-m);
+  }
+
   .ks-text-field__wrapper > input {
     --text-field-size: var(--space-l);
   }

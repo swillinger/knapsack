@@ -1,18 +1,29 @@
 @import '../../global/breakpoints';
 
-.ks-template-view__page-details-toggle {
-  background-color: var(--c-gray-xxlight);
-  transition: background-color 0.3s ease-in;
-  padding: var(--size-xs);
-  display: flex;
-  align-items: center;
+.ks-template-view__page-details-collapse-ctrl {
   position: absolute;
-  top: var(--space-m);
   right: 0;
-  border-radius: var(--radius-l) 0 0 var(--radius-l);
-  &:hover {
-    cursor: pointer;
-    background-color: var(--c-active-highlight);
+  top: var(--space-m);
+  opacity: 1;
+
+  button {
+    // width: calc(var(--space-l) + 2px);
+    height: var(--space-xl);
+    border-radius: var(--space-xxs) 0 0 var(--space-xxs);
+    padding-left: var(--space-xxs);
+    padding-right: var(--space-xs);
+    border-right-width: 0;
+  }
+
+  &__arrow svg {
+    transform: rotate(-90deg);
+    transition: transform 0.3s ease;
+  }
+
+  &--collapsed {
+    .ks-template-view__page-details-collapse-ctrl__arrow svg {
+      transform: rotate(90deg);
+    }
   }
 }
 

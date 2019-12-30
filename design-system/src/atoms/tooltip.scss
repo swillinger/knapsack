@@ -29,9 +29,12 @@
     }
   }
 
-  &:hover > span {
-    visibility: visible;
-    opacity: 1;
+  &:hover {
+    z-index: 10;
+    & > span {
+      visibility: visible;
+      opacity: 1;
+    }
   }
 
   &[data-position='top'] {

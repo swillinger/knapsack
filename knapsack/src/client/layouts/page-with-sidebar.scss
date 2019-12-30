@@ -45,9 +45,11 @@
   &__details {
     grid-area: details;
     width: calc(328px + (var(--size-m) * 2));
-    padding: var(--size-m);
+    height: calc(100vh - (var(--space-xl) * 2));
     border-left: solid 1px var(--c-border);
     transition: width ease-in 0.3s;
+    position: relative;
+    z-index: 1;
   }
 }
 
@@ -94,12 +96,14 @@
 
     button {
       width: calc(var(--space-l) + 2px);
+      height: var(--space-xl);
       border-radius: 0 var(--space-xxs) var(--space-xxs) 0;
     }
 
     svg {
       transform: rotate(90deg);
       transition: transform 0.3s ease;
+      vertical-align: top;
     }
 
     &--collapsed {

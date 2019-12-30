@@ -37,8 +37,8 @@ export class TabbedPanel extends Component<Props, State> {
   render() {
     const { bleed = '30px' } = this.props;
     // @todo refactor these colors
-    const colorTheme = 'var(--c-bg-dark)';
-    const colorThemeAccent = 'var(--c-primary)';
+    const colorTheme = 'var(--c-bg-brand)';
+    const colorThemeAccent = 'var(--c-active)';
     const tabs = this.props.items.map(item => {
       const isPropVariation = !!item.children.props.prop;
       return (

@@ -52,7 +52,7 @@ const PageBuilderEditForm = ({
       onKeyPress={handleHideEditForm}
       type="submit"
       tabIndex="0"
-      className="button button--color-blue button--size-small"
+      className="button button--color-blue button--space-xsmall"
       primary
     >
       Done
@@ -63,7 +63,7 @@ const PageBuilderEditForm = ({
       onKeyPress={handleClearData}
       type="submit"
       tabIndex="0"
-      className="button button--color-iron button--size-small"
+      className="button button--color-iron button--space-xsmall"
     >
       Clear
     </KsButton>

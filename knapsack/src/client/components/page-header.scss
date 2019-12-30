@@ -1,12 +1,12 @@
 .ks-page-header {
-  margin-bottom: var(--size-m);
+  margin-bottom: var(--space-m);
 
   &--is-empty {
     margin-bottom: 0;
   }
 
   &__section {
-    color: var(--c-gray-light);
+    color: var(--c-text-subdued);
     font-size: 1rem;
     margin-bottom: 0;
   }

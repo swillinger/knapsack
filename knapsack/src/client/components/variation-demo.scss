@@ -6,7 +6,7 @@
   }
 
   &__variation-item {
-    padding: var(--size-s) var(--size-m);
+    padding: var(--space-xs) var(--space-m);
     border-bottom: 1px solid;
     .field {
       margin-top: 0 !important;
@@ -22,7 +22,7 @@
 
     h4 {
       border-bottom: 1px solid;
-      padding: var(--size-m);
+      padding: var(--space-m);
       margin: 0;
     }
   }
@@ -77,7 +77,7 @@
     }
 
     details[open] summary {
-      color: var(--c-black);
+      color: var(--c-text-default);
     }
 
     pre {

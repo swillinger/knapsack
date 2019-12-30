@@ -20,7 +20,7 @@
     text-indent: -9999px;
     width: 50px;
     height: 25px;
-    background: var(--c-gray-light);
+    background: var(--c-button-cancel);
     display: inline-block;
     border-radius: 50px;
     position: relative;
@@ -33,7 +33,7 @@
     left: 5px;
     width: 15px;
     height: 15px;
-    background: var(--c-white);
+    background: var(--c-bg);
     border-radius: 22px;
     transition: 0.3s;
   }

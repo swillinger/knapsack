@@ -5,7 +5,7 @@
 
   &__label-text {
     display: block;
-    margin-bottom: var(--size-xxs);
+    margin-bottom: var(--space-xxxs);
 
     .ks-select--size-s & {
       font-size: var(--font-size-s);
@@ -13,7 +13,7 @@
 
     .ks-select--label-inline & {
       display: inline-block;
-      margin-right: var(--size-xxs);
+      margin-right: var(--space-xxxs);
 
       &:after {
         content: ':';

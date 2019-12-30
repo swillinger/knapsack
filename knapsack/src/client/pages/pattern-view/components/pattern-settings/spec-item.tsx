@@ -107,15 +107,15 @@ export const KsSpecItem: React.FC<SpecItemProps> = ({
     <div
       ref={ref}
       className={`ks-spec-item ${isDragging ? 'ks-spec-item--dragging' : ''}`}
-      style={{ marginBottom: 'var(--size-s)', opacity }}
+      style={{ marginBottom: 'var(--space-xs)', opacity }}
     >
       <header
         className="ks-spec-item__header"
         style={{
           display: 'flex',
           alignItems: 'center',
-          padding: 'var(--size-s)',
-          borderBottom: isOpen ? 'var(--util-border)' : '',
+          padding: 'var(--space-xs)',
+          borderBottom: isOpen ? 'var(--c-frame)' : '',
           backgroundColor: 'var(--c-shade)',
         }}
       >
@@ -143,7 +143,7 @@ export const KsSpecItem: React.FC<SpecItemProps> = ({
             style={{
               transform: isOpen ? '' : 'rotate(90deg)',
               transition: 'transform .15s ease-in',
-              marginLeft: 'var(--size-s)',
+              marginLeft: 'var(--space-xs)',
             }}
           >
             <KsButton
@@ -160,7 +160,7 @@ export const KsSpecItem: React.FC<SpecItemProps> = ({
         className="ks-spec-item__body ks-u-shade-bg"
         style={{
           display: isOpen ? 'block' : 'none',
-          padding: 'var(--size-s)',
+          padding: 'var(--space-xs)',
           backgroundColor: 'var(--c-shade)',
         }}
       >

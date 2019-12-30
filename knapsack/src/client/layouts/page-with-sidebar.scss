@@ -44,9 +44,9 @@
 
   &__details {
     grid-area: details;
-    width: calc(328px + (var(--size-m) * 2));
+    width: calc(328px + (var(--space-m) * 2));
     height: calc(100vh - (var(--space-xl) * 2));
-    border-left: solid 1px var(--c-border);
+    border-left: solid 1px var(--c-frame);
     transition: width ease-in 0.3s;
     position: relative;
     z-index: 1;

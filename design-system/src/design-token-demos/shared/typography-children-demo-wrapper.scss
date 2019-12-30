@@ -20,9 +20,9 @@
   }
 
   blockquote[contenteditable]:hover {
-    border-top: 1px dashed var(--c-gray-light);
-    border-right: 1px dashed var(--c-gray-light);
-    border-bottom: 1px dashed var(--c-gray-light);
+    border-top: 1px dashed var(--c-frame);
+    border-right: 1px dashed var(--c-frame);
+    border-bottom: 1px dashed var(--c-frame);
   }
 
   [contenteditable]:not(blockquote) {
@@ -31,6 +31,6 @@
   }
 
   [contenteditable]:not(blockquote):hover {
-    border: 1px dashed var(--c-gray-light);
+    border: 1px dashed var(--c-frame);
   }
 }

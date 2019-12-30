@@ -3,7 +3,7 @@
     max-width: 100%;
     margin-bottom: 10px;
     padding: 2rem;
-    border: var(--c-gray-light) solid 1px;
+    border: var(--c-frame) solid 1px;
     text-align: center;
   }
 
@@ -35,10 +35,10 @@
     font-weight: bold;
     display: inline;
     padding: 0.35rem 0.75rem;
-    background-color: var(--c-red-ghost);
+    background-color: var(--c-danger);
 
     &--pass {
-      background-color: var(--c-green-ghost);
+      background-color: var(--c-success);
     }
   }
 
@@ -49,12 +49,12 @@
     display: inline;
     padding: 0.35rem 1rem;
 
-    border: 1px solid var(--c-red-ghost);
-    color: var(--c-red-ghost);
+    border: 1px solid var(--c-danger);
+    color: var(--c-danger);
 
     &--success {
-      border-color: var(--c-green-ghost);
-      color: var(--c-green-ghost);
+      border-color: var(--c-success);
+      color: var(--c-success);
     }
   }
 
@@ -117,16 +117,16 @@
   }
 
   &__results {
-    color: var(--c-red-ghost);
+    color: var(--c-danger);
     &--pass {
-      color: var(--c-green-ghost);
+      color: var(--c-success);
     }
   }
 
   &__new-ratio {
-    color: var(--c-red-ghost);
+    color: var(--c-danger);
     &--pass {
-      color: var(--c-green-ghost);
+      color: var(--c-success);
     }
   }
 

@@ -7,7 +7,7 @@
   }
 
   &__cube-one {
-    background-color: var(--c-gray-xxdark);
+    background-color: var(--c-bg-brand);
     width: 15px;
     height: 15px;
     position: absolute;
@@ -17,7 +17,7 @@
   }
 
   &__cube-two {
-    background-color: var(--c-gray-xxdark);
+    background-color: var(--c-bg-brand);
     width: 15px;
     height: 15px;
     position: absolute;
@@ -72,12 +72,12 @@
       display: flex;
     }
     &-track {
-      stroke: var(--c-gray-light)
+      stroke: var(--c-frame);
     }
     &-head {
       transform-origin: center;
       transition: stroke-dashoffset .2s cubic-bezier(.4,1,.75,.9);
-      stroke: var(--c-primary);
+      stroke: var(--c-bg-brand);
       stroke-linecap: round;
     }
   }

@@ -67,7 +67,7 @@ export const Sidebar: React.FC = () => {
   return (
     <div className="ks-sidebar">
       <div className="ks-sidebar__search-container">
-        <div className="ks-text-field ks-text-field--flush ks-text-field--size-m">
+        <div className="ks-text-field ks-text-field--flush ks-text-field--space-m">
           <div className="ks-text-field__wrapper ks-text-field__wrapper--icon ks-text-field__input-icon-wrapper">
             <input
               type="text"

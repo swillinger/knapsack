@@ -5,7 +5,7 @@
   --button-click: var(--c-button-primary-active);
   --link-color: var(--c-text-link);
   //--form-color: var(--white);
-  --input-color: var(--c-gray-light);
+  --input-color: var(--c-text-subdued);
   //--input-background-color: var(--white);
 
   //--font-family: "Amazon Ember","Helvetica Neue Light","Helvetica Neue","Helvetica" ,"Arial","sans-serif";
@@ -20,8 +20,8 @@
 
   //--color-background: #232F3E;
 
-  --color-secondary: var(--c-secondary);
-  --color-secondary-accent: var(--c-secondary);
+  --color-secondary: var(--c-button-standard);
+  --color-secondary-accent: var(--c-frame);
 
   --color-danger: var(--c-danger);
   --color-error: var(--c-danger);
@@ -31,13 +31,13 @@
 
   //--gradient-blaze: linear-gradient(270deg, #FFC300 0%, #FF9000 100%);
 
-  --color-blue: var(--c-blue);
-  --color-purple: var(--c-green);
-  --color-gray: var(--c-gray);
+  --color-blue: var(--c-button-primary);
+  // --color-purple: ;
+  --color-gray: var(--c-frame);
   --color-white: white;
 
-  --input-border: var(--util-border);
-  --input-padding: var(--size-xs) var(--size-s);
+  --input-border: var(--c-frame);
+  --input-padding: var(--space-xxs) var(--space-xs);
 
   --box-shadow: var(--shadow);
   --button-height: var(--space-xl);

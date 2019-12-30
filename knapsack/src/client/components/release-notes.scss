@@ -15,9 +15,9 @@
   }
 
   &__commit-hash {
-    background-color: var(--c-gray-light);
+    background-color: var(--c-shade);
     padding: 0.35rem 0.75rem;
-    color: var(--c-black) !important;
+    color: var(--c-text-default) !important;
     border-radius: 0;
     width: 92px;
   }

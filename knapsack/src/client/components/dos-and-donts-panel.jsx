@@ -24,8 +24,8 @@ export default function DosAndDontsPanel(props) {
       className="ks-dos-and-donts-panel"
       style={{
         borderBottomColor: props.item.do
-          ? 'var(--c-green-ghost)'
-          : 'var(--c-red-ghost)',
+          ? 'var(--c-success)'
+          : 'var(--c-danger)',
       }}
     >
       <div>
@@ -33,9 +33,7 @@ export default function DosAndDontsPanel(props) {
         <figcaption>
           <strong
             style={{
-              color: props.item.do
-                ? 'var(--c-green-ghost)'
-                : 'var(--c-red-ghost)',
+              color: props.item.do ? 'var(--c-success)' : 'var(--c-danger)',
             }}
           >
             {props.item.do ? 'Do: ' : "Don't: "}

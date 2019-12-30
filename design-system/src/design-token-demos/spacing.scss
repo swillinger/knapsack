@@ -5,7 +5,7 @@
   padding: 1rem;
 
   &:nth-child(2n) {
-    background-color: var(--c-gray-xxlight);
+    background-color: var(--c-shade);
   }
 
   span + div {
@@ -19,7 +19,6 @@
 
   &__spacing-outer {
     box-sizing: border-box;
-    background-color: var(--c-yellow);
-    border: 1px solid var(--c-black);
+    background-color: var(--c-bg-brand);
   }
 }

@@ -48,9 +48,9 @@
     word-break: normal;
     word-wrap: break-word;
 
-    color: white;
+    color: var(--c-text-inverse);
     background-color: hsl(0, 0%, 8%); /* #141414 */
-    text-shadow: 0 -0.1em 0.2em var(--c-black);
+    text-shadow: 0 -0.1em 0.2em var(--c-text-default);
   }
 
   &__prism-token {

@@ -16,7 +16,7 @@
 
   .error-detail {
     font-size: var(--font-size-s);
-    padding-top: var(--size-xs);
+    padding-top: var(--space-xxs);
   }
 
   .text-danger {
@@ -25,10 +25,10 @@
 
   .panel-danger {
     background-color: var(--c-shade);
-    padding: var(--size-s);
+    padding: var(--space-xs);
     border-radius: var(--radius-l);
     .ks-u-shade-bg & {
-      background-color: var(--c-white);
+      background-color: var(--c-bg);
     }
   }
 }

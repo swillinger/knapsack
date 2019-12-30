@@ -1,5 +1,5 @@
 .page-builder-slice {
-  background: var(--c-white);
+  background: var(--c-bg);
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
@@ -10,12 +10,12 @@
   }
 
   &:active {
-    border: solid 1px var(--c-gray);
+    border: solid 1px var(--c-frame);
   }
 
   &__icon-wrapper {
-    background: var(--c-gray-xxlight);
-    border: solid 1px var(--c-gray);
+    background: var(--c-shade);
+    border: solid 1px var(--c-frame);
     box-sizing: border-box;
     margin-bottom: 0;
     height: 100%;
@@ -24,13 +24,13 @@
     margin-left: 1rem;
 
     &--active {
-      background: var(--c-yellow-xlight);
+      background: var(--c-active-highlight);
       border-left: solid 1px var(--c-active);
     }
   }
   &:active &__icon-wrapper {
-    background: var(--c-gray-xxlight);
-    border-color: var(--c-gray);
+    background: var(--c-shade);
+    border-color: var(--c-frame);
     border-width: 0 0 0 1px;
   }
 
@@ -61,7 +61,7 @@
 
 @keyframes briefHighlight {
   from {
-    box-shadow: 0 0 1.5rem var(--c-yellow-light);
+    box-shadow: 0 0 1.5rem var(--c-active-highlight);
   } to {
     box-shadow: none;
   }

@@ -6,17 +6,17 @@
   }
 
   &__styled-link {
-    height: var(--util-btn-height);
-    line-height: var(--util-btn-height);
+    height: var(--space-xl);
+    line-height: var(--space-xl);
     border: none;
-    color: var(--c-text-black);
+    color: var(--c-text-default);
     font-size: 0.75rem;
     font-weight: 400;
     font-family: system-ui;
     padding: 1px 7px 2px;
     &:link,
     &:visited {
-      color: var(--c-text-black);
+      color: var(--c-text-default);
     }
     &:hover {
       text-decoration: none;

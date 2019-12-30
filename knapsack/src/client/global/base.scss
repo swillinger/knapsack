@@ -1,5 +1,5 @@
 body {
-  color: var(--c-text-black);
+  color: var(--c-text-default);
   font-family: var(--font-family);
   font-size: var(--font-base-size);
   margin: 0;
@@ -40,7 +40,7 @@ hr {
   border-width: 1px 0 0;
   color: var(--c-frame);
   width: 75%;
-  margin: var(--size-l) auto;
+  margin: var(--space-l) auto;
 }
 
 code {
@@ -59,7 +59,7 @@ pre {
   margin: 0;
   code {
     padding: 1.75em;
-    background: var(--c-black);
+    background: var(--c-text-default);
     color: white;
     width: 100%;
     display: block;

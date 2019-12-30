@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.15](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.14...v2.0.0-beta.15) (2019-12-30)
+
+
+### Bug Fixes
+
+* auto pick a free server port ([6eec082](https://github.com/basaltinc/knapsack/commit/6eec082e4b716883543e5e066c0eb20e4f2628b9))
+
+
+
+
+
 # [2.0.0-beta.11](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.10...v2.0.0-beta.11) (2019-12-30)
 
 

@@ -7,11 +7,11 @@
   border: dashed 1px rgba(0,0,0,3);
 
   &--active {
-    border: solid 1px var(--c-yellow);
+    border: solid 1px var(--c-active);
 
     &:hover,
     &:active {
-      border: 1px dashed var(--c-yellow);
+      border: 1px dashed var(--c-active);
     }
   }
 }

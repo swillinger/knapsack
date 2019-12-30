@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.14](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.13...v2.0.0-beta.14) (2019-12-30)
+
+
+### Bug Fixes
+
+* quickly style pass pattern details ([7f4dc02](https://github.com/basaltinc/knapsack/commit/7f4dc026ba55cef6e8848796362b7bb6cd771272))
+
+
+
+
+
 # [2.0.0-beta.13](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.12...v2.0.0-beta.13) (2019-12-30)
 
 **Note:** Version bump only for package @knapsack/monorepo

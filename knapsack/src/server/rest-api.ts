@@ -261,7 +261,7 @@ export function getApiRoutes({
             });
 
             try {
-              await fs.writeFile(fullPath, code, 'utf-8');
+              await fs.writeFile(fullPath, code, 'utf8');
               response = {
                 type: Files.ACTIONS.saveTemplateDemo,
                 payload: {

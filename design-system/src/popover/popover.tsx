@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, CSSProperties } from 'react';
 import Popover, { PopoverProps, ArrowContainer } from 'react-tiny-popover'; // https://www.npmjs.com/package/react-tiny-popover
 import './popover.scss';
 import { useHover } from '../utils/hooks';
@@ -7,6 +7,8 @@ type Props = Omit<PopoverProps, 'isOpen'> & {
   isOpen?: boolean;
   isHoverTriggered?: boolean;
   trigger?: 'prop' | 'hover' | 'click';
+  maxWidth?: number;
+  hasArrow?: boolean;
 };
 
 export const KsPopover: React.FC<Props> = ({
@@ -14,6 +16,8 @@ export const KsPopover: React.FC<Props> = ({
   content,
   isOpen,
   children,
+  maxWidth,
+  hasArrow = true,
   trigger = 'hover',
   ...rest
 }: Props) => {
@@ -24,9 +28,10 @@ export const KsPopover: React.FC<Props> = ({
       setOpen(cur => !cur);
     }
   };
-  // @todo re-enable, fix offset arrow caused by margin
-  const hasArrow = true;
-
+  const contentStyle: CSSProperties = {};
+  if (maxWidth) {
+    contentStyle.maxWidth = `${maxWidth}px`;
+  }
   let open;
   switch (trigger) {
     case 'click':
@@ -57,7 +62,9 @@ export const KsPopover: React.FC<Props> = ({
       padding={10}
       content={({ position, targetRect, popoverRect }) => {
         const popoverContent = (
-          <div className="ks-popover__box-inner">{content}</div>
+          <div className="ks-popover__box-inner" style={contentStyle}>
+            {content}
+          </div>
         );
         if (hasArrow) {
           return (

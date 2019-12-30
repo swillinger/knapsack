@@ -190,8 +190,8 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
           return remove(path);
         }
         switch (encoding) {
-          case 'utf-8':
-            return writeFile(path, contents, { encoding: 'utf8' });
+          case 'utf8':
+            return writeFile(path, contents, { encoding });
           case 'base64': {
             const data = Buffer.from(contents, 'base64');
             return writeFile(path, data);

@@ -196,7 +196,7 @@ export function qsParse(querystring: string): object {
         return keywords[str];
       }
 
-      // utf-8
+      // utf8
       try {
         return decodeURIComponent(strWithoutPlus);
       } catch (e) {

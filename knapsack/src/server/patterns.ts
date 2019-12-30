@@ -17,6 +17,7 @@
 import { readJSON } from 'fs-extra';
 import { join } from 'path';
 import globby from 'globby';
+import produce from 'immer';
 import chokidar from 'chokidar';
 import { version as iframeResizerVersion } from 'iframe-resizer/package.json';
 import { validateDataAgainstSchema } from '@knapsack/schema-utils';
@@ -191,6 +192,7 @@ export class Patterns implements KnapsackDb<PatternsState> {
 
         pattern.templates.forEach(template => {
           if (template?.spec?.isInferred) {
+            // if it's inferred, we don't want to save `spec.props` or `spec.slots`
             template.spec = {
               isInferred: true,
             };
@@ -216,7 +218,7 @@ export class Patterns implements KnapsackDb<PatternsState> {
       allFiles.push({
         isDeleted: true,
         contents: '',
-        encoding: 'utf-8',
+        encoding: 'utf8',
         path: join(this.dataDir, `knapsack.pattern.${id}.json`),
       });
     });
@@ -224,72 +226,124 @@ export class Patterns implements KnapsackDb<PatternsState> {
     return allFiles;
   }
 
-  // async validatePatterns(patterns: KnapsackPattern[]): Promise<void> {}
-
   async updatePatternData(patternConfigPath: string): Promise<void> {
     const finish = timer();
     const pattern: KnapsackPattern = await readJSON(patternConfigPath);
     let { templates = [] } = pattern;
-    // @todo validate: template path exists, has template render that exists, using assetSets that exist
+    // @todo validate: has template render that exists, using assetSets that exist
     templates = await Promise.all(
       templates.map(async template => {
         let { spec = {} } = template;
+        // if we come across `{ typeof: 'function' }` in JSON Schema, the demo won't validate since we store as a string - i.e. `"() => alert('hi')"`, so we'll turn it into a string:
+        const propsValidationSchema = produce(spec?.props, draft => {
+          Object.values(draft?.properties || {}).forEach(prop => {
+            if ('typeof' in prop && prop.typeof === 'function') {
+              delete prop.typeof;
+              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+              // @ts-ignore
+              prop.type = 'string';
+            }
+          });
+        });
 
-        if (spec?.props && template.demosById) {
+        if (template.demosById) {
           // validating data demos against spec
-          Object.values(template.demosById)
-            .filter(isDataDemo)
-            .forEach((demo, i) => {
-              // @todo if we come across `{ typeof: 'function' }` in JSON Schema, the demo won't validate since we store as a string - i.e. `"() => alert('hi')"`
-              const isJsPresent = false;
-              const data = isJsPresent
-                ? {
-                    ...demo.data.props,
-                    // handleClick: () => {},
-                  }
-                : demo.data.props;
-              const results = validateDataAgainstSchema(spec.props, data);
-              if (results.ok) {
-                // console.log(`ok - ${pattern.id} ${template.id} ${i}`);
-              } else {
+          Object.values(template.demosById).forEach((demo, i) => {
+            if (isDataDemo(demo) && spec?.props) {
+              const results = validateDataAgainstSchema(
+                propsValidationSchema,
+                demo.data.props,
+              );
+              if (!results.ok) {
                 log.warn(
                   `invalid demo: ${pattern.id}, ${template.id}, ${demo.id}`,
-                  null,
+                  results,
                   'pattern data',
                 );
-                // console.log(results.message);
-                // console.log(demo.data.props);
-                // console.log();
               }
-            });
+            }
+
+            if (isTemplateDemo(demo)) {
+              const { exists, absolutePath, relativePathFromCwd } = resolvePath(
+                {
+                  path: template.path,
+                  resolveFromDirs: [this.dataDir],
+                },
+              );
+
+              if (!exists) {
+                log.error('Template demo file does not exist!', {
+                  patternId: pattern.id,
+                  templateId: template.id,
+                  demoId: demo.id,
+                  path: template.path,
+                  resolvedAbsolutePath: absolutePath,
+                });
+                throw new Error(`Template demo file does not exist!`);
+              }
+
+              this.filePathsThatTriggerNewData.set(
+                absolutePath,
+                patternConfigPath,
+              );
+            }
+          });
         }
 
         // inferring specs
         if (spec?.isInferred) {
           const renderer = this.templateRenderers[template.templateLanguageId];
           if (renderer?.inferSpec) {
-            let path;
+            const { exists, absolutePath, relativePathFromCwd } = resolvePath({
+              path: template.path,
+              resolveFromDirs: [this.dataDir],
+            });
+
+            if (!exists) {
+              throw new Error(`File does not exist: "${template.path}"`);
+            }
+            this.filePathsThatTriggerNewData.set(
+              absolutePath,
+              patternConfigPath,
+            );
             try {
-              path = require.resolve(template.path);
-            } catch (e) {
-              const relPath = join(this.dataDir, template.path);
-              path = join(process.cwd(), relPath);
-            }
-            if (!fileExists(path)) {
-              throw new Error(`File does not exist: ${path}`);
-            }
-            this.filePathsThatTriggerNewData.set(path, patternConfigPath);
-            spec = {
-              ...spec,
-              ...(await renderer.inferSpec({
-                templatePath: path,
+              const inferredSpec = await renderer.inferSpec({
+                templatePath: absolutePath,
                 template,
-              })),
-              isInferred: true,
-            };
-            // console.log('inferred spec');
-            // console.log(spec);
-            // console.log(spec?.props?.properties);
+              });
+              if (inferredSpec === false) {
+                log.warn(
+                  `Could not infer spec of pattern "${pattern.id}", template "${template.id}"`,
+                  { absolutePath },
+                );
+              } else {
+                const { ok, message } = KnapsackRendererBase.validateSpec(
+                  inferredSpec,
+                );
+                if (!ok) {
+                  throw new Error(message);
+                }
+                log.verbose(
+                  `Success inferring spec of pattern "${pattern.id}", template "${template.id}"`,
+                  inferredSpec,
+                );
+                spec = {
+                  ...spec,
+                  ...inferredSpec,
+                  isInferred: true,
+                };
+              }
+            } catch (err) {
+              console.log(err);
+              console.log();
+              log.error(
+                `Error inferring spec of pattern "${pattern.id}", template "${template.id}": ${err.message}`,
+                {
+                  absolutePath,
+                },
+              );
+              process.exit(1);
+            }
           }
         }
         const { ok, message, data } = KnapsackRendererBase.validateSpec(spec);
@@ -315,7 +369,7 @@ export class Patterns implements KnapsackDb<PatternsState> {
       ...pattern,
       templates,
     };
-    log.info(`${finish()}s for ${pattern.id}`, null, 'pattern data');
+    log.silly(`${finish()}s for ${pattern.id}`, null, 'pattern data');
   }
 
   async updatePatternsData() {
@@ -344,6 +398,7 @@ Resolved absolute path: ${path}
       );
     });
     this.watcher.add([...this.filePathsThatTriggerNewData.values()]);
+
     this.isReady = true;
     log.verbose(`updatePatternsData took: ${s()}`, null, 'pattern data');
     emitPatternsDataReady(this.allPatterns);

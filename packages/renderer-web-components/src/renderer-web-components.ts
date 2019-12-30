@@ -62,7 +62,7 @@ export class KnapsackWebComponentRenderer extends KnapsackRendererBase
           templateId: template.id,
           demoId: demo.id,
         });
-        return readFile(templateDemoPath, 'utf-8');
+        return readFile(templateDemoPath, 'utf8');
       }
       case 'data': {
         const {

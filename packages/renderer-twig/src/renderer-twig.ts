@@ -9,7 +9,7 @@ import { join } from 'path';
 import { readFile, readFileSync } from 'fs-extra';
 import { getTwigUsage } from './utils';
 
-const iconSvg = readFileSync(join(__dirname, '../twig-logo.svg'), 'utf-8');
+const iconSvg = readFileSync(join(__dirname, '../twig-logo.svg'), 'utf8');
 
 // @todo add types
 // type TwigRendererConfig = import('@basalt/twig-renderer').TwigRendererConfig;
@@ -59,7 +59,7 @@ class KnapsackTwigRenderer extends KnapsackRendererBase
           templateId: template.id,
           demoId: demo.id,
         });
-        return readFile(templateDemoPath, 'utf-8');
+        return readFile(templateDemoPath, 'utf8');
       }
       case 'data': {
         const {

@@ -1,7 +1,12 @@
-import { flattenArray, flattenNestedArray } from '../lib/utils';
+import fs from 'fs-extra';
+import { join } from 'path';
+import { flattenArray, flattenNestedArray, timer } from '../lib/utils';
 import * as log from './log';
 import { KnapsackBrain, Patterns } from '../schemas/main-types';
-import { KnapsackConfig } from '../schemas/knapsack-config';
+import {
+  KnapsackConfig,
+  KnapsackTemplateRenderer,
+} from '../schemas/knapsack-config';
 import { KnapsackPattern } from '../schemas/patterns';
 
 export async function init(ksBrain: KnapsackBrain): Promise<void> {
@@ -24,6 +29,52 @@ export async function init(ksBrain: KnapsackBrain): Promise<void> {
   log.info('Done: Initializing');
 }
 
+export async function writeTemplateMeta({
+  templateRenderers,
+  allPatterns,
+  distDir,
+}: {
+  templateRenderers: KnapsackTemplateRenderer[];
+  allPatterns: KnapsackPattern[];
+  distDir: string;
+}): Promise<void> {
+  const getTime = timer();
+  await Promise.all(
+    allPatterns.map(async pattern => {
+      await Promise.all(
+        pattern.templates.map(async template => {
+          const renderer = templateRenderers.find(
+            ({ id }) => id === template.templateLanguageId,
+          );
+          if (!renderer) {
+            throw new Error(
+              `Missing renderer "${template.templateLanguageId}" for patternId: "${pattern.id}" templateId: "${template.id}"`,
+            );
+          }
+          if (!renderer.getTemplateMeta) return;
+
+          const files = await renderer.getTemplateMeta({
+            pattern,
+            template,
+          });
+          if (files?.length > 0) {
+            const dir = join(distDir, 'meta', pattern.id);
+            await fs.emptyDir(dir);
+            await Promise.all(
+              files.map(async file =>
+                fs.writeFile(join(dir, file.path), file.contents, {
+                  encoding: file.encoding,
+                }),
+              ),
+            );
+          }
+        }),
+      );
+    }),
+  );
+  log.verbose(`writeTemplateMeta took ${getTime()}s`);
+}
+
 export async function build({
   config,
   patterns,
@@ -31,7 +82,13 @@ export async function build({
   config: KnapsackConfig;
   patterns: Patterns;
 }): Promise<void> {
+  const getTime = timer();
   log.info('Building...');
+  await writeTemplateMeta({
+    allPatterns: patterns.allPatterns,
+    templateRenderers: config.templateRenderers,
+    distDir: config.dist,
+  });
   await Promise.all(
     config.templateRenderers.map(async templateRenderer => {
       if (!templateRenderer.build) return;
@@ -43,7 +100,9 @@ export async function build({
       log.info('Built', null, `templateRenderer:${templateRenderer.id}`);
     }),
   );
+
   log.info('Knapsack built', null, 'build');
+  log.verbose(`Took ${getTime()}s`);
 }
 
 export async function testPatternRenders(

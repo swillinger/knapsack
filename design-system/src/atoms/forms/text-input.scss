@@ -1,5 +1,5 @@
 .ks-text-field {
-  margin-bottom: var(--space-m);
+  margin-top: var(--space-m);
 
   &__label {
     line-height: var(--space-l);
@@ -27,11 +27,16 @@
     }
   }
 
-  &__description {
+  &__description,
+  &__description > p {
     font-size: var(--font-size-s);
     line-height: var(--space-m);
     color: var(--c-text-subdued);
+  }
+
+  &__description {
     margin-top: var(--space-xxs);
+    margin-left: var(--space-xxs);
   }
 
   &__error {

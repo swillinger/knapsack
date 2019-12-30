@@ -1,5 +1,5 @@
-import { KnapsackDesignToken } from '@knapsack/core/dist/types';
-import { KsCloudConfig } from '@knapsack/core/dist/cloud';
+import { KnapsackDesignToken } from '@knapsack/core/types';
+import { KsCloudConfig, KnapsackFile } from '@knapsack/core/dist/cloud';
 import {
   KnapsackPattern,
   KnapsackPatternTemplate,
@@ -68,7 +68,11 @@ export interface KnapsackTemplateRendererBase {
   inferSpec?: ({
     template: KnapsackPatternTemplate,
     templatePath: string,
-  }) => Promise<KsTemplateSpec>;
+  }) => Promise<KsTemplateSpec | false>;
+  getTemplateMeta?: (opt: {
+    pattern: KnapsackPattern;
+    template: KnapsackPatternTemplate;
+  }) => Promise<KnapsackFile[]>;
 }
 
 export interface KnapsackRenderParams {

@@ -1,4 +1,4 @@
-import { JsonSchemaObject } from '@knapsack/core/dist/types';
+import { JsonSchemaObject } from '@knapsack/core/types';
 import { KnapsackCustomPageSlice } from './custom-pages';
 
 /**

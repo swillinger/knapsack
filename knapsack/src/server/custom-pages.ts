@@ -88,7 +88,7 @@ export class CustomPages implements KnapsackDb<KnapsackCustomPagesData> {
       allFiles.push({
         isDeleted: true,
         contents: '',
-        encoding: 'utf-8',
+        encoding: 'utf8',
         path: join(this.dataDir, 'knapsack.custom-page.*.yml'),
       });
     });

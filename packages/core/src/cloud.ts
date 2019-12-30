@@ -1,14 +1,6 @@
-import { GenericResponse } from '@knapsack/core/src/types/misc';
+import { GenericResponse, KnapsackFile } from './types/misc';
 
-export interface KnapsackFile {
-  contents: string;
-  path: string;
-  encoding: 'utf-8' | 'base64';
-  /**
-   * File should be deleted
-   */
-  isDeleted?: boolean;
-}
+export { KnapsackFile };
 
 export type KsUserInfo = {
   username?: string;

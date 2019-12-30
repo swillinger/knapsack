@@ -19,9 +19,9 @@ import program from 'commander';
 import { join, dirname } from 'path';
 import { writeFileSync, ensureDirSync, readJSONSync } from 'fs-extra';
 import * as log from './log';
-import { knapsackEvents, EVENTS } from '../server/events';
+import { knapsackEvents, EVENTS, KnapsackEventsData } from '../server/events';
 import { serve } from '../server/server';
-import { init, build, testPatternRenders } from './commands';
+import { init, build, testPatternRenders, writeTemplateMeta } from './commands';
 import { getMeta } from '../lib/config';
 import { bootstrapFromConfigFile } from '../lib/bootstrap';
 import { KnapsackPattern } from '../schemas/patterns';
@@ -101,8 +101,23 @@ program.command('build').action(async () => {
 program.command('start').action(async () => {
   await init(ksBrain);
   log.info('Starting...');
+  await writeTemplateMeta({
+    allPatterns: patterns.allPatterns,
+    templateRenderers: config.templateRenderers,
+    distDir: config.dist,
+  });
   const meta = await getMeta(config);
   const templateRendererWatches = config.templateRenderers.filter(t => t.watch);
+  knapsackEvents.on(
+    EVENTS.PATTERNS_DATA_READY,
+    (allPatterns: KnapsackEventsData['PATTERNS_DATA_READY']) => {
+      writeTemplateMeta({
+        allPatterns,
+        templateRenderers: config.templateRenderers,
+        distDir: config.dist,
+      });
+    },
+  );
 
   return Promise.all([
     // patterns.watch(), // @todo restore

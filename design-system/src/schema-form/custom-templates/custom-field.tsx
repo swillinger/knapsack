@@ -26,6 +26,7 @@ export default function CustomField(props: FieldTemplateProps) {
     schema,
     uiSchema,
   } = props;
+  const extraClassNames: string[] = [];
   const fieldDescription = description.props?.description;
   let inputContent = <div />;
   const textWrapperInputs = ['string', 'integer', 'number'];
@@ -51,11 +52,10 @@ export default function CustomField(props: FieldTemplateProps) {
     // ) {
     // <KsTextField />
   } else {
+    extraClassNames.push('ks-text-field');
     inputContent = (
-      <div className="ks-text-field">
-        <div className="ks-text-input-wrapper ks-text-field__wrapper">
-          {children}
-        </div>
+      <div className="ks-text-input-wrapper ks-text-field__wrapper">
+        {children}
       </div>
     );
     // inputContent = children;
@@ -63,11 +63,16 @@ export default function CustomField(props: FieldTemplateProps) {
   /* eslint-disable no-alert, jsx-a11y/label-has-for */
   return (
     <div
-      className={cn(`ks-custom-field`, classNames, {
-        'ks-custom-field--has-errors': rawErrors?.length > 0,
-      })}
+      className={cn(
+        `ks-custom-field`,
+        classNames,
+        {
+          'ks-custom-field--has-errors': rawErrors?.length > 0,
+        },
+        ...extraClassNames,
+      )}
     >
-      <label htmlFor={id} className="ks-field-label">
+      <label htmlFor={id} className="ks-field-label ks-text-field__label">
         {label}
         {label && required ? '*' : null}
         {fieldDescription && (
@@ -78,7 +83,7 @@ export default function CustomField(props: FieldTemplateProps) {
       </label>
       {inputContent}
       {errors && errors}
-      {help}
+      <div className="ks-text-field__description">{help}</div>
     </div>
   );
 }

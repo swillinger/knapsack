@@ -6,6 +6,15 @@ import {
   PropTypeData,
   JsonSchemaObject,
   PropTypeDataBase,
+  StringPropTypeData,
+  BooleanPropTypeData,
+  NumberPropTypeData,
+  OptionsPropTypeData,
+  FunctionPropTypeData,
+  ObjectPropTypeData,
+  ArrayOfObjectsPropTypeData,
+  ArrayOfStringsPropTypeData,
+  ArrayPropTypeData,
 } from '@knapsack/core/types';
 import { sentenceCase } from 'change-case';
 import { useSelector } from '../../../../store';
@@ -16,152 +25,197 @@ type PropEditorProps = {
   handleChange: (newPropData: PropTypeDataBase) => void;
 };
 
-export const KsPropEditor: React.FC<PropEditorProps> = ({
-  prop,
-  handleChange,
-}: PropEditorProps) => {
-  // @todo get this info from the renderer; assuming just React for now
-  const isFunctionPropOk = useSelector(
-    s => s.ui.currentTemplateRenderer === 'react',
-  );
-  const defaultValue: Record<any, any> = {
-    type: 'string',
-    title: 'Default Value',
-  };
-  const schema: JsonSchemaObject = {
-    type: 'object',
-    required: [],
-    properties: {
-      title: {
-        type: 'string',
-        title: 'Title',
-      },
-      description: {
-        type: 'string',
-        title: 'Description',
-      },
-      isRequired: {
-        type: 'boolean',
-        title: 'Required?',
-      },
-      // @ts-ignore
-      defaultValue,
-    },
-  };
-  const { data } = prop;
-  const formData: Record<string, any> = {
-    isRequired: prop.isRequired,
-    description: data.description,
-    defaultValue: data.default,
-  };
-  switch (prop.type) {
-    case PropTypeNames.string: {
-      //
-      break;
-    }
-    case PropTypeNames.options: {
-      formData.options = prop.data.enum ?? [];
-      // @ts-ignore
-      schema.properties.defaultValue.enum = formData.options;
-      if (prop.isRequired) {
-        // const [firstOption] = formData.options;
-        // formData.defaultValue = formData.defaultValue ?? firstOption;
-      } else {
-        // schema.properties.defaultValue.enum = ['', ...formData.options];
-      }
-      schema.properties.options = {
-        type: 'array',
-        title: 'Options',
-        items: {
+/**
+ * If this returns `false`, then the component renders again. Used by `React.memo()`
+ */
+function areEqual(
+  prevProps: PropEditorProps,
+  nextProps: PropEditorProps,
+): boolean {
+  return JSON.stringify(prevProps.prop) === JSON.stringify(nextProps.prop);
+}
+
+export const KsPropEditor: React.FC<PropEditorProps> = React.memo(
+  ({ prop, handleChange }: PropEditorProps) => {
+    // @todo get this info from the renderer; assuming just React for now
+    const isFunctionPropOk = useSelector(
+      s => s.ui.currentTemplateRenderer === 'react',
+    );
+
+    const schema: JsonSchemaObject = {
+      type: 'object',
+      required: [],
+      properties: {
+        title: {
           type: 'string',
+          title: 'Title',
         },
-      };
-      break;
-    }
-    case PropTypeNames.boolean: {
-      // @ts-ignore
-      schema.properties.defaultValue.type = 'boolean';
-      break;
-    }
-    case PropTypeNames.number: {
-      // @ts-ignore
-      schema.properties.defaultValue.type = 'number';
-      break;
-    }
-  }
+        description: {
+          type: 'string',
+          title: 'Description',
+        },
+        isRequired: {
+          type: 'boolean',
+          title: 'Required?',
+        },
+        default: {
+          type: 'string',
+          title: 'Default Value',
+        },
+      },
+    };
+    const { data } = prop;
 
-  return (
-    <div className="ks-prop-editor">
-      <div className="ks-u-margin-top--s">
-        <Select
-          label="Type"
-          isLabelInline={false}
-          items={[
-            PropTypeNames.string,
-            PropTypeNames.number,
-            PropTypeNames.boolean,
-            PropTypeNames.options,
-            PropTypeNames.arrayOfStrings,
-            isFunctionPropOk ? PropTypeNames.function : null,
-            PropTypeNames.unknown,
-          ]
-            .filter(Boolean)
-            .map(propType => ({
-              value: propType,
-              title: sentenceCase(propType),
-            }))}
-          value={prop.type}
-          size="s"
-          handleChange={value => {
-            handleChange({
-              ...prop,
-              type: value,
-              data: {}, // resets `data`
-            });
-          }}
-        />
-      </div>
+    const formData = {
+      isRequired: prop.isRequired ?? false,
+      ...data,
+    };
+    switch (prop.type) {
+      case PropTypeNames.string: {
+        //
+        break;
+      }
+      case PropTypeNames.options: {
+        // @ts-ignore
+        schema.properties.default.enum = formData.enum;
+        if (prop.isRequired) {
+          // const [firstOption] = formData.options;
+          // formData.defaultValue = formData.defaultValue ?? firstOption;
+        } else {
+          // schema.properties.defaultValue.enum = ['', ...formData.options];
+        }
+        schema.properties.enum = {
+          type: 'array',
+          title: 'Options',
+          items: {
+            type: 'string',
+          },
+        };
+        break;
+      }
+      case PropTypeNames.boolean: {
+        // @ts-ignore
+        schema.properties.default.type = 'boolean';
+        break;
+      }
+      case PropTypeNames.number: {
+        // @ts-ignore
+        schema.properties.default.type = 'number';
+        break;
+      }
+      case PropTypeNames.function: {
+        schema.properties.tsType = {
+          type: 'string',
+          title: 'TypeScript Type',
+          default: '() => void',
+        };
+        break;
+      }
+    }
 
-      <div className="ks-u-margin-top--s">
-        <SchemaForm
-          schema={schema}
-          formData={formData}
-          liveValidate
-          uiSchema={{
-            options: {
-              'ui:detailsWrap': false,
-              'ui:emptyValue': '',
-            },
-            description: {
-              'ui:widget': 'textarea',
-              'ui:options': {
-                rows: 2,
+    return (
+      <div className="ks-prop-editor">
+        <div className="ks-u-margin-top--s">
+          <Select
+            label="Type"
+            isLabelInline={false}
+            items={[
+              PropTypeNames.string,
+              PropTypeNames.number,
+              PropTypeNames.boolean,
+              PropTypeNames.options,
+              PropTypeNames.arrayOfStrings,
+              isFunctionPropOk ? PropTypeNames.function : null,
+              PropTypeNames.unknown,
+            ]
+              .filter(Boolean)
+              .map(propType => ({
+                value: propType,
+                title: sentenceCase(propType),
+              }))}
+            value={prop.type}
+            size="s"
+            handleChange={value => {
+              const { title, description } = prop.data;
+              const newLocal: PropTypeData = {
+                ...prop,
+                type: value as any,
+                // @ts-ignore
+                data: {
+                  title,
+                  description,
+                },
+              };
+              switch (newLocal.type) {
+                case PropTypeNames.string: {
+                  newLocal.data.type = 'string';
+                  break;
+                }
+                case PropTypeNames.options: {
+                  newLocal.data.type = 'string';
+                  newLocal.data.enum = [];
+                  break;
+                }
+                case PropTypeNames.boolean: {
+                  newLocal.data.type = 'boolean';
+                  break;
+                }
+                case PropTypeNames.number: {
+                  newLocal.data.type = 'number';
+                  break;
+                }
+                case PropTypeNames.function: {
+                  newLocal.data.typeof = 'function';
+                  newLocal.data.tsType = '() => void';
+                  break;
+                }
+              }
+              handleChange(newLocal);
+            }}
+          />
+        </div>
+
+        <div className="ks-u-margin-top--s">
+          <SchemaForm
+            schema={schema}
+            formData={formData}
+            liveValidate
+            uiSchema={{
+              enum: {
+                'ui:detailsWrap': false,
+                'ui:emptyValue': '',
               },
-            },
-          }}
-          onChange={({ formData: newFormData }) => {
-            const {
-              isRequired,
-              description,
-              options,
-              defaultValue: newDefaultValue,
-              title,
-            } = newFormData;
-            const newData: PropTypeDataBase = {
-              ...prop,
-              isRequired,
-              data: {
-                ...prop.data,
-                title,
-                description,
-                default: newDefaultValue,
+              description: {
+                'ui:widget': 'textarea',
+                'ui:options': {
+                  rows: 2,
+                },
               },
-            };
-            if (options) newData.data.enum = options;
-            handleChange(newData);
-          }}
-        />
+              // tsType: {
+              //   'ui:field': 'FunctionField',
+              // },
+            }}
+            onChange={({ formData: newFormData }) => {
+              const { isRequired, ...rest } = newFormData;
+              const newData: PropTypeDataBase = {
+                ...prop,
+                isRequired,
+                data: {
+                  ...prop.data,
+                  ...rest,
+                },
+              };
+              handleChange(newData);
+            }}
+          />
+        </div>
+        <details>
+          <pre>
+            <code>{JSON.stringify(prop.data, null, '  ')}</code>
+          </pre>
+        </details>
       </div>
-    </div>
-  );
-};
+    );
+  },
+  areEqual,
+);

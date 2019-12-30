@@ -33,6 +33,7 @@ import {
 import { KsRenderResults } from '../../schemas/knapsack-config';
 import { useSelector } from '../store';
 import { useWebsocket } from '../hooks';
+import ErrorCatcher from '../utils/error-catcher';
 
 export type Props = {
   patternId: string;
@@ -154,12 +155,14 @@ const Template: React.FC<Props> = ({
   }, [patternId, templateId, demo, assetSetId, id]);
 
   const content = (
-    <iframe
-      className="ks-template__iframe"
-      title={id}
-      ref={iframeRef}
-      src={htmlUrl}
-    />
+    <ErrorCatcher>
+      <iframe
+        className="ks-template__iframe"
+        title={id}
+        ref={iframeRef}
+        src={htmlUrl}
+      />
+    </ErrorCatcher>
   );
 
   if (isResizable) {

@@ -13,6 +13,7 @@ import { updateTemplateDemo, useDispatch } from '../../../store';
 import { Tabs } from '../../../components/tabs';
 import { KsSlotsForm } from './slots-form';
 import './demo-stage.scss';
+import ErrorCatcher from '../../../utils/error-catcher';
 
 const calculateDemoStageWidth = (size: string) => {
   switch (size) {
@@ -174,13 +175,15 @@ export const KsDemoStage: React.FC<Props> = ({
                   render: () => {
                     return (
                       <>
-                        <SchemaForm
-                          schema={spec.props}
-                          formData={demo.data.props}
-                          onChange={({ formData }) => {
-                            handlePropsChange(formData);
-                          }}
-                        />
+                        <ErrorCatcher>
+                          <SchemaForm
+                            schema={spec.props}
+                            formData={demo.data.props}
+                            onChange={({ formData }) => {
+                              handlePropsChange(formData);
+                            }}
+                          />
+                        </ErrorCatcher>
                       </>
                     );
                   },
@@ -191,14 +194,16 @@ export const KsDemoStage: React.FC<Props> = ({
                       render: () => {
                         if (!isDataDemo(demo)) return;
                         return (
-                          <KsSlotsForm
-                            slotsData={demo.data.slots}
-                            slotsSpec={spec.slots}
-                            templateLanguageId={template.templateLanguageId}
-                            handleData={slotsData => {
-                              handleSlotsChange(slotsData);
-                            }}
-                          />
+                          <ErrorCatcher>
+                            <KsSlotsForm
+                              slotsData={demo.data.slots}
+                              slotsSpec={spec.slots}
+                              templateLanguageId={template.templateLanguageId}
+                              handleData={slotsData => {
+                                handleSlotsChange(slotsData);
+                              }}
+                            />
+                          </ErrorCatcher>
                         );
                       },
                     }

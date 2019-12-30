@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import JsonSchemaForm, {
   FormProps,
   FieldProps,
@@ -14,6 +14,7 @@ import CustomArrayField from './custom-templates/array-field';
 import CustomField from './custom-templates/custom-field';
 import CheckboxWidget from './custom-templates/checkbox-widget';
 import CheckboxesWidget from './custom-templates/checkboxes-widget';
+import { FunctionField } from './custom-templates/function-field';
 import { useFallbackId } from '../utils/hooks';
 
 type Props<T> = Omit<FormProps<T>, 'schema'> & {
@@ -81,6 +82,8 @@ export const SchemaForm = ({
     if (value?.typeof && value.typeof === 'function') {
       uiSchema[key] = {
         'ui:field': 'FunctionField',
+        'ui:help': value.tsType,
+        'ui:placeholder': '() => {}',
       };
     }
   });
@@ -99,7 +102,7 @@ export const SchemaForm = ({
         ArrayFieldTemplate={CustomArrayField}
         FieldTemplate={CustomField}
         fields={{
-          FunctionField: StringField,
+          FunctionField,
           // StringField,
         }}
         className={isInline ? 'ks-rjsf ks-rjsf--inline' : 'ks-rjsf'}

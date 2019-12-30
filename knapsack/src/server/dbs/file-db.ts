@@ -224,7 +224,7 @@ export class FileDb2<ConfigType> implements KnapsackDb<ConfigType> {
         });
         return {
           contents,
-          encoding: 'utf-8',
+          encoding: 'utf8',
         };
       }
       case 'yml': {
@@ -234,7 +234,7 @@ export class FileDb2<ConfigType> implements KnapsackDb<ConfigType> {
         });
         return {
           contents,
-          encoding: 'utf-8',
+          encoding: 'utf8',
         };
       }
       default:

@@ -15,6 +15,7 @@ import {
   PropTypeData,
   isArrayOfStringsProp,
   PropTypeDataBase,
+  StringPropTypeData,
 } from '@knapsack/core/types';
 import {
   KsButton,
@@ -25,6 +26,7 @@ import {
   KsButtonGroup,
 } from '@knapsack/design-system';
 import produce from 'immer';
+import shortid from 'shortid';
 import arrayMove from 'array-move';
 import { validateSpec } from '../../../../../lib/utils';
 import {
@@ -284,16 +286,22 @@ export const KsPatternSettings: React.FC<Props> = ({
       <KsSpecItems
         type={SpecItemTypes.Prop}
         handleAdd={() => {
-          const newProp: PropTypeData = {
-            id: 'newProp',
-            type: PropTypeNames.string,
-            isRequired: false,
-            data: {
-              type: 'string',
-              title: 'New Prop',
-            },
-          };
-          setProps(curProps => [...curProps, newProp]);
+          setProps(curProps => {
+            const id = curProps.some(curProp => curProp.id === 'newProp')
+              ? shortid.generate()
+              : 'newProp';
+            const newProp: StringPropTypeData = {
+              id,
+              type: PropTypeNames.string,
+              isRequired: false,
+              data: {
+                type: 'string',
+                title: 'New Prop',
+              },
+            };
+
+            return [...curProps, newProp];
+          });
         }}
       >
         {props.map((prop, index) => {
@@ -321,6 +329,7 @@ export const KsPatternSettings: React.FC<Props> = ({
               <KsPropEditor
                 prop={prop}
                 handleChange={newPropData => {
+                  setErrors([]);
                   // `handleChange` is responsible for all merging of data; we assume nothing in this function
                   setProps(curProps =>
                     curProps.map((curProp, i) => {
@@ -329,11 +338,8 @@ export const KsPatternSettings: React.FC<Props> = ({
                     }),
                   );
                 }}
-                // key={prop.type}
+                key={prop.type}
               />
-              <pre>
-                <code>{JSON.stringify(prop, null, '  ')}</code>
-              </pre>
             </KsSpecItem>
           );
         })}
@@ -376,6 +382,8 @@ export const KsPatternSettings: React.FC<Props> = ({
               <KsSlotEditor
                 slot={slot}
                 handleChange={newSlotData => {
+                  setErrors([]);
+
                   // `handleChange` is responsible for all merging of data; we assume nothing in this function
                   setSlots(curSlots =>
                     curSlots.map((curSlot, i) => {
@@ -385,9 +393,6 @@ export const KsPatternSettings: React.FC<Props> = ({
                   );
                 }}
               />
-              <pre>
-                <code>{JSON.stringify(slot, null, '  ')}</code>
-              </pre>
             </KsSpecItem>
           );
         })}

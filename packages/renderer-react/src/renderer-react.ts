@@ -2,7 +2,9 @@ import * as babel from '@babel/core';
 import {
   KnapsackRendererBase,
   KnapsackRendererWebpackBase,
+  log,
 } from '@knapsack/app';
+import { KnapsackFile } from '@knapsack/core/types';
 import {
   KnapsackRenderParams,
   KnapsackTemplateRenderer,
@@ -24,7 +26,7 @@ import {
   getUsage,
 } from './utils';
 
-const iconSvg = readFileSync(join(__dirname, '../react-logo.svg'), 'utf-8');
+const iconSvg = readFileSync(join(__dirname, '../react-logo.svg'), 'utf8');
 
 /* eslint-disable class-methods-use-this */
 
@@ -161,7 +163,12 @@ ReactDOM.render(
 );
     `;
 
-    code = await this.babelTransform(code);
+    try {
+      code = await this.babelTransform(code);
+    } catch (e) {
+      console.error(e);
+      code = e.message;
+    }
     code = KnapsackRendererWebpackBase.formatCode({
       code,
       language: 'js',
@@ -202,7 +209,7 @@ ${webpackScriptSrcs
         templateId: opt.template.id,
         demoId: opt.demo.id,
       });
-      const usage = await readFile(templateDemoPath, 'utf-8');
+      const usage = await readFile(templateDemoPath, 'utf8');
       const exportName = opt.demo?.templateInfo?.alias || 'default';
 
       const ksImportCode = `const DemoApp = window.knapsack['${id}'].${exportName};`;
@@ -371,10 +378,65 @@ ${ksImportCode}
   }: {
     template: KnapsackPatternTemplate;
     templatePath: string;
-  }): Promise<KsTemplateSpec> => {
-    return getReactDocs({
+  }): Promise<KsTemplateSpec | false> => {
+    const spec = await getReactDocs({
       src: templatePath,
       exportName: template.alias || 'default',
     });
+    if (spec !== false) {
+      const totalProps = Object.keys(spec?.props?.properties || {}).length;
+      const totalSlots = Object.keys(spec?.slots || {}).length;
+      if (totalProps === 0 && totalSlots === 0) {
+        return false;
+      }
+    }
+    log.inspect({ spec }, 'infered spec');
+    return spec;
+  };
+
+  getTemplateMeta: KnapsackTemplateRendererBase['getTemplateMeta'] = async ({
+    pattern,
+    template,
+  }) => {
+    const files: KnapsackFile[] = [];
+    if (template?.spec?.props) {
+      const schema = JSON.parse(JSON.stringify(template.spec.props));
+      if (template?.spec?.slots) {
+        Object.entries(template.spec.slots).forEach(([id, info]) => {
+          schema.properties[id] = {
+            typeof: 'function',
+            tsType: 'React.ReactNode',
+            description: info.allowedPatternIds
+              ? `${info.description}. Only use: ${info.allowedPatternIds.join(
+                  ', ',
+                )}`
+              : info.description,
+          };
+          schema.required = schema.required ?? [];
+          if (info.isRequired) schema.required.push(id);
+        });
+      }
+      const typeDefs = await KnapsackReactRenderer.convertSchemaToTypeScriptDefs(
+        {
+          schema,
+          title: pattern.id,
+          patternId: pattern.id,
+          templateId: template.id,
+          postBanner: `import * as React from 'react';`,
+        },
+      );
+
+      files.push({
+        contents: typeDefs,
+        encoding: 'utf8',
+        path: `${pattern.id}-${template.id}.spec.d.ts`,
+      });
+      files.push({
+        contents: JSON.stringify(schema, null, '  '),
+        encoding: 'utf8',
+        path: `${pattern.id}-${template.id}.spec.json`,
+      });
+    }
+    return files;
   };
 }

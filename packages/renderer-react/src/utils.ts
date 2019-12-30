@@ -144,7 +144,7 @@ export async function getReactTypeScriptDocs({
 }: {
   src: string;
   exportName?: string;
-}): Promise<KsTemplateSpec> {
+}): Promise<KsTemplateSpec | false> {
   const tsConfigPath = path.resolve(process.cwd(), './tsconfig.json');
   const tsConfigExists = existsSync(tsConfigPath);
   try {
@@ -156,9 +156,9 @@ export async function getReactTypeScriptDocs({
       ? rdTs.withCustomConfig(tsConfigPath, config).parse
       : rdTs.withDefaultConfig(config).parse;
     const results = parse(src);
-    // log.inspect({ results, tsConfigExists }, 'ts result');
+    // log.inspect({ results }, 'ts results');
 
-    if (!results?.length) return;
+    if (!results) return false;
 
     const spec: KsTemplateSpec = {
       props: {
@@ -177,14 +177,11 @@ export async function getReactTypeScriptDocs({
       ? results.pop()
       : results.find(r => r.displayName === exportName);
 
-    // console.log(JSON.stringify(result, null, '  '));
-    // return false;
+    // log.inspect({ result, isDefaultExport, exportName }, 'ts result');
+    if (!result) return false;
 
     const { displayName } = result;
-    // console.log({ displayName, exportName });
     spec.props.description = result.description;
-    // console.log(displayName);
-    // console.log(result.props);
     Object.entries(result.props || {}).forEach(([propName, propDef]) => {
       const {
         name,
@@ -200,6 +197,7 @@ export async function getReactTypeScriptDocs({
         spec.props.properties[propName] = {
           description: `\`${type.name}\` ${description}`,
           typeof: 'function',
+          tsType: propDef?.type?.name,
         };
       }
 
@@ -277,7 +275,7 @@ export async function getReactPropTypesDocs({
 }: {
   src: string;
   exportName?: string;
-}): Promise<KsTemplateSpec> {
+}): Promise<KsTemplateSpec | false> {
   try {
     // console.log({reactDocs});
     const fileSrc = await readFile(src);
@@ -303,6 +301,7 @@ export async function getReactPropTypesDocs({
       ? results.pop()
       : results.find(r => r.displayName === exportName);
 
+    // log.inspect(results, 'JSX PropTypes Results');
     // console.log(JSON.stringify(result, null, '  '));
 
     const spec: KsTemplateSpec = {
@@ -323,24 +322,18 @@ export async function getReactPropTypesDocs({
           if (required) spec.props.required.push(propName);
           spec.props.properties[propName] = {
             type: 'string',
-            description,
-            default: defaultValue?.value,
           };
           break;
         case 'func':
           if (required) spec.props.required.push(propName);
           spec.props.properties[propName] = {
             type: 'string',
-            description,
-            default: defaultValue?.value,
           };
           break;
         case 'bool':
           if (required) spec.props.required.push(propName);
           spec.props.properties[propName] = {
             type: 'boolean',
-            description,
-            default: defaultValue?.value,
           };
           break;
         case 'node':
@@ -348,6 +341,17 @@ export async function getReactPropTypesDocs({
             title: propName,
             description,
           };
+      }
+
+      // assigning info that all would have
+      if (spec.props.properties[propName]) {
+        if (required) spec.props.required.push(propName);
+        if (description && !spec.props.properties[propName].description) {
+          spec.props.properties[propName].description = description;
+        }
+        if (defaultValue && 'value' in defaultValue) {
+          spec.props.properties[propName].default = defaultValue;
+        }
       }
     });
 
@@ -372,7 +376,7 @@ export async function getReactDocs({
 }: {
   src: string;
   exportName?: string;
-}): Promise<KsTemplateSpec> {
+}): Promise<KsTemplateSpec | false> {
   const { ext } = path.parse(src);
   switch (ext) {
     case '.js':

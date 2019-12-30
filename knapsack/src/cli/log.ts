@@ -17,6 +17,10 @@
 import log from 'npmlog'; // https://www.npmjs.com/package/npmlog
 import util from 'util';
 
+function stringifyDeep(obj: {}, depth = 5): string {
+  return util.inspect(obj, { showHidden: false, depth });
+}
+
 export function error(msg: string, extra?: any, prefix = ''): void {
   if (extra) {
     log.error(prefix, msg, extra);
@@ -43,7 +47,7 @@ export function warn(msg: string, extra?: any, prefix = ''): void {
 
 export function verbose(msg: string, extra?: any, prefix = ''): void {
   if (extra) {
-    log.verbose(prefix, msg, extra);
+    log.verbose(prefix, msg, stringifyDeep(extra));
   } else {
     log.verbose(prefix, msg);
   }
@@ -63,7 +67,7 @@ export function silly(msg: string, extra?: any, prefix = ''): void {
 export function inspect(obj: {}, name = 'inspect', depth = 5): void {
   console.log();
   console.log(`Start: ${name} ================`);
-  console.log(util.inspect(obj, { showHidden: false, depth: 5 }));
+  console.log(stringifyDeep(obj, depth));
   console.log(`End: ${name} ----------------`);
   console.log();
 }

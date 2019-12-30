@@ -41,6 +41,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.0",
     "react-prop-matrix": "^1.0.0",
+    "react-view": "2.0.2",
     "storybook-react-router": "^1.0.8"
   },
   "peerDependencies": {

@@ -53,11 +53,19 @@ export const KsFileButtons: React.FC<Props> = ({ filePath }: Props) => {
 
         <KsButton disabled={disabledBtns} size="s">
           <KsPopover
+            maxWidth={310}
             content={
               <p>
                 Copy absolute file path to clipboard.
                 <br />
-                <code>{absolutePath}</code>
+                <code
+                  style={{
+                    wordBreak: 'break-word',
+                    fontSize: 'var(--font-size-s)',
+                  }}
+                >
+                  {absolutePath}
+                </code>
               </p>
             }
             trigger="hover"

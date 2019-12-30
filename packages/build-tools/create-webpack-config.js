@@ -240,6 +240,9 @@ function createWebPackConfig({
     externals: {
       // 'aws-sdk': 'aws-sdk',
     },
+    node: {
+      fs: 'empty',
+    },
   };
 
   if (isProd) {

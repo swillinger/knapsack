@@ -7,7 +7,7 @@ import {
 import fs from 'fs-extra';
 import { join } from 'path';
 
-const iconSvg = fs.readFileSync(join(__dirname, '../html-logo.svg'), 'utf-8');
+const iconSvg = fs.readFileSync(join(__dirname, '../html-logo.svg'), 'utf8');
 
 /* eslint-disable class-methods-use-this */
 

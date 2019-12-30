@@ -1,0 +1,19 @@
+// stylelint-disable
+.ks-rjsf__function-field {
+  .react-view-columns {
+    display: block;
+    margin: 0;
+    // having to override class-less inline-styled elements
+    > div {
+      padding: 0 !important;
+      > [data-testid] {
+        margin: 0 !important;
+        font-family: inherit !important;
+        font-size: inherit !important;
+        > label {
+          display: none;
+        }
+      }
+    }
+  }
+}

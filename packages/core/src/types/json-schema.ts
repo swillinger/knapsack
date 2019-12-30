@@ -40,11 +40,17 @@ export type OptionsProp = {
 
 export type FunctionProp = {
   typeof: 'function';
+  /**
+   * TypeScript type
+   * @example (name: string) => void
+   */
+  tsType: string;
   default?: string;
 } & PropBase;
 
 export type ObjectProp = {
   type: 'object';
+  additionalProperties?: boolean;
   required?: string[];
   properties: {
     [prop: string]: any;
@@ -108,47 +114,47 @@ export interface PropTypeDataBase {
   data: any;
 }
 
-interface StringPropTypeData extends PropTypeDataBase {
+export interface StringPropTypeData extends PropTypeDataBase {
   type: typeof PropTypeNames.string;
   data: StringProp;
 }
 
-interface BooleanPropTypeData extends PropTypeDataBase {
+export interface BooleanPropTypeData extends PropTypeDataBase {
   type: typeof PropTypeNames.boolean;
   data: BooleanProp;
 }
 
-interface NumberPropTypeData extends PropTypeDataBase {
+export interface NumberPropTypeData extends PropTypeDataBase {
   type: typeof PropTypeNames.number;
   data: NumberProp;
 }
 
-interface OptionsPropTypeData extends PropTypeDataBase {
+export interface OptionsPropTypeData extends PropTypeDataBase {
   type: typeof PropTypeNames.options;
   data: OptionsProp;
 }
 
-interface FunctionPropTypeData extends PropTypeDataBase {
+export interface FunctionPropTypeData extends PropTypeDataBase {
   type: typeof PropTypeNames.function;
   data: FunctionProp;
 }
 
-interface ObjectPropTypeData extends PropTypeDataBase {
+export interface ObjectPropTypeData extends PropTypeDataBase {
   type: typeof PropTypeNames.object;
   data: ObjectProp;
 }
 
-interface ArrayOfObjectsPropTypeData extends PropTypeDataBase {
+export interface ArrayOfObjectsPropTypeData extends PropTypeDataBase {
   type: typeof PropTypeNames.arrayOfObjects;
   data: ArrayOfObjectsProp;
 }
 
-interface ArrayOfStringsPropTypeData extends PropTypeDataBase {
+export interface ArrayOfStringsPropTypeData extends PropTypeDataBase {
   type: typeof PropTypeNames.arrayOfStrings;
   data: ArrayOfStringsProp;
 }
 
-interface ArrayPropTypeData extends PropTypeDataBase {
+export interface ArrayPropTypeData extends PropTypeDataBase {
   type: typeof PropTypeNames.array;
   data: ArrayProp;
 }

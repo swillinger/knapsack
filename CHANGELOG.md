@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.11](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.10...v2.0.0-beta.11) (2019-12-30)
+
+
+### Bug Fixes
+
+* **design-system:** button keyboard triggers only on space or enter ([11a2e44](https://github.com/basaltinc/knapsack/commit/11a2e44cd251f3798194c4299889cc89b94de552))
+
+
+### Features
+
+* a ton of awesomeness ([cb0ace5](https://github.com/basaltinc/knapsack/commit/cb0ace5c021e71b903abe277fbe60924ed3f8140))
+* new site layout slot, page details (right sidebar) ([1d65c15](https://github.com/basaltinc/knapsack/commit/1d65c156ed03e92a513509577fba1976edf0531b))
+* pattern spec ui ([dc0274c](https://github.com/basaltinc/knapsack/commit/dc0274c2fc8bf3d6257b155f8a7585edbca51c75))
+* show function types in props table ([a629f0a](https://github.com/basaltinc/knapsack/commit/a629f0ac0a6ad96d4f087b1322175535b8f742df))
+* ui changes (sidebars open) cached ([55bc861](https://github.com/basaltinc/knapsack/commit/55bc8611b4e9ee57cd054a8686bda4707e9e5e9f))
+
+
+
+
+
 # [2.0.0-beta.10](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.9...v2.0.0-beta.10) (2019-12-24)
 
 

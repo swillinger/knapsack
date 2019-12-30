@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.11](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.10...v2.0.0-beta.11) (2019-12-30)
+
+
+### Features
+
+* a ton of awesomeness ([cb0ace5](https://github.com/basaltinc/knapsack/commit/cb0ace5c021e71b903abe277fbe60924ed3f8140))
+* new site layout slot, page details (right sidebar) ([1d65c15](https://github.com/basaltinc/knapsack/commit/1d65c156ed03e92a513509577fba1976edf0531b))
+* pattern spec ui ([dc0274c](https://github.com/basaltinc/knapsack/commit/dc0274c2fc8bf3d6257b155f8a7585edbca51c75))
+* ui changes (sidebars open) cached ([55bc861](https://github.com/basaltinc/knapsack/commit/55bc8611b4e9ee57cd054a8686bda4707e9e5e9f))
+
+
+
+
+
 # [2.0.0-beta.10](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.9...v2.0.0-beta.10) (2019-12-24)
 
 

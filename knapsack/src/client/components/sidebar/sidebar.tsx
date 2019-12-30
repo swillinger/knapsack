@@ -67,12 +67,8 @@ export const Sidebar: React.FC = () => {
   return (
     <div className="ks-sidebar">
       <div className="ks-sidebar__search-container">
-        <div className="ks-text-field ks-text-field--flush">
-          {/* @TODO: Wire up left nav searching
-                    This will likely work with the sortable tree's searchQuery option:
-                    https://github.com/frontend-collective/react-sortable-tree#props
-          */}
-          <div className="ks-text-field__input-icon-wrapper">
+        <div className="ks-text-field ks-text-field--flush ks-text-field--size-m">
+          <div className="ks-text-field__wrapper ks-text-field__wrapper--icon ks-text-field__input-icon-wrapper">
             <input
               type="text"
               className="ks-text-field__input"

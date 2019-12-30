@@ -76,7 +76,7 @@ export default function CustomField(props: FieldTemplateProps) {
         {label}
         {label && required ? '*' : null}
         {fieldDescription && (
-          <Tooltip tooltipContent={fieldDescription} position="top">
+          <Tooltip tooltipContent={fieldDescription} position="right">
             <FaInfoCircle className="ks-custom-field__info-icon" />
           </Tooltip>
         )}

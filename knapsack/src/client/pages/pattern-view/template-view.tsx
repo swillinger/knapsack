@@ -16,10 +16,11 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { CodeBlock, Icon } from '@knapsack/design-system';
+import { CodeBlock, Icon, KsButton } from '@knapsack/design-system';
 import { useHistory } from 'react-router-dom';
 import produce from 'immer';
 import deepEqual from 'deep-equal';
+import classnames from 'classnames';
 import {
   updateTemplateInfo,
   useDispatch,
@@ -266,29 +267,27 @@ const TemplateView: React.FC<Props> = ({
     <CurrentTemplateContext.Provider value={currentTemplateData}>
       <article className="ks-template-view">
         <div
-          className="ks-template-view__page-details-toggle"
-          onClick={() => {
-            dispatch(
-              setPageDetailsVisibility({
-                isOpen: !pageDetailsOpen,
-              }),
-            );
-          }}
-          onKeyDown={e => {
-            // only for space or enter
-            if (!(e.which === 13 || e.which === 32)) return;
-            dispatch(
-              setPageDetailsVisibility({
-                isOpen: !pageDetailsOpen,
-              }),
-            );
-          }}
-          tabIndex={0}
-          role="button"
+          className={classnames({
+            'ks-template-view__page-details-collapse-ctrl': true,
+            'ks-template-view__page-details-collapse-ctrl--collapsed': !pageDetailsOpen,
+          })}
         >
-          {/* @todo add `>` or `<` icon based on open status */}
-          <Icon symbol="settings" />
+          <KsButton
+            onClick={() => {
+              dispatch(
+                setPageDetailsVisibility({
+                  isOpen: !pageDetailsOpen,
+                }),
+              );
+            }}
+          >
+            <span className="ks-template-view__page-details-collapse-ctrl__arrow">
+              <Icon symbol="collapser" />
+            </span>
+            <Icon symbol="settings" />
+          </KsButton>
         </div>
+
         <div className="ks-template-view__overview-wrapper">
           <TemplateHeader
             assetSets={assetSets}

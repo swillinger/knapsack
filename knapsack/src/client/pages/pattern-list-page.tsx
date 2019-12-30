@@ -11,10 +11,6 @@ export const PatternListPage: React.FC = () => {
 
   const panes = [
     {
-      menuItem: 'Table',
-      render: () => <PatternTable allPatterns={allPatterns} />,
-    },
-    {
       menuItem: 'Grid',
       render: () => (
         <PatternGrid
@@ -25,6 +21,10 @@ export const PatternListPage: React.FC = () => {
           }))}
         />
       ),
+    },
+    {
+      menuItem: 'Table',
+      render: () => <PatternTable allPatterns={allPatterns} />,
     },
   ];
 

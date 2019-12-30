@@ -22,7 +22,7 @@ const users = [
   },
   {
     caption:
-      '"Unlike many of the existing tools out there — Pattern Lab, Fractal, Storybook, etc — Knapsack has design system know-how baked into it’s DNA!"',
+      '"Unlike many of the existing tools out there — Pattern Lab, Fractal, Storybook, etc — Knapsack has design system know-how baked into its DNA!"',
     byline: 'Salem Ghoweri, Lead Frontend Architect, Pegasystems',
     image: '/img/salemsquare.jpg',
     pinned: true,

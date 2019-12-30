@@ -2,11 +2,11 @@ type KnapsackNavItemId = string;
 
 export type KnapsackNavItem = {
   id: KnapsackNavItemId;
-  /**
-   * We try to automatically look this up client-side
-   */
   name?: string;
   path?: string;
+  /**
+   * Use "root" if you want it at top level
+   */
   parentId: KnapsackNavItemId;
 };
 

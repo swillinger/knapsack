@@ -19,7 +19,7 @@ import classnames from 'classnames';
 import { KsButton } from '@knapsack/design-system';
 import { Sidebar } from '../components/sidebar/sidebar';
 import ErrorCatcher from '../utils/error-catcher';
-import { SiteHeaderConnected } from '../components/site-header';
+import { SiteHeader } from '../components/site-header';
 import { PageHeaderContainer } from '../components/page-header';
 import './page-with-sidebar.scss';
 import { useDispatch, useSelector, setSidebarVisibility } from '../store';
@@ -57,7 +57,7 @@ const PageWithSidebar: React.FC<Props> = ({
           slottedDetails && !pageDetailsOpen,
       })}
     >
-      <SiteHeaderConnected />
+      <SiteHeader />
       <div
         className={classnames({
           'ks-page-with-sidebar__sidebar': true,

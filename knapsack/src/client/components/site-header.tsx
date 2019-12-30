@@ -5,25 +5,14 @@ import urlJoin from 'url-join';
 import { KsButton } from '@knapsack/design-system';
 import knapsackLogo from '../assets/knapsack-logo-trans.svg';
 import './site-header.scss';
-import { useSelector, saveToServer, useDispatch } from '../store';
-import { KnapsackNavItem } from '../../schemas/nav';
-import { KnapsackSettings } from '../../schemas/knapsack.settings';
+import { useSelector } from '../store';
 import { KsTemplateLanguageSelect } from './template-language-select';
 
-type Props = {
-  settings: KnapsackSettings;
-  primaryNavItems: KnapsackNavItem[];
-  isLocalDev: boolean;
-  canEdit: boolean;
-};
-
-export const SiteHeader: React.FC<Props> = ({
-  settings,
-  primaryNavItems,
-  isLocalDev,
-  canEdit,
-}: Props) => {
-  const dispatch = useDispatch();
+export const SiteHeader: React.FC = () => {
+  const settings = useSelector(s => s.settingsState.settings);
+  const primaryNavItems = useSelector(s => s.navsState.primary);
+  const canEdit = useSelector(s => s.userState.canEdit);
+  const hasChangelog = useSelector(s => !!s.metaState?.meta.changelog);
   const hasMultipleTemplateRenderers = useSelector(
     s => Object.keys(s.patternsState?.renderers ?? {}).length > 1,
   );
@@ -63,14 +52,6 @@ export const SiteHeader: React.FC<Props> = ({
             )}
           </li>
         ))}
-
-        {canEdit && (
-          <li className="ks-site-header__nav-item">
-            <NavLink className="ks-site-header__nav-link" to="/settings">
-              Settings
-            </NavLink>
-          </li>
-        )}
 
         {plugins.getPlugins().map(plugin => {
           if (!plugin.addPages) {
@@ -131,39 +112,32 @@ export const SiteHeader: React.FC<Props> = ({
           </span>
           <div className="ks-site-header__nav-dropdown">
             <ul className="ks-site-header__nav-dropdown-list">
+              {canEdit && (
+                <li className="ks-site-header__nav-dropdown-item">
+                  <NavLink to="/settings">General Settings</NavLink>
+                </li>
+              )}
               <li className="ks-site-header__nav-dropdown-item">
-                <NavLink to="/settings">General Settings</NavLink>
-              </li>
-              <li className="ks-site-header__nav-dropdown-item">
-                <a href="https://knapsack.basalt.io/docs/getting-started">
+                <a
+                  href="https://knapsack.basalt.io/docs/getting-started"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Knapsack Docs
                 </a>
               </li>
               <li className="ks-site-header__nav-dropdown-item">
                 <a href="/demo-urls">Demo URLs</a>
               </li>
-              <li className="ks-site-header__nav-dropdown-item">
-                <NavLink to="/changelog">Changelog</NavLink>
-              </li>
+              {hasChangelog && (
+                <li className="ks-site-header__nav-dropdown-item">
+                  <NavLink to="/changelog">Changelog</NavLink>
+                </li>
+              )}
             </ul>
           </div>
         </li>
       </ul>
     </header>
-  );
-};
-
-export const SiteHeaderConnected: React.FC = () => {
-  const settings = useSelector(s => s.settingsState.settings);
-  const primaryNavItems = useSelector(s => s.navsState.primary);
-  const isLocalDev = useSelector(s => s.userState.isLocalDev);
-  const canEdit = useSelector(s => s.userState.canEdit);
-  return (
-    <SiteHeader
-      settings={settings}
-      primaryNavItems={primaryNavItems}
-      isLocalDev={isLocalDev}
-      canEdit={canEdit}
-    />
   );
 };

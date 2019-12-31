@@ -8,6 +8,7 @@
   "scripts": {
     "clean": "rm -rf dist tsconfig.tsbuildinfo",
     "build": "babel --config-file @knapsack/babel-config --source-maps --ignore 'src/*.test.js' --extensions .js,.ts,.jsx,.tsx --out-dir dist/ src/",
+    "build:docs": "typedoc --options ../../typedoc.json --out ../../docs-site/static/pkgs/core",
     "prepublishOnly": "yarn build",
     "start": "yarn build --watch"
   },

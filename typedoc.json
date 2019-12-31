@@ -1,0 +1,18 @@
+{
+  "mode": "file",
+  "out": "docs",
+  "exclude": [
+    "**/node_modules/**",
+    "test",
+    "./src/client/**",
+    "./src/json-schemas/**",
+    "./src/aws-exports.js"
+  ],
+  "readme": "none",
+  "ignoreCompilerErrors": true,
+  "includeDeclarations": true,
+  "excludeExternals": true,
+  "excludeNotExported": true,
+  "excludePrivate": true,
+  "categorizeByGroup": true
+}

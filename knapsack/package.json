@@ -17,6 +17,7 @@
     "build:schemas": "node ./convert-types-to-json-schemas.js",
     "watch:client": "webpack-cli --config ./webpack.config.js --watch --hide-modules --display minimal",
     "watch:server": "yarn build:server --watch",
+    "build:docs": "typedoc --options ../typedoc.json --tsconfig tsconfig.json --out ../docs-site/static/pkgs/app",
     "watch:schemas": "nodemon --watch ./src/schemas/ --ext .ts,.js --watch convert-types-to-json-schemas.js --exec 'yarn build:schemas' ",
     "start": "run-p watch:*"
   },

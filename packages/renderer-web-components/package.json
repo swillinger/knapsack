@@ -6,6 +6,7 @@
   "types": "dist/renderer-web-components.d.ts",
   "scripts": {
     "build": "BABEL_ENV=cli babel --config-file @knapsack/babel-config --extensions .js,.ts --copy-files --out-dir dist/ src/",
+    "build:docs": "typedoc  --options ../../typedoc.json --out ../../docs-site/static/pkgs/renderer-web-components",
     "clean": "rm -rf dist tsconfig.tsbuildinfo",
     "start": "yarn build --watch"
   },

@@ -6,7 +6,8 @@
     "ava": "ava",
     "build": "run-s clean build:pkgs build:knapsack",
     "build:all": "run-s build build:docs build:private",
-    "build:docs": "FORCE_COLOR=1 lerna run build --scope @knapsack/docs-site",
+    "build:pkgs-docs": "lerna run build:docs",
+    "build:docs": "yarn build:pkgs-docs && FORCE_COLOR=1 lerna run build --scope @knapsack/docs-site",
     "build:knapsack": "FORCE_COLOR=1 lerna run build --scope @knapsack/app",
     "build:pkgs": "FORCE_COLOR=1 lerna run build --no-private --ignore @knapsack/app --stream",
     "build:private": "lerna run --stream --bail --concurrency 1 build --scope @knapsack/example-bootstrap",
@@ -135,6 +136,8 @@
     "stylelint-config-recommended-scss": "^4.0.0",
     "stylelint-scss": "^3.11.1",
     "stylelint-value-no-unknown-custom-properties": "^2.0.0",
+    "typedoc": "^0.15.6",
+    "typedoc-plugin-internal-external": "^2.0.2",
     "typescript": "^3.7.4",
     "typescript-eslint-parser": "^22.0.0"
   },

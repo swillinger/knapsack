@@ -53,34 +53,38 @@ export const languageList = [
   'bash',
 ].filter(lang => availableLanguages.includes(lang));
 
-export const isLanguageSupported = lang => languageList.includes(lang);
+export const isLanguageSupported = (lang: string): boolean =>
+  languageList.includes(lang);
 
 availableLanguages.sort();
 
-export const CodeSnippet = ({ language, code = '' }) => {
+type Props = {
+  language: string;
+  code: string;
+};
+
+export const CodeSnippet: React.FC<Props> = ({
+  language,
+  code = '',
+}: Props) => {
+  let formattedCode: string;
   // check to make sure the language being used is registered
-  if (process.env.NODE_ENV !== 'production') {
-    if (!refractor.registered(language)) {
-      // eslint-disable-next-line no-console
-      console.warn(
-        `No language definitions for '${language}' seems to be registered, did you forget to call \`Refractor.registerLanguage()\`?`,
-      );
-      return (
-        <p>{`No language definitions for '${language}' seems to be registered`}</p>
-      );
-    }
+  if (language && refractor.registered(language)) {
+    const preppedCode = code?.trim();
+
+    const ast = refractor.highlight(code, language);
+
+    // @todo: possibly add marker support like in react-refractor
+    // if (props.markers && props.markers.length > 0) {
+    //   ast = addMarkers(ast, { markers: props.markers });
+    // }
+    formattedCode = ast.length === 0 ? preppedCode : ast.map(mapWithDepth(0));
+  } else {
+    formattedCode = code;
+    console.warn(
+      `No language definitions for '${language}' seems to be registered, did you forget to call \`Refractor.registerLanguage()\`?`,
+    );
   }
-
-  const preppedCode = code?.trim();
-
-  const ast = refractor.highlight(code, language);
-
-  // @todo: possibly add marker support like in react-refractor
-  // if (props.markers && props.markers.length > 0) {
-  //   ast = addMarkers(ast, { markers: props.markers });
-  // }
-  const formattedCode =
-    ast.length === 0 ? preppedCode : ast.map(mapWithDepth(0));
 
   return (
     <pre className="ks-pretty-code">
@@ -89,9 +93,4 @@ export const CodeSnippet = ({ language, code = '' }) => {
       </code>
     </pre>
   );
-};
-
-CodeSnippet.propTypes = {
-  language: PropTypes.string.isRequired,
-  code: PropTypes.string.isRequired,
 };

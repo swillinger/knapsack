@@ -171,7 +171,7 @@ function createWebPackConfig({
         },
       ],
     },
-    devtool: isProd ? 'none' : 'eval-source-map',
+    devtool: isProd ? 'source-map' : 'eval-source-map',
     resolve: {
       // symlinks: false, // @todo consider, but be careful
       extensions: ['.mjs', '.js', '.tsx', '.ts', '.jsx', '.css', '.json'],
@@ -188,7 +188,6 @@ function createWebPackConfig({
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-          DEV_MODE: JSON.stringify(process.env.DEV_MODE),
         },
       }),
       new DashboardPlugin(),
@@ -224,7 +223,6 @@ function createWebPackConfig({
     },
     optimization: {
       minimize: isProd,
-      // minimizer: [new TerserPlugin()],
       namedModules: true,
       namedChunks: true,
       runtimeChunk: 'single',
@@ -257,6 +255,8 @@ function createWebPackConfig({
             // ecma: 6,
             // warnings: true,
             module: true,
+            keep_classnames: true,
+            keep_fnames: true,
           },
         }),
       ],

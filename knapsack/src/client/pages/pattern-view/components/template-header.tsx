@@ -42,7 +42,7 @@ export const TemplateHeader: React.FC<Props> = ({
       disabled={isDemoSettingAssetSetId}
     />
   );
-  console.log({ isDemoSettingAssetSetId, x: demo.assetSetId });
+
   return (
     <header className="ks-template-header ks-template-view__flex-wrapper">
       {isTitleShown && <h3 className="ks-template-header__title">{title}</h3>}

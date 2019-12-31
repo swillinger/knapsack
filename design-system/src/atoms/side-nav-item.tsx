@@ -1,9 +1,11 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import cn from 'classnames';
+import { KnapsackTemplateStatus } from '@knapsack/app/src/schemas/patterns';
 import './side-nav-item.scss';
 import { Icon } from './icon';
 import { KsButton } from './button';
+import { KsPopover } from '../popover/popover';
 
 type Btn = React.PropsWithoutRef<JSX.IntrinsicElements['button']>;
 
@@ -17,11 +19,16 @@ type Props = {
   hasChildren?: boolean;
   isCollapsed?: boolean;
   onClickToggleCollapse?: Btn['onClick'];
-  // @TODO: Replace statusColor with status component.
-  statusColor?: string;
   isSearchMatch?: boolean;
   isSearchFocus?: boolean;
   canDelete?: boolean;
+  statuses?: {
+    status: KnapsackTemplateStatus;
+    templateTitle: string;
+    templateId: string;
+    templateLanguageId: string;
+    path: string;
+  }[];
   handleDelete: () => void;
   handleEdit: (opt: { path: string; title: string }) => void;
 };
@@ -35,7 +42,7 @@ export const SideNavItem: React.FC<Props> = ({
   hasChildren,
   isCollapsed,
   onClickToggleCollapse,
-  statusColor,
+  statuses,
   isSearchMatch,
   isSearchFocus,
   canEditTitle,
@@ -61,11 +68,30 @@ export const SideNavItem: React.FC<Props> = ({
         </span>
       )}
 
-      {statusColor && (
-        <div
-          className="ks-side-nav-item__status-indicator"
-          style={{ backgroundColor: statusColor }}
-        />
+      {statuses?.length > 1 && (
+        <>
+          {statuses.map(statusItem => {
+            return (
+              statusItem.status && (
+                <KsPopover
+                  key={`${statusItem.templateId}-${statusItem.status.id}`}
+                  isHoverTriggered
+                  content={
+                    <span>
+                      {statusItem.templateTitle} Template Status:{' '}
+                      {statusItem.status.title}
+                    </span>
+                  }
+                >
+                  <div
+                    className="ks-side-nav-item__status-indicator"
+                    style={{ backgroundColor: statusItem.status.color }}
+                  />
+                </KsPopover>
+              )
+            );
+          })}
+        </>
       )}
 
       {!path ? (

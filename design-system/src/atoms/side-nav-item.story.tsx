@@ -31,6 +31,30 @@ export const allVariations = () => (
             handleDelete={() => {}}
             handleEdit={() => {}}
             title="Title"
+            statuses={[
+              {
+                templateId: '1',
+                templateTitle: 'React',
+                templateLanguageId: '11',
+                path: 'patterns/thing',
+                status: {
+                  id: 'status-1',
+                  title: 'Ready',
+                  color: '#00c156',
+                },
+              },
+              {
+                templateId: '2',
+                templateTitle: 'Twig',
+                templateLanguageId: '22',
+                path: 'patterns/thing2',
+                status: {
+                  id: 'status-2',
+                  title: 'Broken',
+                  color: '#dd0000',
+                },
+              },
+            ]}
             {...props}
           />
         </>

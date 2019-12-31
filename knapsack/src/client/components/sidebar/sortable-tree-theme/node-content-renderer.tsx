@@ -9,6 +9,7 @@ import {
   deletePattern,
   deletePage,
 } from '../../../store';
+import { getPatternInfoFromUrl } from '../../../../lib/routes';
 import { BASE_PATHS } from '../../../../lib/constants';
 
 export type ExtraProps = {
@@ -68,8 +69,32 @@ export const FileThemeNodeContentRenderer: React.FC<Props> = ({
     s => s.userState.features?.showNonFunctioningUi,
   );
   const { canEdit } = useSelector(s => s.userState);
-  const patternIds = useSelector(s => Object.keys(s.patternsState.patterns));
+  const patterns = useSelector(s => s.patternsState.patterns);
+  const globalStatuses = useSelector(s => s.patternsState.templateStatuses);
+  const patternIds = Object.keys(patterns);
   const dispatch = useDispatch();
+  const patternInfo = getPatternInfoFromUrl(ksNavItem?.path);
+  let pattern: KnapsackPattern;
+  if (patternInfo !== false) {
+    pattern = patterns[patternInfo.patternId];
+  }
+  const statuses = pattern
+    ? pattern.templates.map(template => {
+        const {
+          title: templateTitle,
+          statusId,
+          id: templateId,
+          templateLanguageId,
+        } = template;
+        return {
+          status: statusId ? globalStatuses.find(s => s.id === statusId) : null,
+          templateTitle,
+          templateId,
+          templateLanguageId,
+          path: `${BASE_PATHS.PATTERN}/${pattern.id}/${templateId}`,
+        };
+      })
+    : null;
   const isDraggedDescendant = draggedNode && isDescendant(draggedNode, node);
   const isLandingPadActive = !didDrop && isDragging;
 
@@ -124,6 +149,7 @@ export const FileThemeNodeContentRenderer: React.FC<Props> = ({
           title={ksNavItem.name}
           canEditTitle={showNonFunctioningUi}
           canDelete={canEdit}
+          statuses={statuses}
           isEditMode={isSidebarEditMode}
           hasChildren={
             toggleChildrenVisibility &&

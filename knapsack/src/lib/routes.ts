@@ -2,6 +2,20 @@ import { parse } from 'url';
 import { BASE_PATHS } from './constants';
 import { AppState } from '../client/store';
 
+export function getPatternInfoFromUrl(
+  url: string,
+): { patternId: string; templateId?: string; demoId?: string } | false {
+  if (url.startsWith(`${BASE_PATHS.PATTERN}/`)) {
+    const [_, base, patternId, templateId, demoId] = url.split('/');
+    return {
+      patternId,
+      templateId,
+      demoId,
+    };
+  }
+  return false;
+}
+
 export function getTitleFromPath(path: string, appState: AppState): string {
   // clean up passed in path by removing querystrings
   const { pathname } = parse(path);

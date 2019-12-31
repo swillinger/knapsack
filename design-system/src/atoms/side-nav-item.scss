@@ -65,7 +65,12 @@
     border-radius: 50%;
     width: var(--space-xs);
     height: var(--space-xs);
+  }
+  .ks-popover__children {
     margin-left: var(--space-xs);
+    & + .ks-popover__children {
+      margin-left: var(--space-xxxs);
+    }
   }
 
   &__collapse-btn {
@@ -114,9 +119,14 @@
       }
     }
 
-    .ks-side-nav-item__status-indicator {
+    .ks-popover__children {
       margin-left: 0;
-      margin-right: var(--space-xs);
+      & + .ks-popover__children {
+        margin-left: var(--space-xxxs);
+      }
+      & + *:not(.ks-popover__children) {
+        margin-left: var(--space-xs);
+      }
     }
 
     .ks-side-nav-item__edit-title-btn {

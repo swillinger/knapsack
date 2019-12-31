@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.17](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.16...v2.0.0-beta.17) (2019-12-31)
+
+
+### Bug Fixes
+
+* only show available menu items in main menu ([bb56262](https://github.com/basaltinc/knapsack/commit/bb5626298453a8385d10245557e259458f6e2fdb))
+* pattern landing page shows grid first ([e15802b](https://github.com/basaltinc/knapsack/commit/e15802bb317380f6fc0080aff4f1b3a9a9cfe7ba))
+* several tweaks and adjustments ([c450099](https://github.com/basaltinc/knapsack/commit/c450099a573f0555d0cdd3ec2eca3920a45a35a4))
+
+
+
+
+
 # [2.0.0-beta.16](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.15...v2.0.0-beta.16) (2019-12-30)
 
 

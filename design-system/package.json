@@ -1,6 +1,6 @@
 {
   "name": "@knapsack/design-system",
-  "version": "2.0.0-beta.16",
+  "version": "2.0.0-beta.17",
   "description": "Collection of re-usable UI Components for Knapsack and friends",
   "main": "dist/index.js",
   "module": "dist/index.js",

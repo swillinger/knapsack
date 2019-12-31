@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.22](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.21...v2.0.0-beta.22) (2019-12-31)
+
+
+### Bug Fixes
+
+* cleanup effects on unmounted components ([35f84bb](https://github.com/basaltinc/knapsack/commit/35f84bbed23fb0a9256c6307689c633f42a2dccc))
+* show sidebar status item when only 1 template ([57dba82](https://github.com/basaltinc/knapsack/commit/57dba829132afa60f1a3175ac7193e88dd2d0aad))
+
+
+
+
+
 # [2.0.0-beta.21](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.20...v2.0.0-beta.21) (2019-12-31)
 
 

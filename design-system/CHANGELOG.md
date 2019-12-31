@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.22](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.21...v2.0.0-beta.22) (2019-12-31)
+
+
+### Bug Fixes
+
+* show sidebar status item when only 1 template ([57dba82](https://github.com/basaltinc/knapsack/commit/57dba829132afa60f1a3175ac7193e88dd2d0aad))
+
+
+
+
+
 # [2.0.0-beta.20](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.19...v2.0.0-beta.20) (2019-12-31)
 
 **Note:** Version bump only for package @knapsack/design-system

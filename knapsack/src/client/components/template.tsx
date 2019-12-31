@@ -132,6 +132,7 @@ const Template: React.FC<Props> = ({
   }, []);
 
   useEffect(() => {
+    let isMounted = true;
     // begins a countdown when 'val' changes. if it changes before countdown
     // ends, clear the timeout avoids lodash debounce to avoid stale
     // values in globalSet.
@@ -146,12 +147,17 @@ const Template: React.FC<Props> = ({
         extraParams: { cacheBuster: id },
       })
         .then(info => {
-          handleTemplateInfo(info);
-          setHtmlUrl(info.url);
+          if (isMounted) {
+            handleTemplateInfo(info);
+            setHtmlUrl(info.url);
+          }
         })
         .catch(console.log.bind(console));
     }, 175);
-    return () => clearTimeout(timeout);
+    return () => {
+      isMounted = false;
+      clearTimeout(timeout);
+    };
   }, [patternId, templateId, demo, assetSetId, id]);
 
   const content = (

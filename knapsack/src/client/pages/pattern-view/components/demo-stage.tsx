@@ -55,7 +55,7 @@ type Props = {
 };
 
 export const KsDemoStage: React.FC<Props> = ({
-  demoSize = 'm',
+  demoSize,
   isFormVisible = true,
   setTemplateInfo,
   handlePropsChange,

@@ -183,7 +183,12 @@ export const EditTemplateDemo: React.FC<Props> = ({
                 if (result.type === Files.ACTIONS.verify) {
                   const { relativePath, exists } = result.payload;
                   if (exists) {
-                    handleSubmit(formData);
+                    const newData = {
+                      ...formData,
+                      path: relativePath,
+                    };
+                    handleSubmit(newData);
+                    setData(newData);
                   } else {
                     setErrors([
                       {

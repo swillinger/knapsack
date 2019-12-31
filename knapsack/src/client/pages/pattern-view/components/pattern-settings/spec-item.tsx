@@ -1,18 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
-import {
-  isArrayOfObjectsProp,
-  isFunctionProp,
-  isOptionsProp,
-  isBooleanProp,
-  isNumberProp,
-  isStringProp,
-  PropertyTypes,
-  PropTypeNames,
-  PropTypeNamesList,
-  StringProp,
-  JsonSchemaObject,
-  PropTypeDataBase,
-} from '@knapsack/core/types';
+import React, { useState, useRef } from 'react';
 import { Icon, KsButton } from '@knapsack/design-system';
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd';
 import { XYCoord } from 'dnd-core';

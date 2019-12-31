@@ -113,7 +113,7 @@ export const KsSlotsForm: React.FC<Props> = ({
       <Formik
         initialValues={slotsData}
         // @todo come up with something better than `key` it's caching the `slotsData` too aggressively; need to trigger a remount when it changes sadly. try using "Reset Demo" to test
-        key={JSON.stringify(slotsData)}
+        // key={JSON.stringify(slotsData)}
         onSubmit={({ values, actions }) => {
           console.log('formik submit', { values, actions });
           // handleData(values);

@@ -39,17 +39,11 @@ import {
 } from '../../../schemas/patterns';
 import { KsRenderResults } from '../../../schemas/knapsack-config';
 import { BASE_PATHS } from '../../../lib/constants';
-import { useWebsocket } from '../../hooks';
 import {
   CurrentTemplateContext,
   CurrentTemplateData,
 } from './current-template-context';
-import {
-  TemplateHeader,
-  KsDemoStage,
-  KsSpecDocs,
-  EditTemplateDemo,
-} from './components';
+import { TemplateHeader, KsDemoStage, KsSpecDocs } from './components';
 import { KsTemplateDemos } from './components/template-demos';
 
 export type Props = {
@@ -72,7 +66,7 @@ export type Props = {
 
 const TemplateView: React.FC<Props> = ({
   isVerbose = true,
-  demoSize = 'full',
+  demoSize,
   isReadmeShown = true,
   isTitleShown = true,
   isSchemaFormShown = true,
@@ -117,7 +111,7 @@ const TemplateView: React.FC<Props> = ({
     spec = {},
     // doc: readme,
     title,
-    assetSetIds = globalAssetSetIds,
+    assetSetIds: templateAssetSetIds,
     demosById,
     statusId,
     // demoDatas = [],
@@ -128,10 +122,6 @@ const TemplateView: React.FC<Props> = ({
   const status = allStatuses.find(p => p.id === statusId);
 
   const readme = '';
-  const assetSets = assetSetIds.map(assetSetId => ({
-    id: assetSetId,
-    ...allAssetSets[assetSetId],
-  }));
 
   const backupDemo: DataDemo = {
     type: 'data',
@@ -146,11 +136,7 @@ const TemplateView: React.FC<Props> = ({
 
   const demos = template?.demos?.map(d => demosById[d]) ?? [];
 
-  const hasSchema = !!(
-    schema &&
-    schema.properties &&
-    Object.keys(schema.properties).length > 0
-  );
+  const hasSchema = !!(Object.keys(schema?.properties || {}).length > 0);
 
   const [firstDemo] = demos;
   const initialDemo =
@@ -159,27 +145,27 @@ const TemplateView: React.FC<Props> = ({
     history.replace(`${BASE_PATHS.PATTERN}/${patternId}/${templateId}`);
   }
 
-  const [demoIndex, setDemoIndex] = useState(0);
   const [demo, setDemo] = useState<KnapsackTemplateDemo>(initialDemo);
 
   useEffect(() => {
     if (demoId) {
-      // console.log('new demo!');
+      // new demo!
       setDemo(demosById[demoId]);
     }
   }, [demoId]);
-  // const demo = demos[demoIndex];
-
-  // const [dataState, setDataState] = useState({
-  //   demoDataIndex: 0,
-  //   data: demoDatas[0],
-  // });
 
   const isCodeBlockEditable = isTemplateDemo(demo) && isLocalDev;
+  const assetSetIds = templateAssetSetIds ?? globalAssetSetIds;
+
+  const assetSets = assetSetIds.map(assetSetId => ({
+    id: assetSetId,
+    ...allAssetSets[assetSetId],
+  }));
 
   const [assetSetId, setAssetSetId] = useState(
     assetSets[0] ? assetSets[0].id : '',
   );
+
   const [templateInfo, setTemplateInfo] = useState<
     KsRenderResults & { url: string }
   >();

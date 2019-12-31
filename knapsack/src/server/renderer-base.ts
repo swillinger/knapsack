@@ -101,6 +101,7 @@ export class KnapsackRendererBase implements KnapsackTemplateRendererBase {
     <head>
       <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+          ${inlineHead}
           ${cssUrls
             .map(
               cssUrl =>
@@ -113,7 +114,6 @@ export class KnapsackRendererBase implements KnapsackTemplateRendererBase {
                 `<script src="${jsUrl}" type="text/javascript"></script>`,
             )
             .join('\n')}
-          ${inlineHead}
     </head>
     <body>
     `;
@@ -146,14 +146,15 @@ ${inlineFoot}
     inlineCss = '',
     inlineHead = '',
     inlineFoot = '',
+    isInIframe,
   }: {
     html: string;
   } & GetHeadParams &
     GetFootParams): string {
     return `
-${this.getHead({ cssUrls, headJsUrls, inlineHead })}
-<div>${html}</div>
-${this.getFoot({ jsUrls, inlineJs, inlineCss, inlineFoot })}
+${this.getHead({ cssUrls, headJsUrls, inlineHead, isInIframe })}
+${isInIframe ? `<div class="knapsack-wrapper">${html}</div>` : html}
+${this.getFoot({ jsUrls, inlineJs, inlineCss, inlineFoot, isInIframe })}
 `;
   }
 

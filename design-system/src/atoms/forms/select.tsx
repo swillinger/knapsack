@@ -36,6 +36,7 @@ type Props = {
     title?: string;
     value: string;
   }[];
+  disabled?: boolean;
 };
 
 export const Select: React.FC<Props> = ({
@@ -45,6 +46,7 @@ export const Select: React.FC<Props> = ({
   size = Sizes.m,
   value = items.length === 0 ? '' : items[0].value,
   isLabelInline = true,
+  disabled = false,
 }: Props) => {
   const [id, setId] = useState('');
   useEffect(() => {
@@ -61,6 +63,7 @@ export const Select: React.FC<Props> = ({
     'ks-select': true,
     [`ks-select--size-${size}`]: true,
     'ks-select--label-inline': isLabelInline,
+    'ks-select--disabled': disabled,
   });
   return (
     <label className={classes} htmlFor={id} tabIndex={0}>
@@ -74,6 +77,7 @@ export const Select: React.FC<Props> = ({
           value={currentValue}
           id={id}
           className="ks-select__select"
+          disabled={disabled}
         >
           {items.map(item => (
             <option tabIndex={0} value={item.value} key={item.value}>

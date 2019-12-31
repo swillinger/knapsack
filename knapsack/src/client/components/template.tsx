@@ -140,7 +140,7 @@ const Template: React.FC<Props> = ({
         patternId,
         templateId,
         demo,
-        assetSetId,
+        assetSetId: demo?.assetSetId ?? assetSetId,
         isInIframe: true,
         wrapHtml: true,
         extraParams: { cacheBuster: id },

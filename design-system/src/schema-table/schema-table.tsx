@@ -228,6 +228,7 @@ export const SchemaTable = ({ schema }) => {
         // classname prefix ks- not added due to third party library
         className="schema-table -striped -highlight"
         data={data}
+        key={data.length} // trigger re-rendering when new columns added
         columns={columns}
         showPagination={false}
         defaultPageSize={data.length}

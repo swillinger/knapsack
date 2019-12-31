@@ -25,12 +25,14 @@ export interface GetHeadParams {
   cssUrls?: string[];
   headJsUrls?: string[];
   inlineHead?: string;
+  isInIframe?: boolean;
 }
 export interface GetFootParams {
   jsUrls?: string[];
   inlineJs?: string;
   inlineCss?: string;
   inlineFoot?: string;
+  isInIframe?: boolean;
 }
 
 export interface TemplateRendererMeta {

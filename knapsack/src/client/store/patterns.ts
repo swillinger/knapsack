@@ -529,6 +529,7 @@ export default function reducer(
         const { demosById, demos } = template;
         const id = shortid.generate();
 
+        // @todo get default props and add them as initial data
         demosById[id] = {
           id,
           title: 'My new template demo',

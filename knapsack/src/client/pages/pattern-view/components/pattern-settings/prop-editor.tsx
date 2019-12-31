@@ -126,7 +126,7 @@ export const KsPropEditor: React.FC<PropEditorProps> = React.memo(
               PropTypeNames.options,
               PropTypeNames.arrayOfStrings,
               isFunctionPropOk ? PropTypeNames.function : null,
-              PropTypeNames.unknown,
+              // PropTypeNames.unknown, // @todo enable unknown/full edit mode
             ]
               .filter(Boolean)
               .map(propType => ({

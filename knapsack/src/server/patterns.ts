@@ -258,9 +258,12 @@ export class Patterns implements KnapsackDb<PatternsState> {
                 demo.data.props,
               );
               if (!results.ok) {
+                log.inspect(
+                  { propsSpec: spec.props, demo, results },
+                  'invalid demo info',
+                );
                 log.warn(
-                  `invalid demo: ${pattern.id}, ${template.id}, ${demo.id}`,
-                  results,
+                  `invalid demo: ${pattern.id}, ${template.id}, ${demo.id} ^^^`,
                   'pattern data',
                 );
               }
@@ -615,8 +618,16 @@ Resolved absolute path: ${path}
       } = assetSet ?? {};
 
       const inlineJSs = [inlineJs];
-
+      const inlineHeads = [inlineHead];
       if (isInIframe) {
+        // Need just a little bit of space around the pattern
+        inlineHeads.push(`
+<style>
+.knapsack-wrapper {
+  padding: 5px;
+}
+</style>
+        `);
         inlineJSs.push(`
 /**
   * Prevents the natural click behavior of any links within the iframe.
@@ -665,8 +676,9 @@ if ('WebSocket' in window && location.hostname === 'localhost') {
         jsUrls,
         inlineJs: inlineJSs.join('\n'),
         inlineCss,
-        inlineHead,
+        inlineHead: inlineHeads.join('\n'),
         inlineFoot,
+        isInIframe,
       });
       return {
         ...renderedTemplate,

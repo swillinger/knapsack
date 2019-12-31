@@ -54,6 +54,10 @@ interface DemoBase {
   id: string;
   title: string;
   description?: string;
+  /**
+   * Would override what was on the template
+   */
+  assetSetId?: string;
   type: DemoType;
 }
 

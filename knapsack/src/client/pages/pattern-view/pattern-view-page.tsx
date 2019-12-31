@@ -83,7 +83,7 @@ const PatternViewPage: React.FC<Props> = ({
 
   const [hasTemplates, setHasTemplates] = useState(templatesList.length > 0);
 
-  const [demoSize, setDemoSize] = useState<string>(defaultDemoSize);
+  const [demoSize, setDemoSize] = useState<string>(defaultDemoSize ?? 'm');
 
   let hasSchema = false;
   if (showAllTemplates) {
@@ -250,7 +250,7 @@ const PatternViewPage: React.FC<Props> = ({
               templateId={templateId}
               demoId={demoId}
               key={`${patternId}-${templateId}`}
-              demoSize={demoSize || defaultDemoSize}
+              demoSize={demoSize}
               isVerbose
               isCodeBlockShown
             />
@@ -265,7 +265,7 @@ const PatternViewPage: React.FC<Props> = ({
                   id={patternId}
                   key={template.id}
                   templateId={template.id}
-                  demoSize={demoSize || defaultDemoSize}
+                  demoSize={demoSize}
                   isVerbose={!showAllTemplates}
                 />
                 <br />

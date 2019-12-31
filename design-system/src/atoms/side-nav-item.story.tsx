@@ -34,7 +34,7 @@ export const allVariations = () => (
             statuses={[
               {
                 templateId: '1',
-                templateTitle: 'React',
+                templateLanguageTitle: 'React',
                 templateLanguageId: '11',
                 path: 'patterns/thing',
                 status: {
@@ -45,7 +45,7 @@ export const allVariations = () => (
               },
               {
                 templateId: '2',
-                templateTitle: 'Twig',
+                templateLanguageTitle: 'Twig',
                 templateLanguageId: '22',
                 path: 'patterns/thing2',
                 status: {

@@ -47,14 +47,15 @@ export class KsCloudConnect {
     } = this.cloudConfig;
 
     const repo = `${repoOwner}/${repoName}`;
-    if (!user.ksRepoAccess.includes(repo)) {
-      return {
-        ok: false,
-        message: `Your user does not have permission to write to the "${repo}" repo, only these: ${user.ksRepoAccess?.join(
-          ', ',
-        )}`,
-      };
-    }
+    // @todo re-enable repo access check. disabled b/c adding users to user involved manual api call.
+    // if (!user.ksRepoAccess.includes(repo)) {
+    //   return {
+    //     ok: false,
+    //     message: `Your user does not have permission to write to the "${repo}" repo, only these: ${user.ksRepoAccess?.join(
+    //       ', ',
+    //     )}`,
+    //   };
+    // }
 
     const body: KsCloudSaveBody = {
       owner: repoOwner,

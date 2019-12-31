@@ -72,6 +72,7 @@ export const FileThemeNodeContentRenderer: React.FC<Props> = ({
   const patterns = useSelector(s => s.patternsState.patterns);
   const globalStatuses = useSelector(s => s.patternsState.templateStatuses);
   const patternIds = Object.keys(patterns);
+  const renderers = useSelector(s => s.patternsState.renderers);
   const dispatch = useDispatch();
   const patternInfo = getPatternInfoFromUrl(ksNavItem?.path);
   let pattern: KnapsackPattern;
@@ -80,17 +81,12 @@ export const FileThemeNodeContentRenderer: React.FC<Props> = ({
   }
   const statuses = pattern
     ? pattern.templates.map(template => {
-        const {
-          title: templateTitle,
-          statusId,
-          id: templateId,
-          templateLanguageId,
-        } = template;
+        const { statusId, id: templateId, templateLanguageId } = template;
         return {
           status: statusId ? globalStatuses.find(s => s.id === statusId) : null,
-          templateTitle,
           templateId,
           templateLanguageId,
+          templateLanguageTitle: renderers[templateLanguageId]?.meta?.title,
           path: `${BASE_PATHS.PATTERN}/${pattern.id}/${templateId}`,
         };
       })

@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import cn from 'classnames';
 import { KnapsackTemplateStatus } from '@knapsack/app/src/schemas/patterns';
 import './side-nav-item.scss';
@@ -24,9 +24,9 @@ type Props = {
   canDelete?: boolean;
   statuses?: {
     status: KnapsackTemplateStatus;
-    templateTitle: string;
     templateId: string;
     templateLanguageId: string;
+    templateLanguageTitle: string;
     path: string;
   }[];
   handleDelete: () => void;
@@ -68,25 +68,33 @@ export const SideNavItem: React.FC<Props> = ({
         </span>
       )}
 
-      {statuses?.length > 1 && (
+      {statuses?.length > 0 && (
         <>
           {statuses.map(statusItem => {
             return (
               statusItem.status && (
                 <KsPopover
                   key={`${statusItem.templateId}-${statusItem.status.id}`}
-                  isHoverTriggered
+                  trigger="hover"
                   content={
                     <span>
-                      {statusItem.templateTitle} Template Status:{' '}
-                      {statusItem.status.title}
+                      {statuses.length > 1 ? (
+                        <>
+                          {statusItem.templateLanguageTitle} Template Status:{' '}
+                        </>
+                      ) : (
+                        <>Status: </>
+                      )}
+                      <strong>{statusItem.status.title}</strong>
                     </span>
                   }
                 >
-                  <div
-                    className="ks-side-nav-item__status-indicator"
-                    style={{ backgroundColor: statusItem.status.color }}
-                  />
+                  <Link to={statusItem.path}>
+                    <div
+                      className="ks-side-nav-item__status-indicator"
+                      style={{ backgroundColor: statusItem.status.color }}
+                    />
+                  </Link>
                 </KsPopover>
               )
             );

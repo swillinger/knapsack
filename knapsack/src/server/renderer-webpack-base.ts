@@ -146,8 +146,7 @@ export class KnapsackRendererWebpackBase extends KnapsackRendererBase
     patterns: import('@knapsack/app/src/server/patterns').Patterns;
     cacheDir: string;
   }): Promise<void> {
-    super.init(opt);
-    await fs.emptyDir(this.outputDir);
+    await super.init(opt);
     this.publicPath = `/${path.relative(this.cacheDir, this.outputDir)}/`;
     this.webpackEntry = this.createWebpackEntryFromPatterns(opt.patterns);
     this.createWebpackCompiler(this.webpackEntry);
@@ -180,12 +179,33 @@ export class KnapsackRendererWebpackBase extends KnapsackRendererBase
       .then(manifestString => JSON.parse(manifestString))
       .then(manifest => {
         this.webpackManifest = manifest;
-        return manifest;
       })
-      .catch(console.log.bind(console));
+      .catch(error => {
+        log.error('setManifest()', error);
+        throw new Error(
+          `Error getting WebPack manifest.json file. ${error.message}`,
+        );
+      });
+  }
+
+  setManifestSync() {
+    try {
+      const manifestString = fs.readFileSync(
+        path.join(this.outputDir, 'manifest.json'),
+        'utf8',
+      );
+      const manifest = JSON.parse(manifestString);
+      this.webpackManifest = manifest;
+    } catch (error) {
+      log.error('setManifest()', error);
+      throw new Error(
+        `Error getting WebPack manifest.json file. ${error.message}`,
+      );
+    }
   }
 
   getWebPackEntryPath(id: string, ext = '.js'): string {
+    if (!this.webpackManifest) this.setManifestSync();
     if (!this.webpackManifest) {
       throw new Error(
         `Webpack has not been built yet, cannot access id "${id}"`,

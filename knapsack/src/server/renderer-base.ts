@@ -1,12 +1,9 @@
 import chokidar from 'chokidar';
-import {
-  validateDataAgainstSchema,
-  validateSchema,
-} from '@knapsack/schema-utils';
-import { GenericResponse, JsonSchemaObject } from '@knapsack/core/src/types';
+import { JsonSchemaObject } from '@knapsack/core/src/types';
 import { compile, JSONSchema } from 'json-schema-to-typescript';
 import { pascalCase } from 'change-case';
 import { join } from 'path';
+import fs from 'fs-extra';
 import { knapsackEvents, EVENTS } from './events';
 import * as log from '../cli/log';
 import { formatCode } from './server-utils';
@@ -21,9 +18,7 @@ import {
   isDataDemo,
   isTemplateDemo,
   isSlottedTemplateDemo,
-  KsTemplateSpec,
 } from '../schemas/patterns';
-import specSlotsSchema from '../json-schemas/schemaKsTemplateSpecSlots';
 import { validateSpec } from '../lib/utils';
 
 /* eslint-disable class-methods-use-this, no-empty-function, no-unused-vars */
@@ -67,6 +62,7 @@ export class KnapsackRendererBase implements KnapsackTemplateRendererBase {
   }): Promise<void> {
     this.cacheDir = cacheDir;
     this.outputDir = join(cacheDir, this.outputDirName);
+    await fs.ensureDir(this.outputDir);
   }
 
   static formatCode = formatCode;

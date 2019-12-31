@@ -146,8 +146,6 @@ export class KnapsackReactRenderer extends KnapsackRendererWebpackBase
     demoApp: string;
     webpackScriptSrcs: string[];
   }): Promise<KnapsackTemplateRendererResults> {
-    if (!this.webpackManifest) await this.setManifest();
-
     let code = `
 const root = document.getElementById('render-root');
 const DemoWrapper = window.knapsack['demo-wrapper'].default;

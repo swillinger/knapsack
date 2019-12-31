@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.21](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.20...v2.0.0-beta.21) (2019-12-31)
+
+
+### Bug Fixes
+
+* webpack assets on build then serve ([eea9f7b](https://github.com/basaltinc/knapsack/commit/eea9f7b0e5d7ec83e6bfec03a804d11666b9af9b))
+
+
+
+
+
 # [2.0.0-beta.20](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.19...v2.0.0-beta.20) (2019-12-31)
 
 **Note:** Version bump only for package @knapsack/app

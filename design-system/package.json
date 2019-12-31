@@ -1,6 +1,6 @@
 {
   "name": "@knapsack/design-system",
-  "version": "2.0.0-beta.19",
+  "version": "2.0.0-beta.20",
   "description": "Collection of re-usable UI Components for Knapsack and friends",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -12,8 +12,8 @@
     "start": "yarn build --watch"
   },
   "dependencies": {
-    "@knapsack/core": "^2.0.0-beta.11",
-    "@knapsack/utils": "^2.0.0-beta.11",
+    "@knapsack/core": "^2.0.0-beta.20",
+    "@knapsack/utils": "^2.0.0-beta.20",
     "classnames": "^2.2.6",
     "marked": "^0.7.0",
     "prismjs": "^1.15.0",

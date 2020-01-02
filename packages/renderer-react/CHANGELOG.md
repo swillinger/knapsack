@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.23](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.22...v2.0.0-beta.23) (2020-01-02)
+
+
+### Bug Fixes
+
+* **renderer-react:** adding needed dependencies ([2fc4229](https://github.com/basaltinc/knapsack/commit/2fc4229460f81e02e4c01a6560dca30cb2548b7b))
+
+
+
+
+
 # [2.0.0-beta.22](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.21...v2.0.0-beta.22) (2019-12-31)
 
 **Note:** Version bump only for package @knapsack/renderer-react

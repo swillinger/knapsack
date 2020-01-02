@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.23](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.22...v2.0.0-beta.23) (2020-01-02)
+
+**Note:** Version bump only for package @knapsack/babel-config
+
+
+
+
+
 ## [1.7.1](https://github.com/basaltinc/knapsack/compare/v1.7.0...v1.7.1) (2019-10-26)
 
 **Note:** Version bump only for package @knapsack/babel-config

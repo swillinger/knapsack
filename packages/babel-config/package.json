@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/babel-config",
   "license": "GPL-2.0-or-later",
-  "version": "2.0.0-beta.23",
+  "version": "2.0.0-beta.24",
   "description": "Babel config and deps.",
   "main": "index.js",
   "scripts": {},

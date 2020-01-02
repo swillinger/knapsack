@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.24](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.23...v2.0.0-beta.24) (2020-01-02)
+
+
+### Bug Fixes
+
+* add dismissible status messages ([c48bea4](https://github.com/basaltinc/knapsack/commit/c48bea43121fe851988df70cd0d0848e0e6178ea))
+
+
+
+
+
 # [2.0.0-beta.23](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.22...v2.0.0-beta.23) (2020-01-02)
 
 **Note:** Version bump only for package @knapsack/design-system

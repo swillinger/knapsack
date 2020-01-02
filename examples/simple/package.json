@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/example-simple",
   "license": "ISC",
-  "version": "2.0.0-beta.24",
+  "version": "2.0.0-beta.25",
   "description": "",
   "private": true,
   "main": "index.js",
@@ -14,9 +14,9 @@
   },
   "dependencies": {
     "@basalt/demo-data": "^0.5.1",
-    "@knapsack/app": "2.0.0-beta.24",
-    "@knapsack/renderer-html": "2.0.0-beta.24",
-    "@knapsack/renderer-twig": "2.0.0-beta.24"
+    "@knapsack/app": "2.0.0-beta.25",
+    "@knapsack/renderer-html": "2.0.0-beta.25",
+    "@knapsack/renderer-twig": "2.0.0-beta.25"
   },
   "devDependencies": {
     "theo": "^8.0.0"

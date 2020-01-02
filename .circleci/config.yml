@@ -71,7 +71,6 @@ jobs:
             - repo
             - artifacts
             - .ssh
-#            - .cache/Cypress
 
   tests:
     executor: cypress-with-php
@@ -89,7 +88,7 @@ jobs:
           key: cypress-cache-{{ checksum "node_modules/cypress/package.json" }}
           paths:
             - ~/.cache/Cypress
-      #- run: yarn test:cypress
+      - run: yarn test:cypress
 
   deploys:
     executor: cypress-with-php

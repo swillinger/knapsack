@@ -34,6 +34,12 @@ export const UserPage: React.FC = () => {
 
   return (
     <section className="ks-user-page">
+      <blockquote>
+        <p>
+          If you see: Account recovery requires verified contact information,
+          you can just click skip.
+        </p>
+      </blockquote>
       <div className="ks-user-page__amplify-components ks-u-amplify-wrapper">
         <Authenticator
           amplifyConfig={awsconfig}

@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       ui: {
         ...initialState.ui,
         ...cachedState.ui,
+        status: null,
       },
     };
   }

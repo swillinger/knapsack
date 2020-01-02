@@ -43,7 +43,7 @@ export class KsCloudConnect {
       repoRoot,
       repoName,
       repoOwner,
-      baseBranch = 'next',
+      baseBranch = 'master',
     } = this.cloudConfig;
 
     const repo = `${repoOwner}/${repoName}`;

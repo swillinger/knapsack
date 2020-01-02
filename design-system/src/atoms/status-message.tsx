@@ -1,11 +1,13 @@
 import React from 'react';
 import marked from 'marked';
+import { KsButton } from './button';
 import './status-message.scss';
 
 type StatusTypes = 'success' | 'info' | 'warning' | 'error';
 type Props = {
   message: string;
   type?: StatusTypes;
+  handleClose?: () => void;
 };
 
 const statusTypes = ['success', 'info', 'warning', 'error'];
@@ -35,6 +37,7 @@ const statusColorSets = {
 export const StatusMessage: React.FC<Props> = ({
   message,
   type = 'info',
+  handleClose,
 }: Props) => {
   const theType = statusTypes.includes(type) ? type : 'info';
   const html = marked.parse(message);
@@ -46,7 +49,20 @@ export const StatusMessage: React.FC<Props> = ({
         backgroundColor: statusColorSets[theType].bg,
         color: statusColorSets[theType].text,
       }}
-      dangerouslySetInnerHTML={{ __html: html }}
-    />
+    >
+      {handleClose && (
+        <KsButton
+          className="ks-status-message__close"
+          kind="icon"
+          flush
+          handleTrigger={handleClose}
+          icon="close"
+        />
+      )}
+      <div
+        className="ks-status-message__content"
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
+    </div>
   );
 };

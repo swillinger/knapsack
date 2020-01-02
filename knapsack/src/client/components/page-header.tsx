@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { StatusMessage } from '@knapsack/design-system';
-import { useSelector, AppState } from '../store';
+import { useSelector, AppState, useDispatch, removeStatus } from '../store';
 import './page-header.scss';
 
 type BaseProps = {
@@ -18,6 +18,7 @@ export const PageHeader: React.FC<Props> = ({
   section,
   status,
 }: Props) => {
+  const dispatch = useDispatch();
   const classes = classNames({
     'ks-page-header': true,
     'ks-page-header--has-status': status,
@@ -31,7 +32,11 @@ export const PageHeader: React.FC<Props> = ({
       {title && <h2 className="ks-page-header__title">{title}</h2>}
       {status && (
         <div className="ks-page-header__status">
-          <StatusMessage type={status.type} message={status.message} />
+          <StatusMessage
+            type={status.type}
+            message={status.message}
+            handleClose={() => dispatch(removeStatus())}
+          />
         </div>
       )}
     </header>

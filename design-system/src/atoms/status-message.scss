@@ -1,5 +1,13 @@
 .ks-status-message {
-  padding: var(--space-xs) var(--space-m) var(--space-xxs);
+  padding: var(--space-xs) var(--space-l) var(--space-xxs) var(--space-m);
   margin-bottom: var(--space-l);
   line-height: 1;
+  position: relative;
+  &__content {
+  }
+  &__close {
+    position: absolute;
+    top: var(--space-xxs);
+    right: var(--space-xxs);
+  }
 }

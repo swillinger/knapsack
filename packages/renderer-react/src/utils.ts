@@ -1,13 +1,11 @@
 import { log } from '@knapsack/app';
 import { formatCode } from '@knapsack/app/dist/server/server-utils';
-import { validateSchema } from '@knapsack/schema-utils';
 import path from 'path';
 import { compile } from 'ejs';
-import fs, { readFileSync, readFile, exists, existsSync } from 'fs-extra';
+import fs, { readFileSync, readFile, existsSync } from 'fs-extra';
 import * as reactDocs from 'react-docgen';
 import * as rdTs from 'react-docgen-typescript';
-import { JsonSchemaObject } from '@knapsack/core/src/types';
-import { KsTemplateSpec } from '@knapsack/app/dist/schemas/patterns';
+import { KsTemplateSpec } from '@knapsack/app/src/schemas/patterns';
 
 /**
  * The name of the type, which is usually corresponds to the function name in `React.PropTypes`. However, for types define with `oneOf`, we use `"enum"` and for `oneOfType` we use `"union"`. If a custom function is provided or the type cannot be resolved to anything of `React.PropTypes`, we use `"custom"`.

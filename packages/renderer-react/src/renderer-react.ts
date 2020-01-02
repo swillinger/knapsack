@@ -17,7 +17,6 @@ import {
   KsTemplateSpec,
 } from '@knapsack/app/src/schemas/patterns';
 import camelCase from 'camelcase';
-
 import { readFile, readFileSync } from 'fs-extra';
 import { join } from 'path';
 import {

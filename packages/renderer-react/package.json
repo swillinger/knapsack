@@ -1,6 +1,6 @@
 {
   "name": "@knapsack/renderer-react",
-  "version": "2.0.0-beta.25",
+  "version": "2.0.0-beta.26",
   "description": "Render React",
   "main": "dist/renderer-react.js",
   "types": "dist/renderer-react.d.ts",
@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.7.7",
-    "@knapsack/core": "2.0.0-beta.25",
+    "@knapsack/core": "2.0.0-beta.26",
     "camelcase": "^4.1.0",
     "ejs": "^3.0.1",
     "react-docgen": "^4.1.1",

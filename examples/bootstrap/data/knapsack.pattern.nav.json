@@ -1,0 +1,41 @@
+{
+  "id": "nav",
+  "title": "Nav",
+  "templates": [
+    {
+      "id": "html",
+      "path": "../assets/patterns/nav/nav.html",
+      "templateLanguageId": "html",
+      "assetSetIds": [],
+      "demosById": {},
+      "demos": [],
+      "statusId": "ready"
+    },
+    {
+      "id": "twig",
+      "path": "../assets/patterns/nav/nav.twig",
+      "alias": "@components/nav.twig",
+      "templateLanguageId": "twig",
+      "assetSetIds": [],
+      "demosById": {},
+      "demos": [],
+      "spec": {
+        "slots": {},
+        "props": {
+          "$schema": "http://json-schema.org/draft-07/schema",
+          "type": "object",
+          "required": [],
+          "properties": {
+            "colorScheme": {
+              "title": "Color Scheme",
+              "type": "string",
+              "enum": ["light", "dark"],
+              "default": "light"
+            }
+          }
+        }
+      },
+      "statusId": "proposed"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "id": "media-object",
+  "title": "Media Object",
+  "templates": [
+    {
+      "id": "html",
+      "path": "../assets/patterns/media-object/media-object.html",
+      "templateLanguageId": "html",
+      "assetSetIds": [],
+      "demosById": {},
+      "demos": [],
+      "statusId": "ready"
+    },
+    {
+      "id": "twig",
+      "path": "../assets/patterns/media-object/media-object.twig",
+      "alias": "@components/media-object.twig",
+      "templateLanguageId": "twig",
+      "assetSetIds": [],
+      "demosById": {},
+      "demos": [],
+      "statusId": "proposed"
+    }
+  ]
+}

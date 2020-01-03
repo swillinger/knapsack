@@ -1,0 +1,44 @@
+{
+  "id": "card-grid",
+  "title": "Card Grid",
+  "templates": [
+    {
+      "id": "html",
+      "path": "../assets/patterns/card-grid/card-grid.html",
+      "templateLanguageId": "html",
+      "assetSetIds": [],
+      "demosById": {},
+      "demos": [],
+      "statusId": "ready"
+    },
+    {
+      "id": "twig",
+      "path": "../assets/patterns/card-grid/card-grid.twig",
+      "alias": "@components/card-grid.twig",
+      "templateLanguageId": "twig",
+      "assetSetIds": [],
+      "demosById": {
+        "oyQ5PVx8": {
+          "id": "oyQ5PVx8",
+          "title": "My New Demo",
+          "description": "A description",
+          "type": "data",
+          "data": { "props": {}, "slots": {} }
+        }
+      },
+      "demos": ["oyQ5PVx8"],
+      "spec": {
+        "slots": {
+          "cards": { "title": "Cards", "allowedPatternIds": ["card"] }
+        },
+        "props": {
+          "$schema": "http://json-schema.org/draft-07/schema",
+          "type": "object",
+          "required": [],
+          "properties": { "temp": { "type": "string" } }
+        }
+      },
+      "statusId": "proposed"
+    }
+  ]
+}

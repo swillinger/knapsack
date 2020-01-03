@@ -1,0 +1,43 @@
+{
+  "id": "list-group",
+  "title": "List Group",
+  "templates": [
+    {
+      "id": "html",
+      "path": "../assets/patterns/list-group/list-group.html",
+      "templateLanguageId": "html",
+      "assetSetIds": [],
+      "demosById": {},
+      "demos": [],
+      "statusId": "ready"
+    },
+    {
+      "id": "twig",
+      "path": "../assets/patterns/list-group/list-group.twig",
+      "alias": "@components/list-group.twig",
+      "templateLanguageId": "twig",
+      "assetSetIds": [],
+      "demosById": {},
+      "demos": [],
+      "statusId": "needs-dev",
+      "spec": {
+        "slots": {},
+        "props": {
+          "$schema": "http://json-schema.org/draft-07/schema",
+          "type": "object",
+          "required": [],
+          "properties": {
+            "flush": {
+              "title": "Flush",
+              "description": "Removes borders",
+              "type": "boolean"
+            },
+            "active": { "title": "Active", "type": "boolean" },
+            "disabled": { "title": "Disabled", "type": "boolean" }
+          }
+        }
+      }
+    }
+  ],
+  "description": "Provide contextual feedback messages for typical user actions with the handful of available and flexible list-group messages."
+}

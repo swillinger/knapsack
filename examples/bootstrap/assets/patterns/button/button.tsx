@@ -1,30 +1,16 @@
 import * as React from 'react';
 import cn from 'classnames';
+import {ButtonProps} from '../../../dist/meta/button/button-react.spec';
 
-type Props = {
-  type?:
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'danger'
-    | 'warning'
-    | 'info'
-    | 'light'
-    | 'dark'
-    | 'link';
-  size?: 'sm' | 'md' | 'lg';
-  disabled?: false;
-  outlined?: false;
-  children: React.ReactNode;
-};
-
-const Button: React.FC<Props> = ({
+const Button: React.FC<ButtonProps> = ({
   type = 'primary',
   size = 'md',
   disabled = false,
   outlined = false,
   children,
-}: Props) => {
+  handleClick,
+  icon,
+}: ButtonProps) => {
   const classes = cn(
     'bootstrap',
     'btn',
@@ -33,7 +19,7 @@ const Button: React.FC<Props> = ({
     outlined ? `btn-outline-${type}` : `btn-${type}`,
     {}
     );
-  return <button className={classes}>{children}</button>;
+  return <button className={classes} onClick={event => handleClick()}>{icon}{children}</button>;
 };
 
 export default Button;

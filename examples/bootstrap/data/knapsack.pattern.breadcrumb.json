@@ -1,0 +1,26 @@
+{
+  "id": "breadcrumb",
+  "title": "Breadcrumb",
+  "templates": [
+    {
+      "id": "html",
+      "path": "../assets/patterns/breadcrumb/breadcrumb.html",
+      "templateLanguageId": "html",
+      "assetSetIds": [],
+      "demosById": {},
+      "demos": [],
+      "statusId": "ready"
+    },
+    {
+      "id": "twig",
+      "path": "../assets/patterns/breadcrumb/breadcrumb.twig",
+      "alias": "@components/breadcrumb.twig",
+      "templateLanguageId": "twig",
+      "assetSetIds": [],
+      "demosById": {},
+      "demos": [],
+      "statusId": "needs-dev"
+    }
+  ],
+  "description": "Indicate the current page’s location within a navigational hierarchy that automatically adds separators via CSS."
+}

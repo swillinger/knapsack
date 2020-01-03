@@ -9,6 +9,8 @@ knapsack/node_modules
 # @todo remove and fix lint issues
 /docs-site/pages
 /docs-site/core
+/docs-site/static/pkgs
+/docs-site/.docusaurus
 /docs-site/build
 /knapsack/src/json-schemas
 /knapsack/src/aws-exports.js

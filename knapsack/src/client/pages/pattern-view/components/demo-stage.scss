@@ -1,5 +1,3 @@
-@import '../../../global/breakpoints';
-
 .ks-demo-stage {
   position: relative;
   flex-grow: 1;
@@ -66,7 +64,7 @@
     padding: var(--space-xs) var(--space-s);
     width: 100%;
 
-    @media (max-width: $bp-large - 1) {
+    @media (max-width: calc(var(--bp-large) - 1px)) {
       width: 100% !important;
     }
 
@@ -103,7 +101,7 @@
       }
     }
   }
-  @media (max-width: $bp-large - 1) {
+  @media (max-width: calc(var(--bp-large) - 1px)) {
     display: block !important;
 
     &__stage,

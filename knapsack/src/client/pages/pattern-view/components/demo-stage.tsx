@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import cn from 'classnames';
 import { KsButton, KsButtonGroup, SchemaForm } from '@knapsack/design-system';
 import Template, { Props as TemplateProps } from '../../../components/template';
+import { FunctionField } from '../../../components/function-field';
 import { CurrentTemplateContext } from '../current-template-context';
 import {
   isDataDemo,
@@ -185,6 +186,7 @@ export const KsDemoStage: React.FC<Props> = ({
                             onChange={({ formData }) => {
                               handlePropsChange(formData);
                             }}
+                            customFields={{ FunctionField }}
                           />
                         </ErrorCatcher>
                       </>

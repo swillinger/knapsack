@@ -11,7 +11,7 @@
       true,
       {
         "importFrom": [
-          "./knapsack/src/client/global/variables.css"
+          "./design-system/src/design-tokens/variables.css"
         ]
       }
     ],

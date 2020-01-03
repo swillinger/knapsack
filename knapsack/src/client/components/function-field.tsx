@@ -1,18 +1,6 @@
 import React, { useRef } from 'react';
-import {
-  Editor,
-  Error,
-  useView,
-  PropTypes,
-  Compiler,
-  Placeholder,
-  Knobs,
-} from 'react-view';
-import JsonSchemaForm, {
-  FormProps,
-  FieldProps,
-  ErrorListProps,
-} from 'react-jsonschema-form';
+import { useView, PropTypes, Knobs } from 'react-view';
+import { FieldProps } from 'react-jsonschema-form';
 import './function-field.scss';
 
 export const FunctionField: React.FC<FieldProps> = (props: FieldProps) => {

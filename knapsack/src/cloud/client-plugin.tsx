@@ -1,5 +1,5 @@
 import Loadable from 'react-loadable';
-import { Spinner } from '@knapsack/design-system/dist/spinner/spinner';
+import { Spinner } from '@knapsack/design-system';
 import React from 'react';
 import { KsPlugin } from '@knapsack/core';
 

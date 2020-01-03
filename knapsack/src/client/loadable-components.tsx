@@ -16,7 +16,7 @@
  */
 import Loadable from 'react-loadable';
 // need to keep this entry point small, so not importing entire design system
-import { Spinner } from '@knapsack/design-system/dist/spinner/spinner';
+import { Spinner } from '@knapsack/design-system';
 
 export const PageWithSidebar = Loadable({
   loader: () =>
@@ -77,7 +77,7 @@ export const LoadablePatternsPage = Loadable({
 export const LoadableSchemaTable = Loadable({
   loader: () =>
     import(
-      /* webpackChunkName: "schema-table" */ '@knapsack/design-system/dist/schema-table/schema-table'
+      /* webpackChunkName: "schema-table" */ '@knapsack/design-system'
     ).then(mod => mod.SchemaTable),
   loading: Spinner,
 });

@@ -1,36 +1,36 @@
 :root body {
   /* Layout */
-  --c-bg-brand: #16394B;
-  --c-bg: #FFFFFF;
-  --c-frame: #DDDDDD;
-  --c-shade: #F8F8F8;
+  --c-bg-brand: #16394b;
+  --c-bg: #ffffff;
+  --c-frame: #dddddd;
+  --c-shade: #f8f8f8;
 
   /* Text */
   --c-text-default: #222222;
   --c-text-subdued: #888888;
   --c-text-inverse: var(--c-bg);
-  --c-text-link: #008FC1;
-  --c-text-link-hover: #1AA6D7;
+  --c-text-link: #008fc1;
+  --c-text-link-hover: #1aa6d7;
 
   /* State */
-  --c-success: #00BC62;
-  --c-warning: #F7901E;
-  --c-danger: #CB261B;
+  --c-success: #00bc62;
+  --c-warning: #f7901e;
+  --c-danger: #cb261b;
   --c-error: var(--c-danger);
-  --c-focus: #00A7CC;
+  --c-focus: #00a7cc;
   --c-active: var(--c-focus);
   --c-active-highlight: rgba(0, 167, 204, 0.1);
 
   /* Button */
   --c-button-standard: var(--c-shade);
-  --c-button-standard-hover: #EEEEEE;
-  --c-button-standard-active: #E3E3E3;
-  --c-button-primary: #006FB6;
-  --c-button-primary-hover: #1486D0;
-  --c-button-primary-active: #0061A0;
+  --c-button-standard-hover: #eeeeee;
+  --c-button-standard-active: #e3e3e3;
+  --c-button-primary: #006fb6;
+  --c-button-primary-hover: #1486d0;
+  --c-button-primary-active: #0061a0;
   --c-button-primary-danger: var(--c-danger);
-  --c-button-primary-danger-hover: #DC2D20;
-  --c-button-primary-danger-active: #A50F05;
+  --c-button-primary-danger-hover: #dc2d20;
+  --c-button-primary-danger-active: #a50f05;
   --c-button-cancel: #666666;
   --c-button-cancel-hover: var(--c-danger);
   --c-button-cancel-active: var(--c-button-primary-danger-active);
@@ -47,7 +47,8 @@
   --space-xxxl: 120px;
 
   /* Font Families */
-  --font-family: 'Roboto', "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  --font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande',
+    sans-serif;
   --font-family--code: 'monospace'; /* @todo better code font */
   --font-base-size: 16px;
   --font-size-s: 12px;
@@ -72,4 +73,13 @@
   --anim-speed-m: 0.3s;
   --anim-function: 'ease-in-out';
   --anim-base: var(--anim-speed-m) var(--anim-function);
+
+  /* Breakpoints */
+  --bp-xsmall: 380px;
+  --bp-small: 450px;
+  --bp-medium: 700px;
+  --bp-large: 900px;
+  --bp-xlarge: 1100px;
+  --bp-xxlarge: 1300px;
+  --bp-xxxlarge: 1600px;
 }

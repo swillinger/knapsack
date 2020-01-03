@@ -1,3 +1,6 @@
+import './design-tokens/variables.css';
+import './styles/global.scss';
+
 export * from './atoms';
 export * from './breakpoints-demo/breakpoints-demo';
 export * from './code-block/code-block';

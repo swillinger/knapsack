@@ -22,6 +22,7 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { plugins } from '@knapsack/core';
+import '@knapsack/design-system/dist/ks-design-system.css';
 import Amplify from 'aws-amplify';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
@@ -51,8 +52,6 @@ import {
   LoadableBadRoute,
   PageWithSidebar,
 } from './loadable-components';
-import './global/variables.css';
-import './style.scss';
 import '../cloud/amplify-wrapper.scss';
 
 Amplify.configure(awsconfig);

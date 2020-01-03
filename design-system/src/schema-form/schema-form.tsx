@@ -3,6 +3,7 @@ import JsonSchemaForm, {
   FormProps,
   FieldProps,
   ErrorListProps,
+  Field,
 } from 'react-jsonschema-form';
 import uuid from 'uuid/v4';
 // import { JSONSchema7 } from 'json-schema';
@@ -14,7 +15,6 @@ import CustomArrayField from './custom-templates/array-field';
 import CustomField from './custom-templates/custom-field';
 import CheckboxWidget from './custom-templates/checkbox-widget';
 import CheckboxesWidget from './custom-templates/checkboxes-widget';
-import { FunctionField } from './custom-templates/function-field';
 import { useFallbackId } from '../utils/hooks';
 
 type Props<T> = Omit<FormProps<T>, 'schema'> & {
@@ -26,6 +26,7 @@ type Props<T> = Omit<FormProps<T>, 'schema'> & {
   submitText?: string;
   className?: string;
   children?: React.ReactNode;
+  customFields?: { [name: string]: Field };
 };
 
 const StringField: React.FC<FieldProps> = (props: FieldProps) => {
@@ -72,6 +73,7 @@ export const SchemaForm = ({
   isDebug = false,
   isInline = false,
   uiSchema = {},
+  customFields = {},
   children,
   ...rest
 }: Props<typeof formData>) => {
@@ -101,11 +103,10 @@ export const SchemaForm = ({
         ObjectFieldTemplate={ObjectFieldTemplate}
         ArrayFieldTemplate={CustomArrayField}
         FieldTemplate={CustomField}
-        fields={{
-          FunctionField,
-          // StringField,
-        }}
         className={isInline ? 'ks-rjsf ks-rjsf--inline' : 'ks-rjsf'}
+        fields={{
+          ...customFields,
+        }}
         widgets={{
           // can add any of our own OR replace any of these core ones: https://react-jsonschema-form.readthedocs.io/en/latest/advanced-customization/#customizing-the-default-fields-and-widgets
           CheckboxWidget,

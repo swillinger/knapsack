@@ -16,8 +16,8 @@
  */
 import React from 'react';
 import { Link } from 'react-router-dom';
+import knapsackBranding from '@knapsack/design-system/src/assets/knapsack-bg-black-trans.svg';
 import { useSelector } from '../store';
-import knapsackBranding from '../assets/knapsack-bg-black-trans.svg';
 import './footer.scss';
 
 const Footer: React.FC = () => {

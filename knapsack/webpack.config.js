@@ -27,6 +27,8 @@ module.exports = createWebPackConfig({
     new ScriptExtHtmlWebpackPlugin({
       module: [/js$/],
     }),
-    new WebappWebpackPlugin(join(__dirname, './src/client/assets/favicon.png')),
+    new WebappWebpackPlugin(
+      require.resolve('@knapsack/design-system/src/assets/favicon.png'),
+    ),
   ],
 });

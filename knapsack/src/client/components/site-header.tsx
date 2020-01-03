@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { plugins } from '@knapsack/core';
 import urlJoin from 'url-join';
 import { KsButton } from '@knapsack/design-system';
-import knapsackLogo from '../assets/knapsack-logo-trans.svg';
+import knapsackLogo from '@knapsack/design-system/src/assets/knapsack-logo-trans.svg';
 import './site-header.scss';
 import { useSelector } from '../store';
 import { KsTemplateLanguageSelect } from './template-language-select';

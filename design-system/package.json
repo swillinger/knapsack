@@ -1,6 +1,6 @@
 {
   "name": "@knapsack/design-system",
-  "version": "2.0.0-beta.27",
+  "version": "2.0.0-beta.28",
   "description": "Collection of re-usable UI Components for Knapsack and friends",
   "module": "dist/ks-design-system.js",
   "scripts": {
@@ -12,8 +12,8 @@
     "start": "yarn build --watch"
   },
   "dependencies": {
-    "@knapsack/core": "2.0.0-beta.27",
-    "@knapsack/utils": "2.0.0-beta.27",
+    "@knapsack/core": "2.0.0-beta.28",
+    "@knapsack/utils": "2.0.0-beta.28",
     "classnames": "^2.2.6",
     "marked": "^0.7.0",
     "prismjs": "^1.15.0",
@@ -27,7 +27,7 @@
     "shortid": "2.2.15"
   },
   "devDependencies": {
-    "@knapsack/babel-config": "2.0.0-beta.27",
+    "@knapsack/babel-config": "2.0.0-beta.28",
     "@storybook/addon-a11y": "^5.2.5",
     "@storybook/addon-actions": "^5.2.5",
     "@storybook/addon-docs": "^5.2.5",

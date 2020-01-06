@@ -2,6 +2,7 @@
 const TJS = require('typescript-json-schema'); // https://github.com/YousefED/typescript-json-schema
 const { resolve, relative, join } = require('path');
 const { writeFile, readdirSync, remove } = require('fs-extra');
+const $RefParser = require('json-schema-ref-parser');
 
 console.log('Start: converting TypeScript types to JSON Schemas');
 
@@ -30,6 +31,7 @@ const settings = {
   ignoreErrors: true,
   typeOfKeyword: false,
   refs: false,
+  // aliasRefs: false,
 };
 
 // see validationKeywords: https://github.com/YousefED/typescript-json-schema/blob/master/typescript-json-schema.ts#L254
@@ -96,7 +98,8 @@ ${relative(process.cwd(), __filename)}
 
   await Promise.all(
     schemas.map(async ({ type, schema }) => {
-      const schemaString = JSON.stringify(schema, null, '  ');
+      const fullSchema = await $RefParser.dereference(schema);
+      const schemaString = JSON.stringify(fullSchema, null, '  ');
       const jsFile = `export default ${schemaString};`;
       const fileNameBase = `${fileNamePrefix}${type}`;
       const filePath = resolve(distDir, fileNameBase);

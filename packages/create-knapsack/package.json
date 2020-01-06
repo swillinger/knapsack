@@ -1,7 +1,7 @@
 {
   "name": "create-knapsack",
   "license": "GPL-2.0-or-later",
-  "version": "2.0.0-beta.26",
+  "version": "2.0.0-beta.27",
   "preferGlobal": true,
   "description": "A Knapsack component that helps build Design Systems",
   "bin": "bin/index.js",

@@ -87,6 +87,7 @@ export const KsSelect: React.FC<Props> = ({
       marginRight: 'var(--space-xs)',
       height: 'var(--space-xs)',
       width: 'var(--space-xs)',
+      minWidth: 'var(--space-xs)', // prevents flexbox collapsing pseudo element when text is long
     },
   });
 

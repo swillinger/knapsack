@@ -34,12 +34,6 @@ export const TemplateHeader: React.FC<Props> = ({
     CurrentTemplateContext,
   );
 
-  const emptyStatus: SelectOptionProps = {
-    label: '',
-    value: '',
-    color: '',
-  };
-
   const isDemoSettingAssetSetId = !!demo?.assetSetId;
   const select = () => {
     const selectAssetSet = assetSetId
@@ -79,11 +73,14 @@ export const TemplateHeader: React.FC<Props> = ({
                     label: status.title,
                     color: status.color,
                   }
-                : emptyStatus
+                : {
+                    value: 'error',
+                    label: 'Error: No Status Assigned.',
+                    color: 'var(--c-error)',
+                  }
             }
             handleChange={handleStatusChange}
             options={[
-              emptyStatus,
               ...statuses.map(s => {
                 return {
                   value: s.id,

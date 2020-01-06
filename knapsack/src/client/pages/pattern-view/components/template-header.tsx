@@ -1,5 +1,10 @@
 import React, { useContext } from 'react';
-import { PatternStatusIcon, Select, KsPopover } from '@knapsack/design-system';
+import {
+  PatternStatusIcon,
+  KsSelect,
+  SelectOptionProps,
+  KsPopover,
+} from '@knapsack/design-system';
 import { CurrentTemplateContext } from '../current-template-context';
 import { useSelector } from '../../../store';
 import './template-header.scss';
@@ -11,8 +16,8 @@ type Props = {
   assetSetId?: string;
   isTitleShown?: boolean;
   status?: KnapsackTemplateStatus;
-  handleAssetSetChange: (newAssetSetId: string) => void;
-  handleStatusChange: (newStatusId: string) => void;
+  handleAssetSetChange: (newAssetSet: SelectOptionProps) => void;
+  handleStatusChange: (newStatus: SelectOptionProps) => void;
 };
 
 export const TemplateHeader: React.FC<Props> = ({
@@ -29,41 +34,66 @@ export const TemplateHeader: React.FC<Props> = ({
     CurrentTemplateContext,
   );
 
+  const emptyStatus: SelectOptionProps = {
+    label: '',
+    value: '',
+    color: '',
+  };
+
   const isDemoSettingAssetSetId = !!demo?.assetSetId;
-  const select = (
-    <Select
-      items={assetSets.map(assetSet => ({
-        title: assetSet.title,
-        value: assetSet.id,
-      }))}
-      handleChange={handleAssetSetChange}
-      value={assetSetId}
-      label="Asset Sets"
-      disabled={isDemoSettingAssetSetId}
-    />
-  );
+  const select = () => {
+    const selectAssetSet = assetSetId
+      ? assetSets.find(a => a.id === assetSetId)
+      : null;
+
+    return (
+      <KsSelect
+        options={assetSets.map(assetSet => ({
+          label: assetSet.title,
+          value: assetSet.id,
+        }))}
+        handleChange={handleAssetSetChange}
+        value={{
+          label: selectAssetSet ? selectAssetSet.title : '',
+          value: selectAssetSet ? selectAssetSet.id : '',
+        }}
+        label="Asset Sets"
+        disabled={isDemoSettingAssetSetId}
+      />
+    );
+  };
 
   return (
     <header className="ks-template-header ks-template-view__flex-wrapper">
       {isTitleShown && <h3 className="ks-template-header__title">{title}</h3>}
       {canEdit && (
-        <Select
-          label="Status"
-          value={status?.id ?? ''}
-          handleChange={handleStatusChange}
-          items={[
-            {
-              value: '',
-              title: '',
-            },
-            ...statuses.map(s => {
-              return {
-                value: s.id,
-                title: s.title,
-              };
-            }),
-          ]}
-        />
+        <span className="ks-template-header__status-select">
+          <KsSelect
+            label="Status"
+            isLabelInline
+            isStatusList
+            value={
+              status
+                ? {
+                    value: status.id,
+                    label: status.title,
+                    color: status.color,
+                  }
+                : emptyStatus
+            }
+            handleChange={handleStatusChange}
+            options={[
+              emptyStatus,
+              ...statuses.map(s => {
+                return {
+                  value: s.id,
+                  label: s.title,
+                  color: s.color,
+                };
+              }),
+            ]}
+          />
+        </span>
       )}
       {status && !canEdit && (
         <p>
@@ -86,7 +116,7 @@ export const TemplateHeader: React.FC<Props> = ({
                   </p>
                 }
               >
-                {select}
+                <>{select}</>
               </KsPopover>
             )}
           </>

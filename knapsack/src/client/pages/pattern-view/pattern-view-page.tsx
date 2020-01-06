@@ -15,7 +15,7 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React, { useState } from 'react';
-import { Select } from '@knapsack/design-system';
+import { KsSelect, SelectOptionProps } from '@knapsack/design-system';
 import { useHistory } from 'react-router-dom';
 import cn from 'classnames';
 import {
@@ -83,7 +83,46 @@ const PatternViewPage: React.FC<Props> = ({
 
   const [hasTemplates, setHasTemplates] = useState(templatesList.length > 0);
 
-  const [demoSize, setDemoSize] = useState<string>(defaultDemoSize ?? 'm');
+  const demoSizeOptions = [
+    {
+      value: 's',
+      label: 'Small',
+    },
+    {
+      value: 'm',
+      label: 'Medium',
+    },
+    {
+      value: 'l',
+      label: 'Large',
+    },
+    {
+      value: 'full',
+      label: 'Full',
+    },
+  ];
+  const [demoSize, setDemoSize] = useState<SelectOptionProps>(
+    defaultDemoSize
+      ? demoSizeOptions.find(d => d.value === defaultDemoSize)
+      : {
+          value: 'm',
+          label: 'Medium',
+        },
+  );
+
+  const emptyTemplateOption = {
+    value: 'all',
+    label: 'Show All',
+  };
+  const initialSelectedTemplate = templatesList.find(t => t.id === templateId);
+  const [selectedTemplate, setSelectedTemplate] = useState<SelectOptionProps>(
+    initialSelectedTemplate
+      ? {
+          label: initialSelectedTemplate.title,
+          value: initialSelectedTemplate.id,
+        }
+      : emptyTemplateOption,
+  );
 
   let hasSchema = false;
   if (showAllTemplates) {
@@ -159,23 +198,20 @@ const PatternViewPage: React.FC<Props> = ({
             <div className="ks-pattern-view-page__header__controls">
               {templatesList.length > 1 && (
                 <div>
-                  <Select
+                  <KsSelect
                     label="Template"
-                    value={templateId}
-                    items={[
-                      {
-                        // @todo consider how to show all when we only have 1 template of each language
-                        value: 'all',
-                        title: 'Show All',
-                      },
+                    value={selectedTemplate}
+                    options={[
+                      emptyTemplateOption,
                       ...templatesList.map(t => ({
                         value: t.id,
-                        title: t.title,
+                        label: t.title,
                       })),
                     ]}
-                    handleChange={value => {
+                    handleChange={option => {
+                      setSelectedTemplate(option);
                       history.push(
-                        `${BASE_PATHS.PATTERN}/${patternId}/${value}`,
+                        `${BASE_PATHS.PATTERN}/${patternId}/${option.value}`,
                       );
                     }}
                   />
@@ -183,25 +219,8 @@ const PatternViewPage: React.FC<Props> = ({
               )}
               {hasSchema && (
                 <div>
-                  <Select
-                    items={[
-                      {
-                        value: 's',
-                        title: 'Small',
-                      },
-                      {
-                        value: 'm',
-                        title: 'Medium',
-                      },
-                      {
-                        value: 'l',
-                        title: 'Large',
-                      },
-                      {
-                        value: 'full',
-                        title: 'Full',
-                      },
-                    ]}
+                  <KsSelect
+                    options={demoSizeOptions}
                     value={demoSize}
                     handleChange={setDemoSize}
                     label="Stage Size"
@@ -250,7 +269,7 @@ const PatternViewPage: React.FC<Props> = ({
               templateId={templateId}
               demoId={demoId}
               key={`${patternId}-${templateId}`}
-              demoSize={demoSize}
+              demoSize={demoSize.value}
               isVerbose
               isCodeBlockShown
             />
@@ -265,7 +284,7 @@ const PatternViewPage: React.FC<Props> = ({
                   id={patternId}
                   key={template.id}
                   templateId={template.id}
-                  demoSize={demoSize}
+                  demoSize={demoSize.value}
                   isVerbose={!showAllTemplates}
                 />
                 <br />

@@ -1,19 +1,23 @@
 .ks-select {
-  display: inline-block;
-  overflow: hidden;
-  padding-right: 3px;
+  width: 100%;
+
+  &--label-inline {
+    display: flex;
+    align-items: center;
+  }
+
+  &--size-s {
+    font-size: var(--font-size-s);
+  }
 
   &__label-text {
     display: block;
-    margin-bottom: var(--space-xxxs);
-
-    .ks-select--size-s & {
-      font-size: var(--font-size-s);
-    }
+    line-height: var(--space-l);
 
     .ks-select--label-inline & {
       display: inline-block;
-      margin-right: var(--space-xxxs);
+      margin-right: var(--space-xxs);
+      margin-bottom: 0;
 
       &:after {
         content: ':';
@@ -22,10 +26,15 @@
   }
 
   &__wrapper {
-    display: inline-block;
+    display: block;
     position: relative;
     max-width: 100%;
     margin: 0;
+
+    .ks-select--label-inline & {
+      display: inline-block;
+      flex: 1;
+    }
 
     // Variant display required for select element created by custom fields to span containing form
     &--variant {
@@ -59,6 +68,30 @@
     }
   }
 
+  &__option--has-icon {
+    display: flex;
+    align-items: center;
+
+    span {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    &__icon {
+      height: var(--space-m);
+      margin-right: var(--space-xs);
+      svg {
+        width: auto;
+        height: 100%;
+      }
+      .ks-select--size-s & {
+        height: var(--space-s);
+        margin-right: var(--space-xxs);
+      }
+    }
+  }
+
+  // Depricated, can be used with general select.
   &__icon {
     cursor: pointer;
     position: absolute;

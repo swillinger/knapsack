@@ -3,21 +3,13 @@ import {
   KsButton,
   KsButtonGroup,
   KsTextField,
-  Select,
+  KsSelect,
+  SelectOptionProps,
   Icon,
 } from '@knapsack/design-system';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
-import {
-  Formik,
-  Form,
-  FieldArray,
-  Field,
-  ArrayHelpers,
-  FieldInputProps,
-  FieldProps,
-} from 'formik';
-import { validateDataAgainstSchema } from '@knapsack/schema-utils';
+import { Formik, Form, FieldArray, Field, FieldProps } from 'formik';
 import './slots-form.scss';
 import {
   isSlottedTemplateDemo,
@@ -53,7 +45,7 @@ export const KsSlotsForm: React.FC<Props> = ({
       ({ id, title, templates }) => ({
         id,
         title,
-        value: id, // for <select>s
+        value: id, // for <KsSelect>s
         // only can include other templates that are the same language as this one. PS asset sets not accounted for
         templates: templates
           .filter(t => t.templateLanguageId === templateLanguageId)
@@ -122,16 +114,7 @@ export const KsSlotsForm: React.FC<Props> = ({
         validateOnChange
         validate={validateForm}
       >
-        {({
-          values,
-          setFieldValue,
-          handleChange,
-          isValid,
-          errors,
-          submitForm,
-          handleSubmit,
-          handleReset,
-        }) => {
+        {({ values, setFieldValue }) => {
           checkAndHandleData(values);
           return (
             <Form>
@@ -272,12 +255,26 @@ export const KsSlotsForm: React.FC<Props> = ({
                                 ? allowedPatterns.find(p => p.id === patternId)
                                     .templates
                                 : [];
+                              const templateSelectItems: SelectOptionProps[] = templateItems.map(
+                                t => {
+                                  return {
+                                    label: t.title,
+                                    value: t.value,
+                                  };
+                                },
+                              );
 
                               const demoItems =
                                 templateId && templateItems
                                   ? templateItems.find(t => t.id === templateId)
                                       .demos
                                   : [];
+                              const demoSelectItems = demoItems.map(d => {
+                                return {
+                                  label: d.title,
+                                  value: d.value,
+                                };
+                              });
 
                               return (
                                 <div
@@ -292,15 +289,18 @@ export const KsSlotsForm: React.FC<Props> = ({
                                     {({
                                       field: { name, value },
                                     }: FieldProps) => (
-                                      <Select
+                                      <KsSelect
                                         label="Pattern"
-                                        isLabelInline={false}
-                                        value={value}
-                                        handleChange={newPatternId => {
+                                        value={
+                                          allowedPatterns.find(
+                                            p => p.value === value,
+                                          ) ?? { value: '', label: '' }
+                                        }
+                                        handleChange={newPattern => {
                                           const [
                                             firstTemplate,
                                           ] = allowedPatterns.find(
-                                            p => p.id === newPatternId,
+                                            p => p.id === newPattern.value,
                                           ).templates;
 
                                           const [
@@ -310,14 +310,14 @@ export const KsSlotsForm: React.FC<Props> = ({
                                           setFieldValue(
                                             `${slotName}.${index}`,
                                             {
-                                              patternId: newPatternId,
+                                              patternId: newPattern.value,
                                               templateId: firstTemplate.id,
                                               demoId: firstDemo.id,
                                             },
                                           );
                                         }}
-                                        items={[
-                                          { value: '', title: '' },
+                                        options={[
+                                          { value: '', label: '' },
                                           ...allowedPatterns,
                                         ]}
                                       />
@@ -331,32 +331,30 @@ export const KsSlotsForm: React.FC<Props> = ({
                                       {({
                                         field: { name, value },
                                       }: FieldProps) => (
-                                        <Select
+                                        <KsSelect
                                           label="Template"
-                                          isLabelInline={false}
-                                          value={value}
-                                          handleChange={newTemplateId => {
+                                          value={templateSelectItems.find(
+                                            t => t.value === value,
+                                          )}
+                                          handleChange={newTemplate => {
                                             const [
                                               firstDemo,
                                             ] = allowedPatterns
                                               .find(p => p.id === patternId)
                                               .templates.find(
-                                                t => t.id === newTemplateId,
+                                                t => t.id === newTemplate.value,
                                               ).demos;
 
                                             setFieldValue(
                                               `${slotName}.${index}`,
                                               {
                                                 patternId,
-                                                templateId: newTemplateId,
+                                                templateId: newTemplate.value,
                                                 demoId: firstDemo.id,
                                               },
                                             );
                                           }}
-                                          items={[
-                                            // { value: '', title: '' },
-                                            ...templateItems,
-                                          ]}
+                                          options={templateSelectItems}
                                         />
                                       )}
                                     </Field>
@@ -370,17 +368,15 @@ export const KsSlotsForm: React.FC<Props> = ({
                                       {({
                                         field: { name, value },
                                       }: FieldProps) => (
-                                        <Select
+                                        <KsSelect
                                           label="Demo"
-                                          value={value}
-                                          isLabelInline={false}
-                                          handleChange={newValue => {
-                                            setFieldValue(name, newValue);
+                                          value={demoSelectItems.find(
+                                            d => d.value === value,
+                                          )}
+                                          handleChange={option => {
+                                            setFieldValue(name, option.value);
                                           }}
-                                          items={[
-                                            // { value: '', title: '' },
-                                            ...demoItems,
-                                          ]}
+                                          options={demoSelectItems}
                                         />
                                       )}
                                     </Field>

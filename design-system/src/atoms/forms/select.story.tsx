@@ -1,32 +1,42 @@
 import React, { useState } from 'react';
 import { action } from '@storybook/addon-actions';
-import { Select } from './select';
+import { KsSelect, SelectOptionProps } from './select';
 
 export default {
   title: 'Components|Atoms/Select',
-  component: Select,
+  component: KsSelect,
   decorators: [],
   parameters: {},
 };
 
-const items = [{ value: 'a' }, { value: 'b' }, { value: 'c' }];
+const items: SelectOptionProps[] = [
+  { label: 'A', value: 'a' },
+  { label: 'B', value: 'b' },
+  { label: 'C', value: 'c' },
+];
 
 export const ownState = () => (
-  <Select items={items} handleChange={action('select-change')} />
+  <KsSelect
+    options={items}
+    handleChange={action('select-change')}
+    label="Select Menu"
+  />
 );
 
 export const ParentFormState = () => {
-  const [value, setValue] = useState(items[1].value);
+  const [value, setValue] = useState(items[0]);
 
   action('form-state')(value);
+
   return (
-    <Select
+    <KsSelect
       value={value}
-      items={items}
+      options={items}
       handleChange={newValue => {
         action('controlled-select-change')(newValue);
         setValue(newValue);
       }}
+      label="Select Menu"
     />
   );
 };

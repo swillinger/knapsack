@@ -11,7 +11,7 @@
       "id": "react",
       "templateLanguageId": "react",
       "path": "../assets/patterns/button/button.tsx",
-      "statusId": "proposed",
+      "statusId": "",
       "assetSetIds": ["bootstrap"],
       "spec": {
         "slots": { "children": { "title": "Children" } },

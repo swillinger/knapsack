@@ -279,16 +279,16 @@ const TemplateView: React.FC<Props> = ({
             assetSets={assetSets}
             status={status}
             isTitleShown={!isVerbose && isTitleShown}
-            handleAssetSetChange={newAssetSetId => {
-              setAssetSetId(newAssetSetId);
+            handleAssetSetChange={newAssetSet => {
+              setAssetSetId(newAssetSet.value);
             }}
-            handleStatusChange={newStatusId => {
+            handleStatusChange={newStatus => {
               dispatch(
                 updateTemplateInfo({
                   templateId,
                   patternId,
                   template: {
-                    statusId: newStatusId,
+                    statusId: newStatus.value,
                   },
                 }),
               );

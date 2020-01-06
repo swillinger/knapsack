@@ -2,9 +2,8 @@
   margin-top: var(--space-m);
 
   &__label {
-    line-height: var(--space-l);
     display: block;
-    margin-bottom: var(--space-xxs);
+    line-height: var(--space-l);
   }
 
   &__wrapper > input {
@@ -49,7 +48,6 @@
     align-items: flex-start;
 
     .ks-text-field__label {
-      margin-top: var(--space-xs);
       margin-right: var(--space-xs);
       margin-bottom: 0;
       display: inline-block;

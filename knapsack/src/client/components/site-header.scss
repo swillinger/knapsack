@@ -2,6 +2,8 @@
   background-color: var(--c-bg-brand);
   min-height: calc(var(--space-xl) * 2);
   padding: var(--space-m) 0;
+  position: relative;
+  z-index: 2; // make sure header select menu overlaps lower content.
 
   // @todo do a MUCH better small screen menu
   @media screen and (min-width: 700px) {

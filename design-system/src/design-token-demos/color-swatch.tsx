@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { KnapsackDesignToken } from '@knapsack/core/dist/types';
 import { convertColor, hasOpacity, parseColor } from '@knapsack/utils';
-import { Select, KsButton } from '../atoms';
+import { KsSelect, SelectOptionProps, KsButton } from '../atoms';
 import { CopyToClipboard } from '../copy-to-clipboard/copy-to-clipboard';
 import './color-swatch.scss';
 
@@ -33,11 +33,9 @@ function tokensToSketchPalettes(tokens: KnapsackDesignToken[]): string {
   });
 }
 
-type ColorFormats = 'hsl' | 'rgb' | 'hex';
-
 type ColorSwatchProps = {
   color: KnapsackDesignToken;
-  format: ColorFormats;
+  format: string;
 };
 
 export const ColorSwatch: React.FC<ColorSwatchProps> = ({
@@ -82,7 +80,24 @@ type ColorSwatchesProps = {
 export const ColorSwatches: React.FC<ColorSwatchesProps> = ({
   tokens = [],
 }: ColorSwatchesProps) => {
-  const [format, setFormat] = useState<ColorFormats>('rgb');
+  const colorFormatOptions: SelectOptionProps[] = [
+    {
+      label: 'RGB',
+      value: 'rgb',
+    },
+    {
+      label: 'HEX',
+      value: 'hex',
+    },
+    {
+      label: 'HSL',
+      value: 'hsl',
+    },
+  ];
+
+  const [format, setFormat] = useState<SelectOptionProps>(
+    colorFormatOptions[0],
+  );
 
   const blob = new window.Blob([tokensToSketchPalettes(tokens)], {
     type: 'application/json',
@@ -90,24 +105,27 @@ export const ColorSwatches: React.FC<ColorSwatchesProps> = ({
   const blobURL = window.URL.createObjectURL(blob);
 
   const colorSwatches = tokens.map(token => (
-    <ColorSwatch key={token.name} color={token} format={format} />
+    <ColorSwatch key={token.name} color={token} format={format.value} />
   ));
   /* eslint-disable jsx-a11y/label-has-for */
   return (
     <div>
       <div className="ks-color-swatch__right-label">
-        Color Format:
-        <Select
-          value={format}
-          items={['rgb', 'hex', 'hsl'].map(option => ({
-            value: option,
-            key: option,
-            name: option,
-          }))}
-          handleChange={(value: ColorFormats) => {
-            setFormat(value);
+        <span
+          style={{
+            width: 'calc(var(--space-xxl) * 3)',
           }}
-        />
+        >
+          <KsSelect
+            label="Color Format"
+            isLabelInline
+            value={format}
+            options={colorFormatOptions}
+            handleChange={value => {
+              setFormat(value);
+            }}
+          />
+        </span>
         <div style={{ marginLeft: 'auto' }}>
           <span>
             <a

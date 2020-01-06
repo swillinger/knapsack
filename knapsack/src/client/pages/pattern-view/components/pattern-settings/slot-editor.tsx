@@ -1,8 +1,7 @@
 import React, { useState, useCallback, useRef } from 'react';
 import { JsonSchemaObject } from '@knapsack/core/types';
-import { Select, SchemaForm } from '@knapsack/design-system';
-import { sentenceCase } from 'change-case';
-import { SpecItemTypes, SlotData } from './shared';
+import { SchemaForm } from '@knapsack/design-system';
+import { SlotData } from './shared';
 import { useSelector } from '../../../../store';
 
 type SlotEditorProps = {

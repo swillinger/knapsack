@@ -1,0 +1,27 @@
+{
+  "extends": "../tsconfig.base.json",
+  "include": ["src", "../custom.d.ts"],
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "./build",
+    "rootDir": "./src",
+    "baseUrl": "./",
+    "paths": {
+      "@docusaurus/*": [
+        "../node_modules/@docusaurus/*",
+        "../node_modules/@docusaurus/core/lib/client/exports/*"
+      ]
+    }
+  },
+  "references": [
+    {
+      "path": "../packages/utils"
+    },
+    {
+      "path": "../packages/core"
+    },
+    {
+      "path": "../design-system"
+    }
+  ]
+}

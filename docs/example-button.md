@@ -1,15 +1,16 @@
 ---
 id: example-button
-title: Example: Button
+title: Example Button
 ---
 
 ## Example: Setting up a button
 
-Let's start with a small pattern example – a button! Here are the basic files and file contents needed to build a button in Knapsack. 
+Let's start with a small pattern example – a button! Here are the basic files and file contents needed to build a button in Knapsack.
 
 _Note: This example does not include styles. Styles can be handled a number of ways, including through a button.scss file in this same directory — this will depend on your build setup._
 
 File: `button/knapsack.pattern.js`
+
 ```javascript
 const schema = require('./button.schema');
 
@@ -29,6 +30,7 @@ module.exports = {
 ```
 
 File: `button/knapsack.pattern-meta.json`
+
 ```json
 {
   "title": "Button",
@@ -40,6 +42,7 @@ File: `button/knapsack.pattern-meta.json`
 ```
 
 File: `button/button.schema.js`
+
 ```javascript
 module.exports = {
   $schema: 'http://json-schema.org/draft-07/schema',
@@ -51,12 +54,12 @@ module.exports = {
     text: {
       type: 'string',
       title: 'Text',
-      description: 'This text will show as the button text'
+      description: 'This text will show as the button text',
     },
     url: {
       type: 'string',
       title: 'Url',
-      description: 'This URL will be the destination upon clicking the button'
+      description: 'This URL will be the destination upon clicking the button',
     },
   },
   examples: [
@@ -73,6 +76,7 @@ module.exports = {
 ```
 
 File: `button/button.twig`
+
 ```twig
 <a class="button" href={{ url }}>{{ text }}</a>
 ```

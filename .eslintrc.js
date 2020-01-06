@@ -67,6 +67,16 @@ module.exports = {
     'import/prefer-default-export': [0],
     'import/dynamic-import-chunkname': [2],
     'import/no-dynamic-require': [0],
+    'import/no-unresolved': [
+      2,
+      {
+        ignore: [
+          // docs-site's docusaurus uses this custom webpack alias to point to current theme and it's overrides
+          '^@theme',
+          '^@docusaurus',
+        ],
+      },
+    ],
     'jsdoc/check-types': 'error',
     'jsx-a11y/anchor-is-valid': [
       'warn',

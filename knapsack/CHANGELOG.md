@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.28](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.27...v2.0.0-beta.28) (2020-01-06)
+
+
+### Bug Fixes
+
+* new patterns get first status ([bd21924](https://github.com/basaltinc/knapsack/commit/bd21924a645c6e974ad07c4184afa09e972e6473))
+
+
+
+
+
 # [2.0.0-beta.27](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.26...v2.0.0-beta.27) (2020-01-06)
 
 

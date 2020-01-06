@@ -478,6 +478,11 @@ export default function reducer(
           path,
           alias,
           templateLanguageId,
+          statusId:
+            Array.isArray(draft?.templateStatuses) &&
+            draft.templateStatuses.length > 0
+              ? draft.templateStatuses[0].id
+              : '',
           assetSetIds: assetSetIds ?? [],
           demosById: {},
           demos: [],

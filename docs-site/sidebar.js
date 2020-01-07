@@ -11,6 +11,7 @@ module.exports = {
       'add-new-pattern',
       'example-button',
       'example-nesting-patterns',
+      'spec',
     ],
     'Page Builder': ['page-builder'],
     'Design Tokens': ['design-tokens'],

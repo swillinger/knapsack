@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import cn from 'classnames';
 import { KsSelect, SelectOptionProps } from '@knapsack/design-system';
 import { useHistory, useLocation } from 'react-router';
@@ -32,6 +32,12 @@ export const KsTemplateLanguageSelect: React.FC = () => {
   const [selectedRenderer, setSelectedRenderer] = useState<SelectOptionProps>(
     initialRenderer,
   );
+
+  useEffect(() => {
+    setSelectedRenderer(
+      renderers.find(r => r.meta.id === currentTemplateRenderer),
+    );
+  }, [currentTemplateRenderer]);
 
   if (!renderers || renderers.length < 2) return null;
 

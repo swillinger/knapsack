@@ -199,7 +199,7 @@ export const FileThemeNodeContentRenderer: React.FC<Props> = ({
           path={ksNavItem.path}
           active={
             ksNavItem.path
-              ? window.location.href.startsWith(ksNavItem.path)
+              ? window.location.href.includes(ksNavItem.path)
               : false
           }
           isDragging={isDragging}

@@ -3,8 +3,20 @@ import {
   KnapsackRenderParams,
   KnapsackTemplateRenderer,
   KnapsackTemplateRendererResults,
+  KnapsackTemplateRendererBase,
 } from '@knapsack/app/src/schemas/knapsack-config';
 import { readFile, readFileSync } from 'fs-extra';
+import {
+  KnapsackFile,
+  isOptionsProp,
+  isBooleanProp,
+  isStringProp,
+  isNumberProp,
+} from '@knapsack/core/types';
+import {
+  HTMLDataV1,
+  IAttributeData,
+} from 'vscode-html-languageservice/lib/esm/htmlLanguageTypes';
 import { join } from 'path';
 import { getUsage } from './utils';
 
@@ -148,5 +160,107 @@ export class KnapsackWebComponentRenderer extends KnapsackRendererBase
       aliasDescription:
         'The HTML tag, i.e. if you use `<my-card>` then `my-card`',
     };
+  };
+
+  getTemplateMeta: KnapsackTemplateRendererBase['getTemplateMeta'] = async ({
+    pattern,
+    template,
+  }) => {
+    const files: KnapsackFile[] = [];
+    const htmlCustomData: HTMLDataV1 = {
+      version: 1.1,
+      tags: [],
+    };
+    if (template?.spec?.props) {
+      const typeDefs = await KnapsackWebComponentRenderer.convertSchemaToTypeScriptDefs(
+        {
+          schema: template.spec.props,
+          title: pattern.id,
+          patternId: pattern.id,
+          templateId: template.id,
+        },
+      );
+
+      const attributes: IAttributeData[] = [];
+
+      Object.entries(template.spec.props.properties).forEach(([name, meta]) => {
+        const descriptions: string[] = [];
+        const attr: IAttributeData = {
+          name,
+        };
+        const isRequired =
+          template.spec.props?.required?.includes(name) ?? false;
+        if (isRequired) {
+          descriptions.push('(required)');
+        }
+        if (isOptionsProp(meta)) {
+          attr.values = meta.enum.map(option => ({
+            name: option,
+          }));
+        } else if (isBooleanProp(meta)) {
+          descriptions.push('boolean');
+        }
+
+        if (meta.description) descriptions.push(meta.description);
+        attr.description = descriptions.join(' ');
+        attributes.push(attr);
+      });
+
+      htmlCustomData.tags.push({
+        name: template.alias,
+        description: pattern.description ?? '',
+        references: [
+          {
+            name: 'Knapsack Docs',
+            // @todo pull in base url
+            url: `http://localhost:3999/pattern/${pattern.id}/${template.id}`,
+          },
+        ],
+        attributes,
+      });
+
+      files.push({
+        contents: JSON.stringify(htmlCustomData, null, '  '),
+        encoding: 'utf8',
+        path: `${pattern.id}.${template.id}.html-data.json`,
+      });
+      files.push({
+        contents: typeDefs,
+        encoding: 'utf8',
+        path: `${pattern.id}.${template.id}.spec.d.ts`,
+      });
+      files.push({
+        contents: JSON.stringify(template.spec.props, null, '  '),
+        encoding: 'utf8',
+        path: `${pattern.id}.${template.id}.spec.json`,
+      });
+    }
+    return files;
+  };
+
+  alterTemplateMetaFiles: KnapsackTemplateRendererBase['alterTemplateMetaFiles'] = async ({
+    files,
+  }) => {
+    const newFiles: KnapsackFile[] = [];
+    const htmlCustomData: HTMLDataV1 = {
+      version: 1.1,
+      tags: [],
+    };
+
+    files.forEach(file => {
+      if (!file.path.endsWith('html-data.json')) {
+        newFiles.push(file);
+      } else {
+        const data: HTMLDataV1 = JSON.parse(file.contents);
+        data.tags.forEach(tag => htmlCustomData.tags.push(tag));
+      }
+    });
+
+    newFiles.push({
+      contents: JSON.stringify(htmlCustomData, null, '  '),
+      encoding: 'utf8',
+      path: `knapsack.html-data.json`,
+    });
+    return newFiles;
   };
 }

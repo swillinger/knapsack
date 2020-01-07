@@ -16,5 +16,8 @@
   "author": "Basalt (https://basalt.io/)",
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "vscode-html-languageservice": "^3.0.4-next.12 || ^3.0.4"
   }
 }

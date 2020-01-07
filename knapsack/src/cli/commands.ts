@@ -1,7 +1,7 @@
 import fs, { readFile } from 'fs-extra';
 import portfinder from 'portfinder';
 import findCacheDir from 'find-cache-dir';
-import { resolve, join } from 'path';
+import { isAbsolute, join, dirname } from 'path';
 import { readJson } from '../server/server-utils';
 import { flattenArray, flattenNestedArray, timer } from '../lib/utils';
 import * as log from './log';
@@ -11,7 +11,7 @@ import {
   KnapsackTemplateRenderer,
 } from '../schemas/knapsack-config';
 import { KnapsackPattern } from '../schemas/patterns';
-import { KnapsackMeta } from '../schemas/misc';
+import { KnapsackMeta, KnapsackFile } from '../schemas/misc';
 
 export async function getMeta(config: KnapsackConfig): Promise<KnapsackMeta> {
   const { version, name } = await readJson(
@@ -66,38 +66,59 @@ export async function writeTemplateMeta({
   distDir: string;
 }): Promise<void> {
   const getTime = timer();
-  await Promise.all(
-    allPatterns.map(async pattern => {
-      await Promise.all(
-        pattern.templates.map(async template => {
-          const renderer = templateRenderers.find(
-            ({ id }) => id === template.templateLanguageId,
-          );
-          if (!renderer) {
-            throw new Error(
-              `Missing renderer "${template.templateLanguageId}" for patternId: "${pattern.id}" templateId: "${template.id}"`,
-            );
-          }
-          if (!renderer.getTemplateMeta) return;
+  const metaDir = join(distDir, 'meta');
+  await fs.emptyDir(metaDir);
 
-          const files = await renderer.getTemplateMeta({
-            pattern,
-            template,
-          });
-          if (files?.length > 0) {
-            const dir = join(distDir, 'meta', pattern.id);
-            await fs.emptyDir(dir);
-            await Promise.all(
-              files.map(async file =>
-                fs.writeFile(join(dir, file.path), file.contents, {
-                  encoding: file.encoding,
+  await Promise.all(
+    templateRenderers
+      .filter(t => t.getTemplateMeta)
+      .map(async templateRenderer => {
+        const templateMetaFiles: KnapsackFile[] = [];
+        await Promise.all(
+          allPatterns.map(async pattern => {
+            return Promise.all(
+              pattern.templates
+                .filter(t => t.templateLanguageId === templateRenderer.id)
+                .map(async template => {
+                  const files = await templateRenderer.getTemplateMeta({
+                    pattern,
+                    template,
+                  });
+
+                  if (files?.length > 0) {
+                    const dir = join(distDir, 'meta', pattern.id);
+                    files
+                      .map(file => ({
+                        ...file,
+                        path: join(dir, file.path),
+                      }))
+                      .forEach(file => templateMetaFiles.push(file));
+                  }
                 }),
-              ),
             );
-          }
-        }),
-      );
-    }),
+          }),
+        );
+
+        if (templateMetaFiles?.length > 0) {
+          const filesToWrite = templateRenderer.alterTemplateMetaFiles
+            ? await templateRenderer.alterTemplateMetaFiles({
+                files: templateMetaFiles,
+                metaDir,
+              })
+            : templateMetaFiles;
+          await Promise.all(
+            filesToWrite.map(async file => {
+              await fs.ensureDir(dirname(file.path));
+              const filePath = isAbsolute(file.path)
+                ? file.path
+                : join(metaDir, file.path);
+              return fs.writeFile(filePath, file.contents, {
+                encoding: file.encoding,
+              });
+            }),
+          );
+        }
+      }),
   );
   log.verbose(`writeTemplateMeta took ${getTime()}s`);
 }

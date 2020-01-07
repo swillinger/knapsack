@@ -1,28 +1,25 @@
 {
-  "json.schemas": [{
-      "fileMatch": [
-        "**/knapsack.pattern.*.json"
-      ],
+  "json.schemas": [
+    {
+      "fileMatch": ["**/knapsack.pattern.*.json"],
       "url": "./knapsack/src/json-schemas/schemaKnapsackPattern.json"
     },
     {
-      "fileMatch": [
-        "**/knapsack.navs.json"
-      ],
+      "fileMatch": ["**/knapsack.navs.json"],
       "url": "./knapsack/src/json-schemas/schemaKnapsackNavsConfig.json"
     },
     {
-      "fileMatch": [
-        "**/knapsack.asset-sets.json"
-      ],
+      "fileMatch": ["**/knapsack.asset-sets.json"],
       "url": "./knapsack/src/json-schemas/schemaKnapsackAssetSetsConfig.json"
     },
     {
-      "fileMatch": [
-        "**/knapsack.settings.json"
-      ],
+      "fileMatch": ["**/knapsack.settings.json"],
       "url": "./knapsack/src/json-schemas/schemaKnapsackSettings.json"
-    },
+    }
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
+  "html.customData": [
+    "./examples/bootstrap/dist/meta/knapsack.html-data.json"
+  ],
+  "html.suggest.html5": false
 }

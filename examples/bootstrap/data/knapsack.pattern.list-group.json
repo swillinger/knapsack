@@ -9,7 +9,8 @@
       "assetSetIds": [],
       "demosById": {},
       "demos": [],
-      "statusId": "ready"
+      "statusId": "ready",
+      "spec": {}
     },
     {
       "id": "twig",

@@ -155,6 +155,9 @@ export function updateTemplateDemo({
       templateId,
       demo,
     },
+    meta: {
+      autosaveDelay: 5000,
+    },
   };
 }
 
@@ -405,6 +408,9 @@ export function updateTemplateInfo({
       patternId,
       templateId,
       template,
+    },
+    meta: {
+      autosaveDelay: 5000,
     },
   };
 }

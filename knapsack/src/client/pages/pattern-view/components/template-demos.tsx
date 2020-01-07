@@ -30,7 +30,6 @@ export const KsTemplateDemos: React.FC<Props> = ({}: Props) => {
     templateId,
     canEdit,
     isLocalDev,
-    setDemo,
   } = useContext(CurrentTemplateContext);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -134,7 +133,6 @@ export const KsTemplateDemos: React.FC<Props> = ({}: Props) => {
                       history.push(
                         `${BASE_PATHS.PATTERN}/${patternId}/${templateId}/${aFirstDemo.id}`,
                       );
-                      setDemo(aFirstDemo);
                     }
                   }}
                 >
@@ -153,7 +151,6 @@ export const KsTemplateDemos: React.FC<Props> = ({}: Props) => {
                   history.push(
                     `${BASE_PATHS.PATTERN}/${patternId}/${templateId}/${aDemo.id}`,
                   );
-                  setDemo(aDemo);
                 }}
               />
             </div>

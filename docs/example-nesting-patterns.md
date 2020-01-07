@@ -1,6 +1,6 @@
 ---
 id: example-nesting-patterns
-title: Example: Nesting Patterns
+title: Example Nesting Patterns
 ---
 
 ## Example: Combining Schema to Define Nested Components
@@ -9,9 +9,8 @@ We're big fans of [atomic design](http://atomicdesign.bradfrost.com/). If you ar
 
 Here's an example of setting up a card pattern, which includes the button you've already made.
 
-
-
 File: `card/knapsack.pattern.js`
+
 ```javascript
 const schema = require('./card.schema');
 
@@ -30,8 +29,8 @@ module.exports = {
 };
 ```
 
-
 File: `card/knapsack.pattern-meta.json`
+
 ```json
 {
   "title": "Card",
@@ -43,6 +42,7 @@ File: `card/knapsack.pattern-meta.json`
 ```
 
 File: `card/card.schema.js`
+
 ```javascript
 const buttonSchema = require('../button/button.schema');
 
@@ -70,7 +70,7 @@ module.exports = {
         "I'm a body - Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       button: {
         text: 'Click Me',
-        url: '/url'
+        url: '/url',
       },
     },
   ],

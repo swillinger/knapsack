@@ -9,8 +9,8 @@ dist
 /cypress/videos
 /cypress/screenshots
 /docs-site/build
-/docs-site/i18n
 /docs-site/static/pkgs
+/docs-site/.docusaurus
 tsconfig.tsbuildinfo
 /knapsack/src/json-schemas/*.json
 /knapsack/src/json-schemas/*.ts

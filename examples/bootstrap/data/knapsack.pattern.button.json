@@ -117,7 +117,7 @@
       "templateLanguageId": "twig",
       "alias": "@components/button.twig",
       "path": "../assets/patterns/button/button.twig",
-      "statusId": "proposed",
+      "statusId": "ready",
       "assetSetIds": ["bootstrap"],
       "spec": {
         "props": {

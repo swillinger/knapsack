@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.30](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.29...v2.0.0-beta.30) (2020-01-07)
+
+
+### Features
+
+* generate VS Code web component data files from spec ([9a2fa3b](https://github.com/basaltinc/knapsack/commit/9a2fa3b8693920de0ac364c396b5eea5c290bcbc))
+
+
+
+
+
 # [2.0.0-beta.29](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.28...v2.0.0-beta.29) (2020-01-07)
 
 **Note:** Version bump only for package @knapsack/docs-site

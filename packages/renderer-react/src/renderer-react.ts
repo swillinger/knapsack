@@ -1,4 +1,5 @@
 import * as babel from '@babel/core';
+import { pascalCase } from 'change-case';
 import {
   KnapsackRendererBase,
   KnapsackRendererWebpackBase,
@@ -18,7 +19,7 @@ import {
 } from '@knapsack/app/src/schemas/patterns';
 import camelCase from 'camelcase';
 import { readFile, readFileSync } from 'fs-extra';
-import { join } from 'path';
+import { join, relative, parse } from 'path';
 import {
   copyReactAssets,
   getDemoAppUsage,
@@ -418,7 +419,9 @@ ${ksImportCode}
       const typeDefs = await KnapsackReactRenderer.convertSchemaToTypeScriptDefs(
         {
           schema,
-          title: pattern.id,
+          title: `${pascalCase(pattern.id)}Props`,
+          // @todo pull in base url
+          description: `[Knapsack Docs](http://localhost:3999/pattern/${pattern.id}/${template.id})`,
           patternId: pattern.id,
           templateId: template.id,
           postBanner: `import * as React from 'react';`,
@@ -428,14 +431,48 @@ ${ksImportCode}
       files.push({
         contents: typeDefs,
         encoding: 'utf8',
-        path: `${pattern.id}-${template.id}.spec.d.ts`,
+        path: `${pattern.id}.${template.id}.spec.d.ts`,
       });
       files.push({
         contents: JSON.stringify(schema, null, '  '),
         encoding: 'utf8',
-        path: `${pattern.id}-${template.id}.spec.json`,
+        path: `${pattern.id}.${template.id}.spec.json`,
       });
     }
     return files;
+  };
+
+  alterTemplateMetaFiles: KnapsackTemplateRendererBase['alterTemplateMetaFiles'] = async ({
+    files,
+    metaDir,
+  }) => {
+    const imports: string[] = [];
+
+    const ext = '.spec.d.ts';
+    files.forEach(file => {
+      if (file.path.endsWith(ext)) {
+        const { base } = parse(file.path);
+        const [patternId] = base.split('.');
+        const exportName = pascalCase(`${patternId}Props`);
+        imports.push(
+          `export { ${exportName} } from './${relative(
+            metaDir,
+            file.path,
+          ).replace('.d.ts', '')}';`,
+        );
+      }
+    });
+
+    // extra line at end of file
+    imports.push('');
+
+    return [
+      ...files,
+      {
+        contents: imports.join('\n'),
+        encoding: 'utf8',
+        path: join(metaDir, 'react.d.ts'),
+      },
+    ];
   };
 }

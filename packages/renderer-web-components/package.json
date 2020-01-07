@@ -1,6 +1,6 @@
 {
   "name": "@knapsack/renderer-web-components",
-  "version": "2.0.0-beta.28",
+  "version": "2.0.0-beta.29",
   "description": "Render Web Components",
   "main": "dist/renderer-web-components.js",
   "types": "dist/renderer-web-components.d.ts",

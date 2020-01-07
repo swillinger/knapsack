@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/docs-site",
   "private": true,
-  "version": "2.0.0-beta.28",
+  "version": "2.0.0-beta.29",
   "scripts": {
     "build": "docusaurus build",
     "start": "docusaurus start",
@@ -9,10 +9,10 @@
     "deploy": "docusaurus deploy"
   },
   "devDependencies": {
-    "@knapsack/app": "^2.0.0-beta.28",
-    "@knapsack/design-system": "^2.0.0-beta.28",
     "@docusaurus/core": "^2.0.0-alpha.40",
     "@docusaurus/preset-classic": "^2.0.0-alpha.40",
+    "@knapsack/app": "2.0.0-beta.29",
+    "@knapsack/design-system": "2.0.0-beta.29",
     "node-sass": "^4.0.0",
     "npm-run-all": "^4.0.0"
   }

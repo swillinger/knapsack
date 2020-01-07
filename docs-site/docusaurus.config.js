@@ -40,7 +40,7 @@ const siteConfig = {
       title: 'Knapsack',
       logo: {
         alt: 'Knapsack',
-        src: '/static/img/knapsack-icon.png',
+        src: '/img/knapsack-icon.png',
       },
       links: navLinks,
     },

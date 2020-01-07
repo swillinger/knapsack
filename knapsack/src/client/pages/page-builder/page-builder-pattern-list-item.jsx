@@ -17,7 +17,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Select, KsButton } from '@knapsack/design-system';
+import { KsSelect, KsButton } from '@knapsack/design-system';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import { connectToContext, contextPropTypes } from '../../context';
 import { PageBuilderContext } from './page-builder-context';
@@ -109,7 +109,10 @@ class PlaygroundSidebarPatternListItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      templateId: props.pattern.templates[0].id,
+      selectedTemplate: {
+        label: props.pattern.templates[0].title,
+        value: props.pattern.templates[0].id,
+      },
     };
   }
 
@@ -151,12 +154,12 @@ class PlaygroundSidebarPatternListItem extends Component {
             </div>
           )}
         </div>
-        <Select
-          value={this.state.templateId}
-          handleChange={templateId => this.setState({ templateId })}
-          items={pattern.templates.map(template => ({
+        <KsSelect
+          value={this.state.selectedTemplate}
+          handleChange={selectedTemplate => this.setState({ selectedTemplate })}
+          options={pattern.templates.map(template => ({
             value: template.id,
-            title: template.title,
+            label: template.title,
           }))}
         />
         <br />
@@ -164,13 +167,13 @@ class PlaygroundSidebarPatternListItem extends Component {
           onKeyPress={() =>
             this.context.handleAddSlice(
               this.props.pattern.id,
-              this.state.templateId,
+              this.state.selectedTemplate.value,
             )
           }
           onClick={() =>
             this.context.handleAddSlice(
               this.props.pattern.id,
-              this.state.templateId,
+              this.state.selectedTemplate.value,
             )
           }
         >

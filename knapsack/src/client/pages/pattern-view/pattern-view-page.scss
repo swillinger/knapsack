@@ -28,6 +28,8 @@
     margin-top: var(--space-l);
     margin-left: var(--space-m);
     padding: var(--space-xs) var(--space-s);
+    width: calc(var(--space-xxxl) * 2);
+
     &:empty {
       display: none;
     }

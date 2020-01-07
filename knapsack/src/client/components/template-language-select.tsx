@@ -1,35 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
 import cn from 'classnames';
-import { Select } from '@knapsack/design-system';
+import { KsSelect, SelectOptionProps } from '@knapsack/design-system';
 import { useHistory, useLocation } from 'react-router';
 import { useSelector, useDispatch, setCurrentTemplateRenderer } from '../store';
+import { TemplateRendererMeta } from '../../schemas/knapsack-config';
 import { BASE_PATHS } from '../../lib/constants';
+import './template-language-select.scss';
 
 export const KsTemplateLanguageSelect: React.FC = () => {
   const dispatch = useDispatch();
-  const renderers = useSelector(s => s.patternsState.renderers);
-  const patterns = useSelector(s => s.patternsState.patterns);
-  const currentTemplateRenderer =
-    useSelector(s => s.ui.currentTemplateRenderer) ??
-    Object.keys(renderers ?? {})[0];
   const history = useHistory();
   const { pathname } = useLocation();
-  if (!renderers || Object.keys(renderers ?? {}).length < 2) return null;
+  const patterns = useSelector(s => s.patternsState.patterns);
+  const renderersRaw = useSelector(s => s.patternsState.renderers);
+  const currentTemplateRenderer = useSelector(
+    s => s.ui.currentTemplateRenderer,
+  );
+
+  const renderers = Object.values(renderersRaw).map(r => {
+    return {
+      ...r,
+      label: r.meta.title,
+      value: r.meta.id,
+    };
+  });
+
+  const initialRenderer = currentTemplateRenderer
+    ? renderers.find(r => r.meta.id === currentTemplateRenderer)
+    : renderers[0];
+
+  const [selectedRenderer, setSelectedRenderer] = useState<SelectOptionProps>(
+    initialRenderer,
+  );
+
+  if (!renderers || renderers.length < 2) return null;
 
   const classes = cn({
     'ks-template-language-select': true,
   });
+
   return (
     <div className={classes}>
-      <Select
-        value={currentTemplateRenderer}
-        items={Object.values(renderers).map(({ meta }) => {
-          return {
-            title: meta.title,
-            value: meta.id,
-          };
-        })}
-        handleChange={id => {
+      <KsSelect
+        value={selectedRenderer}
+        options={renderers}
+        isRendererList
+        handleChange={option => {
+          const id = option.value;
+
+          setSelectedRenderer(option);
           dispatch(setCurrentTemplateRenderer({ id }));
 
           if (pathname?.startsWith(`${BASE_PATHS.PATTERN}/`)) {

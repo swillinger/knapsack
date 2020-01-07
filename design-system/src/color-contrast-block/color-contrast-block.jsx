@@ -2,15 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { convertColor } from '@knapsack/utils';
 import { Spinner } from '@knapsack/design-system';
-import { Details, Select } from '../atoms';
+import { Details, KsSelect } from '../atoms';
 import './color-contrast-block.scss';
 
 class ColorContrastBlock extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      bgColor: 'white',
-      textColor: 'black',
+      bgColor: {
+        value: 'white',
+        key: 'White',
+        name: 'White',
+      },
+      textColor: {
+        value: 'black',
+        key: 'Black',
+        name: 'Black',
+      },
       isReady: false,
       contrast: {
         aa: '',
@@ -68,8 +76,8 @@ class ColorContrastBlock extends React.Component {
   }
 
   checkColorContrast() {
-    const bgValue = convertColor(this.state.bgColor, 'hex').slice(1);
-    const txtValue = convertColor(this.state.textColor, 'hex').slice(1);
+    const bgValue = convertColor(this.state.bgColor.value, 'hex').slice(1);
+    const txtValue = convertColor(this.state.textColor.value, 'hex').slice(1);
 
     const url = `https://webaim.org/resources/contrastchecker/?fcolor=${txtValue}&bcolor=${bgValue}&api`;
 
@@ -202,15 +210,15 @@ class ColorContrastBlock extends React.Component {
         <div className="ks-color-contrast-block__accessability-dropdowns">
           Background Color:
           {this.props.bgColors.length > 0 && (
-            <Select
+            <KsSelect
               value={this.state.bgColor}
-              items={this.props.bgColors.map(color => ({
+              options={this.props.bgColors.map(color => ({
                 value: color.value,
                 key: color.name,
-                title: color.name,
+                label: color.name,
               }))}
-              handleChange={value => {
-                this.setState({ bgColor: value }, () =>
+              handleChange={option => {
+                this.setState({ bgColor: option }, () =>
                   this.checkColorContrast(),
                 );
               }}
@@ -218,15 +226,15 @@ class ColorContrastBlock extends React.Component {
           )}
           Text Color:
           {this.props.textColors.length > 0 && (
-            <Select
+            <KsSelect
               value={this.state.textColor}
-              items={this.props.textColors.map(color => ({
+              options={this.props.textColors.map(color => ({
                 value: color.value,
                 key: color.name,
-                title: color.name,
+                label: color.name,
               }))}
-              handleChange={value => {
-                this.setState({ textColor: value }, () =>
+              handleChange={option => {
+                this.setState({ textColor: option }, () =>
                   this.checkColorContrast(),
                 );
               }}
@@ -236,13 +244,15 @@ class ColorContrastBlock extends React.Component {
         <div
           className="ks-color-contrast-block__playground"
           style={{
-            backgroundColor: this.state.bgColor ? this.state.bgColor : 'none',
+            backgroundColor: this.state.bgColor.value
+              ? this.state.bgColor.value
+              : 'none',
           }}
         >
           <h3
             className="ks-color-contrast-block__large-text"
             style={{
-              color: this.state.textColor,
+              color: this.state.textColor.value,
             }}
           >
             Large Text looks like this
@@ -250,7 +260,7 @@ class ColorContrastBlock extends React.Component {
           <h5
             className="ks-color-contrast-block__small-text"
             style={{
-              color: this.state.textColor,
+              color: this.state.textColor.value,
             }}
           >
             small text looks like this

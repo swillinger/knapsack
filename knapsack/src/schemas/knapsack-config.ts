@@ -79,6 +79,16 @@ export interface KnapsackTemplateRendererBase {
     pattern: KnapsackPattern;
     template: KnapsackPatternTemplate;
   }) => Promise<KnapsackFile[]>;
+  /**
+   * The result of all the `getTemplateMeta` runs aggregated together
+   * @see {KnapsackTemplateRendererBase['getTemplateMeta']}
+   * @see getTemplateMeta
+   * @see {getTemplateMeta}
+   */
+  alterTemplateMetaFiles?: (opt: {
+    files: KnapsackFile[];
+    metaDir: string;
+  }) => Promise<KnapsackFile[]>;
 }
 
 export interface KnapsackRenderParams {

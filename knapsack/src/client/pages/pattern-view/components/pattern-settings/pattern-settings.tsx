@@ -17,14 +17,7 @@ import {
   PropTypeDataBase,
   StringPropTypeData,
 } from '@knapsack/core/types';
-import {
-  KsButton,
-  Icon,
-  KsTextField,
-  Select,
-  SchemaForm,
-  KsButtonGroup,
-} from '@knapsack/design-system';
+import { KsButton, KsButtonGroup } from '@knapsack/design-system';
 import produce from 'immer';
 import shortid from 'shortid';
 import arrayMove from 'array-move';

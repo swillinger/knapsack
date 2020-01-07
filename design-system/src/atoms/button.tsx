@@ -41,9 +41,17 @@ type Props = {
   // onClick?(event: React.MouseEvent<HTMLButtonElement>): void;
   // type?: 'button' | 'submit' | 'reset';
   type?: Btn['type'];
+  /**
+   * Which style to use (primary, icon, etc)
+   * @example <KsButton kind="icon" icon="add" />
+   */
   kind?: keyof typeof KINDS;
+  /**
+   * Used with kind="icon". Floating/absolutely positioned icon button.
+   */
   floating?: boolean;
   size?: keyof typeof SIZES;
+  /** Strips any default margin/padding, primarily works with certain kinds. */
   flush?: boolean;
   emphasis?: keyof typeof EMPHASSIS;
   icon?: keyof typeof Icons;

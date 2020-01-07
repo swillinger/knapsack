@@ -1,6 +1,6 @@
 {
   "name": "@knapsack/renderer-twig",
-  "version": "2.0.0-beta.26",
+  "version": "2.0.0-beta.29",
   "description": "Render Twig",
   "main": "dist/renderer-twig.js",
   "types": "dist/renderer-twig.d.ts",

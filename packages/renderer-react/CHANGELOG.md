@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.30](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.29...v2.0.0-beta.30) (2020-01-07)
+
+
+### Bug Fixes
+
+* provide react types in single export ([8ba66f7](https://github.com/basaltinc/knapsack/commit/8ba66f768500b01dc83b57ba01f2d488c94da15e))
+
+
+
+
+
+# [2.0.0-beta.29](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.28...v2.0.0-beta.29) (2020-01-07)
+
+**Note:** Version bump only for package @knapsack/renderer-react
+
+
+
+
+
+# [2.0.0-beta.28](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.27...v2.0.0-beta.28) (2020-01-06)
+
+**Note:** Version bump only for package @knapsack/renderer-react
+
+
+
+
+
+# [2.0.0-beta.27](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.26...v2.0.0-beta.27) (2020-01-06)
+
+**Note:** Version bump only for package @knapsack/renderer-react
+
+
+
+
+
 # [2.0.0-beta.26](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.25...v2.0.0-beta.26) (2020-01-03)
 
 **Note:** Version bump only for package @knapsack/renderer-react

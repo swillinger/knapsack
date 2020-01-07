@@ -1,6 +1,6 @@
 {
   "name": "@knapsack/renderer-web-components",
-  "version": "2.0.0-beta.26",
+  "version": "2.0.0-beta.30",
   "description": "Render Web Components",
   "main": "dist/renderer-web-components.js",
   "types": "dist/renderer-web-components.d.ts",
@@ -16,5 +16,8 @@
   "author": "Basalt (https://basalt.io/)",
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "vscode-html-languageservice": "^3.0.4-next.12 || ^3.0.4"
   }
 }

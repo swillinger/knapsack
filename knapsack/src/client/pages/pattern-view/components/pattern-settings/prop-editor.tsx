@@ -1,20 +1,15 @@
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
-import React from 'react';
-import { Select, SchemaForm, KsButton } from '@knapsack/design-system';
+import React, { useState } from 'react';
+import {
+  KsSelect,
+  SelectOptionProps,
+  SchemaForm,
+} from '@knapsack/design-system';
 import {
   PropTypeNames,
   PropTypeData,
   JsonSchemaObject,
   PropTypeDataBase,
-  StringPropTypeData,
-  BooleanPropTypeData,
-  NumberPropTypeData,
-  OptionsPropTypeData,
-  FunctionPropTypeData,
-  ObjectPropTypeData,
-  ArrayOfObjectsPropTypeData,
-  ArrayOfStringsPropTypeData,
-  ArrayPropTypeData,
 } from '@knapsack/core/types';
 import { sentenceCase } from 'change-case';
 import { useSelector } from '../../../../store';
@@ -66,6 +61,11 @@ export const KsPropEditor: React.FC<PropEditorProps> = React.memo(
     };
     const { data } = prop;
 
+    const [selectedOption, setSelectedOption] = useState<SelectOptionProps>({
+      value: prop.type,
+      label: sentenceCase(prop.type),
+    });
+
     const formData = {
       isRequired: prop.isRequired ?? false,
       ...data,
@@ -116,10 +116,9 @@ export const KsPropEditor: React.FC<PropEditorProps> = React.memo(
     return (
       <div className="ks-prop-editor">
         <div className="ks-u-margin-top--s">
-          <Select
+          <KsSelect
             label="Type"
-            isLabelInline={false}
-            items={[
+            options={[
               PropTypeNames.string,
               PropTypeNames.number,
               PropTypeNames.boolean,
@@ -133,19 +132,20 @@ export const KsPropEditor: React.FC<PropEditorProps> = React.memo(
                 value: propType,
                 title: sentenceCase(propType),
               }))}
-            value={prop.type}
+            value={selectedOption}
             size="s"
-            handleChange={value => {
+            handleChange={option => {
               const { title, description } = prop.data;
               const newLocal: PropTypeData = {
                 ...prop,
-                type: value as any,
+                type: option.value as any,
                 // @ts-ignore
                 data: {
                   title,
                   description,
                 },
               };
+              setSelectedOption(option);
               switch (newLocal.type) {
                 case PropTypeNames.string: {
                   newLocal.data.type = 'string';

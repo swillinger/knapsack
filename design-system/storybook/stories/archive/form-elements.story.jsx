@@ -1,24 +1,24 @@
 /* eslint-disable import/no-unresolved */
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { TextInputWrapper, Select } from '@knapsack/atoms';
+import { TextInputWrapper, KsSelect } from '@knapsack/atoms';
 import { action } from '@storybook/addon-actions';
 
 storiesOf('Form Elements', module)
   .add('Select', () => (
-    <Select
+    <KsSelect
       handleChange={action('option changed')}
-      items={[
+      options={[
         {
-          title: 'Option 1',
+          label: 'Option 1',
           value: 'option1',
         },
         {
-          title: 'Option 2',
+          label: 'Option 2',
           value: 'option2',
         },
         {
-          title: 'Option 3',
+          label: 'Option 3',
           value: 'option3',
         },
       ]}

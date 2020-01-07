@@ -9,6 +9,12 @@
     margin-bottom: 0;
     margin-right: var(--space-s);
   }
+
+  &__status-select {
+    width: calc(var(--space-xxxl) * 2);
+    max-width: 100%;
+  }
+
   &__controls {
     display: flex;
     justify-content: flex-end;

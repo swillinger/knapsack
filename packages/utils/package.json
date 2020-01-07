@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/utils",
   "license": "GPL-2.0-or-later",
-  "version": "2.0.0-beta.26",
+  "version": "2.0.0-beta.29",
   "description": "A Knapsack component that helps build Design Systems",
   "main": "dist--cjs/index.js",
   "module": "dist--mjs/index.js",
@@ -17,11 +17,11 @@
     "start": "run-p watch:*"
   },
   "dependencies": {
-    "@knapsack/core": "2.0.0-beta.26",
+    "@knapsack/core": "2.0.0-beta.29",
     "color": "^3.0.0"
   },
   "devDependencies": {
-    "@knapsack/babel-config": "2.0.0-beta.26",
+    "@knapsack/babel-config": "2.0.0-beta.29",
     "prop-types": "^15.7.2"
   },
   "author": "Basalt (https://basalt.io/)",

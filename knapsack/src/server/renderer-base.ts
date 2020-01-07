@@ -195,13 +195,18 @@ ${this.getFoot({ jsUrls, inlineJs, inlineCss, inlineFoot, isInIframe })}
   static async convertSchemaToTypeScriptDefs({
     schema,
     title,
+    description = '',
     patternId,
     templateId,
     preBanner,
     postBanner,
   }: {
     schema: JsonSchemaObject;
-    title?: string;
+    /**
+     * Will become the `export`-ed `interface`
+     */
+    title: string;
+    description?: string;
     patternId: string;
     templateId: string;
     preBanner?: string;
@@ -210,7 +215,8 @@ ${this.getFoot({ jsUrls, inlineJs, inlineCss, inlineFoot, isInIframe })}
     const theSchema = {
       ...schema,
       additionalProperties: false,
-      title: title ? `${pascalCase(title)}Props` : schema.title ?? 'Props',
+      description,
+      title,
     };
 
     const bannerComment = `

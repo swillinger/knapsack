@@ -347,13 +347,18 @@ export const KsPatternSettings: React.FC<Props> = ({
       <KsSpecItems
         type={SpecItemTypes.Slot}
         handleAdd={() => {
-          setSlots(curSlots => [
-            ...curSlots,
-            {
-              id: 'newSlot',
-              data: { title: 'New Slot' },
-            },
-          ]);
+          setSlots(curSlots => {
+            const id = curSlots.some(curSlot => curSlot.id === 'newSlot')
+              ? shortid.generate()
+              : 'newSlot';
+            return [
+              ...curSlots,
+              {
+                id,
+                data: { title: 'New Slot' },
+              },
+            ];
+          });
         }}
       >
         {slots.map((slot, index) => {

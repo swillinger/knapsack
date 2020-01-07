@@ -89,7 +89,8 @@
               "type": "primary",
               "size": "md",
               "disabled": false,
-              "outlined": false
+              "outlined": false,
+              "handleClick": "() => alert('hi')"
             }
           }
         },

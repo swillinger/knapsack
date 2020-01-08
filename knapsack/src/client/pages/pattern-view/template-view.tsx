@@ -15,10 +15,9 @@
  with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { CodeBlock, Icon, KsButton } from '@knapsack/design-system';
 import { useHistory } from 'react-router-dom';
-import produce from 'immer';
 import deepEqual from 'deep-equal';
 import classnames from 'classnames';
 import {
@@ -142,7 +141,7 @@ const TemplateView: React.FC<Props> = ({
     history.replace(`${BASE_PATHS.PATTERN}/${patternId}/${templateId}`);
   }
 
-  const isCodeBlockEditable = isTemplateDemo(demo) && isLocalDev;
+  const isCodeBlockEditable = demo && isTemplateDemo(demo) && isLocalDev;
   const assetSetIds = templateAssetSetIds ?? globalAssetSetIds;
   const assetSets = assetSetIds.map(assetSetId => ({
     id: assetSetId,

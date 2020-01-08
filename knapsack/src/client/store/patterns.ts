@@ -410,7 +410,7 @@ export function updatePatternInfo(
 }
 
 /**
- * Update basic Template Info
+ * Update basic Template Info by doing a shallow merge of `template`
  */
 export function updateTemplateInfo({
   patternId,

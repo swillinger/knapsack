@@ -216,26 +216,13 @@ export const KsDemoStage: React.FC<Props> = ({
               ].filter(Boolean)}
             />
             <footer className="ks-demo-stage__footer ks-u-margin-top--m">
-              <KsButtonGroup>
-                <KsButton
-                  kind="primary"
-                  size="s"
-                  handleTrigger={() => {
-                    dispatch(
-                      updateTemplateDemo({
-                        patternId,
-                        templateId,
-                        demo,
-                      }),
-                    );
-                  }}
-                >
-                  Save Demo
-                </KsButton>
-                <KsButton size="s" handleTrigger={handleDemoReset}>
-                  Reset Demo
-                </KsButton>
-              </KsButtonGroup>
+              <KsButton
+                size="s"
+                handleTrigger={handleDemoReset}
+                emphasis="danger"
+              >
+                Reset Demo
+              </KsButton>
             </footer>
           </div>
         </div>

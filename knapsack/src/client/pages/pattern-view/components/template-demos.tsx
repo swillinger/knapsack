@@ -59,7 +59,7 @@ export const KsTemplateDemos: React.FC<Props> = ({}: Props) => {
             <div className="ks-template-demos__item__actions">
               {aDemo.description && (
                 <KsPopover
-                  isHoverTriggered
+                  trigger="hover"
                   content={
                     <p style={{ maxWidth: '200px' }}>{aDemo.description}</p>
                   }

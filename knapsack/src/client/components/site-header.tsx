@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { plugins } from '@knapsack/core';
 import urlJoin from 'url-join';
-import { KsButton } from '@knapsack/design-system';
+import { KsButton, KsPopover } from '@knapsack/design-system';
 import knapsackLogo from '@knapsack/design-system/src/assets/knapsack-logo-trans.svg';
 import './site-header.scss';
 import { useSelector } from '../store';
@@ -17,15 +17,32 @@ export const SiteHeader: React.FC = () => {
     s => Object.keys(s.patternsState?.renderers ?? {}).length > 1,
   );
 
-  // Use state instead of classes if dropdown is going to be used as a separate component
-  const handleDropdown = () => {
-    const btn = document.querySelector('.ks-site-header__nav-dropdown');
-    if (btn.classList.contains('ks-site-header__nav-dropdown--active')) {
-      btn.classList.remove('class', 'ks-site-header__nav-dropdown--active');
-    } else {
-      btn.classList.add('ks-site-header__nav-dropdown--active');
-    }
-  };
+  const settingsMenuContent = (
+    <ul className="ks-site-header__settings-menu">
+      {canEdit && (
+        <li>
+          <NavLink to="/settings">General Settings</NavLink>
+        </li>
+      )}
+      <li>
+        <a
+          href="https://knapsack.basalt.io/docs/getting-started"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Knapsack Docs
+        </a>
+      </li>
+      <li>
+        <a href="/demo-urls">Demo URLs</a>
+      </li>
+      {hasChangelog && (
+        <li>
+          <NavLink to="/changelog">Changelog</NavLink>
+        </li>
+      )}
+    </ul>
+  );
 
   return (
     <header className="ks-site-header">
@@ -100,42 +117,10 @@ export const SiteHeader: React.FC = () => {
             </a>
           </li>
         )}
-        <li className="ks-site-header__nav-item">
-          <span className="ks-site-header__nav-icon">
-            <KsButton
-              icon="settings"
-              kind="icon"
-              size="m"
-              onClick={handleDropdown}
-              onKeyPress={handleDropdown}
-            />
-          </span>
-          <div className="ks-site-header__nav-dropdown">
-            <ul className="ks-site-header__nav-dropdown-list">
-              {canEdit && (
-                <li className="ks-site-header__nav-dropdown-item">
-                  <NavLink to="/settings">General Settings</NavLink>
-                </li>
-              )}
-              <li className="ks-site-header__nav-dropdown-item">
-                <a
-                  href="https://knapsack.basalt.io/docs/getting-started"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Knapsack Docs
-                </a>
-              </li>
-              <li className="ks-site-header__nav-dropdown-item">
-                <a href="/demo-urls">Demo URLs</a>
-              </li>
-              {hasChangelog && (
-                <li className="ks-site-header__nav-dropdown-item">
-                  <NavLink to="/changelog">Changelog</NavLink>
-                </li>
-              )}
-            </ul>
-          </div>
+        <li className="ks-site-header__nav-item ks-site-header__nav-icon">
+          <KsPopover content={settingsMenuContent} trigger="click">
+            <KsButton icon="settings" kind="icon" size="m" />
+          </KsPopover>
         </li>
       </ul>
     </header>

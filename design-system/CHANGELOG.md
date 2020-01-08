@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.33](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.32...v2.0.0-beta.33) (2020-01-08)
+
+
+### Bug Fixes
+
+* correct import of normalize lib ([934c333](https://github.com/basaltinc/knapsack/commit/934c333ad4c91acf687590e45a39429c15a18624))
+* remove empty status option from select ([90690fe](https://github.com/basaltinc/knapsack/commit/90690febc73fac8e4ae92143361a8193c95b2e33))
+
+
+### Features
+
+* duplicate demo ([e0cf300](https://github.com/basaltinc/knapsack/commit/e0cf300ef1a5521d942f4cdee5a7eafabac3ed82))
+
+
+
+
+
 # [2.0.0-beta.29](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.28...v2.0.0-beta.29) (2020-01-07)
 
 **Note:** Version bump only for package @knapsack/design-system

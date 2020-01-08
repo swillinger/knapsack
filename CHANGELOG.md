@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.33](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.32...v2.0.0-beta.33) (2020-01-08)
+
+
+### Bug Fixes
+
+* active nav item is highlighted ([29ffa1d](https://github.com/basaltinc/knapsack/commit/29ffa1d5208ad5f8e143c2d41a2c0c1b320340b9))
+* add default, then persist the add-entity radio selection ([200bef5](https://github.com/basaltinc/knapsack/commit/200bef526a196b31f79aa094b0534a48dfd5b45f))
+* adding a slot that already has same id ([192c4ce](https://github.com/basaltinc/knapsack/commit/192c4cef534b1ac54ca0e7427633e75e446ba56b))
+* bottom padding of left nav to accomidate edit panel ([5188bbd](https://github.com/basaltinc/knapsack/commit/5188bbd284966d289e13144a6b7def15ce4da919))
+* change redux equality check from shallow to deep equal to ensure appropriate re-renders ([e5814c8](https://github.com/basaltinc/knapsack/commit/e5814c884a91c9f77954273aa64a7f96afd3d4c6))
+* correct import of normalize lib ([934c333](https://github.com/basaltinc/knapsack/commit/934c333ad4c91acf687590e45a39429c15a18624))
+* ensure header template selector stays up to date ([a6f30b1](https://github.com/basaltinc/knapsack/commit/a6f30b14966f27f57fe72c527da4f8992c4537f7))
+* keep pattern state up to date ([6122cb7](https://github.com/basaltinc/knapsack/commit/6122cb70659c3c1621b81dd923eb14b97158b078))
+* prevent recursive re-renders on empty demos ([a7fef5e](https://github.com/basaltinc/knapsack/commit/a7fef5e21add87d221cd6065db1484f656177747))
+* remove empty status option from select ([90690fe](https://github.com/basaltinc/knapsack/commit/90690febc73fac8e4ae92143361a8193c95b2e33))
+* slots table updating when new slot added ([cde11f0](https://github.com/basaltinc/knapsack/commit/cde11f01896310592a2cc88963fde4b6703eba58))
+
+
+### Features
+
+* demo re-arrange w drag & drop ([7653596](https://github.com/basaltinc/knapsack/commit/76535966493a9ff76c4c3d0989f89f3794a9127f))
+* duplicate demo ([e0cf300](https://github.com/basaltinc/knapsack/commit/e0cf300ef1a5521d942f4cdee5a7eafabac3ed82))
+
+
+
+
+
 # [2.0.0-beta.32](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.31...v2.0.0-beta.32) (2020-01-08)
 
 **Note:** Version bump only for package @knapsack/monorepo

@@ -11,6 +11,7 @@ import {
   addTemplateDataDemo,
   addTemplateTemplateDemo,
   updateTemplateDemo,
+  duplicateDemo,
 } from '../../../store';
 import { BASE_PATHS } from '../../../../lib/constants';
 import { TemplateThumbnail } from '../../../components/template-thumbnail';
@@ -109,6 +110,34 @@ export const KsTemplateDemos: React.FC<Props> = ({}: Props) => {
                     flush
                   >
                     Edit
+                  </KsButton>
+                </KsPopover>
+              )}
+              {canEdit && (
+                <KsPopover content={<p>Duplicate</p>} trigger="hover">
+                  <KsButton
+                    size="s"
+                    kind="icon"
+                    icon="copy"
+                    flush
+                    onClick={() => {
+                      const newDemoId = shortid.generate();
+                      dispatch(
+                        duplicateDemo({
+                          patternId,
+                          templateId,
+                          demoId: aDemo.id,
+                          newDemoId,
+                        }),
+                      );
+                      setTimeout(() => {
+                        history.push(
+                          `${BASE_PATHS.PATTERN}/${patternId}/${templateId}/${newDemoId}`,
+                        );
+                      }, 250);
+                    }}
+                  >
+                    Duplicate Demo
                   </KsButton>
                 </KsPopover>
               )}

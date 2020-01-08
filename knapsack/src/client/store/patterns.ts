@@ -109,6 +109,25 @@ export function updateSpec(
   };
 }
 
+const DUPLICATE_DEMO = 'knapsack/patterns/Duplicate Demo';
+interface DuplicateDemoAction extends Action {
+  type: typeof DUPLICATE_DEMO;
+  payload: {
+    patternId: string;
+    templateId: string;
+    demoId: string;
+    newDemoId?: string;
+  };
+}
+export function duplicateDemo(
+  payload: DuplicateDemoAction['payload'],
+): DuplicateDemoAction {
+  return {
+    type: DUPLICATE_DEMO,
+    payload,
+  };
+}
+
 interface UpdatePatternSlicesAction extends Action {
   type: typeof UPDATE_PATTERN_SLICES;
   payload: {
@@ -427,6 +446,7 @@ type Actions =
   | UpdatePatternSlicesAction
   | RemoveTemplateDemoAction
   | AddTemplateTemplateDemoAction
+  | DuplicateDemoAction
   | UpdateSpecAction;
 
 export default function reducer(
@@ -490,8 +510,18 @@ export default function reducer(
               ? draft.templateStatuses[0].id
               : '',
           assetSetIds: assetSetIds ?? [],
-          demosById: {},
-          demos: [],
+          demosById: {
+            main: {
+              id: 'main',
+              title: 'Main',
+              type: 'data',
+              data: {
+                props: {},
+                slots: {},
+              },
+            },
+          },
+          demos: ['main'],
         });
       });
 
@@ -594,6 +624,20 @@ export default function reducer(
         const { patternId, slices } = action.payload;
         const pattern = draft.patterns[patternId];
         pattern.slices = slices;
+      });
+
+    case DUPLICATE_DEMO:
+      return produce(state, draft => {
+        const { patternId, templateId, demoId, newDemoId } = action.payload;
+        const template = draft.patterns[patternId]?.templates.find(
+          t => t.id === templateId,
+        );
+        const id = newDemoId || shortid.generate();
+        template.demos.push(id);
+        template.demosById[id] = {
+          ...template.demosById[demoId],
+          id,
+        };
       });
 
     case UPDATE_SPEC:

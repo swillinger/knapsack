@@ -228,6 +228,16 @@
         }
       },
       "demos": ["a", "b"]
+    },
+    {
+      "id": "html",
+      "path": "../assets/patterns/card/card.html",
+      "templateLanguageId": "html",
+      "assetSetIds": [],
+      "demosById": {},
+      "demos": [],
+      "spec": {}
     }
-  ]
+  ],
+  "slices": []
 }

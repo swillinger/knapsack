@@ -1,0 +1,67 @@
+{
+  "id": "jumbotron",
+  "title": "Jumbotron",
+  "templates": [
+    {
+      "id": "html",
+      "path": "../assets/patterns/jumbotron/jumbotron.html",
+      "templateLanguageId": "html",
+      "assetSetIds": [],
+      "demosById": {},
+      "demos": [],
+      "statusId": "ready",
+      "spec": {}
+    },
+    {
+      "id": "twig",
+      "path": "../assets/patterns/jumbotron/jumbotron.twig",
+      "alias": "@components/jumbotron.twig",
+      "templateLanguageId": "twig",
+      "assetSetIds": [],
+      "demosById": {
+        "69TaVspO": {
+          "id": "69TaVspO",
+          "title": "Basic Jumbotron",
+          "description": "A basic jumbotron with a cta button.",
+          "type": "data",
+          "data": {
+            "props": {
+              "title": "Jumbotron",
+              "body": "Twenty four hour hydration and sheer color helps me look flawless even when faced with that unforgiving Jumbotron! - Lindsey Vonn",
+              "ctaText": "Button"
+            },
+            "slots": {}
+          }
+        }
+      },
+      "demos": ["69TaVspO"],
+      "spec": {
+        "slots": {},
+        "props": {
+          "$schema": "http://json-schema.org/draft-07/schema",
+          "type": "object",
+          "required": ["title"],
+          "properties": {
+            "title": {
+              "type": "string",
+              "title": "Title",
+              "default": "Title",
+              "description": "Main heading title in this jumbotron."
+            },
+            "body": {
+              "type": "string",
+              "title": "Body Copy",
+              "description": "This is the body copy that will appear in the jumbotron."
+            },
+            "ctaText": {
+              "type": "string",
+              "description": "Text inside the button."
+            }
+          }
+        }
+      },
+      "statusId": "ready"
+    }
+  ],
+  "description": "A lightweight, flexible component that can optionally extend the entire viewport to showcase key marketing messages on your site."
+}

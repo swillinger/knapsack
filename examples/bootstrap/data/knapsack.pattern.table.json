@@ -1,0 +1,63 @@
+{
+  "id": "table",
+  "title": "Table",
+  "templates": [
+    {
+      "id": "html",
+      "path": "../assets/patterns/table/table.html",
+      "templateLanguageId": "html",
+      "assetSetIds": [],
+      "demosById": {},
+      "demos": [],
+      "statusId": "ready",
+      "spec": {}
+    },
+    {
+      "id": "twig",
+      "path": "../assets/patterns/table/table.twig",
+      "alias": "@components/table.twig",
+      "templateLanguageId": "twig",
+      "assetSetIds": [],
+      "demosById": {},
+      "demos": [],
+      "spec": {
+        "slots": {},
+        "props": {
+          "$schema": "http://json-schema.org/draft-07/schema",
+          "description": "Display organized data.",
+          "type": "object",
+          "required": [],
+          "properties": {
+            "dark": {
+              "title": "Dark Mode",
+              "description": "Adds utility class to turn table dark with light text.",
+              "type": "boolean"
+            },
+            "striped": {
+              "description": "Adds row striping.",
+              "type": "boolean"
+            },
+            "bordered": {
+              "title": "Bordered",
+              "description": "Adds borders to all cells.",
+              "type": "boolean"
+            },
+            "hoverable": {
+              "title": "Hoverable",
+              "description": "Adds hover state to all rows.",
+              "type": "boolean"
+            },
+            "caption": {
+              "type": "string",
+              "title": "Caption",
+              "description": "Adds a description underneath the table"
+            },
+            "newProp": { "type": "string" }
+          }
+        }
+      },
+      "statusId": "proposed"
+    }
+  ],
+  "description": "Display organized data."
+}

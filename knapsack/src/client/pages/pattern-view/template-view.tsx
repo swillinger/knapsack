@@ -285,7 +285,11 @@ const TemplateView: React.FC<Props> = ({
             demoSize={demoSize}
             isFormVisible={showSchemaForm}
             // codeBlock={codeBlock}
-            setTemplateInfo={setTemplateInfo}
+            setTemplateInfo={info => {
+              if (!deepEqual(info, templateInfo)) {
+                setTemplateInfo(info);
+              }
+            }}
             handlePropsChange={props => {
               if (isDataDemo(demo)) {
                 dispatch(

@@ -2,7 +2,7 @@
   "name": "@knapsack/app",
   "license": "GPL-2.0-or-later",
   "description": "Build Design Systems on top of knapsack, by Basalt",
-  "version": "2.0.0-beta.30",
+  "version": "2.0.0-beta.32",
   "author": "Basalt (https://basalt.io/)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

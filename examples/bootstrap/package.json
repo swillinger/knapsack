@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/example-bootstrap",
   "license": "ISC",
-  "version": "2.0.0-beta.31",
+  "version": "2.0.0-beta.32",
   "description": "",
   "private": true,
   "main": "index.js",
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@basalt/demo-data": "^0.5.1",
-    "@knapsack/app": "^2.0.0-beta.30",
+    "@knapsack/app": "^2.0.0-beta.32",
     "@knapsack/renderer-html": "2.0.0-beta.29",
     "@knapsack/renderer-twig": "2.0.0-beta.29",
     "@knapsack/renderer-web-components": "^2.0.0-beta.30",

@@ -5,14 +5,26 @@ import { useHover } from '../utils/hooks';
 
 type Props = Omit<PopoverProps, 'isOpen'> & {
   isOpen?: boolean;
-  isHoverTriggered?: boolean;
+  /**
+   * @default 'hover'
+   */
   trigger?: 'prop' | 'hover' | 'click';
   maxWidth?: number;
   hasArrow?: boolean;
 };
 
+/**
+ * Tooltip
+ *
+ * @example
+ * <KsPopover
+ *   content={<p>Content</p>}
+ *   trigger="hover"
+ * >
+ *   <h2>Stuff to hover</h2>
+ * </KsPopover>
+ */
 export const KsPopover: React.FC<Props> = ({
-  isHoverTriggered,
   content,
   isOpen,
   children,

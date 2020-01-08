@@ -20,7 +20,6 @@ export type CurrentTemplateData = {
   canEdit: boolean;
   isLocalDev: boolean;
   hasSchema: boolean;
-  setDemo: (demo: KnapsackTemplateDemo) => void;
 };
 
 export const CurrentTemplateContext = createContext<

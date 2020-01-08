@@ -46,6 +46,7 @@ export const KsSpecDocs: React.FC<Props> = ({}: Props) => {
         <div>
           <h4>Slots</h4>
           <ReactTable
+            key={Object.keys(spec.slots).length}
             data={Object.keys(spec.slots).map(slotName => {
               const {
                 title: slotTitle,

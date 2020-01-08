@@ -9,6 +9,7 @@ import {
 } from '@knapsack/design-system';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
+import deepEqual from 'deep-equal';
 import { Formik, Form, FieldArray, Field, FieldProps } from 'formik';
 import './slots-form.scss';
 import {
@@ -95,7 +96,7 @@ export const KsSlotsForm: React.FC<Props> = ({
 
   const checkAndHandleData = (data: KnapsackTemplateData['slots']): void => {
     const errors = validateForm(data);
-    if (Object.keys(errors).length === 0) {
+    if (Object.keys(errors).length === 0 && !deepEqual(data, slotsData)) {
       handleData(data);
     }
   };

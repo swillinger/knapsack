@@ -15,10 +15,9 @@
  with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { CodeBlock, Icon, KsButton } from '@knapsack/design-system';
 import { useHistory } from 'react-router-dom';
-import produce from 'immer';
 import deepEqual from 'deep-equal';
 import classnames from 'classnames';
 import {
@@ -26,6 +25,7 @@ import {
   useDispatch,
   useSelector,
   setPageDetailsVisibility,
+  updateTemplateDemo,
 } from '../../store';
 import MdBlock from '../../components/md-block';
 // import DosAndDonts from '../../components/dos-and-donts';
@@ -84,7 +84,6 @@ const TemplateView: React.FC<Props> = ({
   );
   const pattern = useSelector(
     ({ patternsState }) => patternsState.patterns[id],
-    deepEqual,
   );
   if (!pattern) {
     const availablePatternIds = allPatterns.map(p => p.id).join(', ');
@@ -109,19 +108,17 @@ const TemplateView: React.FC<Props> = ({
 
   const {
     spec = {},
-    // doc: readme,
     title,
     assetSetIds: templateAssetSetIds,
     demosById,
     statusId,
-    // demoDatas = [],
-    // assetSets = [],
   } = template;
+  const originalDemos = useRef(demosById); // used to reset demo
 
   const { props: schema } = spec;
   const status = allStatuses.find(p => p.id === statusId);
-
-  const readme = '';
+  const hasSchema = !!(Object.keys(schema?.properties || {}).length > 0);
+  const readme = ''; // @todo
 
   const backupDemo: DataDemo = {
     type: 'data',
@@ -135,37 +132,24 @@ const TemplateView: React.FC<Props> = ({
   };
 
   const demos = template?.demos?.map(d => demosById[d]) ?? [];
-
-  const hasSchema = !!(Object.keys(schema?.properties || {}).length > 0);
-
   const [firstDemo] = demos;
-  const initialDemo =
+
+  const demo =
     demosById && demoId ? demosById[demoId] : firstDemo ?? backupDemo;
+
   if (demoId && !demosById[demoId]) {
     history.replace(`${BASE_PATHS.PATTERN}/${patternId}/${templateId}`);
   }
 
-  const [demo, setDemo] = useState<KnapsackTemplateDemo>(initialDemo);
-
-  useEffect(() => {
-    if (demoId) {
-      // new demo!
-      setDemo(demosById[demoId]);
-    }
-  }, [demoId]);
-
-  const isCodeBlockEditable = isTemplateDemo(demo) && isLocalDev;
+  const isCodeBlockEditable = demo && isTemplateDemo(demo) && isLocalDev;
   const assetSetIds = templateAssetSetIds ?? globalAssetSetIds;
-
   const assetSets = assetSetIds.map(assetSetId => ({
     id: assetSetId,
     ...allAssetSets[assetSetId],
   }));
-
   const [assetSetId, setAssetSetId] = useState(
     assetSets[0] ? assetSets[0].id : '',
   );
-
   const [templateInfo, setTemplateInfo] = useState<
     KsRenderResults & { url: string }
   >();
@@ -186,7 +170,6 @@ const TemplateView: React.FC<Props> = ({
     title,
     hasSchema,
     assetSetId,
-    setDemo,
   };
 
   const codeBlock = (
@@ -301,27 +284,60 @@ const TemplateView: React.FC<Props> = ({
             demoSize={demoSize}
             isFormVisible={showSchemaForm}
             // codeBlock={codeBlock}
-            setTemplateInfo={setTemplateInfo}
+            setTemplateInfo={info => {
+              if (!deepEqual(info, templateInfo)) {
+                setTemplateInfo(info);
+              }
+            }}
             handlePropsChange={props => {
-              setDemo(prevDemo =>
-                produce(prevDemo, draft => {
-                  if (isDataDemo(draft)) {
-                    draft.data.props = props;
-                  }
-                }),
-              );
+              if (isDataDemo(demo)) {
+                dispatch(
+                  updateTemplateDemo({
+                    patternId,
+                    templateId,
+                    demo: {
+                      ...demo,
+                      data: {
+                        ...demo.data,
+                        props,
+                      },
+                    },
+                  }),
+                );
+              }
             }}
             handleSlotsChange={slotsData => {
-              setDemo(prevDemo =>
-                produce(prevDemo, draft => {
-                  if (isDataDemo(draft)) {
-                    draft.data.slots = slotsData;
-                  }
-                }),
-              );
+              if (isDataDemo(demo)) {
+                dispatch(
+                  updateTemplateDemo({
+                    patternId,
+                    templateId,
+                    demo: {
+                      ...demo,
+                      data: {
+                        ...demo.data,
+                        slots: slotsData,
+                      },
+                    },
+                  }),
+                );
+              }
             }}
             handleDemoReset={() => {
-              setDemo(prevDemo => demosById[prevDemo.id]);
+              const originalDemo = originalDemos.current[demo?.id] ?? {
+                ...demo,
+                data: {
+                  props: {},
+                  slots: {},
+                },
+              };
+              dispatch(
+                updateTemplateDemo({
+                  patternId,
+                  templateId,
+                  demo: originalDemo,
+                }),
+              );
             }}
           />
         </div>

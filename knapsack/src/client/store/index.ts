@@ -10,6 +10,7 @@ import {
   shallowEqual,
 } from 'react-redux';
 import thunk from 'redux-thunk';
+import deepEqual from 'deep-equal';
 import { localStorageMiddleware } from './utils';
 import settingsState from './settings';
 import patternsState from './patterns';
@@ -69,7 +70,7 @@ const rootEnhancer = composeEnhancers(
  */
 export const useSelector: TypedUseSelectorHook<AppState> = (
   selectorFn,
-  equalityFn = (a, b) => shallowEqual(a, b),
+  equalityFn = (a, b) => deepEqual(a, b),
 ) => {
   return useReduxSelector(selectorFn, equalityFn);
 };

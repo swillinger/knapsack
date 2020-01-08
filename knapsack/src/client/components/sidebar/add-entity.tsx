@@ -3,7 +3,6 @@ import cn from 'classnames'; // https://www.npmjs.com/package/classnames
 import './add-entity.scss';
 import { Formik, Form, Field } from 'formik';
 import { KsButton, KsTextField } from '@knapsack/design-system';
-import { FaPlus } from 'react-icons/fa';
 
 type Props = {
   /**
@@ -41,7 +40,7 @@ export const AddEntity: React.FC<Props> = ({
 }: Props) => {
   const initialValues: MyFormValues = {
     title: '',
-    entityType: null,
+    entityType: 'pattern',
   };
 
   const [isShowing, setIsShowing] = useState(false);
@@ -65,7 +64,7 @@ export const AddEntity: React.FC<Props> = ({
             handleAdd(values);
             actions.setSubmitting(false);
             setIsShowing(!isShowing);
-            actions.resetForm({});
+            actions.setFieldValue('title', '');
           }}
         >
           {() => (

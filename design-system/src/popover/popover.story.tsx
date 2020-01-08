@@ -57,7 +57,7 @@ export const hoverable = () => {
   return (
     <Wrapper>
       <KsPopover
-        isHoverTriggered
+        trigger="hover"
         content={content}
         position={position()}
         align={align()}

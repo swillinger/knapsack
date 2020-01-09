@@ -38,7 +38,6 @@ interface DragItem {
 
 const KsTemplateDemo: React.FC<Props> = ({ index, demo }: Props) => {
   const {
-    pattern,
     demos,
     demo: activeDemo,
     assetSetId,
@@ -50,10 +49,6 @@ const KsTemplateDemo: React.FC<Props> = ({ index, demo }: Props) => {
   } = useContext(CurrentTemplateContext);
   const dispatch = useDispatch();
   const history = useHistory();
-
-  const patternWidth = Array.isArray(pattern.demoWidths)
-    ? pattern.demoWidths[0]?.width
-    : undefined;
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -246,7 +241,6 @@ const KsTemplateDemo: React.FC<Props> = ({ index, demo }: Props) => {
       <div className="ks-template-demos__item__thumbnail-wrap">
         <TemplateThumbnail
           patternId={patternId}
-          patternWidth={patternWidth}
           templateId={templateId}
           assetSetId={assetSetId}
           demo={demo}

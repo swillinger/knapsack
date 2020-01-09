@@ -1,0 +1,7 @@
+.ks-pattern-table {
+  &__pattern-details {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--space-m);
+  }
+}

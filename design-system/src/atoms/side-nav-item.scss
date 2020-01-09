@@ -61,11 +61,6 @@
     }
   }
 
-  &__status-indicator {
-    border-radius: 50%;
-    width: var(--space-xs);
-    height: var(--space-xs);
-  }
   .ks-popover__children {
     margin-left: var(--space-xs);
     & + .ks-popover__children {
@@ -93,7 +88,6 @@
     padding-bottom: var(--space-xxxs);
     display: none;
   }
-
 
   &--editing {
     border: var(--space-xxxs) solid transparent;

@@ -11,7 +11,7 @@
       "id": "react",
       "templateLanguageId": "react",
       "path": "../assets/patterns/button/button.tsx",
-      "statusId": "inProgress",
+      "statusId": "ready",
       "assetSetIds": ["bootstrap"],
       "spec": {
         "slots": {
@@ -99,17 +99,33 @@
           "type": "data",
           "title": "Secondary style",
           "data": {
-            "slots": { "children": ["Other Button Text"] },
+            "slots": { "children": ["Hello!"] },
             "props": {
               "type": "secondary",
               "size": "md",
               "disabled": false,
-              "outlined": false
+              "outlined": false,
+              "handleClick": "() => alert('hi')"
             }
+          }
+        },
+        "Ib85UZzPs": {
+          "id": "Ib85UZzPs",
+          "title": "Cancel",
+          "description": "A description",
+          "type": "data",
+          "data": {
+            "props": {
+              "type": "danger",
+              "size": "md",
+              "disabled": false,
+              "outlined": false
+            },
+            "slots": { "children": ["Cancel"] }
           }
         }
       },
-      "demos": ["primary", "secondary"]
+      "demos": ["primary", "secondary", "Ib85UZzPs"]
     },
     {
       "title": "Twig",
@@ -118,7 +134,7 @@
       "alias": "@components/button.twig",
       "path": "../assets/patterns/button/button.twig",
       "statusId": "proposed",
-      "assetSetIds": ["bootstrap"],
+      "assetSetIds": ["bootstrap", "material"],
       "spec": {
         "props": {
           "$schema": "http://json-schema.org/draft-07/schema",
@@ -184,12 +200,12 @@
           "description": "Here is how what to use for the main call to action, try to limit these per page.",
           "data": {
             "props": {
-              "text": "The Button",
-              "url": "#",
-              "style": "primary",
+              "style": "danger",
               "size": "md",
               "disabled": false,
-              "outlined": false
+              "outlined": false,
+              "text": "The Button",
+              "url": "#"
             }
           }
         },
@@ -306,5 +322,13 @@
       "spec": {}
     }
   ],
-  "slices": []
+  "slices": [
+    {
+      "id": "xqdHiT1f",
+      "blockId": "better-image-slice",
+      "data": {
+        "imgKey": "https://ks-storage-assets162428-local.s3.us-west-2.amazonaws.com/public/2020-01-07%2520at%25201.18%2520PM.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIATKA7VKSIJXO6YNNR%2F20200110%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20200110T001548Z&X-Amz-Expires=900&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEGgaCXVzLXdlc3QtMiJGMEQCIFwyd6s2WT4vxkDYrU6wNeCnVbEQHOC9CiHxu8NTL%2B7zAiA4o9NpEsxri81CF5muaSmGxf4EJsuuIXvjqAejS%2BjqZSqHBAjh%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAEaDDIyNzY5OTY3NjMwNCIMN%2BRkdb2Sy65waPI1KtsDza7WowaL7MFc6k62E8QlxwlLyInZ3Hrj57TbrMXqXYIew9mk%2BtoKxrS%2BEVVP4lIWGU9K8QkPSOBsPWuvzjX54u1OwlLzXAnz2p2dulYBNmJ25ETaUwubPUxrM7pHyNo48%2BQIsH2DGkKIxT%2BwPZ9SasWWBxRHyPSYhEq1Ip6zEy48ZVMg8k54aZzzUJXWwU47GLLa5peKQ3D4NenyhlDsNb6ctx6zySyw4DQZ6GDbZc5tdhrOTWhfqQ0gI1gwFw9aWwHpQxpii8l9oyceIW7DDzxVs6LBAy8dTU1HFKIJdhayNhxb%2FmpsDnXPcGGUKzIdwqQAGLfxWo1rAx5leOKN3ajIyKDD9P9GGj1uitLSSZBeEHaVwtqsofJyFWSkwvszo71y%2BhI6t9R7PClo5jRH6EX9G7bJbaPY3%2FbQsawEIEio25F%2FZcNp2sz9kvSoVgmhKHCIsQvz%2FQk6BsGZ3bTuwF%2F0ETKd9QZBOkUeeGr%2FlTsceS1avY1HhP3BpOZ20vpK1PrGRia7cceLNEgjlsiDROrlHHTsQspTQb9gszktsy9%2B1mKjno%2FuP30%2FQphxcSqtpoHHT%2FShUuEBB8toBxH2HWBzhUK%2B%2BC3w1JlkSJWlf4%2FIYLT9XV8plMtJ7DDF%2FN7wBTrMAjgWKNwKzBBQKPzGNASjO6fZiHluHiA3xQKWq6PXIbgAmlSSuSPakimbG71TeRnRoN3wD1GUWIXf4kPt8QbpCj5mJJwkJyiagcwHQXbjiAdEJuOZm2VLRHeVMbl43fzBBPzqyogFLP9G7P5z8fpMRy05QVEqYXt%2FRm%2Byz14A6yLYKqhMBP67QGFi5FxzGB6Cs%2Ff7ebkjGZh3wNAXhgnlPP9QIfgZxNMwpL5NqmoVcScV6z4TCEwSYPBAMwTJHLhRLkNnuhOI3hU3vxddfIOd%2BG41Kj18H6Y3Ch%2FL1FgAvNdTk8ahaRYmVAzjP8xWDMWwjtj%2BE8iClGEiIIE69bU%2Fhq4PAz10I83ksIK6IedQ0P8VIr8CfrenzfFtTXZv%2Bo3ovRHohcCTGBsY2%2FIJE5w6o29QIb%2ByThynF1wAle6bs%2FFVaUxdWPF08sWjaRYZ&X-Amz-Signature=5c4d03eb9d7277239b8e66e2d3011b69b0f84e01a559b0b64b0e5a174366892a&X-Amz-SignedHeaders=host"
+      }
+    }
+  ]
 }

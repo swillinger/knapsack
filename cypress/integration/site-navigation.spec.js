@@ -13,7 +13,9 @@ describe('Site Navigation', () => {
     });
     // Take a snapshot for visual diffing
     cy.percySnapshot('homepage', { widths: [1200] });
-    cy.screenshot('homepage');
+    cy.screenshot('homepage', {
+      capture: 'fullPage',
+    });
     cy.contains('Patterns').click();
     cy.url().should('include', '/patterns');
     cy.get('.ks-page-header__title').should('have.text', 'Patterns');

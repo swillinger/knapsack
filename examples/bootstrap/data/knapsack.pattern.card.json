@@ -28,7 +28,7 @@
           "required": [],
           "properties": {
             "cardHeader": { "type": "string", "title": "Card Header Text" },
-            "cardTitle": { "type": "string", "title": "Body Title" },
+            "cardTitle": { "type": "string", "title": "Title" },
             "cardSubTitle": { "type": "string", "title": "Body Sub Title" },
             "cardBody": { "type": "string", "title": "Card Body Text" },
             "textAlign": {
@@ -174,13 +174,13 @@
         },
         "props": {
           "$schema": "http://json-schema.org/draft-07/schema",
+          "description": "A Card for containing content",
           "type": "object",
           "title": "Card",
-          "description": "A Card for containing content",
           "required": ["cardTitle", "cardBody"],
           "properties": {
             "cardHeader": { "type": "string", "title": "Card Header Text" },
-            "cardTitle": { "type": "string", "title": "Body Title" },
+            "cardTitle": { "type": "string", "title": "Title" },
             "cardSubTitle": { "type": "string", "title": "Body Sub Title" },
             "cardBody": { "type": "string", "title": "Card Body Text" },
             "textAlign": {
@@ -251,7 +251,7 @@
           "required": ["cardTitle", "cardBody"],
           "properties": {
             "cardHeader": { "type": "string", "title": "Card Header Text" },
-            "cardTitle": { "type": "string", "title": "Body Title" },
+            "cardTitle": { "type": "string", "title": "Title" },
             "cardSubTitle": { "type": "string", "title": "Body Sub Title" },
             "cardBody": { "type": "string", "title": "Card Body Text" },
             "textAlign": {
@@ -283,7 +283,7 @@
             },
             "props": {
               "textAlign": "right",
-              "cardTitle": "Card Title",
+              "cardTitle": "Robots are awesome",
               "cardBody": "Some quick example text to build on the card title and make up the bulk of the card's content.",
               "imgSrc": "/images/demoImg2.jpg",
               "imgAlt": "Nature Picture",

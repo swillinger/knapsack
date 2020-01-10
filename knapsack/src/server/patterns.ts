@@ -197,9 +197,9 @@ export class Patterns implements KnapsackDb<PatternsState> {
         pattern.templates.forEach(template => {
           if (template?.spec?.isInferred) {
             // if it's inferred, we don't want to save `spec.props` or `spec.slots`
-            template.spec = {
-              isInferred: true,
-            };
+            // template.spec = {
+            //   isInferred: true,
+            // };
           }
         });
 
@@ -337,7 +337,7 @@ export class Patterns implements KnapsackDb<PatternsState> {
                 spec = {
                   ...spec,
                   ...inferredSpec,
-                  isInferred: true,
+                  isInferred: false,
                 };
               }
             } catch (err) {
@@ -638,13 +638,25 @@ const links = Array.prototype.slice.call(document.querySelectorAll('a'));
 links.forEach(function(link) {
   link.addEventListener('click', function(e){e.preventDefault();});
 });
+
+window.iFrameResizer = {
+  onReady: function() {
+    // https://github.com/davidjbradshaw/iframe-resizer/blob/master/docs/iframed_page/methods.md
+    if ('parentIFrame' in window) {
+       parentIFrame.sendMessage({
+        type: 'event',
+        event: 'ready',
+      });
+    }
+  }
+}
         `);
       }
 
       if (!isInIframe && websocketsPort) {
         inlineJSs.push(`
 if ('WebSocket' in window && location.hostname === 'localhost') {
-  var socket = new window.WebSocket('ws://localhost:8000');
+  var socket = new window.WebSocket('ws://localhost:${websocketsPort}');
   socket.addEventListener('message', function() {
     window.location.reload();
   });

@@ -11,7 +11,7 @@ import path from 'path';
 import pkg from './package.json';
 
 const extensions = ['.ts', '.tsx', '.js', '.jsx', '.mjs'];
-console.log('dirname', __dirname);
+
 /**
  * Either a function that takes an id and returns true (external) or false (not external), or an Array of module IDs that should remain external to the bundle.
  * The IDs should be either:
@@ -43,6 +43,9 @@ export default {
     format: 'esm',
   },
   external,
+  watch: {
+    include: 'src/**.{tsx,ts,scss,json,js,jsx}',
+  },
   plugins: [
     babel({
       // extends: '@knapsack/babel-config/es',

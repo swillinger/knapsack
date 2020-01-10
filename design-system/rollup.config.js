@@ -44,7 +44,7 @@ export default {
   },
   external,
   watch: {
-    include: 'src/**.{tsx,ts,scss,json,js,jsx}',
+    include: 'src/**/*.{tsx,ts,scss,json,js,jsx}',
   },
   plugins: [
     babel({

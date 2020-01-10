@@ -9,6 +9,7 @@ export * from './side-nav-item';
 export * from './checkbox-input-wrapper';
 export * from './toggle';
 export * from './status-message';
+export * from './status-icon';
 export * from './forms/select';
 export * from './type-to-filter-input-wrapper';
 export * from './type-to-filter';

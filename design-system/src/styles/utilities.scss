@@ -22,6 +22,38 @@ $spaces: [ 'xxxs', 'xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl' ];
   margin-bottom: 0 !important;
 }
 
+// @todo add media query for single column
+[class*='ks-u-grid'] {
+  --ks-grid-spacing: var(--space-m);
+
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  > * {
+    border: 1px solid #000;
+    margin-top: var(--ks-grid-spacing);
+  }
+}
+
+.ks-u-grid,
+.ks-u-grid--m {
+  > * {
+    width: calc(50% - calc(var(--ks-grid-spacing) / 2));
+  }
+}
+
+.ks-u-grid--l {
+  > * {
+    width: calc(33.3% - calc(var(--ks-grid-spacing) / 1));
+  }
+}
+
+.ks-u-grid--xl {
+  > * {
+    width: calc(25% - calc(var(--ks-grid-spacing) / 0.66));
+  }
+}
+
 .ks-eyebrow {
   color: var(--c-text-subdued);
   font-size: var(--font-base-size);

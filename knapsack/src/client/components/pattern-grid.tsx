@@ -18,6 +18,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { BASE_PATHS } from '../../lib/constants';
 import { KnapsackPattern } from '../../schemas/patterns';
+import { TemplateThumbnail } from './template-thumbnail';
 import './pattern-grid.scss';
 
 type Props = {
@@ -57,6 +58,7 @@ Props) => {
           <div className="ks-pattern-grid__list-item__description">
             {description}
           </div>
+          <TemplateThumbnail patternId={id} />
         </Link>
       </li>
     );

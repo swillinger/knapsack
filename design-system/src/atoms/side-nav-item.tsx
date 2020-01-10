@@ -6,6 +6,7 @@ import './side-nav-item.scss';
 import { Icon } from './icon';
 import { KsButton } from './button';
 import { KsPopover } from '../popover/popover';
+import { StatusIcon } from './status-icon';
 
 type Btn = React.PropsWithoutRef<JSX.IntrinsicElements['button']>;
 
@@ -90,10 +91,7 @@ export const SideNavItem: React.FC<Props> = ({
                   }
                 >
                   <Link to={statusItem.path}>
-                    <div
-                      className="ks-side-nav-item__status-indicator"
-                      style={{ backgroundColor: statusItem.status.color }}
-                    />
+                    <StatusIcon status={statusItem.status} />
                   </Link>
                 </KsPopover>
               )

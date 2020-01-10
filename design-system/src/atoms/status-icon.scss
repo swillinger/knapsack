@@ -1,0 +1,12 @@
+.ks-status-icon {
+  display: flex;
+  align-items: center;
+  &__icon {
+    border-radius: 50%;
+    width: var(--space-xs);
+    height: var(--space-xs);
+  }
+  &__title {
+    margin-left: var(--space-xs);
+  }
+}

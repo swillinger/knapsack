@@ -92,6 +92,7 @@ export function saveToServer({
             setStatus({
               message: `Failed: ${results.message}`,
               type: 'error',
+              dismissAfter: 30,
             }),
           );
         } else {
@@ -101,7 +102,7 @@ export function saveToServer({
               setStatus({
                 message: `Success: ${results.message}`,
                 type: 'success',
-                dismissAfter: 30,
+                dismissAfter: 45,
               }),
             );
           }

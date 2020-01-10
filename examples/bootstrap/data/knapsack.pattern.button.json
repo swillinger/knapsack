@@ -11,7 +11,7 @@
       "id": "react",
       "templateLanguageId": "react",
       "path": "../assets/patterns/button/button.tsx",
-      "statusId": "",
+      "statusId": "inProgress",
       "assetSetIds": ["bootstrap"],
       "spec": {
         "slots": {

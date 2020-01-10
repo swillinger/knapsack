@@ -25,7 +25,6 @@
           "$schema": "http://json-schema.org/draft-07/schema",
           "type": "object",
           "title": "Card",
-          "description": "A Card for containing content",
           "required": ["cardTitle", "cardBody"],
           "properties": {
             "cardHeader": { "type": "string", "title": "Card Header Text" },
@@ -49,15 +48,7 @@
           "title": "Main",
           "type": "data",
           "data": {
-            "slots": {
-              "children": [
-                {
-                  "patternId": "button",
-                  "templateId": "react",
-                  "demoId": "primary"
-                }
-              ]
-            },
+            "slots": { "children": [] },
             "props": {
               "cardTitle": "Card Title2",
               "cardBody": "Some quick example text to build on the card title and make up the bulk of the card's content.",

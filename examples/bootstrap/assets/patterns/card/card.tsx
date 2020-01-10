@@ -1,17 +1,8 @@
 import * as React from 'react';
 import cn from 'classnames';
+import { CardProps } from '../../../dist/meta/react';
 
-type Props = {
-  textAlign?: string;
-  // cardHeader?: string;
-  imgSrc?: string;
-  cardTitle?: string;
-  cardSubTitle?: string;
-  cardBody: string;
-  children?: React.ReactNode;
-};
-
-const Card: React.FC<Props> = ({
+const Card: React.FC<CardProps> = ({
   textAlign = 'left',
   children,
   cardBody,
@@ -19,7 +10,7 @@ const Card: React.FC<Props> = ({
   cardSubTitle,
   cardTitle,
   imgSrc,
-}: Props) => {
+}: CardProps) => {
   const classes = cn('card', `text-${textAlign}`, {});
   return (
     <div className={classes}>

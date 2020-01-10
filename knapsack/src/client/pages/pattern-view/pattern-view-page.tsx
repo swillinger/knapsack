@@ -156,6 +156,7 @@ const PatternViewPage: React.FC<Props> = ({
             <KsPatternSettings
               pattern={pattern}
               activeTemplateId={templateId}
+              key={`${pattern.id}-${templateId}-${currentTemplateRenderer}`}
             />
           )
         }

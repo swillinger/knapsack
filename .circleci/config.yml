@@ -80,7 +80,7 @@ jobs:
               git branch --set-upstream-to=origin/$CIRCLE_BRANCH $CIRCLE_BRANCH
               git add .
               git commit -m 'style: lint fixes [skip ci]'
-              git push --no-verify
+              git push origin "$CIRCLE_BRANCH" --no-verify
               echo "Committed and pushed those lint fixes; continuing on with the build!"
             fi
 

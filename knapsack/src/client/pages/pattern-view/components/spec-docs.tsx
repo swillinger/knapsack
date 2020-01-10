@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Details } from '@knapsack/design-system';
 import ReactTable from 'react-table';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
-import { CurrentTemplateContext } from '../current-template-context';
+import { useCurrentTemplateContext } from '../current-template-context';
 import './spec-docs.scss';
 import { LoadableSchemaTable } from '../../../loadable-components';
 import { BASE_PATHS } from '../../../../lib/constants';
@@ -12,7 +12,7 @@ type Props = {};
 
 // eslint-disable-next-line no-empty-pattern
 export const KsSpecDocs: React.FC<Props> = ({}: Props) => {
-  const { hasSchema, spec } = useContext(CurrentTemplateContext);
+  const { hasSchema, spec } = useCurrentTemplateContext();
 
   const classes = cn({
     'ks-spec-docs': true,

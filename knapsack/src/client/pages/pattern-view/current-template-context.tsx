@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createContext, useContext } from 'react';
 import {
   KnapsackPatternTemplate,
   KnapsackTemplateDemo,
@@ -25,3 +25,6 @@ export type CurrentTemplateData = {
 export const CurrentTemplateContext = createContext<
   Partial<CurrentTemplateData>
 >({});
+
+export const useCurrentTemplateContext = () =>
+  useContext(CurrentTemplateContext);

@@ -23,5 +23,8 @@
     {
       "path": "../design-system"
     }
-  ]
+  ],
+  "typeAcquisition": {
+    "enable": true
+  }
 }

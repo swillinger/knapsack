@@ -1,19 +1,20 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": [
-    "src/**/*"
-  ],
+  "include": ["src/**/*"],
   "compilerOptions": {
-//    "tsBuildInfoFile": "./node_modules/.cache/tsconfig.tsbuildinfo",
+    //    "tsBuildInfoFile": "./node_modules/.cache/tsconfig.tsbuildinfo",
     "composite": true,
     "outDir": "./dist",
-    "rootDir": "./src",
-//     "baseUrl": "./",
-//     "outFile": "./dist/index.d.ts",
-
+    "rootDir": "./src"
+    //     "baseUrl": "./",
+    //     "outFile": "./dist/index.d.ts",
   },
-
-   "references": [{
-     "path": "../../knapsack"
-   }]
+  "references": [
+    {
+      "path": "../../knapsack"
+    }
+  ],
+  "typeAcquisition": {
+    "enable": true
+  }
 }

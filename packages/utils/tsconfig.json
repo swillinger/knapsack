@@ -1,12 +1,12 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": [
-    "src",
-    "type-tools.ts"
-  ],
+  "include": ["src", "type-tools.ts"],
   "compilerOptions": {
     "composite": true,
     "rootDir": "src",
     "outDir": "dist"
+  },
+  "typeAcquisition": {
+    "enable": true
   }
 }

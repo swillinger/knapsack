@@ -1,14 +1,17 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": [
-    "src/**/*"
-  ],
+  "include": ["src/**/*"],
   "compilerOptions": {
     "composite": true,
     "outDir": "./dist",
     "rootDir": "./src"
   },
-   "references": [{
-     "path": "../../knapsack"
-   }]
+  "references": [
+    {
+      "path": "../../knapsack"
+    }
+  ],
+  "typeAcquisition": {
+    "enable": true
+  }
 }

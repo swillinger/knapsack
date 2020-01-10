@@ -1,9 +1,6 @@
 {
   "extends": "../tsconfig.base.json",
-  "include": [
-    "src",
-    "../custom.d.ts"
-  ],
+  "include": ["src", "../custom.d.ts"],
   "exclude": [],
   "compilerOptions": {
     "composite": true,
@@ -31,5 +28,8 @@
     {
       "path": "../design-system"
     }
-  ]
+  ],
+  "typeAcquisition": {
+    "enable": true
+  }
 }

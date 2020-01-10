@@ -60,7 +60,30 @@ jobs:
       #      - run: yarn clean
       - run: yarn build
       - run: yarn build:types
-      - run: yarn lint:js --quiet
+      - run:
+          name: Lint & Fix JS
+          command: |
+            yarn lint:js --quiet --fix
+
+            if [ -n "$(git status --porcelain)" ]; then
+              echo "Found some lint fixes to commit";
+              git status
+              echo "";
+              echo "-----";
+              echo "";
+              git config --global user.email "$GH_EMAIL"
+              git config --global user.name "BasaltBot"
+              git remote remove origin
+              git remote add origin "https://${GH_TOKEN}@github.com/basaltinc/knapsack.git"
+              git config --global push.default matching
+              git fetch
+              git branch --set-upstream-to=origin/$CIRCLE_BRANCH $CIRCLE_BRANCH
+              git add .
+              git commit -m 'style: lint fixes [skip ci]'
+              git push --no-verify
+              echo "Committed and pushed those lint fixes; continuing on with the build!"
+            fi
+
       - run: yarn lint:style
       #      - run: yarn build:types
       - run: bash ./scripts/ensure-clean-git-repo.sh

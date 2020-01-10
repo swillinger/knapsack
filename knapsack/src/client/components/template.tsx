@@ -15,6 +15,7 @@
  with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React, { useState, useEffect, useRef, useContext } from 'react';
+import { CircleSpinner } from '@knapsack/design-system';
 import iframeResizer from 'iframe-resizer/js/iframeResizer'; // https://www.npmjs.com/package/iframe-resizer
 import shortid from 'shortid';
 import { KnapsackContext } from '../context';
@@ -57,9 +58,10 @@ const Template: React.FC<Props> = ({
     `${patternId}-${templateId}-${shortid.generate()}`;
 
   const [id, setId] = useState(makeId());
-  const [htmlUrl, setHtmlUrl] = useState('/api/loading');
+  const [htmlUrl, setHtmlUrl] = useState('');
   const [width, setWidth] = useState(null);
-  const iframeRef = useRef(null);
+  const [isReady, setIsReady] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const resizeRef = useRef(null);
   const templatePush = useSelector(s => s.userState.features.templatePush);
   const { socket } = useWebsocket(templatePush);
@@ -99,7 +101,19 @@ const Template: React.FC<Props> = ({
       {
         log: false,
         checkOrigin: [window.location.origin],
-        autoResize: false, // When `true`, triggers resize when window changes size or when ANY DOM attribute changes.
+        autoResize: true, // When `true`, triggers resize when window changes size or when ANY DOM attribute changes.
+        resizeFrom: 'child',
+        onResized: ({ width: newWidth }) => {
+          setWidth(newWidth);
+        },
+        onMessage: ({ message }) => {
+          if (message?.type === 'event') {
+            if (message?.event === 'ready') {
+              // the template has loaded
+              setIsReady(true);
+            }
+          }
+        },
       },
       iframeRef.current,
     );
@@ -112,22 +126,11 @@ const Template: React.FC<Props> = ({
 
     // can use all these callback methods: https://www.npmjs.com/package/iframe-resizer#callback-methods
     const thisIframeResizer = thisIframe.iFrameResizer;
-    // @todo Trigger resize only when needed. Temp stop-gap is to trigger a resize every second for now.
-    const resizerIntervalId = setInterval(() => {
-      thisIframeResizer.resize();
-      if (isResizable) {
-        const newWidth = iframeRef.current.offsetWidth;
-        if (width !== newWidth) {
-          setWidth(newWidth);
-        }
-      }
-    }, 1000);
 
     return (): void => {
       if (thisIframeResizer && typeof thisIframeResizer.close === 'function') {
         thisIframeResizer.close(); // https://github.com/davidjbradshaw/iframe-resizer/issues/576
       }
-      clearInterval(resizerIntervalId);
     };
   }, []);
 
@@ -137,6 +140,7 @@ const Template: React.FC<Props> = ({
     // ends, clear the timeout avoids lodash debounce to avoid stale
     // values in globalSet.
     const timeout = setTimeout(() => {
+      setIsReady(false);
       getTemplateInfo({
         patternId,
         templateId,
@@ -160,7 +164,7 @@ const Template: React.FC<Props> = ({
     };
   }, [patternId, templateId, demo, assetSetId, id]);
 
-  const content = (
+  let content = (
     <ErrorCatcher>
       <iframe
         className="ks-template__iframe"
@@ -172,7 +176,7 @@ const Template: React.FC<Props> = ({
   );
 
   if (isResizable) {
-    return (
+    content = (
       <div className="ks-template__iframe-wrapper" ref={resizeRef}>
         <div className="ks-template__resizable">
           {content}
@@ -185,7 +189,18 @@ const Template: React.FC<Props> = ({
       </div>
     );
   }
-  return <div className="ks-template">{content}</div>;
+  return (
+    <div
+      className={`ks-template ks-template--${isReady ? `ready` : `not-ready`}`}
+    >
+      {!isReady && (
+        <div className="ks-template__spinner">
+          <CircleSpinner size="2em" />
+        </div>
+      )}
+      {content}
+    </div>
+  );
 };
 
 export default Template;

@@ -1,6 +1,10 @@
 import React, { useContext } from 'react';
 import cn from 'classnames';
-import { KsButton, KsButtonGroup, SchemaForm } from '@knapsack/design-system';
+import {
+  KsButton,
+  useValueDebounce,
+  SchemaForm,
+} from '@knapsack/design-system';
 import Template, { Props as TemplateProps } from '../../../components/template';
 import { FunctionField } from '../../../components/function-field';
 import { CurrentTemplateContext } from '../current-template-context';
@@ -77,6 +81,10 @@ export const KsDemoStage: React.FC<Props> = ({
     canEdit,
   } = useContext(CurrentTemplateContext);
   const dispatch = useDispatch();
+  const [props, setProps] = useValueDebounce(
+    isDataDemo(demo) ? demo?.data?.props ?? {} : {},
+    handlePropsChange,
+  );
 
   const classes = cn(
     'ks-demo-stage',
@@ -182,9 +190,10 @@ export const KsDemoStage: React.FC<Props> = ({
                         <ErrorCatcher>
                           <SchemaForm
                             schema={spec.props}
-                            formData={demo.data.props}
+                            formData={props}
                             onChange={({ formData }) => {
-                              handlePropsChange(formData);
+                              setProps(formData);
+                              // handlePropsChange(formData);
                             }}
                             customFields={{ FunctionField }}
                           />

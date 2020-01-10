@@ -1,3 +1,14 @@
+.ks-template {
+  width: 100%;
+  position: relative;
+  &__spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+}
 .ks-template__iframe {
   width: 1px;
   // Using min-width to set the width of the iFrame, works around an issue in iOS that can prevent the iFrame from sizing correctly

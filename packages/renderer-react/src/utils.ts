@@ -147,7 +147,7 @@ export async function getReactTypeScriptDocs({
   const tsConfigExists = existsSync(tsConfigPath);
   try {
     const config = {
-      // shouldExtractLiteralValuesFromEnum: true,
+      shouldExtractLiteralValuesFromEnum: true,
       savePropValueAsString: true,
     };
     const parse = tsConfigExists
@@ -165,7 +165,11 @@ export async function getReactTypeScriptDocs({
         required: [],
         properties: {},
       },
-      slots: {},
+      slots: {
+        children: {
+          title: 'children',
+        },
+      },
     };
 
     const isDefaultExport = !exportName || exportName === 'default';
@@ -180,6 +184,7 @@ export async function getReactTypeScriptDocs({
 
     const { displayName } = result;
     spec.props.description = result.description;
+    // log.inspect(result, 'result');
     Object.entries(result.props || {}).forEach(([propName, propDef]) => {
       const {
         name,
@@ -232,6 +237,23 @@ export async function getReactTypeScriptDocs({
             type: 'boolean',
           };
           break;
+        case 'enum':
+          type EnumType = {
+            name: string;
+            raw: string;
+            value: {
+              /** Looks like `'"option1"'` - beware of string that contains `"` */
+              value: string;
+            }[];
+          };
+          spec.props.properties[propName] = {
+            type: 'string',
+            // yes there is a double "value" & yes it is confusing
+            enum: (type as EnumType).value
+              .map(({ value }) => value?.trim()?.replace(/"/g, ''))
+              .filter(Boolean),
+          };
+          break;
         case 'ReactNode':
           spec.slots[propName] = {
             title: propName,
@@ -245,8 +267,8 @@ export async function getReactTypeScriptDocs({
         if (description && !spec.props.properties[propName].description) {
           spec.props.properties[propName].description = description;
         }
-        if (defaultValue) {
-          spec.props.properties[propName].default = defaultValue;
+        if (defaultValue && 'value' in defaultValue) {
+          spec.props.properties[propName].default = defaultValue.value;
         }
       }
 

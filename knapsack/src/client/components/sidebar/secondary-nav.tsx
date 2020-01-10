@@ -17,11 +17,7 @@ type Props = {
 };
 
 const customSearchMethod = ({ node, searchQuery }) => {
-  return (
-    searchQuery &&
-    node.name &&
-    node.name.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1
-  );
+  return ( searchQuery && node.name && node.name.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1 );
 };
 const searchFocusIndex = 0;
 

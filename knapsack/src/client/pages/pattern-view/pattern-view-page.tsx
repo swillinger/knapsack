@@ -149,173 +149,200 @@ const PatternViewPage: React.FC<Props> = ({
 
   return (
     <ErrorCatcher>
-      <PageWithSidebar
-        slottedDetails={
-          canEdit &&
-          templatesList.length !== 0 && (
-            <KsPatternSettings
-              pattern={pattern}
-              activeTemplateId={templateId}
-              key={`${pattern.id}-${templateId}-${currentTemplateRenderer}`}
-            />
-          )
-        }
-      >
-        <section className={classes}>
-          <header className="ks-pattern-view-page__header">
-            <div className="ks-pattern-view-page__header__info-wrap">
-              {breadcrumb.length > 0 && (
-                <p className="ks-pattern-view-page__header__info-wrap__breadcrumbs">
-                  {breadcrumb.join(' / ')} /
-                </p>
-              )}
-              <h2 className="ks-pattern-view-page__header__info-wrap__title">
-                <InlineEditText
-                  text={title}
-                  isHeading
-                  handleSave={text => {
-                    dispatch(
-                      updatePatternInfo(patternId, {
-                        title: text,
-                      }),
-                    );
-                  }}
-                />
-              </h2>
-
-              <p className="ks-pattern-view-page__header__info-wrap__description">
-                <InlineEditText
-                  text={description}
-                  handleSave={text => {
-                    dispatch(
-                      updatePatternInfo(patternId, {
-                        description: text,
-                      }),
-                    );
-                  }}
-                />
+      <section className={classes}>
+        <header className="ks-pattern-view-page__header">
+          <div className="ks-pattern-view-page__header__info-wrap">
+            {breadcrumb.length > 0 && (
+              <p className="ks-pattern-view-page__header__info-wrap__breadcrumbs">
+                {breadcrumb.join(' / ')} /
               </p>
-            </div>
-            <div className="ks-pattern-view-page__header__controls">
-              {templatesList.length > 1 && (
-                <div>
-                  <KsSelect
-                    label="Template"
-                    value={selectedTemplate}
-                    options={[
-                      emptyTemplateOption,
-                      ...templatesList.map(t => ({
-                        value: t.id,
-                        label: t.title,
-                      })),
-                    ]}
-                    handleChange={option => {
-                      setSelectedTemplate(option);
-                      history.push(
-                        `${BASE_PATHS.PATTERN}/${patternId}/${option.value}`,
-                      );
-                    }}
-                  />
-                </div>
-              )}
-              {hasSchema && (
-                <div>
-                  <KsSelect
-                    options={demoSizeOptions}
-                    value={demoSize}
-                    handleChange={setDemoSize}
-                    label="Stage Size"
-                  />
-                </div>
-              )}
-            </div>
-          </header>
-
-          {templatesList.length === 0 && (
-            <div
-              className="ks-u-shade-bg"
-              style={{
-                padding: 'var(--space-l)',
-                borderRadius: 'var(--radius-l)',
-              }}
-            >
-              <h3>Add Template</h3>
-              <EditTemplateDemo
-                handleSubmit={({ path, alias }) => {
+            )}
+            <h2 className="ks-pattern-view-page__header__info-wrap__title">
+              <InlineEditText
+                text={title}
+                isHeading
+                handleSave={text => {
                   dispatch(
-                    addTemplate({
-                      alias,
-                      path,
-                      patternId,
-                      templateLanguageId: currentTemplateRenderer,
-                    }),
-                  );
-                  // delay a beat so server can be ready to render new template
-                  setTimeout(() => setHasTemplates(true), 100);
-                }}
-                handleDelete={() => {
-                  dispatch(
-                    deletePattern({
-                      patternId: pattern.id,
+                    updatePatternInfo(patternId, {
+                      title: text,
                     }),
                   );
                 }}
               />
-            </div>
-          )}
+            </h2>
 
-          {hasTemplates && templatesList.length > 0 && !showAllTemplates && (
-            <TemplateView
-              id={patternId}
-              templateId={templateId}
-              demoId={demoId}
-              key={`${patternId}-${templateId}`}
-              demoSize={demoSize.value}
-              isVerbose
-              isCodeBlockShown
-            />
-          )}
-
-          {hasTemplates &&
-            templatesList.length > 0 &&
-            showAllTemplates &&
-            templates.map(template => (
-              <div key={template.id}>
-                <TemplateView
-                  id={patternId}
-                  key={template.id}
-                  templateId={template.id}
-                  demoSize={demoSize.value}
-                  isVerbose={!showAllTemplates}
+            <p className="ks-pattern-view-page__header__info-wrap__description">
+              <InlineEditText
+                text={description}
+                handleSave={text => {
+                  dispatch(
+                    updatePatternInfo(patternId, {
+                      description: text,
+                    }),
+                  );
+                }}
+              />
+            </p>
+          </div>
+          <div className="ks-pattern-view-page__header__controls">
+            {templatesList.length > 1 && (
+              <div>
+                <KsSelect
+                  label="Template"
+                  value={selectedTemplate}
+                  options={[
+                    emptyTemplateOption,
+                    ...templatesList.map(t => ({
+                      value: t.id,
+                      label: t.title,
+                    })),
+                  ]}
+                  handleChange={option => {
+                    setSelectedTemplate(option);
+                    history.push(
+                      `${BASE_PATHS.PATTERN}/${patternId}/${option.value}`,
+                    );
+                  }}
                 />
-                <br />
-                <hr />
-                <br />
               </div>
-            ))}
+            )}
+            {hasSchema && (
+              <div>
+                <KsSelect
+                  options={demoSizeOptions}
+                  value={demoSize}
+                  handleChange={setDemoSize}
+                  label="Stage Size"
+                />
+              </div>
+            )}
+          </div>
+        </header>
 
-          <hr />
-
-          <CustomSliceCollection
-            userCanSave={canEdit}
-            handleSave={slices => {
-              dispatch(updatePatternSlices(patternId, slices));
+        {templatesList.length === 0 && (
+          <div
+            className="ks-u-shade-bg"
+            style={{
+              padding: 'var(--space-l)',
+              borderRadius: 'var(--radius-l)',
             }}
-            initialSlices={pattern.slices}
-          />
+          >
+            <h3>Add Template</h3>
+            <EditTemplateDemo
+              handleSubmit={({ path, alias }) => {
+                dispatch(
+                  addTemplate({
+                    alias,
+                    path,
+                    patternId,
+                    templateLanguageId: currentTemplateRenderer,
+                  }),
+                );
+                // delay a beat so server can be ready to render new template
+                setTimeout(() => setHasTemplates(true), 100);
+              }}
+              handleDelete={() => {
+                dispatch(
+                  deletePattern({
+                    patternId: pattern.id,
+                  }),
+                );
+              }}
+            />
+          </div>
+        )}
 
-          {/* {dosAndDonts.map(item => ( */}
-          {/* <DosAndDonts */}
-          {/* key={JSON.stringify(item)} */}
-          {/* title={item.title} */}
-          {/* description={item.description} */}
-          {/* items={item.items} */}
-          {/* /> */}
-          {/* ))} */}
-        </section>
-      </PageWithSidebar>
+        {hasTemplates && templatesList.length > 0 && !showAllTemplates && (
+          <TemplateView
+            id={patternId}
+            templateId={templateId}
+            demoId={demoId}
+            key={`${patternId}-${templateId}`}
+            demoSize={demoSize.value}
+            isVerbose
+            isCodeBlockShown
+          />
+        )}
+
+        {hasTemplates &&
+          templatesList.length > 0 &&
+          showAllTemplates &&
+          templates.map(template => (
+            <div key={template.id}>
+              <TemplateView
+                id={patternId}
+                key={template.id}
+                templateId={template.id}
+                demoSize={demoSize.value}
+                isVerbose={!showAllTemplates}
+              />
+              <br />
+              <hr />
+              <br />
+            </div>
+          ))}
+
+        <hr />
+
+        <CustomSliceCollection
+          userCanSave={canEdit}
+          handleSave={slices => {
+            dispatch(updatePatternSlices(patternId, slices));
+          }}
+          initialSlices={pattern.slices}
+        />
+
+        {/* {dosAndDonts.map(item => ( */}
+        {/* <DosAndDonts */}
+        {/* key={JSON.stringify(item)} */}
+        {/* title={item.title} */}
+        {/* description={item.description} */}
+        {/* items={item.items} */}
+        {/* /> */}
+        {/* ))} */}
+      </section>
     </ErrorCatcher>
   );
 };
 
-export default PatternViewPage;
+export default (props: Props) => {
+  const { patternId, templateId } = props;
+  const canEdit = useSelector(store => store.userState.canEdit);
+  const pattern = useSelector(store => {
+    const thePattern = store.patternsState.patterns[patternId];
+    if (!thePattern) {
+      throw new Error(
+        `The pattern id ${patternId} cannont be found in Redux Store`,
+      );
+    }
+    return thePattern;
+  });
+  const currentTemplateRenderer = useSelector(
+    s => s.ui.currentTemplateRenderer,
+  );
+
+  const { templates } = pattern;
+
+  const templatesList = templates.filter(
+    t => t.templateLanguageId === currentTemplateRenderer,
+  );
+  return (
+    <PageWithSidebar
+      slottedDetails={
+        canEdit &&
+        templatesList.length !== 0 && (
+          <KsPatternSettings
+            pattern={pattern}
+            activeTemplateId={templateId}
+            key={`${pattern.id}-${templateId}-${currentTemplateRenderer}`}
+          />
+        )
+      }
+    >
+      <PatternViewPage
+        {...props}
+        key={`${pattern.id}-${templateId}-${currentTemplateRenderer}`}
+      />
+    </PageWithSidebar>
+  );
+};

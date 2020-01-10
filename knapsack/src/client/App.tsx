@@ -187,7 +187,6 @@ export const App: React.FC = () => {
                           templateId={templateId}
                           demoId={demoId}
                           size="m"
-                          key={patternId}
                         />
                       );
                     }}

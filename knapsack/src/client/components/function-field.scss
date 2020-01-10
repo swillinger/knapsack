@@ -17,3 +17,8 @@
     }
   }
 }
+
+// This is the popover for when there are syntax errors in a function field
+.react-tiny-popover-container {
+  z-index: 1;
+}

@@ -264,7 +264,7 @@ export class Patterns implements KnapsackDb<PatternsState> {
                   'invalid demo info',
                 );
                 log.warn(
-                  `invalid demo: ${pattern.id}, ${template.id}, ${demo.id} ^^^`,
+                  `invalid demo: patternId: "${pattern.id}", templateId: "${template.id}", demoId: "${demo.id}" ^^^`,
                   'pattern data',
                 );
               }

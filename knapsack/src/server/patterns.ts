@@ -145,6 +145,7 @@ export class Patterns implements KnapsackDb<PatternsState> {
       await this.updatePatternsData();
     } catch (error) {
       console.log();
+      console.log(error);
       log.error('Pattern Init failed', error.message);
       console.log();
       log.verbose('', error);

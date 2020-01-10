@@ -11,7 +11,7 @@
       "id": "react",
       "templateLanguageId": "react",
       "path": "../assets/patterns/card/card.tsx",
-      "statusId": "proposed",
+      "statusId": "needs-design",
       "assetSetIds": ["bootstrap"],
       "spec": {
         "slots": {
@@ -54,21 +54,108 @@
                 {
                   "patternId": "button",
                   "templateId": "react",
+                  "demoId": "secondary"
+                }
+              ]
+            },
+            "props": {
+              "textAlign": "right",
+              "cardTitle": "Hi everyone!",
+              "cardBody": "Some quick example text to build on the card title and make up the bulk of the card's content.",
+              "imgSrc": "/images/demoImg2.jpg",
+              "imgAlt": "Nature Picture"
+            }
+          }
+        },
+        "oJ7Sy5zh": {
+          "id": "oJ7Sy5zh",
+          "title": "Right Align",
+          "type": "data",
+          "data": {
+            "slots": {
+              "children": [
+                {
+                  "patternId": "button",
+                  "templateId": "react",
+                  "demoId": "secondary"
+                }
+              ]
+            },
+            "props": {
+              "textAlign": "right",
+              "cardTitle": "Card Title",
+              "cardBody": "Some quick example text to build on the card title and make up the bulk of the card's content.",
+              "imgSrc": "/images/demoImg1.jpg",
+              "imgAlt": "Nature Picture"
+            }
+          }
+        },
+        "kq6_gva2": {
+          "id": "kq6_gva2",
+          "title": "Text Only",
+          "type": "data",
+          "data": {
+            "slots": {
+              "children": [
+                {
+                  "patternId": "button",
+                  "templateId": "react",
                   "demoId": "primary"
                 }
               ]
             },
             "props": {
-              "cardTitle": "Card Title2",
+              "textAlign": "center",
+              "cardTitle": "Card Title",
               "cardBody": "Some quick example text to build on the card title and make up the bulk of the card's content.",
-              "textAlign": "left",
-              "imgSrc": "/images/demoImg2.jpg",
+              "imgAlt": "Nature Picture"
+            }
+          }
+        },
+        "1Rbqal5n": {
+          "id": "1Rbqal5n",
+          "title": "Confirmation Card",
+          "type": "data",
+          "data": {
+            "slots": {
+              "children": [
+                {
+                  "patternId": "button",
+                  "templateId": "react",
+                  "demoId": "Ib85UZzPs"
+                }
+              ]
+            },
+            "props": {
+              "textAlign": "center",
+              "cardTitle": "Are You Sure?",
+              "imgAlt": "Nature Picture"
+            }
+          }
+        },
+        "guoWqGd1": {
+          "id": "guoWqGd1",
+          "title": "Confirmation Card",
+          "type": "data",
+          "data": {
+            "slots": {
+              "children": [
+                {
+                  "patternId": "button",
+                  "templateId": "react",
+                  "demoId": "primary"
+                }
+              ]
+            },
+            "props": {
+              "textAlign": "center",
+              "cardTitle": "Thanks!",
               "imgAlt": "Nature Picture"
             }
           }
         }
       },
-      "demos": ["primary"]
+      "demos": ["1Rbqal5n", "primary", "oJ7Sy5zh", "kq6_gva2", "guoWqGd1"]
     },
     {
       "title": "Web Component",

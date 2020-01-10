@@ -386,10 +386,8 @@ export const KsSlotsForm: React.FC<Props> = ({
                                     <span className="ks-slots-form__pattern-link">
                                       <Link
                                         to={`${BASE_PATHS.PATTERN}/${patternId}/${templateId}/${demoId}`}
-                                        target="_blank"
                                       >
-                                        View Pattern{' '}
-                                        <Icon symbol="external-link" size="s" />
+                                        View Pattern
                                       </Link>
                                     </span>
                                   )}

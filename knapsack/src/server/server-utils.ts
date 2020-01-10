@@ -18,9 +18,10 @@ import fs from 'fs-extra';
 import os from 'os';
 import qs from 'qs';
 import yaml from 'js-yaml';
+import resolve from 'resolve';
 import { execSync } from 'child_process';
 import prettier from 'prettier';
-import { relative, resolve, join, isAbsolute } from 'path';
+import { relative, join, isAbsolute } from 'path';
 import * as log from '../cli/log';
 
 /**
@@ -132,12 +133,13 @@ export function resolvePath({
   }
   let absolutePath: string;
   try {
-    absolutePath = require.resolve(path);
-    const exists = fileExists(path);
-    if (absolutePath && exists) {
+    absolutePath = resolve.sync(path, {
+      basedir: process.cwd(),
+    });
+    if (absolutePath) {
       return {
         originalPath: path,
-        exists,
+        exists: true,
         absolutePath,
         relativePathFromCwd: relative(process.cwd(), absolutePath),
       };
@@ -152,7 +154,7 @@ export function resolvePath({
     originalPath: string;
   };
   resolveFromDirs.forEach(base => {
-    const x = resolve(process.cwd(), join(base, path));
+    const x = join(process.cwd(), join(base, path));
     if (fileExists(x)) {
       result = {
         exists: true,

@@ -29,7 +29,7 @@ export enum Icons {
 
 export type Props = {
   size?: keyof typeof IconSizes;
-  symbol?: keyof typeof Icons;
+  symbol: keyof typeof Icons;
 };
 
 export const Icon: React.FC<Props> = ({

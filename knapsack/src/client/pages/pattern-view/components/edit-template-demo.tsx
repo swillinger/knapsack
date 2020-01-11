@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
-import { KsButton, SchemaForm, KsPopover } from '@knapsack/design-system';
+import {
+  KsButton,
+  SchemaForm,
+  KsPopover,
+  KsSvg,
+} from '@knapsack/design-system';
 import cn from 'classnames';
 import { JsonSchemaObject } from '@knapsack/core/types';
 import { useSelector } from '../../../store';
@@ -101,10 +106,7 @@ export const EditTemplateDemo: React.FC<Props> = ({
       <div className="ks-edit-template-demo__content">
         <h5 className="ks-edit-template-demo__title">
           {title} Template
-          <span
-            className="ks-edit-template-demo__logo"
-            dangerouslySetInnerHTML={{ __html: iconSvg }}
-          />
+          <KsSvg svg={iconSvg} className="ks-edit-template-demo__logo" />
           {handleDelete && (
             <KsPopover
               trigger="click"

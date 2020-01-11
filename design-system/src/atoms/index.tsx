@@ -6,6 +6,7 @@ export * from './forms/text-input';
 export * from './forms/radio-input-wrapper';
 export * from './icon';
 export * from './side-nav-item';
+export * from './svg';
 export * from './checkbox-input-wrapper';
 export * from './toggle';
 export * from './status-message';

@@ -1,6 +1,11 @@
 import React from 'react';
 import cn from 'classnames';
-import Select, { components } from 'react-select';
+import Select, {
+  components,
+  Theme,
+  OptionProps,
+  SingleValueProps,
+} from 'react-select';
 import './select.scss';
 import { useFallbackId } from '../../utils/hooks';
 
@@ -10,9 +15,11 @@ enum Sizes {
 }
 
 export type SelectOptionProps = {
-  label?: string;
+  label: string;
   value: string;
-  [key: string]: any;
+  icon?: React.ReactNode;
+  /** Pass data in here in `options` and get it back in `handleChange`. You'll lose typing though, but should be to handle that on your end relatively easy with `(meta as MyType)` */
+  meta?: {};
 };
 
 type Props = {
@@ -32,16 +39,6 @@ type Props = {
    * Provide an X button to clear the input.
    */
   isClearable?: boolean;
-  /**
-   * If the select menu is displaying a list of statuses.
-   * If so, you can pass `color` values in for each option and a status dot will display with each.
-   */
-  isStatusList?: boolean;
-  /**
-   * If the select menu is displaying a list of renderer engines (react, web components, etc).
-   * If so, each option may have a meta.iconSvg to be displayed to the left of the option label.
-   */
-  isRendererList?: boolean;
   placeholder?: string;
   value?: SelectOptionProps;
   options: SelectOptionProps[];
@@ -54,8 +51,6 @@ export const KsSelect: React.FC<Props> = ({
   handleChange,
   isSearchable = false,
   isClearable = false,
-  isStatusList = false,
-  isRendererList = false,
   placeholder = 'Select...',
   options,
   size = Sizes.m,
@@ -73,57 +68,37 @@ export const KsSelect: React.FC<Props> = ({
     'ks-select--disabled': disabled,
   });
 
-  const statusDot = (color = 'var(--c-frame)') => ({
-    display: 'flex',
-    alignItems: 'center',
-
-    ':before': {
-      content: '" "',
-      backgroundColor: color,
-      border: '1px solid var(--c-bg)',
-      borderRadius: 'var(--space-xs)',
-      boxSizing: 'content-box',
-      display: 'block',
-      marginRight: 'var(--space-xs)',
-      height: 'var(--space-xs)',
-      width: 'var(--space-xs)',
-      minWidth: 'var(--space-xs)', // prevents flexbox collapsing pseudo element when text is long
-    },
-  });
-
-  const customSingleValue = ({ children, ...props }) => {
-    return isRendererList ? (
+  const SingleValue = ({
+    children,
+    ...props
+  }: SingleValueProps<SelectOptionProps>) => {
+    // `props.options` is ALL and `props.data` is THIS option.
+    // I have NO idea why `props.data` contains everything it should BUT `icon` even though in `props.options` it has it but that's what's up.
+    // So I use `props.data.value` to find the full object out of `props.options`
+    // PS `Option` does not have this problem
+    const data = props.options.find(opt => opt.value === props?.data?.value);
+    return (
       <components.SingleValue {...props}>
-        <div className="ks-select__option--has-icon">
-          {props.data.meta?.iconSvg && (
-            <span
-              className="ks-select__option--has-icon__icon"
-              dangerouslySetInnerHTML={{ __html: props.data.meta.iconSvg }}
-            />
+        <div className="ks-select__option">
+          {data?.icon && (
+            <span className="ks-select__option-icon">{data.icon}</span>
           )}
           <span>{children}</span>
         </div>
       </components.SingleValue>
-    ) : (
-      <components.SingleValue {...props}>{children}</components.SingleValue>
     );
   };
 
-  const customOption = ({ children, ...props }) => {
-    return isRendererList ? (
+  const Option = ({ children, ...props }: OptionProps<SelectOptionProps>) => {
+    return (
       <components.Option {...props}>
-        <div className="ks-select__option--has-icon">
-          {props.data.meta?.iconSvg && (
-            <span
-              className="ks-select__option--has-icon__icon"
-              dangerouslySetInnerHTML={{ __html: props.data.meta.iconSvg }}
-            />
+        <div className="ks-select__option">
+          {props.data?.icon && (
+            <span className="ks-select__option-icon">{props.data.icon}</span>
           )}
           <span>{children}</span>
         </div>
       </components.Option>
-    ) : (
-      <components.Option {...props}>{children}</components.Option>
     );
   };
 
@@ -141,30 +116,22 @@ export const KsSelect: React.FC<Props> = ({
       ...provided,
       zIndex: 100,
     }),
-    singleValue: (provided, { data }) => ({
-      ...provided,
-      ...(isStatusList && statusDot(data.color)),
-    }),
-    option: (provided, { data }) => ({
-      ...provided,
-      ...(isStatusList && statusDot(data.color)),
-    }),
   };
 
+  const optionsProp = options.map(option => {
+    return {
+      label: option.value,
+      ...option,
+    };
+  });
   return (
     <label className={classes} htmlFor={id} tabIndex={0}>
       {label && <div className="ks-select__label-text">{label}</div>}
       <span className="ks-select__wrapper">
         <Select
-          options={options.map(option => {
-            return {
-              label: option.value,
-              ...option,
-            };
-          })}
+          options={optionsProp}
           onChange={option => {
-            // setCurrentValue(event);
-            handleChange(option);
+            handleChange(option as SelectOptionProps);
           }}
           value={value}
           isSearchable={isSearchable}
@@ -173,35 +140,42 @@ export const KsSelect: React.FC<Props> = ({
           id={id}
           className="ks-select__select"
           isDisabled={disabled}
-          theme={theme => ({
-            ...theme,
-            borderRadius: 'var(--space-xxs)',
-            colors: {
-              ...theme.colors,
-              primary: 'var(--c-focus)', // focus and active option
-              primary75: 'var(--c-focus)',
-              primary50: 'var(--c-active-highlight)',
-              primary25: 'var(--c-active-highlight)', // option hover state
-              neutral0: 'var(--c-bg)', // bg color
-              // neutral5: ,
-              // neutral10: ,
-              neutral20: 'var(--c-frame)', // input border
-              neutral30: 'var(--c-frame)', // input border hover
-              // neutral40: ,
-              // neutral50: ,
-              neutral60: 'var(--c-text-subdued)', // dropdown caret
-              // neutral70: ,
-              // neutral80: ,
-              // neutral90: ,
-            },
-            spacing: {
-              baseUnit: 4,
-              controlHeight: size === 'm' ? 40 : 24,
-              menuGutter: size === 'm' ? 8 : 2,
-            },
-          })}
+          theme={theme => {
+            const theTheme: Theme = {
+              ...theme,
+              borderRadius: 4, // it wants a number (like `4`) and not a string (like `4px` or `var(--radius-s)`) ¯\_(ツ)_/¯
+              colors: {
+                ...theme.colors,
+                primary: 'var(--c-focus)', // focus and active option
+                primary75: 'var(--c-focus)',
+                primary50: 'var(--c-active-highlight)',
+                primary25: 'var(--c-active-highlight)', // option hover state
+                neutral0: 'var(--c-bg)', // bg color
+                // neutral5: ,
+                // neutral10: ,
+                neutral20: 'var(--c-frame)', // input border
+                neutral30: 'var(--c-frame)', // input border hover
+                // neutral40: ,
+                // neutral50: ,
+                neutral60: 'var(--c-text-subdued)', // dropdown caret
+                // neutral70: ,
+                // neutral80: ,
+                // neutral90: ,
+              },
+              spacing: {
+                baseUnit: 4,
+                controlHeight: size === 'm' ? 40 : 24,
+                menuGutter: size === 'm' ? 8 : 2,
+              },
+            };
+
+            return theTheme;
+          }}
           styles={customStyles}
-          components={{ SingleValue: customSingleValue, Option: customOption }}
+          components={{
+            SingleValue,
+            Option,
+          }}
         />
       </span>
     </label>

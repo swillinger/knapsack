@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import cn from 'classnames';
-import { KsSelect, SelectOptionProps } from '@knapsack/design-system';
+import { KsSelect, SelectOptionProps, KsSvg } from '@knapsack/design-system';
 import { useHistory, useLocation } from 'react-router';
 import { useSelector, useDispatch, setCurrentTemplateRenderer } from '../store';
 import { TemplateRendererMeta } from '../../schemas/knapsack-config';
@@ -49,8 +49,10 @@ export const KsTemplateLanguageSelect: React.FC = () => {
     <div className={classes}>
       <KsSelect
         value={selectedRenderer}
-        options={renderers}
-        isRendererList
+        options={renderers.map(r => ({
+          ...r,
+          icon: <KsSvg svg={r.meta.iconSvg} />,
+        }))}
         handleChange={option => {
           const id = option.value;
 

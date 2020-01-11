@@ -46,20 +46,23 @@ export const KsSlotsForm: React.FC<Props> = ({
       ({ id, title, templates }) => ({
         id,
         title,
+        label: title, // for <KsSelect>s
         value: id, // for <KsSelect>s
         // only can include other templates that are the same language as this one. PS asset sets not accounted for
         templates: templates
           .filter(t => t.templateLanguageId === templateLanguageId)
           ?.map(t => ({
             id: t.id,
-            value: t.id,
+            value: t.id, // for <KsSelect>s
             title: t.title,
+            label: t.title, // for <KsSelect>s
             demos: t.demos?.map(demoId => {
               const demo = t.demosById[demoId];
               return {
                 id: demoId,
                 value: demoId,
                 title: demo.title,
+                label: demo.title, // for <KsSelect>s
               };
             }),
           })),
@@ -292,6 +295,10 @@ export const KsSlotsForm: React.FC<Props> = ({
                                     }: FieldProps) => (
                                       <KsSelect
                                         label="Pattern"
+                                        options={[
+                                          { value: '', label: '' },
+                                          ...allowedPatterns,
+                                        ]}
                                         value={
                                           allowedPatterns.find(
                                             p => p.value === value,
@@ -317,10 +324,6 @@ export const KsSlotsForm: React.FC<Props> = ({
                                             },
                                           );
                                         }}
-                                        options={[
-                                          { value: '', label: '' },
-                                          ...allowedPatterns,
-                                        ]}
                                       />
                                     )}
                                   </Field>

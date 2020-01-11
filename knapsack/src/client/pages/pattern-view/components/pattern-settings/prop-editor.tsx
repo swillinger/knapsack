@@ -130,7 +130,7 @@ export const KsPropEditor: React.FC<PropEditorProps> = React.memo(
               .filter(Boolean)
               .map(propType => ({
                 value: propType,
-                title: sentenceCase(propType),
+                label: sentenceCase(propType),
               }))}
             value={selectedOption}
             size="s"

@@ -4,6 +4,7 @@ import {
   KsSelect,
   SelectOptionProps,
   KsPopover,
+  StatusIcon,
 } from '@knapsack/design-system';
 import { CurrentTemplateContext } from '../current-template-context';
 import { useSelector } from '../../../store';
@@ -65,18 +66,15 @@ export const TemplateHeader: React.FC<Props> = ({
           <KsSelect
             label="Status"
             isLabelInline
-            isStatusList
             value={
               status
                 ? {
                     value: status.id,
                     label: status.title,
-                    color: status.color,
                   }
                 : {
                     value: 'error',
                     label: 'Error: No Status Assigned.',
-                    color: 'var(--c-error)',
                   }
             }
             handleChange={handleStatusChange}
@@ -86,6 +84,7 @@ export const TemplateHeader: React.FC<Props> = ({
                   value: s.id,
                   label: s.title,
                   color: s.color,
+                  icon: <StatusIcon status={s} />,
                 };
               }),
             ]}

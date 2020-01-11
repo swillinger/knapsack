@@ -68,24 +68,18 @@
     }
   }
 
-  &__option--has-icon {
+  &__option {
     display: flex;
     align-items: center;
 
-    span {
-      display: inline-block;
-      vertical-align: middle;
-    }
-
-    &__icon {
-      height: var(--space-m);
+    &-icon {
       margin-right: var(--space-xs);
-      svg {
-        width: auto;
-        height: 100%;
-      }
+      width: var(--space-m);
+      display: flex;
+      justify-content: center;
+
       .ks-select--size-s & {
-        height: var(--space-s);
+        width: var(--space-s);
         margin-right: var(--space-xxs);
       }
     }

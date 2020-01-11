@@ -39,6 +39,7 @@
     "@storybook/addon-viewport": "^5.2.5",
     "@storybook/addons": "^5.2.5",
     "@storybook/react": "^5.2.5",
+    "@types/react-select": "^3.0.8",
     "nodemon": "^1.19.4",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.7.2",

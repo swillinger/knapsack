@@ -16,15 +16,13 @@
  */
 
 import React, { useState, useRef } from 'react';
-import { CodeBlock, Icon, KsButton } from '@knapsack/design-system';
+import { CodeBlock } from '@knapsack/design-system';
 import { useHistory } from 'react-router-dom';
 import deepEqual from 'deep-equal';
-import classnames from 'classnames';
 import {
   updateTemplateInfo,
   useDispatch,
   useSelector,
-  setPageDetailsVisibility,
   updateTemplateDemo,
 } from '../../store';
 import MdBlock from '../../components/md-block';
@@ -99,7 +97,7 @@ const TemplateView: React.FC<Props> = ({
       globalAssetSetIds: assetSetsState.globalAssetSetIds,
     }),
   );
-  const { pageDetailsOpen } = useSelector(s => s.ui);
+
   const dispatch = useDispatch();
 
   const { templates } = pattern;
@@ -235,28 +233,6 @@ const TemplateView: React.FC<Props> = ({
   return (
     <CurrentTemplateContext.Provider value={currentTemplateData}>
       <article className="ks-template-view">
-        <div
-          className={classnames({
-            'ks-template-view__page-details-collapse-ctrl': true,
-            'ks-template-view__page-details-collapse-ctrl--collapsed': !pageDetailsOpen,
-          })}
-        >
-          <KsButton
-            onClick={() => {
-              dispatch(
-                setPageDetailsVisibility({
-                  isOpen: !pageDetailsOpen,
-                }),
-              );
-            }}
-          >
-            <span className="ks-template-view__page-details-collapse-ctrl__arrow">
-              <Icon symbol="collapser" />
-            </span>
-            <Icon symbol="settings" />
-          </KsButton>
-        </div>
-
         <div className="ks-template-view__overview-wrapper">
           <TemplateHeader
             assetSets={assetSets}

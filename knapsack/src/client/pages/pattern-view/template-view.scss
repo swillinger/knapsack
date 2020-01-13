@@ -1,30 +1,3 @@
-.ks-template-view__page-details-collapse-ctrl {
-  position: absolute;
-  right: 0;
-  top: var(--space-m);
-  opacity: 1;
-
-  button {
-    // width: calc(var(--space-l) + 2px);
-    height: var(--space-xl);
-    border-radius: var(--space-xxs) 0 0 var(--space-xxs);
-    padding-left: var(--space-xxs);
-    padding-right: var(--space-xs);
-    border-right-width: 0;
-  }
-
-  &__arrow svg {
-    transform: rotate(-90deg);
-    transition: transform 0.3s ease;
-  }
-
-  &--collapsed {
-    .ks-template-view__page-details-collapse-ctrl__arrow svg {
-      transform: rotate(90deg);
-    }
-  }
-}
-
 .ks-template-view__overview-wrapper {
   width: 100%;
   display: flex;

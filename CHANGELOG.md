@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.34](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.33...v2.0.0-beta.34) (2020-01-13)
+
+
+### Bug Fixes
+
+* hide pattern settings button if can't edit ([#354](https://github.com/basaltinc/knapsack/issues/354)) ([ef5e33b](https://github.com/basaltinc/knapsack/commit/ef5e33bc109c7684715274e0f71d35b1bde04cb0))
+
+
+
+
+
 # [2.0.0-beta.33](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.32...v2.0.0-beta.33) (2020-01-08)
 
 

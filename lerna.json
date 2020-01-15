@@ -5,7 +5,7 @@
   "loglevel": "error",
   "command": {
     "version": {
-      "message": "chore: publish %s [skip ci]"
+      "message": "chore: publish %s"
     },
     "publish": {
       "pre-dist-tag": "next"

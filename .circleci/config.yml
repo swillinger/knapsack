@@ -125,7 +125,7 @@ jobs:
           command: |
             cp docs-site/now.json docs-site/build
             npm i -g now
-            if [ "$CIRCLE_BRANCH" = "next" ]; then
+            if [ "$CIRCLE_TAG" ]; then
               now deploy --scope=basalt --prod --token $ZEIT_TOKEN docs-site/build --local-config=./docs-site/build/now.json
             else
               now deploy --scope=basalt --target staging --token $ZEIT_TOKEN docs-site/build --local-config=./docs-site/build/now.json
@@ -184,11 +184,19 @@ jobs:
           at: '~'
       - run: ./scripts/release.sh
 
+# Git Tags: by default Circle CI does not run on tagged commits unless this is set under the job:
+#  filters:
+#    tags:
+#      only: /^v.*/ # only tags that start with `v` - which are all of them
+# When that is there it will ALSO run on branch pushes (aka all the time)
 workflows:
   version: 2
   main:
     jobs:
-      - setup
+      - setup:
+          filters:
+            tags:
+              only: /^v.*/
       - tests:
           requires:
             - setup
@@ -196,6 +204,9 @@ workflows:
           requires:
             - setup
       - deploys:
+          filters:
+            tags:
+              only: /^v.*/
           requires:
             - setup
       - deploy-knapsack

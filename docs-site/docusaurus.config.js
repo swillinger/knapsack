@@ -19,8 +19,9 @@ const docsConfig = {
   // docs folder path relative to website dir.
   path: '../docs',
   // sidebars file relative to website dir.
-  sidebarPath: require.resolve('./sidebar.json'),
-  editUrl: 'https://github.com/basaltinc/knapsack/blob/next/docs-site/',
+  sidebarPath: require.resolve('./sidebar.js'),
+  // editUrl: 'https://knapsack-site-cms.netlify.com/#/edit/pointless-folder-to-cd-out-of',
+  editUrl: 'https://github.com/basaltinc/knapsack/blob/develop/docs-site/',
   include: ['**/*.md', '**/*.mdx'],
   routeBasePath: 'docs',
 };

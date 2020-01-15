@@ -10,6 +10,8 @@ type Props = Partial<Omit<TemplateProps, 'isResizable'>> & {
    */
   patternWidth?: number;
   patternId: string;
+  /** Width and height of thumbnail. Defaults to 120. */
+  thumbnailSize?: number;
 };
 
 /**
@@ -20,6 +22,7 @@ export const TemplateThumbnail: React.FC<Props> = ({
   handleSelection = () => {},
   patternWidth,
   templateId,
+  thumbnailSize = 120,
   ...rest
 }: Props) => {
   const pattern = useSelector(s => s.patternsState.patterns[rest.patternId]);
@@ -42,14 +45,17 @@ export const TemplateThumbnail: React.FC<Props> = ({
       : 400;
 
   return (
-    <div className="ks-template-thumbnail">
+    <div
+      className="ks-template-thumbnail"
+      style={{ width: `${thumbnailSize}px`, height: `${thumbnailSize}px` }}
+    >
       <div
         className="ks-template-thumbnail__template"
         style={{
           width: `${width}px`,
           transform:
-            120 / width < 1
-              ? `${centeringTranslate} scale(${120 / width})`
+            thumbnailSize / width < 1
+              ? `${centeringTranslate} scale(${thumbnailSize / width})`
               : centeringTranslate,
         }}
       >

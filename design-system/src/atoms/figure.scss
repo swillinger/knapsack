@@ -1,0 +1,28 @@
+.ks-figure {
+  display: inline-block;
+  vertical-align: top;
+
+  figure {
+    margin: 0;
+    border: 1px solid var(--c-frame);
+    border-radius: var(--space-xs);
+    overflow: hidden;
+  }
+
+  figcaption {
+    background-color: var(--c-shade);
+    border-top: 1px solid var(--c-frame);
+    padding: var(--space-xs);
+  }
+
+  &--link {
+    figcaption p {
+      color: var(--c-text-link);
+    }
+
+    &:hover figcaption p,
+    &:focus figcaption p {
+      color: var(--c-text-link-hover);
+    }
+  }
+}

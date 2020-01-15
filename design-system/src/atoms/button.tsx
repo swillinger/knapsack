@@ -57,6 +57,8 @@ type Props = {
   icon?: keyof typeof Icons;
   tabIndex?: number;
   className?: string;
+  /** Apply active state, used for certain kinds, primarily Standard buttons inside KsButtonSelectWrapper */
+  active?: boolean;
 };
 
 export const KsButton: React.FC<Props> = ({
@@ -74,6 +76,7 @@ export const KsButton: React.FC<Props> = ({
   emphasis = EMPHASSIS.none,
   icon,
   tabIndex,
+  active = false,
 }: Props) => {
   const classes = cn(
     {
@@ -83,6 +86,7 @@ export const KsButton: React.FC<Props> = ({
       [`ks-btn--emphasis-${emphasis}`]: true,
       'ks-btn--floating': floating,
       'ks-btn--flush': flush,
+      'ks-btn--active': active,
     },
     className,
   );

@@ -15,7 +15,7 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { KsFigure } from '@knapsack/design-system';
 import { BASE_PATHS } from '../../lib/constants';
 import { KnapsackPattern } from '../../schemas/patterns';
 import { TemplateThumbnail } from './template-thumbnail';
@@ -37,8 +37,6 @@ type Props = {
     /**
      * @see {KnapsackPatternStatus}
      */
-    // statusId?: KnapsackPatternStatus['id'];
-    description?: string;
   }[];
 };
 
@@ -47,21 +45,18 @@ export const PatternGrid: React.FC<Props> = ({
 }: // patternStatuses,
 // patternTypes,
 Props) => {
-  const items = patterns.map(({ id, title, description }) => {
+  const items = patterns.map(({ id, title }) => {
     const path = `${BASE_PATHS.PATTERN}/${id}`;
     return (
-      <li className="ks-pattern-grid__list-item" key={id}>
-        <Link to={path}>
-          <header className="ks-pattern-grid__list-item__header">
-            <h3>{title}</h3>
-          </header>
-          <div className="ks-pattern-grid__list-item__description">
-            {description}
-          </div>
-          <TemplateThumbnail patternId={id} />
-        </Link>
-      </li>
+      <div className="ks-pattern-grid__item" key={id}>
+        <KsFigure
+          linkPath={path}
+          figcaption={<p>{title}</p>}
+          figure={<TemplateThumbnail patternId={id} thumbnailSize={240} />}
+          width={240}
+        />
+      </div>
     );
   });
-  return <ul className="ks-pattern-grid__list">{items}</ul>;
+  return <div className="ks-pattern-grid">{items}</div>;
 };

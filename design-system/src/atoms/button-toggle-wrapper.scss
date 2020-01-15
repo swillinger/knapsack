@@ -1,0 +1,20 @@
+.ks-button-toggle-wrapper {
+  button {
+    height: var(--space-xl);
+    border-radius: 0;
+    margin-right: -1px;
+  }
+
+  & > button:first-child,
+  & > *:first-child button {
+    border-top-left-radius: var(--radius-m);
+    border-bottom-left-radius: var(--radius-m);
+  }
+
+  & > button:last-child,
+  & > *:last-child button {
+    border-top-right-radius: var(--radius-m);
+    border-bottom-right-radius: var(--radius-m);
+    margin-right: 0;
+  }
+}

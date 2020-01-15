@@ -33,6 +33,12 @@
       background-color: var(--c-button-standard-active);
     }
 
+    &.ks-btn--active {
+      color: var(--c-text-inverse);
+      background-color: var(--c-active);
+      border-color: var(--c-active);
+    }
+
     &.ks-btn--emphasis-danger {
       color: var(--c-danger);
     }

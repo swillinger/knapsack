@@ -1,4 +1,4 @@
-// See https://docusaurus.io/docs/site-config for all the possible
+// See https://v2.docusaurus.io/docs/site-config for all the possible
 // site configuration options.
 
 const navLinks = [
@@ -19,11 +19,35 @@ const docsConfig = {
   // docs folder path relative to website dir.
   path: '../docs',
   // sidebars file relative to website dir.
-  sidebarPath: require.resolve('./sidebar.js'),
+  sidebarPath: require.resolve('./sidebar.json'),
   editUrl: 'https://github.com/basaltinc/knapsack/blob/next/docs-site/',
   include: ['**/*.md', '**/*.mdx'],
   routeBasePath: 'docs',
 };
+
+/**
+ * @type {{ href?: string, label?: string, to?: string, html?: string }[]}
+ * see "node_modules/@docusaurus/theme-classic/src/theme/Footer/index.js"
+ * */
+const footerLinks1 = [
+  {
+    href: 'https://demo-bootstrap.knapsack.basalt.io',
+    label: 'Knaspack Bootstrap Example Site',
+  },
+  {
+    href: 'https://github.com/basaltinc/knapsack',
+    label: 'GitHub repo',
+  },
+  {
+    href: 'https://basalt.io',
+    label: 'Basalt',
+  },
+  {
+    // edit config for CMS here: https://github.com/basaltinc/knapsack-site-cms/blob/master/config.yml
+    href: 'https://knapsack-site-cms.netlify.com',
+    label: 'Docs Site CMS',
+  },
+];
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 const siteConfig = {
@@ -31,7 +55,7 @@ const siteConfig = {
   url: 'https://knapsack.basalt.io',
   tagline: 'By Basalt',
   baseUrl: '/', // Base URL for your project */
-  favicon: 'img/favicon.ico',
+  favicon: 'assets/favicon.ico',
   customFields: {
     foo: 'bar',
   },
@@ -51,12 +75,18 @@ const siteConfig = {
         href: 'https://opensource.facebook.com/',
       },
       copyright: `Copyright © ${new Date().getFullYear()} Basalt`,
+      links: [
+        {
+          title: 'Helpful Links',
+          items: footerLinks1,
+        },
+      ],
     },
-    image: 'img/docusaurus.png',
+    image: 'assets/docusaurus.png',
     sidebarCollapsible: false,
-    ogImage: 'img/knapsack.png',
-    twitterImage: 'img/knapsack.png',
-    footerIcon: 'img/favicon.ico',
+    ogImage: 'assets/knapsack.png',
+    twitterImage: 'assets/knapsack.png',
+    footerIcon: 'assets/favicon.ico',
     // Optionally customize the look and feel by following the DocSearch documentation: https://community.algolia.com/docsearch/styling.html
     // You can also check your configuration in our GitHub repo: https://github.com/algolia/docsearch-configs/blob/master/configs/knapsack.json - Please open a pull request if want to leverage your configuration!
     algolia: {

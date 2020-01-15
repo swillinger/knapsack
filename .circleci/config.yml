@@ -125,7 +125,7 @@ jobs:
           command: |
             cp docs-site/now.json docs-site/build
             npm i -g now
-            if [ "$CIRCLE_TAG" ]; then
+            if [ "$CIRCLE_TAG" ] || [ "$CIRCLE_BRANCH" == "next" ]; then
               now deploy --scope=basalt --prod --token $ZEIT_TOKEN docs-site/build --local-config=./docs-site/build/now.json
             else
               now deploy --scope=basalt --target staging --token $ZEIT_TOKEN docs-site/build --local-config=./docs-site/build/now.json

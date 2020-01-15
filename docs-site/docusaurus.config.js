@@ -21,7 +21,7 @@ const docsConfig = {
   // sidebars file relative to website dir.
   sidebarPath: require.resolve('./sidebar.js'),
   // editUrl: 'https://knapsack-site-cms.netlify.com/#/edit/pointless-folder-to-cd-out-of',
-  editUrl: 'https://github.com/basaltinc/knapsack/blob/develop/docs-site/',
+  editUrl: 'https://github.com/basaltinc/knapsack/blob/next/docs-site/',
   include: ['**/*.md', '**/*.mdx'],
   routeBasePath: 'docs',
 };

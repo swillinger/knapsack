@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.35](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.34...v2.0.0-beta.35) (2020-01-15)
+
+
+### Bug Fixes
+
+* svg set to full width ([9715765](https://github.com/basaltinc/knapsack/commit/9715765962ab154b2aaf92a3b3b0e1472f50d6cf))
+
+
+### Features
+
+* basic styles for pattern list page ([#366](https://github.com/basaltinc/knapsack/issues/366)) ([0f9af7f](https://github.com/basaltinc/knapsack/commit/0f9af7fb6c92ec68bbcd57d767e9d088cf06eef2))
+* nicer styled patterns list grid ([#373](https://github.com/basaltinc/knapsack/issues/373)) ([9ee9474](https://github.com/basaltinc/knapsack/commit/9ee9474fca0de9f4506624739ed596df0dc9bb5d))
+
+
+
+
+
 # [2.0.0-beta.33](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.32...v2.0.0-beta.33) (2020-01-08)
 
 

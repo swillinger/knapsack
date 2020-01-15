@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/docs-site",
   "private": true,
-  "version": "2.0.0-beta.34",
+  "version": "2.0.0-beta.35",
   "scripts": {
     "build": "docusaurus build",
     "start": "docusaurus start",
@@ -11,8 +11,8 @@
   "devDependencies": {
     "@docusaurus/core": "^2.0.0-alpha.40",
     "@docusaurus/preset-classic": "^2.0.0-alpha.40",
-    "@knapsack/app": "^2.0.0-beta.34",
-    "@knapsack/design-system": "^2.0.0-beta.33",
+    "@knapsack/app": "^2.0.0-beta.35",
+    "@knapsack/design-system": "^2.0.0-beta.35",
     "node-sass": "^4.0.0",
     "npm-run-all": "^4.0.0"
   }

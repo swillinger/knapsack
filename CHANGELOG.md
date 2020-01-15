@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.35](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.34...v2.0.0-beta.35) (2020-01-15)
+
+
+### Bug Fixes
+
+* **renderer-react:** improve infer spec around enums ([356d2b9](https://github.com/basaltinc/knapsack/commit/356d2b9ab08f303fe1ae76b7d7db117a7dfceb53))
+* adjust save to server status message timeout ([8a1c849](https://github.com/basaltinc/knapsack/commit/8a1c849b8a1e5ba2556816f154cf7295190213e2))
+* better resolution of node path templates ([2249378](https://github.com/basaltinc/knapsack/commit/224937862cef21e85946857fdeb607d453c3606c))
+* ensure pattern settings re-renders when changing language on same pattern ([260474c](https://github.com/basaltinc/knapsack/commit/260474c35c0add5039c62c43c60c77987362eab9))
+* prevent function field error from being under other elements ([79ca4e7](https://github.com/basaltinc/knapsack/commit/79ca4e786a79a2633069d40d48486be0d960a2d2))
+* stale state when upating template language select ([69c0795](https://github.com/basaltinc/knapsack/commit/69c07955e8c4600b582ae8700aa3c9535d179a7c))
+* svg set to full width ([9715765](https://github.com/basaltinc/knapsack/commit/9715765962ab154b2aaf92a3b3b0e1472f50d6cf))
+* view pattern link in slots form opens in same page ([a45d90f](https://github.com/basaltinc/knapsack/commit/a45d90f359372484d4e6fa007bfbc2f24ae1933c))
+
+
+### Features
+
+* basic styles for pattern list page ([#366](https://github.com/basaltinc/knapsack/issues/366)) ([0f9af7f](https://github.com/basaltinc/knapsack/commit/0f9af7fb6c92ec68bbcd57d767e9d088cf06eef2))
+* nicer styled patterns list grid ([#373](https://github.com/basaltinc/knapsack/issues/373)) ([9ee9474](https://github.com/basaltinc/knapsack/commit/9ee9474fca0de9f4506624739ed596df0dc9bb5d))
+* template render has better performance and nicer loader ([241b95c](https://github.com/basaltinc/knapsack/commit/241b95c42268c701df7300a3b0f4c279d8132744))
+
+
+
+
+
 # [2.0.0-beta.34](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.33...v2.0.0-beta.34) (2020-01-13)
 
 

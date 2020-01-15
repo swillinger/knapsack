@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.35](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.34...v2.0.0-beta.35) (2020-01-15)
+
+
+### Bug Fixes
+
+* **renderer-react:** improve infer spec around enums ([356d2b9](https://github.com/basaltinc/knapsack/commit/356d2b9ab08f303fe1ae76b7d7db117a7dfceb53))
+
+
+
+
+
 # [2.0.0-beta.30](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.29...v2.0.0-beta.30) (2020-01-07)
 
 

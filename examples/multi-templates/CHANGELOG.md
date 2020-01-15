@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.34](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.33...v2.0.0-beta.34) (2020-01-13)
+
+**Note:** Version bump only for package @knapsack/example-multi-templates
+
+
+
+
+
 # [2.0.0-beta.33](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.32...v2.0.0-beta.33) (2020-01-08)
 
 **Note:** Version bump only for package @knapsack/example-multi-templates

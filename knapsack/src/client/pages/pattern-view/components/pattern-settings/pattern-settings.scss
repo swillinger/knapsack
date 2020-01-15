@@ -1,19 +1,50 @@
 .ks-pattern-settings {
-  --text-field-size: var(--space-l);
-  --font-base-size: var(--font-size-s);
   height: 100%;
-  overflow: auto;
-  padding: var(--space-m);
 
-  &:after {
-    // create bottom padding
-    content: " ";
-    display: block;
+  &__inner {
+    --text-field-size: var(--space-l);
+    --font-base-size: var(--font-size-s);
     width: 100%;
-    height: var(--space-m);
+    height: 100%;
+    overflow: auto;
+    padding: var(--space-m);
+
+    &:after {
+      // create bottom padding
+      content: " ";
+      display: block;
+      width: 100%;
+      height: var(--space-m);
+    }
   }
 
   .ks-text-field__wrapper > input {
     --text-field-size: var(--space-l);
+  }
+}
+
+.ks-pattern-settings__page-details-collapse-ctrl {
+  position: absolute;
+  right: 100%;
+  top: var(--space-m);
+  opacity: 1;
+
+  button {
+    height: var(--space-xl);
+    border-radius: var(--space-xxs) 0 0 var(--space-xxs);
+    padding-left: var(--space-xxs);
+    padding-right: var(--space-xs);
+    white-space: nowrap;
+  }
+
+  &__arrow svg {
+    transform: rotate(-90deg);
+    transition: transform 0.3s ease;
+  }
+
+  &--collapsed {
+    .ks-pattern-settings__page-details-collapse-ctrl__arrow svg {
+      transform: rotate(90deg);
+    }
   }
 }

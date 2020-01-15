@@ -1,5 +1,6 @@
 /* eslint-disable no-else-return */
 import React, { useState, useCallback, useRef, useMemo } from 'react';
+import classnames from 'classnames';
 import {
   isArrayOfObjectsProp,
   isFunctionProp,
@@ -17,7 +18,7 @@ import {
   PropTypeDataBase,
   StringPropTypeData,
 } from '@knapsack/core/types';
-import { KsButton, KsButtonGroup } from '@knapsack/design-system';
+import { KsButton, KsButtonGroup, Icon } from '@knapsack/design-system';
 import produce from 'immer';
 import shortid from 'shortid';
 import arrayMove from 'array-move';
@@ -28,6 +29,7 @@ import {
   useSelector,
   updateTemplateInfo,
   deletePattern,
+  setPageDetailsVisibility,
 } from '../../../../store';
 import { KsTemplateSpec, KsSlotInfo } from '../../../../../schemas/patterns';
 import { SpecItemTypes, SlotData } from './shared';
@@ -73,6 +75,7 @@ export const KsPatternSettings: React.FC<Props> = ({
   activeTemplateId,
 }: Props) => {
   const dispatch = useDispatch();
+  const { pageDetailsOpen } = useSelector(s => s.ui);
 
   const { templates } = pattern;
   const hasTemplate = templates?.length > 0;
@@ -194,217 +197,241 @@ export const KsPatternSettings: React.FC<Props> = ({
 
   return (
     <div className="ks-pattern-settings">
-      <h3 className="ks-pattern-settings__title">Pattern Settings</h3>
-      {errors.length > 0 && (
-        <div
-          className="ks-pattern-settings__errors ks-u-shade-bg"
-          style={{
-            borderRadius: 'var(--radius-l)',
-            padding: 'var(--space-s)',
-            color: 'var(--c-danger)',
-          }}
-        >
-          <p>
-            <strong>Errors</strong>
-          </p>
-          <ul>
-            {errors.map(error => (
-              <li key={error}>{error}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-      <div className="ks-pattern-settings__edit-template ks-u-margin-top--s">
-        <EditTemplateDemo
-          btnSize="s"
-          data={{
-            path: template.path,
-            alias: template.alias,
-          }}
-          handleSubmit={({ path, alias }) => {
-            dispatch(
-              updateTemplateInfo({
-                patternId: pattern.id,
-                templateId: template.id,
-                template: {
-                  path,
-                  alias,
-                },
-              }),
-            );
-          }}
-          handleDelete={() => {
-            dispatch(
-              deletePattern({
-                patternId: pattern.id,
-              }),
-            );
-          }}
-        />
-      </div>
-      <h4 className="ks-pattern-settings__sub-title">Templates</h4>
-      <KsButtonGroup isGapless={false}>
+      <div
+        className={classnames({
+          'ks-pattern-settings__page-details-collapse-ctrl': true,
+          'ks-pattern-settings__page-details-collapse-ctrl--collapsed': !pageDetailsOpen,
+        })}
+      >
         <KsButton
-          kind="cancel"
-          size="s"
-          disabled={!hasChanges}
-          handleTrigger={() => {
-            setProps(propList);
-            setSlots(slotList);
+          onClick={() => {
+            dispatch(
+              setPageDetailsVisibility({
+                isOpen: !pageDetailsOpen,
+              }),
+            );
           }}
         >
-          Cancel
+          <span className="ks-pattern-settings__page-details-collapse-ctrl__arrow">
+            <Icon symbol="collapser" />
+          </span>
+          <Icon symbol="settings" />
         </KsButton>
-        <KsButton
-          kind="primary"
-          size="s"
-          disabled={!hasChanges}
-          handleTrigger={() => {
-            const newSlots = convertSlotData(slots);
-            const newProps = convertPropData(props);
-            const newSpec = {
-              slots: newSlots,
-              props: newProps,
-            };
-            const results = validateSpec(newSpec);
-            if (results.ok) {
+      </div>
+
+      <div className="ks-pattern-settings__inner">
+        <h3 className="ks-pattern-settings__title">Pattern Settings</h3>
+        {errors.length > 0 && (
+          <div
+            className="ks-pattern-settings__errors ks-u-shade-bg"
+            style={{
+              borderRadius: 'var(--radius-l)',
+              padding: 'var(--space-s)',
+              color: 'var(--c-danger)',
+            }}
+          >
+            <p>
+              <strong>Errors</strong>
+            </p>
+            <ul>
+              {errors.map(error => (
+                <li key={error}>{error}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <div className="ks-pattern-settings__edit-template ks-u-margin-top--s">
+          <EditTemplateDemo
+            btnSize="s"
+            data={{
+              path: template.path,
+              alias: template.alias,
+            }}
+            handleSubmit={({ path, alias }) => {
               dispatch(
-                updateSpec({
+                updateTemplateInfo({
                   patternId: pattern.id,
                   templateId: template.id,
-                  spec: newSpec,
+                  template: {
+                    path,
+                    alias,
+                  },
                 }),
               );
-            } else {
-              setErrors(results.message.split('\n'));
-            }
-          }}
-        >
-          Save
-        </KsButton>
-      </KsButtonGroup>
-      <KsSpecItems
-        type={SpecItemTypes.Prop}
-        handleAdd={() => {
-          setProps(curProps => {
-            const id = curProps.some(curProp => curProp.id === 'newProp')
-              ? shortid.generate()
-              : 'newProp';
-            const newProp: StringPropTypeData = {
-              id,
-              type: PropTypeNames.string,
-              isRequired: false,
-              data: {
-                type: 'string',
-              },
-            };
-
-            return [...curProps, newProp];
-          });
-        }}
-      >
-        {props.map((prop, index) => {
-          return (
-            <KsSpecItem
-              key={prop.id}
-              index={index}
-              id={prop.id}
-              moveItem={moveProp}
-              deleteItem={deleteProp}
-              type={SpecItemTypes.Prop}
-              // isInitiallyOpen={index === 0}
-              handleNewId={newId => {
-                setProps(curProps =>
-                  produce(curProps, draft => {
-                    draft = draft.map((curProp, i) => {
-                      if (i !== index) return curProp;
-                      curProp.id = removeSpaces(newId);
-                      return curProp;
-                    });
+            }}
+            handleDelete={() => {
+              dispatch(
+                deletePattern({
+                  patternId: pattern.id,
+                }),
+              );
+            }}
+          />
+        </div>
+        <h4 className="ks-pattern-settings__sub-title">Templates</h4>
+        <KsButtonGroup isGapless={false}>
+          <KsButton
+            kind="cancel"
+            size="s"
+            disabled={!hasChanges}
+            handleTrigger={() => {
+              setProps(propList);
+              setSlots(slotList);
+            }}
+          >
+            Cancel
+          </KsButton>
+          <KsButton
+            kind="primary"
+            size="s"
+            disabled={!hasChanges}
+            handleTrigger={() => {
+              const newSlots = convertSlotData(slots);
+              const newProps = convertPropData(props);
+              const newSpec = {
+                slots: newSlots,
+                props: newProps,
+              };
+              const results = validateSpec(newSpec);
+              if (results.ok) {
+                dispatch(
+                  updateSpec({
+                    patternId: pattern.id,
+                    templateId: template.id,
+                    spec: newSpec,
                   }),
                 );
-              }}
-            >
-              <KsPropEditor
-                prop={prop}
-                handleChange={newPropData => {
-                  setErrors([]);
-                  // `handleChange` is responsible for all merging of data; we assume nothing in this function
+              } else {
+                setErrors(results.message.split('\n'));
+              }
+            }}
+          >
+            Save
+          </KsButton>
+        </KsButtonGroup>
+        <KsSpecItems
+          type={SpecItemTypes.Prop}
+          handleAdd={() => {
+            setProps(curProps => {
+              const id = curProps.some(curProp => curProp.id === 'newProp')
+                ? shortid.generate()
+                : 'newProp';
+              const newProp: StringPropTypeData = {
+                id,
+                type: PropTypeNames.string,
+                isRequired: false,
+                data: {
+                  type: 'string',
+                },
+              };
+
+              return [...curProps, newProp];
+            });
+          }}
+        >
+          {props.map((prop, index) => {
+            return (
+              <KsSpecItem
+                key={prop.id}
+                index={index}
+                id={prop.id}
+                moveItem={moveProp}
+                deleteItem={deleteProp}
+                type={SpecItemTypes.Prop}
+                // isInitiallyOpen={index === 0}
+                handleNewId={newId => {
                   setProps(curProps =>
-                    curProps.map((curProp, i) => {
-                      if (i !== index) return curProp;
-                      return newPropData;
+                    produce(curProps, draft => {
+                      draft = draft.map((curProp, i) => {
+                        if (i !== index) return curProp;
+                        curProp.id = removeSpaces(newId);
+                        return curProp;
+                      });
                     }),
                   );
                 }}
-                key={prop.type}
-              />
-            </KsSpecItem>
-          );
-        })}
-      </KsSpecItems>
-      <hr />
-      <KsSpecItems
-        type={SpecItemTypes.Slot}
-        handleAdd={() => {
-          setSlots(curSlots => {
-            const id = curSlots.some(curSlot => curSlot.id === 'newSlot')
-              ? shortid.generate()
-              : 'newSlot';
-            return [
-              ...curSlots,
-              {
-                id,
-                data: { title: 'New Slot' },
-              },
-            ];
-          });
-        }}
-      >
-        {slots.map((slot, index) => {
-          return (
-            <KsSpecItem
-              key={slot.id}
-              index={index}
-              id={slot.id}
-              moveItem={moveSlot}
-              deleteItem={deleteSlot}
-              type={SpecItemTypes.Slot}
-              // isInitiallyOpen={index === 0}
-              handleNewId={newId => {
-                setSlots(curSlots =>
-                  curSlots.map((curSlot, i) => {
-                    if (i !== index) return curSlot;
-                    return {
-                      ...curSlot,
-                      data: {
-                        ...curSlot.data,
-                        title: newId, // temp convience
-                      },
-                      id: removeSpaces(newId),
-                    };
-                  }),
-                );
-              }}
-            >
-              <KsSlotEditor
-                slot={slot}
-                handleChange={newSlotData => {
-                  setErrors([]);
-
-                  // `handleChange` is responsible for all merging of data; we assume nothing in this function
+              >
+                <KsPropEditor
+                  prop={prop}
+                  handleChange={newPropData => {
+                    setErrors([]);
+                    // `handleChange` is responsible for all merging of data; we assume nothing in this function
+                    setProps(curProps =>
+                      curProps.map((curProp, i) => {
+                        if (i !== index) return curProp;
+                        return newPropData;
+                      }),
+                    );
+                  }}
+                  key={prop.type}
+                />
+              </KsSpecItem>
+            );
+          })}
+        </KsSpecItems>
+        <hr />
+        <KsSpecItems
+          type={SpecItemTypes.Slot}
+          handleAdd={() => {
+            setSlots(curSlots => {
+              const id = curSlots.some(curSlot => curSlot.id === 'newSlot')
+                ? shortid.generate()
+                : 'newSlot';
+              return [
+                ...curSlots,
+                {
+                  id,
+                  data: { title: 'New Slot' },
+                },
+              ];
+            });
+          }}
+        >
+          {slots.map((slot, index) => {
+            return (
+              <KsSpecItem
+                key={slot.id}
+                index={index}
+                id={slot.id}
+                moveItem={moveSlot}
+                deleteItem={deleteSlot}
+                type={SpecItemTypes.Slot}
+                // isInitiallyOpen={index === 0}
+                handleNewId={newId => {
                   setSlots(curSlots =>
                     curSlots.map((curSlot, i) => {
                       if (i !== index) return curSlot;
-                      return newSlotData;
+                      return {
+                        ...curSlot,
+                        data: {
+                          ...curSlot.data,
+                          title: newId, // temp convience
+                        },
+                        id: removeSpaces(newId),
+                      };
                     }),
                   );
                 }}
-              />
-            </KsSpecItem>
-          );
-        })}
-      </KsSpecItems>
+              >
+                <KsSlotEditor
+                  slot={slot}
+                  handleChange={newSlotData => {
+                    setErrors([]);
+
+                    // `handleChange` is responsible for all merging of data; we assume nothing in this function
+                    setSlots(curSlots =>
+                      curSlots.map((curSlot, i) => {
+                        if (i !== index) return curSlot;
+                        return newSlotData;
+                      }),
+                    );
+                  }}
+                />
+              </KsSpecItem>
+            );
+          })}
+        </KsSpecItems>
+      </div>
     </div>
   );
 };

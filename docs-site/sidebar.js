@@ -17,7 +17,8 @@ module.exports = {
     'Design Tokens': ['design-tokens'],
     Demos: ['demos'],
     Production: ['config', 'deployment'],
+    // We have a simple "sidebar-more.json" so the CMS can easily add to it, since it can't handle the more complicated above structure
     // eslint-disable-next-line global-require
-    'More Info': require('./sidebar-more.json'),
+    ...require('./sidebar-more.json'),
   },
 };

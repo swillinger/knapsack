@@ -164,6 +164,8 @@ jobs:
             if [ "$CIRCLE_BRANCH" = "next" ]; then
               now alias --local-config=./examples/bootstrap/now.json --scope=basalt --token $ZEIT_TOKEN
             fi
+            echo 'Installing "node-fetch" globally since the below scripts require it and we have not installed repo deps yet'
+            npm i -g node-fetch
             DEPLOY_URL=`./scripts/get-latest-deploy.js 'knapsack-demo-bootstrap'`
             echo "Adding GitHub check for DEPLOY_URL: $DEPLOY_URL"
             REPO_SLUG=basaltinc/knapsack GITHUB_TOKEN=$GH_TOKEN npx ci-utils gh-status --state success --url $DEPLOY_URL --description 'Bootstrap Deploy' --context 'deploy/example-bootstrap'

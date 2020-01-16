@@ -23,7 +23,7 @@ function stringifyDeep(obj: {}, depth = 5): string {
 
 export function error(msg: string, extra?: any, prefix = ''): void {
   if (extra) {
-    log.error(prefix, msg);
+    log.error(prefix, msg, stringifyDeep(extra));
   } else {
     log.error(prefix, msg);
   }

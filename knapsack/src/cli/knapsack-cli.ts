@@ -54,7 +54,12 @@ const { patterns, config, assetSets } = ksBrain;
 program.command('serve').action(async () => {
   const meta = await initAll(ksBrain);
   log.info('Serving...');
-  await serve({ meta });
+  try {
+    await serve({ meta });
+  } catch (e) {
+    log.error('Knapsack serve error', e);
+    process.exit(1);
+  }
 });
 
 program.command('build').action(async () => {
@@ -119,7 +124,6 @@ program.command('start').action(async () => {
       });
     },
   );
-
   return Promise.all([
     // patterns.watch(), // @todo restore
     assetSets.watch(),

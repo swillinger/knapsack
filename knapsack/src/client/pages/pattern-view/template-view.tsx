@@ -259,6 +259,7 @@ const TemplateView: React.FC<Props> = ({
           <KsDemoStage
             demoSize={demoSize}
             isFormVisible={showSchemaForm}
+            key={demo.id}
             // codeBlock={codeBlock}
             setTemplateInfo={info => {
               if (!deepEqual(info, templateInfo)) {

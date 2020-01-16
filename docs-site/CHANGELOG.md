@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.37](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.36...v2.0.0-beta.37) (2020-01-16)
+
+
+### Bug Fixes
+
+* only publish non-private packages ([7bda3b0](https://github.com/basaltinc/knapsack/commit/7bda3b0977a1516dbb36d68617334f78441e9f03))
+
+
+
+
+
 # [2.0.0-beta.36](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.35...v2.0.0-beta.36) (2020-01-15)
 
 **Note:** Version bump only for package @knapsack/docs-site

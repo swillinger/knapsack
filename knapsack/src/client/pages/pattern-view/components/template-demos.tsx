@@ -257,7 +257,9 @@ const KsTemplateDemo: React.FC<Props> = ({ index, demo }: Props) => {
 };
 
 export const KsTemplateDemos: React.FC = () => {
-  const { demos, patternId, templateId } = useContext(CurrentTemplateContext);
+  const { demos, patternId, templateId, isLocalDev } = useContext(
+    CurrentTemplateContext,
+  );
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -271,29 +273,31 @@ export const KsTemplateDemos: React.FC = () => {
           <KsTemplateDemo index={i} demo={demo} key={demo.id} />
         ))}
         <div className="ks-template-demos__item ks-template-demos__item--btns">
-          <KsPopover
-            content={
-              <EditTemplateDemo
-                maxWidth={360}
-                handleSubmit={({ path, alias }) => {
-                  dispatch(
-                    addTemplateTemplateDemo({
-                      alias,
-                      path,
-                      patternId,
-                      templateId,
-                    }),
-                  );
-                  // @todo close
-                }}
-              />
-            }
-            trigger="click"
-          >
-            <KsButton kind="standard" icon="add" size="s">
-              Template Demo
-            </KsButton>
-          </KsPopover>
+          {isLocalDev && (
+            <KsPopover
+              content={
+                <EditTemplateDemo
+                  maxWidth={360}
+                  handleSubmit={({ path, alias }) => {
+                    dispatch(
+                      addTemplateTemplateDemo({
+                        alias,
+                        path,
+                        patternId,
+                        templateId,
+                      }),
+                    );
+                    // @todo close
+                  }}
+                />
+              }
+              trigger="click"
+            >
+              <KsButton kind="standard" icon="add" size="s">
+                Template Demo
+              </KsButton>
+            </KsPopover>
+          )}
 
           <KsButton
             size="s"

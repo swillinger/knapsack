@@ -15,7 +15,6 @@ import {
 } from '../../../../schemas/patterns';
 import { InlineEditText } from '../../../components/inline-edit';
 import { updateTemplateDemo, useDispatch } from '../../../store';
-import { Tabs } from '../../../components/tabs';
 import { KsSlotsForm } from './slots-form';
 import './demo-stage.scss';
 import ErrorCatcher from '../../../utils/error-catcher';
@@ -85,6 +84,8 @@ export const KsDemoStage: React.FC<Props> = ({
     isDataDemo(demo) ? demo?.data?.props ?? {} : {},
     handlePropsChange,
   );
+
+  const hasSlots = Object.keys(spec?.slots || {}).length > 0;
 
   const classes = cn(
     'ks-demo-stage',
@@ -180,50 +181,34 @@ export const KsDemoStage: React.FC<Props> = ({
                 />
               </p>
             </header>
-            <Tabs
-              panes={[
-                {
-                  menuItem: 'Props',
-                  render: () => {
-                    return (
-                      <>
-                        <ErrorCatcher>
-                          <SchemaForm
-                            schema={spec.props}
-                            formData={props}
-                            onChange={({ formData }) => {
-                              setProps(formData);
-                              // handlePropsChange(formData);
-                            }}
-                            customFields={{ FunctionField }}
-                          />
-                        </ErrorCatcher>
-                      </>
-                    );
-                  },
-                },
-                Object.keys(spec?.slots || {})?.length > 0
-                  ? {
-                      menuItem: 'Slots',
-                      render: () => {
-                        if (!isDataDemo(demo)) return;
-                        return (
-                          <ErrorCatcher>
-                            <KsSlotsForm
-                              slotsData={demo.data.slots}
-                              slotsSpec={spec.slots}
-                              templateLanguageId={template.templateLanguageId}
-                              handleData={slotsData => {
-                                handleSlotsChange(slotsData);
-                              }}
-                            />
-                          </ErrorCatcher>
-                        );
-                      },
-                    }
-                  : null,
-              ].filter(Boolean)}
-            />
+            <div className="ks-demo-stage__form__content">
+              <ErrorCatcher>
+                <h4>Props</h4>
+                <SchemaForm
+                  schema={spec.props}
+                  formData={props}
+                  onChange={({ formData }) => {
+                    setProps(formData);
+                    // handlePropsChange(formData);
+                  }}
+                  customFields={{ FunctionField }}
+                />
+              </ErrorCatcher>
+
+              {hasSlots && (
+                <ErrorCatcher>
+                  <h4>Slots</h4>
+                  <KsSlotsForm
+                    slotsData={demo.data.slots}
+                    slotsSpec={spec.slots}
+                    templateLanguageId={template.templateLanguageId}
+                    handleData={slotsData => {
+                      handleSlotsChange(slotsData);
+                    }}
+                  />
+                </ErrorCatcher>
+              )}
+            </div>
             <footer className="ks-demo-stage__footer ks-u-margin-top--m">
               <KsButton
                 size="s"

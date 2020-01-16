@@ -53,7 +53,7 @@
                 {
                   "patternId": "button",
                   "templateId": "react",
-                  "demoId": "secondary"
+                  "demoId": "S0OaiJI0"
                 }
               ]
             },
@@ -152,9 +152,37 @@
               "imgAlt": "Nature Picture"
             }
           }
+        },
+        "Jfog2VME": {
+          "id": "Jfog2VME",
+          "title": "Confirmation Card2",
+          "type": "data",
+          "data": {
+            "slots": {
+              "children": [
+                {
+                  "patternId": "button",
+                  "templateId": "react",
+                  "demoId": "S0OaiJI0"
+                }
+              ]
+            },
+            "props": {
+              "textAlign": "center",
+              "cardTitle": "Thanks!",
+              "imgAlt": "Nature Picture"
+            }
+          }
         }
       },
-      "demos": ["primary", "oJ7Sy5zh", "1Rbqal5n", "kq6_gva2", "guoWqGd1"]
+      "demos": [
+        "primary",
+        "oJ7Sy5zh",
+        "1Rbqal5n",
+        "kq6_gva2",
+        "guoWqGd1",
+        "Jfog2VME"
+      ]
     },
     {
       "title": "Web Component",

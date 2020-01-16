@@ -33,27 +33,33 @@
       "parentId": "components-asdf"
     },
     {
-      "id": "/pattern/button",
-      "name": "Button",
-      "path": "/pattern/button",
-      "parentId": "components-asdf"
-    },
-    {
       "id": "/pattern/card",
       "name": "Card",
       "path": "/pattern/card/",
       "parentId": "components-asdf"
     },
     {
-      "id": "card-grid",
-      "name": "Card Grid",
-      "path": "/pattern/card-grid",
-      "parentId": "components-asdf"
+      "id": "/pattern/button",
+      "name": "Button",
+      "path": "/pattern/button",
+      "parentId": "/pattern/card"
+    },
+    {
+      "id": "/pages/colors",
+      "name": "Colors",
+      "path": "/pages/colors",
+      "parentId": "/pattern/card"
     },
     {
       "id": "jumbotron",
       "name": "Jumbotron",
       "path": "/pattern/jumbotron",
+      "parentId": "/pattern/card"
+    },
+    {
+      "id": "card-grid",
+      "name": "Card Grid",
+      "path": "/pattern/card-grid",
       "parentId": "components-asdf"
     },
     {
@@ -85,12 +91,6 @@
       "name": "Design Tokens",
       "path": "",
       "parentId": "root"
-    },
-    {
-      "id": "/pages/colors",
-      "name": "Colors",
-      "path": "/pages/colors",
-      "parentId": "design-tokens"
     },
     {
       "id": "/pages/breakpoints",

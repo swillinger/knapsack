@@ -90,7 +90,7 @@
               "size": "md",
               "disabled": false,
               "outlined": false,
-              "handleClick": "() => alert('hi')"
+              "handleClick": "() => alert('hello')"
             }
           }
         },
@@ -123,9 +123,25 @@
             },
             "slots": { "children": ["Cancel"] }
           }
+        },
+        "S0OaiJI0": {
+          "id": "S0OaiJI0",
+          "type": "data",
+          "title": "Dark & Huge",
+          "description": "Here is how what to use for the main call to action, try to limit these per page.",
+          "data": {
+            "slots": { "children": ["Hello!"] },
+            "props": {
+              "type": "dark",
+              "size": "lg",
+              "disabled": false,
+              "outlined": false,
+              "handleClick": "() => alert('hello')"
+            }
+          }
         }
       },
-      "demos": ["primary", "secondary", "Ib85UZzPs"]
+      "demos": ["primary", "secondary", "S0OaiJI0", "Ib85UZzPs"]
     },
     {
       "title": "Twig",
@@ -309,7 +325,8 @@
           }
         }
       },
-      "demos": ["main", "Nayeue1b", "asdf"]
+      "demos": ["main", "Nayeue1b", "asdf"],
+      "statusId": "needs-design"
     },
     {
       "title": "Bootstrap - HTML",

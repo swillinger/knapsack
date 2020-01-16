@@ -102,9 +102,18 @@ export async function getUsage(data: {
     }
   });
 
-  const extraAttributes: string[] = extraProps.map(
-    ({ key, value }) => `${key}={${value}}`,
-  );
+  const extraAttributes: string[] = [];
+  const slotProps: { [key: string]: string[] } = {};
+
+  extraProps.forEach(({ key, value }) => {
+    slotProps[key] = slotProps[key] ?? [];
+    slotProps[key].push(value);
+  });
+
+  Object.entries(slotProps).forEach(([key, values]) => {
+    const value = `<>${values.join('\n')}</>`;
+    extraAttributes.push(`${key}={${value}}`);
+  });
 
   const result = await renderUsageTemplate({
     templateName,

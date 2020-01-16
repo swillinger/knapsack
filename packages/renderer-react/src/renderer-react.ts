@@ -300,7 +300,14 @@ ${ksImportCode}
             await Promise.all(
               slotItems.map(async slotItem => {
                 if (KnapsackRendererBase.isSlottedText(slotItem)) {
-                  children.push(slotItem);
+                  if (slotName === 'children') {
+                    children.push(slotItem);
+                  } else {
+                    extraProps.push({
+                      key: slotName,
+                      value: slotItem,
+                    });
+                  }
                 } else {
                   const slotPattern = patternManifest.getPattern(
                     slotItem.patternId,

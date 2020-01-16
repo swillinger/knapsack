@@ -31,7 +31,7 @@ PREV_VERSION=`git describe --abbrev=0`
 
 echo "About to run 'lerna publish'..."
 # ./node_modules/.bin/lerna publish from-git --yes
-./node_modules/.bin/lerna publish --conventional-commits --dist-tag next --create-release github --yes --no-private
+./node_modules/.bin/lerna publish --conventional-commits --dist-tag next --create-release github --yes
 echo "DONE: 'lerna publish'"
 echo "------------"
 echo ""

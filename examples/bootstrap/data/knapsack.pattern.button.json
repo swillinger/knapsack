@@ -123,9 +123,25 @@
             },
             "slots": { "children": ["Cancel"] }
           }
+        },
+        "z5fUoeU4": {
+          "id": "z5fUoeU4",
+          "title": "Click me button",
+          "description": "A description",
+          "type": "data",
+          "data": {
+            "props": {
+              "type": "primary",
+              "size": "lg",
+              "disabled": false,
+              "outlined": false,
+              "handleClick": "() => alert('Hi Basalt')"
+            },
+            "slots": { "children": ["Click me!"] }
+          }
         }
       },
-      "demos": ["primary", "secondary", "Ib85UZzPs"]
+      "demos": ["primary", "secondary", "Ib85UZzPs", "z5fUoeU4"]
     },
     {
       "title": "Twig",

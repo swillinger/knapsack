@@ -1,0 +1,52 @@
+{
+  "id": "multi-step-wizard",
+  "title": "Multi Step Wizard",
+  "templates": [
+    {
+      "id": "react",
+      "path": "../assets/patterns/jumbotron/jumbotron.tsx",
+      "templateLanguageId": "react",
+      "statusId": "needs-dev",
+      "assetSetIds": [],
+      "demosById": {
+        "main": {
+          "id": "main",
+          "title": "Main",
+          "type": "data",
+          "data": {
+            "props": {},
+            "slots": {
+              "modalContent": [
+                {
+                  "patternId": "card",
+                  "templateId": "react",
+                  "demoId": "primary"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "demos": ["main"],
+      "spec": {
+        "slots": {
+          "modalContent": {
+            "title": "modalContent",
+            "allowedPatternIds": ["jumbotron", "card"]
+          }
+        },
+        "props": {
+          "$schema": "http://json-schema.org/draft-07/schema",
+          "type": "object",
+          "required": ["title"],
+          "properties": {
+            "title": { "type": "string", "title": "Title" },
+            "steps": { "type": "number" },
+            "body": { "type": "string" }
+          }
+        }
+      }
+    }
+  ],
+  "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+}

@@ -19,16 +19,22 @@
             "title": "Children",
             "description": "Bottom of the card",
             "allowedPatternIds": ["button"]
+          },
+          "body": {
+            "title": "body",
+            "allowedPatternIds": ["button", "card", "jumbotron"]
           }
         },
         "props": {
           "$schema": "http://json-schema.org/draft-07/schema",
+          "description": "Use Bootstrap’s custom card styles as a flexible and extensible content container. It includes options for headers and footers, a wide variety of content, contextual background colors, and powerful display options.",
           "type": "object",
           "title": "Card",
           "required": [],
           "properties": {
             "cardHeader": { "type": "string", "title": "Card Header Text" },
             "cardTitle": { "type": "string", "title": "Title" },
+            "isDark": { "type": "boolean" },
             "cardSubTitle": { "type": "string", "title": "Body Sub Title" },
             "cardBody": { "type": "string", "title": "Card Body Text" },
             "textAlign": {
@@ -62,7 +68,8 @@
               "cardTitle": "Hi everyone!",
               "cardBody": "Some quick example text to build on the card title and make up the bulk of the card's content.",
               "imgSrc": "/images/demoImg2.jpg",
-              "imgAlt": "Nature Picture"
+              "imgAlt": "Nature Picture",
+              "isDark": false
             }
           }
         },
@@ -152,9 +159,38 @@
               "imgAlt": "Nature Picture"
             }
           }
+        },
+        "V1z4JE3n": {
+          "id": "V1z4JE3n",
+          "title": "Confirmation Card2",
+          "type": "data",
+          "data": {
+            "slots": {
+              "children": [
+                {
+                  "patternId": "button",
+                  "templateId": "react",
+                  "demoId": "z5fUoeU4"
+                }
+              ]
+            },
+            "props": {
+              "textAlign": "center",
+              "cardTitle": "Are You Sure?!",
+              "imgAlt": "Nature Picture",
+              "cardSubTitle": "Why would you do this?"
+            }
+          }
         }
       },
-      "demos": ["primary", "oJ7Sy5zh", "1Rbqal5n", "kq6_gva2", "guoWqGd1"]
+      "demos": [
+        "V1z4JE3n",
+        "primary",
+        "oJ7Sy5zh",
+        "1Rbqal5n",
+        "kq6_gva2",
+        "guoWqGd1"
+      ]
     },
     {
       "title": "Web Component",

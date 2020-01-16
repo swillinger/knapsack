@@ -60,7 +60,7 @@
           }
         }
       },
-      "statusId": "ready"
+      "statusId": "needs-dev"
     },
     {
       "id": "react",
@@ -69,7 +69,10 @@
       "statusId": "ready",
       "spec": {
         "slots": {
-          "children": { "title": "children", "allowedPatternIds": ["button"] }
+          "children": {
+            "title": "children",
+            "allowedPatternIds": ["button", "card"]
+          }
         },
         "props": {
           "$schema": "http://json-schema.org/draft-07/schema",
@@ -124,9 +127,29 @@
             },
             "slots": { "children": [] }
           }
+        },
+        "ZGdaQ-vu": {
+          "id": "ZGdaQ-vu",
+          "title": "Main",
+          "type": "data",
+          "data": {
+            "props": {
+              "title": "Title",
+              "body": "Twenty four hour hydration and sheer color helps me look flawless even when faced with that unforgiving Jumbotron! - Lindsey Vonn"
+            },
+            "slots": {
+              "children": [
+                {
+                  "patternId": "card",
+                  "templateId": "react",
+                  "demoId": "V1z4JE3n"
+                }
+              ]
+            }
+          }
         }
       },
-      "demos": ["cEitity5", "main"]
+      "demos": ["cEitity5", "main", "ZGdaQ-vu"]
     }
   ],
   "description": "A lightweight, flexible component that can optionally extend the entire viewport to showcase key marketing messages on your site."

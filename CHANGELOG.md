@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.39](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.38...v2.0.0-beta.39) (2020-01-16)
+
+
+### Bug Fixes
+
+* reset slots form when demo changes ([6c57bab](https://github.com/basaltinc/knapsack/commit/6c57bab895b8d7de192bf2914b7291b678c560c7))
+
+
+
+
+
 # [2.0.0-beta.38](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.37...v2.0.0-beta.38) (2020-01-16)
 
 

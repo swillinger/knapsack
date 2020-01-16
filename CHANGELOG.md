@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.38](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.37...v2.0.0-beta.38) (2020-01-16)
+
+
+### Bug Fixes
+
+* only show add template demo if local dev ([d1c2cbe](https://github.com/basaltinc/knapsack/commit/d1c2cbef0bfc2fb168ce01ac4743def88639329e))
+
+
+### Features
+
+* consolidate props & slots forms ([283b9f0](https://github.com/basaltinc/knapsack/commit/283b9f06b7736d8dd84e645818b5e6775ee2cfeb))
+
+
+
+
+
 # [2.0.0-beta.37](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.36...v2.0.0-beta.37) (2020-01-16)
 
 

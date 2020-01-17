@@ -1,0 +1,39 @@
+---
+title: CLI
+---
+
+## Commands
+
+### `knapsack start`
+
+What you want to run for local development. This will watch assets and create a local server for you.
+
+### `knapsack build`
+
+Build all assets. Generally ran before `knapsack serve` on a deployed server.
+
+### `knapsack serve`
+
+Just start the server. Probably should run `knapsack build` first.
+
+### `knapsack test`
+
+Run through each pattern and ensure no renders fail.
+
+## Environmental Variables
+
+### Log Level
+
+You can set the `KNAPSACK_LOG_LEVEL` to one of "verbose" or "silly" to increase the information logged in the terminal.
+
+```bash
+KNAPSACK_LOG_LEVEL=verbose knapsack start
+```
+
+### Port
+
+If you want to set a specific port for the server to use, set `KNAPSACK_PORT`:
+
+```bash
+KNAPSACK_PORT=80 knapsack serve
+```

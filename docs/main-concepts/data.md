@@ -1,6 +1,6 @@
 ---
 id: data
-title: Data Tracking
+title: Data Folder
 ---
 
 When you make changes to your design system, whether it's to the site settings, adding a page-builder example, or custom sections Knapsack will immediately start tracking and documenting these changes in a series of files tucked away in your `/data` folder. After generating a new project this folder should contain the following:
@@ -42,4 +42,5 @@ These files are providing the data required to create the visual representations
   ]
 }
 ```
+
 Updates occur when using the form fields on the dashboard, or the files can be written in directly to make changes.

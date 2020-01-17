@@ -2,7 +2,7 @@
 // site configuration options.
 
 const navLinks = [
-  { to: 'docs/intro', label: 'Docs', position: 'right' },
+  { to: 'docs/intro/overview', label: 'Docs', position: 'right' },
   { to: 'config-schemas', label: 'Config Files', position: 'right' },
 ];
 

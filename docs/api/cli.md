@@ -1,5 +1,5 @@
 ---
-title: CLI2
+title: CLI
 ---
 
 ## Commands

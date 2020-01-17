@@ -1,7 +1,8 @@
 ---
-id: config
 title: Config
 ---
+
+# **Warning: Doc out of date; below is for v1 (preserved for v2 inspiration)**
 
 ### `knapsack.config.js`
 

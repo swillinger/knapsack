@@ -3,16 +3,18 @@ id: add-new-pattern
 title: Add a New Pattern
 ---
 
+# **Warning: Doc out of date; below is for v1 (preserved for v2 inspiration)**
+
 ## Anatomy of a Pattern
 
 Knapsack will start tracking and documenting your patterns by simply adding the following files to pattern-specific (e.g. `/button`) directory in your Patterns directory.
 
-1) `knapsack.pattern.js` - defines a unique ID for the given pattern, as well as an array of templates that create the pattern and their associated schema files.
-2) `knapsack.pattern-meta.json` - defines meta data about the pattern including its human friendly name, type, and description.
-3) `your-pattern.schema.js` - A json schema for the pattern.
-4) Template file(s). (e.g. `your-pattern.twig`, `your-pattern.html`, `your-pattern.js`).
-5) Assets. Every system will handle this differently, so this may not always apply, but you can include pattern-specific images, styles, javascript, etc. in the specific pattern directory.
-6) *_Optional & Encouraged_* `README.md` - Optional documentation for the pattern.
+1. `knapsack.pattern.js` - defines a unique ID for the given pattern, as well as an array of templates that create the pattern and their associated schema files.
+2. `knapsack.pattern-meta.json` - defines meta data about the pattern including its human friendly name, type, and description.
+3. `your-pattern.schema.js` - A json schema for the pattern.
+4. Template file(s). (e.g. `your-pattern.twig`, `your-pattern.html`, `your-pattern.js`).
+5. Assets. Every system will handle this differently, so this may not always apply, but you can include pattern-specific images, styles, javascript, etc. in the specific pattern directory.
+6. _*Optional & Encouraged*_ `README.md` - Optional documentation for the pattern.
 
 ## Add a New Pattern
 

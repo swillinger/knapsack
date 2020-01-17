@@ -1,7 +1,8 @@
 ---
-id: example-button
-title: Example Button
+title: Setting up a Button Pattern
 ---
+
+# **Warning: Doc out of date; below is for v1 (preserved for v2 inspiration)**
 
 ## Example: Setting up a button
 

@@ -1,6 +1,5 @@
 ---
-id: deployment
-title: Deployment
+title: Hosting
 ---
 
 ### Hosting & Deployment

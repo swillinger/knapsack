@@ -1,7 +1,8 @@
 ---
-id: design-tokens
 title: Design Tokens
 ---
+
+# **Warning: Doc out of date; below is for v1 (preserved for v2 inspiration)**
 
 Design tokens are named entities for identifying, storing, and accessing the most basic layer of a design system. Design tokens include colors, spacing, typography, animation and other values that make up a design language.
 
@@ -79,6 +80,7 @@ Knapsack provides a formatter to get your [Style Dictionary](https://amzn.github
 Here is an example of how to convert Style Dictionary design tokens with the Knapsack Style Dictionary Formatter.
 
 `style-dictionary.config.js`
+
 ```javascript
 const { styleDictionaryKnapsackFormat } = require('@knapsack/app');
 const StyleDictionary = require('style-dictionary');
@@ -110,11 +112,12 @@ module.exports = {
 ```
 
 `knapsack.config.js`
+
 ```javascript
 ...
 
 // Import the json created by running style dictionary with the Knapsack formatter
-const designTokenData = require('./design-tokens/dist/knapsack-design-tokens'); 
+const designTokenData = require('./design-tokens/dist/knapsack-design-tokens');
 
 // Assign your design token data to `config.designTokens.data`
 const config = {

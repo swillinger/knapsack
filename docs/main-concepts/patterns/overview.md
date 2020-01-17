@@ -1,12 +1,12 @@
 ---
-id: patterns-overview
 title: Patterns Overview
 ---
 
-Patterns are the visual components that make up a design system. 
+# **Warning: Doc out of date; below is for v1 (preserved for v2 inspiration)**
+
+Patterns are the visual components that make up a design system.
 
 Unlike other pattern library tools which rely on the creation and continued maintenance of demonstration files, Knapsack relies on data models defined through [Json Schema](https://json-schema.org/) to power the automatic creation of all the variations of any given Pattern.
-
 
 ## Including Patterns in Knapsack
 

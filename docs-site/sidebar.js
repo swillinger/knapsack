@@ -9,35 +9,35 @@ const sidebarConfig = {
       items: [
         {
           type: 'doc',
-          id: 'intro',
+          id: 'intro/overview',
         },
         {
           type: 'doc',
-          id: 'getting-started',
+          id: 'intro/getting-started',
         },
         {
           type: 'doc',
-          id: 'installation',
+          id: 'intro/installation',
         },
         {
           type: 'doc',
-          id: 'config',
+          id: 'intro/config',
         },
         {
           type: 'doc',
-          id: 'glossary',
+          id: 'intro/glossary',
         },
         {
           type: 'doc',
-          id: 'what-is-knapsack',
+          id: 'intro/what-is-knapsack',
         },
         {
           type: 'doc',
-          id: 'file-structure',
+          id: 'intro/file-structure',
         },
         {
           type: 'doc',
-          id: 'getting-help',
+          id: 'intro/getting-help',
         },
       ],
     },
@@ -47,7 +47,11 @@ const sidebarConfig = {
       items: [
         {
           type: 'doc',
-          id: 'basic-tutorial--intro',
+          id: 'basic-tutorial/intro',
+        },
+        {
+          type: 'doc',
+          id: 'basic-tutorial/setting-up-button',
         },
       ],
     },
@@ -57,7 +61,7 @@ const sidebarConfig = {
       items: [
         {
           type: 'doc',
-          id: 'advanced-tutorial--intro',
+          id: 'advanced-tutorial/intro',
         },
       ],
     },
@@ -67,7 +71,7 @@ const sidebarConfig = {
       items: [
         {
           type: 'doc',
-          id: 'design-tokens',
+          id: 'main-concepts/design-tokens',
         },
         {
           type: 'category',
@@ -75,9 +79,21 @@ const sidebarConfig = {
           items: [
             {
               type: 'doc',
-              id: 'patterns-overview',
+              id: 'main-concepts/patterns/overview',
+            },
+            {
+              type: 'doc',
+              id: 'main-concepts/patterns/spec',
+            },
+            {
+              type: 'doc',
+              id: 'main-concepts/patterns/patterns-anatomy',
             },
           ],
+        },
+        {
+          type: 'doc',
+          id: 'main-concepts/data',
         },
       ],
     },
@@ -87,7 +103,15 @@ const sidebarConfig = {
       items: [
         {
           type: 'doc',
-          id: 'add-new-pattern',
+          id: 'guides/add-new-pattern',
+        },
+        {
+          type: 'doc',
+          id: 'guides/hosting',
+        },
+        {
+          type: 'doc',
+          id: 'guides/settings',
         },
       ],
     },
@@ -97,40 +121,33 @@ const sidebarConfig = {
       items: [
         {
           type: 'doc',
-          id: 'troubleshooting',
+          id: 'troubleshooting/general',
         },
       ],
     },
-
-    // 'Getting Started': [
-    //   'intro',
-    //   'getting-started',
-    //   'dashboard-settings',
-    //   'data',
-    // ],
-    // Patterns: [
-    //   'patterns-overview',
-    //   'add-new-pattern',
-    //   'example-button',
-    //   'example-nesting-patterns',
-    //   'spec',
-    // ],
-    // 'Design Tokens': ['design-tokens'],
-    // Demos: ['demos'],
-    // Production: ['config', 'deployment'],
     {
       type: 'category',
       label: 'API Reference',
       items: [
         {
           type: 'doc',
-          id: 'api--cli',
+          id: 'api/cli',
         },
       ],
     },
     {
-      type: 'doc',
-      id: 'faq',
+      type: 'category',
+      label: 'Misc',
+      items: [
+        {
+          type: 'doc',
+          id: 'misc/faq',
+        },
+        {
+          type: 'doc',
+          id: 'misc/examples',
+        },
+      ],
     },
     // We have a simple "sidebar-more.json" so the CMS can easily add to it, since it can't handle the more complicated above structure
     // eslint-disable-next-line global-require

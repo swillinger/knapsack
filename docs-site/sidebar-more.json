@@ -1,3 +1,38 @@
 {
-  "More Info": ["about"]
+  "docs": [
+    {
+      "type": "category",
+      "label": "Advanced Tutorial",
+      "items": [
+        {
+          "type": "doc",
+          "id": "advanced-tutorial--intro"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Main Concepts",
+      "items": [
+        {
+          "type": "doc",
+          "id": "design-tokens"
+        },
+        {
+          "type": "category",
+          "label": "Patterns",
+          "items": [
+            {
+              "type": "doc",
+              "id": "patterns-overview"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "doc",
+      "id": "faq"
+    }
+  ]
 }

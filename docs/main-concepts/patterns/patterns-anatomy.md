@@ -1,6 +1,5 @@
 ---
-id: patterns-anatomy
 title: Anatomy of a Pattern
+id: patterns-anatomy
 ---
-
-@todo
+@todo - write

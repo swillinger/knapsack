@@ -17,12 +17,7 @@ export const PatternListPage: React.FC = () => {
 
   return (
     <PageWithSidebar title="Patterns">
-      <div
-        className="pattern-list-page__toggles"
-        style={{
-          display: 'none', // @todo finish implementing "table"
-        }}
-      >
+      <div className="pattern-list-page__toggles">
         <KsButtonToggleWrapper>
           <KsPopover content={<p>Toggle Grid View</p>}>
             <KsButton

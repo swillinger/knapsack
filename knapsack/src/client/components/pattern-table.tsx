@@ -1,15 +1,10 @@
 import React from 'react';
 import ReactTable from 'react-table';
-import {
-  KsPopover,
-  KsButton,
-  StatusIcon,
-  KsDetails,
-} from '@knapsack/design-system';
+import { KsPopover, StatusIcon, KsDetails } from '@knapsack/design-system';
 import { Link, useHistory } from 'react-router-dom';
 import { BASE_PATHS } from '../../lib/constants';
 import { KnapsackPattern } from '../../schemas/patterns';
-import { useSelector, useDispatch, deletePattern } from '../store';
+import { useSelector } from '../store';
 import { TemplateThumbnail } from './template-thumbnail';
 import './pattern-table.scss';
 
@@ -21,7 +16,6 @@ export const PatternTable: React.FC<Props> = ({ allPatterns }: Props) => {
   const { patterns, templateStatuses, renderers } = useSelector(
     s => s.patternsState,
   );
-  const dispatch = useDispatch();
   const history = useHistory();
 
   const data = [];
@@ -95,33 +89,6 @@ export const PatternTable: React.FC<Props> = ({ allPatterns }: Props) => {
           >
             <div className="pattern-table__content">
               <div>
-                {/* @TODO: Determine if Delete should be here. */}
-                {/* <KsPopover
-                  trigger="click"
-                  content={
-                    <p>
-                      Are you sure?{' '}
-                      <KsButton
-                        kind="primary"
-                        emphasis="danger"
-                        size="s"
-                        handleTrigger={() => {
-                          dispatch(
-                            deletePattern({
-                              patternId: pattern.id,
-                            }),
-                          );
-                        }}
-                      >
-                        Yes
-                      </KsButton>
-                    </p>
-                  }
-                >
-                  <KsButton icon="delete" kind="standard" size="s">
-                    Delete
-                  </KsButton>
-                </KsPopover> */}
                 {pattern.description && (
                   <div className="pattern-table__content__description">
                     <h4>Description</h4>

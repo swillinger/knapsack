@@ -1,7 +1,62 @@
-.ks-pattern-table {
-  &__pattern-details {
+.pattern-table__item-header {
+  display: flex;
+  align-items: center;
+
+  &__title {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__statuses {
     display: flex;
-    justify-content: space-between;
-    padding: var(--space-m);
+    align-items: center;
+
+    & > div {
+      margin-left: var(--space-xs);
+    }
+  }
+}
+
+.pattern-table__content {
+  display: flex;
+
+  & > div:first-child {
+    flex: 1;
+    padding-right: var(--space-l);
+  }
+  & > div:last-child {
+    flex: 2;
+  }
+
+  &__description {
+    margin-bottom: var(--space-xs);
+  }
+
+  &__thumbnail {
+    border: 1px solid var(--c-frame);
+    border-radius: var(--space-xs);
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  &__language-icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+    margin-right: var(--space-xs);
+
+    svg {
+      max-width: var(--space-l);
+      max-height: var(--space-l);
+    }
+  }
+
+  &__language-title {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: var(--space-l);
   }
 }

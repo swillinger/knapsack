@@ -2,11 +2,16 @@
   border: 1px solid var(--c-frame);
   border-radius: var(--space-xxs);
 
+  & + & {
+    margin-top: var(--space-xs);
+  }
+
   & > summary {
     list-style: none;
     display: flex;
     align-items: center;
     height: calc(var(--space-xl) - 2px);
+    padding-right: calc(var(--space-m) - 1px);
 
     &::-webkit-details-marker {
       display: none;

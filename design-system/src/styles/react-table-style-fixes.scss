@@ -14,6 +14,7 @@
     border-bottom: 3px solid transparent;
     color: var(--c-text-default);
     font-weight: normal;
+    text-align: left;
 
     &:focus,
     &:active {
@@ -32,12 +33,5 @@
   }
   .rt-thead.-filters {
     background: var(--c-shade);
-  }
-  .rt-tbody {
-    .rt-td:first-child {
-      background: var(--c-shade);
-      color: var(--c-active);
-      font-weight: bold;
-    }
   }
 }

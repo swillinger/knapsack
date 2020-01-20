@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   KsButton,
   KsButtonToggleWrapper,
   KsPopover,
 } from '@knapsack/design-system';
-import { useSelector } from '../store';
+import {
+  useSelector,
+  useDispatch,
+  setPatternPageViewPreference,
+} from '../store';
 import PageWithSidebar from '../layouts/page-with-sidebar';
 import { PatternGrid } from '../components/pattern-grid';
 import { PatternTable } from '../components/pattern-table';
@@ -13,7 +17,8 @@ import './pattern-list-page.scss';
 export const PatternListPage: React.FC = () => {
   const patterns = useSelector(s => s.patternsState.patterns);
   const allPatterns = Object.values(patterns);
-  const [viewToggle, setViewToggle] = useState('grid');
+  const { patternViewPreference } = useSelector(s => s.ui);
+  const dispatch = useDispatch();
 
   return (
     <PageWithSidebar title="Patterns">
@@ -22,21 +27,25 @@ export const PatternListPage: React.FC = () => {
           <KsPopover content={<p>Toggle Grid View</p>}>
             <KsButton
               icon="grid-view"
-              active={viewToggle === 'grid'}
-              handleTrigger={() => setViewToggle('grid')}
+              active={patternViewPreference === 'grid'}
+              handleTrigger={() =>
+                dispatch(setPatternPageViewPreference({ preference: 'grid' }))
+              }
             />
           </KsPopover>
           <KsPopover content={<p>Toggle Table View</p>}>
             <KsButton
               icon="table-view"
-              active={viewToggle === 'table'}
-              handleTrigger={() => setViewToggle('table')}
+              active={patternViewPreference === 'table'}
+              handleTrigger={() =>
+                dispatch(setPatternPageViewPreference({ preference: 'table' }))
+              }
             />
           </KsPopover>
         </KsButtonToggleWrapper>
       </div>
 
-      {viewToggle === 'grid' && (
+      {patternViewPreference === 'grid' && (
         <PatternGrid
           patterns={allPatterns.map(p => ({
             id: p.id,
@@ -45,7 +54,9 @@ export const PatternListPage: React.FC = () => {
         />
       )}
 
-      {viewToggle === 'table' && <PatternTable allPatterns={allPatterns} />}
+      {patternViewPreference === 'table' && (
+        <PatternTable allPatterns={allPatterns} />
+      )}
     </PageWithSidebar>
   );
 };

@@ -18,6 +18,11 @@ type Status = {
   dismissAfter?: number;
 };
 
+enum PatternViewPreferences {
+  'grid' = 'grid',
+  'table' = 'table',
+}
+
 export interface UiState {
   status?: {
     type: StatusTypes;
@@ -30,6 +35,8 @@ export interface UiState {
    * Is right sidebar open?
    */
   pageDetailsOpen?: boolean;
+  /** On a Pattern page, does the user prefer grid view or table view. */
+  patternViewPreference: keyof typeof PatternViewPreferences;
 }
 
 const SET_PAGE_DETAILS_VISIBILITY = 'knapsack/ui/SET_PAGE_DETAILS_VISIBILITY';
@@ -60,6 +67,23 @@ export function setSidebarVisibility(
 ): SetSidebarVisibilityAction {
   return {
     type: SET_SIDEBAR_VISIBILITY,
+    payload,
+  };
+}
+
+const SET_PATTERN_PAGE_VIEW_PREFERENCE =
+  'knapsack/ui/SET_PATTERN_PAGE_VIEW_PREFERENCE';
+interface SetPatternPageViewPreference extends Action {
+  type: typeof SET_PATTERN_PAGE_VIEW_PREFERENCE;
+  payload: {
+    preference: keyof typeof PatternViewPreferences;
+  };
+}
+export function setPatternPageViewPreference(
+  payload: SetPatternPageViewPreference['payload'],
+): SetPatternPageViewPreference {
+  return {
+    type: SET_PATTERN_PAGE_VIEW_PREFERENCE,
     payload,
   };
 }
@@ -116,6 +140,7 @@ export function setStatus(status: Status) {
 const initialState: UiState = {
   pageDetailsOpen: false,
   sidebarOpen: true,
+  patternViewPreference: 'grid',
 };
 
 type UiActionTypes =
@@ -123,7 +148,8 @@ type UiActionTypes =
   | RemoveStatusAction
   | SetTemplateRenderer
   | SetPageDetailsVisibilityAction
-  | SetSidebarVisibilityAction;
+  | SetSidebarVisibilityAction
+  | SetPatternPageViewPreference;
 
 export default function reducer(
   state = initialState,
@@ -154,6 +180,11 @@ export default function reducer(
       return {
         ...state,
         pageDetailsOpen: action.payload.isOpen,
+      };
+    case SET_PATTERN_PAGE_VIEW_PREFERENCE:
+      return {
+        ...state,
+        patternViewPreference: action.payload.preference,
       };
     default:
       return {

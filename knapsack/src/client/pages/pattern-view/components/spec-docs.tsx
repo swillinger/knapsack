@@ -1,5 +1,5 @@
 import React from 'react';
-import { Details } from '@knapsack/design-system';
+import { KsDetails } from '@knapsack/design-system';
 import ReactTable from 'react-table';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
@@ -27,10 +27,9 @@ export const KsSpecDocs: React.FC<Props> = ({}: Props) => {
               The following properties make up the data that defines each
               instance of this component.
             </p>
-            <Details open>
-              <summary>Props Table</summary>
+            <KsDetails open titleContent="Props Table">
               <LoadableSchemaTable schema={spec?.props} />
-            </Details>
+            </KsDetails>
           </div>
 
           {/* <LoadableVariationDemo */}

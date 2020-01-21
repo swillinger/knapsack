@@ -1,5 +1,4 @@
 import { RollupOptions, InputOption, OutputOptions } from 'rollup';
-
 import commonjs from '@rollup/plugin-commonjs';
 // import builtins from 'rollup-plugin-node-builtins';
 import image from '@rollup/plugin-image';
@@ -10,10 +9,11 @@ import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import url from '@rollup/plugin-url';
 import path from 'path';
+import { DEFAULT_EXTENSIONS } from '@babel/core';
 
 const isProd = process.env.NODE_ENV === 'production';
 
-const extensions = ['.ts', '.tsx', '.js', '.jsx', '.mjs'];
+const extensions = ['.ts', '.tsx', ...DEFAULT_EXTENSIONS];
 
 /**
  * Either a function that takes an id and returns true (external) or false (not external), or an Array of module IDs that should remain external to the bundle.

@@ -10,7 +10,7 @@ import { PatternGrid } from '../components/pattern-grid';
 import { PatternTable } from '../components/pattern-table';
 import './pattern-list-page.scss';
 
-export const PatternListPage: React.FC = () => {
+const PatternListPage: React.FC = () => {
   const patterns = useSelector(s => s.patternsState.patterns);
   const allPatterns = Object.values(patterns);
   const [viewToggle, setViewToggle] = useState('grid');
@@ -54,3 +54,5 @@ export const PatternListPage: React.FC = () => {
     </PageWithSidebar>
   );
 };
+
+export default PatternListPage;

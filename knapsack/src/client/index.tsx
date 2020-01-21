@@ -17,10 +17,12 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
+import { CircleSpinner } from '@knapsack/design-system/spinners';
 import { plugins } from '@knapsack/core';
 import { getStateFromLocalStorage } from './store/utils';
 import { getInitialState } from './data';
-// import { createCloudClientPlugin } from '../cloud/client-plugin';
+
+const App = React.lazy(() => import('./App'));
 
 document.addEventListener('DOMContentLoaded', async () => {
   const mountEl = document.createElement('div');
@@ -56,15 +58,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   plugins.register(createCloudClientPlugin({ store }));
 
-  const App = await import(/* webpackChunkName: "app" */ './App').then(
-    mod => mod.App,
-  );
-
   mountEl.textContent = '';
 
   ReactDom.render(
     <Provider store={store}>
-      <App />
+      <React.Suspense fallback={<CircleSpinner />}>
+        <App />
+      </React.Suspense>
     </Provider>,
     document.getElementById('app'),
   );

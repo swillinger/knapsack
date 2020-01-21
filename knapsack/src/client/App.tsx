@@ -14,7 +14,7 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -22,6 +22,7 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { plugins } from '@knapsack/core';
+import { CircleSpinner } from '@knapsack/design-system/spinners';
 import Amplify from 'aws-amplify';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
@@ -40,18 +41,19 @@ import {
 import { KnapsackContextProvider } from './context';
 import ErrorCatcher from './utils/error-catcher';
 import { BASE_PATHS } from '../lib/constants';
-import {
-  LoadablePatternView,
-  LoadableGraphiqlPage,
-  LoadablePatternsPage,
-  LoadableSettingsPage,
-  LoadableCustomPage,
-  LoadableHome,
-  LoadableChangelogPage,
-  LoadableBadRoute,
-  PageWithSidebar,
-} from './loadable-components';
 import '../cloud/amplify-wrapper.scss';
+
+const PatternPage = lazy(() =>
+  import('./pages/pattern-view/pattern-view-page'),
+);
+const PatternsPage = lazy(() => import('./pages/pattern-list-page'));
+const HomePage = lazy(() => import('./pages/home-page'));
+const GraphiqlPage = lazy(() => import('./pages/graphiql-page'));
+const SettingsPage = lazy(() => import('./pages/settings'));
+const CustomPage = lazy(() => import('./pages/custom-page/custom-page'));
+const ChangelogPage = lazy(() => import('./pages/changelog'));
+const BadRoute = lazy(() => import('./pages/bad-route'));
+const PageWithSidebar = lazy(() => import('./layouts/page-with-sidebar'));
 
 Amplify.configure(awsconfig);
 // Amplify.Logger.LOG_LEVEL = 'DEBUG';
@@ -63,7 +65,7 @@ const apolloClient = new ApolloClient({
   }),
 });
 
-export const App: React.FC = () => {
+const App: React.FC = () => {
   const dispatch = useDispatch();
 
   const settings = useSelector(s => s.settingsState.settings);
@@ -107,147 +109,136 @@ export const App: React.FC = () => {
           <DndProvider backend={HTML5Backend}>
             <>
               <Router>
-                <Switch>
-                  <Route
-                    path="/"
-                    exact
-                    render={props =>
-                      plugins.homePage ? (
-                        plugins.homePage.render()
-                      ) : (
-                        <LoadableHome {...props} />
-                      )
-                    }
-                  />
-                  <Route
-                    path={BASE_PATHS.PATTERNS}
-                    exact
-                    component={LoadablePatternsPage}
-                  />
-
-                  <Route
-                    path={`${BASE_PATHS.GRAPHIQL_PLAYGROUND}`}
-                    exact
-                    render={props => <LoadableGraphiqlPage {...props} />}
-                  />
-                  {canEdit && (
+                <Suspense fallback={<CircleSpinner />}>
+                  <Switch>
+                    <Route path="/" exact component={HomePage} />
                     <Route
-                      path={['/settings', '/settings/:kind']}
+                      path={BASE_PATHS.PATTERNS}
                       exact
-                      render={({ match }) => (
-                        <LoadableSettingsPage initialTab={match.params.kind} />
-                      )}
+                      component={PatternsPage}
                     />
-                  )}
 
-                  <Route
-                    path={[
-                      `${BASE_PATHS.PATTERN}/:patternId`,
-                      `${BASE_PATHS.PATTERN}/:patternId/:templateId`,
-                      `${BASE_PATHS.PATTERN}/:patternId/:templateId/:demoId`,
-                    ]}
-                    exact
-                    render={({ match }) => {
-                      const { patternId, demoId } = match.params;
-                      let { templateId } = match.params;
-                      const pattern = patterns[patternId];
-                      if (!pattern) {
-                        return (
-                          <LoadableBadRoute
-                            title={`Pattern "${patternId}" was not found in the system`}
-                            subtitle="Hold your horses"
-                            message={`We're having trouble finding the pattern "${patternId}" you requested. Please double check your url and the pattern meta.`}
-                          />
-                        );
-                      }
+                    <Route
+                      path={`${BASE_PATHS.GRAPHIQL_PLAYGROUND}`}
+                      exact
+                      render={props => <GraphiqlPage {...props} />}
+                    />
+                    {canEdit && (
+                      <Route
+                        path={['/settings', '/settings/:kind']}
+                        exact
+                        render={({ match }) => (
+                          <SettingsPage initialTab={match.params.kind} />
+                        )}
+                      />
+                    )}
 
-                      if (templateId) {
-                        const templateLanguageId = pattern?.templates?.find(
-                          t => t.id === templateId,
-                        )?.templateLanguageId;
-                        if (templateLanguageId !== currentTemplateRenderer) {
-                          dispatch(
-                            setCurrentTemplateRenderer({
-                              id: templateLanguageId,
-                            }),
+                    <Route
+                      path={[
+                        `${BASE_PATHS.PATTERN}/:patternId`,
+                        `${BASE_PATHS.PATTERN}/:patternId/:templateId`,
+                        `${BASE_PATHS.PATTERN}/:patternId/:templateId/:demoId`,
+                      ]}
+                      exact
+                      render={({ match }) => {
+                        const { patternId, demoId } = match.params;
+                        let { templateId } = match.params;
+                        const pattern = patterns[patternId];
+                        if (!pattern) {
+                          return (
+                            <BadRoute
+                              title={`Pattern "${patternId}" was not found in the system`}
+                              subtitle="Hold your horses"
+                              message={`We're having trouble finding the pattern "${patternId}" you requested. Please double check your url and the pattern meta.`}
+                            />
                           );
                         }
-                      }
 
-                      if (!templateId) {
-                        templateId = pattern?.templates?.find(
-                          t => t.templateLanguageId === currentTemplateRenderer,
-                        )?.id;
-                      }
+                        if (templateId) {
+                          const templateLanguageId = pattern?.templates?.find(
+                            t => t.id === templateId,
+                          )?.templateLanguageId;
+                          if (templateLanguageId !== currentTemplateRenderer) {
+                            dispatch(
+                              setCurrentTemplateRenderer({
+                                id: templateLanguageId,
+                              }),
+                            );
+                          }
+                        }
 
-                      return (
-                        <LoadablePatternView
-                          patternId={patternId}
-                          templateId={templateId}
-                          demoId={demoId}
-                          size="m"
-                        />
-                      );
-                    }}
-                  />
-                  <Route path="/changelog" component={LoadableChangelogPage} />
-                  <Route
-                    path={`${BASE_PATHS.PAGES}/:pageId`}
-                    render={({
-                      match: {
-                        params: { pageId },
-                      },
-                    }) => {
-                      const page = pages[pageId];
-                      if (!page) {
+                        if (!templateId) {
+                          templateId = pattern?.templates?.find(
+                            t =>
+                              t.templateLanguageId === currentTemplateRenderer,
+                          )?.id;
+                        }
+
                         return (
-                          <LoadableBadRoute
-                            title={`Page with id "${pageId}" was not found in the system`}
-                            subtitle="Uh oh"
-                            message={`Is it one of these? ${Object.keys(
-                              pages,
-                            ).join(', ')}`}
+                          <PatternPage
+                            patternId={patternId}
+                            templateId={templateId}
+                            demoId={demoId}
                           />
                         );
+                      }}
+                    />
+                    <Route path="/changelog" component={ChangelogPage} />
+                    <Route
+                      path={`${BASE_PATHS.PAGES}/:pageId`}
+                      render={({
+                        match: {
+                          params: { pageId },
+                        },
+                      }) => {
+                        const page = pages[pageId];
+                        if (!page) {
+                          return (
+                            <BadRoute
+                              title={`Page with id "${pageId}" was not found in the system`}
+                              subtitle="Uh oh"
+                              message={`Is it one of these? ${Object.keys(
+                                pages,
+                              ).join(', ')}`}
+                            />
+                          );
+                        }
+                        return (
+                          <CustomPage
+                            key={`${BASE_PATHS.PAGES}/${pageId}`}
+                            pageId={pageId}
+                          />
+                        );
+                      }}
+                    />
+
+                    {plugins.getPlugins().map(plugin => {
+                      if (!plugin.addPages) {
+                        return null;
                       }
-                      return (
-                        <LoadableCustomPage
-                          path={`${BASE_PATHS.PAGES}/${pageId}`}
-                          key={`${BASE_PATHS.PAGES}/${pageId}`}
-                          sectionTitle="Pages"
-                          title={page.title}
-                          pageId={pageId}
-                        />
-                      );
-                    }}
-                  />
+                      return plugin.addPages().map(page => {
+                        const path = urlJoin('/', plugin.id, page.path);
+                        return (
+                          <Route
+                            key={path}
+                            path={path}
+                            render={() => (
+                              <PageWithSidebar
+                                title={page.title}
+                                section={page.section}
+                              >
+                                {page.render()}
+                              </PageWithSidebar>
+                            )}
+                          />
+                        );
+                      });
+                    })}
 
-                  {plugins.getPlugins().map(plugin => {
-                    if (!plugin.addPages) {
-                      return null;
-                    }
-                    return plugin.addPages().map(page => {
-                      const path = urlJoin('/', plugin.id, page.path);
-                      return (
-                        <Route
-                          key={path}
-                          path={path}
-                          render={() => (
-                            <PageWithSidebar
-                              title={page.title}
-                              section={page.section}
-                            >
-                              {page.render()}
-                            </PageWithSidebar>
-                          )}
-                        />
-                      );
-                    });
-                  })}
-
-                  <Route path="*" render={() => <LoadableBadRoute />} />
-                  <Redirect to="/" />
-                </Switch>
+                    <Route path="*" render={() => <BadRoute />} />
+                    <Redirect to="/" />
+                  </Switch>
+                </Suspense>
               </Router>
             </>
           </DndProvider>
@@ -256,3 +247,5 @@ export const App: React.FC = () => {
     </ErrorCatcher>
   );
 };
+
+export default App;

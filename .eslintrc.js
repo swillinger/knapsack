@@ -65,7 +65,7 @@ module.exports = {
     'consistent-return': [0],
     'import/no-extraneous-dependencies': [0],
     'import/prefer-default-export': [0],
-    'import/dynamic-import-chunkname': [2],
+    'import/dynamic-import-chunkname': [0],
     'import/no-dynamic-require': [0],
     'import/no-unresolved': [
       2,

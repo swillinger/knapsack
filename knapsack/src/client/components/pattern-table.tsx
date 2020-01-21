@@ -1,16 +1,12 @@
 import React from 'react';
 import ReactTable from 'react-table';
-import {
-  KsPopover,
-  KsButton,
-  KsButtonGroup,
-  StatusIcon,
-} from '@knapsack/design-system';
-import { NavLink, useHistory } from 'react-router-dom';
+import { KsPopover, StatusIcon, KsDetails } from '@knapsack/design-system';
+import { Link, useHistory } from 'react-router-dom';
 import { BASE_PATHS } from '../../lib/constants';
 import { KnapsackPattern } from '../../schemas/patterns';
-import { useSelector, useDispatch, deletePattern } from '../store';
+import { useSelector } from '../store';
 import { TemplateThumbnail } from './template-thumbnail';
+import './pattern-table.scss';
 
 type Props = {
   allPatterns: KnapsackPattern[];
@@ -20,10 +16,10 @@ export const PatternTable: React.FC<Props> = ({ allPatterns }: Props) => {
   const { patterns, templateStatuses, renderers } = useSelector(
     s => s.patternsState,
   );
-  const dispatch = useDispatch();
   const history = useHistory();
 
   const data = [];
+
   allPatterns.forEach(
     ({ title: patternTitle, id: patternId, description, templates }) => {
       data.push({
@@ -48,87 +44,69 @@ export const PatternTable: React.FC<Props> = ({ allPatterns }: Props) => {
       });
     },
   );
-  const columns = [
-    {
-      Header: 'Pattern Title',
-      id: 'PatternTitle',
-      accessor: ({ patternId, patternTitle }) => ({ patternId, patternTitle }),
-      Cell: cell => (
-        <NavLink to={`${BASE_PATHS.PATTERN}/${cell.value.patternId}`}>
-          {cell.value.patternTitle}
-        </NavLink>
-      ),
-    },
-    {
-      Header: 'Description',
-      accessor: 'description',
-    },
-  ];
-  return (
-    <div className="ks-pattern-table">
-      <ReactTable
-        className="ks-pattern-table__table"
-        data={data}
-        // expands all rows. `expanded` takes an object like `{0: true, 1: true}` to show the first & second row as expanded
-        expanded={Object.keys(data).map((key, i) => ({
-          [i]: true,
-        }))}
-        columns={columns}
-        showPagination={false}
-        defaultPageSize={data.length}
-        SubComponent={({ original: { data: subData, patternId } }) => {
-          const pattern = patterns[patternId];
 
-          return (
-            <aside className="ks-pattern-table__pattern-details ks-u-grid">
-              <div>
-                <h3>{pattern.title || patternId}</h3>
-                <KsButtonGroup>
-                  <KsButton
-                    size="s"
-                    handleTrigger={() => {
-                      history.push(`${BASE_PATHS.PATTERN}/${patternId}`);
-                    }}
-                  >
-                    View
-                  </KsButton>
-                  <KsPopover
-                    trigger="click"
-                    content={
-                      <p>
-                        Are you sure?{' '}
-                        <KsButton
-                          kind="primary"
-                          emphasis="danger"
-                          size="s"
-                          handleTrigger={() => {
-                            dispatch(
-                              deletePattern({
-                                patternId: pattern.id,
-                              }),
-                            );
-                          }}
+  return (
+    <>
+      {data.map(({ data: subData, patternId }) => {
+        const pattern = patterns[patternId];
+
+        return (
+          <KsDetails
+            key={`pattern-${patternId}`}
+            titleContent={
+              <div className="pattern-table__item-header">
+                <div className="pattern-table__item-header__title">
+                  <Link to={`${BASE_PATHS.PATTERN}/${patternId}`}>
+                    {pattern.title || patternId}
+                  </Link>
+                </div>
+                <div className="pattern-table__item-header__statuses">
+                  {pattern.templates.map(template => {
+                    const status = templateStatuses.find(
+                      s => s.id === template.statusId,
+                    );
+
+                    return (
+                      status && (
+                        <KsPopover
+                          key={`${patternId}-${template.id}`}
+                          trigger="hover"
+                          content={
+                            <span>
+                              {template.templateLanguageId} Template Status:{' '}
+                              <strong>{status.title}</strong>
+                            </span>
+                          }
                         >
-                          Yes
-                        </KsButton>
-                      </p>
-                    }
-                  >
-                    <KsButton icon="delete" kind="standard" size="s">
-                      Delete
-                    </KsButton>
-                  </KsPopover>
-                </KsButtonGroup>
-                <div className="ks-u-margin-top--m">
+                          <StatusIcon status={status} />
+                        </KsPopover>
+                      )
+                    );
+                  })}
+                </div>
+              </div>
+            }
+          >
+            <div className="pattern-table__content">
+              <div>
+                {pattern.description && (
+                  <div className="pattern-table__content__description">
+                    <h4>Description</h4>
+                    <p>{pattern.description}</p>
+                  </div>
+                )}
+                <div className="pattern-table__content__thumbnail">
                   <TemplateThumbnail
                     patternId={patternId}
                     handleSelection={() => {
                       history.push(`${BASE_PATHS.PATTERN}/${patternId}`);
                     }}
+                    thumbnailSize={240}
                   />
                 </div>
               </div>
               <div>
+                <h4>Templates</h4>
                 <ReactTable
                   defaultPageSize={subData.length}
                   data={subData}
@@ -143,17 +121,17 @@ export const PatternTable: React.FC<Props> = ({ allPatterns }: Props) => {
                           return null;
                         }
                         return (
-                          <NavLink
-                            to={`${BASE_PATHS.PATTERN}/${patternId}/${cell.value.templateId}`}
-                          >
+                          <div>
                             <span
-                              className="ks-edit-template-demo__logo"
+                              className="pattern-table__content__language-icon"
                               dangerouslySetInnerHTML={{
                                 __html: renderer.meta.iconSvg,
                               }}
                             />
-                            {renderer.meta.title}
-                          </NavLink>
+                            <span className="pattern-table__content__language-title">
+                              {renderer.meta.title}
+                            </span>
+                          </div>
                         );
                       },
                     },
@@ -165,24 +143,18 @@ export const PatternTable: React.FC<Props> = ({ allPatterns }: Props) => {
                           s => s.id === cell?.value,
                         );
                         if (!status) {
-                          return null;
+                          return <p>Error: No Status Found</p>;
                         }
-                        return (
-                          <NavLink
-                            to={`${BASE_PATHS.PATTERN}/${patternId}/${cell.value.templateId}`}
-                          >
-                            <StatusIcon hasTitle status={status} />
-                          </NavLink>
-                        );
+                        return <StatusIcon hasTitle status={status} />;
                       },
                     },
                   ]}
                 />
               </div>
-            </aside>
-          );
-        }}
-      />
-    </div>
+            </div>
+          </KsDetails>
+        );
+      })}
+    </>
   );
 };

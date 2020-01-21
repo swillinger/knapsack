@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { convertColor } from '@knapsack/utils';
 import { Spinner } from '@knapsack/design-system';
-import { Details, KsSelect } from '../atoms';
+import { KsDetails, KsSelect } from '../atoms';
 import './color-contrast-block.scss';
 
 class ColorContrastBlock extends React.Component {
@@ -102,8 +102,7 @@ class ColorContrastBlock extends React.Component {
       return <Spinner />;
     }
     const colorBlocks = this.state.allResults.map(result => (
-      <Details key={result.bgColor.name}>
-        <summary>{result.bgColor.name}</summary>
+      <KsDetails key={result.bgColor.name} titleContent={result.bgColor.name}>
         <div
           className="ks-color-contrast-block__contrast-inner"
           key={result.bgColor.name}
@@ -198,7 +197,7 @@ class ColorContrastBlock extends React.Component {
             ))}
           </div>
         </div>
-      </Details>
+      </KsDetails>
     ));
     /* eslint-disable jsx-a11y/label-has-for */
     return (
@@ -331,8 +330,7 @@ class ColorContrastBlock extends React.Component {
           </p>
         </div>
         <br />
-        <Details>
-          <summary>WCAG Details</summary>
+        <KsDetails open titleContent="WCAG Details">
           <p>
             <a href="https://www.w3.org/TR/WCAG20/" target="blank">
               WCAG 2.0
@@ -342,7 +340,7 @@ class ColorContrastBlock extends React.Component {
             must be greater than 7:1 and large text ratio must be greater than
             4.5:1. Large text is defined as anything 14pt bold or higher.
           </p>
-        </Details>
+        </KsDetails>
       </div>
     );
   }

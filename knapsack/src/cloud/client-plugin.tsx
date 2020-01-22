@@ -1,23 +1,6 @@
-import Loadable from 'react-loadable';
-import { Spinner } from '@knapsack/design-system';
 import React from 'react';
 import { KsPlugin } from '@knapsack/core';
 
-const LoadableUserPage = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "user-page" */ './user-page').then(
-      ({ UserPage }) => UserPage,
-    ),
-  loading: Spinner,
-});
-
-export const LoadableProposeChange = Loadable({
-  loader: () =>
-    import(
-      /* webpackChunkName: "propose-change-page" */ './propose-change-page'
-    ).then(({ ProposeChangePage }) => ProposeChangePage),
-  loading: Spinner,
-});
 
 export function createCloudClientPlugin({
   store,
@@ -41,7 +24,7 @@ export function createCloudClientPlugin({
           title: 'Propose Change',
           navTitle: 'Propose Change',
           includeInPrimaryNav: true,
-          render: () => <LoadableProposeChange />,
+          Page: React.lazy(() => import('./propose-change-page')),
         });
       }
 
@@ -51,7 +34,7 @@ export function createCloudClientPlugin({
         section: username ? 'User' : '',
         navTitle: 'User',
         includeInPrimaryNav: true,
-        render: () => <LoadableUserPage />,
+        Page: React.lazy(() => import('./user-page')),
       });
 
       return pages;

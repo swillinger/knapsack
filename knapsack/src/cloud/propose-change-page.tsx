@@ -8,7 +8,7 @@ interface FormValues {
   message?: string;
 }
 
-export const ProposeChangePage: React.FC = () => {
+const ProposeChangePage: React.FC = () => {
   const dispatch = useDispatch();
   const canEdit = useSelector(s => s.userState.canEdit);
 
@@ -79,3 +79,5 @@ export const ProposeChangePage: React.FC = () => {
     </Formik>
   );
 };
+
+export default ProposeChangePage;

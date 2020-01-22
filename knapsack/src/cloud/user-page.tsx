@@ -22,7 +22,7 @@ import awsconfig from '../aws-exports';
 import { saveClientToken } from '../lib/user';
 import { useDispatch, useSelector, updateUser } from '../client/store';
 
-export const UserPage: React.FC = () => {
+const UserPage: React.FC = () => {
   const user = useSelector(s => s.userState.user);
   const dispatch = useDispatch();
   const { search } = useLocation();
@@ -53,3 +53,5 @@ export const UserPage: React.FC = () => {
     </section>
   );
 };
+
+export default UserPage;

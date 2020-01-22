@@ -26,7 +26,11 @@ export interface KsPlugin {
     title?: string;
     section?: string;
     includeInPrimaryNav?: boolean;
-    render: () => import('react').ReactNode;
+    /**
+     * A lazy loaded React component
+     * @example React.lazy(() => import('./page'))
+     */
+    Page: import('react').LazyExoticComponent<any>;
   }[];
 }
 

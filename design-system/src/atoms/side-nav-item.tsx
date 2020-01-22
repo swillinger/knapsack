@@ -7,6 +7,7 @@ import { Icon } from './icon';
 import { KsButton } from './button';
 import { KsPopover } from '../popover/popover';
 import { StatusIcon } from './status-icon';
+import { KsDeleteButton } from './delete-button';
 
 type Btn = React.PropsWithoutRef<JSX.IntrinsicElements['button']>;
 
@@ -114,11 +115,13 @@ export const SideNavItem: React.FC<Props> = ({
           hasChildren ? 'ks-side-nav-item__title-container--has-children' : '',
         )}
       >
-        {path && !isEditMode ? (
-          <NavLink to={path}>{title}</NavLink>
-        ) : (
-          <p>{title}</p>
-        )}
+        <div className="ks-side-nav-item__title-container__title">
+          {path && !isEditMode ? (
+            <NavLink to={path}>{title}</NavLink>
+          ) : (
+            <p>{title}</p>
+          )}
+        </div>
         {/* @todo wire up save functionality */}
         {canEditTitle && isEditMode && (
           <div className="ks-side-nav-item__edit-title-btn">
@@ -135,16 +138,26 @@ export const SideNavItem: React.FC<Props> = ({
         )}
 
         {canDelete && isEditMode && (
-          <div className="ks-side-nav-item__edit-title-btn">
-            <KsButton
-              handleTrigger={handleDelete}
-              kind="icon"
+          <div className="ks-side-nav-item__actions">
+            <KsDeleteButton
+              confirmationMessage={
+                <div>
+                  <p>
+                    Are you sure you want to delete the <strong>{title}</strong>{' '}
+                    pattern?
+                  </p>
+                  <p>
+                    <em>
+                      This can not be undone or even recovered by canceling
+                      navigation edits.
+                    </em>
+                  </p>
+                </div>
+              }
               size="s"
-              icon="delete"
               flush
-            >
-              Delete
-            </KsButton>
+              handleTrigger={handleDelete}
+            />
           </div>
         )}
       </div>

@@ -51,9 +51,13 @@ type Props = {
    */
   floating?: boolean;
   size?: keyof typeof SIZES;
+  /** Make the button a block level, full width element. Works with certain button kinds. */
+  isFullWidth?: boolean;
   /** Strips any default margin/padding, primarily works with certain kinds. */
   flush?: boolean;
+  /** Set an emphasis (currently only "danger" available). Emphasis works with certain kinds. */
   emphasis?: keyof typeof EMPHASSIS;
+  /** Use an icon with this button. Button kinds may handle this slightly differently. */
   icon?: keyof typeof Icons;
   tabIndex?: number;
   className?: string;
@@ -71,6 +75,7 @@ export const KsButton: React.FC<Props> = ({
   kind = KINDS.standard,
   floating = false,
   size = SIZES.m,
+  isFullWidth = false,
   flush = false,
   className = '',
   emphasis = EMPHASSIS.none,
@@ -85,6 +90,7 @@ export const KsButton: React.FC<Props> = ({
       [`ks-btn--size-${size}`]: true,
       [`ks-btn--emphasis-${emphasis}`]: true,
       'ks-btn--floating': floating,
+      'ks-btn--block': isFullWidth,
       'ks-btn--flush': flush,
       'ks-btn--active': active,
     },

@@ -48,3 +48,14 @@
     }
   }
 }
+
+.pattern-view-page__add-template-form {
+  background-color: var(--c-shade);
+  border: 1px solid var(--c-frame);
+  border-radius: var(--space-xs);
+  padding: var(--space-m);
+
+  h3 {
+    margin-bottom: var(--space-m);
+  }
+}

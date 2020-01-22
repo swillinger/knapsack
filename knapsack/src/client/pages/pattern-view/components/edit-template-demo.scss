@@ -2,16 +2,19 @@
   &__title {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    & > h5,
+    & > div {
+      display: flex;
+      align-items: center;
+    }
   }
   &__logo {
     display: flex;
     align-items: center;
-    margin-left: var(--space-xxs);
-    width: 20px;
-    height: 20px;
-  }
-  &__intro {
-    color: var(--c-text-subdued);
+    margin-right: var(--space-xxs);
+    width: var(--space-l);
+    height: var(--space-l);
   }
   &__form {
     margin-top: var(--space-m);

@@ -1,7 +1,12 @@
 import React, { useContext, useRef } from 'react';
 import cn from 'classnames';
 import shortid from 'shortid';
-import { Icon, KsButton, KsPopover } from '@knapsack/design-system';
+import {
+  Icon,
+  KsButton,
+  KsPopover,
+  KsDeleteButton,
+} from '@knapsack/design-system';
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
 import { useHistory } from 'react-router-dom';
@@ -187,7 +192,7 @@ const KsTemplateDemo: React.FC<Props> = ({ index, demo }: Props) => {
             <KsButton
               size="s"
               kind="icon"
-              icon="copy"
+              icon="duplicate"
               flush
               onClick={() => {
                 const newDemoId = shortid.generate();
@@ -211,13 +216,11 @@ const KsTemplateDemo: React.FC<Props> = ({ index, demo }: Props) => {
           </KsPopover>
         )}
         {canEdit && (
-          <KsButton
-            kind="icon"
-            emphasis="danger"
-            icon="delete"
+          <KsDeleteButton
+            confirmationMessage="Are you sure you want to delete this pattern demo?"
             size="s"
             flush
-            onClick={() => {
+            handleTrigger={() => {
               dispatch(
                 removeTemplateDemo({
                   patternId,
@@ -233,9 +236,7 @@ const KsTemplateDemo: React.FC<Props> = ({ index, demo }: Props) => {
                 );
               }
             }}
-          >
-            Delete Demo
-          </KsButton>
+          />
         )}
       </div>
       <div className="ks-template-demos__item__thumbnail-wrap">

@@ -24,7 +24,6 @@ import {
   useDispatch,
   updatePatternSlices,
   addTemplate,
-  deletePattern,
 } from '../../store';
 import ErrorCatcher from '../../utils/error-catcher';
 // import DosAndDonts from '../../components/dos-and-donts';
@@ -220,13 +219,7 @@ const PatternViewPage: React.FC<Props> = ({
         </header>
 
         {templatesList.length === 0 && (
-          <div
-            className="ks-u-shade-bg"
-            style={{
-              padding: 'var(--space-l)',
-              borderRadius: 'var(--radius-l)',
-            }}
-          >
+          <div className="pattern-view-page__add-template-form">
             <h3>Add Template</h3>
             <EditTemplateDemo
               handleSubmit={({ path, alias }) => {
@@ -240,13 +233,6 @@ const PatternViewPage: React.FC<Props> = ({
                 );
                 // delay a beat so server can be ready to render new template
                 setTimeout(() => setHasTemplates(true), 100);
-              }}
-              handleDelete={() => {
-                dispatch(
-                  deletePattern({
-                    patternId: pattern.id,
-                  }),
-                );
               }}
             />
           </div>

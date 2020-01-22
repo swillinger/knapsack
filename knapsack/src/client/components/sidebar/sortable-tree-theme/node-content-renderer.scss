@@ -4,6 +4,8 @@
 
   &__inner {
     flex: 1;
+    /* Hack to allow `text-overflow: ellipsis` on internal flex items */
+    min-width: 0;
   }
 }
 

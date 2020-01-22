@@ -1,6 +1,8 @@
 .ks-popover {
   &__children {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
   }
   &__box {
 

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import {
   KsButton,
   SchemaForm,
-  KsPopover,
   KsSvg,
+  KsDeleteButton,
 } from '@knapsack/design-system';
 import cn from 'classnames';
 import { JsonSchemaObject } from '@knapsack/core/types';
@@ -107,40 +107,20 @@ export const EditTemplateDemo: React.FC<Props> = ({
       style={{ maxWidth: maxWidth ? `${maxWidth}px` : '100%' }}
     >
       <div className="ks-edit-template-demo__content">
-        <h5 className="ks-edit-template-demo__title">
-          {title} Template
-          <KsSvg svg={iconSvg} className="ks-edit-template-demo__logo" />
+        <div className="ks-edit-template-demo__title">
+          <h5>
+            <KsSvg svg={iconSvg} className="ks-edit-template-demo__logo" />
+            <span>{title} Template</span>
+          </h5>
           {!isNewTemplate && handleDelete && (
-            <KsPopover
-              trigger="click"
-              content={
-                <p>
-                  Are you sure?{' '}
-                  <KsButton
-                    kind="primary"
-                    emphasis="danger"
-                    size="s"
-                    handleTrigger={handleDelete}
-                  >
-                    Yes
-                  </KsButton>
-                </p>
-              }
-            >
-              <KsButton
-                icon="delete"
-                kind="icon"
-                size="s"
-                flush
-                className="ks-edit-template-demo__delete"
-              />
-            </KsPopover>
+            <KsDeleteButton
+              confirmationMessage={`Are you sure you want to delete this ${title} template?`}
+              handleTrigger={handleDelete}
+              size="s"
+              flush
+            />
           )}
-        </h5>
-        <p className="ks-edit-template-demo__intro ks-u-body-small">
-          A template demo references is a reference to a pre-coded file, rather
-          than being built via the schema data editor.
-        </p>
+        </div>
 
         {data?.path && <KsFileButtons filePath={data?.path} />}
 

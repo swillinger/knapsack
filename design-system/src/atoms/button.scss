@@ -96,6 +96,11 @@
       vertical-align: top;
       margin-right: var(--space-xxxs);
     }
+
+    &.ks-btn--block {
+      display: block;
+      width: 100%;
+    }
   }
 
   &-cancel {
@@ -115,6 +120,11 @@
 
     &:active {
       color: var(--c-button-cancel-active);
+    }
+
+    &.ks-btn--block {
+      display: block;
+      width: 100%;
     }
   }
 

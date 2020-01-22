@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Icon, KsButton } from '@knapsack/design-system';
+import { Icon, KsButton, KsDeleteButton } from '@knapsack/design-system';
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
 import { InlineEditText } from '../../../../components/inline-edit';
@@ -118,9 +118,7 @@ export const KsSpecItem: React.FC<SpecItemProps> = ({
             alignItems: 'center',
           }}
         >
-          <KsButton
-            icon="delete"
-            kind="icon"
+          <KsDeleteButton
             flush
             size="s"
             handleTrigger={() => deleteItem(index)}

@@ -5,7 +5,7 @@ import {
   KsTextField,
   KsSelect,
   SelectOptionProps,
-  Icon,
+  KsDeleteButton,
 } from '@knapsack/design-system';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
@@ -211,14 +211,10 @@ export const KsSlotsForm: React.FC<Props> = ({
                                       Move Down
                                     </KsButton>
                                   )}
-                                  <KsButton
-                                    icon="delete"
-                                    kind="icon"
-                                    emphasis="danger"
+                                  <KsDeleteButton
                                     size="s"
                                     flush
-                                    onClick={() => arrayHelpers.remove(index)}
-                                    onKeyPress={() =>
+                                    handleTrigger={() =>
                                       arrayHelpers.remove(index)
                                     }
                                   />

@@ -1,10 +1,9 @@
 ---
 title: Design Tokens
 ---
-
 # **Warning: Doc out of date; below is for v1 (preserved for v2 inspiration)**
 
-Design tokens are named entities for identifying, storing, and accessing the most basic layer of a design system. Design tokens include colors, spacing, typography, animation and other values that make up a design language.
+Design tokens are named entities for identifying, storing, and accessing the most basic layer of a design system. Design tokens include colors, spacing, typography, animation and other values that make up a design language and are usually accessible in both Javascript and in SCSS.
 
 Assigning core design values to design tokens is an effective way to create a more scalable, maintainable, and intentional system.
 
@@ -70,7 +69,6 @@ const config = {
 };
 
 module.exports = config;
-
 ```
 
 ## Design Tokens From Style Dictionary
@@ -134,5 +132,4 @@ const config = {
 };
 
 module.exports = config;
-
 ```

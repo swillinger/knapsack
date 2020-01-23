@@ -29,10 +29,6 @@ const sidebarConfig = {
         },
         {
           type: 'doc',
-          id: 'intro/what-is-knapsack',
-        },
-        {
-          type: 'doc',
           id: 'intro/file-structure',
         },
         {

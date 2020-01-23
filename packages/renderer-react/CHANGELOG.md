@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.40](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.39...v2.0.0-beta.40) (2020-01-23)
+
+
+### Bug Fixes
+
+* **renderer-react:** handle multiple components in named slots ([11d7ca7](https://github.com/basaltinc/knapsack/commit/11d7ca7cd00ef58c65cbdeebbe95755070032557))
+
+
+
+
+
 # [2.0.0-beta.35](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.34...v2.0.0-beta.35) (2020-01-15)
 
 

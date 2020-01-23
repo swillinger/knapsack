@@ -1,6 +1,6 @@
 {
   "name": "@knapsack/renderer-react",
-  "version": "2.0.0-beta.35",
+  "version": "2.0.0-beta.40",
   "description": "Render React",
   "main": "dist/renderer-react.js",
   "types": "dist/renderer-react.d.ts",

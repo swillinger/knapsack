@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.40](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.39...v2.0.0-beta.40) (2020-01-23)
+
+
+### Bug Fixes
+
+* formatting ([7e634cd](https://github.com/basaltinc/knapsack/commit/7e634cd9e9077249cb51dbece14b81ff713116b5))
+* pattern settings gear ([35ca69c](https://github.com/basaltinc/knapsack/commit/35ca69cfb5a707eb74a0904443b244de09bedf54))
+* template settings delete should delete template, not pattern ([#371](https://github.com/basaltinc/knapsack/issues/371)) ([cc87644](https://github.com/basaltinc/knapsack/commit/cc876448953dee0fc30e8cb6e3e429ec019eae7e))
+
+
+### Features
+
+* pattern detail list view [#381](https://github.com/basaltinc/knapsack/issues/381) ([fbc388f](https://github.com/basaltinc/knapsack/commit/fbc388f90a8145acabdb1cbc24355b7f29207c73))
+* save pattern page view preference ([db2ff8c](https://github.com/basaltinc/knapsack/commit/db2ff8c2955463470a60cc57a61f67e479f09ed3))
+* style pass pattern list view ([7779080](https://github.com/basaltinc/knapsack/commit/777908097ac5a05b9444d62ad020c644b5b5f680))
+* update details pattern ([f95bca2](https://github.com/basaltinc/knapsack/commit/f95bca283e815afda460e0b36d6b8aedc67eafe2))
+
+
+
+
+
 # [2.0.0-beta.39](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.38...v2.0.0-beta.39) (2020-01-16)
 
 

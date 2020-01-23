@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.40](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.39...v2.0.0-beta.40) (2020-01-23)
+
+
+### Features
+
+* style pass pattern list view ([7779080](https://github.com/basaltinc/knapsack/commit/777908097ac5a05b9444d62ad020c644b5b5f680))
+* update details pattern ([f95bca2](https://github.com/basaltinc/knapsack/commit/f95bca283e815afda460e0b36d6b8aedc67eafe2))
+
+
+
+
+
 # [2.0.0-beta.39](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.38...v2.0.0-beta.39) (2020-01-16)
 
 **Note:** Version bump only for package @knapsack/example-bootstrap

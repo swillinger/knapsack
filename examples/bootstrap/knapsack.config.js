@@ -54,7 +54,7 @@ const config = {
     repoOwner: 'basaltinc',
     repoName: 'knapsack',
     repoRoot: join(__dirname, '../..'),
-    baseBranch: getGitBranch(),
+    baseBranch: getGitBranch() || 'develop',
     apiBase: 'https://d4kez41c5b.execute-api.us-west-2.amazonaws.com/Prod',
     // apiBase: 'http://127.0.0.1:3000',
   },

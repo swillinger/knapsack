@@ -103,6 +103,10 @@ const sidebarConfig = {
         },
         {
           type: 'doc',
+          id: 'guides/sidebar',
+        },
+        {
+          type: 'doc',
           id: 'guides/hosting',
         },
         {

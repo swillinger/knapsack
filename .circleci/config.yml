@@ -125,16 +125,12 @@ jobs:
           command: |
             cp docs-site/now.json docs-site/build
             npm i -g now
-            if [ "$CIRCLE_TAG" ] || [ "$CIRCLE_BRANCH" == "next" ]; then
+            if [ "$CIRCLE_TAG" ] || [ "$CIRCLE_BRANCH" == "next" ] || [ "$CIRCLE_BRANCH" == "develop" ]; then
               now deploy --scope=basalt --prod --token $ZEIT_TOKEN docs-site/build --local-config=./docs-site/build/now.json
             else
               now deploy --scope=basalt --target staging --token $ZEIT_TOKEN docs-site/build --local-config=./docs-site/build/now.json
             fi
             DEPLOY_URL=`./scripts/get-latest-deploy.js 'knapsack-docs'`
-            if [ "$CIRCLE_BRANCH" == "develop" ]; then
-              echo "Aliasing deploy: $DEPLOY_URL"
-              now alias set $DEPLOY_URL dev.knapsack.cloud --scope=basalt --token $ZEIT_TOKEN
-            fi
             echo "Adding GitHub check for DEPLOY_URL: $DEPLOY_URL"
             REPO_SLUG=basaltinc/knapsack GITHUB_TOKEN=$GH_TOKEN npx ci-utils gh-status --state success --url $DEPLOY_URL --description 'Docs Deploy' --context 'deploy/docs'
       # - run:

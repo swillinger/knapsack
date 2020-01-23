@@ -1,32 +1,23 @@
 ---
 title: Overview
-id: overview
 ---
 ## Welcome to Knapsack! ✨
 
 Knapsack is an open source, scalable platform ideal for multi-brand design systems. With Knapsack, you can get your own design system up and running quickly.
 
-## What is a design system? 
-The concept goes by many names you may have heard of: pattern library, atomic design, or design language. In essence a design system is a series of components that can be reused in different combinations. Design systems allow you to manage design at scale and to mix and match "design building blocks" to easily create a variety of experiences.
+## What is a design system?
+
+The concept goes by many names, some that you may have heard of include pattern library, atomic design, or design language. In essence a design system is a series of components that can be reused in different combinations. Design systems allow you to manage design at scale and to mix and match "design building blocks" to easily create a variety of experiences.
 
 ## History
 
-Knapsack is the brain child of one Evan Lovely, CTO at Basalt and co-maintainer of another open source project, Pattern Lab. Over the past few years, Evan and the rest of the Basalt team have gleaned new ideas from implementing design systems for several industries across the spectrum of their business. Examining different ways to improve their technique to serve large organizations to the fullest extent possible.
+Knapsack is the brain child of Evan Lovely, the CTO at Basalt and has worked on another open source project, Pattern Lab. Over the past few years, Evan and the rest of the Basalt team have gleaned new ideas from implementing design systems for several industries across the spectrum of their business. This has allowed the team to examine how to improve their techniques to best serve large organizations.
 
-What they found is the current tools on the market enforce an unnecessary ceiling for teams looking to build a robust and flexible design system. This barrier is commonly found by organizations that manage more than a few digital properties or sub-brands.
+It became apparent that tools on the market had enforced an unnecessary ceiling for teams looking to build a robust and flexible design system. This ends up being a common barrier for organizations managing more than a few digital properties or brands.
 
-Thus the earliest iteration of this project, Bedrock, was born. As it grew (and after a rather amusing situation with a product by the same name) we realized that our brand should be more in line with our goal. Knapsack was born out of a thought exercise known as "The Knapsack Problem".
+Thus, the earliest iteration of this project, Bedrock, was born. As it grew (and after a rather amusing situation with a product by the same name) we realized that our brand should be more in line with our goal. Knapsack was born out of a thought exercise known as "The Knapsack Problem".
 
-If you have a knapsack with a definite carrying capacity, and a set amount of objects each with a different size and weight, how do you optimize packing with the best configuration possible? This is what we aim to provide — the tools to navigate this scenario in the simplest terms for even the most complicated of combinations.
-
-## What is Knapsack?
-
-Knapsack is an API-first framework, and the foundation for your design system. This includes the ability to hold:
-
-* Coded components, organized, and language-agnostic
-* Documentation for Design Tokens, Brand Standards, Usage, and Version History Context
-* Page Builder, a prototyping function to display and assemble component variants into a full experience (great for tight iteration loops and on-the-fly creative brainstorms w/the broader DS team)
-* Flexible, open API allowing for integrations with design tools, documentation software, and project management systems
+The Knapsack Problem refers to having a knapsack that has a definite carrying capacity, along with and a set amount of objects each with a different size and weight. The question becomes, how do you optimize packing with the best configuration possible? This is what we aim to provide — the tools to navigate this scenario in the simplest terms for even the most complicated of combinations.
 
 ## Who uses Knapsack?
 

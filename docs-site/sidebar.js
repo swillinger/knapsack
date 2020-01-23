@@ -103,7 +103,7 @@ const sidebarConfig = {
         },
         {
           type: 'doc',
-          id: 'guides/sidebar',
+          id: 'guides/left-nav',
         },
         {
           type: 'doc',

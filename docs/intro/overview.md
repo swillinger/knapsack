@@ -38,8 +38,7 @@ Knapsack is primarily used by front end developers, but provides immediate benef
 
 After the components are created in Knapsack, the platform can be used every day to maintain, evolve, and prune your design system. Benefits of this adoption includes:
 
-\- Rapid implementation and modification of components, across all properties and brands
-
+- Rapid implementation and modification of components, across all properties and brands
 - Expand and prune your library through introduction and deprecation of patterns
 - Integrate sub-brands into the global design system at your own pace
 - Prototyping for Designers and Content Managers

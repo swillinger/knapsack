@@ -107,6 +107,10 @@ const sidebarConfig = {
         },
         {
           type: 'doc',
+          id: 'guides/pattern-edit-metadata',
+        },
+        {
+          type: 'doc',
           id: 'guides/hosting',
         },
         {

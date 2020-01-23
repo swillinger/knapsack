@@ -1,19 +1,20 @@
 import { RollupOptions, InputOption, OutputOptions } from 'rollup';
-
 import commonjs from '@rollup/plugin-commonjs';
 // import builtins from 'rollup-plugin-node-builtins';
 import image from '@rollup/plugin-image';
 import json from '@rollup/plugin-json';
 import babel from 'rollup-plugin-babel';
 import scss from 'rollup-plugin-scss';
+import externalGlobals from 'rollup-plugin-external-globals';
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import url from '@rollup/plugin-url';
 import path from 'path';
+import { DEFAULT_EXTENSIONS } from '@babel/core';
 
 const isProd = process.env.NODE_ENV === 'production';
 
-const extensions = ['.ts', '.tsx', '.js', '.jsx', '.mjs'];
+const extensions = ['.ts', '.tsx', ...DEFAULT_EXTENSIONS];
 
 /**
  * Either a function that takes an id and returns true (external) or false (not external), or an Array of module IDs that should remain external to the bundle.
@@ -50,6 +51,7 @@ export function createRollupConfig({
   external = externalAll,
   globals = {},
   cssOutputFile,
+  globalReact = true,
 }: {
   input: InputOption;
   distDir: string;
@@ -60,6 +62,8 @@ export function createRollupConfig({
    * Filename to write css to, can use `/` for subdirs
    */
   cssOutputFile?: string;
+  /** Is React on `window.React`? */
+  globalReact?: boolean;
 }) {
   const config: RollupOptions = {
     input,
@@ -71,6 +75,7 @@ export function createRollupConfig({
       chunkFileNames: '[name]-[hash].js',
       // sourcemap: 'inline',
       globals,
+      preferConst: true,
     },
     // preserveModules: true,
     external,
@@ -147,6 +152,11 @@ export function createRollupConfig({
           '**/*.woff2',
         ],
       }),
+      globalReact
+        ? externalGlobals({
+            react: 'React',
+          })
+        : null,
     ].filter(Boolean),
     onwarn(warning) {
       // Skip certain warnings

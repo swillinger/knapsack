@@ -25,9 +25,6 @@ export async function getMeta(config: KnapsackConfig): Promise<KnapsackMeta> {
     serverPort,
     knapsackVersion: version,
     cacheDir,
-    changelog: config.changelog
-      ? await readFile(config.changelog, 'utf8')
-      : null,
     version: config.version,
     hasKnapsackCloud: 'cloud' in config,
   };
@@ -52,6 +49,12 @@ export async function initAll(ksBrain: KnapsackBrain): Promise<KnapsackMeta> {
     }),
   );
 
+  if (config.plugins) {
+    await Promise.all(
+      config.plugins.filter(p => p.init).map(p => p.init(ksBrain)),
+    );
+  }
+
   log.info('Done: Initializing');
   return meta;
 }
@@ -67,7 +70,12 @@ export async function writeTemplateMeta({
 }): Promise<void> {
   const getTime = timer();
   const metaDir = join(distDir, 'meta');
-  await fs.emptyDir(metaDir);
+  try {
+    await fs.emptyDir(metaDir);
+  } catch (e) {
+    log.error('Could not empty the meta directory in the dist directory', e);
+    process.exit(1);
+  }
 
   await Promise.all(
     templateRenderers

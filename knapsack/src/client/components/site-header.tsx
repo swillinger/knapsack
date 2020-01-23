@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { plugins } from '@knapsack/core';
 import urlJoin from 'url-join';
 import { KsButton, KsPopover } from '@knapsack/design-system';
 import knapsackLogo from '@knapsack/design-system/src/assets/knapsack-logo-trans.svg';
+import { plugins } from '../plugins';
+import { Navs } from '../../schemas/plugins';
 import './site-header.scss';
 import { useSelector } from '../store';
 import { KsTemplateLanguageSelect } from './template-language-select';
@@ -12,7 +13,6 @@ export const SiteHeader: React.FC = () => {
   const settings = useSelector(s => s.settingsState.settings);
   const primaryNavItems = useSelector(s => s.navsState.primary);
   const canEdit = useSelector(s => s.userState.canEdit);
-  const hasChangelog = useSelector(s => !!s.metaState?.meta.changelog);
   const hasMultipleTemplateRenderers = useSelector(
     s => Object.keys(s.patternsState?.renderers ?? {}).length > 1,
   );
@@ -36,11 +36,24 @@ export const SiteHeader: React.FC = () => {
       <li>
         <a href="/demo-urls">Demo URLs</a>
       </li>
-      {hasChangelog && (
-        <li>
-          <NavLink to="/changelog">Changelog</NavLink>
-        </li>
-      )}
+      {plugins.getPlugins().map(plugin => {
+        if (!plugin.addPages) {
+          return null;
+        }
+        return plugin
+          .addPages()
+          .filter(page => page?.navItem?.nav === Navs.primarySub)
+          .map(page => {
+            const path = urlJoin('/', plugin.id, page.path);
+            return (
+              <li key={path} className="ks-site-header__nav-item">
+                <NavLink to={path} className="ks-site-header__nav-link">
+                  {page.navItem.title}
+                </NavLink>
+              </li>
+            );
+          });
+      })}
     </ul>
   );
 
@@ -76,13 +89,13 @@ export const SiteHeader: React.FC = () => {
           }
           return plugin
             .addPages()
-            .filter(page => page.includeInPrimaryNav)
+            .filter(page => page?.navItem?.nav === Navs.primary)
             .map(page => {
               const path = urlJoin('/', plugin.id, page.path);
               return (
                 <li key={path} className="ks-site-header__nav-item">
                   <NavLink to={path} className="ks-site-header__nav-link">
-                    {page.navTitle}
+                    {page.navItem.title}
                   </NavLink>
                 </li>
               );

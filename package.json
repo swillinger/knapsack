@@ -14,7 +14,7 @@
     "build:pkgs-docs": "lerna run build:docs",
     "build:private": "lerna run --stream --bail --concurrency 1 build --scope @knapsack/example-bootstrap",
     "build:storybook": "yarn workspace @knapsack/design-system build:storybook",
-    "build:types": "tsc --build knapsack packages/{core,build-tools}",
+    "build:types": "tsc --build knapsack packages/{core,build-tools,plugin-changelog-md}",
     "clean": "lerna run clean",
     "commit": "git-cz",
     "cypress": "cypress",
@@ -142,7 +142,7 @@
     "stylelint-value-no-unknown-custom-properties": "^2.0.0",
     "typedoc": "^0.15.6",
     "typedoc-plugin-internal-external": "^2.0.2",
-    "typescript": "^3.7.4",
+    "typescript": "^3.7.5",
     "typescript-eslint-parser": "^22.0.0"
   },
   "repository": {

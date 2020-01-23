@@ -7,6 +7,9 @@ const {
 const { KnapsackReactRenderer } = require('@knapsack/renderer-react');
 const webpack = require('webpack');
 const babelConfig = require('@knapsack/babel-config/es');
+const {
+  configure: configureChangelogMd,
+} = require('@knapsack/plugin-changelog-md');
 const webpackConfig = require('./webpack.config');
 const { getGitBranch } = require('@knapsack/app/dist/server/server-utils');
 const designTokens = require('./assets/design-tokens/dist/knapsack-design-tokens');
@@ -22,7 +25,6 @@ const config = {
   public: './public',
   data: './data',
   version,
-  changelog: './CHANGELOG.md',
   templateRenderers: [
     new KnapsackReactRenderer({
       webpackConfig,
@@ -49,6 +51,11 @@ const config = {
       },
     }),
     new HtmlRenderer(),
+  ],
+  plugins: [
+    configureChangelogMd({
+      changelogPath: './CHANGELOG.md',
+    }),
   ],
   cloud: {
     repoOwner: 'basaltinc',

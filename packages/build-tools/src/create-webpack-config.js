@@ -11,6 +11,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { resolve } = require('path');
 
 const isProd = process.env.NODE_ENV === 'production';
+const babelConfig = require.resolve('@knapsack/babel-config/es');
 
 /**
  * @private
@@ -72,7 +73,11 @@ function createWebPackConfig({
             {
               loader: require.resolve('babel-loader'),
               options: {
-                extends: require.resolve('@knapsack/babel-config/es'),
+                extends: babelConfig,
+                babelrc: false,
+                plugins: [
+                  ['babel-plugin-smart-webpack-import', { hashes: true }],
+                ],
                 cacheDirectory: true,
               },
             },

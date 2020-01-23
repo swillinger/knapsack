@@ -25,7 +25,6 @@ import { DndContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-import { connectToContext } from '../../context';
 import PageWithSidebar from '../../layouts/page-with-sidebar';
 import PlaygroundSlice from './page-builder-slice';
 import PageBuilderStartSliceInsert from './page-builder-start-slice-insert';
@@ -522,6 +521,4 @@ Playground.propTypes = {
   id: PropTypes.string.isRequired, // @todo save/show playgrounds based on `id`
 };
 
-export default DndContext(HTML5Backend)(
-  connect(mapStateToProps)(connectToContext(Playground)),
-);
+export default DndContext(HTML5Backend)(connect(mapStateToProps)(Playground));

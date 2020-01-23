@@ -1,0 +1,3 @@
+{
+  "extends": "@knapsack/babel-config/es"
+}

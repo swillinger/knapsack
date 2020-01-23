@@ -15,8 +15,8 @@
  with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 
-import React, { useState, useRef } from 'react';
-import { CodeBlock } from '@knapsack/design-system';
+import React, { useState, useRef, Suspense, lazy } from 'react';
+import { CodeBlock, CircleSpinner } from '@knapsack/design-system';
 import { useHistory } from 'react-router-dom';
 import deepEqual from 'deep-equal';
 import {
@@ -41,8 +41,10 @@ import {
   CurrentTemplateContext,
   CurrentTemplateData,
 } from './current-template-context';
-import { TemplateHeader, KsDemoStage, KsSpecDocs } from './components';
+import { TemplateHeader, KsDemoStage } from './components';
 import { KsTemplateDemos } from './components/template-demos';
+
+const KsSpecDocs = lazy(() => import('./components/spec-docs'));
 
 export type Props = {
   /**
@@ -331,7 +333,11 @@ const TemplateView: React.FC<Props> = ({
             }}
           />
         )}
-        {isVerbose && <KsSpecDocs />}
+        {isVerbose && (
+          <Suspense fallback={<CircleSpinner />}>
+            <KsSpecDocs />
+          </Suspense>
+        )}
       </article>
     </CurrentTemplateContext.Provider>
   );

@@ -13,9 +13,19 @@ const SAVE_TO_SERVER_FAIL = 'knapsack/meta/SAVE_TO_SERVER_FAIL';
 
 export interface MetaState {
   meta?: import('../../schemas/misc').KnapsackMeta;
+  plugins: {
+    id: string;
+    /**
+     * If `loadContent()` hook was implemented, then an API endpoint is set up and waiting for us
+     */
+    hasContent: boolean;
+    clientPluginPath?: string;
+  }[];
 }
 
-const initialState: MetaState = {};
+const initialState: MetaState = {
+  plugins: [],
+};
 
 interface SaveToServerRequestAction extends Action {
   type: typeof SAVE_TO_SERVER_REQUEST;

@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": "./src",
+    "outDir": "dist",
+    "baseUrl": "./"
+  },
+  "typeAcquisition": {
+    "enable": true
+  },
+  "references": [{ "path": "../core" }]
+}

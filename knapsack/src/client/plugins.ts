@@ -15,26 +15,13 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import global from 'global';
-
-export interface KsPlugin {
-  id: string;
-  title?: string;
-  description?: string;
-  addPages?: () => {
-    path: string;
-    navTitle: string;
-    title?: string;
-    section?: string;
-    includeInPrimaryNav?: boolean;
-    render: () => import('react').ReactNode;
-  }[];
-}
+import { KsClientPlugin } from '../schemas/plugins';
 
 /**
  * Plugins are internal alpha only for now, continued work on them with probably frequent API changes will happen until we feel confident in external use in the future.
  */
 class PluginStore {
-  plugins: Record<string, KsPlugin>;
+  plugins: Record<string, KsClientPlugin>;
 
   homePage: any;
 
@@ -46,16 +33,16 @@ class PluginStore {
   /**
    * Register Knapsack plugin
    */
-  register(plugin?: KsPlugin): boolean {
-    if (plugin) {
-      const isInitialRegistration = !(plugin.id in this.plugins);
-      this.plugins[plugin.id] = plugin;
-      // console.log(`plugin registered`, plugin);
-      return isInitialRegistration;
+  register(plugin: KsClientPlugin): void {
+    if (plugin.id in this.plugins) {
+      throw new Error(
+        `Plugin with id "${plugin.id}" has already been registered.`,
+      );
     }
+    this.plugins[plugin.id] = plugin;
   }
 
-  getPlugins(): KsPlugin[] {
+  getPlugins(): KsClientPlugin[] {
     return Object.values(this.plugins);
   }
 
@@ -63,6 +50,7 @@ class PluginStore {
    * @param {object} options - Options to pass in
    * @param {Function} options.render - Render function that pass props to custom component
    * @return {void} - Sets the Home page
+   * @deprecated
    */
   setHomePage({ render }) {
     this.homePage = { render };

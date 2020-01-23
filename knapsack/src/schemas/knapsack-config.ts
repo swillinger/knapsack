@@ -1,5 +1,6 @@
 import { KnapsackDesignToken } from '@knapsack/core/types';
 import { KsCloudConfig, KnapsackFile } from '@knapsack/core/dist/cloud';
+import { KsServerPlugin } from './plugins';
 import {
   KnapsackPattern,
   KnapsackPatternTemplate,
@@ -142,7 +143,7 @@ export interface KnapsackConfig {
       tokens: KnapsackDesignToken[];
     };
   };
-  changelog?: string;
+  plugins?: KsServerPlugin<any>[];
   version?: string;
   cloud?: KsCloudConfig;
 }

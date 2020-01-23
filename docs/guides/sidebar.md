@@ -1,5 +1,8 @@
 ---
 title: Organizing Sidebar
 ---
+\- main concepts
 
-@todo
+\-- Decoupled from folder stuctures
+
+\- Click edit

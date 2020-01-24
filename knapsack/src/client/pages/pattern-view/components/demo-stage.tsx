@@ -81,7 +81,7 @@ export const KsDemoStage: React.FC<Props> = ({
   } = useContext(CurrentTemplateContext);
   const dispatch = useDispatch();
   const [props, setProps] = useValueDebounce(
-    isDataDemo(demo) ? demo?.data?.props ?? {} : {},
+    isDataDemo(demo) ? demo?.data?.props ?? null : null,
     handlePropsChange,
   );
 
@@ -186,10 +186,9 @@ export const KsDemoStage: React.FC<Props> = ({
                 <h4>Props</h4>
                 <SchemaForm
                   schema={spec.props}
-                  formData={props}
+                  formData={props ?? {}}
                   onChange={({ formData }) => {
                     setProps(formData);
-                    // handlePropsChange(formData);
                   }}
                   customFields={{ FunctionField }}
                 />

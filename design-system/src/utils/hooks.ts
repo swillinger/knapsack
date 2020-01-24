@@ -4,9 +4,10 @@ import deepEqual from 'deep-equal';
 
 /**
  * Creates a duplicate internal state, so we can preserve instant value editing while debouncing top-level state updates that are slow
+ * Warning: passing `{}` as `globalVal` will cause infinite loop since `{} !== {}` (use in `useEffect` dependency array)
+ * Borrowed with appreciation from `react-view`
  * @example
  * const [code, setCode] = useValueDebounce<string>(globalCode, handleChange);
- * Borrowed with appreciation from `react-view`
  */
 export function useValueDebounce<T>(
   globalVal: T,

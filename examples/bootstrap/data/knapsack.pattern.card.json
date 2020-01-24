@@ -53,12 +53,12 @@
                 {
                   "patternId": "button",
                   "templateId": "react",
-                  "demoId": "secondary"
+                  "demoId": "VcJlszkM"
                 }
               ]
             },
             "props": {
-              "textAlign": "right",
+              "textAlign": "left",
               "cardTitle": "Hi everyone!",
               "cardBody": "Some quick example text to build on the card title and make up the bulk of the card's content.",
               "imgSrc": "/images/demoImg2.jpg",
@@ -121,7 +121,7 @@
                 {
                   "patternId": "button",
                   "templateId": "react",
-                  "demoId": "Ib85UZzPs"
+                  "demoId": "VcJlszkM"
                 }
               ]
             },

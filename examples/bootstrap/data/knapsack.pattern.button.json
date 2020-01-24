@@ -73,6 +73,10 @@
               "description": "This is sick",
               "typeof": "function",
               "tsType": "() => void"
+            },
+            "isDark": {
+              "description": "Should this dark background with light text?",
+              "type": "boolean"
             }
           }
         }
@@ -84,13 +88,13 @@
           "title": "Primary style",
           "description": "Here is how what to use for the main call to action, try to limit these per page.",
           "data": {
-            "slots": { "children": [] },
+            "slots": { "children": ["Text"] },
             "props": {
-              "type": "primary",
-              "size": "md",
+              "type": "secondary",
+              "size": "sm",
               "disabled": false,
               "outlined": false,
-              "handleClick": "() => alert('hi')"
+              "handleClick": "() => alert('Hello Stephen')"
             }
           }
         },
@@ -123,9 +127,24 @@
             },
             "slots": { "children": ["Cancel"] }
           }
+        },
+        "VcJlszkM": {
+          "id": "VcJlszkM",
+          "title": "Big Primary",
+          "description": "A description",
+          "type": "data",
+          "data": {
+            "props": {
+              "type": "primary",
+              "size": "lg",
+              "disabled": false,
+              "outlined": false
+            },
+            "slots": { "children": ["You should click me!"] }
+          }
         }
       },
-      "demos": ["primary", "secondary", "Ib85UZzPs"]
+      "demos": ["VcJlszkM", "primary", "secondary", "Ib85UZzPs"]
     },
     {
       "title": "Twig",
@@ -286,7 +305,12 @@
           "title": "main",
           "type": "data",
           "data": {
-            "props": { "size": "md", "type": "primary" },
+            "props": {
+              "size": "lg",
+              "type": "primary",
+              "disabled": false,
+              "outlined": false
+            },
             "slots": { "default": ["Some Button Text"] }
           }
         },
@@ -310,7 +334,7 @@
         }
       },
       "demos": ["main", "Nayeue1b", "asdf"],
-      "statusId": "inProgress"
+      "statusId": "needs-dev"
     },
     {
       "title": "Bootstrap - HTML",

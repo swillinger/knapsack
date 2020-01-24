@@ -84,7 +84,7 @@
           "title": "Primary style",
           "description": "Here is how what to use for the main call to action, try to limit these per page.",
           "data": {
-            "slots": { "children": [] },
+            "slots": { "children": ["Text"] },
             "props": {
               "type": "primary",
               "size": "md",

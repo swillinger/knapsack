@@ -56,6 +56,76 @@
       "demos": [],
       "spec": {},
       "statusId": "ready"
+    },
+    {
+      "id": "react",
+      "path": "../assets/patterns/alert/alert.tsx",
+      "templateLanguageId": "react",
+      "statusId": "ready",
+      "assetSetIds": [],
+      "demosById": {
+        "main": {
+          "id": "main",
+          "title": "Main",
+          "type": "data",
+          "data": {
+            "props": { "type": "primary" },
+            "slots": {
+              "message": [
+                "My message Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+              ]
+            }
+          }
+        },
+        "uJcuUQAh": {
+          "id": "uJcuUQAh",
+          "title": "With Footer CTA",
+          "type": "data",
+          "data": {
+            "props": { "type": "primary" },
+            "slots": {
+              "message": [
+                "My message Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+              ],
+              "footer": [
+                {
+                  "patternId": "button",
+                  "templateId": "react",
+                  "demoId": "primary"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "demos": ["main", "uJcuUQAh"],
+      "spec": {
+        "slots": {
+          "message": { "title": "message" },
+          "footer": { "title": "footer" }
+        },
+        "props": {
+          "$schema": "http://json-schema.org/draft-07/schema",
+          "description": "Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages.",
+          "type": "object",
+          "required": ["type"],
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "primary",
+                "secondary",
+                "danger",
+                "warning",
+                "alert",
+                "light",
+                "dark"
+              ],
+              "default": "primary"
+            }
+          }
+        }
+      }
     }
   ],
   "description": "Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages."

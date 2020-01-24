@@ -8,28 +8,23 @@ type Data = {
 
 export const markdownSlice: Slice<Data> = {
   id: 'markdown-slice',
-  title: 'Markdown',
-  render: props => <MdBlock md={props.data.md} key={props.data.md} />,
-  schema: {
-    title: 'Markdown',
-    type: 'object',
-    required: ['md'],
-    properties: {
-      md: {
-        type: 'string',
-        title: 'Markdown content',
-      },
-    },
-  },
-  uiSchema: {
-    md: {
-      'ui:widget': 'textarea',
-      'ui:options': {
-        rows: 15,
-      },
-    },
+  title: 'Text',
+  render: ({ isEditing, setSliceData, data }) => {
+    return (
+      <MdBlock
+        md={data.md}
+        handleChange={md => setSliceData({ md })}
+        isEditorShown={isEditing}
+      />
+    );
   },
   initialData: {
-    md: 'Some **markdown** here',
+    md: `
+# A Heading
+
+- A list of
+- Things to
+- Say about this
+    `.trim(),
   },
 };

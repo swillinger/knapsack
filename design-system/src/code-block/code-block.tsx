@@ -6,6 +6,7 @@ export {
   availableLanguages,
   languageList,
   isLanguageSupported,
+  CodeSnippet,
 } from './pretty-code/pretty-code';
 
 type Props = {

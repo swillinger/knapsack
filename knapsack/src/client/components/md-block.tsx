@@ -15,8 +15,8 @@
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import marked from 'marked';
-import { useValueDebounce } from '@knapsack/design-system';
+import { useValueDebounce, CodeSnippet } from '@knapsack/design-system';
+import ReactMarkdown from 'react-markdown';
 import { SuspenseLoader } from './suspense-loader';
 import './md-block.scss';
 import 'easymde/dist/easymde.min.css';
@@ -62,7 +62,14 @@ const MdBlock: React.FC<Props> = ({
         </SuspenseLoader>
       )}
       {!isEditorShown && (
-        <div dangerouslySetInnerHTML={{ __html: marked.parse(md.trim()) }} />
+        <ReactMarkdown
+          source={md.trim()}
+          renderers={{
+            code: ({ language, value }) => (
+              <CodeSnippet code={value} language={language} />
+            ),
+          }}
+        />
       )}
     </div>
   );

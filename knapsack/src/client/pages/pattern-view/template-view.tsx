@@ -325,9 +325,9 @@ const TemplateView: React.FC<Props> = ({
           <MdBlock
             md={readme}
             key={`${id}-${templateId}`}
-            isEditable={permissions.includes('write')}
+            isEditorShown={permissions.includes('write')}
             title="Documentation (not wired up to save right now)"
-            handleSave={newReadme => {
+            handleChange={newReadme => {
               // @todo save it
               console.log('handleSave on readme called', newReadme);
             }}

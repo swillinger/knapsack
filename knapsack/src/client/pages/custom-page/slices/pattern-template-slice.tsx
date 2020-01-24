@@ -4,7 +4,6 @@ import { SchemaForm } from '@knapsack/design-system';
 import TemplateView, {
   Props as TemplateViewProps,
 } from '../../pattern-view/template-view';
-import { gqlQuery } from '../../../data';
 import { Slice, SliceRenderParams } from './types';
 import { useSelector } from '../../../store';
 

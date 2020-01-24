@@ -14,65 +14,56 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-import React, { useState } from 'react';
+import React from 'react';
 import marked from 'marked';
-import { KsButton } from '@knapsack/design-system';
+import { useValueDebounce } from '@knapsack/design-system';
+import { SuspenseLoader } from './suspense-loader';
 import './md-block.scss';
+import 'easymde/dist/easymde.min.css';
+
+// https://github.com/RIP21/react-simplemde-editor
+const SimpleMDE = React.lazy(() => import('react-simplemde-editor'));
 
 type Props = {
   md: string;
   title?: string;
-  handleSave?: (md: string) => void;
-  isEditable?: boolean;
+  handleChange?: (md: string) => void;
+  isEditorShown?: boolean;
 };
 
-const MdBlock: React.FC<Props> = (props: Props) => {
-  const { title, isEditable, md: initialMd, handleSave } = props;
-  const [md, setMd] = useState(initialMd);
-  const [editing, setEditing] = useState(false);
-
+const MdBlock: React.FC<Props> = ({
+  title,
+  md: initialMd,
+  handleChange,
+  isEditorShown,
+}: Props) => {
+  const [md, setMd] = useValueDebounce(initialMd, handleChange);
   if (!md) return null;
-  const html = marked.parse(md.trim());
-  let editArea;
-
-  if (editing && isEditable) {
-    editArea = (
-      <textarea
-        value={md}
-        onChange={e => setMd(e.target.value)}
-        style={{
-          width: '50%',
-        }}
-      />
-    );
-  }
 
   return (
     <div className="ks-md-block">
       <div className="ks-md-block__documentation-header">
         {title && <h4>{title}</h4>}
-        {isEditable && (
-          <div style={{ marginLeft: 'auto' }}>
-            <KsButton
-              onClick={() => {
-                if (editing && handleSave) {
-                  handleSave(md);
-                }
-                setEditing(prevEditing => !prevEditing);
-              }}
-            >
-              <>{editing ? 'Save' : 'Edit'}</>
-            </KsButton>
-          </div>
-        )}
       </div>
-      <div style={{ marginBottom: '10px', display: 'flex' }}>
-        <div
-          dangerouslySetInnerHTML={{ __html: html }}
-          style={{ width: editing ? '50%' : '100%' }}
-        />
-        {editArea}
-      </div>
+      {isEditorShown && (
+        <SuspenseLoader>
+          <SimpleMDE
+            onChange={value => {
+              setMd(value);
+            }}
+            value={md}
+            // https://github.com/Ionaru/easy-markdown-editor#configuration
+            options={{
+              // autoDownloadFontAwesome: false,
+              indentWithTabs: false,
+              promptURLs: true,
+            }}
+          />
+        </SuspenseLoader>
+      )}
+      {!isEditorShown && (
+        <div dangerouslySetInnerHTML={{ __html: marked.parse(md.trim()) }} />
+      )}
     </div>
   );
 };

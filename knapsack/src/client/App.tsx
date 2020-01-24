@@ -29,6 +29,8 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import urlJoin from 'url-join';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
+import LogRocket from 'logrocket';
+import setupLogRocketReact from 'logrocket-react';
 import { plugins } from './plugins';
 import awsconfig from '../aws-exports';
 import 'react-sortable-tree/style.css';
@@ -53,6 +55,10 @@ const CustomPage = lazy(() => import('./pages/custom-page/custom-page'));
 const PluginPage = lazy(() => import('./pages/plugin-page'));
 const BadRoute = lazy(() => import('./pages/bad-route'));
 const PageWithSidebar = lazy(() => import('./layouts/page-with-sidebar'));
+
+LogRocket.init('lkqvxk/knapsack');
+setupLogRocketReact(LogRocket);
+console.log('hi');
 
 Amplify.configure(awsconfig);
 // Amplify.Logger.LOG_LEVEL = 'DEBUG';

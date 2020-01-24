@@ -10,6 +10,7 @@ import {
   shallowEqual,
 } from 'react-redux';
 import thunk from 'redux-thunk';
+import LogRocket from 'logrocket';
 import deepEqual from 'deep-equal';
 import { localStorageMiddleware } from './utils';
 import settingsState from './settings';
@@ -58,7 +59,12 @@ const composeEnhancers =
 /* eslint-enable no-underscore-dangle */
 
 const rootEnhancer = composeEnhancers(
-  applyMiddleware(thunk, localStorageMiddleware, autoSaveMiddleware),
+  applyMiddleware(
+    thunk,
+    localStorageMiddleware,
+    autoSaveMiddleware,
+    LogRocket.reduxMiddleware(),
+  ),
 );
 
 /**

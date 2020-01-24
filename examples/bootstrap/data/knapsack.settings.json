@@ -1,1 +1,6 @@
-{ "title": "Knapsack Demo", "subtitle": "Build it in Knapsack", "slogan": "" }
+{
+  "parentBrand": {},
+  "title": "Knapsack Bootstrap Demo",
+  "subtitle": "Build it in Knapsack",
+  "slogan": ""
+}

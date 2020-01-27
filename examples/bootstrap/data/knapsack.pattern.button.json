@@ -11,7 +11,7 @@
       "id": "react",
       "templateLanguageId": "react",
       "path": "../assets/patterns/button/button.tsx",
-      "statusId": "ready",
+      "statusId": "needs-dev",
       "assetSetIds": ["bootstrap"],
       "spec": {
         "slots": {
@@ -86,8 +86,8 @@
           "data": {
             "slots": { "children": ["Text"] },
             "props": {
-              "type": "primary",
-              "size": "md",
+              "type": "warning",
+              "size": "lg",
               "disabled": false,
               "outlined": false,
               "handleClick": "() => alert('hi')"

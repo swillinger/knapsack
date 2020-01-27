@@ -11,7 +11,7 @@
       "id": "react",
       "templateLanguageId": "react",
       "path": "../assets/patterns/card/card.tsx",
-      "statusId": "inProgress",
+      "statusId": "needs-dev",
       "assetSetIds": ["bootstrap"],
       "spec": {
         "slots": {
@@ -58,8 +58,8 @@
               ]
             },
             "props": {
-              "textAlign": "right",
-              "cardTitle": "Hi everyone!",
+              "textAlign": "center",
+              "cardTitle": "Hello",
               "cardBody": "Some quick example text to build on the card title and make up the bulk of the card's content.",
               "imgSrc": "/images/demoImg2.jpg",
               "imgAlt": "Nature Picture"
@@ -127,7 +127,7 @@
             },
             "props": {
               "textAlign": "center",
-              "cardTitle": "Are You Sure?",
+              "cardTitle": "Are You Sure?!",
               "imgAlt": "Nature Picture"
             }
           }
@@ -154,7 +154,7 @@
           }
         }
       },
-      "demos": ["primary", "oJ7Sy5zh", "1Rbqal5n", "kq6_gva2", "guoWqGd1"]
+      "demos": ["primary", "1Rbqal5n", "kq6_gva2", "oJ7Sy5zh", "guoWqGd1"]
     },
     {
       "title": "Web Component",

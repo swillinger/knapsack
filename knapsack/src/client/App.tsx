@@ -58,7 +58,6 @@ const PageWithSidebar = lazy(() => import('./layouts/page-with-sidebar'));
 
 LogRocket.init('lkqvxk/knapsack');
 setupLogRocketReact(LogRocket);
-console.log('hi');
 
 Amplify.configure(awsconfig);
 // Amplify.Logger.LOG_LEVEL = 'DEBUG';

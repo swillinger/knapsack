@@ -192,6 +192,10 @@ export function getApiRoutes({
       if (results.ok) {
         res.send(wrapHtml ? results.wrappedHtml : results.html);
       } else {
+        let demo;
+        if (dataId) {
+          demo = memDb.getData(dataId);
+        }
         log.error(`Error rendering template`, {
           patternId,
           templateId,
@@ -200,7 +204,9 @@ export function getApiRoutes({
           isInIframe,
           assetSetId,
           message: results.message,
+          demo,
         });
+        console.log(); // empty line
         res.send(results.message);
       }
     });

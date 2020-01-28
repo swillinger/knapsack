@@ -10,6 +10,8 @@ import { CustomPages } from '../server/custom-pages';
 import { DesignTokens } from '../server/design-tokens';
 import { AssetSets } from '../server/asset-sets';
 import { KnapsackBrain, KnapsackConfig } from '../schemas/main-types';
+import { configure as configureCloudPlugin } from '../cloud/server-plugin';
+import { configure as configureAppPlugin } from './app-plugin';
 
 let isReady = false;
 
@@ -53,6 +55,12 @@ export function bootstrap(
   const customPages = new CustomPages({ dataDir: config.data });
   const navs = new Navs({ dataDir: config.data });
   const tokens = new DesignTokens(config.designTokens);
+
+  config.plugins = [
+    ...(config.plugins ?? []),
+    configureCloudPlugin(config.cloud),
+    configureAppPlugin(),
+  ];
 
   brain = {
     patterns,

@@ -11,7 +11,7 @@
       "id": "react",
       "templateLanguageId": "react",
       "path": "../assets/patterns/button/button.tsx",
-      "statusId": "ready",
+      "statusId": "inProgress",
       "assetSetIds": ["bootstrap"],
       "spec": {
         "slots": {
@@ -86,8 +86,8 @@
           "data": {
             "slots": { "children": ["Text"] },
             "props": {
-              "type": "primary",
-              "size": "md",
+              "type": "success",
+              "size": "lg",
               "disabled": false,
               "outlined": false,
               "handleClick": "() => alert('hi')"
@@ -123,9 +123,25 @@
             },
             "slots": { "children": ["Cancel"] }
           }
+        },
+        "w8TaP5ho": {
+          "id": "w8TaP5ho",
+          "type": "data",
+          "title": "Read More CTA",
+          "description": "Here is how what to use for the main call to action, try to limit these per page.",
+          "data": {
+            "slots": { "children": ["Read More"] },
+            "props": {
+              "type": "primary",
+              "size": "lg",
+              "disabled": false,
+              "outlined": false,
+              "handleClick": "() => alert('hi')"
+            }
+          }
         }
       },
-      "demos": ["primary", "secondary", "Ib85UZzPs"]
+      "demos": ["w8TaP5ho", "primary", "secondary", "Ib85UZzPs"]
     },
     {
       "title": "Twig",

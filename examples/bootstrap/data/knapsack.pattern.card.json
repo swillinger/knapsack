@@ -225,7 +225,8 @@
           }
         }
       },
-      "demos": ["primary"]
+      "demos": ["primary"],
+      "statusId": "needs-dev"
     },
     {
       "title": "Twig",
@@ -324,7 +325,8 @@
       "assetSetIds": [],
       "demosById": {},
       "demos": [],
-      "spec": {}
+      "spec": {},
+      "statusId": "ready"
     }
   ],
   "slices": []

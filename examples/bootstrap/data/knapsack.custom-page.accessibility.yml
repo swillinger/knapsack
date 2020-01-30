@@ -69,7 +69,7 @@ slices:
         need to also be conveyed to non-visual users.
 
 
-        ```
+        ```html
 
         <p class="text-danger">
           <span class="sr-only">Danger: </span>
@@ -85,8 +85,12 @@ slices:
         keyboard users).
 
 
-        `<a class="sr-only sr-only-focusable" href="#content">Skip to main
-        content</a>`
+        ```html
+
+        <a class="sr-only sr-only-focusable" href="#content">Skip to main
+        content</a>
+
+        ```
 
 
         ### Additional resources

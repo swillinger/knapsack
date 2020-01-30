@@ -1,6 +1,52 @@
 id: colors
 title: Colors
 slices:
+  - id: 10dd4wVg
+    blockId: markdown-slice
+    data:
+      md: >-
+        # Usage
+
+        Copy the variable from the color names below; for example the
+        `bs-color-core-blue` color is used like this:
+
+
+        ```scss
+
+        .my-class {
+          background-color: $bs-color-core-blue;
+        }
+
+        ```
+
+
+        # Brand Colors
+  - id: 1Kf3e4rM
+    blockId: design-token-slice
+    data:
+      tokens:
+        tags:
+          - core
+        category: color
+      demo:
+        id: color-swatch
+  - id: 4W-JzSu2
+    blockId: markdown-slice
+    data:
+      md: '# Text Colors'
+  - id: mk_pmK7Z
+    blockId: design-token-slice
+    data:
+      tokens:
+        tags:
+          - message
+        category: color
+      demo:
+        id: text-color
+  - id: n8wtu57R
+    blockId: markdown-slice
+    data:
+      md: '# All Colors'
   - id: mq5Qcifm
     blockId: design-token-slice
     data:

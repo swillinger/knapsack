@@ -27,12 +27,6 @@
       "parentId": "components-asdf"
     },
     {
-      "id": "breadcrumb",
-      "name": "Breadcrumb",
-      "path": "/pattern/breadcrumb",
-      "parentId": "components-asdf"
-    },
-    {
       "id": "/pattern/button",
       "name": "Button",
       "path": "/pattern/button",
@@ -45,39 +39,9 @@
       "parentId": "components-asdf"
     },
     {
-      "id": "card-grid",
-      "name": "Card Grid",
-      "path": "/pattern/card-grid",
-      "parentId": "components-asdf"
-    },
-    {
       "id": "jumbotron",
       "name": "Jumbotron",
       "path": "/pattern/jumbotron",
-      "parentId": "components-asdf"
-    },
-    {
-      "id": "list-group",
-      "name": "List Group",
-      "path": "/pattern/list-group",
-      "parentId": "components-asdf"
-    },
-    {
-      "id": "media-object",
-      "name": "Media Object",
-      "path": "/pattern/media-object",
-      "parentId": "components-asdf"
-    },
-    {
-      "id": "nav",
-      "name": "Nav",
-      "path": "/pattern/nav",
-      "parentId": "components-asdf"
-    },
-    {
-      "id": "table",
-      "name": "Table",
-      "path": "/pattern/table",
       "parentId": "components-asdf"
     },
     {

@@ -10,7 +10,7 @@
       "title": "React",
       "id": "react",
       "templateLanguageId": "react",
-      "path": "../assets/patterns/button/button.tsx",
+      "path": "@knapsack/example-bootstrap/assets/patterns/button/button.tsx",
       "statusId": "ready",
       "assetSetIds": ["bootstrap"],
       "spec": {

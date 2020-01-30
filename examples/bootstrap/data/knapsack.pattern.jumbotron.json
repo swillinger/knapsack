@@ -64,7 +64,7 @@
     },
     {
       "id": "react",
-      "path": "../assets/patterns/jumbotron/jumbotron.tsx",
+      "path": "@knapsack/example-bootstrap/assets/patterns/jumbotron/jumbotron.tsx",
       "templateLanguageId": "react",
       "statusId": "ready",
       "spec": {
@@ -72,7 +72,8 @@
           "children": {
             "title": "children",
             "allowedPatternIds": ["card", "button"]
-          }
+          },
+          "subHead": { "title": "subHead", "allowedPatternIds": ["button"] }
         },
         "props": {
           "$schema": "http://json-schema.org/draft-07/schema",
@@ -125,27 +126,7 @@
               "title": "The Title",
               "body": "Twenty four hour hydration and sheer color helps me look flawless even when faced with that unforgiving Jumbotron! - Lindsey Vonn"
             },
-            "slots": {
-              "children": [
-                {
-                  "patternId": "card",
-                  "templateId": "react",
-                  "demoId": "kq6_gva2"
-                }
-              ],
-              "subHead": [
-                {
-                  "patternId": "button",
-                  "templateId": "react",
-                  "demoId": "Ib85UZzPs"
-                },
-                {
-                  "patternId": "button",
-                  "templateId": "react",
-                  "demoId": "w8TaP5ho"
-                }
-              ]
-            }
+            "slots": { "children": [], "subHead": [] }
           }
         }
       },

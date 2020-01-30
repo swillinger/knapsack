@@ -57,6 +57,7 @@ const MdBlock: React.FC<Props> = ({
               // autoDownloadFontAwesome: false,
               indentWithTabs: false,
               promptURLs: true,
+              spellChecker: false,
             }}
           />
         </SuspenseLoader>

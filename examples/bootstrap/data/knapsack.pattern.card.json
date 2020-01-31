@@ -19,18 +19,29 @@
             "title": "Children",
             "description": "Bottom of the card",
             "allowedPatternIds": ["button"]
+          },
+          "aboveTheTitle": {
+            "title": "aboveTheTitle",
+            "allowedPatternIds": ["alert", "button"]
           }
         },
         "props": {
           "$schema": "http://json-schema.org/draft-07/schema",
+          "description": "Use Bootstrap’s custom card styles as a flexible and extensible content container. It includes options for headers and footers, a wide variety of content, contextual background colors, and powerful display options.",
           "type": "object",
           "title": "Card",
-          "required": [],
+          "required": ["imageAlign"],
           "properties": {
             "cardHeader": { "type": "string", "title": "Card Header Text" },
             "cardTitle": { "type": "string", "title": "Title" },
             "cardSubTitle": { "type": "string", "title": "Body Sub Title" },
             "cardBody": { "type": "string", "title": "Card Body Text" },
+            "imageAlign": {
+              "description": "Where should the image go?",
+              "type": "string",
+              "enum": ["top", "left", "bottom", "right"],
+              "default": "top"
+            },
             "textAlign": {
               "type": "string",
               "title": "Text Align",
@@ -55,10 +66,18 @@
                   "templateId": "react",
                   "demoId": "secondary"
                 }
+              ],
+              "aboveTheTitle": [
+                {
+                  "patternId": "button",
+                  "templateId": "react",
+                  "demoId": "primary"
+                }
               ]
             },
             "props": {
-              "textAlign": "right",
+              "imageAlign": "bottom",
+              "textAlign": "left",
               "cardTitle": "Hi everyone!",
               "cardBody": "Some quick example text to build on the card title and make up the bulk of the card's content.",
               "imgSrc": "/images/demoImg2.jpg",
@@ -152,9 +171,38 @@
               "imgAlt": "Nature Picture"
             }
           }
+        },
+        "A-fdO37q": {
+          "id": "A-fdO37q",
+          "title": "Cambia Card",
+          "type": "data",
+          "data": {
+            "slots": {
+              "children": [
+                {
+                  "patternId": "button",
+                  "templateId": "react",
+                  "demoId": "X1HswqhZ"
+                }
+              ]
+            },
+            "props": {
+              "textAlign": "center",
+              "cardTitle": "Hello Cambia",
+              "imgSrc": "/images/demoImg1.jpg",
+              "imgAlt": "Nature Picture"
+            }
+          }
         }
       },
-      "demos": ["primary", "oJ7Sy5zh", "1Rbqal5n", "kq6_gva2", "guoWqGd1"]
+      "demos": [
+        "primary",
+        "A-fdO37q",
+        "oJ7Sy5zh",
+        "1Rbqal5n",
+        "kq6_gva2",
+        "guoWqGd1"
+      ]
     },
     {
       "title": "Web Component",
@@ -225,7 +273,8 @@
           }
         }
       },
-      "demos": ["primary"]
+      "demos": ["primary"],
+      "statusId": "ready"
     },
     {
       "title": "Twig",
@@ -324,7 +373,8 @@
       "assetSetIds": [],
       "demosById": {},
       "demos": [],
-      "spec": {}
+      "spec": {},
+      "statusId": "ready"
     }
   ],
   "slices": []

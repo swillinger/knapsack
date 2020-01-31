@@ -66,7 +66,7 @@
       "id": "react",
       "path": "@knapsack/example-bootstrap/assets/patterns/jumbotron/jumbotron.tsx",
       "templateLanguageId": "react",
-      "statusId": "ready",
+      "statusId": "needs-design",
       "spec": {
         "slots": {
           "children": {
@@ -126,7 +126,16 @@
               "title": "The Title",
               "body": "Twenty four hour hydration and sheer color helps me look flawless even when faced with that unforgiving Jumbotron! - Lindsey Vonn"
             },
-            "slots": { "children": [], "subHead": [] }
+            "slots": {
+              "children": [
+                {
+                  "patternId": "card",
+                  "templateId": "react",
+                  "demoId": "A-fdO37q"
+                }
+              ],
+              "subHead": []
+            }
           }
         }
       },

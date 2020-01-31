@@ -87,7 +87,7 @@
             "slots": { "children": ["Text"] },
             "props": {
               "type": "primary",
-              "size": "md",
+              "size": "sm",
               "disabled": false,
               "outlined": false,
               "handleClick": "() => alert('hi')"
@@ -123,9 +123,40 @@
             },
             "slots": { "children": ["Cancel"] }
           }
+        },
+        "X1HswqhZ": {
+          "id": "X1HswqhZ",
+          "type": "data",
+          "title": "Click Me",
+          "description": "Here is how what to use for the main call to action, try to limit these per page.",
+          "data": {
+            "slots": { "children": ["Click Me!"] },
+            "props": {
+              "type": "success",
+              "size": "lg",
+              "disabled": false,
+              "outlined": false,
+              "handleClick": "() => alert('Hello')"
+            }
+          }
+        },
+        "Yxbj-t9G": {
+          "id": "Yxbj-t9G",
+          "title": "Adam's Danger",
+          "description": "A description",
+          "type": "data",
+          "data": {
+            "props": {
+              "type": "dark",
+              "size": "lg",
+              "disabled": false,
+              "outlined": false
+            },
+            "slots": { "children": ["Hi Adam!"] }
+          }
         }
       },
-      "demos": ["primary", "secondary", "Ib85UZzPs"]
+      "demos": ["Yxbj-t9G", "primary", "secondary", "Ib85UZzPs", "X1HswqhZ"]
     },
     {
       "title": "Twig",

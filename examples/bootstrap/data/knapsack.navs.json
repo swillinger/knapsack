@@ -9,10 +9,28 @@
   ],
   "secondary": [
     {
+      "id": "/pages/intro",
+      "name": "Intro",
+      "path": "/pages/intro",
+      "parentId": "root"
+    },
+    {
+      "id": "/pages/colors",
+      "name": "Colors",
+      "path": "/pages/colors",
+      "parentId": "/pages/intro"
+    },
+    {
       "id": "patterns-asdf",
       "name": "Patterns",
       "path": "/patterns",
       "parentId": "root"
+    },
+    {
+      "id": "/pattern/button",
+      "name": "Button",
+      "path": "/pattern/button",
+      "parentId": "patterns-asdf"
     },
     {
       "id": "components-asdf",
@@ -27,27 +45,9 @@
       "parentId": "components-asdf"
     },
     {
-      "id": "breadcrumb",
-      "name": "Breadcrumb",
-      "path": "/pattern/breadcrumb",
-      "parentId": "components-asdf"
-    },
-    {
-      "id": "/pattern/button",
-      "name": "Button",
-      "path": "/pattern/button",
-      "parentId": "components-asdf"
-    },
-    {
       "id": "/pattern/card",
       "name": "Card",
       "path": "/pattern/card/",
-      "parentId": "components-asdf"
-    },
-    {
-      "id": "card-grid",
-      "name": "Card Grid",
-      "path": "/pattern/card-grid",
       "parentId": "components-asdf"
     },
     {
@@ -57,40 +57,10 @@
       "parentId": "components-asdf"
     },
     {
-      "id": "list-group",
-      "name": "List Group",
-      "path": "/pattern/list-group",
-      "parentId": "components-asdf"
-    },
-    {
-      "id": "media-object",
-      "name": "Media Object",
-      "path": "/pattern/media-object",
-      "parentId": "components-asdf"
-    },
-    {
-      "id": "nav",
-      "name": "Nav",
-      "path": "/pattern/nav",
-      "parentId": "components-asdf"
-    },
-    {
-      "id": "table",
-      "name": "Table",
-      "path": "/pattern/table",
-      "parentId": "components-asdf"
-    },
-    {
       "id": "design-tokens",
       "name": "Design Tokens",
       "path": "",
       "parentId": "root"
-    },
-    {
-      "id": "/pages/colors",
-      "name": "Colors",
-      "path": "/pages/colors",
-      "parentId": "design-tokens"
     },
     {
       "id": "/pages/breakpoints",
@@ -117,12 +87,6 @@
       "parentId": "design-tokens"
     },
     { "id": "docs", "name": "Docs", "path": "", "parentId": "root" },
-    {
-      "id": "/pages/intro",
-      "name": "Intro",
-      "path": "/pages/intro",
-      "parentId": "docs"
-    },
     {
       "id": "/pages/accessibility",
       "name": "Accessibility",

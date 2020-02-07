@@ -9,6 +9,12 @@
   ],
   "secondary": [
     {
+      "id": "/pages/intro",
+      "name": "Intro",
+      "path": "/pages/intro",
+      "parentId": "root"
+    },
+    {
       "id": "patterns-asdf",
       "name": "Patterns",
       "path": "/patterns",
@@ -117,12 +123,6 @@
       "parentId": "design-tokens"
     },
     { "id": "docs", "name": "Docs", "path": "", "parentId": "root" },
-    {
-      "id": "/pages/intro",
-      "name": "Intro",
-      "path": "/pages/intro",
-      "parentId": "docs"
-    },
     {
       "id": "/pages/accessibility",
       "name": "Accessibility",

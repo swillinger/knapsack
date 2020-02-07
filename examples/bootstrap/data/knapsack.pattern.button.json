@@ -97,12 +97,12 @@
         "secondary": {
           "id": "secondary",
           "type": "data",
-          "title": "Secondary style",
+          "title": "Cancel Button",
           "data": {
-            "slots": { "children": ["Hello!"] },
+            "slots": { "children": ["Cancel!"] },
             "props": {
               "type": "secondary",
-              "size": "md",
+              "size": "lg",
               "disabled": false,
               "outlined": false,
               "handleClick": "() => alert('hi')"
@@ -123,9 +123,24 @@
             },
             "slots": { "children": ["Cancel"] }
           }
+        },
+        "gcQpDxtG": {
+          "id": "gcQpDxtG",
+          "type": "data",
+          "title": "Cancel Button",
+          "data": {
+            "slots": { "children": ["Hi"] },
+            "props": {
+              "type": "secondary",
+              "size": "lg",
+              "disabled": false,
+              "outlined": false,
+              "handleClick": "() => alert('hi')"
+            }
+          }
         }
       },
-      "demos": ["primary", "secondary", "Ib85UZzPs"]
+      "demos": ["Ib85UZzPs", "primary", "secondary", "gcQpDxtG"]
     },
     {
       "title": "Twig",

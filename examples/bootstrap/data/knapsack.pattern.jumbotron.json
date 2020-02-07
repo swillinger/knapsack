@@ -126,7 +126,16 @@
               "title": "The Title",
               "body": "Twenty four hour hydration and sheer color helps me look flawless even when faced with that unforgiving Jumbotron! - Lindsey Vonn"
             },
-            "slots": { "children": [], "subHead": [] }
+            "slots": {
+              "children": [
+                {
+                  "patternId": "card",
+                  "templateId": "react",
+                  "demoId": "primary"
+                }
+              ],
+              "subHead": []
+            }
           }
         }
       },

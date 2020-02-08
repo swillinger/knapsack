@@ -1,0 +1,71 @@
+{
+  "id": "sandbox-page",
+  "title": "Sandbox Pages",
+  "templates": [
+    {
+      "id": "react",
+      "path": "../assets/pages/sandbox-page/sandbox-page.tsx",
+      "templateLanguageId": "react",
+      "statusId": "inProgress",
+      "assetSetIds": [],
+      "demosById": {
+        "main": {
+          "id": "main",
+          "title": "Main",
+          "type": "data",
+          "data": {
+            "props": { "title": "Sandbox Page Title" },
+            "slots": {
+              "gridItems": [
+                {
+                  "patternId": "card",
+                  "templateId": "react",
+                  "demoId": "oJ7Sy5zh"
+                },
+                {
+                  "patternId": "card",
+                  "templateId": "react",
+                  "demoId": "primary"
+                },
+                {
+                  "patternId": "card",
+                  "templateId": "react",
+                  "demoId": "1Rbqal5n"
+                }
+              ],
+              "hero": [
+                {
+                  "patternId": "jumbotron",
+                  "templateId": "react",
+                  "demoId": "cEitity5"
+                }
+              ],
+              "pageTop": [
+                {
+                  "patternId": "alert",
+                  "templateId": "react",
+                  "demoId": "main"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "demos": ["main"],
+      "spec": {
+        "slots": {
+          "pageTop": { "title": "pageTop", "allowedPatternIds": ["alert"] },
+          "hero": { "title": "hero", "allowedPatternIds": ["jumbotron"] },
+          "gridItems": { "title": "gridItems" }
+        },
+        "props": {
+          "$schema": "http://json-schema.org/draft-07/schema",
+          "type": "object",
+          "required": [],
+          "properties": { "title": { "type": "string" } }
+        }
+      }
+    }
+  ],
+  "description": "Full pages to play around with"
+}

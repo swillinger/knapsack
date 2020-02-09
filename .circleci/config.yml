@@ -123,13 +123,14 @@ jobs:
       - run:
           name: Deploy Docs Site
           command: |
-            cp docs-site/now.json docs-site/build
+            cd docs-site
             npm i -g now
             if [ "$CIRCLE_TAG" ] || [ "$CIRCLE_BRANCH" == "next" ] || [ "$CIRCLE_BRANCH" == "develop" ]; then
-              now deploy --scope=basalt --prod --token $ZEIT_TOKEN docs-site/build --local-config=./docs-site/build/now.json
+              now deploy --prod --token $ZEIT_TOKEN ./build --confirm
             else
-              now deploy --scope=basalt --target staging --token $ZEIT_TOKEN docs-site/build --local-config=./docs-site/build/now.json
+              now deploy --target staging --token $ZEIT_TOKEN ./build --confirm
             fi
+            cd ..
             DEPLOY_URL=`./scripts/get-latest-deploy.js 'knapsack-docs'`
             echo "Adding GitHub check for DEPLOY_URL: $DEPLOY_URL"
             REPO_SLUG=basaltinc/knapsack GITHUB_TOKEN=$GH_TOKEN npx ci-utils gh-status --state success --url $DEPLOY_URL --description 'Docs Deploy' --context 'deploy/docs'

@@ -122,6 +122,7 @@ export function resolvePath({
   absolutePath?: string;
   relativePathFromCwd?: string;
   originalPath: string;
+  type: 'absolute' | 'relative' | 'package' | 'unknown';
 } {
   if (isAbsolute(path)) {
     return {
@@ -129,6 +130,7 @@ export function resolvePath({
       absolutePath: path,
       exists: fileExists(path),
       relativePathFromCwd: relative(process.cwd(), path),
+      type: 'absolute',
     };
   }
   let absolutePath: string;
@@ -142,6 +144,7 @@ export function resolvePath({
         exists: true,
         absolutePath,
         relativePathFromCwd: relative(process.cwd(), absolutePath),
+        type: 'package',
       };
     }
   } catch (e) {
@@ -152,6 +155,7 @@ export function resolvePath({
     absolutePath?: string;
     relativePathFromCwd?: string;
     originalPath: string;
+    type: 'relative';
   };
   resolveFromDirs.forEach(base => {
     const x = join(process.cwd(), join(base, path));
@@ -161,6 +165,7 @@ export function resolvePath({
         absolutePath: x,
         originalPath: path,
         relativePathFromCwd: relative(process.cwd(), x),
+        type: 'relative',
       };
     }
   });
@@ -169,6 +174,7 @@ export function resolvePath({
   return {
     exists: false,
     originalPath: path,
+    type: 'unknown',
   };
 }
 

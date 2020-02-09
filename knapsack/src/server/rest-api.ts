@@ -247,7 +247,7 @@ export function getApiRoutes({
         switch (reqBody.type) {
           case Files.ACTIONS.verify: {
             const { path } = reqBody.payload;
-            const { exists, absolutePath } = resolvePath({
+            const { exists, absolutePath, type } = resolvePath({
               path,
               resolveFromDirs: [dataDir],
             });
@@ -258,6 +258,7 @@ export function getApiRoutes({
                 exists,
                 relativePath: exists ? relative(dataDir, absolutePath) : '',
                 absolutePath,
+                type,
               },
             };
             break;

@@ -5,6 +5,10 @@
   }
 }
 
+.ks-u-text-subdued {
+  color: var(--c-text-subdued);
+}
+
 $spaces: [ 'xxxs', 'xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl' ];
 @each $space in $spaces {
   .ks-u-margin-top--#{$space} {
@@ -30,7 +34,6 @@ $spaces: [ 'xxxs', 'xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl' ];
   justify-content: space-between;
   flex-wrap: wrap;
   > * {
-    border: 1px solid #000;
     margin-top: var(--ks-grid-spacing);
   }
 }

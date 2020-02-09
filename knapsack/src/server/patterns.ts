@@ -197,9 +197,9 @@ export class Patterns implements KnapsackDb<PatternsState> {
         pattern.templates.forEach(template => {
           if (template?.spec?.isInferred) {
             // if it's inferred, we don't want to save `spec.props` or `spec.slots`
-            // template.spec = {
-            //   isInferred: true,
-            // };
+            template.spec = {
+              isInferred: true,
+            };
           }
         });
 
@@ -337,7 +337,6 @@ export class Patterns implements KnapsackDb<PatternsState> {
                 spec = {
                   ...spec,
                   ...inferredSpec,
-                  isInferred: false,
                 };
               }
             } catch (err) {

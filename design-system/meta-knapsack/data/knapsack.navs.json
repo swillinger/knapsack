@@ -1,0 +1,30 @@
+{
+  "primary": [
+    {
+      "id": "patterns-asdf",
+      "name": "Patterns",
+      "path": "/patterns",
+      "parentId": "root"
+    }
+  ],
+  "secondary": [
+    {
+      "id": "patterns-asdf",
+      "name": "Patterns",
+      "path": "/patterns",
+      "parentId": "root"
+    },
+    {
+      "id": "button",
+      "name": "Button",
+      "path": "/pattern/button",
+      "parentId": "patterns-asdf"
+    },
+    {
+      "id": "status-message",
+      "name": "Status Message",
+      "path": "/pattern/status-message",
+      "parentId": "patterns-asdf"
+    }
+  ]
+}

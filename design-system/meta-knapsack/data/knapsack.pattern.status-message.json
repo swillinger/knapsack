@@ -1,0 +1,89 @@
+{
+  "id": "status-message",
+  "title": "Status Message",
+  "description": "",
+  "demoSize": "l",
+  "demoWidths": [{ "width": 700 }],
+  "showAllTemplates": false,
+  "templates": [
+    {
+      "title": "React",
+      "id": "react",
+      "templateLanguageId": "react",
+      "path": "../../src/atoms/status-message.tsx",
+      "alias": "StatusMessage",
+      "statusId": "ready",
+      "assetSetIds": [],
+      "spec": { "isInferred": true },
+      "demosById": {
+        "Wsh_bVKB": {
+          "id": "Wsh_bVKB",
+          "type": "data",
+          "title": "With Close",
+          "description": "",
+          "data": {
+            "props": {
+              "type": "info",
+              "message": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+              "handleClose": "() => {}"
+            }
+          }
+        },
+        "NelwoZxlr": {
+          "id": "NelwoZxlr",
+          "type": "data",
+          "title": "Success",
+          "description": "",
+          "data": {
+            "props": {
+              "type": "success",
+              "message": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+              "handleClose": ""
+            }
+          }
+        },
+        "NppRcAhqL": {
+          "id": "NppRcAhqL",
+          "type": "data",
+          "title": "Warning",
+          "description": "",
+          "data": {
+            "props": {
+              "type": "warning",
+              "message": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+              "handleClose": ""
+            }
+          }
+        },
+        "NWq3LV0OF": {
+          "id": "NWq3LV0OF",
+          "type": "data",
+          "title": "Error",
+          "description": "",
+          "data": {
+            "props": {
+              "type": "error",
+              "message": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+              "handleClose": ""
+            }
+          }
+        },
+        "Sdlj9Ge4": {
+          "id": "Sdlj9Ge4",
+          "type": "data",
+          "title": "Info",
+          "description": "",
+          "data": {
+            "props": {
+              "type": "info",
+              "message": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+              "handleClose": ""
+            }
+          }
+        }
+      },
+      "demos": ["Sdlj9Ge4", "NelwoZxlr", "NppRcAhqL", "NWq3LV0OF", "Wsh_bVKB"]
+    }
+  ],
+  "slices": []
+}

@@ -12,7 +12,7 @@
     "build:knapsack": "FORCE_COLOR=1 lerna run build --scope @knapsack/app",
     "build:pkgs": "FORCE_COLOR=1 lerna run build --no-private --ignore @knapsack/app --stream",
     "build:pkgs-docs": "lerna run build:docs",
-    "build:private": "lerna run --stream --bail --concurrency 1 build --scope @knapsack/example-bootstrap",
+    "build:private": "lerna run --stream --bail --concurrency 1 build --scope @knapsack/example-bootstrap --scope @knapsack/meta-knapsack",
     "build:storybook": "yarn workspace @knapsack/design-system build:storybook",
     "build:types": "tsc --build knapsack packages/{core,build-tools,plugin-changelog-md}",
     "clean": "lerna run clean",
@@ -49,7 +49,8 @@
     "test:ex-1": "lerna run --stream --bail --scope @knapsack/example-bootstrap test",
     "test:ex-2": "lerna run --stream --bail --scope @knapsack/example-simple test",
     "test:ex-3": "lerna run --stream --bail --scope @knapsack/example-multi-templates test",
-    "test:examples": "run-s test:ex-1",
+    "test:meta-ks": "lerna run --stream --bail --scope @knapsack/meta-knapsack test",
+    "test:examples": "run-s test:ex-1 test:meta-ks",
     "test:percy-storybook": "percy-storybook --build_dir design-system/storybook/dist --widths 1000",
     "test:prepush": "run-s lint",
     "up": "yarn upgrade-interactive --latest",
@@ -62,6 +63,7 @@
     "packages": [
       "knapsack",
       "design-system",
+      "design-system/meta-knapsack",
       "docs-site",
       "examples/*",
       "packages/*"

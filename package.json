@@ -113,7 +113,7 @@
     "babel-eslint": "^10.0.3",
     "color": "^3.0.0",
     "commitizen": "^3.0.4",
-    "cypress": "^3.8.1",
+    "cypress": "^4.0.1",
     "cz-lerna-changelog": "^2.0.1",
     "eslint": "^6.5.1",
     "eslint-config-airbnb": "^18.0.1",

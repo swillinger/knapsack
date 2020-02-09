@@ -376,7 +376,7 @@ export async function getReactPropTypesDocs({
           spec.props.properties[propName].description = description;
         }
         if (defaultValue && 'value' in defaultValue) {
-          spec.props.properties[propName].default = defaultValue;
+          spec.props.properties[propName].default = defaultValue.value;
         }
       }
     });

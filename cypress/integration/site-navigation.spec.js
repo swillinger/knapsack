@@ -5,7 +5,7 @@
 describe('Site Navigation', () => {
   it('Navigates between main menu items', () => {
     cy.visit('/');
-    cy.get('.ks-site-header').contains('Knapsack Demo');
+    cy.get('.ks-site-header').contains('Knapsack Bootstrap Demo');
     cy.contains('Knapsack Bootstrap Demo');
     cy.get('.ks-home-splash__inner__version').then($version => {
       // keeping consistent so it doesn't keep failing Percy Visual Regression Testing

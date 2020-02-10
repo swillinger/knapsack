@@ -8,7 +8,7 @@
   "scripts": {
     "build": "NODE_ENV=production run-s --print-name build:knapsack",
     "build:knapsack": "NODE_ENV=production node $NODE_DEBUG_OPTION ./node_modules/.bin/knapsack build",
-    "dev:knapsack": "nodemon --config ../../examples/nodemon.json --exec 'yarn start:knapsack'",
+    "dev:knapsack": "nodemon --config ../../examples/nodemon.json --watch ../dist/knapsack-design-tokens.json --exec 'yarn start:knapsack'",
     "serve": "NODE_ENV=production node $NODE_DEBUG_OPTION ./node_modules/.bin/knapsack serve",
     "start": "run-s dev:knapsack",
     "start:knapsack": "node $NODE_DEBUG_OPTION ./node_modules/.bin/knapsack start",

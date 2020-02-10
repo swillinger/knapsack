@@ -1,4 +1,5 @@
 import './design-tokens/variables.css';
+import '../dist/ks-design-tokens.css';
 import './styles';
 
 export * from './atoms';

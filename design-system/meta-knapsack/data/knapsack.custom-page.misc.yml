@@ -1,0 +1,27 @@
+id: misc
+title: Misc
+slices:
+  - id: j7QZuHhG
+    blockId: design-token-slice
+    data:
+      tokens:
+        tags: []
+        category: radius
+      demo:
+        id: border-radius
+  - id: M8gwX8ew
+    blockId: design-token-slice
+    data:
+      tokens:
+        tags: []
+        category: shadow
+      demo:
+        id: box-shadow
+  - id: wxElmRYg
+    blockId: design-token-slice
+    data:
+      tokens:
+        tags: []
+        category: bp
+      demo:
+        id: media-query

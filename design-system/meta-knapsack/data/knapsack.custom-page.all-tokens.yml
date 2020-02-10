@@ -1,0 +1,10 @@
+id: all-tokens
+title: All Tokens
+slices:
+  - id: xJnxwesu
+    blockId: design-token-slice
+    data:
+      tokens:
+        tags: []
+      demo:
+        id: table-list

@@ -14,3 +14,68 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
+
+export const styleDictionaryKnapsackFormat = {
+  name: 'knapsack',
+  formatter: ({ allProperties }) => {
+    const tokens = allProperties.map(
+      ({ path, attributes, value, name, comment, tags = [] }) => {
+        const [category, ...pathTags] = path;
+        pathTags.pop(); // removes last item from array in-place
+        return {
+          value,
+          name,
+          comment,
+          category,
+          tags: [...tags, ...pathTags].filter(Boolean),
+          meta: {
+            path,
+            attributes,
+          },
+        };
+      },
+    );
+    return JSON.stringify({ tokens }, null, '  ');
+  },
+};
+
+export function theoKnapsackFormat(theo) {
+  theo.registerFormat('knapsack', result => {
+    const theoTokens: {
+      aliases: object;
+      meta: object;
+      props: {
+        type: string;
+        comment?: string;
+        category: string;
+        value: string;
+        originalValue: string;
+        name: string;
+      }[];
+    } = result.toJSON();
+    const { props } = theoTokens;
+    return {
+      tokens: props.map(
+        ({
+          category,
+          name,
+          type = '',
+          value,
+          originalValue,
+          comment = '',
+        }) => ({
+          value,
+          name,
+          comment,
+          originalValue: originalValue || '',
+          category,
+          tags: [type].filter(Boolean),
+        }),
+      ),
+    };
+  });
+
+  return {
+    type: 'knapsack',
+  };
+}

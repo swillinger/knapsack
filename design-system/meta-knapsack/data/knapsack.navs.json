@@ -25,6 +25,36 @@
       "name": "Status Message",
       "path": "/pattern/status-message",
       "parentId": "patterns-asdf"
+    },
+    {
+      "id": "design-tokens",
+      "name": "Design Tokens",
+      "path": "",
+      "parentId": "root"
+    },
+    {
+      "id": "colors",
+      "name": "Colors",
+      "path": "/pages/colors",
+      "parentId": "design-tokens"
+    },
+    {
+      "id": "spacing",
+      "name": "Spacing",
+      "path": "/pages/spacing",
+      "parentId": "design-tokens"
+    },
+    {
+      "id": "misc",
+      "name": "Misc",
+      "path": "/pages/misc",
+      "parentId": "design-tokens"
+    },
+    {
+      "id": "all-tokens",
+      "name": "All Tokens",
+      "path": "/pages/all-tokens",
+      "parentId": "design-tokens"
     }
   ]
 }

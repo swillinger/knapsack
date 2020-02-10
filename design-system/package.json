@@ -7,11 +7,15 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "clean": "rm -rf dist tsconfig.tsbuildinfo storybook/dist",
-    "build": "BABEL_ENV=react rollup -c rollup.config.js",
+    "build:rollup": "BABEL_ENV=react rollup -c rollup.config.js",
+    "build:tokens": "style-dictionary build --config ./style-dictionary.config.js",
+    "build": "run-s build:tokens build:rollup",
     "buildX": "babel --env-name react --config-file @knapsack/babel-config/es --copy-files --source-maps --extensions .tsx,.ts --out-dir dist/ src/",
     "build:storybook": "NODE_ENV=production build-storybook --quiet --config-dir ./storybook --output-dir ./storybook/dist",
     "start:storybook": "start-storybook --port 6006 --config-dir ./storybook",
-    "start": "yarn build --watch"
+    "watch:rollup": "yarn build:rollup --watch",
+    "watch:tokens": "nodemon --watch ./src/design-tokens --ext .js,.json --exec 'yarn build:tokens'",
+    "start": "yarn build:tokens && run-p watch:*"
   },
   "dependencies": {
     "@knapsack/core": "^2.0.0-beta.35",
@@ -46,7 +50,8 @@
     "react": "^16.8.0",
     "react-prop-matrix": "^1.0.0",
     "react-view": "2.0.2",
-    "storybook-react-router": "^1.0.8"
+    "storybook-react-router": "^1.0.8",
+    "style-dictionary": "^2.8.3"
   },
   "peerDependencies": {
     "react": "^16.8.0"

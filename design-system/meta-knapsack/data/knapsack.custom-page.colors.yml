@@ -1,0 +1,11 @@
+id: colors
+title: Colors
+slices:
+  - id: DQVZP3EL
+    blockId: design-token-slice
+    data:
+      tokens:
+        tags: []
+        category: c
+      demo:
+        id: color-swatch

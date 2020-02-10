@@ -11,6 +11,7 @@
   }
 
   &__swatch-color-gradient-background {
+    border-top: solid 1px var(--c-frame);
     height: 100px;
     margin-top: auto;
     background-image: linear-gradient(

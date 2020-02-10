@@ -9,7 +9,7 @@ const main = createRollupConfig({
   },
   cssOutputFile: './dist/ks-design-system.css',
   distDir,
-  watchIncludes: ['./src/**', './src/**/*.scss'],
+  watchIncludes: ['./src/**', './src/**/*.scss', './dist/ks-design-tokens.css'],
   globalReact: false,
 });
 

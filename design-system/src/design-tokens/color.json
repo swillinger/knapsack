@@ -1,0 +1,59 @@
+{
+  "c": {
+    "bg": {
+      "default": {
+        "value": "#ffffff"
+      },
+      "brand": {
+        "value": "#16394b"
+      }
+    },
+    "frame": {
+      "value": "#dddddd"
+    },
+    "shade": {
+      "value": "#f8f8f8"
+    },
+    "success": {
+      "value": "#00bc62"
+    },
+    "warning": {
+      "value": "#f7901e"
+    },
+    "danger": {
+      "value": "#cb261b"
+    },
+    "error": {
+      "value": "{c.danger.value}"
+    },
+    "focus": {
+      "value": "#00a7cc"
+    },
+    "active": {
+      "value": "{c.focus.value}"
+    },
+    "active-highlight": {
+      "value": "rgba(0, 167, 204, 0.1)"
+    },
+    "shadow": {
+      "value": "rgba(0, 0, 0, 0.24)"
+    },
+    "text": {
+      "default": {
+        "value": "#222222"
+      },
+      "subdued": {
+        "value": "#888888"
+      },
+      "inverse": {
+        "value": "{c.bg.default.value}"
+      },
+      "link": {
+        "value": "#008fc1"
+      },
+      "link-hover": {
+        "value": "#1aa6d7"
+      }
+    }
+  }
+}

@@ -86,6 +86,7 @@ export function createRollupConfig({
     // preserveSymlinks: true,
     watch: {
       include: watchIncludes,
+      clearScreen: false,
     },
     plugins: [
       babel({

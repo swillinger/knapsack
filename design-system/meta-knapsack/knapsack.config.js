@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const { createWebPackConfig } = require('@knapsack/build-tools');
 const babelConfig = require('@knapsack/babel-config/es');
 const { version } = require('./package.json');
+const { tokens } = require('../dist/knapsack-design-tokens');
 
 const webpackConfig = createWebPackConfig({
   // Not really needed since it's used only for `entry` and `output`, and we throw those away...
@@ -20,11 +21,12 @@ const webpackConfig = createWebPackConfig({
   useHtmlWebpackPlugin: false,
 });
 
-/** @type {import('../../knapsack/src/schemas/knapsack-config.ts').KnapsackConfig} */
+/** @type {import('../../knapsack/src/schemas/knapsack-config').KnapsackConfig} */
 const config = {
   designTokens: {
+    createCodeSnippet: token => `var(--${token.name})`,
     data: {
-      tokens: [],
+      tokens,
     },
   },
   dist: './public/dist',

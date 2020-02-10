@@ -1,6 +1,20 @@
 {
-  "globalAssetSetIds": [],
+  "globalAssetSetIds": ["demos"],
   "allAssetSets": {
+    "demos": {
+      "id": "demos",
+      "title": "Demos",
+      "inlineCss": "",
+      "inlineJs": "",
+      "assets": [
+        {
+          "src": "../../dist/ks-design-system.css"
+        },
+        {
+          "src": "../assets/demos.css"
+        }
+      ]
+    },
     "example": {
       "id": "example",
       "title": "Example",

@@ -15,16 +15,29 @@
       "parentId": "root"
     },
     {
+      "id": "components",
+      "name": "Components",
+      "path": "",
+      "parentId": "patterns-asdf"
+    },
+    {
       "id": "button",
       "name": "Button",
       "path": "/pattern/button",
-      "parentId": "patterns-asdf"
+      "parentId": "components"
     },
     {
       "id": "status-message",
       "name": "Status Message",
       "path": "/pattern/status-message",
-      "parentId": "patterns-asdf"
+      "parentId": "components"
+    },
+    { "id": "utilities", "name": "Utilities", "path": "", "parentId": "root" },
+    {
+      "id": "grid",
+      "name": "Grid",
+      "path": "/pattern/grid",
+      "parentId": "utilities"
     },
     {
       "id": "design-tokens",

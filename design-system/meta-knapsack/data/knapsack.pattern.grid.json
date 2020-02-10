@@ -1,0 +1,38 @@
+{
+  "id": "grid",
+  "title": "Grid",
+  "templates": [
+    {
+      "id": "html",
+      "path": "../demos/utils/grid-m.html",
+      "templateLanguageId": "html",
+      "statusId": "ready",
+      "assetSetIds": [],
+      "demosById": {
+        "OmEg8OT6Z": {
+          "id": "OmEg8OT6Z",
+          "title": "Large",
+          "type": "template",
+          "templateInfo": { "path": "../demos/utils/grid-l.html" },
+          "description": ""
+        },
+        "_kgKEVrs5": {
+          "id": "_kgKEVrs5",
+          "title": "Extra Large",
+          "type": "template",
+          "templateInfo": { "path": "../demos/utils/grid-xl.html" },
+          "description": ""
+        },
+        "SYG1QXth": {
+          "id": "SYG1QXth",
+          "title": "Medium",
+          "type": "template",
+          "templateInfo": { "path": "../demos/utils/grid-m.html" },
+          "description": ""
+        }
+      },
+      "demos": ["SYG1QXth", "OmEg8OT6Z", "_kgKEVrs5"],
+      "spec": {}
+    }
+  ]
+}

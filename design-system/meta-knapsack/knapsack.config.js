@@ -1,4 +1,5 @@
 const { KnapsackReactRenderer } = require('@knapsack/renderer-react');
+const HtmlRenderer = require('@knapsack/renderer-html');
 const { join } = require('path');
 const webpack = require('webpack');
 const { createWebPackConfig } = require('@knapsack/build-tools');
@@ -8,8 +9,8 @@ const { tokens } = require('../dist/knapsack-design-tokens');
 
 const webpackConfig = createWebPackConfig({
   // Not really needed since it's used only for `entry` and `output`, and we throw those away...
-  dist: join(__dirname, './public/dist'),
-  webRootDir: './public',
+  dist: join(__dirname, './dist'),
+  webRootDir: './dist',
   // injectCssChanges: false,
   extraSrcDirs: [
     __dirname,
@@ -29,8 +30,8 @@ const config = {
       tokens,
     },
   },
-  dist: './public/dist',
-  public: './public',
+  dist: './dist',
+  public: '..',
   data: './data',
   version,
   templateRenderers: [
@@ -40,7 +41,7 @@ const config = {
       babelConfig,
       demoWrapperPath: join(__dirname, './demo-wrapper.tsx'),
     }),
-    // new HtmlRenderer(),
+    new HtmlRenderer(),
   ],
   cloud: {
     repoOwner: 'basaltinc',

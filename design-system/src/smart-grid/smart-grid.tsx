@@ -23,7 +23,9 @@ type Props = {
   'row-items-xxxlarge'?: number;
 };
 
-// eslint-disable-next-line react/prefer-stateless-function
+/**
+ * @deprecated Use `KsGrid`
+ */
 export const SmartGrid: React.FC<Props> = (props: Props) => {
   // static defaultProps: typeof defaultProps;
 

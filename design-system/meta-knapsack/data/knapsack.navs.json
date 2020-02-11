@@ -32,12 +32,17 @@
       "path": "/pattern/status-message",
       "parentId": "components"
     },
-    { "id": "utilities", "name": "Utilities", "path": "", "parentId": "root" },
+    {
+      "id": "layouts",
+      "name": "Layouts",
+      "path": "",
+      "parentId": "patterns-asdf"
+    },
     {
       "id": "grid",
       "name": "Grid",
       "path": "/pattern/grid",
-      "parentId": "utilities"
+      "parentId": "layouts"
     },
     {
       "id": "design-tokens",
@@ -68,6 +73,13 @@
       "name": "All Tokens",
       "path": "/pages/all-tokens",
       "parentId": "design-tokens"
+    },
+    { "id": "sandbox", "name": "Sandbox", "path": "", "parentId": "root" },
+    {
+      "id": "slices-sandbox",
+      "name": "Slices Sandbox",
+      "path": "/pages/slices-sandbox",
+      "parentId": "sandbox"
     }
   ]
 }

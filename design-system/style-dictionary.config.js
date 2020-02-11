@@ -43,9 +43,17 @@ module.exports = {
       transforms: ['attribute/cti', 'name/cti/kebab', 'color/css'],
       buildPath: './dist/',
       files: [
+        // CSS Custom Properties DO NOT WORK in Media Queries
+        // We export out a scss variables file for that
         {
           destination: 'ks-design-tokens.css',
           format: 'custom-css/variables',
+          filter: token => token.attributes.category !== 'bp',
+        },
+        {
+          destination: 'ks-design-tokens.scss',
+          format: 'scss/variables',
+          filter: token => token.attributes.category === 'bp',
         },
       ],
     },

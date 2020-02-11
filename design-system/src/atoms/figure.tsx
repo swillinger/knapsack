@@ -7,25 +7,44 @@ type Props = {
   figure?: React.ReactNode;
   figcaption?: React.ReactNode;
   linkPath?: string;
-  width?: number;
+  handleTrigger?: () => void;
 };
 
 export const KsFigure: React.FC<Props> = ({
   figure,
   figcaption,
-  linkPath,
-  width,
+  handleTrigger,
 }: Props) => {
-  const fig = () => (
-    <figure style={{ width: `${width}px` }}>
-      <div className="ks-figure__content">{figure}</div>
-      {figcaption && <figcaption>{figcaption}</figcaption>}
-    </figure>
-  );
-
+  const classes = cn('ks-figure', {
+    'ks-figure--is-link': !!handleTrigger,
+  });
   return (
-    <div className={cn('ks-figure', linkPath ? 'ks-figure--link' : '')}>
-      {linkPath ? <Link to={linkPath}>{fig()}</Link> : <>{fig()}</>}
+    <div
+      className={classes}
+      role="button"
+      tabIndex={0}
+      onClick={() => {
+        if (handleTrigger) handleTrigger();
+      }}
+      onKeyPress={e => {
+        if (!handleTrigger) return;
+        // only continue if key is enter or space
+        if (
+          // enter
+          e.which === 13 ||
+          // space
+          e.which === 32
+        ) {
+          handleTrigger();
+        }
+      }}
+    >
+      <figure className="ks-figure__figure">
+        <div className="ks-figure__content">{figure}</div>
+        {figcaption && (
+          <figcaption className="ks-figure__caption">{figcaption}</figcaption>
+        )}
+      </figure>
     </div>
   );
 };

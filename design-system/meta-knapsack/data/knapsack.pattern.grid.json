@@ -33,6 +33,50 @@
       },
       "demos": ["SYG1QXth", "OmEg8OT6Z", "_kgKEVrs5"],
       "spec": {}
+    },
+    {
+      "id": "react",
+      "path": "../../src/grid/grid.tsx",
+      "alias": "KsGrid",
+      "templateLanguageId": "react",
+      "statusId": "proposed",
+      "spec": { "isInferred": true },
+      "assetSetIds": [],
+      "demosById": {
+        "main": {
+          "id": "main",
+          "title": "Main",
+          "type": "data",
+          "data": {
+            "props": { "gapSize": "s", "itemSize": "l" },
+            "slots": {
+              "children": [
+                {
+                  "patternId": "status-message",
+                  "templateId": "react",
+                  "demoId": "Sdlj9Ge4"
+                },
+                {
+                  "patternId": "status-message",
+                  "templateId": "react",
+                  "demoId": "NelwoZxlr"
+                },
+                {
+                  "patternId": "status-message",
+                  "templateId": "react",
+                  "demoId": "NppRcAhqL"
+                },
+                {
+                  "patternId": "status-message",
+                  "templateId": "react",
+                  "demoId": "Sdlj9Ge4"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "demos": ["main"]
     }
   ]
 }

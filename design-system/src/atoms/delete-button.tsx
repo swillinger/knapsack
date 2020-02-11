@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { KsButton, SIZES } from './button';
 import { KsPopover } from '../popover/popover';
 import './delete-button.scss';
@@ -22,9 +22,11 @@ export const KsDeleteButton: React.FC<Props> = ({
   flush = false,
   handleTrigger,
 }: Props) => {
+  const [isPopoverOpen, setOpen] = useState(false);
   return (
     <KsPopover
-      trigger="click"
+      trigger="prop"
+      isOpen={isPopoverOpen}
       content={
         <div className="ks-delete-btn__confirmation">
           {typeof confirmationMessage === 'string' ? (
@@ -36,14 +38,25 @@ export const KsDeleteButton: React.FC<Props> = ({
             kind="primary"
             emphasis="danger"
             isFullWidth
-            handleTrigger={handleTrigger}
+            handleTrigger={() => {
+              setTimeout(() => {
+                setOpen(false);
+              }, 10);
+              handleTrigger();
+            }}
           >
             {confirmBtnText}
           </KsButton>
         </div>
       }
     >
-      <KsButton icon="delete" kind="icon" size={size} flush={flush}>
+      <KsButton
+        icon="delete"
+        kind="icon"
+        size={size}
+        flush={flush}
+        handleTrigger={() => setOpen(true)}
+      >
         Delete
       </KsButton>
     </KsPopover>

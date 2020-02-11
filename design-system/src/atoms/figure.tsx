@@ -4,14 +4,13 @@ import { Link } from 'react-router-dom';
 import './figure.scss';
 
 type Props = {
-  figure?: React.ReactNode;
+  children?: React.ReactNode;
   figcaption?: React.ReactNode;
-  linkPath?: string;
   handleTrigger?: () => void;
 };
 
 export const KsFigure: React.FC<Props> = ({
-  figure,
+  children,
   figcaption,
   handleTrigger,
 }: Props) => {
@@ -40,7 +39,7 @@ export const KsFigure: React.FC<Props> = ({
       }}
     >
       <figure className="ks-figure__figure">
-        <div className="ks-figure__content">{figure}</div>
+        <div className="ks-figure__content">{children}</div>
         {figcaption && (
           <figcaption className="ks-figure__caption">{figcaption}</figcaption>
         )}

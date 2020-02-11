@@ -1,0 +1,99 @@
+{
+  "id": "figure",
+  "title": "Figure",
+  "templates": [
+    {
+      "id": "react",
+      "path": "../../src/atoms/figure.tsx",
+      "alias": "KsFigure",
+      "templateLanguageId": "react",
+      "statusId": "ready",
+      "assetSetIds": [],
+      "spec": { "isInferred": true },
+      "demosById": {
+        "main": {
+          "id": "main",
+          "title": "Short caption",
+          "type": "data",
+          "data": {
+            "props": {},
+            "slots": {
+              "children": [
+                {
+                  "patternId": "status-message",
+                  "templateId": "react",
+                  "demoId": "Sdlj9Ge4"
+                }
+              ],
+              "figcaption": ["A Caption"]
+            }
+          }
+        },
+        "vSckpLR7": {
+          "id": "vSckpLR7",
+          "title": "Button caption",
+          "type": "data",
+          "data": {
+            "props": {},
+            "slots": {
+              "children": [
+                {
+                  "patternId": "status-message",
+                  "templateId": "react",
+                  "demoId": "Sdlj9Ge4"
+                }
+              ],
+              "figcaption": [
+                {
+                  "patternId": "button",
+                  "templateId": "react",
+                  "demoId": "GPuRnlEq"
+                }
+              ]
+            }
+          }
+        },
+        "33jZbbIt": {
+          "id": "33jZbbIt",
+          "title": "Long caption",
+          "type": "data",
+          "data": {
+            "props": {},
+            "slots": {
+              "children": [
+                {
+                  "patternId": "status-message",
+                  "templateId": "react",
+                  "demoId": "Sdlj9Ge4"
+                }
+              ],
+              "figcaption": [
+                "Laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+              ]
+            }
+          }
+        },
+        "AJuDzMig": {
+          "id": "AJuDzMig",
+          "title": "No caption",
+          "type": "data",
+          "data": {
+            "props": {},
+            "slots": {
+              "children": [
+                {
+                  "patternId": "status-message",
+                  "templateId": "react",
+                  "demoId": "Sdlj9Ge4"
+                }
+              ],
+              "figcaption": []
+            }
+          }
+        }
+      },
+      "demos": ["main", "33jZbbIt", "vSckpLR7", "AJuDzMig"]
+    }
+  ],
+  "description": "Wrap content & provide a description"
+}

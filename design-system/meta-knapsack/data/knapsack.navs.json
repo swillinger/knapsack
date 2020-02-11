@@ -33,6 +33,12 @@
       "parentId": "components"
     },
     {
+      "id": "figure",
+      "name": "Figure",
+      "path": "/pattern/figure",
+      "parentId": "components"
+    },
+    {
       "id": "layouts",
       "name": "Layouts",
       "path": "",

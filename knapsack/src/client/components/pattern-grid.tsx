@@ -58,11 +58,12 @@ Props) => {
       >
         <KsFigure
           figcaption={<p>{title}</p>}
-          figure={<TemplateThumbnail patternId={id} thumbnailSize={240} />}
           handleTrigger={() => {
             history.push(path);
           }}
-        />
+        >
+          <TemplateThumbnail patternId={id} thumbnailSize={240} />
+        </KsFigure>
       </div>
     );
   });

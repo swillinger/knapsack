@@ -80,13 +80,6 @@
       "path": "/pattern/table",
       "parentId": "components-asdf"
     },
-    { "id": "pages", "name": "Pages", "path": "", "parentId": "root" },
-    {
-      "id": "sandbox-page",
-      "name": "Sandbox Pages",
-      "path": "/pattern/sandbox-page",
-      "parentId": "pages"
-    },
     {
       "id": "design-tokens",
       "name": "Design Tokens",

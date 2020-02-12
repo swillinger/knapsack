@@ -10,7 +10,7 @@
       "title": "React",
       "id": "react",
       "templateLanguageId": "react",
-      "path": "@knapsack/example-bootstrap/assets/patterns/button/button.tsx",
+      "path": "../assets/patterns/button/button.tsx",
       "statusId": "ready",
       "assetSetIds": ["bootstrap"],
       "spec": {
@@ -84,7 +84,16 @@
           "title": "Primary style",
           "description": "Here is how what to use for the main call to action, try to limit these per page.",
           "data": {
-            "slots": { "children": ["Text"] },
+            "slots": {
+              "children": [
+                {
+                  "patternId": "button",
+                  "templateId": "react",
+                  "demoId": "primary"
+                },
+                "Click Me!"
+              ]
+            },
             "props": {
               "type": "primary",
               "size": "md",

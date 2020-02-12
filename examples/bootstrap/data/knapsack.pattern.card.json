@@ -10,7 +10,7 @@
       "title": "React",
       "id": "react",
       "templateLanguageId": "react",
-      "path": "@knapsack/example-bootstrap/assets/patterns/card/card.tsx",
+      "path": "../assets/patterns/card/card.tsx",
       "statusId": "inProgress",
       "assetSetIds": ["bootstrap"],
       "spec": {

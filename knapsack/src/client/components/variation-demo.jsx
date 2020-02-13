@@ -18,7 +18,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import { SchemaForm, TabbedPanel } from '@knapsack/design-system';
-import { getTypeColor } from '../context';
 import Template from './template';
 import './variation-demo.scss';
 
@@ -42,8 +41,8 @@ export class VariationDemo extends Component {
 
   render() {
     const { prop, propKey } = this.props;
-    const colorTheme = getTypeColor(this.props.color);
-    const colorThemeAccent = getTypeColor(this.props.color, 'accent');
+    const colorTheme = 'var(--c-bg-brand)';
+    const colorThemeAccent = 'var(--c-text-default)';
     const formSchema = {
       type: 'object',
       properties: {
@@ -184,7 +183,6 @@ export class VariationDemo extends Component {
 VariationDemo.defaultProps = {
   data: {},
   isExpanded: false,
-  color: 'component',
 };
 
 VariationDemo.propTypes = {
@@ -200,7 +198,6 @@ VariationDemo.propTypes = {
     enum: PropTypes.array,
   }).isRequired,
   isExpanded: PropTypes.bool,
-  color: PropTypes.string,
 };
 
 export default function VariationDemos({

@@ -24,28 +24,34 @@ class KnapsackHtmlRenderer extends KnapsackRendererBase
   async render(
     opt: KnapsackRenderParams,
   ): Promise<KnapsackTemplateRendererResults> {
-    const { patternManifest, template, pattern } = opt;
+    const usage = await this.getUsage(opt);
 
-    try {
-      const templateAbsolutePath = patternManifest.getTemplateAbsolutePath({
-        patternId: pattern.id,
-        templateId: template.id,
-      });
-      return {
-        ok: true,
-        html: await fs.readFile(templateAbsolutePath, 'utf8'),
-      };
-    } catch (error) {
-      return {
-        ok: false,
-        html: `<p>${error.message}<p>`,
-        message: error.message,
-      };
-    }
+    return {
+      ok: true,
+      html: KnapsackRendererBase.formatCode({
+        code: usage,
+        language: 'html',
+      }),
+    };
   }
 
-  async getUsage({ template }) {
-    return fs.readFile(template.absolutePath, 'utf8');
+  async getUsage({
+    pattern,
+    template,
+    demo,
+    patternManifest,
+  }: KnapsackRenderParams): Promise<string> {
+    if (!demo) {
+      return fs.readFile(template.alias, 'utf8');
+    }
+    if (KnapsackRendererBase.isTemplateDemo(demo)) {
+      const templateDemoPath = patternManifest.getTemplateDemoAbsolutePath({
+        patternId: pattern.id,
+        templateId: template.id,
+        demoId: demo.id,
+      });
+      return fs.readFile(templateDemoPath, 'utf8');
+    }
   }
 
   getMeta: KnapsackTemplateRenderer['getMeta'] = () => {

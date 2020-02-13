@@ -25,6 +25,7 @@
     "@knapsack/renderer-html": "^2.0.0-beta.35",
     "@knapsack/renderer-twig": "^2.0.0-beta.35",
     "@knapsack/renderer-web-components": "^2.0.0-beta.35",
+    "@knapsack/plugin-changelog-md": "^2.0.0-beta.33",
     "lit-element": "^2.2.1",
     "lodash.template": "^4.4.0"
   },

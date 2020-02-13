@@ -19,7 +19,6 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { KsSelect, KsButton } from '@knapsack/design-system';
 import { FaExternalLinkAlt } from 'react-icons/fa';
-import { connectToContext, contextPropTypes } from '../../context';
 import { PageBuilderContext } from './page-builder-context';
 import './page-builder-pattern-list-item.scss';
 
@@ -194,7 +193,6 @@ class PlaygroundSidebarPatternListItem extends Component {
 
 PlaygroundSidebarPatternListItem.propTypes = {
   pattern: PropTypes.object.isRequired,
-  context: contextPropTypes.isRequired,
 };
 
-export default connectToContext(PlaygroundSidebarPatternListItem);
+export default PlaygroundSidebarPatternListItem;

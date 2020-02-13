@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 function Hello() {
   useEffect(() => {
-    window.location.pathname = '/docs/intro';
+    window.location.pathname = '/docs/intro/overview';
   }, []);
   return null;
 }

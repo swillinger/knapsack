@@ -18,7 +18,6 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import { CircleSpinner } from '@knapsack/design-system';
 import iframeResizer from 'iframe-resizer/js/iframeResizer'; // https://www.npmjs.com/package/iframe-resizer
 import shortid from 'shortid';
-import { KnapsackContext } from '../context';
 import { getTemplateInfo } from '../data';
 import {
   WS_EVENTS,

@@ -1,0 +1,57 @@
+{
+  "id": "button",
+  "title": "Button",
+  "description": "Click it",
+  "demoSize": "m",
+  "demoWidths": [{ "width": 150 }],
+  "showAllTemplates": false,
+  "templates": [
+    {
+      "title": "React",
+      "id": "react",
+      "templateLanguageId": "react",
+      "path": "../../src/atoms/button.tsx",
+      "alias": "KsButton",
+      "statusId": "ready",
+      "assetSetIds": ["bootstrap"],
+      "spec": { "isInferred": true },
+      "demosById": {
+        "GPuRnlEq": {
+          "id": "GPuRnlEq",
+          "title": "Main",
+          "description": "A description",
+          "type": "data",
+          "data": {
+            "props": {
+              "disabled": false,
+              "type": "button",
+              "kind": "primary",
+              "floating": false,
+              "size": "s",
+              "isFullWidth": false,
+              "flush": false,
+              "emphasis": "none",
+              "className": "",
+              "active": false,
+              "icon": "search",
+              "handleTrigger": "() => alert('triggered')"
+            },
+            "slots": { "children": ["Text"] }
+          }
+        },
+        "HYdOT7QVG": {
+          "id": "HYdOT7QVG",
+          "title": "All Variations",
+          "type": "template",
+          "templateInfo": {
+            "alias": "allVariations",
+            "path": "../../src/atoms/button.story.tsx"
+          },
+          "description": "From a Storybook story"
+        }
+      },
+      "demos": ["GPuRnlEq", "HYdOT7QVG"]
+    }
+  ],
+  "slices": []
+}

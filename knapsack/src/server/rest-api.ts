@@ -22,6 +22,8 @@ import { isAbsolute, join, relative } from 'path';
 import { exec } from 'child_process';
 import highlight from 'highlight.js';
 import * as Files from '../schemas/api/files';
+import { endpoint as pluginsEndpoint } from '../schemas/api/plugins';
+import { handlePluginsEndpoint } from './api/plugins';
 import { MemDb } from './dbs/mem-db';
 import * as log from '../cli/log';
 import { BASE_PATHS, HTTP_STATUS } from '../lib/constants';
@@ -69,6 +71,8 @@ export function getApiRoutes({
       message: 'Welcome to the API!',
     });
   });
+
+  router.post(pluginsEndpoint, handlePluginsEndpoint);
 
   {
     const url = urlJoin(baseUrl, 'data');
@@ -188,6 +192,10 @@ export function getApiRoutes({
       if (results.ok) {
         res.send(wrapHtml ? results.wrappedHtml : results.html);
       } else {
+        let demo;
+        if (dataId) {
+          demo = memDb.getData(dataId);
+        }
         log.error(`Error rendering template`, {
           patternId,
           templateId,
@@ -196,7 +204,9 @@ export function getApiRoutes({
           isInIframe,
           assetSetId,
           message: results.message,
+          demo,
         });
+        console.log(); // empty line
         res.send(results.message);
       }
     });
@@ -237,7 +247,7 @@ export function getApiRoutes({
         switch (reqBody.type) {
           case Files.ACTIONS.verify: {
             const { path } = reqBody.payload;
-            const { exists, absolutePath } = resolvePath({
+            const { exists, absolutePath, type } = resolvePath({
               path,
               resolveFromDirs: [dataDir],
             });
@@ -248,6 +258,7 @@ export function getApiRoutes({
                 exists,
                 relativePath: exists ? relative(dataDir, absolutePath) : '',
                 absolutePath,
+                type,
               },
             };
             break;

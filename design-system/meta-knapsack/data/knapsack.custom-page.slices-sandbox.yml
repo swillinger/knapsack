@@ -1,0 +1,13 @@
+id: slices-sandbox
+title: Slices Sandbox
+slices:
+  - id: 19qQG_mh
+    blockId: image-slice
+    data:
+      images:
+        - caption: Image 1
+          src: /uploads/image-placeholder1.png
+        - caption: Image B
+          src: /uploads/image-placeholder-b.png
+        - caption: Image 3
+          src: /uploads/image-placeholder3.png

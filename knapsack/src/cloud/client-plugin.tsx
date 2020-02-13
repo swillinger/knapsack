@@ -1,47 +1,32 @@
-import Loadable from 'react-loadable';
-import { Spinner } from '@knapsack/design-system';
 import React from 'react';
-import { KsPlugin } from '@knapsack/core';
+import {
+  KsClientPlugin,
+  KsPluginLoadFunc,
+  KsPluginPageConfig,
+  Navs,
+} from '../schemas/plugins';
 
-const LoadableUserPage = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "user-page" */ './user-page').then(
-      ({ UserPage }) => UserPage,
-    ),
-  loading: Spinner,
-});
-
-export const LoadableProposeChange = Loadable({
-  loader: () =>
-    import(
-      /* webpackChunkName: "propose-change-page" */ './propose-change-page'
-    ).then(({ ProposeChangePage }) => ProposeChangePage),
-  loading: Spinner,
-});
-
-export function createCloudClientPlugin({
-  store,
-}: {
-  store: import('../client/store').StoreType;
-}): KsPlugin {
+const createCloudClientPlugin: KsPluginLoadFunc<{}> = ({ store }) => {
   let state = store.getState();
   if (!state.metaState.meta.hasKnapsackCloud) return;
 
-  const plugin: KsPlugin = {
+  const plugin: KsClientPlugin<{}> = {
     id: 'ks-cloud',
     addPages() {
       state = store.getState();
       const { canEdit, user } = state.userState;
       const username = user?.username;
-      const pages: ReturnType<typeof plugin.addPages> = [];
+      const pages: KsPluginPageConfig<{}>[] = [];
 
       if (canEdit) {
         pages.push({
           path: 'propose-change',
           title: 'Propose Change',
-          navTitle: 'Propose Change',
-          includeInPrimaryNav: true,
-          render: () => <LoadableProposeChange />,
+          navItem: {
+            title: 'Propose Change',
+            nav: Navs.primary,
+          },
+          Page: React.lazy(() => import('./propose-change-page')),
         });
       }
 
@@ -49,9 +34,11 @@ export function createCloudClientPlugin({
         path: 'user',
         title: username || 'User',
         section: username ? 'User' : '',
-        navTitle: 'User',
-        includeInPrimaryNav: true,
-        render: () => <LoadableUserPage />,
+        navItem: {
+          title: 'User',
+          nav: Navs.primarySub,
+        },
+        Page: React.lazy(() => import('./user-page')),
       });
 
       return pages;
@@ -59,4 +46,6 @@ export function createCloudClientPlugin({
   };
 
   return plugin;
-}
+};
+
+export default createCloudClientPlugin;

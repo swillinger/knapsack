@@ -76,7 +76,7 @@ export const SideNavItem: React.FC<Props> = ({
             return (
               statusItem.status && (
                 <KsPopover
-                  key={`${statusItem.templateId}-${statusItem.status.id}`}
+                  key={`${statusItem.templateLanguageId}-${statusItem.status.id}`}
                   trigger="hover"
                   content={
                     <span>

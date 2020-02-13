@@ -2,6 +2,7 @@ import express from 'express';
 import { join, dirname } from 'path';
 import { apiUrlBase } from '../lib/constants';
 import { createDemoUrl } from './server-utils';
+import { KnapsackConfig } from '../schemas/knapsack-config';
 
 const router = express.Router();
 
@@ -11,12 +12,14 @@ export function setupRoutes({
   distDir,
   publicDir,
   cacheDir,
+  plugins,
 }: {
   patterns: import('./patterns').Patterns;
   knapsackDistDir: string;
   distDir?: string;
   publicDir?: string;
   cacheDir: string;
+  plugins: KnapsackConfig['plugins'];
 }): typeof router {
   router.use('*', async (req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -65,6 +68,14 @@ export function setupRoutes({
 
   if (publicDir) {
     router.use(express.static(publicDir));
+  }
+
+  if (plugins) {
+    plugins
+      .filter(p => p.publicDir)
+      .forEach(plugin => {
+        router.use(`/plugins/${plugin.id}`, express.static(plugin.publicDir));
+      });
   }
 
   // This page is mainly so IE can get a list of links to view the individual templates outside of the system

@@ -1,0 +1,91 @@
+{
+  "primary": [
+    {
+      "id": "patterns-asdf",
+      "name": "Patterns",
+      "path": "/patterns",
+      "parentId": "root"
+    }
+  ],
+  "secondary": [
+    {
+      "id": "patterns-asdf",
+      "name": "Patterns",
+      "path": "/patterns",
+      "parentId": "root"
+    },
+    {
+      "id": "components",
+      "name": "Components",
+      "path": "",
+      "parentId": "patterns-asdf"
+    },
+    {
+      "id": "button",
+      "name": "Button",
+      "path": "/pattern/button",
+      "parentId": "components"
+    },
+    {
+      "id": "status-message",
+      "name": "Status Message",
+      "path": "/pattern/status-message",
+      "parentId": "components"
+    },
+    {
+      "id": "figure",
+      "name": "Figure",
+      "path": "/pattern/figure",
+      "parentId": "components"
+    },
+    {
+      "id": "layouts",
+      "name": "Layouts",
+      "path": "",
+      "parentId": "patterns-asdf"
+    },
+    {
+      "id": "grid",
+      "name": "Grid",
+      "path": "/pattern/grid",
+      "parentId": "layouts"
+    },
+    {
+      "id": "design-tokens",
+      "name": "Design Tokens",
+      "path": "",
+      "parentId": "root"
+    },
+    {
+      "id": "colors",
+      "name": "Colors",
+      "path": "/pages/colors",
+      "parentId": "design-tokens"
+    },
+    {
+      "id": "spacing",
+      "name": "Spacing",
+      "path": "/pages/spacing",
+      "parentId": "design-tokens"
+    },
+    {
+      "id": "misc",
+      "name": "Misc",
+      "path": "/pages/misc",
+      "parentId": "design-tokens"
+    },
+    {
+      "id": "all-tokens",
+      "name": "All Tokens",
+      "path": "/pages/all-tokens",
+      "parentId": "design-tokens"
+    },
+    { "id": "sandbox", "name": "Sandbox", "path": "", "parentId": "root" },
+    {
+      "id": "slices-sandbox",
+      "name": "Slices Sandbox",
+      "path": "/pages/slices-sandbox",
+      "parentId": "sandbox"
+    }
+  ]
+}

@@ -166,11 +166,11 @@ export const EditTemplateDemo: React.FC<Props> = ({
                 },
               }).then(result => {
                 if (result.type === Files.ACTIONS.verify) {
-                  const { relativePath, exists } = result.payload;
+                  const { relativePath, exists, type } = result.payload;
                   if (exists) {
                     const newData = {
                       ...formData,
-                      path: relativePath,
+                      path: type === 'package' ? path : relativePath,
                     };
                     handleSubmit(newData);
                     setData(newData);

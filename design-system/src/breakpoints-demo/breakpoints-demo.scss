@@ -10,13 +10,11 @@
 .ks-breakpoints-demo__breakpoint-item {
   position: absolute;
   border-left: solid 3px var(--c-frame);
-  opacity: 0.7;
   height: 100%;
 
-  & > .label {
+  & > .ks-label {
     display: block;
     background: var(--c-frame);
-    opacity: 0.7;
     padding: 3px;
     color: white;
   }

@@ -21,7 +21,6 @@ export interface KnapsackMeta {
   websocketsPort: number;
   knapsackVersion: string;
   version?: string;
-  changelog?: string;
   hasKnapsackCloud: boolean;
   /**
    * Absolute path to directory where Knapsack can keep it's own files

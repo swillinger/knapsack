@@ -20,12 +20,7 @@ import { Link } from 'react-router-dom';
 import shortid from 'shortid';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import {
-  BlockQuoteWrapper,
-  KsButton,
-  StatusMessage,
-} from '@knapsack/design-system';
-import { connectToContext, contextPropTypes } from '../context';
+import { KsButton, StatusMessage } from '@knapsack/design-system';
 import { apiUrlBase, BASE_PATHS } from '../../lib/constants';
 import PageWithSidebar from '../layouts/page-with-sidebar';
 import './page-builder-landing-page.scss';
@@ -84,7 +79,7 @@ class PageBuilderLandingPage extends Component {
   }
 
   render() {
-    const { enableBlockquotes } = this.props.context.features;
+    const canWrite = true;
     return (
       <Query query={examplesQuery}>
         {({ data }) => {
@@ -98,15 +93,6 @@ class PageBuilderLandingPage extends Component {
                   message={this.state.statusMessage}
                   type="error"
                 />
-              )}
-              {enableBlockquotes && (
-                <BlockQuoteWrapper>
-                  When I design buildings, I think of the overall composition,
-                  much as the parts of a body would fit together. On top of
-                  that, I think about how people will approach the building and
-                  experience that space.
-                  <footer>Tadao Ando</footer>
-                </BlockQuoteWrapper>
               )}
               <div className="page-builder-landing-page__two-up">
                 <div>
@@ -136,7 +122,7 @@ class PageBuilderLandingPage extends Component {
               </div>
               <div>
                 <h3>Create a New Page</h3>
-                {(this.props.context.permissions.includes('write') && (
+                {(canWrite && (
                   <KsButton
                     primary
                     onClick={this.makeNewExample}
@@ -164,8 +150,7 @@ PageBuilderLandingPage.defaultProps = {
 };
 
 PageBuilderLandingPage.propTypes = {
-  context: contextPropTypes.isRequired,
   location: PropTypes.object,
 };
 
-export default connectToContext(PageBuilderLandingPage);
+export default PageBuilderLandingPage;

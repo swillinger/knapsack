@@ -16,6 +16,7 @@
  */
 import React from 'react';
 import { KsFigure } from '@knapsack/design-system';
+import { useHistory } from 'react-router-dom';
 import { BASE_PATHS } from '../../lib/constants';
 import { KnapsackPattern } from '../../schemas/patterns';
 import { TemplateThumbnail } from './template-thumbnail';
@@ -45,16 +46,24 @@ export const PatternGrid: React.FC<Props> = ({
 }: // patternStatuses,
 // patternTypes,
 Props) => {
+  const history = useHistory();
+
   const items = patterns.map(({ id, title }) => {
     const path = `${BASE_PATHS.PATTERN}/${id}`;
     return (
-      <div className="ks-pattern-grid__item" key={id}>
+      <div
+        className="ks-pattern-grid__item"
+        key={id}
+        style={{ width: '240px' }}
+      >
         <KsFigure
-          linkPath={path}
           figcaption={<p>{title}</p>}
-          figure={<TemplateThumbnail patternId={id} thumbnailSize={240} />}
-          width={240}
-        />
+          handleTrigger={() => {
+            history.push(path);
+          }}
+        >
+          <TemplateThumbnail patternId={id} thumbnailSize={240} />
+        </KsFigure>
       </div>
     );
   });

@@ -118,7 +118,10 @@ export const AddEntity: React.FC<Props> = ({
                     <div className="ks-add-entity__footer__title-field">
                       <KsTextField
                         label="Title"
-                        inputProps={field}
+                        inputProps={{
+                          ...field,
+                          autoComplete: 'off',
+                        }}
                         error={meta.error}
                         flush
                       />

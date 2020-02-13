@@ -23,6 +23,7 @@ export interface VerifyDataResponse {
     exists: boolean;
     relativePath: string;
     absolutePath: string;
+    type: 'absolute' | 'relative' | 'package' | 'unknown';
   };
 }
 

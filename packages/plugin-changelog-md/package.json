@@ -1,0 +1,24 @@
+{
+  "name": "@knapsack/plugin-changelog-md",
+  "description": "Add CHANGELOG.md info to Knapsack",
+  "version": "2.0.0-beta.33",
+  "main": "dist/server/changelog-md.js",
+  "module": "dist/client/packages/plugin-changelog-md/src/client/changelog-page.js",
+  "scripts": {
+    "clean": "rm -rf dist tsconfig.tsbuildinfo",
+    "build:server": "BABEL_ENV=cli babel --config-file @knapsack/babel-config --source-maps --extensions .js,.ts,.jsx,.tsx --out-dir dist/server src/server",
+    "build:client": "rollup -c",
+    "build": "yarn build:server && yarn build:client",
+    "prepublishOnly": "yarn build",
+    "start:server": "yarn build:server --watch",
+    "start:client": "yarn build:client --watch",
+    "start": "run-p start:*"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "keywords": [
+    "knapsack-plugin",
+    "design-system"
+  ],
+  "license": "GPL-2.0-or-later"
+}

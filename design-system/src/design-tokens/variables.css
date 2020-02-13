@@ -1,25 +1,25 @@
 :root body {
   /* Layout */
-  --c-bg-brand: #16394b;
-  --c-bg: #ffffff;
-  --c-frame: #dddddd;
-  --c-shade: #f8f8f8;
+  /* --c-bg-brand: #16394b; */
+  --c-bg: var(--c-bg-default, #ffffff);
+  /* --c-frame: #dddddd; */
+  /* --c-shade: #f8f8f8; */
 
   /* Text */
-  --c-text-default: #222222;
+  /* --c-text-default: #222222;
   --c-text-subdued: #888888;
   --c-text-inverse: var(--c-bg);
   --c-text-link: #008fc1;
-  --c-text-link-hover: #1aa6d7;
+  --c-text-link-hover: #1aa6d7; */
 
   /* State */
-  --c-success: #00bc62;
+  /* --c-success: #00bc62;
   --c-warning: #f7901e;
   --c-danger: #cb261b;
   --c-error: var(--c-danger);
   --c-focus: #00a7cc;
   --c-active: var(--c-focus);
-  --c-active-highlight: rgba(0, 167, 204, 0.1);
+  --c-active-highlight: rgba(0, 167, 204, 0.1); */
 
   /* Button */
   --c-button-standard: var(--c-shade);
@@ -36,7 +36,7 @@
   --c-button-cancel-active: var(--c-button-primary-danger-active);
 
   /* Spacing */
-  --space-xxxs: 2px;
+  /* --space-xxxs: 2px;
   --space-xxs: 4px;
   --space-xs: 8px;
   --space-s: 12px;
@@ -44,7 +44,7 @@
   --space-l: 24px;
   --space-xl: 40px;
   --space-xxl: 64px;
-  --space-xxxl: 120px;
+  --space-xxxl: 120px; */
 
   /* Font Families */
   --font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande',
@@ -56,14 +56,15 @@
   --line-height-s: var(--space-m);
 
   /* Border Radius */
-  --radius-s: var(--space-xxxs);
+  /* --radius-s: var(--space-xxxs);
   --radius-m: var(--space-xxs);
-  --radius-l: var(--space-xs);
+  --radius-l: var(--space-xs); */
 
   /* Shadows */
-  --c-shadow: rgba(0, 0, 0, 0.24);
-  --shadow: 0px var(--space-xxxs) var(--space-xs) var(--c-shadow);
-  --floating-btn-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.16);
+  /* --c-shadow: rgba(0, 0, 0, 0.24); */
+  --shadow: var(--shadow-default);
+  /* --shadow: 0px var(--space-xxxs) var(--space-xs) var(--c-shadow); */
+  --floating-btn-shadow: var(--shadow-floating-btn);
 
   /* Layout */
   --sidebar-width: 360px;
@@ -74,11 +75,11 @@
   --anim-base: var(--anim-speed-m) var(--anim-function);
 
   /* Breakpoints */
-  --bp-xsmall: 380px;
+  /* --bp-xsmall: 380px;
   --bp-small: 450px;
   --bp-medium: 700px;
   --bp-large: 900px;
   --bp-xlarge: 1100px;
   --bp-xxlarge: 1300px;
-  --bp-xxxlarge: 1600px;
+  --bp-xxxlarge: 1600px; */
 }

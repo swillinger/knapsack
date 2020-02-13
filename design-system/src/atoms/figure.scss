@@ -1,28 +1,34 @@
 .ks-figure {
   display: inline-block;
   vertical-align: top;
+  border: 1px solid var(--c-frame);
+  border-radius: var(--space-xs);
+  overflow: hidden;
 
-  figure {
+  &__figure {
     margin: 0;
-    border: 1px solid var(--c-frame);
-    border-radius: var(--space-xs);
-    overflow: hidden;
   }
 
-  figcaption {
+  &__caption {
     background-color: var(--c-shade);
     border-top: 1px solid var(--c-frame);
     padding: var(--space-xs);
   }
 
-  &--link {
-    figcaption p {
+  &--is-link {
+    &:hover {
+      cursor: pointer;
+    }
+    .ks-figure__caption,
+    .ks-figure__caption p {
       color: var(--c-text-link);
     }
-
-    &:hover figcaption p,
-    &:focus figcaption p {
-      color: var(--c-text-link-hover);
+    &:hover,
+    &:focus {
+      .ks-figure__caption,
+      .ks-figure__caption p {
+        color: var(--c-text-link-hover);
+      }
     }
   }
 }

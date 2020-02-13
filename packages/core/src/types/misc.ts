@@ -1,7 +1,7 @@
-export interface GenericResponse {
+export interface GenericResponse<data = object> {
   ok: boolean;
   message?: string;
-  data?: object;
+  data?: data;
 }
 
 export interface KnapsackFile {

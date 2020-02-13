@@ -25,7 +25,6 @@ import {
   FaEdit,
   FaArrowsAlt,
 } from 'react-icons/fa';
-import { connectToContext, contextPropTypes } from '../../context';
 import Template from '../../components/template';
 import { DragTypes } from './DragTypes';
 import './page-builder-slice.scss';
@@ -148,7 +147,6 @@ PageBuilderSlice.propTypes = {
   id: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   isChanged: PropTypes.bool.isRequired,
-  context: contextPropTypes.isRequired,
 };
 
 const sliceSource = {
@@ -247,4 +245,4 @@ const DroppableDraggablePlaygroundSlice = DropTarget(
 )(DraggablePlaygroundSlice); // <- HOC takes in a component here
 
 // Now it's Draggable & Droppable (i.e. re-arrangable)
-export default connectToContext(DroppableDraggablePlaygroundSlice);
+export default DroppableDraggablePlaygroundSlice;

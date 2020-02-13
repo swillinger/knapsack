@@ -1,17 +1,16 @@
 import React from 'react';
-import { KsDetails } from '@knapsack/design-system';
+import { KsDetails, SchemaTable } from '@knapsack/design-system';
 import ReactTable from 'react-table';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import { useCurrentTemplateContext } from '../current-template-context';
 import './spec-docs.scss';
-import { LoadableSchemaTable } from '../../../loadable-components';
 import { BASE_PATHS } from '../../../../lib/constants';
 
 type Props = {};
 
 // eslint-disable-next-line no-empty-pattern
-export const KsSpecDocs: React.FC<Props> = ({}: Props) => {
+const KsSpecDocs: React.FC<Props> = ({}: Props) => {
   const { hasSchema, spec } = useCurrentTemplateContext();
 
   const classes = cn({
@@ -28,7 +27,7 @@ export const KsSpecDocs: React.FC<Props> = ({}: Props) => {
               instance of this component.
             </p>
             <KsDetails open titleContent="Props Table">
-              <LoadableSchemaTable schema={spec?.props} />
+              <SchemaTable schema={spec?.props} />
             </KsDetails>
           </div>
 
@@ -97,3 +96,5 @@ export const KsSpecDocs: React.FC<Props> = ({}: Props) => {
     </div>
   );
 };
+
+export default KsSpecDocs;

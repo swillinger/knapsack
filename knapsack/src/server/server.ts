@@ -272,6 +272,15 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
       },
       metaState: {
         meta,
+        plugins: config.plugins.map(p => {
+          return {
+            id: p.id,
+            hasContent: !!p.loadContent,
+            clientPluginPath: p.clientPluginPath
+              ? join(`/plugins/${p.id}`, p.clientPluginPath)
+              : null,
+          };
+        }),
       },
     };
 
@@ -332,6 +341,7 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
     distDir: config.dist,
     publicDir: config.public,
     cacheDir: meta.cacheDir,
+    plugins: config.plugins,
   });
   app.use(regularRoutes);
 

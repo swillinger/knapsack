@@ -14,14 +14,14 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import {
   BrowserRouter as Router,
   Route,
   Switch,
   Redirect,
 } from 'react-router-dom';
-import { plugins } from '@knapsack/core';
+import { CircleSpinner } from '@knapsack/design-system/spinners';
 import Amplify from 'aws-amplify';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
@@ -29,6 +29,9 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import urlJoin from 'url-join';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
+import LogRocket from 'logrocket';
+import setupLogRocketReact from 'logrocket-react';
+import { plugins } from './plugins';
 import awsconfig from '../aws-exports';
 import 'react-sortable-tree/style.css';
 import {
@@ -37,21 +40,24 @@ import {
   useDispatch,
   setCurrentTemplateRenderer,
 } from './store';
-import { KnapsackContextProvider } from './context';
 import ErrorCatcher from './utils/error-catcher';
 import { BASE_PATHS } from '../lib/constants';
-import {
-  LoadablePatternView,
-  LoadableGraphiqlPage,
-  LoadablePatternsPage,
-  LoadableSettingsPage,
-  LoadableCustomPage,
-  LoadableHome,
-  LoadableChangelogPage,
-  LoadableBadRoute,
-  PageWithSidebar,
-} from './loadable-components';
 import '../cloud/amplify-wrapper.scss';
+
+const PatternPage = lazy(() =>
+  import('./pages/pattern-view/pattern-view-page'),
+);
+const PatternsPage = lazy(() => import('./pages/pattern-list-page'));
+const HomePage = lazy(() => import('./pages/home-page'));
+const GraphiqlPage = lazy(() => import('./pages/graphiql-page'));
+const SettingsPage = lazy(() => import('./pages/settings'));
+const CustomPage = lazy(() => import('./pages/custom-page/custom-page'));
+const PluginPage = lazy(() => import('./pages/plugin-page'));
+const BadRoute = lazy(() => import('./pages/bad-route'));
+const PageWithSidebar = lazy(() => import('./layouts/page-with-sidebar'));
+
+LogRocket.init('lkqvxk/knapsack');
+setupLogRocketReact(LogRocket);
 
 Amplify.configure(awsconfig);
 // Amplify.Logger.LOG_LEVEL = 'DEBUG';
@@ -63,7 +69,7 @@ const apolloClient = new ApolloClient({
   }),
 });
 
-export const App: React.FC = () => {
+const App: React.FC = () => {
   const dispatch = useDispatch();
 
   const settings = useSelector(s => s.settingsState.settings);
@@ -93,49 +99,32 @@ export const App: React.FC = () => {
     );
   }, []);
 
-  const knapsackContext = {
-    settings,
-    features: {}, // @todo remove
-    meta,
-    permissions: role.permissions,
-  };
-
   return (
     <ErrorCatcher>
       <ApolloProvider client={apolloClient}>
-        <KnapsackContextProvider value={knapsackContext}>
-          <DndProvider backend={HTML5Backend}>
-            <>
-              <Router>
+        <DndProvider backend={HTML5Backend}>
+          <>
+            <Router>
+              <Suspense fallback={<CircleSpinner />}>
                 <Switch>
-                  <Route
-                    path="/"
-                    exact
-                    render={props =>
-                      plugins.homePage ? (
-                        plugins.homePage.render()
-                      ) : (
-                        <LoadableHome {...props} />
-                      )
-                    }
-                  />
+                  <Route path="/" exact component={HomePage} />
                   <Route
                     path={BASE_PATHS.PATTERNS}
                     exact
-                    component={LoadablePatternsPage}
+                    component={PatternsPage}
                   />
 
                   <Route
                     path={`${BASE_PATHS.GRAPHIQL_PLAYGROUND}`}
                     exact
-                    render={props => <LoadableGraphiqlPage {...props} />}
+                    render={props => <GraphiqlPage {...props} />}
                   />
                   {canEdit && (
                     <Route
                       path={['/settings', '/settings/:kind']}
                       exact
                       render={({ match }) => (
-                        <LoadableSettingsPage initialTab={match.params.kind} />
+                        <SettingsPage initialTab={match.params.kind} />
                       )}
                     />
                   )}
@@ -153,7 +142,7 @@ export const App: React.FC = () => {
                       const pattern = patterns[patternId];
                       if (!pattern) {
                         return (
-                          <LoadableBadRoute
+                          <BadRoute
                             title={`Pattern "${patternId}" was not found in the system`}
                             subtitle="Hold your horses"
                             message={`We're having trouble finding the pattern "${patternId}" you requested. Please double check your url and the pattern meta.`}
@@ -181,16 +170,14 @@ export const App: React.FC = () => {
                       }
 
                       return (
-                        <LoadablePatternView
+                        <PatternPage
                           patternId={patternId}
                           templateId={templateId}
                           demoId={demoId}
-                          size="m"
                         />
                       );
                     }}
                   />
-                  <Route path="/changelog" component={LoadableChangelogPage} />
                   <Route
                     path={`${BASE_PATHS.PAGES}/:pageId`}
                     render={({
@@ -201,7 +188,7 @@ export const App: React.FC = () => {
                       const page = pages[pageId];
                       if (!page) {
                         return (
-                          <LoadableBadRoute
+                          <BadRoute
                             title={`Page with id "${pageId}" was not found in the system`}
                             subtitle="Uh oh"
                             message={`Is it one of these? ${Object.keys(
@@ -211,11 +198,8 @@ export const App: React.FC = () => {
                         );
                       }
                       return (
-                        <LoadableCustomPage
-                          path={`${BASE_PATHS.PAGES}/${pageId}`}
+                        <CustomPage
                           key={`${BASE_PATHS.PAGES}/${pageId}`}
-                          sectionTitle="Pages"
-                          title={page.title}
                           pageId={pageId}
                         />
                       );
@@ -233,26 +217,27 @@ export const App: React.FC = () => {
                           key={path}
                           path={path}
                           render={() => (
-                            <PageWithSidebar
-                              title={page.title}
-                              section={page.section}
-                            >
-                              {page.render()}
-                            </PageWithSidebar>
+                            <PluginPage
+                              plugin={plugin}
+                              page={page}
+                              key={path}
+                            />
                           )}
                         />
                       );
                     });
                   })}
 
-                  <Route path="*" render={() => <LoadableBadRoute />} />
+                  <Route path="*" render={() => <BadRoute />} />
                   <Redirect to="/" />
                 </Switch>
-              </Router>
-            </>
-          </DndProvider>
-        </KnapsackContextProvider>
+              </Suspense>
+            </Router>
+          </>
+        </DndProvider>
       </ApolloProvider>
     </ErrorCatcher>
   );
 };
+
+export default App;

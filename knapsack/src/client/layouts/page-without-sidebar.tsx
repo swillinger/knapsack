@@ -16,7 +16,6 @@
  */
 import React from 'react';
 import { SiteHeader } from '../components/site-header';
-import Footer from '../components/footer';
 import { PageHeaderContainer } from '../components/page-header';
 import ErrorCatcher from '../utils/error-catcher';
 import './page-without-sidebar.scss';
@@ -40,7 +39,6 @@ const PageWithoutSidebar: React.FC<Props> = ({
         {children}
       </main>
     </ErrorCatcher>
-    <Footer />
   </div>
 );
 

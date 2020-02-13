@@ -97,6 +97,14 @@ function validateConfig(config: KnapsackConfig): boolean {
     );
   }
 
+  {
+    const { ok, message } = validateUniqueIdsInArray(config.plugins);
+    if (!ok) {
+      log.error(`Plugins must have a unique "id". ${message}`);
+      process.exit(1);
+    }
+  }
+
   return true;
 }
 
@@ -109,9 +117,10 @@ export function processConfig(
 ): KnapsackConfig {
   const { public: publicDir, dist, ...rest } = convertOldConfig(userConfig);
 
-  const config = {
+  const config: KnapsackConfig = {
     public: resolve(from, publicDir),
     dist: resolve(from, dist),
+    plugins: rest.plugins ?? [],
     ...rest,
   };
 

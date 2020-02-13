@@ -22,6 +22,7 @@ import {
   KnapsackTemplateDemo,
 } from '../schemas/patterns';
 import * as Files from '../schemas/api/files';
+import * as Plugins from '../schemas/api/plugins';
 import { AppState } from './store';
 import { KsRenderResults } from '../schemas/knapsack-config';
 import { timer } from '../lib/utils';
@@ -122,6 +123,25 @@ export function files(x: Files.Actions): Promise<Files.ActionResponses> {
       body: JSON.stringify(x),
     })
     .then(res => res.json());
+}
+
+export function getPluginContent({
+  pluginId,
+}: {
+  pluginId: string;
+}): Promise<Plugins.GetContentResponse> {
+  const body: Plugins.GetContentRequest = {
+    pluginId,
+    type: Plugins.ACTIONS.getContent,
+  };
+  return fetch(Plugins.endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify(body),
+  }).then(res => res.json());
 }
 
 /**

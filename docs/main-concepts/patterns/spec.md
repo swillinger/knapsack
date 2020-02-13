@@ -1,7 +1,10 @@
 ---
-id: spec
 title: Spec
 ---
+This is the specification of how a pattern should be used.
+
+* Defines the pieces of a pattern
+* Provides a set of options for these piece that represent how a pattern is used
 
 ## Using spec meta data
 

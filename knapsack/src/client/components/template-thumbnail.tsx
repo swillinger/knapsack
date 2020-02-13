@@ -27,14 +27,21 @@ export const TemplateThumbnail: React.FC<Props> = ({
 }: Props) => {
   const pattern = useSelector(s => s.patternsState.patterns[rest.patternId]);
   const { currentTemplateRenderer } = useSelector(s => s.ui);
-  const [firstTemplate] = pattern?.templates;
-  const template =
-    pattern?.templates?.find(t =>
-      templateId
-        ? t.id === templateId
-        : t.templateLanguageId === currentTemplateRenderer,
-    ) ?? firstTemplate;
-  if (!template) return null;
+  const template = pattern?.templates?.find(t =>
+    templateId
+      ? t.id === templateId
+      : t.templateLanguageId === currentTemplateRenderer,
+  );
+  if (!template) {
+    return (
+      <div
+        className="ks-template-thumbnail ks-template-thumbnail--empty"
+        style={{ width: `${thumbnailSize}px`, height: `${thumbnailSize}px` }}
+      >
+        No {currentTemplateRenderer} template available for {pattern.id}
+      </div>
+    );
+  }
   const demo = rest.demo ?? template?.demosById[template?.demos[0]];
   const centeringTranslate = 'translate(-50%, -50%)';
 

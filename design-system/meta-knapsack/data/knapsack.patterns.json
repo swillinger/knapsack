@@ -1,0 +1,34 @@
+{
+  "templateStatuses": [
+    {
+      "id": "proposed",
+      "title": "Proposed",
+      "color": "#9b9b9b"
+    },
+    {
+      "id": "needs-design",
+      "title": "Needs Design",
+      "color": "#FC0"
+    },
+    {
+      "id": "needs-dev",
+      "title": "Needs Development",
+      "color": "#FC0"
+    },
+    {
+      "id": "needs-approval",
+      "title": "Needs Approval",
+      "color": "#FC0"
+    },
+    {
+      "id": "inProgress",
+      "title": "In Progress",
+      "color": "var(--c-button-primary)"
+    },
+    {
+      "id": "ready",
+      "title": "Ready",
+      "color": "#2ECC40"
+    }
+  ]
+}

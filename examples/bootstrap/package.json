@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/example-bootstrap",
   "license": "ISC",
-  "version": "2.0.0-beta.41",
+  "version": "2.0.0-beta.42",
   "description": "",
   "private": true,
   "main": "index.js",
@@ -21,11 +21,11 @@
   },
   "dependencies": {
     "@basalt/demo-data": "^0.5.1",
-    "@knapsack/app": "^2.0.0-beta.40",
-    "@knapsack/renderer-html": "^2.0.0-beta.35",
+    "@knapsack/app": "^2.0.0-beta.42",
+    "@knapsack/plugin-changelog-md": "^2.0.0-beta.42",
+    "@knapsack/renderer-html": "^2.0.0-beta.42",
     "@knapsack/renderer-twig": "^2.0.0-beta.35",
     "@knapsack/renderer-web-components": "^2.0.0-beta.35",
-    "@knapsack/plugin-changelog-md": "^2.0.0-beta.33",
     "lit-element": "^2.2.1",
     "lodash.template": "^4.4.0"
   },

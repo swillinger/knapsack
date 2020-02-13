@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.42](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.41...v2.0.0-beta.42) (2020-02-13)
+
+
+### Bug Fixes
+
+* breakpoint token demo label ([d7cbb96](https://github.com/basaltinc/knapsack/commit/d7cbb96217d63cfd11333bb00a124f6e46934397))
+* template demo infinite render loop ([90eef39](https://github.com/basaltinc/knapsack/commit/90eef399f70bb43313739849deb5bb2769aacc9e))
+
+
+### Features
+
+* add grid, improve figure ([df7f2c9](https://github.com/basaltinc/knapsack/commit/df7f2c9efc75c6717f7012490670b9f5c7bf9270))
+* add syntax highlight to markdown block ([c0d0de4](https://github.com/basaltinc/knapsack/commit/c0d0de482260664720d505e0f3abdee899a99e52))
+* delete popups self-close ([7c063eb](https://github.com/basaltinc/knapsack/commit/7c063ebeb7dad7b26d514e3b53fbc6c640c8eb25))
+* setup plugin system ([#385](https://github.com/basaltinc/knapsack/issues/385)) ([c4d275c](https://github.com/basaltinc/knapsack/commit/c4d275cf3f5ce3afd689ce6625c9960316a4a3b4))
+
+
+
+
+
 # [2.0.0-beta.40](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.39...v2.0.0-beta.40) (2020-01-23)
 
 

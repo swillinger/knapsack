@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.42](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.41...v2.0.0-beta.42) (2020-02-13)
+
+
+### Bug Fixes
+
+* **renderer-react:** infer spec with prop types getting default value ([9e88ace](https://github.com/basaltinc/knapsack/commit/9e88ace83a38b2ce9c03536dba704b81287ab4b3))
+
+
+
+
+
 # [2.0.0-beta.40](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.39...v2.0.0-beta.40) (2020-01-23)
 
 

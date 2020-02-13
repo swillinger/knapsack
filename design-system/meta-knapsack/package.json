@@ -1,7 +1,7 @@
 {
   "name": "@knapsack/meta-knapsack",
   "license": "ISC",
-  "version": "2.0.0-beta.40",
+  "version": "2.0.0-beta.42",
   "description": "Knapsack Design System for Knapsack",
   "private": true,
   "main": "index.js",
@@ -15,10 +15,9 @@
     "test": "knapsack test"
   },
   "dependencies": {
-    "@knapsack/app": "^2.0.0-beta.40",
-    "@knapsack/design-system": "^2.0.0-beta.40",
-    "@knapsack/renderer-react": "^2.0.0-beta.40"
+    "@knapsack/app": "^2.0.0-beta.42",
+    "@knapsack/design-system": "^2.0.0-beta.42",
+    "@knapsack/renderer-react": "^2.0.0-beta.42"
   },
-  "devDependencies": {},
   "author": ""
 }

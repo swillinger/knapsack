@@ -1,6 +1,6 @@
 {
   "name": "@knapsack/build-tools",
-  "version": "2.0.0-beta.40",
+  "version": "2.0.0-beta.42",
   "description": "",
   "main": "dist/create-webpack-config.js",
   "scripts": {

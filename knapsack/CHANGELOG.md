@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.42](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.41...v2.0.0-beta.42) (2020-02-13)
+
+
+### Bug Fixes
+
+* disable autocompletion in add entity field ([de01597](https://github.com/basaltinc/knapsack/commit/de01597b81e3d333a0bcc2f34fb726e6ab9e1b51))
+* home page spacing ([bdb3760](https://github.com/basaltinc/knapsack/commit/bdb37602c0b352ecc71c7267ca3eae0588daed84))
+* patterns page only shows current template language ([743d726](https://github.com/basaltinc/knapsack/commit/743d7269bc8d393bd4bb82304ff1dd2e90db55d1))
+* template demo infinite render loop ([90eef39](https://github.com/basaltinc/knapsack/commit/90eef399f70bb43313739849deb5bb2769aacc9e))
+* using node package as pattern path no longer resolves to relative path ([f221bf2](https://github.com/basaltinc/knapsack/commit/f221bf2ec290faf24f6382fe32b4d2add0ab9286))
+
+
+### Features
+
+* add grid, improve figure ([df7f2c9](https://github.com/basaltinc/knapsack/commit/df7f2c9efc75c6717f7012490670b9f5c7bf9270))
+* add rich text editor for markdown ([70e2096](https://github.com/basaltinc/knapsack/commit/70e20969783c7440b2870085a67a2fd539ecbcbb))
+* add syntax highlight to markdown block ([c0d0de4](https://github.com/basaltinc/knapsack/commit/c0d0de482260664720d505e0f3abdee899a99e52))
+* setup plugin system ([#385](https://github.com/basaltinc/knapsack/issues/385)) ([c4d275c](https://github.com/basaltinc/knapsack/commit/c4d275cf3f5ce3afd689ce6625c9960316a4a3b4))
+
+
+
+
+
 # [2.0.0-beta.40](https://github.com/basaltinc/knapsack/compare/v2.0.0-beta.39...v2.0.0-beta.40) (2020-01-23)
 
 

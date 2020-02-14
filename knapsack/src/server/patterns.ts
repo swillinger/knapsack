@@ -390,6 +390,26 @@ export class Patterns implements KnapsackDb<PatternsState> {
         onlyFiles: true,
       },
     );
+
+    // Initially creating the patterns `this.byId` object in alphabetical order so that everywhere else patterns are listed they are alphabetical
+    patternDataFiles
+      .map(file => {
+        // turns this: `data/knapsack.pattern.card-grid.json`
+        // into this: `[ 'data/', 'card-grid.json' ]`
+        const [, lastPart] = file.split('knapsack.pattern.');
+        // now we have `card-grid`
+        const id = lastPart.replace('.json', '');
+        return id;
+      })
+      .sort()
+      .forEach(id => {
+        this.byId[id] = {
+          id,
+          title: id,
+          templates: [],
+        };
+      });
+
     await Promise.all(
       patternDataFiles.map(async file => {
         this.filePathsThatTriggerNewData.set(file, file);

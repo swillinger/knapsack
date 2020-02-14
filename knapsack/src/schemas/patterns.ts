@@ -85,13 +85,13 @@ export type KnapsackTemplateDemo = TemplateDemo | DataDemo;
 export type DemoSize = 's' | 'm' | 'l' | 'full';
 
 export function isDataDemo(demo: TemplateDemo | DataDemo): demo is DataDemo {
-  return demo.type === 'data';
+  return demo?.type === 'data';
 }
 
 export function isTemplateDemo(
   demo: TemplateDemo | DataDemo,
 ): demo is TemplateDemo {
-  return demo.type === 'template';
+  return demo?.type === 'template';
 }
 
 export type KsSlotInfo = {

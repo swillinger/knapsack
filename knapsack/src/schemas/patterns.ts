@@ -1,5 +1,7 @@
-import { JsonSchemaObject } from '@knapsack/core/types';
+import { JsonSchemaObject, KnapsackTemplateStatus } from '@knapsack/core/types';
 import { KnapsackCustomPageSlice } from './custom-pages';
+
+export { KnapsackTemplateStatus };
 
 /**
  * Used by template renderers in addition to `path`
@@ -191,12 +193,6 @@ export interface KnapsackPatternTemplateCode {
   templateSrc: string;
   usage: string;
   language: string;
-}
-
-export interface KnapsackTemplateStatus {
-  id: string;
-  title: string;
-  color?: string;
 }
 
 export interface KnapsackPatternsConfig {

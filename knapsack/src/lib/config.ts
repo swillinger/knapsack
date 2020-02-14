@@ -120,6 +120,7 @@ export function processConfig(
   const config: KnapsackConfig = {
     public: resolve(from, publicDir),
     dist: resolve(from, dist),
+    // data: resolve(from, rest.data), // @todo turn `data` directory from relative to absolute path & then resolve issues elsewhere that arise (i.e. when `join()` is used)
     plugins: rest.plugins ?? [],
     ...rest,
   };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { KnapsackTemplateStatus } from '@knapsack/app/src/schemas/patterns';
+import { KnapsackTemplateStatus } from '@knapsack/core/types';
 import './status-icon.scss';
 
 type Props = {

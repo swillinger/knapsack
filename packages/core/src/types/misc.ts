@@ -13,3 +13,9 @@ export interface KnapsackFile {
    */
   isDeleted?: boolean;
 }
+
+export interface KnapsackTemplateStatus {
+  id: string;
+  title: string;
+  color?: string;
+}

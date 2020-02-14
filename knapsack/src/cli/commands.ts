@@ -127,7 +127,10 @@ export async function writeTemplateMeta({
           );
         }
       }),
-  );
+  ).catch(err => {
+    log.error(`Error writeTemplateMeta`, err);
+    process.exit(1);
+  });
   log.verbose(`writeTemplateMeta took ${getTime()}s`);
 }
 

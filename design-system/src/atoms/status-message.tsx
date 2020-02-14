@@ -5,7 +5,8 @@ import './status-message.scss';
 
 type StatusTypes = 'success' | 'info' | 'warning' | 'error';
 type Props = {
-  message: string;
+  message?: string;
+  children: React.ReactNode;
   type?: StatusTypes;
   handleClose?: () => void;
 };
@@ -36,11 +37,11 @@ const statusColorSets = {
 
 export const StatusMessage: React.FC<Props> = ({
   message,
+  children,
   type = 'info',
   handleClose,
 }: Props) => {
   const theType = statusTypes.includes(type) ? type : 'info';
-  const html = marked.parse(message);
   return (
     <div
       className="ks-status-message"
@@ -59,10 +60,12 @@ export const StatusMessage: React.FC<Props> = ({
           icon="close"
         />
       )}
-      <div
-        className="ks-status-message__content"
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
+      <div className="ks-status-message__content">
+        {message && (
+          <div dangerouslySetInnerHTML={{ __html: marked.parse(message) }} />
+        )}
+        {children}
+      </div>
     </div>
   );
 };

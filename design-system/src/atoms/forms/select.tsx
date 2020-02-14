@@ -23,7 +23,7 @@ export type SelectOptionProps = {
 };
 
 type Props = {
-  label?: string;
+  label?: string | React.ReactNode;
   id?: string;
   /**
    * Display the label inline with the input? Defaults to false (label above the input).

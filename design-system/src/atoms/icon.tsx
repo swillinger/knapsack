@@ -15,6 +15,7 @@ export enum Icons {
   'copy' = 'copy',
   'duplicate' = 'duplicate',
   'delete' = 'delete',
+  'down' = 'down',
   'drag-handle' = 'drag-handle',
   'dropdown-carrot' = 'dropdown-carrot',
   'edit-text' = 'edit-text',
@@ -28,6 +29,7 @@ export enum Icons {
   'sort-alphabetically' = 'sort-alphabetically',
   'grid-view' = 'grid-view',
   'table-view' = 'table-view',
+  'up' = 'up',
 }
 
 export type Props = {
@@ -241,6 +243,48 @@ export const Icon: React.FC<Props> = ({
             <rect x="3" y="3" width="18" height="18" />
             <path d="M3 9H21" />
             <path d="M3 15H21" />
+          </g>
+        );
+        break;
+
+      case Icons.up:
+        returnSymbol = (
+          <g>
+            <path
+              d="M12 19V5"
+              stroke="#222222"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M5 12L12 5L19 12"
+              stroke="#222222"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </g>
+        );
+        break;
+
+      case Icons.down:
+        returnSymbol = (
+          <g>
+            <path
+              d="M12 5L12 19"
+              stroke="#222222"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M19 12L12 19L5 12"
+              stroke="#222222"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </g>
         );
         break;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import cn from 'classnames';
-import { KnapsackTemplateStatus } from '@knapsack/app/src/schemas/patterns';
+import { KnapsackTemplateStatus } from '@knapsack/core/types';
 import './side-nav-item.scss';
 import { Icon } from './icon';
 import { KsButton } from './button';

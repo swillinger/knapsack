@@ -16,7 +16,7 @@ export function useValueDebounce<T>(
    * ms to delay
    */
   delay = 250,
-): [T, (val: T) => void] {
+): [T, React.Dispatch<React.SetStateAction<T>>] {
   const [val, set] = useState(globalVal);
 
   useEffect(() => {

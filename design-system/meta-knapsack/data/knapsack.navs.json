@@ -93,6 +93,12 @@
       "parentId": "components"
     },
     {
+      "id": "svg",
+      "name": "SVG",
+      "path": "/pattern/svg",
+      "parentId": "components"
+    },
+    {
       "id": "layouts",
       "name": "Layouts",
       "path": "",

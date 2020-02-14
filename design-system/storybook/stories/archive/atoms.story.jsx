@@ -4,7 +4,6 @@ import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 import { action } from '@storybook/addon-actions';
 import {
-  BlockQuoteWrapper,
   KsButton,
   KsDetails,
   KsSelect,
@@ -56,11 +55,11 @@ storiesOf('Atoms', module)
     )),
   )
   .add('Blockquote Wrapper', () => (
-    <BlockQuoteWrapper>
+    <div>
       It’s art if can’t be explained. It’s fashion if no one asks for an
       explanation. It’s design if it doesn’t need explanation.
       <footer>Wouter Stokkel</footer>
-    </BlockQuoteWrapper>
+    </div>
   ))
   .add(
     'Tool Tip',

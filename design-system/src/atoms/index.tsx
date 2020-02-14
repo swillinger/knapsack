@@ -1,6 +1,5 @@
 export * from './button';
 export * from './button-toggle-wrapper';
-export * from './block-quote-wrapper';
 export * from './delete-button';
 export * from './details';
 export * from './figure';

@@ -50,9 +50,11 @@ export function useKsDragDrop({
   index,
   handleDrop,
   ref,
+  canDrag = true,
 }: {
   dragTypeId: string;
   index: number;
+  canDrag?: boolean;
   ref: React.MutableRefObject<HTMLDivElement>;
   handleDrop: ({ dragIndex: number }) => void;
 }): {
@@ -103,6 +105,7 @@ export function useKsDragDrop({
   });
 
   const [{ isDragging }, drag] = useDrag({
+    canDrag: () => canDrag,
     item: {
       type: dragTypeId,
       index,

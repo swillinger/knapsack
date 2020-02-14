@@ -31,3 +31,14 @@ export interface KnapsackMeta {
 export interface GraphQlContext extends KnapsackBrain {
   canWrite: boolean;
 }
+
+export type FileResponse = GenericResponse<{
+  publicPath: string;
+  mimetype: string;
+  /**
+   * File size in bytes
+   */
+  size: number;
+  originalName: string;
+  filename: string;
+}>;

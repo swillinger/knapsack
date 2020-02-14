@@ -18,9 +18,12 @@ import express from 'express';
 import urlJoin from 'url-join';
 import md from 'marked';
 import fs from 'fs-extra';
-import { isAbsolute, join, relative } from 'path';
+import { join, relative, parse as parsePath } from 'path';
 import { exec } from 'child_process';
 import highlight from 'highlight.js';
+import { paramCase } from 'change-case';
+import shortid from 'shortid';
+import multer from 'multer';
 import * as Files from '../schemas/api/files';
 import { endpoint as pluginsEndpoint } from '../schemas/api/plugins';
 import { handlePluginsEndpoint } from './api/plugins';
@@ -29,7 +32,7 @@ import * as log from '../cli/log';
 import { BASE_PATHS, HTTP_STATUS } from '../lib/constants';
 import { getUserInfo } from './auth';
 import { KnapsackBrain, KnapsackConfig } from '../schemas/main-types';
-import { KnapsackMeta } from '../schemas/misc';
+import { KnapsackMeta, FileResponse } from '../schemas/misc';
 import { KnapsackTemplateDemo } from '../schemas/patterns';
 import { KsRenderResults } from '../schemas/knapsack-config';
 import { fileExists, resolvePath } from './server-utils';
@@ -233,12 +236,11 @@ export function getApiRoutes({
       router.post(url, async (req, res) => {
         const userInfo = getUserInfo(req);
         const { isLocalDev } = getFeaturesForUser(userInfo);
-        if (!isLocalDev) {
-          return res.status(HTTP_STATUS.BAD.BAD_REQUEST).send({
+        const localOnly = () =>
+          res.status(HTTP_STATUS.BAD.BAD_REQUEST).send({
             ok: false,
             message: 'This endpoint only available to local developers',
           });
-        }
 
         let response: Files.ActionResponses;
         const reqBody: Files.Actions = req.body;
@@ -246,6 +248,9 @@ export function getApiRoutes({
 
         switch (reqBody.type) {
           case Files.ACTIONS.verify: {
+            if (!isLocalDev) {
+              return localOnly();
+            }
             const { path } = reqBody.payload;
             const { exists, absolutePath, type } = resolvePath({
               path,
@@ -264,6 +269,9 @@ export function getApiRoutes({
             break;
           }
           case Files.ACTIONS.saveTemplateDemo: {
+            if (!isLocalDev) {
+              return localOnly();
+            }
             const { patternId, templateId, demoId, code } = reqBody.payload;
             const fullPath = patternManifest.getTemplateDemoAbsolutePath({
               patternId,
@@ -291,6 +299,9 @@ export function getApiRoutes({
             break;
           }
           case Files.ACTIONS.deleteTemplateDemo: {
+            if (!isLocalDev) {
+              return localOnly();
+            }
             const { path } = reqBody.payload;
             const { exists, absolutePath } = resolvePath({
               path,
@@ -329,6 +340,9 @@ export function getApiRoutes({
           }
 
           case Files.ACTIONS.openFile: {
+            if (!isLocalDev) {
+              return localOnly();
+            }
             const { filePath } = reqBody.payload;
             const { exists, absolutePath } = resolvePath({
               path: filePath,
@@ -437,6 +451,77 @@ export function getApiRoutes({
   router.get(url6, (req, res) => {
     const { role } = getUserInfo(req);
     res.send(role.permissions);
+  });
+
+  const destination = join(config.public, 'uploads');
+
+  const uploaderLocal = multer({
+    dest: config.public,
+    storage: multer.diskStorage({
+      destination,
+      filename(req, file, cb) {
+        const { originalname } = file;
+        const { name, ext } = parsePath(originalname);
+        let filename = `${paramCase(name)}${ext}`;
+        if (fs.existsSync(join(destination, filename))) {
+          filename = `${paramCase(name)}-${shortid.generate()}${ext}`;
+        }
+        cb(null, filename);
+      },
+    }),
+  });
+  const uploadLocalSingle = uploaderLocal.single('file');
+
+  const url7 = urlJoin(baseUrl, 'upload');
+  registerEndpoint(url7);
+
+  router.post(url7, (req, res) => {
+    let resData: FileResponse;
+
+    uploadLocalSingle(req, res, err => {
+      const { file } = req as Express.Request;
+      if (err instanceof multer.MulterError) {
+        resData = {
+          ok: false,
+          message: err.message,
+        };
+        return res.send(resData);
+      }
+      if (err) {
+        resData = {
+          ok: false,
+          message: err.message,
+        };
+        return res.send(resData);
+      }
+      if (!file) {
+        resData = {
+          ok: false,
+          message: 'Did not receive a file',
+        };
+        return res.send(resData);
+      }
+
+      const {
+        path,
+        size,
+        mimetype,
+        originalname,
+        filename,
+      } = file as Express.Multer.File;
+      const publicPath = `/${relative(config.public, path)}`;
+      resData = {
+        ok: true,
+        data: {
+          publicPath,
+          size,
+          mimetype,
+          originalName: originalname,
+          filename,
+        },
+      };
+      return res.status(200).send(resData);
+    });
   });
 
   return router;

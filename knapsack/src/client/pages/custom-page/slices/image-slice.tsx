@@ -1,71 +1,226 @@
-import React from 'react';
+import React, { useState, useCallback, useRef } from 'react';
+import {
+  KsButton,
+  KsFigure,
+  useValueDebounce,
+  KsGrid,
+  Icon,
+  KsDeleteButton,
+  StatusMessage,
+} from '@knapsack/design-system';
+import arrayMove from 'array-move';
+import { useDropzone, DropzoneOptions } from 'react-dropzone';
 import { Slice } from './types';
+import { uploadFile } from '../../../data';
+import { InlineEditText } from '../../../components/inline-edit';
+import { useKsDragDrop } from '../../../hooks';
+import './image-slice.scss';
+
+type Image = {
+  caption?: string;
+  src: string;
+};
 
 type Data = {
-  images: {
-    caption?: string;
-    src: string;
-  }[];
+  imageSize?: 's' | 'm' | 'l';
+  images?: Image[];
+};
+
+type Props = {
+  image: Image;
+  showControls: boolean;
+  index: number;
+  handleCaptionSave: (text: string) => void;
+  move: (from: number, to: number) => void;
+  handleDelete: () => void;
+};
+
+const ImageSliceImage: React.FC<Props> = ({
+  image,
+  index,
+  showControls,
+  handleCaptionSave,
+  handleDelete,
+  move,
+}: Props) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const { isDragging } = useKsDragDrop({
+    ref,
+    dragTypeId: 'image-slice-image',
+    canDrag: showControls,
+    index,
+    handleDrop: ({ dragIndex }) => {
+      move(dragIndex, index);
+    },
+  });
+
+  return (
+    <div
+      style={{ opacity: isDragging ? 0 : 1 }}
+      ref={ref}
+      className="ks-image-slice__image"
+    >
+      <KsFigure
+        figcaption={
+          <>
+            <InlineEditText
+              text={image.caption}
+              showControls={showControls}
+              handleSave={handleCaptionSave}
+            />
+            {showControls && (
+              <div className="ks-image-slice__image-controls">
+                <div className="ks-image-slice__image-handle">
+                  <Icon symbol="drag-handle" />
+                </div>
+                <KsDeleteButton flush size="s" handleTrigger={handleDelete} />
+              </div>
+            )}
+          </>
+        }
+      >
+        <img src={image.src} alt={image.caption} />
+      </KsFigure>
+    </div>
+  );
+};
+
+const ImageSlice = ({
+  isEditing,
+  setSliceData,
+  data = {},
+}: import('./types').SliceRenderParams<Data>): JSX.Element => {
+  // const [localData, setData] = useValueDebounce(data, setSliceData);
+  // const [files, setFiles] = useState<
+  //   ({
+  //     preview: string;
+  //   } & File)[]
+  // >([]);
+  const { images = [], imageSize = 'm' } = data;
+
+  async function handleFiles(files: File[]): Promise<void> {
+    const uploadedFiles = await Promise.all(
+      files.map(async file => {
+        const results = await uploadFile(file);
+        if (!results.ok) {
+          console.error('uh oh!', { results, file });
+        }
+        return results.data;
+      }),
+    );
+
+    setSliceData({
+      images: [
+        ...images,
+        ...uploadedFiles.map(file => {
+          return {
+            src: file.publicPath,
+            caption: file.originalName,
+          };
+        }),
+      ],
+    });
+  }
+
+  const onDrop = useCallback<DropzoneOptions['onDrop']>(async acceptedFiles => {
+    // setFiles(
+    //   acceptedFiles.map(file => ({
+    //     ...file,
+    //     preview: URL.createObjectURL(file),
+    //   })),
+    // );
+    handleFiles(acceptedFiles);
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
+    onDrop,
+    accept: ['image/*'],
+    multiple: true,
+  });
+
+  let editForm;
+  if (isEditing) {
+    editForm = (
+      <div className="ks-u-margin-bottom--m">
+        <StatusMessage
+          type="warning"
+          message="Image uploading currently only works on localhost and is not currently set up for Cloud uploads"
+        />
+        <br className="ks-u-margin-bottom--s" />
+        <KsButton handleTrigger={open} kind="primary" size="s" icon="add">
+          Add Images
+        </KsButton>
+        {/* <div>
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={e => {
+              const files = Array.from(e.target.files);
+              if (!files) return;
+              handleFiles(files);
+            }}
+          />
+        </div> */}
+      </div>
+    );
+  }
+
+  // if (images.length === 0) return <h5>Not enough data to render...</h5>;
+  const rootAttributes = isEditing ? getRootProps() : {};
+  return (
+    <div {...rootAttributes} className="ks-image-slice">
+      {isEditing && <input {...getInputProps()} />}
+      {editForm}
+      <KsGrid itemSize={imageSize}>
+        {images.map((image, index) => (
+          <ImageSliceImage
+            image={image}
+            key={`${image.src}-${isEditing}`}
+            index={index}
+            showControls={isEditing}
+            move={(from, to) => {
+              setSliceData({
+                images: arrayMove(images, from, to),
+              });
+            }}
+            handleDelete={() => {
+              setSliceData({
+                images: images.filter((img, i) => index !== i),
+              });
+            }}
+            handleCaptionSave={text => {
+              setSliceData({
+                images: images.map((img, i) => {
+                  if (index !== i) return img;
+                  return {
+                    ...img,
+                    caption: text,
+                  };
+                }),
+              });
+            }}
+          />
+        ))}
+      </KsGrid>
+    </div>
+  );
 };
 
 export const imageSlice: Slice<Data> = {
   id: 'image-slice',
   title: 'Image Grid',
-  description: '1 to 3 images with captions laid out in a grid',
-  render: ({ data: { images = [] } = {} }) => {
-    if (images.length === 0) return <h5>Not enough data to render...</h5>;
-    const width = images.length > 1 ? 99 / images.length : 100;
-
-    return (
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
-        {images.map(image => (
-          <figure
-            key={JSON.stringify(image)}
-            style={{
-              width: `${width}%`,
-            }}
-          >
-            <img src={image.src} alt={image.caption} />
-            <figcaption>{image.caption}</figcaption>
-          </figure>
-        ))}
-      </div>
-    );
-  },
+  description: 'Multiple images with captions laid out in a grid',
+  render: props => <ImageSlice {...props} />,
   schema: {
-    title: 'Image Slice',
     type: 'object',
     required: [],
     properties: {
-      images: {
-        type: 'array',
-        items: {
-          type: 'object',
-          properties: {
-            caption: {
-              type: 'string',
-            },
-            src: {
-              type: 'string',
-            },
-          },
-        },
-      },
-    },
-  },
-  uiSchema: {
-    images: {
-      'ui:help': 'Please try and keep image file size small',
-      items: {
-        src: {
-          'ui:widget': 'file',
-          // 'ui:widget': 'data-url',
-        },
+      imageSize: {
+        title: 'Image Size',
+        type: 'string',
+        enum: ['s', 'm', 'l'],
+        enumNames: ['small', 'medium', 'large'],
       },
     },
   },

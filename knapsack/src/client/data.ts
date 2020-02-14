@@ -17,15 +17,13 @@
 import qs from 'qs';
 import { DocumentNode } from 'graphql';
 import { apiUrlBase, graphqlBase } from '../lib/constants';
-import {
-  KnapsackTemplateData,
-  KnapsackTemplateDemo,
-} from '../schemas/patterns';
+import { KnapsackTemplateDemo } from '../schemas/patterns';
 import * as Files from '../schemas/api/files';
 import * as Plugins from '../schemas/api/plugins';
 import { AppState } from './store';
 import { KsRenderResults } from '../schemas/knapsack-config';
 import { timer } from '../lib/utils';
+import { FileResponse } from '../schemas/misc';
 
 export { Files };
 
@@ -172,6 +170,27 @@ export function saveData(data: object): Promise<string> {
       return results.data.hash;
     })
     .catch(console.log.bind(console));
+}
+
+export function uploadFile(file: File): Promise<FileResponse> {
+  const body = new FormData();
+  body.append('file', file);
+
+  return window
+    .fetch(`${apiUrlBase}/upload`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+      },
+      body,
+    })
+    .then(res => res.json())
+    .then(response => {
+      if (!response.ok) {
+        console.error('uh oh: upload crap out', response);
+      }
+      return response;
+    });
 }
 
 export function getInitialState(): Promise<AppState> {

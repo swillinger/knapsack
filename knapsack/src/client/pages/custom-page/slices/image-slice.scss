@@ -1,0 +1,14 @@
+.ks-image-slice {
+  &__image-controls {
+    display: flex;
+    align-items: center;
+    > * {
+      margin-right: var(--space-s);
+    }
+  }
+  &__image-handle {
+    &:hover {
+      cursor: grab;
+    }
+  }
+}

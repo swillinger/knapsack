@@ -69,6 +69,18 @@
       "parentId": "components"
     },
     {
+      "id": "pattern-status-icon",
+      "name": "Pattern Status Icon",
+      "path": "/pattern/pattern-status-icon",
+      "parentId": "components"
+    },
+    {
+      "id": "side-nav-item",
+      "name": "Side Nav Item",
+      "path": "/pattern/side-nav-item",
+      "parentId": "components"
+    },
+    {
       "id": "status-message",
       "name": "Status Message",
       "path": "/pattern/status-message",

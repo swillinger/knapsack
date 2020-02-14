@@ -1,0 +1,43 @@
+{
+  "id": "side-nav-item",
+  "title": "Side Nav Item",
+  "templates": [
+    {
+      "id": "react",
+      "path": "@knapsack/design-system",
+      "alias": "SideNavItem",
+      "templateLanguageId": "react",
+      "statusId": "needs-approval",
+      "spec": {
+        "isInferred": "@knapsack/design-system/dist/ks-design-system.d.ts"
+      },
+      "assetSetIds": [],
+      "demosById": {
+        "main": {
+          "id": "main",
+          "title": "Main",
+          "type": "data",
+          "data": {
+            "props": {
+              "title": "Title",
+              "active": false,
+              "hasChildren": true,
+              "isCollapsed": true
+            },
+            "slots": {}
+          }
+        },
+        "ai-oggRjJ": {
+          "id": "ai-oggRjJ",
+          "title": "My new template demo",
+          "type": "template",
+          "templateInfo": {
+            "alias": "allVariations",
+            "path": "../../src/atoms/side-nav-item.story.tsx"
+          }
+        }
+      },
+      "demos": ["main", "ai-oggRjJ"]
+    }
+  ]
+}

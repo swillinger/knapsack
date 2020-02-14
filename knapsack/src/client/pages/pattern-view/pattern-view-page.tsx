@@ -37,6 +37,7 @@ import { CustomSliceCollection } from '../custom-page/custom-slice-collection';
 import { InlineEditText } from '../../components/inline-edit';
 import { getBreadcrumb } from '../../utils';
 import { EditTemplateDemo } from './components';
+import { DemoSize } from '../../../schemas/patterns';
 
 type Props = {
   patternId: string;
@@ -100,14 +101,12 @@ const PatternViewPage: React.FC<Props> = ({
       label: 'Full',
     },
   ];
-  const [demoSize, setDemoSize] = useState<SelectOptionProps>(
-    defaultDemoSize
-      ? demoSizeOptions.find(d => d.value === defaultDemoSize)
-      : {
-          value: 'm',
-          label: 'Medium',
-        },
-  );
+  const demoSize = defaultDemoSize
+    ? demoSizeOptions.find(d => d.value === defaultDemoSize)
+    : {
+        value: 'l',
+        label: 'Large',
+      };
 
   const emptyTemplateOption = {
     value: 'all',
@@ -210,7 +209,13 @@ const PatternViewPage: React.FC<Props> = ({
                 <KsSelect
                   options={demoSizeOptions}
                   value={demoSize}
-                  handleChange={setDemoSize}
+                  handleChange={({ value }) => {
+                    dispatch(
+                      updatePatternInfo(patternId, {
+                        demoSize: value as DemoSize,
+                      }),
+                    );
+                  }}
                   label="Stage Size"
                 />
               </div>

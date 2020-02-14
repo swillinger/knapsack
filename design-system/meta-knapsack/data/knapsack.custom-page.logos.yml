@@ -1,0 +1,35 @@
+id: logos
+title: Logos
+slices:
+  - id: MYmqLpeu
+    blockId: image-slice
+    data:
+      images:
+        - src: /uploads/knapsack-bg-black-full.png
+          caption: knapsack-bg-black-full.png
+        - src: /uploads/knapsack-bg-black-full.svg
+          caption: knapsack-bg-black-full.svg
+        - src: /uploads/knapsack-bg-black-trans.png
+          caption: knapsack-bg-black-trans.png
+        - src: /uploads/knapsack-bg-black-trans.svg
+          caption: knapsack-bg-black-trans.svg
+        - src: /uploads/knapsack-bg-black.png
+          caption: knapsack-bg-black.png
+        - src: /uploads/knapsack-bg-black.svg
+          caption: knapsack-bg-black.svg
+        - src: /uploads/knapsack-bg-inline-trans.png
+          caption: knapsack-bg-inline-trans.png
+        - src: /uploads/knapsack-bg-inline-trans.svg
+          caption: knapsack-bg-inline-trans.svg
+        - src: /uploads/knapsack-black.png
+          caption: knapsack-black.png
+        - src: /uploads/knapsack-black.svg
+          caption: knapsack-black.svg
+        - src: /uploads/knapsack-logo-trans.png
+          caption: knapsack-logo-trans.png
+        - src: /uploads/knapsack-logo-trans.svg
+          caption: knapsack-logo-trans.svg
+        - src: /uploads/knapsack-logo.svg
+          caption: knapsack-logo.svg
+        - src: /uploads/knapsack-white.png
+          caption: knapsack-white.png

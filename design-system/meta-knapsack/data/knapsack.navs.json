@@ -80,6 +80,13 @@
       "path": "/pages/all-tokens",
       "parentId": "design-tokens"
     },
+    { "id": "assets", "name": "Assets", "path": "", "parentId": "root" },
+    {
+      "id": "logos",
+      "name": "Logos",
+      "path": "/pages/logos",
+      "parentId": "assets"
+    },
     { "id": "sandbox", "name": "Sandbox", "path": "", "parentId": "root" },
     {
       "id": "slices-sandbox",

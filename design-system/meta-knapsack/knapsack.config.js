@@ -20,6 +20,8 @@ const webpackConfig = createWebPackConfig({
   ],
   tsConfigFile: join(__dirname, '../tsconfig.json'),
   useHtmlWebpackPlugin: false,
+  // outputStats: true,
+  maxAssetSize: 900 * 1000,
 });
 
 /** @type {import('../../knapsack/src/schemas/knapsack-config').KnapsackConfig} */

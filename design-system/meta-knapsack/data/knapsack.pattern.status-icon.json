@@ -1,0 +1,26 @@
+{
+  "id": "status-icon",
+  "title": "Status Icon",
+  "templates": [
+    {
+      "id": "react",
+      "path": "@knapsack/design-system",
+      "alias": "StatusIcon",
+      "templateLanguageId": "react",
+      "statusId": "ready",
+      "spec": {
+        "isInferred": "@knapsack/design-system/dist/ks-design-system.d.ts"
+      },
+      "assetSetIds": [],
+      "demosById": {
+        "main": {
+          "id": "main",
+          "title": "Main",
+          "type": "data",
+          "data": { "props": { "hasTitle": false }, "slots": {} }
+        }
+      },
+      "demos": ["main"]
+    }
+  ]
+}

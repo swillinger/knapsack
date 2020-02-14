@@ -81,6 +81,12 @@
       "parentId": "components"
     },
     {
+      "id": "status-icon",
+      "name": "Status Icon",
+      "path": "/pattern/status-icon",
+      "parentId": "components"
+    },
+    {
       "id": "status-message",
       "name": "Status Message",
       "path": "/pattern/status-message",

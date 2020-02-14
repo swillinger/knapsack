@@ -51,6 +51,12 @@
       "parentId": "components"
     },
     {
+      "id": "details",
+      "name": "Details",
+      "path": "/pattern/details",
+      "parentId": "components"
+    },
+    {
       "id": "figure",
       "name": "Figure",
       "path": "/pattern/figure",

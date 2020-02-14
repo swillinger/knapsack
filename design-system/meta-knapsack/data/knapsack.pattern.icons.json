@@ -7,7 +7,7 @@
       "path": "@knapsack/design-system",
       "alias": "Icon",
       "templateLanguageId": "react",
-      "statusId": "proposed",
+      "statusId": "ready",
       "spec": {
         "isInferred": "@knapsack/design-system/dist/ks-design-system.d.ts"
       },

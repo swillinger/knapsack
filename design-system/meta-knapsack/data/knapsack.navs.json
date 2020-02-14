@@ -45,15 +45,21 @@
       "parentId": "components"
     },
     {
-      "id": "status-message",
-      "name": "Status Message",
-      "path": "/pattern/status-message",
-      "parentId": "components"
-    },
-    {
       "id": "figure",
       "name": "Figure",
       "path": "/pattern/figure",
+      "parentId": "components"
+    },
+    {
+      "id": "icons",
+      "name": "Icons",
+      "path": "/pattern/icons",
+      "parentId": "components"
+    },
+    {
+      "id": "status-message",
+      "name": "Status Message",
+      "path": "/pattern/status-message",
       "parentId": "components"
     },
     {

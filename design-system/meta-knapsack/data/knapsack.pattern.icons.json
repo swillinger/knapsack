@@ -1,0 +1,36 @@
+{
+  "id": "icons",
+  "title": "Icons",
+  "templates": [
+    {
+      "id": "react",
+      "path": "@knapsack/design-system",
+      "alias": "Icon",
+      "templateLanguageId": "react",
+      "statusId": "proposed",
+      "spec": {
+        "isInferred": "@knapsack/design-system/dist/ks-design-system.d.ts"
+      },
+      "assetSetIds": [],
+      "demosById": {
+        "main": {
+          "id": "main",
+          "title": "Main",
+          "type": "data",
+          "data": { "props": {}, "slots": {} }
+        },
+        "uQ7Wazkh8": {
+          "id": "uQ7Wazkh8",
+          "title": "All Icons",
+          "type": "template",
+          "templateInfo": {
+            "alias": "allVariations",
+            "path": "../../src/atoms/icon.story.tsx"
+          },
+          "description": ""
+        }
+      },
+      "demos": ["main", "uQ7Wazkh8"]
+    }
+  ]
+}

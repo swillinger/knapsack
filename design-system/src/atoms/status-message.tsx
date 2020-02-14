@@ -6,7 +6,7 @@ import './status-message.scss';
 type StatusTypes = 'success' | 'info' | 'warning' | 'error';
 type Props = {
   message?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   type?: StatusTypes;
   handleClose?: () => void;
 };

@@ -48,7 +48,7 @@
           "title": "Main",
           "type": "data",
           "data": {
-            "props": { "gapSize": "s", "itemSize": "l" },
+            "props": { "gapSize": "l", "itemSize": "s" },
             "slots": {
               "children": [
                 {
@@ -74,9 +74,18 @@
               ]
             }
           }
+        },
+        "EXQVytW-F": {
+          "id": "EXQVytW-F",
+          "title": "My new template demo",
+          "type": "template",
+          "templateInfo": {
+            "alias": "sizes",
+            "path": "../../src/grid/grid-demoes.tsx"
+          }
         }
       },
-      "demos": ["main"]
+      "demos": ["main", "EXQVytW-F"]
     }
   ]
 }

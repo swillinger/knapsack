@@ -1,40 +1,26 @@
 @import '../../dist/ks-design-tokens.scss';
 
 .ks-grid {
-  --ks-grid-column-count: 1;
+  --ks-grid-item-size: 100px;
   display: grid;
   justify-items: stretch;
   align-items: stretch;
   justify-content: stretch;
   grid-auto-flow: row;
-  grid-template-columns: repeat(var(--ks-grid-column-count), auto);
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(var(--ks-grid-item-size), 1fr)
+  );
+  // grid-template-columns: repeat(var(--ks-grid-column-count), auto);
   &--item-size {
     &-s {
-      @media (min-width: $bp-xsmall) {
-        --ks-grid-column-count: 2;
-      }
-      @media (min-width: $bp-medium) {
-        --ks-grid-column-count: 3;
-      }
-      @media (min-width: $bp-large) {
-        --ks-grid-column-count: 4;
-      }
+      --ks-grid-item-size: 200px;
     }
     &-m {
-      @media screen and (min-width: $bp-small) {
-        --ks-grid-column-count: 2;
-      }
-      @media (min-width: $bp-large) {
-        --ks-grid-column-count: 4;
-      }
+      --ks-grid-item-size: 300px;
     }
     &-l {
-      @media (min-width: $bp-xlarge) {
-        --ks-grid-column-count: 2;
-      }
-      @media (min-width: $bp-xxxlarge) {
-        --ks-grid-column-count: 3;
-      }
+      --ks-grid-item-size: 500px;
     }
   }
   &--gap-size {

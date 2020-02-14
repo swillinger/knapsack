@@ -2,12 +2,18 @@ import React from 'react';
 import cn from 'classnames';
 import './grid.scss';
 
+export enum KsGridItemSizes {
+  's' = 's',
+  'm' = 'm',
+  'l' = 'l',
+}
+
 type Props = {
   gapSize?: 's' | 'm' | 'l';
   /**
    * Smaller items will have more per row
    */
-  itemSize?: 's' | 'm' | 'l';
+  itemSize?: keyof typeof KsGridItemSizes;
   children: React.ReactNode;
 };
 

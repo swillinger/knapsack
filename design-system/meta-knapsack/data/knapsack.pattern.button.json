@@ -10,11 +10,13 @@
       "title": "React",
       "id": "react",
       "templateLanguageId": "react",
-      "path": "../../src/atoms/button.tsx",
+      "path": "@knapsack/design-system",
       "alias": "KsButton",
       "statusId": "ready",
       "assetSetIds": ["bootstrap"],
-      "spec": { "isInferred": true },
+      "spec": {
+        "isInferred": "@knapsack/design-system/dist/ks-design-system.d.ts"
+      },
       "demosById": {
         "GPuRnlEq": {
           "id": "GPuRnlEq",
@@ -26,7 +28,7 @@
               "disabled": false,
               "type": "button",
               "kind": "primary",
-              "floating": false,
+              "floating": true,
               "size": "s",
               "isFullWidth": false,
               "flush": false,
@@ -34,7 +36,7 @@
               "className": "",
               "active": false,
               "icon": "search",
-              "handleTrigger": "() => alert('triggered')"
+              "handleTrigger": "() => alert('triggered') "
             },
             "slots": { "children": ["Text"] }
           }

@@ -198,7 +198,7 @@ export class Patterns implements KnapsackDb<PatternsState> {
           if (template?.spec?.isInferred) {
             // if it's inferred, we don't want to save `spec.props` or `spec.slots`
             template.spec = {
-              isInferred: true,
+              isInferred: template?.spec?.isInferred,
             };
           }
         });
@@ -301,13 +301,17 @@ export class Patterns implements KnapsackDb<PatternsState> {
         if (spec?.isInferred) {
           const renderer = this.templateRenderers[template.templateLanguageId];
           if (renderer?.inferSpec) {
-            const { exists, absolutePath, relativePathFromCwd } = resolvePath({
-              path: template.path,
+            const pathToInferSpecFrom =
+              typeof spec.isInferred === 'string'
+                ? spec.isInferred
+                : template.path;
+            const { exists, absolutePath } = resolvePath({
+              path: pathToInferSpecFrom,
               resolveFromDirs: [this.dataDir],
             });
 
             if (!exists) {
-              throw new Error(`File does not exist: "${template.path}"`);
+              throw new Error(`File does not exist: "${pathToInferSpecFrom}"`);
             }
             this.filePathsThatTriggerNewData.set(
               absolutePath,

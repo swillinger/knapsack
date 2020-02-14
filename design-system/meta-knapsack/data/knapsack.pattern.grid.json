@@ -36,11 +36,13 @@
     },
     {
       "id": "react",
-      "path": "../../src/grid/grid.tsx",
+      "path": "@knapsack/design-system",
       "alias": "KsGrid",
       "templateLanguageId": "react",
-      "statusId": "proposed",
-      "spec": { "isInferred": true },
+      "statusId": "ready",
+      "spec": {
+        "isInferred": "@knapsack/design-system/dist/ks-design-system.d.ts"
+      },
       "assetSetIds": [],
       "demosById": {
         "main": {

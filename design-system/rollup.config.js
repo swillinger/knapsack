@@ -5,7 +5,7 @@ const distDir = './dist';
 
 const main = createRollupConfig({
   input: {
-    'ks-design-system': './src/index.ts',
+    'ks-design-system': './src/ks-design-system.ts',
   },
   cssOutputFile: './dist/ks-design-system.css',
   distDir,

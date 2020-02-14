@@ -10,11 +10,13 @@
       "title": "React",
       "id": "react",
       "templateLanguageId": "react",
-      "path": "../../src/atoms/status-message.tsx",
+      "path": "@knapsack/design-system",
       "alias": "StatusMessage",
       "statusId": "ready",
       "assetSetIds": [],
-      "spec": { "isInferred": true },
+      "spec": {
+        "isInferred": "@knapsack/design-system/dist/ks-design-system.d.ts"
+      },
       "demosById": {
         "Wsh_bVKB": {
           "id": "Wsh_bVKB",

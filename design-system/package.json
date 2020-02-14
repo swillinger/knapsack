@@ -4,7 +4,7 @@
   "description": "Collection of re-usable UI Components for Knapsack and friends",
   "main": "dist/ks-design-system.js",
   "module": "dist/ks-design-system.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/ks-design-system.d.ts",
   "scripts": {
     "clean": "rm -rf dist tsconfig.tsbuildinfo storybook/dist",
     "build:rollup": "BABEL_ENV=react rollup -c rollup.config.js",

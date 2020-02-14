@@ -4,12 +4,14 @@
   "templates": [
     {
       "id": "react",
-      "path": "../../src/atoms/figure.tsx",
+      "path": "@knapsack/design-system",
       "alias": "KsFigure",
       "templateLanguageId": "react",
       "statusId": "ready",
       "assetSetIds": [],
-      "spec": { "isInferred": true },
+      "spec": {
+        "isInferred": "@knapsack/design-system/dist/ks-design-system.d.ts"
+      },
       "demosById": {
         "main": {
           "id": "main",

@@ -106,7 +106,14 @@ export type KsSlotInfo = {
  * Supersedes `schema`
  */
 export type KsTemplateSpec = {
-  isInferred?: boolean;
+  /**
+   * EXPERMIMENTAL
+   * Attempt to create the props & slots spec by reading the source file. Prevents ability to use spec editor.
+   * If `true`, then uses the template `alias` & `path` to find the file.
+   * If a string, then that file path is used in place of the source file. Scenario: the `path` is used to point to a compiled file w types stripped and this is used to point to either the source file w types or the compiled `.d.ts` file.
+   * Currently only React is supported. The file extension determines if TypeScript (ts/tsx) or PropTypes (js/jsx) is used for inference.
+   */
+  isInferred?: boolean | string;
   /**
    * JSON Schema defining the serializable data passed in
    * The classic, formerly `schema`

@@ -144,7 +144,7 @@ export const AddEntity: React.FC<Props> = ({
       <KsButton
         kind="icon-standard"
         icon="add"
-        onClick={() => setIsShowing(!isShowing)}
+        handleTrigger={() => setIsShowing(!isShowing)}
       >
         Add Navigation Element
       </KsButton>

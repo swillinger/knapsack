@@ -653,9 +653,20 @@ export default function reducer(
           t => t.id === templateId,
         );
         const id = newDemoId || shortid.generate();
+        const demo = template.demosById[demoId];
+        let { title } = demo;
+        // We want to add a number to title: 'Main' => 'Main 2' OR 'Main 3' => 'Main 4'
+        const lastCharacter = title.slice(-1);
+        const lastAsNum = parseInt(lastCharacter, 10);
+        if (Number.isInteger(lastAsNum)) {
+          title = `${title.slice(0, -1)}${lastAsNum + 1}`;
+        } else {
+          title = `${title} 2`;
+        }
         template.demos.push(id);
         template.demosById[id] = {
-          ...template.demosById[demoId],
+          ...demo,
+          title,
           id,
         };
       });

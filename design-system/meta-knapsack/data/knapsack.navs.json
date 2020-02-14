@@ -45,6 +45,12 @@
       "parentId": "components"
     },
     {
+      "id": "delete-button",
+      "name": "Delete Button",
+      "path": "/pattern/delete-button",
+      "parentId": "components"
+    },
+    {
       "id": "figure",
       "name": "Figure",
       "path": "/pattern/figure",

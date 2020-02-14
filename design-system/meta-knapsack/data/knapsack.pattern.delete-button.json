@@ -1,0 +1,26 @@
+{
+  "id": "delete-button",
+  "title": "Delete Button",
+  "templates": [
+    {
+      "id": "react",
+      "path": "@knapsack/design-system",
+      "alias": "KsDeleteButton",
+      "templateLanguageId": "react",
+      "statusId": "proposed",
+      "spec": {
+        "isInferred": "@knapsack/design-system/dist/ks-design-system.d.ts"
+      },
+      "assetSetIds": [],
+      "demosById": {
+        "main": {
+          "id": "main",
+          "title": "Main",
+          "type": "data",
+          "data": { "props": {}, "slots": {} }
+        }
+      },
+      "demos": ["main"]
+    }
+  ]
+}

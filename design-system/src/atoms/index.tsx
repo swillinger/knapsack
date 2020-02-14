@@ -17,6 +17,5 @@ export * from './forms/select';
 export * from './type-to-filter-input-wrapper';
 export * from './type-to-filter';
 export * from './clear-filter-button';
-export * from './demo-block';
 export * from './tooltip';
 export * from './pattern-status-icon';

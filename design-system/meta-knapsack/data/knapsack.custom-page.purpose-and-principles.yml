@@ -1,0 +1,54 @@
+id: purpose-and-principles
+title: Purpose & Principles
+slices:
+  - id: pg_l6BR6
+    blockId: markdown-slice
+    data:
+      md: >-
+        ### Design Purpose
+
+
+        Bring the many sources of truth together.
+
+
+        ### Design Principles
+
+
+        #### Presentation Over UI Design
+
+
+        Knapsack celebrates the user’s system and content. Knapsack's UI will be
+        as unobtrusive and themeable as possible so that the user’s content and
+        brand style can shine.
+
+
+        #### In Context
+
+
+        Controls for editing content will be on or around the content in as
+        close proximity as possible. No modals allowed. Same goes for help text
+        and links to documentation, specifically when a user can edit.
+
+
+        #### Choice Over Direction
+
+
+        While we may provide initial guidance or sane defaults, Knapsack users
+        get the final say in how their system functions. When designing
+        features, we opt to provide choice and flexibility over specific
+        methodology where possible.
+
+
+        #### Familiar is Friendly
+
+
+        We use widely embraced UI/X paradigms to minimize the learning curve for
+        users. We're selective about doing something new and will exercise
+        restraint when doing something new isn't demonstrably better.
+
+
+        #### Lead by Example
+
+
+        We use Knapsack's design to expose users to usability best practices in
+        order to ultimately help them understand and build better products.

@@ -9,6 +9,24 @@
   ],
   "secondary": [
     {
+      "id": "getting-started",
+      "name": "Getting Started",
+      "path": "",
+      "parentId": "root"
+    },
+    {
+      "id": "purpose-and-principles",
+      "name": "Purpose & Principles",
+      "path": "/pages/purpose-and-principles",
+      "parentId": "getting-started"
+    },
+    {
+      "id": "design",
+      "name": "Design",
+      "path": "/pages/design",
+      "parentId": "getting-started"
+    },
+    {
       "id": "patterns-asdf",
       "name": "Patterns",
       "path": "/patterns",

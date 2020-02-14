@@ -27,6 +27,7 @@ export const KsDeleteButton: React.FC<Props> = ({
     <KsPopover
       trigger="prop"
       isOpen={isPopoverOpen}
+      onClickOutside={() => setOpen(false)}
       content={
         <div className="ks-delete-btn__confirmation">
           {typeof confirmationMessage === 'string' ? (
@@ -39,10 +40,8 @@ export const KsDeleteButton: React.FC<Props> = ({
             emphasis="danger"
             isFullWidth
             handleTrigger={() => {
-              setTimeout(() => {
-                setOpen(false);
-              }, 10);
-              handleTrigger();
+              setOpen(false);
+              setTimeout(handleTrigger, 10);
             }}
           >
             {confirmBtnText}
@@ -55,7 +54,7 @@ export const KsDeleteButton: React.FC<Props> = ({
         kind="icon"
         size={size}
         flush={flush}
-        handleTrigger={() => setOpen(true)}
+        handleTrigger={() => setOpen(open => !open)}
       >
         Delete
       </KsButton>

@@ -1,6 +1,6 @@
 import React from 'react';
 import shortid from 'shortid';
-import { KsButton, SchemaForm } from '@knapsack/design-system';
+import { KsButton, SchemaForm, KsDeleteButton } from '@knapsack/design-system';
 import knapsackSlices from './slices';
 // import { Slice } from './slices/types';
 import { KnapsackCustomPageSlice } from '../../../schemas/custom-pages';

@@ -20,7 +20,7 @@ type Props = {
   active?: boolean;
   hasChildren?: boolean;
   isCollapsed?: boolean;
-  onClickToggleCollapse?: Btn['onClick'];
+  onClickToggleCollapse?: () => void;
   isSearchMatch?: boolean;
   isSearchFocus?: boolean;
   canDelete?: boolean;
@@ -172,7 +172,7 @@ export const SideNavItem: React.FC<Props> = ({
           <KsButton
             kind="icon"
             icon="collapser"
-            onClick={onClickToggleCollapse}
+            handleTrigger={onClickToggleCollapse}
             flush
           >
             {isCollapsed ? 'Expand' : 'Collapse'}

@@ -153,7 +153,7 @@ export const KsSlotsForm: React.FC<Props> = ({
                                   icon="add"
                                   size="s"
                                   // onKeyPress={() => arrayHelpers.insert(index)} // remove a friend from the list
-                                  onClick={() =>
+                                  handleTrigger={() =>
                                     arrayHelpers.push({
                                       patternId: '',
                                       templateId: '',
@@ -169,7 +169,9 @@ export const KsSlotsForm: React.FC<Props> = ({
                                 <KsButton
                                   icon="add"
                                   size="s"
-                                  onClick={() => arrayHelpers.push('Text')} // remove a friend from the list
+                                  handleTrigger={() =>
+                                    arrayHelpers.push('Text')
+                                  } // remove a friend from the list
                                   // onKeyPress={() => arrayHelpers.insert(index)} // remove a friend from the list
                                 >
                                   Add Text
@@ -194,7 +196,7 @@ export const KsSlotsForm: React.FC<Props> = ({
                                   {index !== 0 && (
                                     <KsButton
                                       size="s"
-                                      onClick={() =>
+                                      handleTrigger={() =>
                                         arrayHelpers.move(index, index - 1)
                                       }
                                     >
@@ -204,7 +206,7 @@ export const KsSlotsForm: React.FC<Props> = ({
                                   {index !== slottedDatas.length - 1 && (
                                     <KsButton
                                       size="s"
-                                      onClick={() =>
+                                      handleTrigger={() =>
                                         arrayHelpers.move(index, index + 1)
                                       }
                                     >

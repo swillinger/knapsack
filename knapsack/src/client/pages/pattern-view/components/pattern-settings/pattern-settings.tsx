@@ -211,7 +211,7 @@ export const KsPatternSettings: React.FC<Props> = ({
         })}
       >
         <KsButton
-          onClick={() => {
+          handleTrigger={() => {
             dispatch(
               setPageDetailsVisibility({
                 isOpen: !pageDetailsOpen,

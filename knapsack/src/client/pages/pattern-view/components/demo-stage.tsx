@@ -106,7 +106,7 @@ export const KsDemoStage: React.FC<Props> = ({
             kind="icon"
             icon="external-link"
             flush
-            onClick={() => {
+            handleTrigger={() => {
               if (templateInfo?.url) {
                 window.open(templateInfo.url, '_blank');
               }

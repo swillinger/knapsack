@@ -79,7 +79,7 @@ const KsTemplateDemo: React.FC<Props> = ({ index, demo }: Props) => {
     <figure
       ref={ref}
       className={cn('ks-template-demos__item', {
-        'ks-template-demos__item--active': activeDemo.id === demo.id,
+        'ks-template-demos__item--active': activeDemo?.id === demo.id,
       })}
       style={{ opacity }}
     >
@@ -152,7 +152,7 @@ const KsTemplateDemo: React.FC<Props> = ({ index, demo }: Props) => {
               kind="icon"
               icon="duplicate"
               flush
-              onClick={() => {
+              handleTrigger={() => {
                 const newDemoId = shortid.generate();
                 dispatch(
                   duplicateDemo({
@@ -262,7 +262,7 @@ export const KsTemplateDemos: React.FC = () => {
             size="s"
             kind="standard"
             icon="add"
-            onClick={() => {
+            handleTrigger={() => {
               const demoId = shortid.generate();
               dispatch(
                 addTemplateDataDemo({

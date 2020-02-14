@@ -107,7 +107,7 @@ export const Sidebar: React.FC = () => {
               kind="icon-standard"
               icon="edit"
               floating
-              onClick={() => setIsSidebarEditMode(true)}
+              handleTrigger={() => setIsSidebarEditMode(true)}
             >
               Edit Left Navigation
             </KsButton>
@@ -158,7 +158,7 @@ export const Sidebar: React.FC = () => {
               <div>
                 <KsButton
                   kind="cancel"
-                  onClick={() => {
+                  handleTrigger={() => {
                     setTreeItems(initialTreeItems);
                     setIsSidebarEditMode(false);
                   }}
@@ -167,7 +167,7 @@ export const Sidebar: React.FC = () => {
                 </KsButton>
                 <KsButton
                   kind="primary"
-                  onClick={() => {
+                  handleTrigger={() => {
                     const newFlatData = getFlatDataFromTree({
                       treeData: treeItems,
                       ignoreCollapsed: false,

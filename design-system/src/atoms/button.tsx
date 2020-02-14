@@ -27,19 +27,10 @@ type Props = {
   children?: React.ReactNode;
   disabled?: boolean;
   /**
-   * @deprecated use `handleTrigger`
-   */
-  onClick?: Btn['onClick'];
-  /**
-   * @deprecated use `handleTrigger`
-   */
-  onKeyPress?: Btn['onKeyPress'];
-  /**
-   * Passed to `onClick` & `onKeyPress`
+   * Fired when clicked or activated by keyboard.
+   * `<button>`'s `onClick` is also triggered by keyboard (yah native HTML elements!)
    */
   handleTrigger?: () => void;
-  // onClick?(event: React.MouseEvent<HTMLButtonElement>): void;
-  // type?: 'button' | 'submit' | 'reset';
   type?: Btn['type'];
   /**
    * Which style to use (primary, icon, etc)
@@ -68,8 +59,6 @@ type Props = {
 export const KsButton: React.FC<Props> = ({
   children,
   disabled = false,
-  onClick,
-  onKeyPress,
   handleTrigger,
   type = 'button',
   kind = KINDS.standard,
@@ -104,22 +93,7 @@ export const KsButton: React.FC<Props> = ({
     <button
       className={classes}
       disabled={disabled}
-      onClick={handleTrigger || onClick}
-      onKeyPress={e => {
-        // only continue if key is enter or space
-        if (
-          // enter
-          e.which === 13 ||
-          // space
-          e.which === 32
-        ) {
-          if (handleTrigger) {
-            handleTrigger();
-          } else {
-            onKeyPress(e);
-          }
-        }
-      }}
+      onClick={handleTrigger}
       type={type}
       tabIndex={tabIndex}
     >

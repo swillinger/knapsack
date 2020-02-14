@@ -156,7 +156,7 @@ export class CustomSliceCollection extends React.Component<Props, State> {
           {userCanSave && (
             <div style={{ marginRight: '.5rem' }}>
               <KsButton
-                onClick={() =>
+                handleTrigger={() =>
                   this.setState(prevState => ({
                     isEditing: !prevState.isEditing,
                   }))
@@ -165,7 +165,7 @@ export class CustomSliceCollection extends React.Component<Props, State> {
                 Edit Slices
               </KsButton>
               <KsButton
-                onClick={() => {
+                handleTrigger={() => {
                   this.setState({ saveButtonText: 'Saving...' });
                   setTimeout(() => {
                     this.setState({ saveButtonText: 'Save' });

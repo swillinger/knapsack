@@ -74,7 +74,7 @@ const PageWithSidebar: React.FC<Props> = ({
           <KsButton
             kind="icon-standard"
             icon="collapser"
-            onClick={() =>
+            handleTrigger={() =>
               dispatch(setSidebarVisibility({ isOpen: !sidebarOpen }))
             }
           >

@@ -72,19 +72,17 @@ class CustomSlice extends React.Component<Props, State> {
             <p>{knapsackSlice.description}</p>
             <KsButton
               disabled={sliceIndex === 0}
-              onClick={() => moveSliceUp(sliceIndex)}
+              handleTrigger={() => moveSliceUp(sliceIndex)}
             >
               Move Up
             </KsButton>
             <KsButton
               disabled={sliceIndex + 1 === slicesLength}
-              onClick={() => moveSliceDown(sliceIndex)}
+              handleTrigger={() => moveSliceDown(sliceIndex)}
             >
               Move Down
             </KsButton>
-            <KsButton onClick={() => deleteSlice(slice.id)}>
-              Delete Slice
-            </KsButton>
+            <KsDeleteButton handleTrigger={() => deleteSlice(slice.id)} />
             {knapsackSlice.schema && (
               <SchemaForm
                 schema={knapsackSlice.schema}

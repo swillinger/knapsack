@@ -3,6 +3,7 @@
   line-height: 1;
   position: relative;
   &__content {
+    opacity: 0.9; // blends it in with the background just a touch
   }
   &__close {
     position: absolute;

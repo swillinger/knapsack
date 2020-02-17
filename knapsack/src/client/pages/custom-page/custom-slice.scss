@@ -1,6 +1,8 @@
 .ks-custom-slice {
+  // stylelint-disable function-calc-no-invalid
   margin-left: calc(-1 * var(--space-m));
   margin-right: calc(-1 * var(--space-m));
+  // stylelint-enable function-calc-no-invalid
   padding: var(--space-m);
 
   &--dragging {

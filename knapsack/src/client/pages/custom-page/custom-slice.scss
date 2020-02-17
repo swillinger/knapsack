@@ -1,0 +1,37 @@
+.ks-custom-slice {
+  margin-left: calc(-1 * var(--space-m));
+  margin-right: calc(-1 * var(--space-m));
+  padding: var(--space-m);
+
+  &--dragging {
+    opacity: 0;
+  }
+
+  &__content {
+    border: solid 1px transparent;
+    .ks-custom-slice:hover & {
+      border-color: var(--c-active);
+    }
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    transition: opacity ease-in 0.2s;
+    .ks-custom-slice:hover & {
+      opacity: 1;
+    }
+    > * {
+      margin-right: var(--space-s);
+    }
+  }
+  &__handle {
+    &:hover {
+      cursor: grab;
+    }
+    .ks-custom-slice--dragging & {
+      cursor: grabbing;
+    }
+  }
+}

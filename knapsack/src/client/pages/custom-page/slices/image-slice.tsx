@@ -86,7 +86,7 @@ const ImageSliceImage: React.FC<Props> = ({
 };
 
 const ImageSlice = ({
-  isEditing,
+  canEdit,
   setSliceData,
   data = {},
 }: import('./types').SliceRenderParams<Data>): JSX.Element => {
@@ -139,7 +139,7 @@ const ImageSlice = ({
   });
 
   let editForm;
-  if (isEditing) {
+  if (canEdit) {
     editForm = (
       <div className="ks-u-margin-bottom--m">
         <StatusMessage
@@ -167,18 +167,19 @@ const ImageSlice = ({
   }
 
   // if (images.length === 0) return <h5>Not enough data to render...</h5>;
-  const rootAttributes = isEditing ? getRootProps() : {};
+  const rootAttributes = canEdit ? getRootProps() : {};
+
   return (
     <div {...rootAttributes} className="ks-image-slice">
-      {isEditing && <input {...getInputProps()} />}
+      {canEdit && <input {...getInputProps()} />}
       {editForm}
       <KsGrid itemSize={imageSize}>
         {images.map((image, index) => (
           <ImageSliceImage
             image={image}
-            key={`${image.src}-${isEditing}`}
+            key={`${image.src}-${canEdit}`}
             index={index}
-            showControls={isEditing}
+            showControls={canEdit}
             move={(from, to) => {
               setSliceData({
                 images: arrayMove(images, from, to),

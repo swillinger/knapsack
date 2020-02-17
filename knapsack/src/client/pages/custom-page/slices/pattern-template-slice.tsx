@@ -10,27 +10,39 @@ import { useSelector } from '../../../store';
 type Data = {
   patternId?: string;
   templateId?: string;
-  options?: {
-    demoSize?: TemplateViewProps['demoSize'];
-    showReadme?: TemplateViewProps['isReadmeShown'];
-    showSchemaForm?: TemplateViewProps['isSchemaFormShown'];
-  };
+  demoId?: string;
+  demoSize?: TemplateViewProps['demoSize'];
+  showReadme?: TemplateViewProps['isReadmeShown'];
+  showSchemaForm?: TemplateViewProps['isSchemaFormShown'];
 };
 
 function PatternTemplateSlice({
-  isEditing,
+  canEdit,
   setSliceData,
   data: sliceData,
 }: SliceRenderParams<Data>) {
   const [formData, setFormData] = useState(
-    sliceData || { patternId: '', templateId: '', options: {} },
+    sliceData || {
+      patternId: '',
+      templateId: '',
+      demoId: '',
+      showReadme: false,
+      demoSize: 'm',
+      showSchemaForm: true,
+    },
   );
   const patterns = useSelector(s => Object.values(s.patternsState.patterns));
 
   if (patterns.length === 0) return <div>Loading...</div>;
 
-  const { patternId, templateId, options } = formData;
-  const { showReadme, demoSize, showSchemaForm } = options;
+  const {
+    patternId,
+    templateId,
+    demoId,
+    showReadme,
+    demoSize,
+    showSchemaForm,
+  } = formData;
 
   const schemaProps: any = {
     patternId: {
@@ -52,33 +64,37 @@ function PatternTemplateSlice({
     };
   }
 
-  schemaProps.options = {
-    type: 'object',
-    title: 'Display Options',
-    properties: {
-      showReadme: {
-        type: 'boolean',
-        title: 'Show Readme',
-        default: true,
-      },
-      showSchemaForm: {
-        type: 'boolean',
-        title: 'Show Schema Form',
-        default: true,
-      },
-      demoSize: {
-        type: 'string',
-        title: 'Demo Size',
-        enum: ['s', 'm', 'l', 'full'],
-        enumNames: ['Small', 'Medium', 'Large', 'Full'],
-        default: 'l',
-      },
-    },
+  if (templateId) {
+    const { templates } = patterns.find(p => p.id === patternId);
+    const { demos, demosById } = templates.find(t => t.id === templateId);
+    schemaProps.demoId = {
+      type: 'string',
+      title: 'Demo',
+      enum: demos,
+      enumNames: demos.map(dId => demosById[dId]?.title),
+      default: demos[0] ?? '',
+    };
+  }
+
+  if (showSchemaForm) {
+    schemaProps.demoSize = {
+      type: 'string',
+      title: 'Demo Size',
+      enum: ['s', 'm', 'l', 'full'],
+      enumNames: ['Small', 'Medium', 'Large', 'Full'],
+      default: 'l',
+    };
+  }
+
+  schemaProps.showSchemaForm = {
+    type: 'boolean',
+    title: 'Show Schema Form',
+    default: true,
   };
 
   return (
     <div>
-      {isEditing && (
+      {canEdit && (
         <SchemaForm
           formData={formData}
           schema={{
@@ -86,35 +102,44 @@ function PatternTemplateSlice({
             $schema: 'http://json-schema.org/draft-07/schema',
             properties: schemaProps,
           }}
-          uiSchema={{
-            classNames: 'ks-rjsf-custom-object-grid-3',
-          }}
+          isInline
           onChange={({ formData: newFormData }) => {
-            if (newFormData.patternId === formData.patternId) {
-              setFormData(newFormData);
-              setSliceData(newFormData);
-            } else {
-              const { templates } = patterns.find(
-                p => p.id === newFormData.patternId,
-              );
-              setFormData({
-                ...newFormData,
-                templateId: templates.map(t => t.id)[0],
-              });
-              setSliceData({
-                ...newFormData,
-                templateId: templates.map(t => t.id)[0],
-              });
+            const x: Data = {
+              ...newFormData,
+            };
+            if (newFormData.patternId !== formData.patternId) {
+              x.templateId = '';
+              x.demoId = '';
             }
+            if (!x.patternId) {
+              x.patternId = patterns[0]?.id;
+            }
+            if (newFormData.templateId !== formData.templateId) {
+              x.templateId = '';
+            }
+            const { templates } = patterns.find(p => p.id === x.patternId);
+            if (!x.templateId) {
+              x.templateId = templates[0]?.id;
+              x.demoId = '';
+            }
+            if (!x.demoId) {
+              const [firstDemoId] = templates.find(
+                t => t.id === x.templateId,
+              )?.demos;
+              x.demoId = firstDemoId;
+            }
+            setFormData(x);
+            setSliceData(x);
           }}
         />
       )}
 
       <div>
-        {patternId && templateId && (
+        {patternId && templateId && demoId && (
           <TemplateView
             templateId={templateId}
             id={patternId}
+            demoId={demoId}
             isVerbose={false}
             isReadmeShown={showReadme}
             demoSize={demoSize}

@@ -236,32 +236,34 @@ const TemplateView: React.FC<Props> = ({
     <CurrentTemplateContext.Provider value={currentTemplateData}>
       <article className="ks-template-view">
         <div className="ks-template-view__overview-wrapper">
-          <TemplateHeader
-            assetSets={assetSets}
-            status={status}
-            isTitleShown={!isVerbose && isTitleShown}
-            handleAssetSetChange={newAssetSet => {
-              setAssetSetId(newAssetSet.value);
-            }}
-            handleStatusChange={newStatus => {
-              dispatch(
-                updateTemplateInfo({
-                  templateId,
-                  patternId,
-                  template: {
-                    statusId: newStatus.value,
-                  },
-                }),
-              );
-            }}
-          />
+          {isVerbose && (
+            <TemplateHeader
+              assetSets={assetSets}
+              status={status}
+              isTitleShown={!isVerbose && isTitleShown}
+              handleAssetSetChange={newAssetSet => {
+                setAssetSetId(newAssetSet.value);
+              }}
+              handleStatusChange={newStatus => {
+                dispatch(
+                  updateTemplateInfo({
+                    templateId,
+                    patternId,
+                    template: {
+                      statusId: newStatus.value,
+                    },
+                  }),
+                );
+              }}
+            />
+          )}
 
-          <KsTemplateDemos />
+          {isVerbose && <KsTemplateDemos />}
 
           <KsDemoStage
             demoSize={demoSize}
-            isFormVisible={showSchemaForm}
-            key={demo.id}
+            isFormVisible={showSchemaForm && isDataDemo(demo)}
+            key={demo?.id}
             // codeBlock={codeBlock}
             setTemplateInfo={info => {
               if (!deepEqual(info, templateInfo)) {

@@ -276,7 +276,6 @@ const PatternViewPage: React.FC<Props> = ({
         <hr />
 
         <CustomSliceCollection
-          userCanSave={canEdit}
           handleSave={slices => {
             dispatch(updatePatternSlices(patternId, slices));
           }}

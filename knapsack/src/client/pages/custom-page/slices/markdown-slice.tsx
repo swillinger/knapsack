@@ -9,12 +9,12 @@ type Data = {
 export const markdownSlice: Slice<Data> = {
   id: 'markdown-slice',
   title: 'Text',
-  render: ({ isEditing, setSliceData, data }) => {
+  render: ({ canEdit, setSliceData, data }) => {
     return (
       <MdBlock
         md={data.md}
         handleChange={md => setSliceData({ md })}
-        isEditorShown={isEditing}
+        isEditorShown={canEdit}
       />
     );
   },

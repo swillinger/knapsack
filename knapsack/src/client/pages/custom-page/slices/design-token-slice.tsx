@@ -202,7 +202,7 @@ class DesignTokenSlice extends React.Component<Props, State> {
   }
 
   render() {
-    const { isEditing } = this.props;
+    const { canEdit } = this.props;
     const { allTokens, formData, ready, hasError } = this.state;
     if (!ready) return <div>Loading...</div>;
 
@@ -250,7 +250,7 @@ class DesignTokenSlice extends React.Component<Props, State> {
 
     return (
       <div>
-        {isEditing && (
+        {canEdit && (
           <SchemaForm
             formData={formData}
             schema={{
@@ -346,7 +346,7 @@ class DesignTokenSlice extends React.Component<Props, State> {
 
         {!hasError && (
           <div>
-            {isEditing && (
+            {canEdit && (
               <details>
                 <summary>Token Data ({tokens.length} total)</summary>
                 <pre>

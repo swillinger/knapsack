@@ -15,13 +15,14 @@
  with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
 import React from 'react';
-import { KsButton, SchemaForm } from '@knapsack/design-system';
+import { useValueDebounce, KsSelect, Icon } from '@knapsack/design-system';
 import arrayMove from 'array-move';
 import produce from 'immer';
 import shortid from 'shortid';
 import knapsackSlices from './slices';
 import CustomSlice from './custom-slice';
 import { KnapsackCustomPageSlice } from '../../../schemas/custom-pages';
+import { useSelector } from '../../store';
 
 const AddSliceForm = ({
   addSlice,
@@ -30,177 +31,93 @@ const AddSliceForm = ({
   addSlice: (index: number, sliceId: string) => void;
   index: number;
 }) => (
-  <SchemaForm
-    schema={{
-      type: 'object',
-      $schema: 'http://json-schema.org/draft-07/schema',
-      properties: {
-        slice: {
-          title: 'Add Slice',
-          type: 'string',
-          enum: knapsackSlices.map(b => b.id),
-          enumNames: knapsackSlices.map(b => b.title || b.id),
-        },
-      },
-    }}
-    onChange={({ formData }) => {
-      if (!formData.slice) return;
-      addSlice(index, formData.slice);
+  <KsSelect
+    options={[
+      { label: '(Select type)', value: '' },
+      ...knapsackSlices.map(slice => ({
+        label: slice.title || slice.id,
+        value: slice.id,
+      })),
+    ]}
+    isLabelInline
+    label={<Icon symbol="add" />}
+    handleChange={({ value: sliceId }) => {
+      if (sliceId) addSlice(index, sliceId);
     }}
   />
 );
 
 type Props = {
-  userCanSave: boolean;
   initialSlices?: KnapsackCustomPageSlice[];
   handleSave: (slices: KnapsackCustomPageSlice[]) => void;
 };
 
-type State = {
-  saveButtonText: string;
-  isEditing: boolean;
-  slices: KnapsackCustomPageSlice[];
-};
+export const CustomSliceCollection: React.FC<Props> = ({
+  initialSlices = [],
+  handleSave,
+}: Props) => {
+  const { canEdit } = useSelector(s => s.userState);
+  const [slices, setSlices] = useValueDebounce(initialSlices, handleSave);
 
-export class CustomSliceCollection extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      slices: props.initialSlices || [],
-      saveButtonText: 'Save',
-      isEditing: false,
-    };
+  const setSliceData = (
+    index: number,
+    data: KnapsackCustomPageSlice['data'],
+  ): void => {
+    setSlices(prevSlices =>
+      prevSlices.map((slice, i) => {
+        if (i !== index) return slice;
+        return {
+          ...slice,
+          data,
+        };
+      }),
+    );
+  };
 
-    this.moveSliceDown = this.moveSliceDown.bind(this);
-    this.moveSliceUp = this.moveSliceUp.bind(this);
-    this.deleteSlice = this.deleteSlice.bind(this);
-    this.setSliceData = this.setSliceData.bind(this);
-    this.addSlice = this.addSlice.bind(this);
-  }
-
-  setSliceData(index: number, data: KnapsackCustomPageSlice['data']): void {
-    this.setState(prevState => {
-      const slices = [...prevState.slices];
-      const oldSlice = slices[index];
-      slices.splice(index, 1, {
-        ...oldSlice,
-        data,
-      });
-      return {
-        slices,
-      };
-    });
-  }
-
-  addSlice(index: number, sliceId: string): void {
+  const addSlice = (index: number, sliceId: string): void => {
     const slice = knapsackSlices.find(b => b.id === sliceId);
-    this.setState(
-      produce(draft => {
-        draft.slices.splice(index, 0, {
+    setSlices(prevSlices => {
+      return produce(prevSlices, draft => {
+        draft.splice(index, 0, {
           id: shortid.generate(),
           blockId: sliceId,
           data: slice.initialData,
         });
-      }),
-    );
-  }
-
-  /**
-   * @param index - Index of item in `this.state.slices` to move up
-   * @return sets state
-   */
-  moveSliceUp(index: number): void {
-    this.setState(prevState => {
-      return produce(prevState, draft => {
-        draft.slices = arrayMove(draft.slices, index, index - 1);
       });
     });
-  }
+  };
 
-  /**
-   * @param index - Index of item in `this.state.slices` to move down
-   * @return sets state
-   */
-  moveSliceDown(index: number): void {
-    this.setState(prevState => {
-      return produce(prevState, draft => {
-        draft.slices = arrayMove(prevState.slices, index, index + 1);
-      });
-    });
-  }
+  const deleteSlice = (index: number): void => {
+    setSlices(prevSlices => prevSlices.filter((slice, i) => i !== index));
+  };
 
-  /**
-   * @param sliceId
-   * @return sets state
-   */
-  deleteSlice(sliceId: string): void {
-    this.setState(prevState => {
-      return produce(prevState, draft => {
-        draft.slices = draft.slices.filter(slice => slice.id !== sliceId);
-      });
-    });
-  }
+  const moveSlice = (from: number, to: number): void => {
+    setSlices(prevSlices => arrayMove(prevSlices, from, to));
+  };
 
-  render() {
-    const { userCanSave, handleSave } = this.props;
+  const moveSliceUp = (index: number): void => moveSlice(index, index - 1);
+  const moveSliceDown = (index: number): void => moveSlice(index, index + 1);
 
-    const { slices = [], isEditing, saveButtonText } = this.state;
-    return (
-      <section className="ks-ks-custom-slice-collection">
-        <header
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-        >
-          {userCanSave && (
-            <div style={{ marginRight: '.5rem' }}>
-              <KsButton
-                handleTrigger={() =>
-                  this.setState(prevState => ({
-                    isEditing: !prevState.isEditing,
-                  }))
-                }
-              >
-                Edit Slices
-              </KsButton>
-              <KsButton
-                handleTrigger={() => {
-                  this.setState({ saveButtonText: 'Saving...' });
-                  setTimeout(() => {
-                    this.setState({ saveButtonText: 'Save' });
-                  }, 500);
-                  handleSave(slices);
-                }}
-              >
-                {saveButtonText}
-              </KsButton>
-            </div>
-          )}
-        </header>
-
-        {slices.map((slice, sliceIndex) => (
-          <div key={slice.id}>
-            {isEditing && (
-              <AddSliceForm addSlice={this.addSlice} index={sliceIndex} />
-            )}
-            <CustomSlice
-              key={slice.id}
-              slice={slice}
-              sliceIndex={sliceIndex}
-              slicesLength={slices.length}
-              isEditing={isEditing}
-              setSliceData={this.setSliceData}
-              deleteSlice={this.deleteSlice}
-              moveSliceUp={this.moveSliceUp}
-              moveSliceDown={this.moveSliceDown}
-            />
-          </div>
-        ))}
-        {isEditing && (
-          <AddSliceForm addSlice={this.addSlice} index={slices.length} />
-        )}
-      </section>
-    );
-  }
-}
+  return (
+    <section className="ks-custom-slice-collection">
+      {slices.map((slice, sliceIndex) => (
+        <div key={slice.id}>
+          {canEdit && <AddSliceForm addSlice={addSlice} index={sliceIndex} />}
+          <CustomSlice
+            key={slice.id}
+            slice={slice}
+            sliceIndex={sliceIndex}
+            slicesLength={slices.length}
+            canEdit={canEdit}
+            setSliceData={setSliceData}
+            moveSlice={moveSlice}
+            deleteSlice={deleteSlice}
+            moveSliceUp={moveSliceUp}
+            moveSliceDown={moveSliceDown}
+          />
+        </div>
+      ))}
+      {canEdit && <AddSliceForm addSlice={addSlice} index={slices.length} />}
+    </section>
+  );
+};

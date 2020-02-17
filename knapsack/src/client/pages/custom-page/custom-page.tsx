@@ -26,7 +26,6 @@ type Props = {
 };
 
 const CustomPage: React.FC<Props> = ({ pageId }: Props) => {
-  const userCanSave = useSelector(state => state.userState.canEdit);
   const page = useSelector(
     ({ customPagesState }) => customPagesState.pages[pageId],
   );
@@ -40,7 +39,6 @@ const CustomPage: React.FC<Props> = ({ pageId }: Props) => {
   return (
     <PageWithSidebar title={page.title}>
       <CustomSliceCollection
-        userCanSave={userCanSave}
         initialSlices={initialSlices}
         handleSave={slices => {
           dispatch(

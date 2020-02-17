@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
 import cn from 'classnames';
 import shortid from 'shortid';
 import {
@@ -8,6 +8,7 @@ import {
   KsDeleteButton,
   StatusMessage,
   Icon,
+  useHover,
 } from '@knapsack/design-system';
 import knapsackSlices from './slices';
 // import { Slice } from './slices/types';
@@ -62,6 +63,7 @@ const CustomSlice: React.FC<Props> = ({
   deleteSlice,
   setSliceData,
 }: Props) => {
+  // Start: Drag/Drop
   const ref = useRef();
   const { isDragging } = useKsDragDrop({
     index: sliceIndex,
@@ -71,8 +73,10 @@ const CustomSlice: React.FC<Props> = ({
       moveSlice(sliceIndex, dragIndex);
     },
   });
+  // Stop: Drag/Drop
 
-  // Error handling for slices: if the error catcher gets an error, we set the error msg; then on the next data render we generate a new `key` so the slice component re-mounts completely
+  // Start: Error handling for slices
+  // If the error catcher gets an error, we set the error msg; then on the next data render we generate a new `key` so the slice component re-mounts completely
   const [errorMsg, setErrorMsg] = useState('');
   const keyRef = useRef(shortid.generate());
   useEffect(() => {
@@ -81,25 +85,52 @@ const CustomSlice: React.FC<Props> = ({
       setErrorMsg('');
     }
   }, [slice]);
+  // Stop: Error handling for slices
 
+  // Start: Edit UI
+  const [isEditPopoverOpen, setEditPopOverOpen] = useState(false);
+  const [hoverRef, isHovered] = useHover(ref);
+  // Stop: Edit UI
+
+  const [state, setState] = useState<any>();
   const knapsackSlice = knapsackSlices.find(k => {
     return k.id === slice.blockId;
   });
 
+  const renderParams = {
+    data: slice.data ?? {},
+    setSliceData: data => setSliceData(sliceIndex, data),
+    canEdit,
+    state,
+    setState,
+  };
+
+  // This ensures the slice itself only re-renders when it's props change
+  const theSlice = useMemo(() => {
+    return knapsackSlice.render(renderParams);
+  }, [renderParams.data, renderParams.state]);
+
   if (!knapsackSlice) {
-    console.error(`Could not find slice!`, { slice, knapsackSlices });
+    console.error(`Could not find slice!`, {
+      slice,
+      knapsackSlices,
+    });
     return <h2>Could not find slice id {slice.blockId}!</h2>;
   }
 
   const isFirstSlice = sliceIndex === 0;
   const isLastSlice = sliceIndex + 1 === slicesLength;
+  // UI is visible if slice is hovered - and ALWAYS visible if the edit popover is open
+  const isEditUiVisible = (canEdit && isHovered) || isEditPopoverOpen;
 
   const classes = cn('ks-custom-slice', {
     'ks-custom-slice--dragging': isDragging,
     'ks-custom-slice--can-edit': canEdit,
+    'ks-custom-slice--edit-ui-visible': isEditUiVisible,
   });
+
   return (
-    <aside ref={ref} className={classes}>
+    <aside ref={hoverRef} className={classes}>
       {canEdit && (
         <div className="ks-custom-slice__controls">
           <div className="ks-custom-slice__handle">
@@ -126,36 +157,42 @@ const CustomSlice: React.FC<Props> = ({
             flush
             handleTrigger={() => deleteSlice(sliceIndex)}
           />
-          <KsPopover
-            trigger="click"
-            position="right"
-            content={
-              <>
-                <h4>{knapsackSlice.title}</h4>
-                {knapsackSlice.schema && (
-                  <SchemaForm
-                    schema={knapsackSlice.schema}
-                    uiSchema={knapsackSlice.uiSchema || {}}
-                    formData={slice.data}
-                    onChange={({ formData }) => {
-                      setSliceData(sliceIndex, formData);
-                    }}
-                  />
-                )}
+          {knapsackSlice?.renderEditForm && (
+            <KsPopover
+              trigger="prop"
+              position="right"
+              maxWidth={360}
+              isOpen={isEditPopoverOpen}
+              onClickOutside={() => setEditPopOverOpen(false)}
+              content={
+                <>
+                  <h4>{knapsackSlice.title}</h4>
+                  {knapsackSlice.schema && (
+                    <SchemaForm
+                      schema={knapsackSlice.schema}
+                      uiSchema={knapsackSlice.uiSchema || {}}
+                      formData={slice.data}
+                      onChange={({ formData }) => {
+                        setSliceData(sliceIndex, formData);
+                      }}
+                    />
+                  )}
 
-                {knapsackSlice?.renderEditForm &&
-                  knapsackSlice?.renderEditForm({
-                    data: slice.data,
-                    setSliceData: data => setSliceData(sliceIndex, data),
-                    canEdit,
-                  })}
-              </>
-            }
-          >
-            <KsButton size="s" icon="edit" kind="icon" flush>
-              Edit
-            </KsButton>
-          </KsPopover>
+                  {knapsackSlice?.renderEditForm(renderParams)}
+                </>
+              }
+            >
+              <KsButton
+                size="s"
+                icon="edit"
+                kind="icon"
+                flush
+                handleTrigger={() => setEditPopOverOpen(is => !is)}
+              >
+                Edit
+              </KsButton>
+            </KsPopover>
+          )}
         </div>
       )}
 
@@ -165,11 +202,7 @@ const CustomSlice: React.FC<Props> = ({
           errorMsg={errorMsg}
           key={keyRef.current}
         >
-          {knapsackSlice.render({
-            data: slice.data,
-            setSliceData: data => setSliceData(sliceIndex, data),
-            canEdit,
-          })}
+          {theSlice}
         </CustomSliceErrorCatcher>
       </div>
     </aside>

@@ -48,20 +48,25 @@ export function useValueDebounce<T>(
  * <div ref={hoverRef as any}>when hovered, `isHover` is true
  * Borrowed with appreciation from `react-view`
  */
-export function useHover() {
+export function useHover(
+  /**
+   * Optionally takes an already created ref to re-use
+   */
+  prevRef?: React.MutableRefObject<HTMLElement>,
+): [React.MutableRefObject<HTMLElement>, boolean] {
   const [value, setValue] = useState<boolean>(false);
-  const ref = useRef(null);
-  const handleMouseOver = () => setValue(true);
-  const handleMouseOut = () => setValue(false);
+  const ref = prevRef ?? useRef(null);
+  const handleMouseEnter = () => setValue(true);
+  const handleMouseLeave = () => setValue(false);
   useEffect(() => {
     const node = ref.current as any;
     if (node) {
-      node.addEventListener('mouseover', handleMouseOver);
-      node.addEventListener('mouseout', handleMouseOut);
+      node.addEventListener('mouseenter', handleMouseEnter);
+      node.addEventListener('mouseleave', handleMouseLeave);
 
       return () => {
-        node.removeEventListener('mouseover', handleMouseOver);
-        node.removeEventListener('mouseout', handleMouseOut);
+        node.removeEventListener('mouseenter', handleMouseEnter);
+        node.removeEventListener('mouseleave', handleMouseLeave);
       };
     }
     return undefined;

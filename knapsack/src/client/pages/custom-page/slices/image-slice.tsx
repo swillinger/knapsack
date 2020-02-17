@@ -9,6 +9,7 @@ import {
   StatusMessage,
 } from '@knapsack/design-system';
 import arrayMove from 'array-move';
+import cn from 'classnames';
 import { useDropzone, DropzoneOptions } from 'react-dropzone';
 import { Slice } from './types';
 import { uploadFile } from '../../../data';
@@ -85,6 +86,27 @@ const ImageSliceImage: React.FC<Props> = ({
   );
 };
 
+async function handleFiles(
+  files: File[],
+): Promise<{ src: string; caption: string }[]> {
+  const uploadedFiles = await Promise.all(
+    files.map(async file => {
+      const results = await uploadFile(file);
+      if (!results.ok) {
+        console.error('uh oh!', { results, file });
+      }
+      return results.data;
+    }),
+  );
+
+  return uploadedFiles.map(file => {
+    return {
+      src: file.publicPath,
+      caption: file.originalName,
+    };
+  });
+}
+
 const ImageSlice = ({
   canEdit,
   setSliceData,
@@ -98,30 +120,6 @@ const ImageSlice = ({
   // >([]);
   const { images = [], imageSize = 'm' } = data;
 
-  async function handleFiles(files: File[]): Promise<void> {
-    const uploadedFiles = await Promise.all(
-      files.map(async file => {
-        const results = await uploadFile(file);
-        if (!results.ok) {
-          console.error('uh oh!', { results, file });
-        }
-        return results.data;
-      }),
-    );
-
-    setSliceData({
-      images: [
-        ...images,
-        ...uploadedFiles.map(file => {
-          return {
-            src: file.publicPath,
-            caption: file.originalName,
-          };
-        }),
-      ],
-    });
-  }
-
   const onDrop = useCallback<DropzoneOptions['onDrop']>(async acceptedFiles => {
     // setFiles(
     //   acceptedFiles.map(file => ({
@@ -129,50 +127,35 @@ const ImageSlice = ({
     //     preview: URL.createObjectURL(file),
     //   })),
     // );
-    handleFiles(acceptedFiles);
+    const uploadedImages = await handleFiles(acceptedFiles);
+    setSliceData({
+      images: [...uploadedImages, ...images],
+    });
   }, []);
 
   const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     onDrop,
     accept: ['image/*'],
     multiple: true,
+    noClick: true,
+    noKeyboard: true,
   });
-
-  let editForm;
-  if (canEdit) {
-    editForm = (
-      <div className="ks-u-margin-bottom--m">
-        <StatusMessage
-          type="warning"
-          message="Image uploading currently only works on localhost and is not currently set up for Cloud uploads"
-        />
-        <br className="ks-u-margin-bottom--s" />
-        <KsButton handleTrigger={open} kind="primary" size="s" icon="add">
-          Add Images
-        </KsButton>
-        {/* <div>
-          <input
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={e => {
-              const files = Array.from(e.target.files);
-              if (!files) return;
-              handleFiles(files);
-            }}
-          />
-        </div> */}
-      </div>
-    );
-  }
-
   // if (images.length === 0) return <h5>Not enough data to render...</h5>;
   const rootAttributes = canEdit ? getRootProps() : {};
+  const inputProps = getInputProps();
+
+  const classes = cn('ks-image-slice', {
+    'ks-image-slice--dragging': isDragActive,
+  });
 
   return (
-    <div {...rootAttributes} className="ks-image-slice">
-      {canEdit && <input {...getInputProps()} />}
-      {editForm}
+    <div className={classes} {...rootAttributes}>
+      {canEdit && isDragActive && (
+        <div className="ks-image-slice__dropzone">
+          <input {...inputProps} />
+          <p>Drop images here to upload...</p>
+        </div>
+      )}
       <KsGrid itemSize={imageSize}>
         {images.map((image, index) => (
           <ImageSliceImage
@@ -213,6 +196,30 @@ export const imageSlice: Slice<Data> = {
   title: 'Image Grid',
   description: 'Multiple images with captions laid out in a grid',
   render: props => <ImageSlice {...props} />,
+  renderEditForm: ({ setSliceData, data }) => {
+    return (
+      <>
+        <StatusMessage
+          type="warning"
+          message="Image uploading currently only works on localhost and is not currently set up for Cloud uploads"
+        />
+        <h5>Upload Images</h5>
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={async e => {
+            const files = Array.from(e.target.files);
+            if (!files) return;
+            const uploadedImages = await handleFiles(files);
+            setSliceData({
+              images: [...uploadedImages, ...data.images],
+            });
+          }}
+        />
+      </>
+    );
+  },
   schema: {
     type: 'object',
     required: [],
@@ -222,6 +229,7 @@ export const imageSlice: Slice<Data> = {
         type: 'string',
         enum: ['s', 'm', 'l'],
         enumNames: ['small', 'medium', 'large'],
+        default: 'm',
       },
     },
   },

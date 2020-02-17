@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   DesignTokenTable,
   CopyToClipboard,
@@ -30,6 +30,11 @@ type SliceData = {
   demo?: {
     id?: string;
   };
+};
+
+type SliceSharedState = {
+  allTokens: KnapsackDesignToken[];
+  tokens: KnapsackDesignToken[];
 };
 
 /**
@@ -142,7 +147,7 @@ const demos: DesignTokenDemo[] = [
   // },
 ];
 
-type Props = SliceRenderParams<SliceData>;
+type Props = SliceRenderParams<SliceData, SliceSharedState>;
 type State = {
   allTokens: KnapsackDesignToken[];
   ready: boolean;
@@ -163,213 +168,214 @@ function getTags(tokens: KnapsackDesignToken[]): string[] {
   return [...allTags].filter(Boolean);
 }
 
-class DesignTokenSlice extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      allTokens: [],
-      formData: props.data || {
-        tokens: {},
-        demo: {},
-      },
-      ready: false,
-      hasError: false,
-    };
+function filterTokens({
+  allTokens,
+  category,
+  tags,
+  name,
+}: {
+  allTokens: KnapsackDesignToken[];
+  category?: string;
+  tags?: string[];
+  name?: string;
+}): {
+  tokens: KnapsackDesignToken[];
+  theseTags: string[];
+  theseCategories: string[];
+} {
+  let tokens = [...allTokens];
+
+  const theseCategories = getCategories(allTokens);
+
+  if (category) {
+    tokens = tokens.filter(t => t.category === category);
   }
 
-  // consider adding this in since the parent component removed the unique `key` prop to ensure trigger of componentDidMount happened
-  // static getDerivedStateFromProps(props, state) {
-  //
-  // }
-
-  componentDidMount() {
-    getDesignTokens()
-      .then(tokens => {
-        this.setState({
-          allTokens: tokens,
-          ready: true,
-        });
-      })
-      .catch(console.log.bind(console));
+  const theseTags = getTags(tokens);
+  if (tags && tags.length > 0) {
+    tokens = tokens.filter(t => hasItemsInItems(t.tags, theseTags));
   }
 
-  componentDidCatch(error, errorInfo) {
-    console.error({ error, errorInfo });
-    this.setState({
-      hasError: true,
-      errorMessage: error.message,
-    });
+  if (name) {
+    tokens = tokens.filter(t => containsString(t.name, name));
   }
 
-  render() {
-    const { canEdit } = this.props;
-    const { allTokens, formData, ready, hasError } = this.state;
-    if (!ready) return <div>Loading...</div>;
-
-    const {
-      tokens: { category = '', tags: tokenTags = [], name = '' } = {},
-      demo: { id: demoId = '' } = {},
-    } = formData;
-
-    let tokens = allTokens;
-
-    const categories = getCategories(allTokens);
-    if (category) {
-      tokens = tokens.filter(t => t.category === category);
-    }
-
-    const tags = getTags(tokens);
-    if (tokenTags && tokenTags.length > 0) {
-      tokens = tokens.filter(t => hasItemsInItems(t.tags, tokenTags));
-    }
-
-    if (name) {
-      tokens = tokens.filter(t => containsString(t.name, name));
-    }
-
-    const demoFallback = (
-      <div>
-        <p>
-          No demo with id <code>{demoId}</code> found, it should be one of
-          these:
-        </p>
-        <ul>
-          {demos.map(d => (
-            <li key={d.id}>
-              <code>{d.id}</code>
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
-
-    const demo = demos.find(d => d.id === demoId);
-    // if (demo) {
-    //   Demo = demo.render;
-    // }
-
-    return (
-      <div>
-        {canEdit && (
-          <SchemaForm
-            formData={formData}
-            schema={{
-              type: 'object',
-              $schema: 'http://json-schema.org/draft-07/schema',
-              properties: {
-                tokens: {
-                  type: 'object',
-                  title: 'Design Tokens',
-                  description:
-                    'This filters all design tokens available into a collection that is fit for your Demo.',
-                  properties: {
-                    category: {
-                      type: 'string',
-                      title: 'Design Token Category',
-                      enum: categories,
-                    },
-                    tags: {
-                      type: 'array',
-                      title: 'Design Token Tags',
-                      uniqueItems: true,
-                      default: tags,
-                      items: {
-                        type: 'string',
-                        enum: tags,
-                      },
-                    },
-                    name: {
-                      type: 'string',
-                      title: 'Design Token Name filter',
-                    },
-                  },
-                },
-                demo: {
-                  type: 'object',
-                  title: 'Design Token Demo',
-                  description: 'This is what UI displays the design tokens',
-                  properties: {
-                    id: {
-                      type: 'string',
-                      title: 'Demo',
-                      enum: demos.map(d => d.id),
-                      enumNames: demos.map(d => d.title),
-                      default: 'raw-values',
-                    },
-                  },
-                },
-              },
-            }}
-            uiSchema={{
-              classNames: 'ks-rjsf-custom-object-grid-2',
-              tokens: {
-                tags: {
-                  'ui:widget': 'checkboxes',
-                  'ui:options': {
-                    inline: true,
-                  },
-                },
-              },
-            }}
-            onChange={({ formData: newFormData }: { formData: SliceData }) => {
-              if (
-                newFormData.tokens &&
-                newFormData.tokens.category !== formData.tokens.category
-              ) {
-                this.setState({
-                  formData: {
-                    ...newFormData,
-                    tokens: {
-                      ...newFormData.tokens,
-                      tags: [],
-                    },
-                  },
-                  hasError: false,
-                });
-              } else {
-                this.setState({ formData: newFormData, hasError: false });
-              }
-              this.props.setSliceData(newFormData);
-            }}
-          />
-        )}
-
-        {hasError && (
-          <div>
-            <h4>
-              The Token Demo and Token Data do not match up, please adjust
-              settings.
-            </h4>
-            <p>{this.state.errorMessage}</p>
-          </div>
-        )}
-
-        {!hasError && (
-          <div>
-            {canEdit && (
-              <details>
-                <summary>Token Data ({tokens.length} total)</summary>
-                <pre>
-                  <code>{JSON.stringify(tokens, null, '  ')}</code>
-                </pre>
-              </details>
-            )}
-
-            {!demo && demoFallback}
-            {demo && tokens && demo.render({ tokens })}
-            {/* {tokens && <Demo tokens={tokens} />} */}
-            {/* {tokens && demo.render({ tokens })} */}
-          </div>
-        )}
-      </div>
-    );
-  }
+  return {
+    tokens,
+    theseTags,
+    theseCategories,
+  };
 }
 
-export const designTokenDemoSlice: Slice<SliceData> = {
+const DesignTokenSliceEdit: React.FC<Props> = ({
+  data = {
+    demo: { id: '' },
+    tokens: { category: '', tags: [], name: '' },
+  },
+  setSliceData,
+  state = { allTokens: [] },
+  setState,
+}: Props) => {
+  const { allTokens } = state;
+
+  if (!allTokens) return null;
+  const { theseCategories, theseTags } = filterTokens({
+    allTokens,
+    ...data.tokens,
+  });
+
+  return (
+    <div className="ks-design-token-slice-edit">
+      <SchemaForm
+        formData={data}
+        schema={{
+          type: 'object',
+          $schema: 'http://json-schema.org/draft-07/schema',
+          properties: {
+            tokens: {
+              type: 'object',
+              title: 'Design Tokens',
+              description:
+                'This filters all design tokens available into a collection that is fit for your Demo.',
+              properties: {
+                category: {
+                  type: 'string',
+                  title: 'Design Token Category',
+                  enum: theseCategories,
+                },
+                tags: {
+                  type: 'array',
+                  title: 'Design Token Tags',
+                  uniqueItems: true,
+                  default: theseTags,
+                  items: {
+                    type: 'string',
+                    enum: theseTags,
+                  },
+                },
+                name: {
+                  type: 'string',
+                  title: 'Design Token Name filter',
+                },
+              },
+            },
+            demo: {
+              type: 'object',
+              title: 'Design Token Demo',
+              description: 'This is what UI displays the design tokens',
+              properties: {
+                id: {
+                  type: 'string',
+                  title: 'Demo',
+                  enum: demos.map(d => d.id),
+                  enumNames: demos.map(d => d.title),
+                  default: 'raw-values',
+                },
+              },
+            },
+          },
+        }}
+        uiSchema={{
+          classNames: 'ks-rjsf-custom-object-grid-2',
+          tokens: {
+            tags: {
+              'ui:widget': 'checkboxes',
+              'ui:options': {
+                inline: true,
+              },
+            },
+          },
+        }}
+        onChange={({ formData: newFormData }: { formData: SliceData }) => {
+          // if (
+          //   newFormData.tokens &&
+          //   newFormData.tokens.category !== formData.tokens.category
+          // ) {
+          //   // setState({})
+          //   this.setState({
+          //     formData: {
+          //       ...newFormData,
+          //       tokens: {
+          //         ...newFormData.tokens,
+          //         tags: [],
+          //       },
+          //     },
+          //     hasError: false,
+          //   });
+          // } else {
+          //   this.setState({ formData: newFormData, hasError: false });
+          // }
+          setSliceData(newFormData);
+        }}
+      />
+    </div>
+  );
+};
+
+const DesignTokenSlice: React.FC<Props> = ({
+  data = {
+    demo: { id: '' },
+    tokens: { category: '', tags: [], name: '' },
+  },
+  setSliceData,
+  state = {},
+  setState,
+}: Props) => {
+  console.log({ data });
+  const demoId = data?.demo?.id;
+  // const { category = '', tags = [], name = '' } = data?.tokens ?? {};
+
+  useEffect(() => {
+    getDesignTokens().then(allTokens => {
+      setState({ tokens: allTokens, allTokens });
+    });
+  }, []);
+
+  const { allTokens } = state;
+
+  if (!allTokens) return <div>Loading...</div>;
+
+  const { tokens } = filterTokens({ allTokens, ...data.tokens });
+
+  const demoFallback = (
+    <div>
+      <p>
+        No demo with id <code>{demoId}</code> found, it should be one of these:
+      </p>
+      <ul>
+        {demos.map(d => (
+          <li key={d.id}>
+            <code>{d.id}</code>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+
+  const demo = demos.find(d => d.id === demoId);
+  return (
+    <div className="ks-design-token-slice">
+      {!demo && demoFallback}
+      {demo && tokens && demo.render({ tokens })}
+    </div>
+  );
+};
+
+export const designTokenDemoSlice: Slice<SliceData, SliceSharedState> = {
   id: 'design-token-slice',
   title: 'Design Token Demo',
   description:
     "Filter through your whole collection of design tokens and then apply them to any design token demo you'd like",
   render: props => <DesignTokenSlice {...props} />,
+  renderEditForm: props => <DesignTokenSliceEdit {...props} />,
+  initialData: {
+    demo: {
+      id: 'simple-list',
+    },
+    tokens: {
+      category: '',
+      tags: [],
+      name: '',
+    },
+  },
 };

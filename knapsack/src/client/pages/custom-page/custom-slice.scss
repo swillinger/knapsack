@@ -11,7 +11,8 @@
 
   &__content {
     border: solid 1px transparent;
-    .ks-custom-slice:hover & {
+    transition: border ease-in 0.2s;
+    .ks-custom-slice--edit-ui-visible & {
       border-color: var(--c-active);
     }
   }
@@ -21,7 +22,7 @@
     align-items: center;
     opacity: 0;
     transition: opacity ease-in 0.2s;
-    .ks-custom-slice:hover & {
+    .ks-custom-slice--edit-ui-visible & {
       opacity: 1;
     }
     > * {

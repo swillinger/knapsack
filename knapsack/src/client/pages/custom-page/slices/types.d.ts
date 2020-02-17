@@ -1,24 +1,26 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { KnapsackCustomPageSlice } from '../../../../schemas/custom-pages';
 
-export type SliceRenderParams<T> = {
-  data: T;
+export type SliceRenderParams<DataType, StateType = {}> = {
+  data: DataType;
   canEdit: boolean;
-  setSliceData: (data: T) => void;
+  setSliceData: (data: DataType) => void;
+  state: Partial<StateType>;
+  setState: React.Dispatch<React.SetStateAction<StateType>>;
   /**
    * Passing in a new key will trigger a full un-mount & re-mount of the React Component
    */
   key?: string;
 };
 
-export interface Slice<T> {
+export interface Slice<DataType, StateType = {}> {
   id: string;
   title: string;
   description?: string;
-  render: (opt: SliceRenderParams<T>) => ReactNode;
-  renderEditForm?: (opt: SliceRenderParams<T>) => ReactNode;
+  render: (opt: SliceRenderParams<DataType>) => ReactNode;
+  renderEditForm?: (opt: SliceRenderParams<DataType>) => ReactNode;
   schema?: object;
   data?: object;
   uiSchema?: object;
-  initialData?: T;
+  initialData?: DataType;
 }

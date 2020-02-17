@@ -1,4 +1,19 @@
 .ks-image-slice {
+  position: relative;
+  &__dropzone {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-top: var(--space-xl);
+    text-align: center;
+    font-size: 3rem;
+    background-color: rgba(193, 191, 191, 0.64);
+    p {
+      font-size: 2rem;
+    }
+  }
   &__image-controls {
     display: flex;
     align-items: center;

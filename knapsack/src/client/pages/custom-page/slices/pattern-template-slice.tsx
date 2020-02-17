@@ -16,11 +16,13 @@ type Data = {
   showSchemaForm?: TemplateViewProps['isSchemaFormShown'];
 };
 
-function PatternTemplateSlice({
+type Props = SliceRenderParams<Data>;
+
+function PatternTemplateSliceEdit({
   canEdit,
   setSliceData,
   data: sliceData,
-}: SliceRenderParams<Data>) {
+}: Props) {
   const [formData, setFormData] = useState(
     sliceData || {
       patternId: '',
@@ -72,7 +74,7 @@ function PatternTemplateSlice({
       title: 'Demo',
       enum: demos,
       enumNames: demos.map(dId => demosById[dId]?.title),
-      default: demos[0] ?? '',
+      // default: demos[0] ?? '',
     };
   }
 
@@ -93,68 +95,81 @@ function PatternTemplateSlice({
   };
 
   return (
-    <div>
-      {canEdit && (
-        <SchemaForm
-          formData={formData}
-          schema={{
-            type: 'object',
-            $schema: 'http://json-schema.org/draft-07/schema',
-            properties: schemaProps,
-          }}
-          isInline
-          onChange={({ formData: newFormData }) => {
-            const x: Data = {
-              ...newFormData,
-            };
-            if (newFormData.patternId !== formData.patternId) {
-              x.templateId = '';
-              x.demoId = '';
-            }
-            if (!x.patternId) {
-              x.patternId = patterns[0]?.id;
-            }
-            if (newFormData.templateId !== formData.templateId) {
-              x.templateId = '';
-            }
-            const { templates } = patterns.find(p => p.id === x.patternId);
-            if (!x.templateId) {
-              x.templateId = templates[0]?.id;
-              x.demoId = '';
-            }
-            if (!x.demoId) {
-              const [firstDemoId] = templates.find(
-                t => t.id === x.templateId,
-              )?.demos;
-              x.demoId = firstDemoId;
-            }
-            setFormData(x);
-            setSliceData(x);
-          }}
+    <SchemaForm
+      formData={formData}
+      schema={{
+        type: 'object',
+        $schema: 'http://json-schema.org/draft-07/schema',
+        properties: schemaProps,
+      }}
+      isInline
+      onChange={({ formData: newFormData }) => {
+        const x: Data = {
+          ...newFormData,
+        };
+        if (newFormData.patternId !== formData.patternId) {
+          x.templateId = '';
+          x.demoId = '';
+        }
+        if (!x.patternId) {
+          x.patternId = patterns[0]?.id;
+        }
+        if (newFormData.templateId !== formData.templateId) {
+          x.templateId = '';
+        }
+        const { templates } = patterns.find(p => p.id === x.patternId);
+        if (!x.templateId) {
+          x.templateId = templates[0]?.id;
+          x.demoId = '';
+        }
+        if (!x.demoId) {
+          const [firstDemoId] = templates.find(
+            t => t.id === x.templateId,
+          )?.demos;
+          x.demoId = firstDemoId;
+        }
+        setFormData(x);
+        setSliceData(x);
+      }}
+    />
+  );
+}
+
+const PatternTemplateSlice: React.FC<Props> = ({ data }: Props) => {
+  const {
+    patternId,
+    templateId,
+    demoId,
+    showReadme,
+    demoSize,
+    showSchemaForm,
+  } = data;
+
+  const isReady = patternId && templateId && demoId;
+  return (
+    <>
+      {isReady && (
+        <TemplateView
+          templateId={templateId}
+          id={patternId}
+          demoId={demoId}
+          isVerbose={false}
+          isReadmeShown={showReadme}
+          demoSize={demoSize}
+          isTitleShown={false}
+          isSchemaFormShown={showSchemaForm}
         />
       )}
 
-      <div>
-        {patternId && templateId && demoId && (
-          <TemplateView
-            templateId={templateId}
-            id={patternId}
-            demoId={demoId}
-            isVerbose={false}
-            isReadmeShown={showReadme}
-            demoSize={demoSize}
-            isTitleShown={false}
-            isSchemaFormShown={showSchemaForm}
-          />
-        )}
-      </div>
-    </div>
+      {!isReady && <p>Configure more information in edit menu</p>}
+    </>
   );
-}
+};
 
 export const patternTemplateSlice: Slice<Data> = {
   id: 'pattern-template-slice',
   title: 'Pattern Template',
   description: 'Render a Pattern Template',
   render: props => <PatternTemplateSlice {...props} />,
+  renderEditForm: props => <PatternTemplateSliceEdit {...props} />,
 };

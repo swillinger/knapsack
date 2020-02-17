@@ -58,6 +58,24 @@
       "parentId": "forms"
     },
     {
+      "id": "spinner-fxlSIWH-v",
+      "name": "Spinner",
+      "path": "",
+      "parentId": "components"
+    },
+    {
+      "id": "spinner",
+      "name": "Spinner",
+      "path": "/pattern/spinner",
+      "parentId": "spinner-fxlSIWH-v"
+    },
+    {
+      "id": "circle-spinner",
+      "name": "Circle Spinner",
+      "path": "/pattern/circle-spinner",
+      "parentId": "spinner-fxlSIWH-v"
+    },
+    {
       "id": "button",
       "name": "Button",
       "path": "/pattern/button",
@@ -91,6 +109,12 @@
       "id": "pattern-status-icon",
       "name": "Pattern Status Icon",
       "path": "/pattern/pattern-status-icon",
+      "parentId": "components"
+    },
+    {
+      "id": "popover",
+      "name": "Popover",
+      "path": "/pattern/popover",
       "parentId": "components"
     },
     {

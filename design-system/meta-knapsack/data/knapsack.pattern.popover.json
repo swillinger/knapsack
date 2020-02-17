@@ -1,0 +1,69 @@
+{
+  "id": "popover",
+  "title": "Popover",
+  "templates": [
+    {
+      "id": "react",
+      "path": "@knapsack/design-system",
+      "alias": "KsPopover",
+      "templateLanguageId": "react",
+      "statusId": "proposed",
+      "assetSetIds": [],
+      "demosById": {
+        "main": {
+          "id": "main",
+          "title": "Main",
+          "type": "data",
+          "data": { "props": {}, "slots": {} }
+        },
+        "qoKvbcB5O": {
+          "id": "qoKvbcB5O",
+          "title": "Simple",
+          "type": "template",
+          "templateInfo": {
+            "alias": "simple",
+            "path": "../../src/popover/popover.story.tsx"
+          }
+        },
+        "uAWLusZdq": {
+          "id": "uAWLusZdq",
+          "title": "Hoverable",
+          "type": "template",
+          "templateInfo": {
+            "alias": "hoverable",
+            "path": "../../src/popover/popover.story.tsx"
+          },
+          "description": ""
+        }
+      },
+      "demos": ["main", "qoKvbcB5O", "uAWLusZdq"],
+      "spec": {
+        "slots": {
+          "content": {
+            "title": "Content",
+            "description": "The content in the popover.",
+            "isRequired": false
+          },
+          "children": {
+            "title": "children",
+            "description": "Stuff that shows and triggers the popover."
+          }
+        },
+        "props": {
+          "$schema": "http://json-schema.org/draft-07/schema",
+          "type": "object",
+          "required": [],
+          "properties": {
+            "isOpen": { "type": "boolean" },
+            "trigger": {
+              "type": "string",
+              "description": "How to trigger the popover. Options are \"prop\", \"hover\" and \"click\"."
+            },
+            "maxWidth": { "type": "number" },
+            "hasArrow": { "type": "boolean" }
+          }
+        }
+      }
+    }
+  ]
+}

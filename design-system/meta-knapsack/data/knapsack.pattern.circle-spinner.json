@@ -1,0 +1,38 @@
+{
+  "id": "circle-spinner",
+  "title": "Circle Spinner",
+  "templates": [
+    {
+      "id": "react",
+      "path": "@knapsack/design-system",
+      "alias": "CircleSpinner",
+      "templateLanguageId": "react",
+      "statusId": "ready",
+      "assetSetIds": [],
+      "demosById": {
+        "main": {
+          "id": "main",
+          "title": "Main",
+          "type": "data",
+          "data": { "props": {}, "slots": {} }
+        }
+      },
+      "demos": ["main"],
+      "spec": {
+        "slots": {},
+        "props": {
+          "$schema": "http://json-schema.org/draft-07/schema",
+          "type": "object",
+          "required": [],
+          "properties": {
+            "size": {
+              "type": "string",
+              "description": "Size value. Set a string value (e.g. \"40px\")."
+            },
+            "error": { "type": "string" }
+          }
+        }
+      }
+    }
+  ]
+}

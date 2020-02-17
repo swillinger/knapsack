@@ -14,3 +14,9 @@ slices:
         * type-to-filter
         * fields/radio-input-wrapper
         * fields/text-input-wrapper
+        * /schema-form
+        * /schema-table
+        * /tabbed-panel
+
+        Delete?
+        * smart-grid

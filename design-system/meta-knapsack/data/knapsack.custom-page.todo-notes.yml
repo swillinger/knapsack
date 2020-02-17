@@ -13,3 +13,4 @@ slices:
         * type-to-filter-input-wrapper
         * type-to-filter
         * fields/radio-input-wrapper
+        * fields/text-input-wrapper

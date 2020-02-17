@@ -52,6 +52,12 @@
       "parentId": "forms"
     },
     {
+      "id": "text-input",
+      "name": "Text Input",
+      "path": "/pattern/text-input",
+      "parentId": "forms"
+    },
+    {
       "id": "button",
       "name": "Button",
       "path": "/pattern/button",

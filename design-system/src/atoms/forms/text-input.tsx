@@ -13,6 +13,9 @@ type Props = {
   label?: string;
   placeholder?: string;
   isLabelInline?: boolean;
+  /**
+   * Width of the inline label. Use a full string value like "120px".
+   */
   inlineLabelWidth?: string;
   inputProps?: any;
   type?: string;

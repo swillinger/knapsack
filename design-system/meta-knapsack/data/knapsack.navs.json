@@ -39,6 +39,19 @@
       "parentId": "patterns-asdf"
     },
     {
+      "id": "todo-notes",
+      "name": "Todo Notes",
+      "path": "/pages/todo-notes",
+      "parentId": "components"
+    },
+    { "id": "forms", "name": "Forms", "path": "", "parentId": "components" },
+    {
+      "id": "select",
+      "name": "Select",
+      "path": "/pattern/select",
+      "parentId": "forms"
+    },
+    {
       "id": "button",
       "name": "Button",
       "path": "/pattern/button",

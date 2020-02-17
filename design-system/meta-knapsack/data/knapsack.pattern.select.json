@@ -1,0 +1,83 @@
+{
+  "id": "select",
+  "title": "Select",
+  "templates": [
+    {
+      "id": "react",
+      "path": "@knapsack/design-system",
+      "alias": "KsSelect",
+      "templateLanguageId": "react",
+      "statusId": "needs-dev",
+      "assetSetIds": [],
+      "demosById": {
+        "main": {
+          "id": "main",
+          "title": "Main",
+          "type": "data",
+          "data": { "props": { "isLabelInline": false }, "slots": {} }
+        },
+        "o-6IUhrOb": {
+          "id": "o-6IUhrOb",
+          "title": "My new template demo",
+          "type": "template",
+          "templateInfo": {
+            "alias": "ownState",
+            "path": "../../src/atoms/forms/select.story.tsx"
+          }
+        },
+        "4Ib0qTH7Y": {
+          "id": "4Ib0qTH7Y",
+          "title": "My new template demo",
+          "type": "template",
+          "templateInfo": {
+            "alias": "ParentFormState",
+            "path": "../../src/atoms/forms/select.story.tsx"
+          }
+        }
+      },
+      "demos": ["main", "o-6IUhrOb", "4Ib0qTH7Y"],
+      "spec": {
+        "slots": {},
+        "props": {
+          "$schema": "http://json-schema.org/draft-07/schema",
+          "type": "object",
+          "required": [],
+          "properties": {
+            "label": { "type": "string", "title": "Label" },
+            "id": { "type": "string", "title": "ID" },
+            "isLabelInline": {
+              "title": "Inline Label",
+              "description": "Display the label inline with the input? Defaults to false (label above the input).",
+              "type": "boolean",
+              "default": false
+            },
+            "size": {
+              "type": "string",
+              "title": "Size",
+              "description": "\"s\" for small, or \"m\" for medium."
+            },
+            "handleChange": {
+              "title": "On Change",
+              "typeof": "function",
+              "tsType": "() => void"
+            },
+            "isSearchable": {
+              "title": "Is Searchable",
+              "description": "Add the ability to search the options.",
+              "type": "boolean"
+            },
+            "isClearable": {
+              "title": "Is Clearable",
+              "description": "Provide an \"x\" button to clear the input.",
+              "type": "boolean"
+            },
+            "disabled": { "type": "string", "title": "Disabled" },
+            "placeholder": { "type": "string", "title": "Placeholder" },
+            "value": { "type": "string" }
+          }
+        }
+      }
+    }
+  ],
+  "description": "The main demo isn't working because value & options require objects, which we can't quite enter as props yet."
+}

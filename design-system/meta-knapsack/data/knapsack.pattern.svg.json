@@ -7,7 +7,7 @@
       "path": "@knapsack/design-system",
       "alias": "KsSvg",
       "templateLanguageId": "react",
-      "statusId": "proposed",
+      "statusId": "needs-approval",
       "assetSetIds": [],
       "demosById": {
         "main": {
@@ -35,5 +35,6 @@
         }
       }
     }
-  ]
+  ],
+  "description": "@TODO: I (brandon) tried to paste some svg markup in the SVG prop but wasn't getting anything.."
 }

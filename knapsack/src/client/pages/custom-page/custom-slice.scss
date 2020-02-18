@@ -27,6 +27,7 @@
 
   // start individual controls
   &__handle {
+    color: var(--c-active);
     position: absolute;
     top: var(--space-xxs);
     left: calc((var(--space-l) + var(--space-xxs)) * -1);

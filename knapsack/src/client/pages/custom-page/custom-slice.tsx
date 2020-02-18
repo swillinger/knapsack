@@ -107,7 +107,7 @@ const CustomSlice: React.FC<Props> = ({
 
   // This ensures the slice itself only re-renders when it's props change
   const theSlice = useMemo(() => {
-    return knapsackSlice.render(renderParams);
+    return knapsackSlice?.render(renderParams);
   }, [renderParams.data, renderParams.state]);
 
   if (!knapsackSlice) {

@@ -15,7 +15,6 @@ export enum Icons {
   'copy' = 'copy',
   'duplicate' = 'duplicate',
   'delete' = 'delete',
-  'down' = 'down',
   'drag-handle' = 'drag-handle',
   'dropdown-carrot' = 'dropdown-carrot',
   'edit-text' = 'edit-text',
@@ -29,7 +28,8 @@ export enum Icons {
   'sort-alphabetically' = 'sort-alphabetically',
   'grid-view' = 'grid-view',
   'table-view' = 'table-view',
-  'up' = 'up',
+  'move-item-up' = 'move-item-up',
+  'move-item-down' = 'move-item-down',
 }
 
 export type Props = {
@@ -247,44 +247,20 @@ export const Icon: React.FC<Props> = ({
         );
         break;
 
-      case Icons.up:
+      case Icons['move-item-up']:
         returnSymbol = (
           <g>
-            <path
-              d="M12 19V5"
-              stroke="#222222"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M5 12L12 5L19 12"
-              stroke="#222222"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
+            <path d="M12 19V5" />
+            <path d="M5 12L12 5L19 12" />
           </g>
         );
         break;
 
-      case Icons.down:
+      case Icons['move-item-down']:
         returnSymbol = (
           <g>
-            <path
-              d="M12 5L12 19"
-              stroke="#222222"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M19 12L12 19L5 12"
-              stroke="#222222"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
+            <path d="M12 5L12 19" />
+            <path d="M19 12L12 19L5 12" />
           </g>
         );
         break;

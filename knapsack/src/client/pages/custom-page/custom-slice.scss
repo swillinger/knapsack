@@ -1,35 +1,36 @@
+/* stylelint-disable function-calc-no-invalid */
 .ks-custom-slice {
-  // stylelint-disable function-calc-no-invalid
-  margin-left: calc(-1 * var(--space-m));
-  margin-right: calc(-1 * var(--space-m));
-  // stylelint-enable function-calc-no-invalid
-  padding: var(--space-m);
-
   &--dragging {
     opacity: 0;
   }
 
-  &__content {
-    border: solid 1px transparent;
-    transition: border ease-in 0.2s;
-    .ks-custom-slice--edit-ui-visible & {
-      border-color: var(--c-active);
-    }
+  &__content-wrapper {
+    max-width: calc(var(--font-base-size) * 50);
+    margin: 0 auto var(--space-l);
+    position: relative;
   }
 
   &__controls {
-    display: flex;
-    align-items: center;
+    border: 1px solid var(--c-active);
+
+    position: absolute;
+    top: calc(var(--space-xxs) * -1);
+    right: calc(var(--space-xxs) * -1);
+    left: calc(var(--space-xxs) * -1);
+    bottom: calc(var(--space-xxs) * -1);
+
     opacity: 0;
-    transition: opacity ease-in 0.2s;
     .ks-custom-slice--edit-ui-visible & {
       opacity: 1;
     }
-    > * {
-      margin-right: var(--space-s);
-    }
   }
+
+  // start individual controls
   &__handle {
+    position: absolute;
+    top: var(--space-xxs);
+    left: calc((var(--space-l) + var(--space-xxs)) * -1);
+
     &:hover {
       cursor: grab;
     }
@@ -37,4 +38,42 @@
       cursor: grabbing;
     }
   }
+  &__move {
+    position: absolute;
+    line-height: 1;
+    left: calc(var(--space-xxs) * -1);
+
+    &.--move-up {
+      bottom: 100%;
+    }
+    &.--move-down {
+      top: 100%;
+    }
+  }
+  &__slice-actions {
+    position: absolute;
+    top: calc((var(--space-l) / 2) * -1);
+    right: var(--space-m);
+    z-index: 1;
+    white-space: nowrap;
+
+    & > div {
+      background-color: var(--c-bg);
+      border: 1px solid var(--c-active);
+      border-radius: var(--radius-m);
+      width: var(--space-l);
+      height: var(--space-l);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    & > div + div {
+      margin-left: var(--space-xs);
+    }
+  }
+  // end individual controls
+
+  &__content {}
 }
+/* stylelint-enable function-calc-no-invalid */

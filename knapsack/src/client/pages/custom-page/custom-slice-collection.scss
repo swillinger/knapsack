@@ -1,0 +1,6 @@
+.ks-custom-slice-collection {
+  &__add-slice {
+    max-width: calc(var(--font-base-size) * 50);
+    margin: 0 auto var(--space-l);
+  }
+}

@@ -131,79 +131,95 @@ const CustomSlice: React.FC<Props> = ({
 
   return (
     <aside ref={hoverRef} className={classes}>
-      {canEdit && (
-        <div className="ks-custom-slice__controls">
-          <div className="ks-custom-slice__handle">
-            <Icon symbol="drag-handle" />
+      <div className="ks-custom-slice__content-wrapper">
+        {canEdit && (
+          <div className="ks-custom-slice__controls">
+            <div className="ks-custom-slice__handle">
+              <Icon symbol="drag-handle" />
+            </div>
+            {!isFirstSlice && (
+              <div className="ks-custom-slice__move --move-up">
+                <KsButton
+                  kind="icon"
+                  disabled={isFirstSlice}
+                  size="s"
+                  icon="move-item-up"
+                  flush
+                  handleTrigger={() => moveSliceUp(sliceIndex)}
+                />
+              </div>
+            )}
+            {!isLastSlice && (
+              <div className="ks-custom-slice__move --move-down">
+                <KsButton
+                  kind="icon"
+                  disabled={isLastSlice}
+                  size="s"
+                  icon="move-item-down"
+                  flush
+                  handleTrigger={() => moveSliceDown(sliceIndex)}
+                />
+              </div>
+            )}
+            <div className="ks-custom-slice__slice-actions">
+              {knapsackSlice?.renderEditForm && (
+                <div className="ks-custom-slice__edit-btn">
+                  <KsPopover
+                    trigger="prop"
+                    position="right"
+                    maxWidth={360}
+                    isOpen={isEditPopoverOpen}
+                    onClickOutside={() => setEditPopOverOpen(false)}
+                    content={
+                      <>
+                        <h4>{knapsackSlice.title}</h4>
+                        {knapsackSlice.schema && (
+                          <SchemaForm
+                            schema={knapsackSlice.schema}
+                            uiSchema={knapsackSlice.uiSchema || {}}
+                            formData={slice.data}
+                            onChange={({ formData }) => {
+                              setSliceData(sliceIndex, formData);
+                            }}
+                          />
+                        )}
+
+                        {knapsackSlice?.renderEditForm(renderParams)}
+                      </>
+                    }
+                  >
+                    <KsButton
+                      size="s"
+                      icon="edit"
+                      kind="icon"
+                      flush
+                      handleTrigger={() => setEditPopOverOpen(is => !is)}
+                    >
+                      Edit
+                    </KsButton>
+                  </KsPopover>
+                </div>
+              )}
+              <div className="ks-custom-slice__delete-btn">
+                <KsDeleteButton
+                  size="s"
+                  flush
+                  handleTrigger={() => deleteSlice(sliceIndex)}
+                />
+              </div>
+            </div>
           </div>
-          {!isFirstSlice && (
-            <KsButton
-              disabled={isFirstSlice}
-              size="s"
-              icon="up"
-              handleTrigger={() => moveSliceUp(sliceIndex)}
-            />
-          )}
-          {!isLastSlice && (
-            <KsButton
-              disabled={isLastSlice}
-              size="s"
-              icon="down"
-              handleTrigger={() => moveSliceDown(sliceIndex)}
-            />
-          )}
-          <KsDeleteButton
-            size="s"
-            flush
-            handleTrigger={() => deleteSlice(sliceIndex)}
-          />
-          {knapsackSlice?.renderEditForm && (
-            <KsPopover
-              trigger="prop"
-              position="right"
-              maxWidth={360}
-              isOpen={isEditPopoverOpen}
-              onClickOutside={() => setEditPopOverOpen(false)}
-              content={
-                <>
-                  <h4>{knapsackSlice.title}</h4>
-                  {knapsackSlice.schema && (
-                    <SchemaForm
-                      schema={knapsackSlice.schema}
-                      uiSchema={knapsackSlice.uiSchema || {}}
-                      formData={slice.data}
-                      onChange={({ formData }) => {
-                        setSliceData(sliceIndex, formData);
-                      }}
-                    />
-                  )}
+        )}
 
-                  {knapsackSlice?.renderEditForm(renderParams)}
-                </>
-              }
-            >
-              <KsButton
-                size="s"
-                icon="edit"
-                kind="icon"
-                flush
-                handleTrigger={() => setEditPopOverOpen(is => !is)}
-              >
-                Edit
-              </KsButton>
-            </KsPopover>
-          )}
+        <div className="ks-custom-slice__content">
+          <CustomSliceErrorCatcher
+            setErrorMsg={setErrorMsg}
+            errorMsg={errorMsg}
+            key={keyRef.current}
+          >
+            {theSlice}
+          </CustomSliceErrorCatcher>
         </div>
-      )}
-
-      <div className="ks-custom-slice__content">
-        <CustomSliceErrorCatcher
-          setErrorMsg={setErrorMsg}
-          errorMsg={errorMsg}
-          key={keyRef.current}
-        >
-          {theSlice}
-        </CustomSliceErrorCatcher>
       </div>
     </aside>
   );

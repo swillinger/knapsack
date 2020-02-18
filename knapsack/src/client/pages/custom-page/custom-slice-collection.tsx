@@ -23,6 +23,7 @@ import knapsackSlices from './slices';
 import CustomSlice from './custom-slice';
 import { KnapsackCustomPageSlice } from '../../../schemas/custom-pages';
 import { useSelector } from '../../store';
+import './custom-slice-collection.scss';
 
 const AddSliceForm = ({
   addSlice,
@@ -102,7 +103,11 @@ export const CustomSliceCollection: React.FC<Props> = ({
     <section className="ks-custom-slice-collection">
       {slices.map((slice, sliceIndex) => (
         <div key={slice.id}>
-          {canEdit && <AddSliceForm addSlice={addSlice} index={sliceIndex} />}
+          {canEdit && (
+            <div className="ks-custom-slice-collection__add-slice">
+              <AddSliceForm addSlice={addSlice} index={sliceIndex} />
+            </div>
+          )}
           <CustomSlice
             key={slice.id}
             slice={slice}
@@ -117,7 +122,11 @@ export const CustomSliceCollection: React.FC<Props> = ({
           />
         </div>
       ))}
-      {canEdit && <AddSliceForm addSlice={addSlice} index={slices.length} />}
+      {canEdit && (
+        <div className="ks-custom-slice-collection__add-slice">
+          <AddSliceForm addSlice={addSlice} index={slices.length} />
+        </div>
+      )}
     </section>
   );
 };

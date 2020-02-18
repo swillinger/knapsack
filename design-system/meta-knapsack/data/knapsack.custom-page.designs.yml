@@ -1,0 +1,9 @@
+id: designs
+title: Designs
+slices:
+  - id: IweR3Mix
+    blockId: figma-slice
+    data:
+      height: 500
+      figmaFileUrl: >-
+        https://www.figma.com/file/qwWkufVXbmS2np6CGlJpEA/Knapsack-2020?node-id=2%3A4202

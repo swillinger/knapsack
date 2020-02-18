@@ -185,7 +185,7 @@ const CustomSlice: React.FC<Props> = ({
                           />
                         )}
 
-                        {knapsackSlice?.renderEditForm(renderParams)}
+                        {knapsackSlice?.renderEditForm?.(renderParams)}
                       </>
                     }
                   >

@@ -122,6 +122,7 @@ const CustomSlice: React.FC<Props> = ({
   const isLastSlice = sliceIndex + 1 === slicesLength;
   // UI is visible if slice is hovered - and ALWAYS visible if the edit popover is open
   const isEditUiVisible = (canEdit && isHovered) || isEditPopoverOpen;
+  const hasEditForm = !!knapsackSlice.schema || !!knapsackSlice.renderEditForm;
 
   const classes = cn('ks-custom-slice', {
     'ks-custom-slice--dragging': isDragging,
@@ -162,7 +163,7 @@ const CustomSlice: React.FC<Props> = ({
               </div>
             )}
             <div className="ks-custom-slice__slice-actions">
-              {knapsackSlice?.renderEditForm && (
+              {hasEditForm && (
                 <div className="ks-custom-slice__edit-btn">
                   <KsPopover
                     trigger="prop"

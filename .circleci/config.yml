@@ -124,6 +124,7 @@ jobs:
           name: Deploy Docs Site
           command: |
             cd docs-site
+            cp -r .now/ build/
             npm i -g now
             if [ "$CIRCLE_TAG" ] || [ "$CIRCLE_BRANCH" == "next" ] || [ "$CIRCLE_BRANCH" == "develop" ]; then
               now deploy --prod --token $ZEIT_TOKEN ./build --confirm

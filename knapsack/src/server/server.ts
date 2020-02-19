@@ -14,7 +14,7 @@
     You should have received a copy of the GNU General Public License along
     with Knapsack; if not, see <https://www.gnu.org/licenses>.
  */
-import express from 'express';
+import express, { Express } from 'express';
 import { ApolloServer, gql } from 'apollo-server-express';
 import { makeExecutableSchema, mergeSchemas } from 'graphql-tools';
 import WebSocket from 'ws';
@@ -47,7 +47,14 @@ import {
 import { WS_EVENTS, WebSocketMessage } from '../schemas/web-sockets';
 import { flattenArray, isBase64 } from '../lib/utils';
 
-export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
+export async function getServer({
+  meta,
+}: {
+  meta: KnapsackMeta;
+}): Promise<{
+  serve: () => void;
+  app: Express;
+}> {
   const {
     patterns,
     customPages,
@@ -366,42 +373,56 @@ export async function serve({ meta }: { meta: KnapsackMeta }): Promise<void> {
     return true;
   }
 
-  if (meta.websocketsPort && enableTemplatePush) {
-    wss = new WebSocket.Server({
-      port: meta.websocketsPort,
-      clientTracking: true,
-    });
-    // wss.on('connection', ws => {
-    //   ws.on('message', msg => {
-    //     console.log('wss messge', msg);
-    //   });
-    // });
-  }
-  app.listen(port, () => {
-    log.silly('Available endpoints', endpoints, 'server');
+  function serve() {
+    if (meta.websocketsPort && enableTemplatePush) {
+      wss = new WebSocket.Server({
+        port: meta.websocketsPort,
+        clientTracking: true,
+      });
+      // wss.on('connection', ws => {
+      //   ws.on('message', msg => {
+      //     console.log('wss messge', msg);
+      //   });
+      // });
+    }
 
-    // want url to not get buried with info
-    // @todo show this after event is fired from WebPack being ready
-    setTimeout(() => {
-      log.info(
-        `🚀 Server listening on http://localhost:${port}`,
-        null,
-        'server',
-      );
-    }, 250);
-  });
+    app.listen(port, () => {
+      log.silly('Available endpoints', endpoints, 'server');
 
-  if (enableTemplatePush && wss) {
-    knapsackEvents.on(EVENTS.PATTERN_TEMPLATE_CHANGED, data => {
+      // want url to not get buried with info
+      // @todo show this after event is fired from WebPack being ready
       setTimeout(() => {
-        sendWsMessage({ event: WS_EVENTS.PATTERN_TEMPLATE_CHANGED, data });
-      }, 100);
+        log.info(
+          `🚀 Server listening on http://localhost:${port}`,
+          null,
+          'server',
+        );
+      }, 250);
     });
 
-    knapsackEvents.on(EVENTS.PATTERN_ASSET_CHANGED, data => {
-      setTimeout(() => {
-        sendWsMessage({ event: WS_EVENTS.PATTERN_ASSET_CHANGED, data });
-      }, 100);
-    });
+    if (enableTemplatePush && wss) {
+      knapsackEvents.on(EVENTS.PATTERN_TEMPLATE_CHANGED, data => {
+        setTimeout(() => {
+          sendWsMessage({
+            event: WS_EVENTS.PATTERN_TEMPLATE_CHANGED,
+            data,
+          });
+        }, 100);
+      });
+
+      knapsackEvents.on(EVENTS.PATTERN_ASSET_CHANGED, data => {
+        setTimeout(() => {
+          sendWsMessage({
+            event: WS_EVENTS.PATTERN_ASSET_CHANGED,
+            data,
+          });
+        }, 100);
+      });
+    }
   }
+
+  return {
+    app,
+    serve,
+  };
 }

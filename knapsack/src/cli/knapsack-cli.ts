@@ -17,10 +17,16 @@
  */
 import program from 'commander';
 import { join } from 'path';
+import {
+  createProxyMiddleware,
+  Filter,
+  Options,
+  RequestHandler,
+} from 'http-proxy-middleware';
 import { readJSONSync } from 'fs-extra';
 import * as log from './log';
 import { knapsackEvents, EVENTS, KnapsackEventsData } from '../server/events';
-import { serve } from '../server/server';
+import { getServer } from '../server/server';
 import {
   initAll,
   build,
@@ -55,7 +61,7 @@ program.command('serve').action(async () => {
   const meta = await initAll(ksBrain);
   log.info('Serving...');
   try {
-    await serve({ meta });
+    await getServer({ meta }).then(({ serve }) => serve());
   } catch (e) {
     log.error('Knapsack serve error', e);
     process.exit(1);
@@ -124,6 +130,9 @@ program.command('start').action(async () => {
       });
     },
   );
+
+  const { serve } = await getServer({ meta });
+
   return Promise.all([
     // patterns.watch(), // @todo restore
     assetSets.watch(),
@@ -134,7 +143,7 @@ program.command('start').action(async () => {
         }),
       }),
     ),
-    serve({ meta }),
+    serve(),
   ])
     .then(() => log.info('Started!', null, 'start'))
     .catch(err => {

@@ -143,7 +143,7 @@ ${patternDemos
     const { accept = '' } = req.headers;
     const accepted = accept.split(',');
     // this is for serving up a Netlify CMS folder if present
-    if (!req.baseUrl.startsWith('/admin') && accepted.includes('text/html')) {
+    if (accepted.includes('text/html')) {
       res.sendFile(join(knapsackDistDir, 'index.html'));
     } else {
       next();
